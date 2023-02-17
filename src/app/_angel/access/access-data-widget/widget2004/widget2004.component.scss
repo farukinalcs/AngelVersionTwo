@@ -1,0 +1,21 @@
+table {
+    width: 100%;
+    overflow-y: scroll;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+  
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+th {
+    font-weight: bold;
+}
+.tableHeaderCellDiv { 
+    resize: horizontal;  
+    overflow:hidden;
+    font-weight: 900;
+}

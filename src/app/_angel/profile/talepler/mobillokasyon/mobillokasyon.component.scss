@@ -1,0 +1,34 @@
+table {
+    width: 100%;
+    overflow-y: scroll;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+  
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.tableHeaderCellDiv { 
+    resize: horizontal;  
+    overflow:hidden;
+    font-weight: 900;
+}
+
+
+
+
+.hover01 img {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+
+.hover01:hover img {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+}
+

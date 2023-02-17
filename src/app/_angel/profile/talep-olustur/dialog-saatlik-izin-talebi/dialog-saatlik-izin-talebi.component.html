@@ -1,0 +1,270 @@
+<mat-dialog-content style="width: 1200px; height: 600px;">
+    <div class="row border-bottom border-2 rounded">
+        <div class="col-8">
+            <h1 mat-dialog-title class="text-danger">Günlük İzin Talep Formu</h1>
+        </div>
+
+        <div class="col-4" style="display: flex; justify-content: end;">
+            <a mat-dialog-close class="text-hover-danger">
+                <i class="fa fa-2x mt-2 mr-2" style="font-size: 30px;">&#xf00d;</i>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <mat-stepper #stepper [linear]="isLinear" [orientation]="(stepperOrientation | async)!" (click)="getFormsValues()">
+                    <mat-step [stepControl]="firstFormGroup" >
+                        <form [formGroup]="firstFormGroup">
+                            <ng-template matStepLabel >Bilgiler</ng-template>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Talep Edilen İzin Türü</mat-label>
+                                            <mat-select formControlName="talepEdilenIzinTuru" required>
+                                                <mat-option value="izin1">izin1</mat-option>
+                                                <mat-option value="izin2">izin2</mat-option>
+                                                <mat-option value="izin3">izin3</mat-option>
+                                                <mat-option value="izin4">izin4</mat-option>
+                                            </mat-select>
+                                            <mat-icon matSuffix>message</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>İzin Hakkı</mat-label>
+                                            <!-- <textarea matInput formControlName="firstCtr" matTextareaAutosize [maxRows]="5"></textarea> -->
+                                            <input matInput  formControlName="izinHakki" required>
+                                            <mat-icon matSuffix>email</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-10">
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>İzin Adresi</mat-label>
+                                            <!-- <textarea matInput formControlName="firstCtr" matTextareaAutosize [maxRows]="5"></textarea> -->
+                                            <input matInput  formControlName="izinAdresi" required>
+                                            <mat-icon matSuffix>email</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>İzin Açıklama</mat-label>
+                                            <!-- <textarea matInput formControlName="firstCtr" matTextareaAutosize [maxRows]="5"></textarea> -->
+                                            <input matInput  formControlName="izinAciklama" required>
+                                            <mat-icon matSuffix>email</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+    
+                                <div class="row mt-20 ">
+                                    <div class="col-12 d-flex align-items-end justify-content-end">
+                                        <button  class="w-25 btn btn-primary" [disabled]="!isFirstFormValid"   matStepperNext (click)="getFormsValues()">İleri</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="secondFormGroup">
+                        <form [formGroup]="secondFormGroup">
+                            <ng-template matStepLabel>Tarih</ng-template>
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>İzin Başlangıç Tarihi</mat-label>
+                                            <input matInput [matDatepicker]="picker1" formControlName="izinBaslangicTarihi">
+                                            <mat-hint>MM/DD/YYYY</mat-hint>
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Başlangıç Saati</mat-label>
+                                            <input matInput type="time" formControlName="izinBaslangicSaati">
+                                            <mat-hint>HH:MM</mat-hint>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>İzin Bitiş Tarihi</mat-label>
+                                            <input matInput [matDatepicker]="picker2" formControlName="izinBitisTarihi">
+                                            <mat-hint>MM/DD/YYYY</mat-hint>
+                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker2></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Bitiş Saati</mat-label>
+                                            <input matInput type="time" formControlName="izinBitisSaati">
+                                            <mat-hint>HH:MM</mat-hint>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-10">
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>İzin Süresi</mat-label>
+                                            <input matInput type="time" formControlName="izinSuresi">
+                                            <mat-hint>HH:MM</mat-hint>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Vekalet Verilecek Kişi</mat-label>
+                                            <mat-select formControlName="vekaletVerilecekKisi" required>
+                                                <mat-option value="vekil1">vekil1</mat-option>
+                                                <mat-option value="vekil2">vekil2</mat-option>
+                                                <mat-option value="vekil3">vekil3</mat-option>
+                                                <mat-option value="vekil4">vekil4</mat-option>
+                                            </mat-select>
+                                            <mat-icon matSuffix>message</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-20">
+                                <div class="col-6 d-flex justify-content-start">
+                                    <button class="w-50 btn btn-primary" matStepperPrevious>Geri</button>
+                                </div>
+
+                                <div class="col-6 d-flex justify-content-end">
+                                    <button class="w-50 btn btn-primary" [disabled]="!isSecondFormValid" matStepperNext>İleri</button>
+                                </div>
+                                
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Özet</ng-template>
+                        <div class="container">
+                            <div class="row d-flex justify-content-center mt-10">
+                                <div class="col-8">
+                                    <div class="card card-custom" style="background-color: #f1f3f4;">
+                                        <div class="card-header ribbon ribbon-top ribbon-ver">
+                                            <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
+                                                OK!
+                                            </div>
+                                            <h3 class="card-title">
+                                                Talep Özeti
+                                            </h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="container">
+                                                <div class="row mb-2">
+                                                    <div class="col-4 fw-bold fs-6 text-gray-600">
+                                                        Yeni İzin Hakkı :
+                                                    </div>
+                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.yeniIzinHakki}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row mb-2">
+                                                    <div class="col-4 fw-bold fs-6 text-gray-600">
+                                                        İzin Talep Türü :
+                                                    </div>
+                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.talepEdilenIzinTuru}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row mb-2">
+                                                    <div class="col-4 fw-bold fs-6 text-gray-600">
+                                                        İzin Başlangıç Zamanı :
+                                                    </div>
+                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.izinBaslangicTarihi}} - {{formsValues.izinBaslangicSaati}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row mb-2">
+                                                    <div class="col-4 fw-bold fs-6 text-gray-600">
+                                                        İzin Bitiş Zamanı :
+                                                    </div>
+                                                    <div class="col-6 col-8 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.izinBitisTarihi}} - {{formsValues.izinBitisSaati}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row mb-2">
+                                                    <div class="col-4 fw-bold fs-6 text-gray-600">
+                                                        İzin Süresi :
+                                                    </div>
+                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.izinSuresi}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row mb-2">
+                                                    <div class="col-4 fw-bold fs-6 text-gray-600">
+                                                        İzin Adresi :
+                                                    </div>
+                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.izinAdresi}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row mb-2">
+                                                    <div class="col-4 fw-bold fs-6 text-gray-600 ">
+                                                        İzin Açıklama :
+                                                    </div>
+                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.izinAciklama}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row mb-2">
+                                                    <div class="col-4 fw-bold fs-6 text-gray-600">
+                                                        Vekil Kişi :
+                                                    </div>
+                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.vekaletVerilecekKisi}}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                        <div class="row mt-20">
+                            <div class="col-6 d-flex justify-content-start">
+                                <button class="w-50 btn btn-primary" matStepperPrevious>Back</button>
+                            </div>
+
+                            <!-- <div class="col-1 d-flex justify-content-end">
+                                <button class="btn btn-danger" (click)="stepper.reset()">İptal</button>
+                            </div> -->
+
+                            <div class="col-6 d-flex justify-content-end">
+                                <button class="w-50 btn btn-success">Gönder</button>
+                            </div>
+                        </div>
+                    </mat-step>
+                </mat-stepper>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>

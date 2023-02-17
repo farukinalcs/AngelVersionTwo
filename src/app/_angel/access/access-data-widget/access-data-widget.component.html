@@ -1,0 +1,132 @@
+<div class="row" *ngIf="removeItems1.length > 0">
+    <div class="col-12">
+        <div class="card card-custom bg-light-danger mb-2 mb-4">
+            <div class="card-body">
+                <div class="d-flex align-items-center p-1">
+                    <div class="ng-star-inserted" *ngFor="let item of removeItems1">
+                        <div class="bg-hover-dark p-2 rounded removeItems">
+                            <div class="mr-1 text-center" (click)="addItem1(item)">
+                                <a>{{item.type}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-container *ngIf="dashboard1.length > 0">
+    <gridster class="options" [options]="options1">
+
+        <gridster-item [item]="item" class="rounded-4" *ngFor="let item of dashboard1">
+            <div >
+                <div *ngIf="item.type == 'İçerideki Personel Sayısı' " class="row d-flex align-items-center bg-light-primary">
+                    <a (touchstart)="removeItem1($event, item)" (mousedown)="removeItem1($event, item)"
+                        class="text-hover-danger removeIcon">
+                        <i class="fa">&#xf00d;</i>
+                    </a>    
+                </div>
+    
+                <div *ngIf="item.type == 'İçerideki Ziyaretçi Sayısı' " class="row d-flex align-items-center bg-light-warning">
+                    <a (touchstart)="removeItem1($event, item)" (mousedown)="removeItem1($event, item)"
+                        class="text-hover-danger removeIcon">
+                        <i class="fa">&#xf00d;</i>
+                    </a>    
+                </div>
+    
+                <div *ngIf="item.type == 'İçerideki Cihazlara Gönderilen Son 100 İşlem' " class="row d-flex align-items-center bg-light-info">
+                    <a (touchstart)="removeItem1($event, item)" (mousedown)="removeItem1($event, item)"
+                        class="text-hover-danger removeIcon">
+                        <i class="fa">&#xf00d;</i>
+                    </a>    
+                </div>
+    
+                <div *ngIf="item.type == 'İletişimi Kesik Cihaz Sayısı' " class="row d-flex align-items-center bg-light-success">
+                    <a (touchstart)="removeItem1($event, item)" (mousedown)="removeItem1($event, item)"
+                        class="text-hover-danger removeIcon">
+                        <i class="fa">&#xf00d;</i>
+                    </a>    
+                </div>
+    
+                <div *ngIf="item.type == 'Alarm Sayısı' " class="row d-flex align-items-center bg-light-danger">
+                    <a (touchstart)="removeItem1($event, item)" (mousedown)="removeItem1($event, item)"
+                        class="text-hover-danger removeIcon">
+                        <i class="fa">&#xf00d;</i>
+                    </a>    
+                </div>
+    
+                <div *ngIf="item.type == 'Mesaisi Bitip Çıkmayan Personel Sayısı' " class="row d-flex align-items-center bg-light-dark">
+                    <a (touchstart)="removeItem1($event, item)" (mousedown)="removeItem1($event, item)"
+                        class="text-hover-danger removeIcon">
+                        <i class="fa">&#xf00d;</i>
+                    </a>    
+                </div>
+                
+                <div class="gridster-item-content">
+                    <app-parent-widget [widget]="item" [resizeEvent]="resizeEvent"></app-parent-widget>
+                </div>
+                
+            </div>
+    
+        </gridster-item>
+    </gridster>
+</ng-container>
+
+
+
+
+
+<div class="row mt-4" *ngIf="removeItems2.length > 0">
+    <div class="col-12">
+        <div class="card card-custom bg-light-danger mb-2 mb-4">
+            <div class="card-body">
+                <div class="d-flex align-items-center p-1">
+                    <div class="ng-star-inserted" *ngFor="let item of removeItems2">
+                        <div class="bg-hover-dark p-2 rounded removeItems">
+                            <div class="mr-1 text-center" (click)="addItem2(item)">
+                                <a>{{item.type}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="dashboard2.length > 0">
+    <gridster class="options2 mt-4" [options]="options2" >
+        <gridster-item #fullScreen [item]="item" class="gridsterfit overflow-auto" *ngFor="let item of dashboard2" >
+                <div id="gridsterItem">
+                    <div class="row" style="width: 98%; margin-left: 6px;">
+                        <div class="col-3 d-flex justify-content-start align-items-center">
+                            <h6 class="card-label text-hover-dark mt-2 font-weight-bolder text-light">{{item.type}}</h6>
+                        </div>
+                        
+                        <div class="col-9 d-flex justify-content-end align-items-center removeIcon2">
+                            <a class="ml-4 text-hover-dark ">
+                                <i class="fa fa-hand text-light"></i>
+                            </a>
+
+                            <app-full-screen-div [div]="this.divRef"></app-full-screen-div>
+                            
+                            <a  (mousedown)="removeItem2($event, item)"
+                                (touchstart)="removeItem2($event, item)"
+                                class="ml-4 text-hover-dark ">
+                                <i class="fa text-light">&#xf00d;</i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="gridster-item-content">
+                        <app-parent-widget2 [widget]="item" [resizeEvent]="resizeEvent"></app-parent-widget2>
+                    </div>
+
+                </div>
+        </gridster-item>
+    </gridster>
+</ng-container>
+
+

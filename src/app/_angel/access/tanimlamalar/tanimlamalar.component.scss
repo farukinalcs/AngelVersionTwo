@@ -1,0 +1,31 @@
+.list-group-item-action:active {
+    color: white;
+    background-color: #009ef7;
+}
+
+.list-group-item-action:hover, .list-group-item-action:focus {
+    z-index: 1;
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #009ef7;
+}
+
+.ma-elevation-z8 > table {
+    width: 100%;
+    overflow-y: scroll;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+  
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.tableHeaderCellDiv { 
+    resize: horizontal;  
+    overflow:hidden;
+    font-weight: 900;
+
+}

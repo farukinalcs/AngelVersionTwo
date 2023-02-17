@@ -1,0 +1,534 @@
+<mat-dialog-content style="width: 1200px; height: 600px;">
+    <div class="row border-bottom border-2 rounded">
+        <div class="col-8">
+            <h1 mat-dialog-title class="text-danger">Ziyaretçi Talep Formu</h1>
+        </div>
+
+        <div class="col-4" style="display: flex; justify-content: end;">
+            <a mat-dialog-close class="text-hover-danger">
+                <i class="fa fa-2x mt-2 mr-2" style="font-size: 30px;">&#xf00d;</i>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <mat-stepper #stepper [linear]="isLinear" [orientation]="(stepperOrientation | async)!" (click)="getFormsValues()">
+                    <mat-step [stepControl]="firstFormGroup">
+                        <form [formGroup]="firstFormGroup">
+                            <ng-template matStepLabel>Bilgiler</ng-template>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Ad</mat-label>
+                                            <input matInput  formControlName="ad" required>
+                                            <mat-icon matSuffix>person</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Soyad</mat-label>
+                                            <input matInput  formControlName="soyad" required>
+                                            <mat-icon matSuffix>person</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-10">
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>E-mail</mat-label>
+                                            <input matInput  formControlName="email" required>
+                                            <mat-icon matSuffix>mail</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Firma</mat-label>
+                                            <mat-select formControlName="firma" required>
+                                                <mat-option value="Firma1">Firma1</mat-option>
+                                                <mat-option value="Firma2">Firma2</mat-option>
+                                                <mat-option value="Firma3">Firma3</mat-option>
+                                            </mat-select>
+                                            <mat-icon matSuffix>business</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-10">
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Açıklama</mat-label>
+                                            <input matInput  formControlName="aciklama" required>
+                                            <mat-icon matSuffix>message</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Ziyaret Tipi</mat-label>
+                                            <mat-select formControlName="ziyaretTipi" required>
+                                                <mat-option value="Ziyaret Tipi 1">Ziyaret Tipi 1</mat-option>
+                                                <mat-option value="Ziyaret Tipi 2">Ziyaret Tipi 2</mat-option>
+                                                <mat-option value="Ziyaret Tipi 3">Ziyaret Tipi 3</mat-option>
+                                            </mat-select>
+                                            <mat-icon matSuffix>fastfood</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+    
+                                <div class="row mt-20 ">
+                                    <div class="col-12 d-flex align-items-end justify-content-end">
+                                        <button  class="w-25 btn btn-primary" [disabled]="!isFirstFormValid"  matStepperNext (click)="getFormsValues()">İleri</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="secondFormGroup" >
+                        <form [formGroup]="secondFormGroup">
+                            <ng-template matStepLabel>Tarih</ng-template>
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Giriş Tarihi</mat-label>
+                                            <input matInput [matDatepicker]="picker1" formControlName="girisTarihi">
+                                            <mat-hint>MM/DD/YYYY</mat-hint>
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Çıkış Tarihi</mat-label>
+                                            <input matInput [matDatepicker]="picker2" formControlName="cikisTarihi">
+                                            <mat-hint>MM/DD/YYYY</mat-hint>
+                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker2></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-10">
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Giriş Saati</mat-label>
+                                            <input matInput type="time" formControlName="girisSaati">
+                                            <mat-hint>HH:MM</mat-hint>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Çıkış Saati</mat-label>
+                                            <input matInput type="time" formControlName="cikisSaati">
+                                            <mat-hint>HH:MM</mat-hint>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-20">
+                                <div class="col-6 d-flex justify-content-start">
+                                    <button class="w-50 btn btn-primary" matStepperPrevious>Geri</button>
+                                </div>
+
+                                <div class="col-6 d-flex justify-content-end">
+                                    <button class="w-50 btn btn-primary" [disabled]="!isSecondFormValid" matStepperNext >İleri</button>
+                                </div>
+                                
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Özet</ng-template>
+                        <div class="container">
+                            <div class="row d-flex justify-content-center mt-10">
+                                <div class="col-8">
+                                    <div class="card card-custom" style="background-color: #f1f3f4;">
+                                        <div class="card-header ribbon ribbon-top ribbon-ver">
+                                            <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
+                                                OK!
+                                            </div>
+                                            <h3 class="card-title">
+                                                Talep Özeti
+                                            </h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        Ad :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.ad}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        Soyad :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.soyad}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        E-Mail :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.email}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        Firma :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.firma}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row"> 
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        Ziyaret Tipi :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.ziyaretTipi}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        Açıklama :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.aciklama}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        Giriş Zamanı :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.girisTarihi}} - {{formsValues.girisSaati}}
+                                                    </div>
+                                                </div>
+                                            
+                                            
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600 ">
+                                                        Çıkış Zamanı :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.cikisTarihi}} - {{formsValues.cikisSaati}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-20">
+                            <div class="col-6 d-flex justify-content-start">
+                                <button class="w-50 btn btn-primary" matStepperPrevious>Back</button>
+                            </div>
+
+
+                            <div class="col-6 d-flex justify-content-end">
+                                <button class="w-50 btn btn-success">Gönder</button>
+                            </div>
+                        </div>
+                    </mat-step>
+                </mat-stepper>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <mat-dialog-content style="width: 1200px; height: 600px; margin: 0; padding: 0;">
+    <div class="row border-bottom border-2 m-0-p-4" style="background-color: #F64E60; width: 100%;">
+        <div class="col-8">
+            <h1 mat-dialog-title class="text-light ml-4">Ziyaretçi Talep Formu</h1>
+        </div>
+
+        <div class="col-4" style="display: flex; justify-content: end; align-items: center;">
+            <a mat-dialog-close>
+                <i class="fa fa-2x mt-0 mr-4 text-light" style="font-size: 30px;">&#xf00d;</i>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <mat-stepper #stepper [linear]="isLinear" [orientation]="(stepperOrientation | async)!" (click)="getFormsValues()">
+                    <mat-step [stepControl]="firstFormGroup">
+                        <form [formGroup]="firstFormGroup">
+                            <ng-template matStepLabel>Bilgiler</ng-template>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Ad</mat-label>
+                                            <input matInput  formControlName="ad" required>
+                                            <mat-icon matSuffix>person</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Soyad</mat-label>
+                                            <input matInput  formControlName="soyad" required>
+                                            <mat-icon matSuffix>person</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-10">
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>E-mail</mat-label>
+                                            <input matInput  formControlName="email" required>
+                                            <mat-icon matSuffix>mail</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Firma</mat-label>
+                                            <mat-select formControlName="firma" required>
+                                                <mat-option value="Firma1">Firma1</mat-option>
+                                                <mat-option value="Firma2">Firma2</mat-option>
+                                                <mat-option value="Firma3">Firma3</mat-option>
+                                            </mat-select>
+                                            <mat-icon matSuffix>business</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-10">
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Açıklama</mat-label>
+                                            <input matInput  formControlName="aciklama" required>
+                                            <mat-icon matSuffix>message</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Ziyaret Tipi</mat-label>
+                                            <mat-select formControlName="ziyaretTipi" required>
+                                                <mat-option value="Ziyaret Tipi 1">Ziyaret Tipi 1</mat-option>
+                                                <mat-option value="Ziyaret Tipi 2">Ziyaret Tipi 2</mat-option>
+                                                <mat-option value="Ziyaret Tipi 3">Ziyaret Tipi 3</mat-option>
+                                            </mat-select>
+                                            <mat-icon matSuffix>fastfood</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+    
+                                <div class="row mt-20 ">
+                                    <div class="col-12 d-flex align-items-end justify-content-end">
+                                        <button  class="w-25 btn btn-primary" [disabled]="!isFirstFormValid"  matStepperNext (click)="getFormsValues()">İleri</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="secondFormGroup" >
+                        <form [formGroup]="secondFormGroup">
+                            <ng-template matStepLabel>Tarih</ng-template>
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Giriş Tarihi</mat-label>
+                                            <input matInput [matDatepicker]="picker1" formControlName="girisTarihi">
+                                            <mat-hint>MM/DD/YYYY</mat-hint>
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Çıkış Tarihi</mat-label>
+                                            <input matInput [matDatepicker]="picker2" formControlName="cikisTarihi">
+                                            <mat-hint>MM/DD/YYYY</mat-hint>
+                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker2></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-10">
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Giriş Saati</mat-label>
+                                            <input matInput type="time" formControlName="girisSaati">
+                                            <mat-hint>HH:MM</mat-hint>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Çıkış Saati</mat-label>
+                                            <input matInput type="time" formControlName="cikisSaati">
+                                            <mat-hint>HH:MM</mat-hint>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-20">
+                                <div class="col-6 d-flex justify-content-start">
+                                    <button class="w-50 btn btn-primary" matStepperPrevious>Geri</button>
+                                </div>
+
+                                <div class="col-6 d-flex justify-content-end">
+                                    <button class="w-50 btn btn-primary" [disabled]="!isSecondFormValid" matStepperNext >İleri</button>
+                                </div>
+                                
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Özet</ng-template>
+                        <div class="container">
+                            <div class="row d-flex justify-content-center mt-10">
+                                <div class="col-8">
+                                    <div class="card card-custom" style="background-color: #f1f3f4;">
+                                        <div class="card-header ribbon ribbon-top ribbon-ver">
+                                            <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
+                                                OK!
+                                            </div>
+                                            <h3 class="card-title">
+                                                Talep Özeti
+                                            </h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        Ad :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.ad}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        Soyad :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.soyad}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        E-Mail :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.email}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        Firma :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.firma}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row"> 
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        Ziyaret Tipi :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.ziyaretTipi}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        Açıklama :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.aciklama}}
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
+                                                        Giriş Zamanı :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.girisTarihi}} - {{formsValues.girisSaati}}
+                                                    </div>
+                                                </div>
+                                            
+                                            
+                                                <div class="row">
+                                                    <div class="col-3 fw-bold fs-6 text-gray-600 ">
+                                                        Çıkış Zamanı :
+                                                    </div>
+                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
+                                                        {{formsValues.cikisTarihi}} - {{formsValues.cikisSaati}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-20">
+                            <div class="col-6 d-flex justify-content-start">
+                                <button class="w-50 btn btn-primary" matStepperPrevious>Back</button>
+                            </div>
+
+
+                            <div class="col-6 d-flex justify-content-end">
+                                <button class="w-50 btn btn-success">Gönder</button>
+                            </div>
+                        </div>
+                    </mat-step>
+                </mat-stepper>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content> -->
