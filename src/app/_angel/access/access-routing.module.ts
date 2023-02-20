@@ -6,6 +6,7 @@ import { TerminalComponent } from './terminal/terminal.component';
 import { GecisgruplariComponent } from './gecisgruplari/gecisgruplari.component';
 import { TanimlamalarComponent } from './tanimlamalar/tanimlamalar.component';
 import { RaporlarComponent } from './raporlar/raporlar.component';
+import { AccessDataWidgetComponent } from './access-data-widget/access-data-widget.component';
 
 
 const routes: Routes = [

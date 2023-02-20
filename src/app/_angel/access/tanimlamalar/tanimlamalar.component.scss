@@ -1,31 +1,235 @@
-.list-group-item-action:active {
-    color: white;
-    background-color: #009ef7;
+/* Page title */
+/* ---------------------------------------------------------- */
+.title-holder {
+    border-bottom: 2px solid #f2f2f2;
+    margin-bottom: 10px;
 }
 
-.list-group-item-action:hover, .list-group-item-action:focus {
-    z-index: 1;
-    color: #ffffff;
-    text-decoration: none;
-    background-color: #009ef7;
+.table-holder {
+    background-color: white;
+    padding: 15px;
+    padding-top: 5px;
+    border-radius: 5px;
+    margin-left: 45px;
+    margin-right: 45px;
 }
 
-.ma-elevation-z8 > table {
+.list-title {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: 0.5px;
+    margin: 5px;
+}
+
+/* ---------------------------------------------------------- */
+
+
+/* Table styles */
+/* ---------------------------------------------------------- */
+.mat-table {
     width: 100%;
-    overflow-y: scroll;
+    box-shadow: none;
 }
 
-tr.example-element-row:not(.example-expanded-row):hover {
-    background: whitesmoke;
-}
-  
-tr.example-element-row:not(.example-expanded-row):active {
-    background: #efefef;
+.float-right {
+    float: right;
 }
 
-.tableHeaderCellDiv { 
-    resize: horizontal;  
-    overflow:hidden;
-    font-weight: 900;
+/* ---------------------------------------------------------- */
 
+/* Header styles */
+/* ---------------------------------------------------------- */
+.mat-header-cell {
+    background-color: #311D3F;
+    color: white;
+}
+
+.mat-sort-header-arrow {
+    color: white;
+}
+
+.mat-header-cell:not(:first-child) {
+    padding-left: 0;
+}
+
+/* Style just the text in the header */
+.mat-header-cell span {
+    font-weight: 600;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.5px;
+}
+
+/* Round the top table corners */
+.mat-header-cell:first-child {
+    border-top-left-radius: 5px;
+}
+
+.mat-header-cell:last-child {
+    border-top-right-radius: 5px;
+}
+
+.mat-header-row {
+    height: 3em;
+}
+
+.btn-icon {
+    height: 17px;
+    width: 17px;
+    background-color: #e8e1e4;
+    border: none;
+}
+
+.sort-icon {
+    height: 17px;
+    width: 17px;
+    color: white;
+}
+
+::ng-deep .mat-sort-header-arrow {
+    position: relative;
+    left: -1.5rem;
+    display: none !important;
+    opacity: 0;
+}
+
+.header {
+    padding: 5px;
+}
+
+
+/* ---------------------------------------------------------- */
+
+
+/* Column styles */
+/* ---------------------------------------------------------- */
+.id-column {
+    width: 25%;
+    padding-right: 3rem;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.isim-column {
+    width: 25%;
+    padding-right: 3rem;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.duzenle-column {
+    width: 25%;
+    padding-right: 3rem;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+/* ---------------------------------------------------------- */
+
+/* Row styles */
+/* ---------------------------------------------------------- */
+.mat-row:nth-child(2n) {
+    background-color: #f2f2f2;
+}
+
+.mat-row:hover {
+    background-color: #cccaca;
+}
+
+/* ---------------------------------------------------------- */
+
+/* Cell styles */
+/* ---------------------------------------------------------- */
+.state-cell {
+    text-align: right;
+}
+
+.mat-cell {
+    border: none;
+}
+
+.green-svg {
+    fill: #6dd400;
+}
+
+.gray-svg {
+    fill: #b2b4b6;
+}
+
+/* ---------------------------------------------------------- */
+
+
+/* Paginator styles */
+/* ---------------------------------------------------------- */
+.mat-paginator {
+    font-size: 14px;
+    font-weight: 600;
+    color: #311D3F;
+}
+
+.mat-paginator .mat-paginator-range-label {
+    color: #e0e0e0;
+}
+
+.mat-paginator .mat-paginator-page-size {
+    background-color: #fafafa;
+    transition: all 0.3s ease-in-out;
+}
+
+.mat-paginator .mat-paginator-page-size:hover {
+    background-color: #c5cae9;
+}
+/* ---------------------------------------------------------- */
+
+/* Sort arrow styless */ 
+/* ---------------------------------------------------------- */
+// ::ng-deep .tableHeaderCellDiv .mat-sort-header-arrow {
+//     color: rgb(255, 255, 255);
+// }
+::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
+    color: white !important;
+}
+/* ---------------------------------------------------------- */
+
+
+/* Table Responsive Styles */
+/* ---------------------------------------------------------- */
+
+@media screen and (max-width: 960px) {
+    .mat-table {
+        width: 100%;
+    }
+    
+    table td p {
+        font-size: 8px;
+    }
+    
+    table th {
+        font-size: 11px;
+    }
+    
+}
+/* ---------------------------------------------------------- */
+
+
+
+
+.btn.btn-light-dark.active {
+    background-color: #311d3f !important;
+}
+
+
+.tanimlar-item {
+    .tanimlar-item-content {
+        border: 1px solid var(--surface-d);
+        border-radius: 3px;
+        margin: .3rem;
+        text-align: center;
+    }
+
+    .tanimlar-image {
+        width: 50%;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+    }
 }

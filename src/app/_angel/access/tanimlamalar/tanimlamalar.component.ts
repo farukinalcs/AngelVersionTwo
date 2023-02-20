@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class TanimlamalarComponent implements OnInit {
 
-  displayedColumns : string[] = ['id', 'isim', 'düzenle'];
+  displayedColumns : string[] = ['id', 'isim', 'duzenle'];
   dataSource :any
 
   tanimlar : any[] = [
@@ -29,13 +29,33 @@ export class TanimlamalarComponent implements OnInit {
     {id : 14, isim : "MEYER SECURITY"},
   ];
 
-  selectedItem : any;
+  selectedItem : any = this.tanimlar[0];
   
   formTest : FormGroup;
+  
+	responsiveOptions;
 
   constructor(
     private formBuilder : FormBuilder
-  ) { }
+  ) {
+    this.responsiveOptions = [
+      {
+          breakpoint: '1024px',
+          numVisible: 3,
+          numScroll: 3
+      },
+      {
+          breakpoint: '768px',
+          numVisible: 2,
+          numScroll: 2
+      },
+      {
+          breakpoint: '560px',
+          numVisible: 1,
+          numScroll: 1
+      }
+  ];
+   }
 
   ngOnInit(): void {
     this.setTableValue();
@@ -65,4 +85,7 @@ export class TanimlamalarComponent implements OnInit {
     console.log("TEST :", this.firma);
   }
 
+  onSelect(item : any): void {
+    this.selectedItem = item;
+  }
 }
