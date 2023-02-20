@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AccessdashboardComponent } from './accessdashboard/accessdashboard.component';
 import { RouterModule } from '@angular/router';
-import { SicillisteComponent } from './sicilliste/sicilliste.component';
 import { TerminalComponent } from './terminal/terminal.component';
 import { GecisgruplariComponent } from './gecisgruplari/gecisgruplari.component';
 import { TanimlamalarComponent } from './tanimlamalar/tanimlamalar.component';
@@ -40,7 +39,6 @@ import { ButtonModule } from 'primeng/button';
 @NgModule({
   declarations: [
     AccessdashboardComponent,
-    SicillisteComponent,
     TerminalComponent,
     GecisgruplariComponent,
     TanimlamalarComponent,
@@ -80,11 +78,6 @@ import { ButtonModule } from 'primeng/button';
     MatDialogModule,
     MatListModule,
     ReactiveFormsModule,
-    NgbModule,
-    NgbCarouselModule,
-    CarouselModule,
-    ButtonModule
-
 
   ]
 })

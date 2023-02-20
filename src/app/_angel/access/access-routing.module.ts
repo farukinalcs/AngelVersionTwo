@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes,RouterModule } from '@angular/router';
 import { AccessdashboardComponent } from './accessdashboard/accessdashboard.component';
-import { SicillisteComponent } from './sicilliste/sicilliste.component';
 import { TerminalComponent } from './terminal/terminal.component';
 import { GecisgruplariComponent } from './gecisgruplari/gecisgruplari.component';
 import { TanimlamalarComponent } from './tanimlamalar/tanimlamalar.component';
@@ -38,14 +37,6 @@ const routes: Routes = [
     //   { path: '', redirectTo: '', pathMatch: 'full' },
     //   { path: '**', redirectTo: '', pathMatch: 'full' },
     // ],
-  },
-  {
-    path: 'genel_bakis',
-    component: AccessDataWidgetComponent,
-  },
-  {
-    path: 'sicil_liste',
-    component: SicillisteComponent,
   },
   {
     path: 'terminal',
