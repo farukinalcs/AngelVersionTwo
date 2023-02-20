@@ -3,11 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { PuantajRoutingModule } from './puantaj-routing.module';
 import { PuantajdashboardComponent } from './puantajdashboard/puantajdashboard.component';
+import { PdksComponent } from './pdks/pdks.component';
+import { PuantajListesiComponent } from './puantaj-listesi/puantaj-listesi.component';
 
 
 @NgModule({
   declarations: [
-    PuantajdashboardComponent
+    PuantajdashboardComponent,
+    PdksComponent,
+    PuantajListesiComponent
   ],
   imports: [
     CommonModule,
