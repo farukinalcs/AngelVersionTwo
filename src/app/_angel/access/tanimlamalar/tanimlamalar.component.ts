@@ -32,7 +32,6 @@ export class TanimlamalarComponent implements OnInit {
   selectedItem : any = this.tanimlar[0];
   
   formTest : FormGroup;
-  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   
 	responsiveOptions;
 
