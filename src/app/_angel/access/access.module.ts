@@ -33,8 +33,9 @@ import { DialogWidget1001Component } from './access-data-widget/widget1001/dialo
 import { FullScreenDivComponent } from '../shared/full-screen-div/full-screen-div.component';
 import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule } from '@angular/forms';
-
-
+import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CarouselModule } from 'primeng/carousel';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     NgApexchartsModule,
     MatDialogModule,
     MatListModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule,
+    NgbCarouselModule,
+    CarouselModule,
+    ButtonModule
 
 
   ]
