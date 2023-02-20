@@ -78,6 +78,10 @@ import { ButtonModule } from 'primeng/button';
     MatDialogModule,
     MatListModule,
     ReactiveFormsModule,
+    CarouselModule,
+    ButtonModule,
+    NgbCarouselModule,
+    NgbModule
 
   ]
 })
