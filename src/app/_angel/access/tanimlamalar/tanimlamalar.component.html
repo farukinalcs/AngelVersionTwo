@@ -6,7 +6,7 @@
             <div class="card card-custom gutter-b">
                 <div class="card-body ">
                     
-                    <p-carousel [value]="tanimlar" [numVisible]="6" [numScroll]="3" [circular]="false"
+                    <p-carousel [value]="tanimlar" [numVisible]="6" [numScroll]="3" [circular]="true" [autoplayInterval]="3000" 
                         [responsiveOptions]="responsiveOptions">
                         <ng-template let-item pTemplate="item">
                             <div class="tanimlar-item">
@@ -34,7 +34,7 @@
                                                     </svg>
                                                 </span>
                                             </span>
-                                            <span class=" font-size-lg py-2 font-weight-bold text-center">
+                                            <span class=" font-size-lg py-2 font-weight-bold text-center" style="font-size: 13px;">
                                                 {{item.isim}}
                                             </span>
                                         </button>
@@ -57,7 +57,7 @@
                     <div class="row mb-5">
                         <div class="col-8">
                             <label class="form-label fs-6 fw-bolder text-dark">{{selectedItem.isim}} ekle</label>
-                            <input class="form-control bg-transparent" type="number" name="parmakIziSayisi" autocomplete="off"/>
+                            <input class="form-control bg-transparent" type="text" autocomplete="off"/>
                         </div>
                         
                         <div class="col-4 d-flex justify-content-center mt-8">
@@ -139,7 +139,93 @@
             <ng-container *ngIf="selectedItem.isim === 'Mail Servis' ">
                 
                 <div class="container card" style="padding: 30px;">
-                    <div class="row mb-5">
+
+                    <div class="row mb-6">
+                        <label class="col-lg-2 col-form-label fw-bold fs-6"><span class="required">SMTP Mail Sunucu</span></label>
+                        <div class="col-lg-4 fv-row">
+                          <input type="text" class="form-control form-control-lg form-control-solid" placeholder="SMTP Mail Sunucu"/>
+                        </div>
+
+                        <label class="col-lg-2 col-form-label required fw-bold fs-6">SMTP Port</label>
+                        <div class="col-lg-4 fv-row">
+                            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="SMTP Port"/>
+                        </div>
+                    </div>
+
+                    <div class="row mb-6">
+                        <label class="col-lg-2 col-form-label required fw-bold fs-6">POP Mail Sunucu</label>
+                        <div class="col-lg-4 fv-row">
+                            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="POP Mail Sunucu"/>
+                        </div>
+
+                        <label class="col-lg-2 col-form-label required fw-bold fs-6">POP Port</label>
+                        <div class="col-lg-4 fv-row">
+                            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="POP Port"/>
+                        </div>
+                    </div>
+
+                    <div class="row mb-6">
+                        <label class="col-lg-2 col-form-label required fw-bold fs-6">Etki Alanı</label>
+                        <div class="col-lg-4 fv-row">
+                            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Etki Alanı"/>
+                        </div>
+
+                        <label class="col-lg-2 col-form-label required fw-bold fs-6">From Mail Adresi</label>
+                        <div class="col-lg-4 fv-row">
+                            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="From Mail Adresi"/>
+                        </div>
+                    </div>
+
+                    <div class="row mb-6">
+                        <label class="col-lg-2 col-form-label required fw-bold fs-6">Kullanıcı Adı</label>
+                        <div class="col-lg-4 fv-row">
+                            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Kullanıcı Adı"/>
+                        </div>
+
+                        <label class="col-lg-2 col-form-label required fw-bold fs-6">Şifre</label>
+                        <div class="col-lg-4 fv-row">
+                            <input type="password" class="form-control form-control-lg form-control-solid" placeholder="Şifre"/>
+                        </div>
+                    </div>
+
+                    <div class="row mb-6">
+                        <div class="col-lg-8 fv-row">
+                            <div class="d-flex align-items-center mt-3">
+                                <label class="form-check form-check-inline form-check-solid me-5">
+                                    <input class="form-check-input" type="checkbox" />
+                                    <span class="fw-bold ps-2 fs-6">Aktif</span>
+                                </label>
+                                <label class="form-check form-check-inline form-check-solid">
+                                <input class="form-check-input" type="checkbox" />
+                                    <span class="fw-bold ps-2 fs-6">SSL Kullan</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4 mb-4">
+                            <button class="btn btn-success w-100" (click)="getFormValue()">
+                                Test Mail Gönder
+                            </button>
+                        </div>
+
+                        <div class="col-4 mb-4">
+                            <button class="btn btn-success w-100" (click)="getFormValue()">
+                                Test Mail Geçmişi
+                            </button>
+                        </div>
+
+                        <div class="col-4 mb-4">
+                            <button class="btn btn-success w-100" (click)="getFormValue()">
+                                Kaydet
+                            </button>
+                        </div>
+                    </div>
+
+
+
+                    <!-- <div class="row mb-5">
                         <div class="col-8 mb-4">
                             <label class="form-label fs-6 fw-bolder text-dark">SMTP Mail Sunucu</label>
                             <input class="form-control bg-transparent" type="text" autocomplete="off"/>
@@ -180,14 +266,19 @@
                             <input class="form-control bg-transparent" type="text" autocomplete="off"/>
                         </div>
 
-                        <div class="col-4 mb-4">
-                            <label class="form-label fs-6 fw-bolder text-dark">Aktif</label>
-                            <input class="form-control bg-transparent" type="checkbox" autocomplete="off"/>
-                        </div>
-
-                        <div class="col-4 mb-4">
-                            <label class="form-label fs-6 fw-bolder text-dark">SSL Kullan</label>
-                            <input class="form-control bg-transparent" type="checkbox" autocomplete="off"/>
+                        <div class="row mb-6">
+                            <div class="col-lg-8 fv-row">
+                                <div class="d-flex align-items-center mt-3">
+                                    <label class="form-check form-check-inline form-check-solid me-5">
+                                        <input class="form-check-input" type="checkbox" />
+                                        <span class="fw-bold ps-2 fs-6">Aktif</span>
+                                    </label>
+                                    <label class="form-check form-check-inline form-check-solid">
+                                    <input class="form-check-input" type="checkbox" />
+                                        <span class="fw-bold ps-2 fs-6">SSL Kullan</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-4 mb-4">
@@ -207,7 +298,7 @@
                                 Kaydet
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
         
             </ng-container>
