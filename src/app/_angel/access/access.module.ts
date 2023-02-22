@@ -32,8 +32,11 @@ import { DialogWidget1001Component } from './access-data-widget/widget1001/dialo
 import { FullScreenDivComponent } from '../shared/full-screen-div/full-screen-div.component';
 import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule } from '@angular/forms';
-
-
+import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CarouselModule } from 'primeng/carousel';
+import { ButtonModule } from 'primeng/button';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { SidebarModule } from 'primeng/sidebar';
 
 @NgModule({
   declarations: [
@@ -77,8 +80,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDialogModule,
     MatListModule,
     ReactiveFormsModule,
-    
-
+    CarouselModule,
+    ButtonModule,
+    NgbCarouselModule,
+    NgbModule,
+    ScrollPanelModule,
+    SidebarModule
 
   ]
 })

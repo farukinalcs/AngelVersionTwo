@@ -24,6 +24,11 @@ export class AccessDataWidgetComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.dashboardHeaderOptions();
+    this.dashboardBodyOptions();
+  }
+
+  dashboardHeaderOptions() {
     this.options1 = {
       displayGrid: DisplayGrid.OnDragAndResize,
       gridType: GridType.Fixed,
@@ -66,7 +71,9 @@ export class AccessDataWidgetComponent implements OnInit {
       { cols: 26, rows: 5, y: 6, x: 27 ,type: 'Alarm Sayısı' }, 
       { cols: 26, rows: 5, y: 6, x: 53 ,type: 'Mesaisi Bitip Çıkmayan Personel Sayısı'},
     ];
+  }
 
+  dashboardBodyOptions() {
     this.options2 = {
       displayGrid: DisplayGrid.OnDragAndResize,
       gridType: GridType.Fixed,

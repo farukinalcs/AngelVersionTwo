@@ -8,7 +8,9 @@
 @import "./core/vendors/plugins/prismjs";
 @import "./core/vendors/plugins/formvalidation";
 
+// Components
 @import 
     "core/components/timeline-4",
     "core/components/ribbon",
-    "../sass/core/components/wave"
+    "../sass/core/components/wave",
+    "./core/components/label"

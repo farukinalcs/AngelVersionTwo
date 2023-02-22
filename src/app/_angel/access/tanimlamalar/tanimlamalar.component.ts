@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class TanimlamalarComponent implements OnInit {
 
-  displayedColumns : string[] = ['id', 'isim', 'düzenle'];
+  displayedColumns : string[] = ['id', 'isim', 'duzenle'];
   dataSource :any
 
   tanimlar : any[] = [
@@ -21,6 +21,19 @@ export class TanimlamalarComponent implements OnInit {
     {id : 6, isim : "Bölüm"},
     {id : 7, isim : "Parmak İzi"},
     {id : 8, isim : "Time Zone"},
+    {id : 9, isim : "Alt Firma"},
+    {id : 10, isim : "Direktörlük"},
+    {id : 11, isim : "Terminal Grupları"},
+    {id : 12, isim : "Belge Tipi"},
+    {id : 13, isim : "Puantaj"},
+    {id : 14, isim : "FTP Bilgileri"},
+    {id : 15, isim : "Ayrılış Nedeni"},
+    {id : 16, isim : "Güvenlik"},
+    {id : 17, isim : "Olay Kodları"},
+    {id : 18, isim : "Yazıcılar"},
+    {id : 19, isim : "Led Panolar"},
+    {id : 20, isim : "Yetki Rolleri"},
+    {id : 21, isim : "Ben Sayfası"}
   ];
   firma : any[] = [
     {id : 11, isim : "MEYER GROUP"},
@@ -29,13 +42,33 @@ export class TanimlamalarComponent implements OnInit {
     {id : 14, isim : "MEYER SECURITY"},
   ];
 
-  selectedItem : any;
+  selectedItem : any = this.tanimlar[0];
   
   formTest : FormGroup;
+  
+	responsiveOptions;
 
   constructor(
     private formBuilder : FormBuilder
-  ) { }
+  ) {
+    this.responsiveOptions = [
+      {
+          breakpoint: '1024px',
+          numVisible: 3,
+          numScroll: 3
+      },
+      {
+          breakpoint: '768px',
+          numVisible: 2,
+          numScroll: 2
+      },
+      {
+          breakpoint: '560px',
+          numVisible: 1,
+          numScroll: 1
+      }
+  ];
+   }
 
   ngOnInit(): void {
     this.setTableValue();
@@ -65,4 +98,7 @@ export class TanimlamalarComponent implements OnInit {
     console.log("TEST :", this.firma);
   }
 
+  onSelect(item : any): void {
+    this.selectedItem = item;
+  }
 }
