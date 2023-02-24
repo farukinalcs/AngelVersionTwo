@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FullScreenDivComponent } from './full-screen-div/full-screen-div.component';
 import { SicilListeComponent } from './sicil-liste/sicil-liste.component';
 import { SicilComponent } from './sicil/sicil.component';
+import { DialogContainerComponent } from './dialog-container/dialog-container.component';
 
 
 
@@ -10,7 +11,8 @@ import { SicilComponent } from './sicil/sicil.component';
   declarations: [
     FullScreenDivComponent,
     SicilListeComponent,
-    SicilComponent
+    SicilComponent,
+    DialogContainerComponent
   ],
   imports: [
     CommonModule

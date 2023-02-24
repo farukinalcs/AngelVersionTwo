@@ -105,16 +105,19 @@
         <gridster-item #fullScreen [item]="item" class="gridsterfit overflow-auto" *ngFor="let item of dashboard2" >
                 <div id="gridsterItem">
                     <div class="row" style="width: 98%; margin-left: 6px;">
-                        <div class="col-3 d-flex justify-content-start align-items-center">
+                        <div class="col-5 d-flex justify-content-start align-items-center">
                             <h6 class="card-label text-hover-dark mt-2 font-weight-bolder text-light">{{item.type}}</h6>
                         </div>
                         
-                        <div class="col-9 d-flex justify-content-end align-items-center removeIcon2">
+                        <div class="col-7 d-flex justify-content-end align-items-center removeIcon2">
                             <a class="ml-4 text-hover-dark ">
                                 <i class="fa fa-hand text-light"></i>
                             </a>
 
-                            <app-full-screen-div [div]="this.divRef"></app-full-screen-div>
+                            <!-- <a class="ml-4 text-hover-dark " (click)="toggleSize()">
+                                <i class="fa fa-home text-light"></i>
+                            </a> -->
+                            <app-full-screen-div [div]="item"></app-full-screen-div>
                             
                             <a  (mousedown)="removeItem2($event, item)"
                                 (touchstart)="removeItem2($event, item)"

@@ -1,17 +1,28 @@
-<div class="container" style="height: 500px;">
-  <div class="row">
-    <div class="col-12">
-      <mat-tab-group mat-stretch-tabs="false">
+<div class="container">
+  <div class="card p-5">
 
-        <mat-tab label="Onayınızı Bekleyen Form Sayısı : {{onayBeklenenForm}}">
-          <div class="row mt-5">
+    <mat-tab-group mat-stretch-tabs="false">
 
-            <mat-card>
-              <mat-card-content>
+      <mat-tab label="Onayınızı Bekleyen Form Sayısı : {{onayBeklenenForm}}">
+        <div class="row mt-5 d-flex justify-content-center">
+
+          <div class="col-7">
+            <div class="input-group" style="height: 43.64px;">
+              <input class="input-group form-control form-control-sm" type="text" placeholder="Search..">
+            </div>
+          </div>
+
+          <div class="col-3">
+            <button class="btn btn-primary btn-shadow-hover font-weight-bold mr-2" (click)="op.toggle($event)">
+              Detaylı Arama
+              <i class="fa fa-search" style="font-size:20px"></i>
+            </button>
+            <p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '550px'}" [showTransitionOptions]="'200ms'" [hideTransitionOptions]="'200ms'" [dismissable]="false">
+              <ng-template pTemplate>
                 <div class="row">
                   <div class="col-12">
                     <div class="row">
-                      <div class="col-lg-3 col-md-3 border-end border-bottom">
+                      <div class="col-lg-4 col-md-3 border-end border-bottom">
                         <form class="p-4">
                           <div class="mb-3">
                             <label for="exampleDropdownFormEmail2" class="form-label">Ad</label>
@@ -19,32 +30,36 @@
                           </div>
                           <div class="mb-3">
                             <label for="exampleDropdownFormPassword2" class="form-label">Soyad</label>
-                            <input type="text" class="form-control form-control-sm" id="exampleDropdownFormPassword2" placeholder="Soyad">
+                            <input type="text" class="form-control form-control-sm"
+                              id="exampleDropdownFormPassword2" placeholder="Soyad">
                           </div>
                         </form>
                       </div>
 
-                      <div class="col-lg-3 col-md-3 border-end border-bottom">
+                      <!-- <div class="col-lg-3 col-md-3 border-end border-bottom">
                         <form class="p-4">
                           <div class="mb-3">
                             <label for="exampleDropdownFormEmail2" class="form-label">Sicil No</label>
-                            <input type="number" class="form-control form-control-sm" id="exampleDropdownFormEmail2" placeholder="Ad">
+                            <input type="number" class="form-control form-control-sm" id="exampleDropdownFormEmail2"
+                              placeholder="Ad">
                           </div>
                           <div class="mb-3">
                             <label for="exampleDropdownFormPassword2" class="form-label">Personel No</label>
-                            <input type="number" class="form-control form-control-sm" id="exampleDropdownFormPassword2" placeholder="Soyad">
+                            <input type="number" class="form-control form-control-sm"
+                              id="exampleDropdownFormPassword2" placeholder="Soyad">
                           </div>
                         </form>
-                      </div>
+                      </div> -->
 
-                      <div class="col-lg-3 col-md-3 border-end border-bottom">
+                      <div class="col-lg-4 col-md-3 border-end border-bottom">
                         <form class="p-4">
                           <div class="mb-3">
                             <label for="exampleDropdownFormEmail2" class="form-label">Belge Türü</label>
-                            <input type="text" class="form-control form-control-sm" id="exampleDropdownFormEmail2" placeholder="Ad">
+                            <input type="text" class="form-control form-control-sm" id="exampleDropdownFormEmail2"
+                              placeholder="Ad">
                           </div>
                           <div class="mb-3">
-                            <label  class="form-label">Direktörlük</label>
+                            <label class="form-label">Direktörlük</label>
                             <select class="form-select form-select-sm" aria-label=".form-select-sm example">
                               <option selected>Direktörlük 1</option>
                               <option value="1">One</option>
@@ -52,14 +67,14 @@
                               <option value="3">Three</option>
                             </select>
                           </div>
-                          
+
                         </form>
                       </div>
 
-                      <div class="col-lg-3 col-md-3 border-end border-bottom">
+                      <!-- <div class="col-lg-3 col-md-3 border-end border-bottom">
                         <form class="p-4">
                           <div class="mb-3">
-                            <label  class="form-label">Firma</label>
+                            <label class="form-label">Firma</label>
                             <select class="form-select form-select-sm" aria-label=".form-select-sm example">
                               <option selected>Firma 1</option>
                               <option value="1">One</option>
@@ -69,7 +84,298 @@
                           </div>
                           <div class="mb-3">
                             <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                              <label  class="form-label">Bölüm</label>
+                              <label class="form-label">Bölüm</label>
+                              <option selected>Bölüm 1</option>
+                              <option value="1">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                          </div>
+                        </form>
+                      </div> -->
+                      <div class="col-lg-4 border-bottom col-md-3">
+                        <form class="p-4">
+                          <div class="mb-3">
+                            <label class="form-label">Pozisyon</label>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                              <option selected>Pozisyon 1</option>
+                              <option value="1">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Görev</label>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                              <option selected>Görev 1</option>
+                              <option value="1">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      
+
+                      <div class="col-lg-4 col-md-3 border-end ">
+                        <form class="p-4">
+                          <div class="mb-3">
+                            <label class="form-label">Alt Firma</label>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                              <option selected>Alt Firma 1</option>
+                              <option value="1">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Yaka</label>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                              <option selected>Yaka 1</option>
+                              <option value="1">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                          </div>
+                        </form>
+                      </div>
+
+                      <div class="col-lg-4 col-md-3 border-end ">
+                        <form class="p-4">
+                          <div class="mb-3">
+                            <label for="exampleDropdownFormPassword2" class="form-label">Talep Tarihi</label>
+                            <input type="text" class="form-control form-control-sm"
+                              id="exampleDropdownFormPassword2" placeholder="Soyad">
+                          </div>
+                          <div class="mb-3">
+                            <label for="exampleDropdownFormPassword2" class="form-label">Talep Tarihi</label>
+                            <input type="text" class="form-control form-control-sm"
+                              id="exampleDropdownFormPassword2" placeholder="Soyad">
+                          </div>
+                        </form>
+                      </div>
+
+                      <div class="col-lg-4 col-md-3  d-flex justify-content-center align-items-center">
+                        
+                        <button class="btn btn-sm btn-primary w-100" (click)="op.hide()">Filtrele
+                          <i class="fa-solid fa-filter" style="font-size:20px"></i>
+                        </button>
+                      </div>
+                    </div>
+
+
+
+
+                  </div>
+                </div>
+              </ng-template>
+            </p-overlayPanel>
+          </div>
+
+        </div>
+
+        <div class="row d-flex justify-content-start mt-5">
+
+          <div class="col-2 d-flex justify-content-center align-items-center card">
+            <mat-checkbox class="example-margin" [checked]="allComplete" [indeterminate]="someComplete()"
+              (change)="setAll($event.checked)">
+              {{checkboxText}}
+            </mat-checkbox>
+          </div>
+
+          <div class="col-10 btn-group-sm d-flex justify-content-end align-items-center">
+            <button type="button" class="btn btn-success m-4" (click)="postSelected()">Seçilenleri Onayla</button>
+            <button type="button" class="btn btn-danger">Seçilenleri Reddet</button>
+          </div>
+
+        </div>
+
+        <div class="row mt-5 p-1">
+          <div class="col-4 mb-9" *ngFor="let item of onayBeklenenFormlar.subtasks">
+            <mat-accordion>
+              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header #panelA>
+                  <mat-panel-title>
+
+                    <section class="example-section m-6 mt-9">
+                      <p>
+                        <mat-checkbox [(ngModel)]="item.completed" (ngModelChange)="updateAllComplete()"
+                          (click)="panelA._toggle()">
+                        </mat-checkbox>
+                      </p>
+                    </section>
+
+                    <div class="ml-4">
+                      {{item.talepTipi}}
+                    </div>
+
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    {{item.name}}
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div class="">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-12 d-flex justify-content-center">
+                      <img width="150px" src="./assets/media/avatars/300-7.jpg" alt="Metronic" />
+                    </div>
+                    <div class="col-12 d-flex justify-content-center mt-4">
+                      <h3>{{item.name}}</h3>
+                    </div>
+                  </div>
+                  <div class="row card-body">
+                    <div class="col-12 text-center">
+                      <h5>Nedeni</h5>
+                      <span>{{item.neden}}</span>
+                    </div>
+
+                    <div class="col-12 mt-6 text-center">
+                      <h5>Başlangıç</h5>
+                      <span>{{item.baslangicTarih}}</span>
+                    </div>
+
+                    <div class="col-12 mt-6 text-center">
+                      <h5>Bitiş/İş Başı</h5>
+                      <span>{{item.bitisTarih}}</span>
+                    </div>
+
+                    <div class="col-12 mt-6 text-center">
+                      <h5>Açıklama</h5>
+                      <span>{{item.aciklama}}</span>
+                    </div>
+
+                    <div class="col-12 text-center">
+                      <div class="row mt-8">
+                        <div class="col-3">
+                          <button class="btn btn-icon btn-light-success btn-circle">
+                            <i class="fa-solid fa-check"></i>
+                          </button>
+                          <h6>Onay</h6>
+                        </div>
+
+                        <div class="col-3">
+                          <button class="btn btn-icon btn-light-danger btn-circle">
+                            <i class="fa-solid fa-xmark"></i>
+                          </button>
+                          <h6>Red</h6>
+                        </div>
+
+                        <div class="col-3">
+                          <button class="btn btn-icon btn-light-info btn-circle">
+                            <i class="fa-solid fa-question"></i>
+                          </button>
+                          <h6>Süreç</h6>
+                        </div>
+
+                        <div class="col-3">
+                          <button class="btn btn-icon btn-light-primary btn-circle">
+                            <i class="fa-solid fa-print"></i>
+                          </button>
+                          <h6>Form</h6>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-12"></div>
+                    <div class="col-12"></div>
+                  </div>
+                </div>
+
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Onaylananlar">
+        <div class="row mt-5">
+          <div class="col-1"></div>
+
+          <div class="col-7">
+            <div class="input-group" style="height: 43.64px;">
+              <input class="input-group form-control form-control-sm" type="text" placeholder="Search..">
+            </div>
+          </div>
+
+          <div class="col-3">
+            <button class="btn btn-primary btn-shadow-hover font-weight-bold mr-2" (click)="op.toggle($event)">
+              Detaylı Arama
+              <i class="fa fa-search" style="font-size:20px"></i>
+            </button>
+            <p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '550px'}">
+              <ng-template pTemplate>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-lg-3 col-md-3 border-end border-bottom">
+                        <form class="p-4">
+                          <div class="mb-3">
+                            <label for="exampleDropdownFormEmail2" class="form-label">Ad</label>
+                            <input type="text" class="form-control form-control-sm" id="exampleDropdownFormEmail2"
+                              placeholder="Ad">
+                          </div>
+                          <div class="mb-3">
+                            <label for="exampleDropdownFormPassword2" class="form-label">Soyad</label>
+                            <input type="text" class="form-control form-control-sm"
+                              id="exampleDropdownFormPassword2" placeholder="Soyad">
+                          </div>
+                        </form>
+                      </div>
+
+                      <div class="col-lg-3 col-md-3 border-end border-bottom">
+                        <form class="p-4">
+                          <div class="mb-3">
+                            <label for="exampleDropdownFormEmail2" class="form-label">Sicil No</label>
+                            <input type="number" class="form-control form-control-sm" id="exampleDropdownFormEmail2"
+                              placeholder="Ad">
+                          </div>
+                          <div class="mb-3">
+                            <label for="exampleDropdownFormPassword2" class="form-label">Personel No</label>
+                            <input type="number" class="form-control form-control-sm"
+                              id="exampleDropdownFormPassword2" placeholder="Soyad">
+                          </div>
+                        </form>
+                      </div>
+
+                      <div class="col-lg-3 col-md-3 border-end border-bottom">
+                        <form class="p-4">
+                          <div class="mb-3">
+                            <label for="exampleDropdownFormEmail2" class="form-label">Belge Türü</label>
+                            <input type="text" class="form-control form-control-sm" id="exampleDropdownFormEmail2"
+                              placeholder="Ad">
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Direktörlük</label>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                              <option selected>Direktörlük 1</option>
+                              <option value="1">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                          </div>
+
+                        </form>
+                      </div>
+
+                      <div class="col-lg-3 col-md-3 border-end border-bottom">
+                        <form class="p-4">
+                          <div class="mb-3">
+                            <label class="form-label">Firma</label>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                              <option selected>Firma 1</option>
+                              <option value="1">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                          </div>
+                          <div class="mb-3">
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                              <label class="form-label">Bölüm</label>
                               <option selected>Bölüm 1</option>
                               <option value="1">One</option>
                               <option value="2">Two</option>
@@ -84,7 +390,7 @@
                       <div class="col-lg-3 col-md-3 border-end border-bottom">
                         <form class="p-4">
                           <div class="mb-3">
-                            <label  class="form-label">Pozisyon</label>
+                            <label class="form-label">Pozisyon</label>
                             <select class="form-select form-select-sm" aria-label=".form-select-sm example">
                               <option selected>Pozisyon 1</option>
                               <option value="1">One</option>
@@ -93,7 +399,7 @@
                             </select>
                           </div>
                           <div class="mb-3">
-                            <label  class="form-label">Görev</label>
+                            <label class="form-label">Görev</label>
                             <select class="form-select form-select-sm" aria-label=".form-select-sm example">
                               <option selected>Görev 1</option>
                               <option value="1">One</option>
@@ -107,7 +413,7 @@
                       <div class="col-lg-3 col-md-3 border-end border-bottom">
                         <form class="p-4">
                           <div class="mb-3">
-                            <label  class="form-label">Alt Firma</label>
+                            <label class="form-label">Alt Firma</label>
                             <select class="form-select form-select-sm" aria-label=".form-select-sm example">
                               <option selected>Alt Firma 1</option>
                               <option value="1">One</option>
@@ -116,7 +422,7 @@
                             </select>
                           </div>
                           <div class="mb-3">
-                            <label  class="form-label">Yaka</label>
+                            <label class="form-label">Yaka</label>
                             <select class="form-select form-select-sm" aria-label=".form-select-sm example">
                               <option selected>Yaka 1</option>
                               <option value="1">One</option>
@@ -131,397 +437,262 @@
                         <form class="p-4">
                           <div class="mb-3">
                             <label for="exampleDropdownFormPassword2" class="form-label">Talep Tarihi</label>
-                            <input type="text" class="form-control form-control-sm" id="exampleDropdownFormPassword2" placeholder="Soyad">
+                            <input type="text" class="form-control form-control-sm"
+                              id="exampleDropdownFormPassword2" placeholder="Soyad">
                           </div>
                           <div class="mb-3">
                             <label for="exampleDropdownFormPassword2" class="form-label">Talep Tarihi</label>
-                            <input type="text" class="form-control form-control-sm" id="exampleDropdownFormPassword2" placeholder="Soyad">
+                            <input type="text" class="form-control form-control-sm"
+                              id="exampleDropdownFormPassword2" placeholder="Soyad">
                           </div>
                         </form>
                       </div>
 
-                      <div class="col-lg-3 col-md-3 border-end border-bottom d-flex justify-content-center align-items-center">
+                      <div
+                        class="col-lg-3 col-md-3 border-end border-bottom d-flex justify-content-center align-items-center">
 
-                        
 
-                        <button class="btn btn-primary w-50">Filtrele
+
+                        <button class="btn btn-sm btn-primary w-100">Filtrele
                           <i class="fa-solid fa-filter" style="font-size:20px"></i>
                         </button>
                       </div>
                     </div>
-                    
-                    
-                    
-                    
+
+
+
+
                   </div>
                 </div>
-                
-              </mat-card-content>
-            </mat-card>
-            
+              </ng-template>
+            </p-overlayPanel>
           </div>
 
-          <div class="row d-flex justify-content-start mt-5">
-            
-            <div class="col-2 d-flex justify-content-center align-items-center card">
-              <mat-checkbox
-                class="example-margin"
-                [checked]="allComplete"
-                [indeterminate]="someComplete()"
-                (change)="setAll($event.checked)">
-                {{checkboxText}}
-              </mat-checkbox>
-            </div>
-            
-            <div class="col-10 btn-group-sm d-flex justify-content-end align-items-center">
-                <button type="button" class="btn btn-success m-4" (click)="postSelected()">Seçilenleri Onayla</button>
-                <button type="button" class="btn btn-danger">Seçilenleri Reddet</button>
-            </div>
+          <div class="col-1"></div>
+        </div>
 
+        <div class="row d-flex justify-content-start">
+          <div class="col-6 mt-5">
+            <mat-chip-list aria-label="selection">
+              <!-- <mat-chip color="primary" (click)="selectAll()">Listelenenleri Seç</mat-chip> -->
+              <!-- <mat-chip color="primary" (click)="deselectAll()">Listedeki Seçimleri Kaldır</mat-chip> -->
+            </mat-chip-list>
           </div>
+        </div>
 
-          <div class="row mt-5">
-            <div class="col-4 mb-9" *ngFor="let item of onayBeklenenFormlar.subtasks">
-              <mat-accordion>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                  <mat-expansion-panel-header #panelA>
-                    <mat-panel-title>
+        <div class="row mt-5">
+          <div class="col-4 mb-9" *ngFor="let item of onaylananFormlar">
+            <mat-accordion>
+              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header #panelB>
+                  <mat-panel-title>
 
-                      <section class="example-section m-6 mt-9">
-                        <p>
-                          <mat-checkbox
-                            [(ngModel)]="item.completed"
-                            (ngModelChange)="updateAllComplete()"
-                            (click)="panelA._toggle()">
-                          </mat-checkbox>
-                        </p>
-                      </section>
+                    <section class="example-section m-6 mt-9">
+                      <p><mat-checkbox [ngModel]="isChecked" (click)="panelB._toggle()"></mat-checkbox>
+                      </p>
+                    </section>
 
-                      <div class="ml-4">
-                        {{item.talepTipi}}
-                      </div>
-
-                    </mat-panel-title>
-                    <mat-panel-description>
-                      {{item.name}}
-                    </mat-panel-description>
-                  </mat-expansion-panel-header>
-
-                  <div class="card card-custom">
-                    <div class="row card-header card-header-center d-flex justify-content-center">
-                      <div class="col-12 d-flex justify-content-center">
-                        <img width="150px" src="./assets/media/avatars/300-7.jpg" alt="Metronic" />
-                      </div>
-                      <div class="col-12 d-flex justify-content-center mt-4">
-                        <h3>{{item.name}}</h3>
-                      </div>
+                    <div class="ml-4">
+                      {{item.talepTipi}}
                     </div>
-                    <div class="row card-body">
-                      <div class="col-12 text-center">
-                        <h5>Nedeni</h5>
-                        <span>{{item.neden}}</span>
-                      </div>
 
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Başlangıç</h5>
-                        <span>{{item.baslangicTarih}}</span>
-                      </div>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    {{item.name}}
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
 
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Bitiş/İş Başı</h5>
-                        <span>{{item.bitisTarih}}</span>
-                      </div>
-
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Açıklama</h5>
-                        <span>{{item.aciklama}}</span>
-                      </div>
-
-                      <div class="col-12 text-center">
-                        <div class="row mt-8">
-                          <div class="col-3">
-                            <button class="btn btn-icon btn-light-success btn-circle">
-                              <i class="fa-solid fa-check"></i>
-                            </button>
-                            <h6>Onay</h6>
-                          </div>
-
-                          <div class="col-3">
-                            <button class="btn btn-icon btn-light-danger btn-circle">
-                              <i class="fa-solid fa-xmark"></i>
-                            </button>
-                            <h6>Red</h6>
-                          </div>
-
-                          <div class="col-3">
-                            <button class="btn btn-icon btn-light-info btn-circle">
-                              <i class="fa-solid fa-question"></i>
-                            </button>
-                            <h6>Süreç</h6>
-                          </div>
-
-                          <div class="col-3">
-                            <button class="btn btn-icon btn-light-primary btn-circle">
-                              <i class="fa-solid fa-print"></i>
-                            </button>
-                            <h6>Form</h6>
-                          </div>
-                        </div>
-                      </div>
-
-
-                      <div class="col-12"></div>
-                      <div class="col-12"></div>
+                <div class="">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-12 d-flex justify-content-center">
+                      <img width="150px" src="./assets/media/avatars/300-7.jpg" alt="Metronic" />
+                    </div>
+                    <div class="col-12 d-flex justify-content-center mt-4">
+                      <h3>{{item.name}}</h3>
                     </div>
                   </div>
-
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
-          </div>
-        </mat-tab>
-
-        <mat-tab label="Onaylananlar">
-          <div class="row mt-5">
-            <div class="col-1"></div>
-
-            <div class="col-7">
-              <div class="input-group" style="height: 43.64px;">
-                <input class="input-group form-control form-control-sm" type="text" placeholder="Search..">
-              </div>
-            </div>
-
-            <div class="col-3">
-              <button class="btn btn-primary btn-shadow-hover font-weight-bold mr-2">
-                Detaylı Arama
-                <i class="fa fa-search" style="font-size:20px"></i>
-              </button>
-            </div>
-
-            <div class="col-1"></div>
-          </div>
-
-          <div class="row d-flex justify-content-start">
-            <div class="col-6 mt-5">
-              <mat-chip-list aria-label="selection">
-                <!-- <mat-chip color="primary" (click)="selectAll()">Listelenenleri Seç</mat-chip> -->
-                <!-- <mat-chip color="primary" (click)="deselectAll()">Listedeki Seçimleri Kaldır</mat-chip> -->
-              </mat-chip-list>
-            </div>
-          </div>
-
-          <div class="row mt-5">
-            <div class="col-4 mb-9" *ngFor="let item of onaylananFormlar">
-              <mat-accordion>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                  <mat-expansion-panel-header #panelB>
-                    <mat-panel-title>
-
-                      <section class="example-section m-6 mt-9" >
-                        <p><mat-checkbox  [ngModel]="isChecked"
-                            (change)="onCheckboxChange($event, item.selected, item.name)" (click)="panelB._toggle()"></mat-checkbox>
-                        </p>
-                      </section>
-
-                      <div class="ml-4">
-                        {{item.talepTipi}}
-                      </div>
-
-                    </mat-panel-title>
-                    <mat-panel-description>
-                      {{item.name}}
-                    </mat-panel-description>
-                  </mat-expansion-panel-header>
-
-                  <div class="card card-custom">
-                    <div class="row card-header card-header-center d-flex justify-content-center">
-                      <div class="col-12 d-flex justify-content-center">
-                        <img width="150px" src="./assets/media/avatars/300-7.jpg" alt="Metronic" />
-                      </div>
-                      <div class="col-12 d-flex justify-content-center mt-4">
-                        <h3>{{item.name}}</h3>
-                      </div>
+                  <div class="row card-body">
+                    <div class="col-12 text-center">
+                      <h5>Nedeni</h5>
+                      <span>{{item.neden}}</span>
                     </div>
-                    <div class="row card-body">
-                      <div class="col-12 text-center">
-                        <h5>Nedeni</h5>
-                        <span>{{item.neden}}</span>
-                      </div>
 
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Başlangıç</h5>
-                        <span>{{item.baslangicTarih}}</span>
-                      </div>
+                    <div class="col-12 mt-6 text-center">
+                      <h5>Başlangıç</h5>
+                      <span>{{item.baslangicTarih}}</span>
+                    </div>
 
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Bitiş/İş Başı</h5>
-                        <span>{{item.bitisTarih}}</span>
-                      </div>
+                    <div class="col-12 mt-6 text-center">
+                      <h5>Bitiş/İş Başı</h5>
+                      <span>{{item.bitisTarih}}</span>
+                    </div>
 
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Açıklama</h5>
-                        <span>{{item.aciklama}}</span>
-                      </div>
+                    <div class="col-12 mt-6 text-center">
+                      <h5>Açıklama</h5>
+                      <span>{{item.aciklama}}</span>
+                    </div>
 
-                      <div class="col-12 text-center">
-                        <div class="row mt-8">
-                          <div class="col-5">
-                            <button class="btn btn-icon btn-success btn-circle" disabled>
-                              <i class="fa-solid fa-check"></i>
-                            </button>
-                            <h6 class="text-success">ONAYLANDI</h6>
-                          </div>
+                    <div class="col-12 text-center">
+                      <div class="row mt-8">
+                        <div class="col-5">
+                          <button class="btn btn-icon btn-success btn-circle" disabled>
+                            <i class="fa-solid fa-check"></i>
+                          </button>
+                          <h6 class="text-success">ONAYLANDI</h6>
+                        </div>
 
-                          <div class="col-3">
-                            <button class="btn btn-icon btn-light-info btn-circle">
-                              <i class="fa-solid fa-question"></i>
-                            </button>
-                            <h6>Süreç</h6>
-                          </div>
+                        <div class="col-3">
+                          <button class="btn btn-icon btn-light-info btn-circle">
+                            <i class="fa-solid fa-question"></i>
+                          </button>
+                          <h6>Süreç</h6>
+                        </div>
 
-                          <div class="col-4">
-                            <button class="btn btn-icon btn-light-primary btn-circle">
-                              <i class="fa-solid fa-print"></i>
-                            </button>
-                            <h6>Form</h6>
-                          </div>
+                        <div class="col-4">
+                          <button class="btn btn-icon btn-light-primary btn-circle">
+                            <i class="fa-solid fa-print"></i>
+                          </button>
+                          <h6>Form</h6>
                         </div>
                       </div>
+                    </div>
 
 
-                      <div class="col-12"></div>
-                      <div class="col-12"></div>
+                    <div class="col-12"></div>
+                    <div class="col-12"></div>
+                  </div>
+                </div>
+
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Reddedilenler">
+        <div class="row mt-5">
+          <div class="col-1"></div>
+
+          <div class="col-7">
+            <div class="input-group" style="height: 43.64px;">
+              <input class="input-group form-control form-control-sm" type="text" placeholder="Search..">
+            </div>
+          </div>
+
+          <div class="col-3">
+            <button class="btn btn-primary btn-shadow-hover font-weight-bold mr-2">
+              Detaylı Arama
+              <i class="fa fa-search" style="font-size:20px"></i>
+            </button>
+          </div>
+
+          <div class="col-1"></div>
+        </div>
+
+        <div class="row d-flex justify-content-start">
+          <div class="col-6 mt-5">
+            <mat-chip-list aria-label="Fish selection">
+              <!-- <mat-chip color="primary" (click)="selectAll()">Listelenenleri Seç</mat-chip> -->
+              <!-- <mat-chip color="primary" (click)="deselectAll()">Listedeki Seçimleri Kaldır</mat-chip> -->
+              <!-- <mat-chip color="primary">Tümünü Seç</mat-chip>
+              <mat-chip color="accent">Tümünü kaldır</mat-chip> -->
+            </mat-chip-list>
+          </div>
+        </div>
+
+        <div class="row mt-5">
+          <div class="col-4 mb-9" *ngFor="let item of reddedilenFormlar">
+            <mat-accordion>
+              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header #panelC>
+                  <mat-panel-title>
+
+                    <section class="example-section m-6 mt-9">
+                      <p><mat-checkbox [ngModel]="isChecked" (click)="panelC._toggle()"></mat-checkbox>
+                      </p>
+                    </section>
+
+                    <div class="ml-4">
+                      {{item.talepTipi}}
+                    </div>
+
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    {{item.name}}
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div class="">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-12 d-flex justify-content-center">
+                      <img width="150px" src="./assets/media/avatars/300-7.jpg" alt="Metronic" />
+                    </div>
+                    <div class="col-12 d-flex justify-content-center mt-4">
+                      <h3>{{item.name}}</h3>
                     </div>
                   </div>
-
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
-          </div>
-        </mat-tab>
-
-        <mat-tab label="Reddedilenler">
-          <div class="row mt-5">
-            <div class="col-1"></div>
-
-            <div class="col-7">
-              <div class="input-group" style="height: 43.64px;">
-                <input class="input-group form-control form-control-sm" type="text" placeholder="Search..">
-              </div>
-            </div>
-
-            <div class="col-3">
-              <button class="btn btn-primary btn-shadow-hover font-weight-bold mr-2">
-                Detaylı Arama
-                <i class="fa fa-search" style="font-size:20px"></i>
-              </button>
-            </div>
-
-            <div class="col-1"></div>
-          </div>
-
-          <div class="row d-flex justify-content-start">
-            <div class="col-6 mt-5">
-              <mat-chip-list aria-label="Fish selection">
-                <!-- <mat-chip color="primary" (click)="selectAll()">Listelenenleri Seç</mat-chip> -->
-                <!-- <mat-chip color="primary" (click)="deselectAll()">Listedeki Seçimleri Kaldır</mat-chip> -->
-                <!-- <mat-chip color="primary">Tümünü Seç</mat-chip>
-                <mat-chip color="accent">Tümünü kaldır</mat-chip> -->
-              </mat-chip-list>
-            </div>
-          </div>
-
-          <div class="row mt-5">
-            <div class="col-4 mb-9" *ngFor="let item of reddedilenFormlar">
-              <mat-accordion>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                  <mat-expansion-panel-header #panelC>
-                    <mat-panel-title>
-
-                      <section class="example-section m-6 mt-9" >
-                        <p><mat-checkbox  [ngModel]="isChecked"
-                            (change)="onCheckboxChange($event, item.selected, item.name)" (click)="panelC._toggle()"></mat-checkbox>
-                        </p>
-                      </section>
-
-                      <div class="ml-4">
-                        {{item.talepTipi}}
-                      </div>
-
-                    </mat-panel-title>
-                    <mat-panel-description>
-                      {{item.name}}
-                    </mat-panel-description>
-                  </mat-expansion-panel-header>
-
-                  <div class="card card-custom">
-                    <div class="row card-header card-header-center d-flex justify-content-center">
-                      <div class="col-12 d-flex justify-content-center">
-                        <img width="150px" src="./assets/media/avatars/300-7.jpg" alt="Metronic" />
-                      </div>
-                      <div class="col-12 d-flex justify-content-center mt-4">
-                        <h3>{{item.name}}</h3>
-                      </div>
+                  <div class="row card-body">
+                    <div class="col-12 text-center">
+                      <h5>Nedeni</h5>
+                      <span>{{item.neden}}</span>
                     </div>
-                    <div class="row card-body">
-                      <div class="col-12 text-center">
-                        <h5>Nedeni</h5>
-                        <span>{{item.neden}}</span>
-                      </div>
 
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Başlangıç</h5>
-                        <span>{{item.baslangicTarih}}</span>
-                      </div>
+                    <div class="col-12 mt-6 text-center">
+                      <h5>Başlangıç</h5>
+                      <span>{{item.baslangicTarih}}</span>
+                    </div>
 
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Bitiş/İş Başı</h5>
-                        <span>{{item.bitisTarih}}</span>
-                      </div>
+                    <div class="col-12 mt-6 text-center">
+                      <h5>Bitiş/İş Başı</h5>
+                      <span>{{item.bitisTarih}}</span>
+                    </div>
 
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Açıklama</h5>
-                        <span>{{item.aciklama}}</span>
-                      </div>
+                    <div class="col-12 mt-6 text-center">
+                      <h5>Açıklama</h5>
+                      <span>{{item.aciklama}}</span>
+                    </div>
 
-                      <div class="col-12 text-center">
-                        <div class="row mt-8">
-                          <div class="col-5">
-                            <button class="btn btn-icon btn-danger btn-circle" disabled>
-                              <i class="fa-solid fa-xmark"></i>
-                            </button>
-                            <h6 class="text-danger">REDDEDİLDİ</h6>
-                          </div>
+                    <div class="col-12 text-center">
+                      <div class="row mt-8">
+                        <div class="col-5">
+                          <button class="btn btn-icon btn-danger btn-circle" disabled>
+                            <i class="fa-solid fa-xmark"></i>
+                          </button>
+                          <h6 class="text-danger">REDDEDİLDİ</h6>
+                        </div>
 
-                          <div class="col-3">
-                            <button class="btn btn-icon btn-light-info btn-circle">
-                              <i class="fa-solid fa-question"></i>
-                            </button>
-                            <h6>Süreç</h6>
-                          </div>
+                        <div class="col-3">
+                          <button class="btn btn-icon btn-light-info btn-circle">
+                            <i class="fa-solid fa-question"></i>
+                          </button>
+                          <h6>Süreç</h6>
+                        </div>
 
-                          <div class="col-3">
-                            <button class="btn btn-icon btn-light-primary btn-circle">
-                              <i class="fa-solid fa-print"></i>
-                            </button>
-                            <h6>Form</h6>
-                          </div>
+                        <div class="col-3">
+                          <button class="btn btn-icon btn-light-primary btn-circle">
+                            <i class="fa-solid fa-print"></i>
+                          </button>
+                          <h6>Form</h6>
                         </div>
                       </div>
-
-
-                      <div class="col-12"></div>
-                      <div class="col-12"></div>
                     </div>
+
+
+                    <div class="col-12"></div>
+                    <div class="col-12"></div>
                   </div>
+                </div>
 
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
+              </mat-expansion-panel>
+            </mat-accordion>
           </div>
-        </mat-tab>
+        </div>
+      </mat-tab>
 
-      </mat-tab-group>
-    </div>
+    </mat-tab-group>
+
+    
   </div>
+
+
 </div>
