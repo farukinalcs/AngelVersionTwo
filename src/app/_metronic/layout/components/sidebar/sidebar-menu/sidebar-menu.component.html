@@ -160,14 +160,53 @@
       </div> -->
     </div>
 
-
     <!-- PUANTAJ -->
 
-    <div class="menu-item">
-      <a class="menu-link without-sub" routerLink="/puantaj" routerLinkActive="active"><span class="menu-icon">
+    <!-- <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/puantaj" routerLinkActive="active">
+        <span class="menu-icon">
           <span [inlineSVG]="'./assets/media/icons/duotune/general/gen019.svg'" class="svg-icon svg-icon-2"></span>
         </span><span class="menu-title">PUANTAJ</span></a>
+    </div> -->
+    
+    <!-- PUANTAJ -->
+    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+      <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"
+            [inlineSVG]="'./assets/media/icons/duotune/general/gen019.svg'"></span></span><span
+          class="menu-title">PUANTAJ</span><span class="menu-arrow"></span></span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/puantaj"><span class="menu-bullet"><span
+                class="bullet bullet-dot"></span></span><span class="menu-title">Genel Bakış</span></a>
+        </div>
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="access/sicil_liste"><span
+              class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Sicil
+              Liste</span></a>
+        </div>
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="puantaj/pdks"><span
+              class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+              class="menu-title">Pdks</span></a>
+        </div>
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="access/gecis_gruplari"><span
+              class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Pdks Pivot</span></a>
+        </div>
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="access/tanimlamalar"><span
+              class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+              class="menu-title">Tanımlamalar</span></a>
+        </div>
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="access/raporlar"><span
+              class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+              class="menu-title">Raporlar</span></a>
+        </div>
+      </div>
     </div>
+
+
 
     <!-- Layout builder -->
     <!-- <div class="menu-item">
