@@ -49,57 +49,16 @@ export class TalepedilenlerComponent implements OnInit {
   checkboxText : any = 'Tümünü Seç';
   allComplete: boolean = false;
 
-  constructor(
-
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
 
   }
 
-  
-
-  // Checkbox'ı tek tek işaretlemeye veye işareti kaldırmaya, selectedItems dizisini değiştiren fonksiyon
-  onCheckboxChange(event : any, selectedValue : any, name: any){
-    if (event.checked) {
-      selectedValue = true;
-      this.selectedItems.push(name);
-    } else {
-      selectedValue = false;
-      this.selectedItems = this.selectedItems.filter((i: any) => i !== name);
-    }
-    console.log("items : ", this.onayBeklenenFormlar);
-    console.log("Selected Items Single: ", this.selectedItems);
-  }
-
-  // Tüm checkboxları true olarak işaretleyen fonksiyon
-  checkboxClick(event : any) {
-    let isCheckedAll : any = event.checked;
-    console.log("c:", isCheckedAll);
-    if (isCheckedAll) {
-      this.onayBeklenenFormlar.forEach((item: any) => {
-        item.selected = true;
-        this.selectedItems.push(item.name);
-      });
-      this.checkboxText = 'Seçilenleri Kaldır';
-      console.log("Selected Items SelectAll: ", this.selectedItems);  
-    } else {
-      this.onayBeklenenFormlar.forEach((item: any) => {
-        item.selected = false;
-        this.selectedItems.pop();
-      });
-      this.checkboxText = 'Tümünü Seç'
-      console.log("Selected Items DeselectAll: ", this.selectedItems);
-    }
-    
-  }
-
-  
-
-
   updateAllComplete() {
     this.allComplete = this.onayBeklenenFormlar.subtasks != null && this.onayBeklenenFormlar.subtasks.every((t: any) => t.completed);
   
+    console.log("AllComplete :", this.allComplete);    
     console.log("updateAllComplete :", this.onayBeklenenFormlar);    
   }
 

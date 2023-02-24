@@ -35,6 +35,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { SidebarModule } from 'primeng/sidebar';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,9 @@ import { ButtonModule } from 'primeng/button';
     CarouselModule,
     ButtonModule,
     NgbCarouselModule,
-    NgbModule
+    NgbModule,
+    ScrollPanelModule,
+    SidebarModule
 
   ]
 })
