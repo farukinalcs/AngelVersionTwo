@@ -40,6 +40,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { DialogSaatlikIzinTalebiComponent } from './talep-olustur/dialog-saatlik-izin-talebi/dialog-saatlik-izin-talebi.component';
 import { DialogGunlukIzinTalebiComponent } from './talep-olustur/dialog-gunluk-izin-talebi/dialog-gunluk-izin-talebi.component';
 import { TranslationModule } from 'src/app/modules/i18n';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 
 @NgModule({
@@ -92,7 +93,8 @@ import { TranslationModule } from 'src/app/modules/i18n';
     MatNativeDateModule,
     ReactiveFormsModule,
     FormsModule,
-    TranslationModule
+    TranslationModule,
+    OverlayPanelModule
     
   ]
 })
