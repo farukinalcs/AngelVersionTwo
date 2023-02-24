@@ -5,6 +5,7 @@ import { PuantajRoutingModule } from './puantaj-routing.module';
 import { PuantajdashboardComponent } from './puantajdashboard/puantajdashboard.component';
 import { PdksComponent } from './pdks/pdks.component';
 import { PuantajListesiComponent } from './puantaj-listesi/puantaj-listesi.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { PuantajListesiComponent } from './puantaj-listesi/puantaj-listesi.compo
   ],
   imports: [
     CommonModule,
-    PuantajRoutingModule
+    PuantajRoutingModule,
+    AgGridModule
   ]
 })
 export class PuantajModule { }
