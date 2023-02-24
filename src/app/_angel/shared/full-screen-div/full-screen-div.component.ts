@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input, OnInit, Renderer2 } from '@angular/core';
+import { HelperService } from 'src/app/_helpers/helper.service';
 
 @Component({
   selector: 'app-full-screen-div',
@@ -10,11 +11,12 @@ export class FullScreenDivComponent implements OnInit {
 
   constructor(
     @Inject(DOCUMENT) private document: any,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private helper : HelperService
   ) { }
 
   @Input() div: any;
-  @Input() agGrid: any;
+  @Input() refComponent: any;
 
 
 
@@ -56,28 +58,22 @@ export class FullScreenDivComponent implements OnInit {
 
 
 
-    // if (this.agGrid !== "No") {
-    //   console.log("this.agGrid full",this.agGrid );
-    //   //  this.agGrid.setGridHeight("95vh");
-    //   var id : any;
-    //   if (window.document.getElementsByClassName("mat-dialog-container")[0] != null) {
-    //     id = window.document.getElementsByClassName("mat-dialog-container")[0].id;
-    //   }
-    //   var offsetHeight = 0;
-    //   if (window.document.getElementById(id) != null) {
-    //     offsetHeight = window.document.getElementById(id).offsetHeight
-   
-    //   }
-
-    //   if (offsetHeight == 0) {
-    //     offsetHeight = window.document.getElementsByClassName("divFullScreen")[0].clientHeight;
-
-    //   }
-
-    //   this.agGrid.gridSizeRender();
-    // }
-    // this.divRef.nativeElement.addClassName = 'divFullScreen';
     this.isFullScreen = true;
+    if (this.refComponent?.dashboardItemViewSize != undefined) {
+
+      this.refComponent.dashboardItemViewSize = undefined;
+
+      setTimeout(() => {
+        if (this.refComponent?.chartsDetail != undefined) {
+
+
+          this.refComponent.dashboardItemViewSize = [this.refComponent?.chartsDetail.width - 60, this.refComponent?.chartsDetail.height - 170]
+        }
+
+        this.helper.refreshComponent(this.refComponent);
+
+      }, 2000);
+    }
 
   }
   /* Close fullscreen */

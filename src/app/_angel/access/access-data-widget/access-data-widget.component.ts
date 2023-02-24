@@ -79,14 +79,14 @@ export class AccessDataWidgetComponent implements OnInit {
       gridType: GridType.Fixed,
       addEmptyRowsCount: 50,
       minCols : 1,
-      maxCols : 200,
+      maxCols : 1000000000000000000,
       minRows : 1,
-      maxRows : 200,
-      maxItemCols: 260,
+      maxRows : 1000000000000000000,
+      maxItemCols: 1000000000000000000,
       minItemCols: 2,
-      maxItemRows: 250,
+      maxItemRows: 1000000000000000000,
       minItemRows: 2,
-      maxItemArea: 2500,
+      maxItemArea: 1000000000000000000,
       minItemArea: 1,
       defaultItemCols: 2,
       defaultItemRows: 4,
@@ -109,10 +109,10 @@ export class AccessDataWidgetComponent implements OnInit {
     };
 
     this.dashboard2 = [
-      { cols: 50, rows: 15, y: 0, x: 28 ,type: 'Geçişler' },
-      { cols: 28, rows: 15, y: 0, x: 0 ,type:  'İçerideki Kişi Sayısı' },
-      { cols: 78, rows: 14, y: 12, x: 28 ,type: 'Kapı İşlemleri' },
-      { cols: 52, rows: 15, y: 29, x: 15 ,type: 'Olaylar' },
+      { cols: 30, rows: 17, y: 0, x: 0 ,type:  'İçerideki Kişi Sayısı' },
+      { cols: 52, rows: 17, y: 0, x: 30 ,type: 'Geçişler' },
+      { cols: 78, rows: 14, y: 15, x: 28 ,type: 'Kapı İşlemleri' },
+      { cols: 52, rows: 15, y: 31, x: 15 ,type: 'Olaylar' },
     ];
   }
   

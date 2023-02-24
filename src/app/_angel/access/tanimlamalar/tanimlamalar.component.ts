@@ -21,6 +21,19 @@ export class TanimlamalarComponent implements OnInit {
     {id : 6, isim : "Bölüm"},
     {id : 7, isim : "Parmak İzi"},
     {id : 8, isim : "Time Zone"},
+    {id : 9, isim : "Alt Firma"},
+    {id : 10, isim : "Direktörlük"},
+    {id : 11, isim : "Terminal Grupları"},
+    {id : 12, isim : "Belge Tipi"},
+    {id : 13, isim : "Puantaj"},
+    {id : 14, isim : "FTP Bilgileri"},
+    {id : 15, isim : "Ayrılış Nedeni"},
+    {id : 16, isim : "Güvenlik"},
+    {id : 17, isim : "Olay Kodları"},
+    {id : 18, isim : "Yazıcılar"},
+    {id : 19, isim : "Led Panolar"},
+    {id : 20, isim : "Yetki Rolleri"},
+    {id : 21, isim : "Ben Sayfası"}
   ];
   firma : any[] = [
     {id : 11, isim : "MEYER GROUP"},

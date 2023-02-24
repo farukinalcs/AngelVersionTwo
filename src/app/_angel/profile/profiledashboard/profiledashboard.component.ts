@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { map, Observable, startWith } from 'rxjs';
+import { map, Observable, startWith, Subscription } from 'rxjs';
 import { AuthService, UserType } from 'src/app/modules/auth';
+import { HelperService } from 'src/app/_helpers/helper.service';
 import { DialogFazlaMesaiTalebiComponent } from '../talep-olustur/dialog-fazla-mesai-talebi/dialog-fazla-mesai-talebi.component';
 import { DialogGunlukIzinTalebiComponent } from '../talep-olustur/dialog-gunluk-izin-talebi/dialog-gunluk-izin-talebi.component';
 import { DialogSaatlikIzinTalebiComponent } from '../talep-olustur/dialog-saatlik-izin-talebi/dialog-saatlik-izin-talebi.component';
@@ -14,6 +15,8 @@ import { DialogZiyaretciTalebiComponent } from '../talep-olustur/dialog-ziyaretc
   styleUrls: ['./profiledashboard.component.scss']
 })
 export class ProfiledashboardComponent implements OnInit {
+
+  private unsubscribe: Subscription[] = [];
 
   user$: Observable<UserType>;
 
@@ -30,7 +33,8 @@ export class ProfiledashboardComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private fomrBuilder : FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private helper : HelperService
   ) { }
 
   ngOnInit(): void {
@@ -39,8 +43,22 @@ export class ProfiledashboardComponent implements OnInit {
     this.filtered();
   }
 
-  openDialog(component : any) {
-    this.dialog.open(component);
+  openDialog(component: any) {
+    // this.dialog.open(component);
+
+    var dialogRes = this.helper.dynamicDialog(false, '530px', '550px', 'fmTalepFormu', 'form', this.dialog, this);
+
+    const ruleDialogSubs = dialogRes.afterClosed().subscribe((result: any) => {
+      this.helper.refreshComponent(this);
+                          
+      if (result == "OK") {
+        console.log("result :", result);
+        
+      }
+
+    });
+
+    this.unsubscribe.push(ruleDialogSubs);
   }  
 
   getCurrentUserInformations() {

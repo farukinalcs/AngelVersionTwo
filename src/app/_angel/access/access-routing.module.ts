@@ -39,6 +39,10 @@ const routes: Routes = [
     // ],
   },
   {
+    path: 'genel_bakis',
+    component: AccessDataWidgetComponent,
+  },
+  {
     path: 'terminal',
     component: TerminalComponent,
   },

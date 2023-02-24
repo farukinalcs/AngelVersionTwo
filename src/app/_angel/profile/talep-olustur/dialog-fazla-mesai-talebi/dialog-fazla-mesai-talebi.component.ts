@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { map, Observable } from 'rxjs';
@@ -17,6 +17,9 @@ import {BreakpointObserver} from '@angular/cdk/layout';
   ],
 })
 export class DialogFazlaMesaiTalebiComponent implements OnInit {
+  // @Input() inRowSelection = "single";
+  // @Input() inRangeSelection = false;
+  
   // Stepper responsive 
   stepperOrientation: Observable<StepperOrientation>;
   // Form geçerli ise geçiş olsun
