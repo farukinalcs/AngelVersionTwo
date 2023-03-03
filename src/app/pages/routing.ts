@@ -69,7 +69,7 @@ const Routing: Routes = [
   },
   {
     path: '',
-    redirectTo: '/profile',
+    redirectTo: '/profile/gecislerim',
     pathMatch: 'full',
   },
   {

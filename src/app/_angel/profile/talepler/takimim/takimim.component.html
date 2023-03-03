@@ -1,72 +1,228 @@
-<div class="row mt-5">
-    <div class="col-4 mb-9" *ngFor="let item of response">
-      <mat-accordion >
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
+<div class="container">
+  <div class="card p-5">
+
+    <div class="row">
+      <h5>Horizontal</h5>
+      <p-splitter [style]="{ height: '100%' }" styleClass="p-mb-5">
+        <ng-template pTemplate>
+          <div class="p-col p-d-flex p-ai-center p-jc-center">
+            <div class="mb-9 p-5" *ngFor="let item of staffInside">
+              <mat-accordion>
+                <mat-expansion-panel class="mat-expansion-panel staffInside" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <div class="text-success">
+                        {{item.durum}}
+                      </div>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      {{item.ad}} {{item.soyad}}
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+      
+                  <div class="card card-custom">
+                    <div class="row card-header card-header-center d-flex justify-content-center">
+                      <div class="col-12 d-flex justify-content-center">
+                        <img width="110px" src="./assets/media/avatars/300-7.jpg" alt="Metronic"
+                          style="border-radius: 80px;" />
+                      </div>
+                      <div class="col-12 d-flex justify-content-center mt-4">
+                        <h3>({{item.sicilno}})</h3>
+                      </div>
+                    </div>
+                    <div class="row card-body">
+                      <div class="col-12 text-center">
+                        <h5>Bekleyen İzin Talepleri</h5>
+                        <span>{{item.bekleyenizintalep}}</span>
+                      </div>
+      
+                      <div class="col-12 mt-6 text-center">
+                        <h5>Bekleyen FM Talepleri</h5>
+                        <span>{{item.bekleyenfmtalep}}</span>
+                      </div>
+      
+                      <div class="col-12 mt-6 text-center">
+                        <h5>Geç Kalma Sayısı (Ay)</h5>
+                        <span>{{item.geckalma}}</span>
+                      </div>
+      
+                      <div class="col-12 mt-6 text-center">
+                        <h5>Erken ÇıkmaSayısı(Ay)</h5>
+                        <span>{{item.erkencikma}}</span>
+                      </div>
+      
+                      <div class="col-6 mt-6 text-center">
+                        <h5>Giriş</h5>
+                        <span>{{item.ggiris}}</span>
+                      </div>
+      
+      
+                      <div class="col-6 mt-6 text-center">
+                        <h5>Çıkış</h5>
+                        <span>{{item.gcikis}}</span>
+                      </div>
+      
+                      <div class="col-12 mt-6 text-center">
+                        <button class="btn btn-primary">
+                          Mesaj Gönder
+                        </button>
+                      </div>
+      
+                    </div>
+                  </div>
+      
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate>
+          <div class="p-col p-d-flex p-ai-center p-jc-center">
+            <div class="mb-9 p-5" *ngFor="let item of staffOutside">
+              <mat-accordion>
+                <mat-expansion-panel class="mat-expansion-panel staffOutside" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <div class="text-danger">
+                        {{item.durum}}
+                      </div>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      {{item.ad}} {{item.soyad}}
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+      
+                  <div class="card card-custom">
+                    <div class="row card-header card-header-center d-flex justify-content-center">
+                      <div class="col-12 d-flex justify-content-center">
+                        <img width="110px" src="./assets/media/avatars/300-7.jpg" alt="Metronic"
+                          style="border-radius: 80px;" />
+                      </div>
+                      <div class="col-12 d-flex justify-content-center mt-4">
+                        <h3>({{item.sicilno}})</h3>
+                      </div>
+                    </div>
+                    <div class="row card-body">
+                      <div class="col-12 text-center">
+                        <h5>Bekleyen İzin Talepleri</h5>
+                        <span>{{item.bekleyenizintalep}}</span>
+                      </div>
+      
+                      <div class="col-12 mt-6 text-center">
+                        <h5>Bekleyen FM Talepleri</h5>
+                        <span>{{item.bekleyenfmtalep}}</span>
+                      </div>
+      
+                      <div class="col-12 mt-6 text-center">
+                        <h5>Geç Kalma Sayısı (Ay)</h5>
+                        <span>{{item.geckalma}}</span>
+                      </div>
+      
+                      <div class="col-12 mt-6 text-center">
+                        <h5>Erken ÇıkmaSayısı(Ay)</h5>
+                        <span>{{item.erkencikma}}</span>
+                      </div>
+      
+                      <div class="col-6 mt-6 text-center">
+                        <h5>Giriş</h5>
+                        <span>{{item.ggiris}}</span>
+                      </div>
+      
+      
+                      <div class="col-6 mt-6 text-center">
+                        <h5>Çıkış</h5>
+                        <span>{{item.gcikis}}</span>
+                      </div>
+      
+                      <div class="col-12 mt-6 text-center">
+                        <button class="btn btn-primary">
+                          Mesaj Gönder
+                        </button>
+                      </div>
+      
+                    </div>
+                  </div>
+      
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </div>
+        </ng-template>
+      </p-splitter>
+    </div>
+
+    <!-- <div class="row mt-5">
+      <div class="col-4 mb-9" *ngFor="let item of response">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
                 <div class="text-danger">
-                    {{item.gelmedi}}
+                  {{item.gelmedi}}
                 </div>
                 <div>
-                    -{{item.durum}}
+                  -{{item.durum}}
                 </div>
-            </mat-panel-title>
-            <mat-panel-description>
-              {{item.ad}} {{item.soyad}}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
+              </mat-panel-title>
+              <mat-panel-description>
+                {{item.ad}} {{item.soyad}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
 
-          <div class="card card-custom">
-            <div class="row card-header card-header-center d-flex justify-content-center">
+            <div class="card card-custom">
+              <div class="row card-header card-header-center d-flex justify-content-center">
                 <div class="col-12 d-flex justify-content-center">
-                  <img width="110px" src="./assets/media/avatars/300-7.jpg" alt="Metronic" style="border-radius: 80px;"/>
+                  <img width="110px" src="./assets/media/avatars/300-7.jpg" alt="Metronic"
+                    style="border-radius: 80px;" />
                 </div>
                 <div class="col-12 d-flex justify-content-center mt-4">
                   <h3>({{item.sicilno}})</h3>
                 </div>
-            </div>
-            <div class="row card-body">
-              <div class="col-12 text-center">
-                <h5>Bekleyen İzin Talepleri</h5>
-                <span>{{item.bekleyenizintalep}}</span>  
               </div>
+              <div class="row card-body">
+                <div class="col-12 text-center">
+                  <h5>Bekleyen İzin Talepleri</h5>
+                  <span>{{item.bekleyenizintalep}}</span>
+                </div>
 
-              <div class="col-12 mt-6 text-center">
-                <h5>Bekleyen FM Talepleri</h5>
-                <span>{{item.bekleyenfmtalep}}</span>
-              </div>
+                <div class="col-12 mt-6 text-center">
+                  <h5>Bekleyen FM Talepleri</h5>
+                  <span>{{item.bekleyenfmtalep}}</span>
+                </div>
 
-              <div class="col-12 mt-6 text-center">
-                <h5>Geç Kalma Sayısı (Ay)</h5>
-                <span>{{item.geckalma}}</span>
-              </div>
+                <div class="col-12 mt-6 text-center">
+                  <h5>Geç Kalma Sayısı (Ay)</h5>
+                  <span>{{item.geckalma}}</span>
+                </div>
 
-              <div class="col-12 mt-6 text-center">
-                <h5>Erken ÇıkmaSayısı(Ay)</h5>
-                <span>{{item.erkencikma}}</span>
-              </div>
+                <div class="col-12 mt-6 text-center">
+                  <h5>Erken ÇıkmaSayısı(Ay)</h5>
+                  <span>{{item.erkencikma}}</span>
+                </div>
 
-              <div class="col-6 mt-6 text-center">
-                <h5>Giriş</h5>
-                <span>{{item.ggiris}}</span>
-              </div>
-              
+                <div class="col-6 mt-6 text-center">
+                  <h5>Giriş</h5>
+                  <span>{{item.ggiris}}</span>
+                </div>
 
-              <div class="col-6 mt-6 text-center">
-                <h5>Çıkış</h5>
-                <span>{{item.gcikis}}</span>
-              </div>
 
-              <div class="col-12 mt-6 text-center">
-                <button class="btn btn-primary">
+                <div class="col-6 mt-6 text-center">
+                  <h5>Çıkış</h5>
+                  <span>{{item.gcikis}}</span>
+                </div>
+
+                <div class="col-12 mt-6 text-center">
+                  <button class="btn btn-primary">
                     Mesaj Gönder
-                </button>
+                  </button>
+                </div>
+
               </div>
-
             </div>
-          </div>
 
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div> -->
   </div>
+</div>

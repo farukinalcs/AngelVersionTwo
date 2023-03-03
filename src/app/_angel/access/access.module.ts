@@ -37,6 +37,13 @@ import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { SidebarModule } from 'primeng/sidebar';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatOptionModule } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -85,7 +92,15 @@ import { SidebarModule } from 'primeng/sidebar';
     NgbCarouselModule,
     NgbModule,
     ScrollPanelModule,
-    SidebarModule
+    SidebarModule,
+    OverlayPanelModule,
+		MultiSelectModule,
+    MatChipsModule,
+    MatOptionModule,
+    MatAutocompleteModule,
+    MatIconModule,
+    MatSelectModule
+
 
   ]
 })

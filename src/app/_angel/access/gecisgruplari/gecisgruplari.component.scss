@@ -105,65 +105,34 @@
 
 /* Column styles */
 /* ---------------------------------------------------------- */
-.type-column {
-    width: 15%;
-    padding-right: 3rem;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
-
-.tarih-column {
-    width: 25%;
-    padding-right: 3rem;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
-
-.girisCikis-column {
-    width: 25%;
-    padding-right: 3rem;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
-
-.normalSure-column {
+.checkbox-column {
     width: 5%;
     padding-right: 3rem;
     padding-top: 0px;
     padding-bottom: 0px;
 }
 
-.araSure-column {
-    width: 5%;
+.terminal-column {
+    width: 20%;
     padding-right: 3rem;
     padding-top: 0px;
     padding-bottom: 0px;
 }
 
-.izinSure-column {
-    width: 5%;
+.durum-column {
+    width: 45%;
     padding-right: 3rem;
     padding-top: 0px;
     padding-bottom: 0px;
 }
 
-.fazlaSure-column {
-    width: 5%;
+.edit-column {
+    width: 30%;
     padding-right: 3rem;
     padding-top: 0px;
     padding-bottom: 0px;
 }
 
-.eksikSure-column {
-    width: 5%;
-    padding-right: 3rem;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
-
-.Button-column {
-    width: 5%;
-}
 
 /* ---------------------------------------------------------- */
 
@@ -269,5 +238,13 @@
 .label {
     background-color: #311d3f6c;
     color: #311d3f;
+}
+/* ---------------------------------------------------------- */
+
+
+/* Card Styles*/
+/* ---------------------------------------------------------- */
+.card {
+    background-color: #a79fad;
 }
 /* ---------------------------------------------------------- */
