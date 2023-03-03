@@ -255,6 +255,8 @@
                     w-200px w-sm-300px
                     flex-column
                     mt-3
+                    me-20
+                    pe-10
                   ">
               <div class="d-flex justify-content-between w-100 mt-auto mb-2">
                 <span class="fw-bold fs-6 text-gray-400">Kullanılan izin yüzdesi</span>
@@ -270,42 +272,24 @@
 
       <div class="d-flex overflow-auto h-55px justify-content-center">
         <ul class="
-                nav nav-stretch nav-line-tabs nav-line-tabs-2x
-                border-transparent
-                fw-bolder
-                flex-nowrap
-              ">
-          <li class="nav-item">
-            <a class="nav-link text-active-primary me-6" routerLink="gecislerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.GECISLERIM"></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-active-primary me-6" routerLink="surelerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.SURELERIM"></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-active-primary me-6" routerLink="izinlerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.IZINLERIM"></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-active-primary me-6" routerLink="talep_edilenler" routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEP_EDILENLER"></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-active-primary me-6" routerLink="taleplerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEPLERIM"></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-active-primary me-6" routerLink="ziyaretci_taleplerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.ZIYARETCI_TALEPLERIM"></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-active-primary me-6" routerLink="mobil_lokasyon" routerLinkActive="active" translate="MENU.PROFIL_SUB.MOBIL_LOKASYON"></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-active-primary me-6" routerLink="task_listem" routerLinkActive="active" translate="MENU.PROFIL_SUB.TASK_LISTEM"></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-active-primary me-6" routerLink="takimim" routerLinkActive="active">
-              <span class="menu-title" translate="MENU.PROFIL_SUB.TAKIMIM"></span>
-            </a>
+                      nav nav-stretch nav-line-tabs nav-line-tabs-2x
+                      border-transparent
+                      fw-bolder
+                      flex-nowrap
+                    ">
+          <li class="nav-item" *ngFor="let item of links">
+            <a class="nav-link text-active-primary me-6" routerLink="{{item.link}}" routerLinkActive="active"
+              translate="{{item.translate}}"></a>
           </li>
         </ul>
       </div>
+
+      <!-- <p-dock [model]="links" position="bottom">
+        <ng-template pTemplate="item" let-item>
+            <a class="me-6" routerLink="{{item.link}}" routerLinkActive="active"
+              translate="{{item.translate}}"></a>
+          </li>
+      </p-dock> -->
     </div>
   </div>
 

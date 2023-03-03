@@ -20,6 +20,18 @@ export class ProfiledashboardComponent implements OnInit {
 
   user$: Observable<UserType>;
 
+  links : any[] = [
+    {name: 'Geçişlerim', translate: 'MENU.PROFIL_SUB.GECISLERIM', link: 'gecislerim'},
+    {name: 'Sürelerim', translate: 'MENU.PROFIL_SUB.SURELERIM', link: 'surelerim'},
+    {name: 'İzinlerim', translate: 'MENU.PROFIL_SUB.IZINLERIM', link: 'izinlerim'},
+    {name: 'Talep Edilenler', translate: 'MENU.PROFIL_SUB.TALEP_EDILENLER', link: 'talep_edilenler'},
+    {name: 'Taleplerim', translate: 'MENU.PROFIL_SUB.TALEPLERIM', link: 'taleplerim'},
+    {name: 'Ziyaretçi Taleplerim', translate: 'MENU.PROFIL_SUB.ZIYARETCI_TALEPLERIM', link: 'ziyaretci_taleplerim'},
+    {name: 'Mobil Lokasyon', translate: 'MENU.PROFIL_SUB.MOBIL_LOKASYON', link: 'mobil_lokasyon'},
+    {name: 'Task Listem', translate: 'MENU.PROFIL_SUB.TASK_LISTEM', link: 'task_listem'},
+    {name: 'Takımım', translate: 'MENU.PROFIL_SUB.TAKIMIM', link: 'takimim'},
+  ];
+
   myControl : any = FormGroup;
   options: string[] = ['Test 1', 'Test 2', 'Test 3', 'Test 4', 'Test 5'];
   filteredOptions: Observable<string[]>;
