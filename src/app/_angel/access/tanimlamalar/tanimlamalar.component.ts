@@ -36,16 +36,17 @@ export class TanimlamalarComponent implements OnInit {
     {id : 21, isim : "Ben Sayfası"}
   ];
   firma : any[] = [
-    {id : 11, isim : "MEYER GROUP"},
-    {id : 12, isim : "MEYER BIOMETRIC"},
-    {id : 13, isim : "MEYER RFID"},
-    {id : 14, isim : "MEYER SECURITY"},
+    {id : 11, isim : "MEYER GROUP", isEdit : false},
+    {id : 12, isim : "MEYER BIOMETRIC", isEdit : false},
+    {id : 13, isim : "MEYER RFID", isEdit : false},
+    {id : 14, isim : "MEYER SECURITY", isEdit : false},
   ];
 
   selectedItem : any = this.tanimlar[0];
   
   formTest : FormGroup;
-  
+  formEditText : FormGroup;
+
 	responsiveOptions;
 
   constructor(
@@ -84,7 +85,10 @@ export class TanimlamalarComponent implements OnInit {
   createForm() {
     this.formTest = this.formBuilder.group({
       ekelenenDeger : ['', Validators.required]
-    })
+    });
+    this.formEditText = this.formBuilder.group({
+      text : ['']
+    });
   }
 
   getFormValue() {
@@ -100,5 +104,24 @@ export class TanimlamalarComponent implements OnInit {
 
   onSelect(item : any): void {
     this.selectedItem = item;
+  }
+
+  // Tablodan düzenleme alanı açma
+  onEdit(item: any) {
+    item.isEdit = true;
+  }
+
+  // Tablodaki veriyi güncelleme 
+  updateData(table: any, element: any, value: any) {
+    console.log("element :", element);
+    console.log("value :", value);
+    console.log("table :", table);
+
+    let f = table.filter((item:any) => item.durum != value);
+    console.log("table.filteredData :", f);
+    this.setTableValue();
+
+    element.durum = value;
+    element.isEdit = false;
   }
 }

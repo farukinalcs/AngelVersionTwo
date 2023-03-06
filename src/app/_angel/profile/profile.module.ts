@@ -41,6 +41,7 @@ import { DialogSaatlikIzinTalebiComponent } from './talep-olustur/dialog-saatlik
 import { DialogGunlukIzinTalebiComponent } from './talep-olustur/dialog-gunluk-izin-talebi/dialog-gunluk-izin-talebi.component';
 import { TranslationModule } from 'src/app/modules/i18n';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { SplitterModule } from "primeng/splitter";
 
 
 @NgModule({
@@ -94,7 +95,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     ReactiveFormsModule,
     FormsModule,
     TranslationModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    SplitterModule
     
   ]
 })
