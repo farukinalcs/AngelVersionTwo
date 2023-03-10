@@ -63,6 +63,46 @@ export class PuantajListesiComponent implements OnInit {
     { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
     MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
     YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
   ];
 
   defaultColDef: ColDef = {
