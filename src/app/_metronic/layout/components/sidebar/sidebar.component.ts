@@ -429,8 +429,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.toggleState = 'active';
     }
 
+    // if (this.appSidebarDefaultCollapseDesktopEnabled) {
+    //   this.toggleType = 'collapse';
+    //   this.toggleState = '';
+    // }
+
     if (this.appSidebarDefaultCollapseDesktopEnabled) {
-      this.toggleType = 'collapse';
+      this.toggleType = 'minimize';
       this.toggleState = '';
     }
 
