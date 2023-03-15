@@ -1,12 +1,11 @@
     <ag-grid-angular
-    style="width: 70vw; height: 100vh;"
-    class="ag-theme-alpine"
+    style="width: 70vw; height: 50vh;"
+    class="ag-theme-balham"
     [rowData]="rowData"
     [columnDefs]="columnDefs"
     [defaultColDef]="defaultColDef"
     [rowSelection]="'multiple'"
     [animateRows]="true"
+    [rowGroupPanelShow]="'always'"
     (cellClicked)="onCellClicked($event)">
     </ag-grid-angular>
-
-    <!-- YORUM -->
