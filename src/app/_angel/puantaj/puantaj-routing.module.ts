@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PdksComponent } from './pdks/pdks.component';
+import { PuantajRaporlarComponent } from './puantaj-raporlar/puantaj-raporlar.component';
+import { PuantajTanimlamalarComponent } from './puantaj-tanimlamalar/puantaj-tanimlamalar.component';
 import { PuantajdashboardComponent } from './puantajdashboard/puantajdashboard.component';
 
 const routes: Routes = [
@@ -9,8 +11,24 @@ const routes: Routes = [
     component: PuantajdashboardComponent,
   },
   {
+    path: 'puantaj',
+    component: PuantajdashboardComponent,
+  },
+  {
     path: 'pdks',
     component: PdksComponent,
+  },
+  {
+    path: 'pdkspiv',
+    component: PdksComponent,
+  },
+  {
+    path: 'tanimlamalar',
+    component: PuantajTanimlamalarComponent,
+  },
+  {
+    path: 'raporlar',
+    component: PuantajRaporlarComponent,
   },
 ];
 
