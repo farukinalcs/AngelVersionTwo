@@ -8,6 +8,8 @@ import { PuantajListesiComponent } from './puantaj-listesi/puantaj-listesi.compo
 import { AgGridModule } from 'ag-grid-angular';
 import { FormsModule } from '@angular/forms';
 import { MyGridCellComponent } from './my-grid-cell/my-grid-cell.component';
+import { PuantajTanimlamalarComponent } from './puantaj-tanimlamalar/puantaj-tanimlamalar.component';
+import { PuantajRaporlarComponent } from './puantaj-raporlar/puantaj-raporlar.component';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { MyGridCellComponent } from './my-grid-cell/my-grid-cell.component';
     PuantajdashboardComponent,
     PdksComponent,
     PuantajListesiComponent,
-    MyGridCellComponent
+    MyGridCellComponent,
+    PuantajTanimlamalarComponent,
+    PuantajRaporlarComponent
   ],
   imports: [
     CommonModule,

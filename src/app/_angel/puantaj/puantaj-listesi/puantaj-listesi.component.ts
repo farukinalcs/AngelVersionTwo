@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AgGridAngular } from 'ag-grid-angular';
 import { CellClickedEvent, ColDef } from 'ag-grid-community';
 import { MyGridCellComponent } from '../my-grid-cell/my-grid-cell.component';
-
 
 @Component({
   selector: 'app-puantaj-listesi',
@@ -10,6 +10,7 @@ import { MyGridCellComponent } from '../my-grid-cell/my-grid-cell.component';
   styleUrls: ['./puantaj-listesi.component.scss']
 })
 export class PuantajListesiComponent implements OnInit {
+  @ViewChild("agGrid",{static:false}) agGrid:AgGridAngular;
   // columnDefs:ColDef[] = [
   //   {field:"make"},
   //   {field:"model"},
@@ -126,6 +127,12 @@ export class PuantajListesiComponent implements OnInit {
 
   onCellClicked(event: CellClickedEvent){
     console.log("event",event)
+  }
+  getSelectedRows(){
+    const selectedNodes = this.agGrid.api.getSelectedNodes();
+    const selectedData = selectedNodes.map(node =>node.data);
+    // alert(`Selected Nodes: ${selectedData}`);
+    console.log("selectedData",selectedData);
   }
 
 
