@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { CellClickedEvent, ColDef } from 'ag-grid-community';
+import { CellClickedEvent, ColDef, ICellRendererParams } from 'ag-grid-community';
 import { MyGridCellComponent } from '../my-grid-cell/my-grid-cell.component';
 
 @Component({
@@ -23,9 +23,11 @@ export class PuantajListesiComponent implements OnInit {
     headerCheckboxSelectionFilteredOnly: true,
     checkboxSelection: true, pinned: 'left' }, 
     { headerName: "Talep Ekle", field: "Talepekle", cellRendererParams: { color: 'blue' }, maxWidth: 100,cellRenderer:MyGridCellComponent},
-    { headerName: "Simge", field: "Simge", cellRendererParams: { color: '#ff0000' }, maxWidth: 100},
-    { headerName: "SID", field: "SID",cellRendererParams: { color: '#ff0000' }, maxWidth: 100},
-    { headerName: "Sicil No", cellRendererParams: { color: '#ff0000' }, field: 'SicilNo', maxWidth: 120 },
+    { headerName: "Simge", field: "Simge", cellRendererParams: { color: '#ff0000' }, maxWidth: 100, rowGroup:true},
+    { headerName: "SID", field: "SID",cellRendererParams: { color: '#ff0000' }, maxWidth: 100, cellRenderer:MyGridCellComponent},
+    { headerName: "Sicil No", cellRendererParams: { color: '#ff0000' }, field: 'SicilNo', maxWidth: 120, cellRenderer :  (params : ICellRendererParams) => {
+      return `<b style="color:red"> !!${params.value} </b>`
+    }},
     { headerName: "Ad", cellRendererParams: { color: '#ff0000' }, field: 'Ad', maxWidth: 120},
     { headerName: "Soyad", cellRendererParams: { color: '#ff0000' }, field: 'Soyad', maxWidth: 120 },
     { headerName: "Mesai Tarih", cellRendererParams: { color: '#ff0000' }, field: 'MesaiTarih', maxWidth: 120 },
@@ -53,7 +55,7 @@ export class PuantajListesiComponent implements OnInit {
   ];
 
   rowData:any[] = [
-    { Talepekle: 'Ford', Simge: 'Mondeo', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    { Talepekle: 'Ford', Simge: 'Mondeo', SID: 33500, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
     MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
     YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
 
@@ -61,35 +63,15 @@ export class PuantajListesiComponent implements OnInit {
     MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
     YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
 
-    { Talepekle: 'Porsche', Simge: 'Boxter', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    { Talepekle: 'Porsche', Simge: 'Boxter', SID: 33500, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
     MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
     YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
 
-    { Talepekle: 'Ford', Simge: 'Mondeo', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    { Talepekle: 'Ford', Simge: 'Mondeo', SID: 33500, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
     MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
     YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
 
-    { Talepekle: 'Porsche', Simge: 'Boxter', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
-    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
-    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
-
-    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
-    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
-    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
-
-    { Talepekle: 'Ford', Simge: 'Mondeo', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
-    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
-    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
-
-    { Talepekle: 'Porsche', Simge: 'Boxter', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
-    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
-    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
-
-    { Talepekle: 'Ford', Simge: 'Mondeo', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
-    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
-    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
-
-    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    { Talepekle: 'Porsche', Simge: 'Boxter', SID: 33500, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
     MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
     YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
 
@@ -102,6 +84,26 @@ export class PuantajListesiComponent implements OnInit {
     YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
 
     { Talepekle: 'Porsche', Simge: 'Boxter', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Ford', Simge: 'Mondeo', SID: 33500, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Toyota', Simge: 'Celica', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Ford', Simge: 'Mondeo', SID: 35000, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
+    MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
+    YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
+
+    { Talepekle: 'Porsche', Simge: 'Boxter', SID: 33500, SicilNo: 'Toyota', Ad: 'Celica', Soyad: 35000, MesaiTarih: 'Toyota', Giriş: 'Celica', Çıkış: 35000, 
     MS: 'Celica', NM: 35000, AS: 'Toyota', FM: 'Celica', GV: 35000, GZ: 'Celica', FAS: 35000, OFM: 'Toyota', RTOFM: 'Celica', RTFM: 35000, IZS: 'Celica', 
     YIZS: 35000, SGKI: 'Toyota', UCZI: 'Celica', RM: 35000, EM: 35000, MesaiAçıklama: 'Toyota', İzinAçıklama: 'Celica', RMAçıklama: 35000,},
 
