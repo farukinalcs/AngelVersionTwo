@@ -11,7 +11,7 @@ const routes: Routes = [
     component: PuantajdashboardComponent,
   },
   {
-    path: 'puantaj',
+    path: 'genel_bakis',
     component: PuantajdashboardComponent,
   },
   {
