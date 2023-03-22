@@ -123,6 +123,8 @@ export class PuantajListesiComponent implements OnInit {
 
   }
 
+
+  puantaj:number = 0;
   constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
