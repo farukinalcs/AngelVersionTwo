@@ -23,7 +23,7 @@ export class PuantajListesiComponent implements OnInit {
     headerCheckboxSelectionFilteredOnly: true,
     checkboxSelection: true, pinned: 'left' }, 
     { headerName: "Talep Ekle", field: "Talepekle", cellRendererParams: { color: 'blue' }, maxWidth: 100,cellRenderer:MyGridCellComponent},
-    { headerName: "Simge", field: "Simge", cellRendererParams: { color: '#ff0000' }, maxWidth: 100, rowGroup:true},
+    { headerName: "Simge", field: "Simge", cellRendererParams: { color: '#ff0000' }, maxWidth: 100},
     { headerName: "SID", field: "SID",cellRendererParams: { color: '#ff0000' }, maxWidth: 100, cellRenderer:MyGridCellComponent},
     { headerName: "Sicil No", cellRendererParams: { color: '#ff0000' }, field: 'SicilNo', maxWidth: 120, cellRenderer :  (params : ICellRendererParams) => {
       return `<b style="color:red"> !!${params.value} </b>`
@@ -118,9 +118,13 @@ export class PuantajListesiComponent implements OnInit {
 
   defaultColDef: ColDef = {
     sortable:true,
-    filter:true
+    filter:true,
+    resizable:true
+
   }
 
+
+  puantaj:number = 0;
   constructor(private http:HttpClient) { }
 
   ngOnInit(): void {

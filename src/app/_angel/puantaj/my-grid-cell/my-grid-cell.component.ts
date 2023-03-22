@@ -5,7 +5,7 @@ import { ICellRendererParams } from 'ag-grid-community';
 @Component({
   selector: 'app-my-grid-cell',
   template: `
-     # {{value}}
+     # cellcomp{{value}}
   `,
   styles: [
   ]
