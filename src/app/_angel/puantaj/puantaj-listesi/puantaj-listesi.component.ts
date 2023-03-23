@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { AgGridAngular } from 'ag-grid-angular';
 import { CellClickedEvent, ColDef, ICellRendererParams } from 'ag-grid-community';
+import { Observable } from 'rxjs';
 import { MyGridCellComponent } from '../my-grid-cell/my-grid-cell.component';
 
 @Component({
@@ -122,12 +124,15 @@ export class PuantajListesiComponent implements OnInit {
     resizable:true
 
   }
+ 
 
-
-  puantaj:number = 0;
-  constructor(private http:HttpClient) { }
+  puantaj$ : Observable<number>;
+  constructor(private http:HttpClient, private store:Store<{number:number}>) {
+    this.puantaj$ = this.store.select("number");
+   }
 
   ngOnInit(): void {
+    
     // this.rowData = this.http.get("https://www.ag-grid.com/example-assets/row-data.json");
   }
 
