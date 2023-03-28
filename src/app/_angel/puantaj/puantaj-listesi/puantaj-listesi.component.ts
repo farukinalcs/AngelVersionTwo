@@ -9,7 +9,8 @@ import { MyGridCellComponent } from '../my-grid-cell/my-grid-cell.component';
 @Component({
   selector: 'app-puantaj-listesi',
   templateUrl: './puantaj-listesi.component.html',
-  styleUrls: ['./puantaj-listesi.component.scss']
+  styleUrls: ['./puantaj-listesi.component.scss'],
+  
 })
 export class PuantajListesiComponent implements OnInit {
   @ViewChild("agGrid",{static:false}) agGrid:AgGridAngular;
