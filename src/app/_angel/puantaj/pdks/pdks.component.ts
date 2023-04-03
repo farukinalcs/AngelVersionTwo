@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { pdksIncrement } from '../../NGRX/pdks.action';
 
+
 @Component({
   selector: 'app-pdks',
   templateUrl: './pdks.component.html',
@@ -15,7 +16,7 @@ export class PdksComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
+  
   test(){
     // this.pdks += 1;
     // alert(`'ARRUBEE' ${this.pdks}`);
