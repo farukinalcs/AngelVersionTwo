@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { MyGridCellComponent } from './my-grid-cell/my-grid-cell.component';
 import { PuantajTanimlamalarComponent } from './puantaj-tanimlamalar/puantaj-tanimlamalar.component';
 import { PuantajRaporlarComponent } from './puantaj-raporlar/puantaj-raporlar.component';
+import { PuantajWidgetComponent } from './puantaj-widget/puantaj-widget.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { PuantajRaporlarComponent } from './puantaj-raporlar/puantaj-raporlar.co
     PuantajListesiComponent,
     MyGridCellComponent,
     PuantajTanimlamalarComponent,
-    PuantajRaporlarComponent
+    PuantajRaporlarComponent,
+    PuantajWidgetComponent
   ],
   imports: [
     CommonModule,
