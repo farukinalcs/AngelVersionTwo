@@ -125,7 +125,7 @@
                             </th>
                             <td mat-cell *matCellDef="let element">
                                 <ng-container *ngIf="!element.isEdit">
-                                    <p class="label label-xl label-light-success label-inline">
+                                    <p class="label label-xl label-light-success label-inline" (dblclick)="onEdit(element)">
                                         {{element.durum}}</p>
                                 </ng-container>
     

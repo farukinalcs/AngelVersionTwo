@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
@@ -10,6 +10,20 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   styleUrls: ['./dialog-ziyaretci-talebi.component.scss']
 })
 export class DialogZiyaretciTalebiComponent implements OnInit {
+
+
+  stepperFields : any[] = [
+    {class : 'stepper-item current', number : 1, title : 'Bilgiler', desc :'Beklenen ziyarteçi'},
+    {class : 'stepper-item', number : 2, title : 'Ziyaret', desc :'Ziyaret Tipi'},
+    {class : 'stepper-item', number : 3, title : 'Giriş', desc :'Giriş zamanı'},
+    {class : 'stepper-item', number : 4, title : 'Çıkış', desc :'Çıkış zamanı'},
+    {class : 'stepper-item', number : 5, title : 'Tamamlandı', desc :'Özet bilgiler'},
+  ];
+  
+  formsCount : any = 5;  
+  currentStep$: BehaviorSubject<number> = new BehaviorSubject(1);
+  currentItem : any = this.stepperFields[0];
+  visitorFormValues : any;
 
   // Stepper responsive 
   stepperOrientation: Observable<StepperOrientation>;
@@ -43,7 +57,7 @@ export class DialogZiyaretciTalebiComponent implements OnInit {
     private breakpointObserver: BreakpointObserver
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.init();
   }
 
@@ -52,6 +66,34 @@ export class DialogZiyaretciTalebiComponent implements OnInit {
     this.createFormGroup();
     this.checkFirstFormValid();
     this.checkSecondFormValid();
+  }
+
+
+  nextStep() {
+    const nextStep = this.currentStep$.value + 1;
+
+    if (nextStep > this.formsCount) {
+      return;
+    }
+
+    this.currentStep$.next(nextStep);
+    this.currentItem = this.stepperFields[this.currentStep$.value - 1];
+    let prevItem = this.stepperFields[this.currentStep$.value - 2]
+    this.currentItem.class = "stepper-item current";
+    prevItem.class = "stepper-item completed";
+
+  }
+
+  prevStep() {
+    const prevStep = this.currentStep$.value - 1;
+    if (prevStep === 0) {
+      return;
+    }
+    this.currentStep$.next(prevStep);
+    this.currentItem = this.stepperFields[this.currentStep$.value - 1];
+    let prevItem = this.stepperFields[this.currentStep$.value]
+    this.currentItem.class = "stepper-item current";
+    prevItem.class = "stepper-item";
   }
 
   // Formların oluşması
@@ -63,6 +105,10 @@ export class DialogZiyaretciTalebiComponent implements OnInit {
       firma : ['', Validators.required],
       ziyaretTipi : ['', Validators.required],
       aciklama : ['', Validators.required],
+      girisTarihi : ['', Validators.required],
+      girisSaati : ['', Validators.required],
+      cikisTarihi : ['', Validators.required],
+      cikisSaati : ['', Validators.required]
     });
 
     this.secondFormGroup = this.formBuilder.group({
@@ -75,22 +121,25 @@ export class DialogZiyaretciTalebiComponent implements OnInit {
 
   // Form değerlerinin alınması
   getFormsValues() {
-    this.firstFormGroup.valueChanges.subscribe((d) => {
-      this.formsValues.ad = d.ad;
-      this.formsValues.soyad = d.soyad;
-      this.formsValues.email = d.email;
-      this.formsValues.firma = d.firma;
-      this.formsValues.ziyaretTipi = d.ziyaretTipi;
-      this.formsValues.aciklama = d.aciklama;
+    this.visitorFormValues = Object.assign({}, this.firstFormGroup.value)
+    console.log("form : ", this.visitorFormValues);
+    
+    // this.firstFormGroup.valueChanges.subscribe((d) => {
+    //   this.formsValues.ad = d.ad;
+    //   this.formsValues.soyad = d.soyad;
+    //   this.formsValues.email = d.email;
+    //   this.formsValues.firma = d.firma;
+    //   this.formsValues.ziyaretTipi = d.ziyaretTipi;
+    //   this.formsValues.aciklama = d.aciklama;
 
-    });
-    this.secondFormGroup.valueChanges.subscribe((d) => {
-      this.formsValues.girisTarihi = d.girisTarihi;
-      this.formsValues.girisSaati = d.girisSaati;
-      this.formsValues.cikisTarihi = d.cikisTarihi;
-      this.formsValues.cikisSaati = d.cikisSaati;
-    });
-    console.log("TEST :", this.formsValues);
+    // });
+    // this.secondFormGroup.valueChanges.subscribe((d) => {
+    //   this.formsValues.girisTarihi = d.girisTarihi;
+    //   this.formsValues.girisSaati = d.girisSaati;
+    //   this.formsValues.cikisTarihi = d.cikisTarihi;
+    //   this.formsValues.cikisSaati = d.cikisSaati;
+    // });
+    // console.log("TEST :", this.formsValues);
   }
 
   // Stepper'ı yataydan dikeye çevir

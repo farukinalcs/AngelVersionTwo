@@ -298,3 +298,182 @@
 
 
 <router-outlet></router-outlet>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container-fluid">
+  <div class="card mb-5 mb-xl-10">
+    <div class="card-body pt-9 pb-0">
+      <div class="row" *ngIf="user$ | async as _user">
+        <div class="col-2">
+          <div class="col-12 me-7 mb-4">
+            <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+              <img alt="Logo" src="{{'data:image/jpg;base64,' + _user.fotoimage}}" />
+              <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-5">
+          <div class="row">
+            <div class="col-4">
+              <a class="text-gray-800 text-hover-primary fs-2 fw-bolder me-1 cursor-pointer">
+                _user$.loginnam
+              </a>
+            </div>
+
+            <div class="col-4">
+              <a class="cursor-pointer">
+                <span [inlineSVG]="'./assets/media/icons/duotune/general/gen026.svg'" class="svg-icon svg-icon-1 svg-icon-primary"></span>
+              </a>
+            </div>
+            <div class="col-4">
+              <a class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">
+                İşe Giriş Tarihi
+              </a>
+            </div>
+
+            <div class="col-4">
+              <a class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2 cursor-pointer">
+                <span [inlineSVG]="'./assets/media/icons/duotune/communication/com006.svg' " class="svg-icon svg-icon-4 me-1"></span>
+                _user.firmaad
+              </a>
+            </div>
+
+            <div class="col-4">
+              <a class=" d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2 cursor-pointer">
+                <span [inlineSVG]="'./assets/media/icons/duotune/general/gen018.svg' " class="svg-icon svg-icon-4 me-1"></span>
+                _user.gorevad
+              </a>
+            </div>
+
+            <div class="col-4">
+              <a class="d-flex align-items-center text-gray-400 text-hover-primary mb-2 cursor-pointer">
+                <span [inlineSVG]="'./assets/media/icons/duotune/communication/com011.svg' " class="svg-icon svg-icon-4 me-1"></span>
+                _user.customerName
+              </a>
+            </div>
+
+            <div class="col-12">
+              <div class="row">
+                <div class="col-4">
+                  <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                    <div class="d-flex align-items-center">
+                      <div class="fs-2 fw-bolder">45</div>
+                    </div>
+                    <div class="fw-bold fs-6 text-gray-400">Kıdem</div>
+                  </div>
+                </div>
+
+                <div class="col-4">
+                  <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                    <div class="d-flex align-items-center">
+                      <div class="fs-2 fw-bolder">5</div>
+                    </div>
+                    <div class="fw-bold fs-6 text-gray-400">Kullanılan</div>
+                  </div>
+                </div>
+
+                <div class="col-4">
+                  <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                    <div class="d-flex align-items-center">
+                      <div class="fs-2 fw-bolder">60</div>
+                    </div>
+                    <div class="fw-bold fs-6 text-gray-400">Devir</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-5">
+          <div class="row">
+            <div class="col-6">
+              <form class="example-form" [formGroup]="myControl">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Vekalet Profil Değişimi</mat-label>
+                  <input type="text" placeholder="Pick one" aria-label="Vekalet Profil Değişimi" matInput
+                    formControlName="vekilSec" [matAutocomplete]="auto">
+                  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </form>
+            </div>
+
+            <div class="col-6">
+              <button class="btn btn-primary" mat-button [matMenuTriggerFor]="talepler">Talep Oluştur</button>
+              <mat-menu #talepler="matMenu">
+                <button mat-menu-item [matMenuTriggerFor]="izin">
+                  <i class="icon-l fas fa-skiing"> </i>
+                  İzin
+                </button>
+
+                <button (click)="openDialog(dialogFazlaMesaiComponent)" mat-menu-item>
+                  <i class="icon-l fas fa-calendar-alt"> </i>
+                  Fazla Mesai
+                </button>
+
+                <button mat-menu-item (click)="openDialog(dialogZiyaretciComponent)">
+                  <i class="fa-solid fa-person-walking"> </i>
+                  Ziyaretçi
+                </button>
+
+                <button mat-menu-item>
+                  <i class="icon-l fas fa-bus-alt"> </i>
+                  Servis
+                </button>
+
+                <button mat-menu-item>
+                  <i class="icon-l fas fa-graduation-cap"> </i>
+                  Eğitim
+                </button>
+              </mat-menu>
+
+              <mat-menu #izin="matMenu">
+                <button mat-menu-item (click)="openDialog(dialogSaatlikIzinComponent)">Saatlik İzin</button>
+                <button mat-menu-item (click)="openDialog(dialogGunlukIzinComponent)">Günlük İzin</button>
+              </mat-menu>
+            </div>
+
+            <div class="col-12">
+              <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3 me-20 pe-10">
+                <div class="d-flex justify-content-between w-100 mt-auto mb-2">
+                  <span class="fw-bold fs-6 text-gray-400">Kullanılan izin yüzdesi</span>
+                  <span class="fw-bolder fs-6">50%</span>
+                </div>
+                <div class="h-5px mx-3 w-100 bg-light mb-3">
+                  <div class="bg-success rounded h-5px" role="progressbar" [style.width]="'16.66666666666667%'"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex overflow-auto h-55px justify-content-center">
+        <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fw-bolder flex-nowrap">
+          <li class="nav-item" *ngFor="let item of links">
+            <a class="nav-link text-active-primary me-6" routerLink="{{item.link}}" routerLinkActive="active" translate="{{item.translate}}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div> -->
