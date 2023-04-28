@@ -1,6 +1,15 @@
-<ag-grid-angular
-    style="width: 100vw; height: 350px;"
-    class="ag-theme-alpine"
+   
+   <button (click)="getSelectedRows()">GET SELECTED ROWS</button>
+
+   <h3 style="color: red;">{{puantaj}}</h3>
+
+   <ag-grid-angular #agGrid
+    style="width: 70vw; height: 50vh;"
+    class="ag-theme-balham"
     [rowData]="rowData"
-    [columnDefs]="columnDefs">
-</ag-grid-angular>
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [rowSelection]="'multiple'"
+    [animateRows]="true"
+    (cellClicked)="onCellClicked($event)">
+    </ag-grid-angular>

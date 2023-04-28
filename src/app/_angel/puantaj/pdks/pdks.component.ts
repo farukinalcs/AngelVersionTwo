@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PdksComponent implements OnInit {
 
+  pdks:number = 0;
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  test(){
+    this.pdks += 1;
+    alert(`'ARRUBEE' ${this.pdks}`);
   }
 
 }

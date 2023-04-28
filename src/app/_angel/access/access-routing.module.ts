@@ -10,34 +10,34 @@ import { AccessDataWidgetComponent } from './access-data-widget/access-data-widg
 
 
 const routes: Routes = [
-  {
-    path: '',
-    component: AccessdashboardComponent,
-    // children: [
-    //   {
-    //     path: 'sicil_liste',
-    //     component: SicillisteComponent,
-    //   },
-    //   {
-    //     path: 'terminal',
-    //     component: TerminalComponent,
-    //   },
-    //   {
-    //     path: 'gecis_gruplari',
-    //     component: GecisgruplariComponent,
-    //   },
-    //   {
-    //     path: 'tanimlamalar',
-    //     component: TanimlamalarComponent,
-    //   },
-    //   {
-    //     path: 'raporlar',
-    //     component: RaporlarComponent,
-    //   },
-    //   { path: '', redirectTo: '', pathMatch: 'full' },
-    //   { path: '**', redirectTo: '', pathMatch: 'full' },
-    // ],
-  },
+  // {
+  //   path: '',
+  //   component: AccessdashboardComponent,
+  //   children: [
+  //     {
+  //       path: 'sicil_liste',
+  //       component: SicillisteComponent,
+  //     },
+  //     {
+  //       path: 'terminal',
+  //       component: TerminalComponent,
+  //     },
+  //     {
+  //       path: 'gecis_gruplari',
+  //       component: GecisgruplariComponent,
+  //     },
+  //     {
+  //       path: 'tanimlamalar',
+  //       component: TanimlamalarComponent,
+  //     },
+  //     {
+  //       path: 'raporlar',
+  //       component: RaporlarComponent,
+  //     },
+  //     { path: '', redirectTo: '', pathMatch: 'full' },
+  //     { path: '**', redirectTo: '', pathMatch: 'full' },
+  //   ],
+  // },
   {
     path: 'genel_bakis',
     component: AccessDataWidgetComponent,
