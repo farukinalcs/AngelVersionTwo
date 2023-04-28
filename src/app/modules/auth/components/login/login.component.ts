@@ -5,6 +5,8 @@ import { first } from 'rxjs/operators';
 import { UserModel } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthHTTPService } from '../../services/auth-http';
+import { HelperService } from 'src/app/_helpers/helper.service';
 
 @Component({
   selector: 'app-login',
@@ -28,8 +30,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private authHttpService : AuthHTTPService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private helperService : HelperService
   ) {
     this.isLoading$ = this.authService.isLoading$;
     // redirect to home if already logged in
@@ -39,6 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.gate();
     this.initForm();
     // get return url from route parameters or default to '/'
     this.returnUrl =
@@ -85,6 +90,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
       });
     this.unsubscribe.push(loginSubscr);
+  }
+
+  gate() {
+    this.authHttpService.gate().subscribe((response : any) => {
+      console.log("GATE : ", response);
+      this.helperService.gateResponseX = response.x;
+    })
   }
 
   ngOnDestroy() {

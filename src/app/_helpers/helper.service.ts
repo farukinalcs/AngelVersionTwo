@@ -7,6 +7,8 @@ import { DialogContainerComponent } from '../_angel/shared/dialog-container/dial
 })
 export class HelperService {
 
+  gateResponseX : any;
+  
   userLoginModel : any = { 
     loginname:"",
     gorev:null,
