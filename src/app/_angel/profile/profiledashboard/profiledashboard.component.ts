@@ -56,21 +56,21 @@ export class ProfiledashboardComponent implements OnInit {
   }
 
   openDialog(component: any) {
-    // this.dialog.open(component);
+    this.dialog.open(component);
 
-    var dialogRes = this.helper.dynamicDialog(false, '530px', '550px', 'fmTalepFormu', 'form', this.dialog, this);
+    // var dialogRes = this.helper.dynamicDialog(false, '530px', '550px', 'fmTalepFormu', 'form', this.dialog, this);
 
-    const ruleDialogSubs = dialogRes.afterClosed().subscribe((result: any) => {
-      this.helper.refreshComponent(this);
+    // const ruleDialogSubs = dialogRes.afterClosed().subscribe((result: any) => {
+    //   this.helper.refreshComponent(this);
                           
-      if (result == "OK") {
-        console.log("result :", result);
+    //   if (result == "OK") {
+    //     console.log("result :", result);
         
-      }
+    //   }
 
-    });
+    // });
 
-    this.unsubscribe.push(ruleDialogSubs);
+    // this.unsubscribe.push(ruleDialogSubs);
   }  
 
   getCurrentUserInformations() {
