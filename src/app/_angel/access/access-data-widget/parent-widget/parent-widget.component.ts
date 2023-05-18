@@ -12,6 +12,8 @@ export class ParentWidgetComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log("widget :", this.widget);
+    console.log("resizeEvent :", this.resizeEvent);
   }
 
 }

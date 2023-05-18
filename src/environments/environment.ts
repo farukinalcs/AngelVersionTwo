@@ -9,7 +9,7 @@ export const environment = {
   isMockEnabled: true,
   apiUrl:'https://api.meyerangel.com:8086/api',
   // newApiUrl : 'http://92.45.62.51:5216/api',
-  newApiUrl : 'https://www.meyerangel.com:8061/api',
+  newApiUrl : 'http://localhost:5216/api',
   appThemeName: 'Metronic',
   appPurchaseUrl: 'https://1.envato.market/EA4JP',
   appHTMLIntegration:

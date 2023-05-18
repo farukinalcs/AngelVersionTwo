@@ -50,6 +50,15 @@ export const locale = {
       LOGIN: {
         TITLE: 'Login Account',
         BUTTON: 'Sign In',
+        USERNAME: "Username",
+        PASSWORD: "Password",
+        APP_LIST : "APP List"
+      },
+      LOGIN_FAILED : {
+        PASSWORD_REQUIRED : "Şifre gerekli!",
+        USERNAME_REQUIRED : "Kullanıcı adı gerekli!",
+        APP_REQUIRED : "Uygulama gerekli!",
+        MIN_LENGTH_3 : "Şifre en az 3 karakter içermelidir!"
       },
       FORGOT: {
         TITLE: 'Forgotten Password?',

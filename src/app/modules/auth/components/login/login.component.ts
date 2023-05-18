@@ -1,12 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { filter, first } from 'rxjs/operators';
 import { UserModel } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { AuthHTTPService } from '../../services/auth-http';
 import { HelperService } from 'src/app/_helpers/helper.service';
+import { TranslationService } from 'src/app/modules/i18n';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,28 @@ export class LoginComponent implements OnInit, OnDestroy {
   returnUrl: string;
   isLoading$: Observable<boolean>;
 
+  selectedLanguage : any;
+  language : LanguageFlag;
+  languages : LanguageFlag[] = [
+    {
+      lang: 'en',
+      name: 'English',
+      flag: './assets/media/flags/united-states.svg',
+    },
+    {
+      lang: 'de',
+      name: 'German',
+      flag: './assets/media/flags/germany.svg',
+    },
+    {
+      lang: 'tr',
+      name: 'Turkish',
+      flag: './assets/media/flags/turkey.svg',
+    },
+  ];
+
+  appList : any[] = [];
+
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
@@ -33,7 +56,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authHttpService : AuthHTTPService,
     private route: ActivatedRoute,
     private router: Router,
-    private helperService : HelperService
+    private helperService : HelperService,
+    private translationService : TranslationService,
+    private ref : ChangeDetectorRef
   ) {
     this.isLoading$ = this.authService.isLoading$;
     // redirect to home if already logged in
@@ -43,6 +68,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.setSelectedLanguage();
     this.gate();
     this.initForm();
     // get return url from route parameters or default to '/'
@@ -57,11 +83,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.loginForm = this.fb.group({
+      appList : ['', Validators.required],
       userName: [
         this.defaultAuth.userName,
         Validators.compose([
-          // Validators.required,
-          // Validators.email,
+          Validators.required,
           Validators.minLength(3),
           Validators.maxLength(320), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
         ]),
@@ -80,10 +106,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   submit() {
     this.hasError = false;
     const loginSubscr = this.authService
-      .login(this.f.userName.value, this.f.password.value)
+      .login(this.f.userName.value, this.f.password.value, this.selectedLanguage, this.f.appList.value)
       .pipe(first())
-      .subscribe((user: UserModel) => {
-        if (user) {
+      .subscribe((data) => {
+
+        if (data) {
           this.router.navigate([this.returnUrl]);
         } else {
           this.hasError = true;
@@ -96,10 +123,46 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authHttpService.gate().subscribe((response : any) => {
       console.log("GATE : ", response);
       this.helperService.gateResponseX = response.x;
+      this.helperService.gateResponseY = response.y
+
+      this.appList = JSON.parse(response.m);
+      console.log("App List : ", this.appList);
+      
+      this.ref.detectChanges();
     })
+  }
+
+  setLanguageWithRefresh(lang : any) {
+    this.setLanguage(lang);
+    this.selectedLanguage = lang;
+  }
+
+  setLanguage(lang : any) {
+    this.languages.forEach((language: LanguageFlag) => {
+      if (language.lang === lang) {
+        language.active = true;
+        this.language = language;
+        this.selectedLanguage = lang;
+      } else {
+        language.active = false;
+      }
+    });
+    this.translationService.setLanguage(lang);
+  }
+
+  setSelectedLanguage(): any {
+    this.setLanguage(this.translationService.getSelectedLanguage());
   }
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
+}
+
+
+interface LanguageFlag {
+  lang: string;
+  name: string;
+  flag: string;
+  active?: boolean;
 }

@@ -271,9 +271,16 @@ export const locale = {
         BUTTON: "Giriş Yap",
         USERNAME: "Kullanıcı Adı",
         PASSWORD: "Şifre",
+        APP_LIST : "Uygulamalar"
+      },
+      LOGIN_FAILED : {
+        PASSWORD_REQUIRED : "Password required!",
+        USERNAME_REQUIRED : "Username required!",
+        APP_REQUIRED : "App required!",
+        MIN_LENGTH_3 : "Password should have at least 3 symbols!"
       },
       FORGOT: {
-        TITLE: "Şifremi Unuttum",
+        TITLE: "Şifremi Unuttum ? ",
         FIND_LOGIN: "Kullanıcımı Bul",
         RESET_PASSWORD: "Şifremi Sıfırla",
         DESC: "Enter your email to reset your password",
