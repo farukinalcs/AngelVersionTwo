@@ -7,8 +7,11 @@ import { AuthHTTPService } from './auth-http/auth-http.service';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { HelperService } from 'src/app/_helpers/helper.service';
+import { ResponseModel } from '../models/response-model';
+import { ResponseXloginDetail } from '../models/response-Xlogindetail';
+import { ResponseDetailZ } from '../models/response-detail-z';
 
-export type UserType = UserModel | undefined;
+export type UserType = ResponseXloginDetail | undefined;
 
 @Injectable({
   providedIn: 'root',
@@ -23,17 +26,10 @@ export class AuthService implements OnDestroy {
   currentUser$: Observable<UserType>;
   isLoading$: Observable<boolean>;
   currentUserSubject: BehaviorSubject<UserType>;
-  // isLoadingSubject: BehaviorSubject<boolean>;
 
   get currentUserValue(): UserType {
     return this.currentUserSubject.value;
   }
-
-  
-
-  // set currentUserValue(user: UserType) {
-  //   this.currentUserSubject.next(user);
-  // }
 
   constructor(
     private authHttpService: AuthHTTPService,
@@ -48,58 +44,42 @@ export class AuthService implements OnDestroy {
     // this.unsubscribe.push(subscr);
   }
 
-  // public methods
-  // login(email: string, password: string): Observable<UserType> {
-  //   this.isLoadingSubject.next(true);
-  //   return this.authHttpService.login(email, password).pipe(
-  //     map((auth: AuthModel) => {
-  //       const result = this.setAuthFromLocalStorage(auth);
-  //       return result;
-  //     }),
-  //     switchMap(() => this.getUserByToken()),
-  //     catchError((err) => {
-  //       console.error('err', err);
-  //       return of(undefined);
-  //     }),
-  //     finalize(() => this.isLoadingSubject.next(false))
-  //   );
-  // }
-
-  login(email: string, password: string): Observable<any> {
+  login(email: string, password: string, lang: any, appList : any): Observable<any> {
     this.isLoadingSubject.next(true);
 
-    // return this.authHttpService.login(email, password)
-    return this.authHttpService.cryptoLogin(email, password)
-    .pipe(
-      map((auth: any) => {
-        const result = this.setAuthFromLocalStorage(auth[0]);
-        if (result) {
-          var AuthModel = this.getAuthFromLocalStorage();
-          if (AuthModel == null) {
-            return of(undefined);
+    return this.authHttpService.cryptoLogin(email, password, lang, appList)
+      .pipe(map((auth : ResponseModel<ResponseXloginDetail, ResponseDetailZ>[]) => {
+        let response : ResponseXloginDetail[] = JSON.parse(auth[0].x.toString());
+        console.log("response :", response[0]);
+        
+        let response_z : ResponseDetailZ = JSON.parse(auth[0].z.toString());        
+        
+        if (response_z.islemsonuc == 1) {
+          const result = this.setAuthFromLocalStorage(auth[0].y);
+          if (result) {
+            var AuthModel = this.getAuthFromLocalStorage();
+            if (AuthModel == null) {
+              return of(undefined);
+            }
+            var user = response[0];
+
+            
+            this.helper.userLoginModel = response[0];
+            console.log("helper type", typeof(this.helper.userLoginModel));
+            this.currentUserSubject = new BehaviorSubject<any>(user);
+            this.isLoadingSubject.next(false)
+
+            return this.currentUserSubject;
           }
-          
-          var user:any = { loginname:"",gorev:null,yetki:null,bolum:null,kademe:null,xsicilid:null,extloginname:"", customerName: "", id: null, tokenid: "",islemno:'',access:"",accessmenu:true,admin:false};
-       
-          user=AuthModel;
-          this.helper.userLoginModel = AuthModel;
-          this.currentUserSubject = new BehaviorSubject<any>(user);
-          this.isLoadingSubject.next(false)
-
-          console.log("AuthModel",AuthModel);
-          console.log("USER",user);
-          console.log("this.helper.userLoginModel",this.helper.userLoginModel);
-
-          return this.currentUserSubject;
         }
       }),
 
-      catchError((err) => {
-        console.error('err', err);
-        return of(undefined);
-      }),
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+        catchError((err) => {
+          console.error('err', err);
+          return of(undefined);
+        }),
+        finalize(() => this.isLoadingSubject.next(false))
+      );
   }
 
   logout() {
@@ -115,20 +95,6 @@ export class AuthService implements OnDestroy {
       return of(undefined);
     }
     var user:any;
-
-    // var user = { fullname: "", username: "", id: null, tokenid: "",extloginname:"",xsicilid:null };
-    // var user: any = { loginname:"", id: null, tokenid: "",gorev:null,yetki:null,bolum:null,kademe:null,xsicilid:null,extloginname:"", customerName: "",islemno:'',access:"",accessmenu:true,admin:false};
-    
-    // user.loginname = AuthModel.loginname;
-    // user.gorev = AuthModel.gorev;
-    // user.yetki = AuthModel.yetki;
-    // user.bolum = AuthModel.bolum;
-    // user.kademe = AuthModel.kademe;
-    // user.id = AuthModel.id;
-    // user.tokenid = AuthModel.tokenid;
-    // user.extloginname = AuthModel.extloginname;
-    // user.xsicilid = AuthModel.xsicilid;
-    // this.helper.userLoginModel = AuthModel;
     
     const auth = this.getAuthFromLocalStorage();
 
@@ -157,7 +123,7 @@ export class AuthService implements OnDestroy {
       map(() => {
         this.isLoadingSubject.next(false);
       }),
-      switchMap(() => this.login(user.email, user.password)),
+      // switchMap(() => this.login(user.email, user.password)),
       catchError((err) => {
         console.error('err', err);
         return of(undefined);
@@ -174,9 +140,9 @@ export class AuthService implements OnDestroy {
   }
 
   // private methods
-  private setAuthFromLocalStorage(auth: AuthModel): boolean {
+  private setAuthFromLocalStorage(auth:any): boolean {
     // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
-    if (auth && auth.tokenid) {
+    if (auth ) {
       localStorage.setItem(this.authLocalStorageToken, JSON.stringify(auth));
       return true;
     }
@@ -195,20 +161,6 @@ export class AuthService implements OnDestroy {
       return hata;
     }
   }
-  // private getAuthFromLocalStorage(): AuthModel | undefined {
-  //   try {
-  //     const lsValue = localStorage.getItem(this.authLocalStorageToken);
-  //     if (!lsValue) {
-  //       return undefined;
-  //     }
-
-  //     const authData = JSON.parse(lsValue);
-  //     return authData;
-  //   } catch (error) {
-  //     console.error(error);
-  //     return undefined;
-  //   }
-  // }
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());

@@ -64,12 +64,12 @@ export class AccessDataWidgetComponent implements OnInit {
     };
 
     this.dashboard1 = [
-      { cols: 26, rows: 5, y: 0, x: 0 ,type: 'İçerideki Personel Sayısı' },
-      { cols: 26, rows: 5, y: 0, x: 26 ,type: 'İçerideki Ziyaretçi Sayısı' },
-      { cols: 26, rows: 5, y: 0, x: 52 ,type:  'İçerideki Cihazlara Gönderilen Son 100 İşlem' },
-      { cols: 26, rows: 5, y: 6, x: 0 ,type: 'İletişimi Kesik Cihaz Sayısı' },
-      { cols: 26, rows: 5, y: 6, x: 27 ,type: 'Alarm Sayısı' }, 
-      { cols: 26, rows: 5, y: 6, x: 53 ,type: 'Mesaisi Bitip Çıkmayan Personel Sayısı'},
+      { cols: 26, rows: 5, y: 0, x: 0 ,type: 'İçerideki Personel Sayısı', class: 'row d-flex align-items-center bg-light-primary' },
+      { cols: 26, rows: 5, y: 0, x: 26 ,type: 'İçerideki Ziyaretçi Sayısı', class: 'row d-flex align-items-center bg-light-warning' },
+      { cols: 26, rows: 5, y: 0, x: 52 ,type: 'İçerideki Cihazlara Gönderilen Son 100 İşlem', class: 'row d-flex align-items-center bg-light-info' },
+      { cols: 26, rows: 5, y: 6, x: 0 ,type: 'İletişimi Kesik Cihaz Sayısı', class: 'row d-flex align-items-center bg-light-success' },
+      { cols: 26, rows: 5, y: 6, x: 27 ,type: 'Alarm Sayısı', class: 'row d-flex align-items-center bg-light-danger' }, 
+      { cols: 26, rows: 5, y: 6, x: 53 ,type: 'Mesaisi Bitip Çıkmayan Personel Sayısı', class: 'row d-flex align-items-center bg-light-dark'},
     ];
   }
 
@@ -111,27 +111,19 @@ export class AccessDataWidgetComponent implements OnInit {
     this.dashboard2 = [
       { cols: 30, rows: 17, y: 0, x: 0 ,type:  'İçerideki Kişi Sayısı' },
       { cols: 52, rows: 17, y: 0, x: 30 ,type: 'Geçişler' },
-      { cols: 78, rows: 14, y: 15, x: 28 ,type: 'Kapı İşlemleri' },
+      { cols: 78, rows: 14, y: 15, x: 28 ,type: 'Kapı İşlemleri'},
       { cols: 52, rows: 15, y: 31, x: 15 ,type: 'Olaylar' },
     ];
   }
   
-  removeItem1($event : any, item : any) {
-    $event.preventDefault();
-    $event.stopPropagation();
+  removeItem1(item : any) {
     this.dashboard1.splice(this.dashboard1.indexOf(item), 1);
-
     this.removeItems1.push(item)
   }
 
-  removeItem2($event : any, item : any) {
-    $event.preventDefault();
-    $event.stopPropagation();
+  removeItem2(item : any) {
     this.dashboard2.splice(this.dashboard2.indexOf(item), 1);
-
     this.removeItems2.push(item);
-    //
-    //
   }
 
   addItem1(item : any) {

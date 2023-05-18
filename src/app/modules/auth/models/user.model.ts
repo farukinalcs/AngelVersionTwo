@@ -123,3 +123,4 @@ export class UserModel extends AuthModel {
     this.socialNetworks = user.socialNetworks;
   }
 }
+
