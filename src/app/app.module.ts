@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { AuthService } from './modules/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { StoreModule } from '@ngrx/store';
+import { PdksReducer } from './_angel/NGRX/pdks.reducer';
 // #fake-start#
 // import { FakeAPIService } from './_fake/fake-api.service';
 
@@ -45,7 +46,7 @@ function appInitializer(authService: AuthService) {
     AppRoutingModule,
     InlineSVGModule.forRoot(),
     NgbModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({number: PdksReducer}),
   ],
   providers: [
     {
