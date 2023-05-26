@@ -8,9 +8,11 @@ import { DialogContainerComponent } from '../_angel/shared/dialog-container/dial
 export class HelperService {
 
   gateResponseX : any;
-  gateResponseY :any;
+  gateResponseY : any;
   
   userLoginModel : any;
+
+  yetki : any[];
 
   isMobileSubsDynamicDialog: Subscription = new Subscription();
 

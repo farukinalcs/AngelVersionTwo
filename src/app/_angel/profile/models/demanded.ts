@@ -1,0 +1,35 @@
+export class DemandedModel {
+    fotoimage: string; 
+    gerceklesme: string;
+    tipad: string;
+    Personel: string;
+    neden: string;
+    Id: number;
+    Baslangic: string;
+    Bitis: string;
+    SicilId: number;
+    Kademe: number;
+    Onaylayan: any | null;
+    Uyarilar: string;
+    OnayTarih: any | null;
+    nedenx: string;
+    sectim: number;
+}
+
+// {
+//     "fotoimage": "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",
+//     "gerceklesme": "Başlamadı",
+//     "tipad": "İzin",
+//     "Personel": "Tayfun Test",
+//     "neden": "Görev İzin",
+//     "Id": 6,
+//     "Baslangic": "2023-05-29T00:00:00",
+//     "Bitis": "2023-05-30T00:00:00",
+//     "SicilId": 234,
+//     "Kademe": 1,
+//     "Onaylayan": null,
+//     "Uyarilar": "",
+//     "OnayTarih": null,
+//     "nedenx": "Talep Edilenler Test",
+//     "sectim": 0
+// }

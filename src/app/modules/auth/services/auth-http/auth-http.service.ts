@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
 import { UserModel } from '../../models/user.model';
 import { environment } from '../../../../../environments/environment';
-import { AuthModel } from '../../models/auth.model';
 import * as CryptoJS from "crypto-js";
 import { HelperService } from 'src/app/_helpers/helper.service';
 
@@ -24,9 +23,9 @@ export class AuthHTTPService {
   }
 
   cryptoLogin(email : string, password : string, lang : any, appList : any) : Observable<any> {
-    let headers = new HttpHeaders({
-      Authorization: this.helperService.gateResponseX,
-    });
+    // let headers = new HttpHeaders({
+    //   Authorization: this.helperService.gateResponseX,
+    // });
 
     var loginOptions = {
       loginName : email,
@@ -52,19 +51,11 @@ export class AuthHTTPService {
     };
     
     let options = {
-      headers : headers,
+      // headers : headers,
       params: data
     };
 
-    console.log("options : ", options);
     return this.http.get<any>(API_URL + '/auth', options);
-  }
-
-
-  login(email:string,password:string): Observable<any>{
-    var params = {Name :'LoginName='+email+'&Password='+password+'&ldap=0'}
-
-    return this.http.get<AuthModel>(API_USERS_URL,{params});
   }
 
   // CREATE =>  POST: add a new user to the server

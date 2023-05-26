@@ -1,87 +1,71 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subject, takeUntil } from 'rxjs';
+import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
+import { ResponseModel } from 'src/app/modules/auth/models/response-model';
+import { Durations } from '../../models/durations';
+import { ProfileService } from '../../profile.service';
 
 @Component({
   selector: 'app-surelerim',
   templateUrl: './surelerim.component.html',
   styleUrls: ['./surelerim.component.scss']
 })
-export class SurelerimComponent implements OnInit {
+export class SurelerimComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject();
+  
   @ViewChild(MatPaginator, {static : true}) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns : string[] = ['tarih', 'girisCikis', 'normalSure', 'araSure', 'izinSure', 'fazlaSure', 'eksikSure']; 
+  dataSource :MatTableDataSource<any>;
   
-  dataSourceGunluk :MatTableDataSource<any>;
-  dataSourceHaftalik :MatTableDataSource<any>;
-  dataSourceAylik :MatTableDataSource<any>;
-
-  gunlukSureler : any[] = [
-    {tarih : '16-12-2022 Cuma', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '17-12-2022 Cumartesi', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-  ];
-
-  haftalikSureler : any[] = [
-    {tarih : '16-12-2022 Cuma', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '17-12-2022 Cumartesi', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '18-12-2022 Pazar', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '19-12-2022 Pazartesi', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '20-12-2022 Salı', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '21-12-2022 Çarşamba', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '22-12-2022 Perşembe', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-  ];
-
-  aylikSureler : any[] = [
-    {tarih : '16-12-2022 Cuma', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '17-12-2022 Cumartesi', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '18-12-2022 Pazar', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '19-12-2022 Pazartesi', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '20-12-2022 Salı', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '21-12-2022 Çarşamba', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '22-12-2022 Perşembe', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '22-12-2022 Perşembe', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '22-12-2022 Perşembe', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '22-12-2022 Perşembe', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '22-12-2022 Perşembe', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '22-12-2022 Perşembe', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '22-12-2022 Perşembe', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '22-12-2022 Perşembe', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '22-12-2022 Perşembe', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-    {tarih : '22-12-2022 Perşembe', girisCikis : '08:00 18:04', normalSure : '00:00', araSure : '00:00', izinSure : '00:00 ', fazlaSure : '', eksikSure : '540'},
-  ];
-
-  
-  constructor() { }
+  durations : any[] = [];
+  constructor(
+    private profilService : ProfileService,
+    private ref : ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
-    this.dataSourceGunluk = new MatTableDataSource(this.gunlukSureler);
-    this.dataSourceGunluk.paginator = this.paginator;
+    this.getDurations('1');
 
-    this.dataSourceHaftalik = new MatTableDataSource(this.haftalikSureler);
-    this.dataSourceHaftalik.paginator = this.paginator;
+  }
 
-    this.dataSourceAylik = new MatTableDataSource(this.aylikSureler);
-    this.dataSourceAylik.paginator = this.paginator;
+  getDurations(event : any) {
+    let zamanAralik : any = '1';
+
+    if (event.tab) {
+      if (event.tab.textLabel == 'Bugün') {
+        zamanAralik = '1';
+      } else if (event.tab.textLabel == 'Hafta') {
+        zamanAralik = '7';
+      } else if (event.tab.textLabel == 'Ay') {
+        zamanAralik = '30';
+      }
+    }
+
+    this.profilService.getDurations(zamanAralik).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<Durations, ResponseDetailZ>[]) => {
+      let data = response[0].x;
+      let message = response[0].z;
+      let responseToken = response[0].y;
+
+      console.log("SÜRELERİM :", data);
+      this.durations = data;
+
+      this.dataSource = new MatTableDataSource(this.durations);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;  
+      
+      this.ref.detectChanges();
+    });
   }
 
 
 
-
-
-
-
-
-
-
-
-
-
-  ngAfterViewInit() {
-    this.dataSourceGunluk.sort = this.sort;
-    this.dataSourceHaftalik.sort = this.sort;
-    this.dataSourceAylik.sort = this.sort;
-
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
   }
-
+  
 }

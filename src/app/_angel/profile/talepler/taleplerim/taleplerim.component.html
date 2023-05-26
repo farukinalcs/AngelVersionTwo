@@ -1,404 +1,698 @@
 <div class="container" style="height: 500px;">
     <div class="row card p-5">
       <div class="col-12">
-        <mat-tab-group mat-stretch-tabs="false">
+        <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="resetArr()">
   
-          <mat-tab label="Süreci Devam Eden Form Sayısı : {{sureciDevamEdenFormSayisi}}">
-            <div class="row mt-5">
-              <div class="col-1"></div>
-  
-              <div class="col-7">
-                <div class="input-group" style="height: 43.64px;">
-                  <input class="input-group form-control form-control-sm" type="text" placeholder="Search..">
+          <mat-tab label="Süreci Devam Eden Formlar">
+          <!-- <mat-tab label="Süreci Devam Eden Form Sayısı : {{sureciDevamEdenFormSayisi}}"> -->
+
+            <div class="row mt-5 m-0">
+              <div class="col-12 d-flex justify-content-center">
+
+                <ul class="nav nav-pills nav-pills-custom mb-3">
+                  <li class="nav-item mb-3 me-3 me-lg-6" >
+                    <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
+                      data-bs-toggle="pill" (click)="getMyDemands('izin')" id="izinNavItem">
+              
+                      <div class="nav-icon mb-3">
+                        <i class="fa-solid fa-umbrella-beach fs-2"></i>
+                      </div>
+              
+                      <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">İzin</span>
+                      <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                    </a>
+                  </li>
+              
+                  <li class="nav-item mb-3 me-3 me-lg-6" >
+                    <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2" 
+                      data-bs-toggle="pill" (click)="getMyDemands('fazlamesai')" id="fazlamesaiNavItem"  >
+              
+                      <div class="nav-icon mb-3">
+                        <i class="fa-solid fa-business-time fs-2"></i>
+                      </div>
+
+                      <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Fazla Mesai</span>
+                      <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                    </a>
+                  </li>
+              
+              
+                  <li class="nav-item mb-3 me-3 me-lg-6" >
+                    <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2" 
+                      data-bs-toggle="pill" (click)="getMyDemands('ziyaretci')" id="ziyaretciNavItem"  >
+              
+                      <div class="nav-icon mb-3">
+                        <i class="fa-solid fa-people-group fs-2"></i>
+                      </div>
+              
+                      <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Ziyaretçi</span>
+                      <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>              
+                    </a>
+                  </li>
+              
+                  <li class="nav-item mb-3 me-3 me-lg-6" >
+                    <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2" 
+                      data-bs-toggle="pill" (click)="getMyDemands('tum')" id="digerNavItem"  >
+              
+                      <div class="nav-icon mb-3">
+                        <i class="fa-solid fa-circle-question fs-2"></i>
+                      </div>
+                      <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Diğer</span>
+                      <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                    </a>
+                  </li>
+                </ul>
+              </div>              
+            </div>
+
+            <ng-container *ngIf="!kaynak && sureciDevamEdenFormlar.length == 0">
+              <div class="row mt-5 m-0">
+                <div class="col-12 d-flex justify-content-center">
+                  <div class="d-flex align-items-center bg-light-info rounded p-5 text-center w-50">
+                    <i class="fa-solid fa-triangle-exclamation fs-2x text-info ms-5"></i>
+                    <div class="flex-grow-1 me-2">
+                        <a class="fw-bold text-gray-800 text-hover-primary fs-6">Talep Tipi Seçmelisiniz</a>
+                    </div>
+                  </div>
                 </div>
               </div>
-  
-              <div class="col-3">
-                <button class="btn btn-primary btn-shadow-hover font-weight-bold mr-2">
-                  Detaylı Arama
-                  <i class="fa fa-search" style="font-size:20px"></i>
-                </button>
-              </div>
-  
-              <div class="col-1"></div>
-            </div>
-  
-            <div class="row d-flex justify-content-start">
-              <div class="col-6 mt-5">
-                <mat-chip-list aria-label="Fish selection">
-                  <mat-chip color="primary">Listelenenleri Seç</mat-chip>
-                  <mat-chip color="primary">Listedeki Seçimleri Kaldır</mat-chip>
-                  <!-- <mat-chip color="primary">Tümünü Seç</mat-chip>
-                  <mat-chip color="accent">Tümünü kaldır</mat-chip> -->
-                </mat-chip-list>
-              </div>
-            </div>
-  
-            <div class="row mt-5">
-              <div class="col-4 mb-9" *ngFor="let item of sureciDevamEdenFormlar">
-                <mat-accordion >
-                  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header>
-                      <mat-panel-title>
-                        {{item.talepTipi}}
-                      </mat-panel-title>
-                      <mat-panel-description>
-                        {{item.name}}
-                      </mat-panel-description>
-                    </mat-expansion-panel-header>
-  
-                    <div class="card card-custom">
-                      <div class="row card-header card-header-center d-flex justify-content-center">
-                          <div class="col-12 d-flex justify-content-center">
-                            <img width="150px" src="./assets/media/avatars/300-7.jpg" alt="Metronic" />
-                          </div>
-                          <div class="col-12 d-flex justify-content-center mt-4">
-                            <h3>{{item.name}}</h3>
-                          </div>
-                      </div>
-                      <div class="row card-body">
-                        <div class="col-12 text-center">
-                          <h5>Nedeni</h5>
-                          <span>{{item.neden}}</span>  
-                        </div>
-  
-                        <div class="col-12 mt-6 text-center">
-                          <h5>Başlangıç</h5>
-                          <span>{{item.baslangicTarih}}</span>
-                        </div>
-  
-                        <div class="col-12 mt-6 text-center">
-                          <h5>Bitiş/İş Başı</h5>
-                          <span>{{item.bitisTarih}}</span>
-                        </div>
-  
-                        <div class="col-12 mt-6 text-center">
-                          <h5>Açıklama</h5>
-                          <span>{{item.aciklama}}</span>
-                        </div>
-  
-                        <div class="col-12 text-center">
-                          <div class="row mt-8">
-                            <div class="col-3">
-                              <button class="btn btn-icon btn-light-success btn-circle">
-                                <i class="fa-solid fa-check"></i>
-                              </button>
-                              <h6>Onay</h6>
-                            </div>
-    
-                            <div class="col-3">
-                              <button class="btn btn-icon btn-light-danger btn-circle">
-                                <i class="fa-solid fa-xmark"></i>
-                              </button>
-                              <h6>Red</h6>
-                            </div>
-    
-                            <div class="col-3">
-                              <button class="btn btn-icon btn-light-info btn-circle">
-                                <i class="fa-solid fa-question"></i>
-                              </button>
-                              <h6>Süreç</h6>
-                            </div>
-    
-                            <div class="col-3">
-                              <button class="btn btn-icon btn-light-primary btn-circle">
-                                <i class="fa-solid fa-print"></i>
-                              </button>
-                              <h6>Form</h6>
-                            </div>
-                          </div>
-                        </div>
-                        
-  
-                        <div class="col-12"></div>
-                        <div class="col-12"></div>
-                      </div>
+            </ng-container>
+
+            <ng-container *ngIf="kaynak && sureciDevamEdenFormlar.length == 0">
+              <div class="row mt-5 m-0">
+                <div class="col-12 d-flex justify-content-center">
+                  <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
+                    <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                    <div class="flex-grow-1 me-2">
+                        <a class="fw-bold text-gray-800 text-hover-primary fs-6">Kayıt Bulunamadı</a>
                     </div>
-  
-                  </mat-expansion-panel>
-                </mat-accordion>
-                <!-- <div class="card card-custom">
-                  <div class="card-header card-header-right ribbon ribbon-clip ribbon-left">
-                    <div class="ribbon-target" style="top: 12px;">
-                      <span class="ribbon-inner bg-warning"></span>İzin Talebi
-                    </div>
-                    <h3 class="card-title">
-                      Clip Style
-                    </h3>
                   </div>
-                  <div class="card-body">
-                    ...
-                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="kaynak && sureciDevamEdenFormlar.length > 0">
+              <div class="row mt-5 m-0">
+                <!-- <div class="col-2 d-flex align-items-center justify-content-end">
+                  <mat-checkbox class="example-margin" [checked]="allComplete" [indeterminate]="someComplete(sureciDevamEdenFormlar)"
+                    (change)="setAll($event.checked, sureciDevamEdenFormlar)">
+                    <label class="fs-5">Tümünü Seç</label>
+                  </mat-checkbox>
                 </div> -->
+
+                <!-- <div class="col-2 d-flex align-items-center justify-content-end">
+                  <button class="btn btn-danger btn-shadow-hover font-weight-bold mr-2" (click)="showPositionDialog('top')">
+                    Seçilenleri İptal Et
+                  </button>
+                </div> -->
+  
+                <div class="col-8">
+                  <button class="btn btn-primary btn-shadow-hover font-weight-bold mr-2">
+                    Detaylı Arama
+                    <i class="fa fa-search" ></i>
+                  </button>
+                </div>
+  
+                <div class="col-4 justify-content-end">
+                  <div class="input-group w-100 h-100">
+                    <input class="input-group form-control form-control-sm" [(ngModel)]="filterText" type="text" placeholder="Search..">
+                  </div>
+                </div>
               </div>
-            </div>
+    
+              
+    
+              <div class="row mt-5 m-0">
+                <div class="col-4 mb-9" *ngFor="let item of sureciDevamEdenFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
+                  <mat-accordion >
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                      <mat-expansion-panel-header #panelA>
+                        <mat-panel-title>
+                          <!-- <section class="example-section m-6 mt-9">
+                            <p>
+                              <mat-checkbox [(ngModel)]="item.completed" (ngModelChange)="updateAllComplete(item)"
+                                (click)="panelA._toggle()">
+                              </mat-checkbox>
+                            </p>
+                          </section> -->
+  
+                          <div class="ml-4">
+                            {{item.tipad}}
+                          </div>
+                          
+                        </mat-panel-title>
+                        <mat-panel-description>
+                          {{item.Personel}}
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+    
+                      <div class="card card-custom">
+                        <div class="row card-header card-header-center d-flex justify-content-center">
+                            <div class="col-12 d-flex justify-content-center">
+                              <img width="150px" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
+                            </div>
+                            <div class="col-12 d-flex justify-content-center mt-4">
+                              <h3>{{item.Personel}}</h3>
+                            </div>
+                        </div>
+                        <div class="row card-body">
+                          <div class="col-12 text-center">
+                            <h5>Nedeni</h5>
+                            <span>{{item.neden}}</span>  
+                          </div>
+    
+                          <div class="col-12 mt-6 text-center">
+                            <h5>Başlangıç</h5>
+                            <span>{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}} </span>
+                          </div>
+    
+                          <div class="col-12 mt-6 text-center">
+                            <h5>Bitiş/İş Başı</h5>
+                            <span>{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
+                          </div>
+    
+                          <div class="col-12 mt-6 text-center">
+                            <h5>Açıklama</h5>
+                            <span>{{item.nedenx}}</span>
+                          </div>
+    
+                          <div class="col-12 text-center">
+                            <div class="row mt-8">
+      
+                              <div class="col-4">
+                                <button class="btn btn-icon btn-light-danger btn-circle" (click)="showPositionDialog('top', item)">
+                                  <i class="fa-solid fa-xmark"></i>
+                                </button>
+                                <h6>İptal</h6>
+                              </div>
+      
+                              <div class="col-4">
+                                <button class="btn btn-icon btn-light-info btn-circle" (click)="showDemandProcessDialog(item.Id, item.tipad)">
+                                  <i class="fa-solid fa-question"></i>
+                                </button>
+                                <h6>Süreç</h6>
+                              </div>
+      
+                              <div class="col-4">
+                                <button class="btn btn-icon btn-light-primary btn-circle">
+                                  <i class="fa-solid fa-print"></i>
+                                </button>
+                                <h6>Form</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+    
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </div>
+              </div>
+            </ng-container>
+            
           </mat-tab>
   
           <mat-tab label="Onaylananlar">
-            <div class="row mt-5">
-              <div class="col-1"></div>
-  
-              <div class="col-7">
-                <div class="input-group" style="height: 43.64px;">
-                  <input class="input-group form-control form-control-sm" type="text" placeholder="Search..">
+            <div class="row mt-5 m-0">
+              <div class="col-12 d-flex justify-content-center">
+
+                <ul class="nav nav-pills nav-pills-custom mb-3" >
+                  <li class="nav-item mb-3 me-3 me-lg-6" >
+                    <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
+                      data-bs-toggle="pill" (click)="getMyDemands('izin')"  id="izinNavItem" >
+              
+                      <div class="nav-icon mb-3">
+                        <i class="fa-solid fa-umbrella-beach fs-2"></i>
+                      </div>
+              
+                      <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">İzin</span>
+                      <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                    </a>
+                  </li>
+              
+                  <li class="nav-item mb-3 me-3 me-lg-6" >
+                    <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2" 
+                      data-bs-toggle="pill" (click)="getMyDemands('fazlamesai')" id="fazlamesaiNavItem"  >
+              
+                      <div class="nav-icon mb-3">
+                        <i class="fa-solid fa-business-time fs-2"></i>
+                      </div>
+
+                      <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Fazla Mesai</span>
+                      <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                    </a>
+                  </li>
+              
+              
+                  <li class="nav-item mb-3 me-3 me-lg-6" >
+                    <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2" 
+                      data-bs-toggle="pill" (click)="getMyDemands('ziyaretci')" id="ziyaretciNavItem"  >
+              
+                      <div class="nav-icon mb-3">
+                        <i class="fa-solid fa-people-group fs-2"></i>
+                      </div>
+              
+                      <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Ziyaretçi</span>
+                      <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>              
+                    </a>
+                  </li>
+              
+                  <li class="nav-item mb-3 me-3 me-lg-6" >
+                    <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2" 
+                      data-bs-toggle="pill" (click)="getMyDemands('tum')" id="digerNavItem"  >
+              
+                      <div class="nav-icon mb-3">
+                        <i class="fa-solid fa-circle-question fs-2"></i>
+                      </div>
+                      <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Diğer</span>
+                      <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <ng-container *ngIf="!kaynak && onaylananFormlar.length == 0">
+              <div class="row mt-5 m-0">
+                <div class="col-12 d-flex justify-content-center">
+                  <div class="d-flex align-items-center bg-light-info rounded p-5 text-center w-50">
+                    <i class="fa-solid fa-triangle-exclamation fs-2x text-info ms-5"></i>
+                    <div class="flex-grow-1 me-2">
+                        <a class="fw-bold text-gray-800 text-hover-primary fs-6">Talep Tipi Seçmelisiniz</a>
+                    </div>
+                  </div>
                 </div>
               </div>
-  
-              <div class="col-3">
-                <button class="btn btn-primary btn-shadow-hover font-weight-bold mr-2">
-                  Detaylı Arama
-                  <i class="fa fa-search" style="font-size:20px"></i>
-                </button>
-              </div>
-  
-              <div class="col-1"></div>
-            </div>
-  
-            <div class="row d-flex justify-content-start">
-              <div class="col-6 mt-5">
-                <mat-chip-list aria-label="Fish selection">
-                  <mat-chip color="primary">Listelenenleri Seç</mat-chip>
-                  <mat-chip color="primary">Listedeki Seçimleri Kaldır</mat-chip>
-                  <!-- <mat-chip color="primary">Tümünü Seç</mat-chip>
-                  <mat-chip color="accent">Tümünü kaldır</mat-chip> -->
-                </mat-chip-list>
-              </div>
-            </div>
-  
-            <div class="row mt-5">
-              <div class="col-4 mb-9" *ngFor="let item of onaylananFormlar">
-                <mat-accordion >
-                  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header>
-                      <mat-panel-title>
-                        {{item.talepTipi}}
-                      </mat-panel-title>
-                      <mat-panel-description>
-                        {{item.name}}
-                      </mat-panel-description>
-                    </mat-expansion-panel-header>
-  
-                    <div class="card card-custom">
-                      <div class="row card-header card-header-center d-flex justify-content-center">
-                          <div class="col-12 d-flex justify-content-center">
-                            <img width="150px" src="./assets/media/avatars/300-7.jpg" alt="Metronic" />
-                          </div>
-                          <div class="col-12 d-flex justify-content-center mt-4">
-                            <h3>{{item.name}}</h3>
-                          </div>
-                      </div>
-                      <div class="row card-body">
-                        <div class="col-12 text-center">
-                          <h5>Nedeni</h5>
-                          <span>{{item.neden}}</span>  
-                        </div>
-  
-                        <div class="col-12 mt-6 text-center">
-                          <h5>Başlangıç</h5>
-                          <span>{{item.baslangicTarih}}</span>
-                        </div>
-  
-                        <div class="col-12 mt-6 text-center">
-                          <h5>Bitiş/İş Başı</h5>
-                          <span>{{item.bitisTarih}}</span>
-                        </div>
-  
-                        <div class="col-12 mt-6 text-center">
-                          <h5>Açıklama</h5>
-                          <span>{{item.aciklama}}</span>
-                        </div>
-  
-                        <div class="col-12 text-center">
-                          <div class="row mt-8">
-                            <div class="col-3">
-                              <button class="btn btn-icon btn-light-success btn-circle">
-                                <i class="fa-solid fa-check"></i>
-                              </button>
-                              <h6>Onay</h6>
-                            </div>
-    
-                            <div class="col-3">
-                              <button class="btn btn-icon btn-light-danger btn-circle">
-                                <i class="fa-solid fa-xmark"></i>
-                              </button>
-                              <h6>Red</h6>
-                            </div>
-    
-                            <div class="col-3">
-                              <button class="btn btn-icon btn-light-info btn-circle">
-                                <i class="fa-solid fa-question"></i>
-                              </button>
-                              <h6>Süreç</h6>
-                            </div>
-    
-                            <div class="col-3">
-                              <button class="btn btn-icon btn-light-primary btn-circle">
-                                <i class="fa-solid fa-print"></i>
-                              </button>
-                              <h6>Form</h6>
-                            </div>
-                          </div>
-                        </div>
-                        
-  
-                        <div class="col-12"></div>
-                        <div class="col-12"></div>
-                      </div>
+            </ng-container>
+
+            <ng-container *ngIf="kaynak && onaylananFormlar.length == 0">
+              <div class="row mt-5 m-0">
+                <div class="col-12 d-flex justify-content-center">
+                  <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
+                    <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                    <div class="flex-grow-1 me-2">
+                        <a class="fw-bold text-gray-800 text-hover-primary fs-6">Kayıt Bulunamadı</a>
                     </div>
-  
-                  </mat-expansion-panel>
-                </mat-accordion>
+                  </div>
+                </div>
               </div>
-            </div>
+            </ng-container>
+
+            <ng-container *ngIf="onaylananFormlar.length > 0">
+              <div class="row mt-5 m-0">
+                <!-- <div class="col-2 d-flex align-items-center justify-content-end">
+                  <mat-checkbox class="example-margin" [checked]="allComplete" [indeterminate]="someComplete(onaylananFormlar)"
+                    (change)="setAll($event.checked, onaylananFormlar)">
+                    <label class="fs-5">Tümünü Seç</label>
+                    
+                  </mat-checkbox>
+                </div> -->
+  
+                <div class="col-6 d-flex justify-content-start">
+                  <button class="btn btn-primary btn-shadow-hover font-weight-bold mr-2">
+                    Detaylı Arama
+                    <i class="fa fa-search" ></i>
+                  </button>
+                </div>
+  
+                <div class="col-6 justify-content-end">
+                  <div class="input-group w-100 h-100">
+                    <input class="input-group form-control form-control-sm" [(ngModel)]="filterText" type="text" placeholder="Search..">
+                  </div>
+                </div>
+              </div>
+    
+              <div class="row mt-5 m-0">
+                <div class="col-4 mb-9" *ngFor="let item of onaylananFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
+                  <mat-accordion >
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                      <mat-expansion-panel-header #panelB>
+                        <mat-panel-title>
+                          <!-- <section class="example-section m-6 mt-9">
+                            <p>
+                              <mat-checkbox [(ngModel)]="item.completed" (ngModelChange)="updateAllComplete(item)"
+                                (click)="panelB._toggle()">
+                              </mat-checkbox>
+                            </p>
+                          </section> -->
+  
+                          <div class="ml-4">
+                            {{item.tipad}}
+                          </div>
+                          
+                        </mat-panel-title>
+                        <mat-panel-description>
+                          {{item.Personel}}
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+    
+                      <div class="card card-custom">
+                        <div class="row card-header card-header-center d-flex justify-content-center">
+                            <div class="col-12 d-flex justify-content-center">
+                              <img width="150px" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
+                            </div>
+                            <div class="col-12 d-flex justify-content-center mt-4">
+                              <h3>{{item.Personel}}</h3>
+                            </div>
+                        </div>
+                        <div class="row card-body">
+                          <div class="col-12 text-center">
+                            <h5>Nedeni</h5>
+                            <span>{{item.neden}}</span>  
+                          </div>
+    
+                          <div class="col-12 mt-6 text-center">
+                            <h5>Başlangıç</h5>
+                            <span>{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}} </span>
+                          </div>
+    
+                          <div class="col-12 mt-6 text-center">
+                            <h5>Bitiş/İş Başı</h5>
+                            <span>{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
+                          </div>
+    
+                          <div class="col-12 mt-6 text-center">
+                            <h5>Açıklama</h5>
+                            <span>{{item.nedenx}}</span>
+                          </div>
+    
+                          <div class="col-12 text-center">
+                            <div class="row mt-8">
+      
+                              <div class="col-5">
+                                <button class="btn btn-icon btn-success btn-circle" disabled>
+                                  <i class="fa-solid fa-xmark"></i>
+                                </button>
+                                <h6 class="text-success">ONAYLANDI</h6>
+                              </div>
+      
+                              <div class="col-3">
+                                <button class="btn btn-icon btn-light-info btn-circle" (click)="showDemandProcessDialog(item.Id, item.tipad)">
+                                  <i class="fa-solid fa-question"></i>
+                                </button>
+                                <h6>Süreç</h6>
+                              </div>
+      
+                              <div class="col-3">
+                                <button class="btn btn-icon btn-light-primary btn-circle">
+                                  <i class="fa-solid fa-print"></i>
+                                </button>
+                                <h6>Form</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+    
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </div>
+              </div>
+            </ng-container>
+
+            
           </mat-tab>
   
           <mat-tab label="Reddedilenler">
-            <div class="row mt-5">
-              <div class="col-1"></div>
-  
-              <div class="col-7">
-                <div class="input-group" style="height: 43.64px;">
-                  <input class="input-group form-control form-control-sm" type="text" placeholder="Search..">
+            <div class="row mt-5 m-0">
+              <div class="col-12 d-flex justify-content-center">
+
+                <ul class="nav nav-pills nav-pills-custom mb-3" role="tablist3">
+                  <li class="nav-item mb-3 me-3 me-lg-6" >
+                    <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
+                      data-bs-toggle="pill" (click)="getMyDemands('izin')"  id="izinNavItem" >
+              
+                      <div class="nav-icon mb-3">
+                        <i class="fa-solid fa-umbrella-beach fs-2"></i>
+                      </div>
+              
+                      <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">İzin</span>
+                      <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                    </a>
+                  </li>
+              
+                  <li class="nav-item mb-3 me-3 me-lg-6" >
+                    <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2" 
+                      data-bs-toggle="pill" (click)="getMyDemands('fazlamesai')" id="fazlamesaiNavItem" >
+              
+                      <div class="nav-icon mb-3">
+                        <i class="fa-solid fa-business-time fs-2"></i>
+                      </div>
+
+                      <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Fazla Mesai</span>
+                      <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                    </a>
+                  </li>
+              
+              
+                  <li class="nav-item mb-3 me-3 me-lg-6" >
+                    <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2" 
+                      data-bs-toggle="pill" (click)="getMyDemands('ziyaretci')" id="ziyaretciNavItem">
+              
+                      <div class="nav-icon mb-3">
+                        <i class="fa-solid fa-people-group fs-2"></i>
+                      </div>
+              
+                      <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Ziyaretçi</span>
+                      <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>              
+                    </a>
+                  </li>
+              
+                  <li class="nav-item mb-3 me-3 me-lg-6">
+                    <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2" 
+                      data-bs-toggle="pill" (click)="getMyDemands('tum')" id="digerNavItem">
+              
+                      <div class="nav-icon mb-3">
+                        <i class="fa-solid fa-circle-question fs-2"></i>
+                      </div>
+                      <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Diğer</span>
+                      <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <ng-container *ngIf="!kaynak && reddedilenFormlar.length == 0">
+              <div class="row mt-5 m-0">
+                <div class="col-12 d-flex justify-content-center">
+                  <div class="d-flex align-items-center bg-light-info rounded p-5 text-center w-50">
+                    <i class="fa-solid fa-triangle-exclamation fs-2x text-info ms-5"></i>
+                    <div class="flex-grow-1 me-2">
+                        <a class="fw-bold text-gray-800 text-hover-primary fs-6">Talep Tipi Seçmelisiniz</a>
+                    </div>
+                  </div>
                 </div>
               </div>
-  
-              <div class="col-3">
-                <button class="btn btn-primary btn-shadow-hover font-weight-bold mr-2">
-                  Detaylı Arama
-                  <i class="fa fa-search" style="font-size:20px"></i>
-                </button>
+            </ng-container>
+
+            <ng-container *ngIf="kaynak && reddedilenFormlar.length == 0">
+              <div class="row mt-5 m-0">
+                <div class="col-12 d-flex justify-content-center">
+                  <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
+                    <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                    <div class="flex-grow-1 me-2">
+                        <a class="fw-bold text-gray-800 text-hover-primary fs-6">Kayıt Bulunamadı</a>
+                    </div>
+                  </div>
+                </div>
               </div>
-  
-              <div class="col-1"></div>
-            </div>
-  
-            <div class="row d-flex justify-content-start">
-              <div class="col-6 mt-5">
-                <mat-chip-list aria-label="Fish selection">
-                  <mat-chip color="primary">Listelenenleri Seç</mat-chip>
-                  <mat-chip color="primary">Listedeki Seçimleri Kaldır</mat-chip>
-                  <!-- <mat-chip color="primary">Tümünü Seç</mat-chip>
-                  <mat-chip color="accent">Tümünü kaldır</mat-chip> -->
-                </mat-chip-list>
+            </ng-container>
+
+            <ng-container *ngIf="reddedilenFormlar.length > 0">
+              <div class="row mt-5 m-0">
+                <!-- <div class="col-2 d-flex align-items-center justify-content-end">
+                  <mat-checkbox class="example-margin" [checked]="allComplete" [indeterminate]="someComplete(reddedilenFormlar)"
+                    (change)="setAll($event.checked, reddedilenFormlar)">
+                    <label class="fs-5">Tümünü Seç</label>
+            
+                  </mat-checkbox>
+                </div> -->
+            
+                <div class="col-6 d-flex justify-content-start">
+                  <button class="btn btn-primary btn-shadow-hover font-weight-bold mr-2">
+                    Detaylı Arama
+                    <i class="fa fa-search" ></i>
+                  </button>
+                </div>
+            
+                <div class="col-6 justify-content-end">
+                  <div class="input-group w-100 h-100">
+                    <input class="input-group form-control form-control-sm" [(ngModel)]="filterText" type="text"
+                      placeholder="Search..">
+                  </div>
+                </div>
               </div>
-            </div>
-  
-            <div class="row mt-5">
-              <div class="col-4 mb-9" *ngFor="let item of reddedilenFormlar">
-                <mat-accordion >
-                  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header>
-                      <mat-panel-title>
-                        {{item.talepTipi}}
-                      </mat-panel-title>
-                      <mat-panel-description>
-                        {{item.name}}
-                      </mat-panel-description>
-                    </mat-expansion-panel-header>
-  
-                    <div class="card card-custom">
-                      <div class="row card-header card-header-center d-flex justify-content-center">
+            
+            
+            
+              <div class="row mt-5 m-0">
+                <div class="col-4 mb-9" *ngFor="let item of reddedilenFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
+                  <mat-accordion>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                      <mat-expansion-panel-header #panelC>
+                        <mat-panel-title>
+                          <!-- <section class="example-section m-6 mt-9">
+                            <p>
+                              <mat-checkbox [(ngModel)]="item.completed" (ngModelChange)="updateAllComplete(item)"
+                                (click)="panelC._toggle()">
+                              </mat-checkbox>
+                            </p>
+                          </section> -->
+            
+                          <div class="ml-4">
+                            {{item.tipad}}
+                          </div>
+            
+                        </mat-panel-title>
+                        <mat-panel-description>
+                          {{item.Personel}}
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+            
+                      <div class="card card-custom">
+                        <div class="row card-header card-header-center d-flex justify-content-center">
                           <div class="col-12 d-flex justify-content-center">
-                            <img width="150px" src="./assets/media/avatars/300-7.jpg" alt="Metronic" />
+                            <img width="150px" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
                           </div>
                           <div class="col-12 d-flex justify-content-center mt-4">
-                            <h3>{{item.name}}</h3>
+                            <h3>{{item.Personel}}</h3>
                           </div>
-                      </div>
-                      <div class="row card-body">
-                        <div class="col-12 text-center">
-                          <h5>Nedeni</h5>
-                          <span>{{item.neden}}</span>  
                         </div>
-  
-                        <div class="col-12 mt-6 text-center">
-                          <h5>Başlangıç</h5>
-                          <span>{{item.baslangicTarih}}</span>
-                        </div>
-  
-                        <div class="col-12 mt-6 text-center">
-                          <h5>Bitiş/İş Başı</h5>
-                          <span>{{item.bitisTarih}}</span>
-                        </div>
-  
-                        <div class="col-12 mt-6 text-center">
-                          <h5>Açıklama</h5>
-                          <span>{{item.aciklama}}</span>
-                        </div>
-  
-                        <div class="col-12 text-center">
-                          <div class="row mt-8">
-                            <div class="col-3">
-                              <button class="btn btn-icon btn-light-success btn-circle">
-                                <i class="fa-solid fa-check"></i>
-                              </button>
-                              <h6>Onay</h6>
-                            </div>
-    
-                            <div class="col-3">
-                              <button class="btn btn-icon btn-light-danger btn-circle">
-                                <i class="fa-solid fa-xmark"></i>
-                              </button>
-                              <h6>Red</h6>
-                            </div>
-    
-                            <div class="col-3">
-                              <button class="btn btn-icon btn-light-info btn-circle">
-                                <i class="fa-solid fa-question"></i>
-                              </button>
-                              <h6>Süreç</h6>
-                            </div>
-    
-                            <div class="col-3">
-                              <button class="btn btn-icon btn-light-primary btn-circle">
-                                <i class="fa-solid fa-print"></i>
-                              </button>
-                              <h6>Form</h6>
+                        <div class="row card-body">
+                          <div class="col-12 text-center">
+                            <h5>Nedeni</h5>
+                            <span>{{item.neden}}</span>
+                          </div>
+            
+                          <div class="col-12 mt-6 text-center">
+                            <h5>Başlangıç</h5>
+                            <span>{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}} </span>
+                          </div>
+            
+                          <div class="col-12 mt-6 text-center">
+                            <h5>Bitiş/İş Başı</h5>
+                            <span>{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
+                          </div>
+            
+                          <div class="col-12 mt-6 text-center">
+                            <h5>Açıklama</h5>
+                            <span>{{item.nedenx}}</span>
+                          </div>
+            
+                          <div class="col-12 text-center">
+                            <div class="row mt-8">
+            
+                              <div class="col-5">
+                                <button class="btn btn-icon btn-danger btn-circle" disabled>
+                                  <i class="fa-solid fa-xmark"></i>
+                                </button>
+                                <h6 class="text-danger">REDDEDİLDİ</h6>
+                              </div>
+            
+                              <div class="col-3">
+                                <button class="btn btn-icon btn-light-info btn-circle" (click)="showDemandProcessDialog(item.Id, item.tipad)">
+                                  <i class="fa-solid fa-question"></i>
+                                </button>
+                                <h6>Süreç</h6>
+                              </div>
+            
+                              <div class="col-3">
+                                <button class="btn btn-icon btn-light-primary btn-circle">
+                                  <i class="fa-solid fa-print"></i>
+                                </button>
+                                <h6>Form</h6>
+                              </div>
                             </div>
                           </div>
                         </div>
-                        
-  
-                        <div class="col-12"></div>
-                        <div class="col-12"></div>
                       </div>
-                    </div>
-  
-                  </mat-expansion-panel>
-                </mat-accordion>
+            
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </div>
               </div>
-            </div>
+            </ng-container>
           </mat-tab>
   
         </mat-tab-group>
       </div>
     </div>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <p-dialog header="İptal" [(visible)]="displayPosition" [position]="position" [modal]="true" [style]="{width: '50vw'}"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false">
   
+    <div class="fv-row mb-10 fv-plugins-icon-container">
   
+      <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+        <span class="required">Açıklama</span>
+      </label>
   
+      <textarea [(ngModel)]="descriptionText" class="form-control form-control-solid" rows="3" placeholder="İptal açıklaması giriniz"
+        style="height: 12px;"></textarea>
+      <div class="fv-plugins-message-container invalid-feedback"></div>
+    </div>
   
-  
-  <!-- <div class="col-2 d-flex justify-content-center">
-                <button class="btn btn-light-primary font-weight-bold mr-2 btn-sm btn-pill">
-                  Listelenenleri Seç
-                </button>
-              </div>
-  
-              <div class="col-2 d-flex justify-content-center">
-                <button class="btn btn-light-primary font-weight-bold mr-2 btn-sm btn-pill">
-                  Listedeki Seçimleri Kaldır
-                </button>
-              </div>
-  
-              <div class="col-2 d-flex justify-content-center">
-                <button class="btn btn-light-primary font-weight-bold mr-2 btn-sm btn-pill">
-                  Tümünü Seç
-                </button>
-              </div>
-  
-              <div class="col-2 d-flex justify-content-center">
-                <button class="btn btn-light-primary font-weight-bold mr-2 btn-sm btn-pill">
-                  Tümünü kaldır
-                </button>
-              </div> -->
+    <ng-template pTemplate="footer">
+      <p-button icon="pi pi-check" (click)="cancelMyDemands(selectedItem.Id, selectedItem.tipad, descriptionText, kaynak)" label="Gönder"
+        class="p-button-text"></p-button>
+      <p-button icon="pi pi-times" (click)="displayPosition=false; descriptionText = ''" label="Vazgeç"></p-button>
+    </ng-template>
+  </p-dialog>
+
+
+  <p-dialog header="Talep Süreci" [(visible)]="displayDemandProcess" [modal]="true" [style]="{width: '50vw'}"
+    [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+
+    <div class="card">
+      <p-timeline [value]="demandProcess" align="alternate" styleClass="customized-timeline">
+        <ng-template pTemplate="marker" let-event>
+          <span class="custom-marker p-shadow-2 bg-info">
+            
+            <ng-container *ngIf="event.islem == 'Eklendi'">
+              <i class="fa-solid fa-plus text-light"></i>
+            </ng-container>
+
+            <ng-container *ngIf="event.islem == 'Reddedildi'">
+              <i class="fa-solid fa-xmark text-light"></i>
+            </ng-container>
+
+            <ng-container *ngIf="event.islem == 'Onay Bekleniyor'">
+              <i class="fa-solid fa-clock-rotate-left text-light"></i>
+            </ng-container>
+
+            <ng-container *ngIf="event.islem == 'Onaylandı'">
+              <i class="fa-solid fa-check text-light"></i>
+            </ng-container>
+            
+
+          </span>
+        </ng-template>
+        <ng-template pTemplate="content" let-event>
+          <p-card [header]="event.islem" [subheader]="event.zaman">
+            <div class="fw-bold fs-4 text-center text-gray-800 ng-star-inserted">{{event.adsoyad}}</div>
+            <div class="text-dark text-hover-info mb-1 font-size-lg">
+              {{event.islemaciklama}}
+            </div>
+          </p-card>
+        </ng-template>
+      </p-timeline>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button icon="pi pi-times" (click)="displayDemandProcess=false" label="Kapat" class="p-button-text"></p-button>
+    </ng-template>
+  </p-dialog>

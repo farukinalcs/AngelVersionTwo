@@ -42,6 +42,13 @@ import { DialogGunlukIzinTalebiComponent } from './talep-olustur/dialog-gunluk-i
 import { TranslationModule } from 'src/app/modules/i18n';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SplitterModule } from "primeng/splitter";
+import {TableModule} from 'primeng/table';
+import {InputTextModule} from 'primeng/inputtext';
+import { SearchFilterPipe } from 'src/app/_helpers/pipes/search-filter.pipe';
+import {DialogModule} from 'primeng/dialog';
+import {ButtonModule} from 'primeng/button';
+import {TimelineModule} from 'primeng/timeline';
+import {CardModule} from 'primeng/card';
 
 
 @NgModule({
@@ -61,7 +68,8 @@ import { SplitterModule } from "primeng/splitter";
     DialogFazlaMesaiTalebiComponent,
     DialogZiyaretciTalebiComponent,
     DialogSaatlikIzinTalebiComponent,
-    DialogGunlukIzinTalebiComponent
+    DialogGunlukIzinTalebiComponent,
+    SearchFilterPipe
   ],
   imports: [
     CommonModule,
@@ -96,7 +104,14 @@ import { SplitterModule } from "primeng/splitter";
     FormsModule,
     TranslationModule,
     OverlayPanelModule,
-    SplitterModule
+    SplitterModule,
+
+    TableModule,
+    InputTextModule,
+    DialogModule,
+    ButtonModule,
+    TimelineModule,
+    CardModule
     
   ]
 })

@@ -2,7 +2,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
 import { map, catchError, switchMap, finalize } from 'rxjs/operators';
 import { UserModel } from '../models/user.model';
-import { AuthModel } from '../models/auth.model';
 import { AuthHTTPService } from './auth-http/auth-http.service';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
@@ -20,8 +19,9 @@ export class AuthService implements OnDestroy {
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
   private isLoadingSubject: BehaviorSubject<boolean>;
-  public authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
-  
+  // public authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
+  public authLocalStorageToken = "token";
+
   // public fields
   currentUser$: Observable<UserType>;
   isLoading$: Observable<boolean>;
@@ -49,28 +49,31 @@ export class AuthService implements OnDestroy {
 
     return this.authHttpService.cryptoLogin(email, password, lang, appList)
       .pipe(map((auth : ResponseModel<ResponseXloginDetail, ResponseDetailZ>[]) => {
-        let response : ResponseXloginDetail[] = JSON.parse(auth[0].x.toString());
+        console.log("AUTH :", auth);
+
+        // let response : ResponseXloginDetail[] = JSON.parse(auth[0].x.toString());
+        let response : ResponseXloginDetail[] = auth[0].x;
+
         console.log("response :", response[0]);
         
-        let response_z : ResponseDetailZ = JSON.parse(auth[0].z.toString());        
+        // let response_z : ResponseDetailZ = JSON.parse(auth[0].z.toString());        
+        let response_z : ResponseDetailZ = auth[0].z;        
         
         if (response_z.islemsonuc == 1) {
-          const result = this.setAuthFromLocalStorage(auth[0].y);
-          if (result) {
-            var AuthModel = this.getAuthFromLocalStorage();
-            if (AuthModel == null) {
-              return of(undefined);
-            }
+          // const result = this.setAuthFromLocalStorage(auth[0].y);
+          // if (result) {
+            // var token = this.getAuthFromLocalStorage();
+            // if (token == null) {
+            //   return of(undefined);
+            // }
             var user = response[0];
-
             
             this.helper.userLoginModel = response[0];
-            console.log("helper type", typeof(this.helper.userLoginModel));
             this.currentUserSubject = new BehaviorSubject<any>(user);
             this.isLoadingSubject.next(false)
 
             return this.currentUserSubject;
-          }
+          // }
         }
       }),
 
@@ -90,8 +93,8 @@ export class AuthService implements OnDestroy {
   }
 
   getUserByToken(): Observable<any> {
-    var AuthModel = this.getAuthFromLocalStorage();
-    if (AuthModel == null) {
+    var token = this.getAuthFromLocalStorage();
+    if (token == null) {
       return of(undefined);
     }
     var user:any;
@@ -140,16 +143,26 @@ export class AuthService implements OnDestroy {
   }
 
   // private methods
-  private setAuthFromLocalStorage(auth:any): boolean {
+  setAuthFromLocalStorage(token:any): boolean {
     // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
-    if (auth ) {
-      localStorage.setItem(this.authLocalStorageToken, JSON.stringify(auth));
+
+    const storageToken = JSON.parse(localStorage.getItem('token') || '{}');
+    console.log("....STORAGE TOKEN",storageToken);
+    console.log("....REfRESH TOKEN",token);
+    if (storageToken != token) {
+      localStorage.setItem(this.authLocalStorageToken, JSON.stringify(token));
       return true;
     }
     return false;
   }
+
+
+  // 
+  // if (storageToken != responseToken) {
+  //   this.authService.setAuthFromLocalStorage(responseToken);
+  // }
   
-  private getAuthFromLocalStorage(): AuthModel{
+  private getAuthFromLocalStorage(): any{
     try {
       const authData = JSON.parse(
         localStorage.getItem(this.authLocalStorageToken) || '{}'

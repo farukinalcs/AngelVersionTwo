@@ -30,14 +30,7 @@ export class Widget1001Component implements OnInit, OnDestroy {
         console.log("widget : ", widget);
       }
     });
-
-    console.log("securedata : ", this.accessService.getMultipleAccessWidget());
-    this.accessService.getMultipleAccessWidgetData
-    .subscribe((response : any) => {
-      console.log("Response : ", response);
-    }, (error : any) => {
-      console.log("HATA ", error);
-    })    
+    
   }
 
   openDialog() {
