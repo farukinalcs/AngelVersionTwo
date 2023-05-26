@@ -1,7 +1,7 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { ClipboardModule } from 'ngx-clipboard';
 import { TranslateModule } from '@ngx-translate/core';
@@ -13,6 +13,9 @@ import { AuthService } from './modules/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { StoreModule } from '@ngrx/store';
 import { PdksReducer } from './_angel/NGRX/pdks.reducer';
+import { TokenInterceptor } from './modules/auth/services/auth-http/token.interceptor';
+import { SearchFilterPipe } from './_helpers/pipes/search-filter.pipe';
+import { ToastrModule } from 'ngx-toastr';
 // #fake-start#
 // import { FakeAPIService } from './_fake/fake-api.service';
 
@@ -35,18 +38,11 @@ function appInitializer(authService: AuthService) {
     TranslateModule.forRoot(),
     HttpClientModule,
     ClipboardModule,
-    // #fake-start#
-    // environment.isMockEnabled
-    //   ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
-    //       passThruUnknownUrl: true,
-    //       dataEncapsulation: false,
-    //     })
-    //   : [],
-    // #fake-end#
     AppRoutingModule,
     InlineSVGModule.forRoot(),
     NgbModule,
     StoreModule.forRoot({number: PdksReducer}),
+    ToastrModule.forRoot()
   ],
   providers: [
     {
@@ -55,6 +51,11 @@ function appInitializer(authService: AuthService) {
       multi: true,
       deps: [AuthService],
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi : true
+    }
   ],
   bootstrap: [AppComponent],
 })

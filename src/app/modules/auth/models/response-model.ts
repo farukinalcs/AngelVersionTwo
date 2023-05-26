@@ -3,5 +3,5 @@ export class ResponseModel<X, Z> {
     m : any[];
     x : X[];
     y : any;
-    z : Z[];
+    z : Z;
 }

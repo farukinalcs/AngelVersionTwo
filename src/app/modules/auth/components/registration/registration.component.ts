@@ -98,7 +98,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     const registrationSubscr = this.authService
       .registration(newUser)
       .pipe(first())
-      .subscribe((user: UserModel) => {
+      .subscribe((user: any) => {
         if (user) {
           this.router.navigate(['/']);
         } else {

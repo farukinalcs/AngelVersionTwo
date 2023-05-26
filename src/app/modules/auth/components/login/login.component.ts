@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
-import { UserModel } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { AuthHTTPService } from '../../services/auth-http';
@@ -112,6 +111,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         if (data) {
           this.router.navigate([this.returnUrl]);
+          this.helperService.gateResponseX = '';
         } else {
           this.hasError = true;
         }
@@ -120,16 +120,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   gate() {
-    this.authHttpService.gate().subscribe((response : any) => {
+    const gateSubscr = this.authHttpService.gate().subscribe((response : any) => {
       console.log("GATE : ", response);
       this.helperService.gateResponseX = response.x;
       this.helperService.gateResponseY = response.y
 
       this.appList = JSON.parse(response.m);
-      console.log("App List : ", this.appList);
       
       this.ref.detectChanges();
-    })
+    });
+
+    this.unsubscribe.push(gateSubscr);
   }
 
   setLanguageWithRefresh(lang : any) {

@@ -1,170 +1,203 @@
 <div class="container">
     <div class="card p-5">
-        <mat-tab-group mat-stretch-tabs="false">
+        <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="getTransitions($event)">
 
             <mat-tab label="Bugün">
-        
+
                 <div class="m-10 card card-custom gutter-b">
                     <div class="card-body">
-                        <!--begin::Example-->
                         <div class="row d-flex justify-content-center">
                             <div class="col-8 frame pb-20">
-        
-                                <div class="timeline timeline-4">
-                                    <div class="timeline-bar"></div>
-                                    <div class="timeline-items" *ngFor="let item of gunlukGecisler">
-        
-                                        <ng-container *ngIf="item.hareketTipi == '-1' ">
-                                            <div class="timeline-item timeline-item-left">
-                                                <div class="timeline-badge">
-                                                    <div class="bg-danger"></div>
+
+                                <ng-container *ngIf="transitions">
+
+                                    <div class="timeline timeline-4">
+                                        <div class="timeline-items" *ngFor="let item of transitions">
+
+                                            <ng-container *ngIf="item.yon == '3' ">
+                                                <div class="timeline-item timeline-item-left">
+                                                    <div class="timeline-badge">
+                                                        <div class="bg-danger"></div>
+                                                    </div>
+
+                                                    <div class="timeline-label">
+                                                        <span class="fw-bold fs-6 text-gray-600">{{item.zaman |
+                                                            date:'dd/MM/yyyy'}} - {{item.zaman |
+                                                            date : 'HH:mm:ss'}}</span>
+                                                    </div>
+
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800">
+                                                        {{item.cihaz}}
+                                                    </div>
                                                 </div>
-                    
-                                                <div class="timeline-label">
-                                                    <span class="fw-bold fs-6 text-gray-600">{{item.tarih}} - {{item.saat}}</span>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="item.yon == '2' ">
+                                                <div class="timeline-item timeline-item-right">
+                                                    <div class="timeline-badge">
+                                                        <div class="bg-success"></div>
+                                                    </div>
+                                                    <div class="timeline-label text-primary">
+                                                        <span class="fw-bold fs-6 text-gray-600">{{item.zaman |
+                                                            date:'dd/MM/yyyy'}} - {{item.zaman |
+                                                            date : 'HH:mm:ss'}}</span>
+                                                    </div>
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800">
+                                                        {{item.cihaz}}
+                                                    </div>
                                                 </div>
-                    
-                                                <div class="timeline-content fw-bold fs-6 text-gray-800">
-                                                    Zemin PDKS Cihazından Çıkış Yapıldı
-                                                </div>
-                                            </div>
-                                        </ng-container>
-        
-                                        <ng-container *ngIf="item.hareketTipi == '1' ">
-                                            <div class="timeline-item timeline-item-right">
-                                                <div class="timeline-badge">
-                                                    <div class="bg-success"></div>
-                                                </div>
-                                                <div class="timeline-label text-primary">
-                                                    <span class="fw-bold fs-6 text-gray-600">{{item.tarih}} - {{item.saat}}</span>
-                                                </div>
-                                                <div class="timeline-content fw-bold fs-6 text-gray-800">
-                                                    Zemin PDKS Cihazından Giriş Yapıldı
-                                                </div>
-                                            </div>
-                                        </ng-container>
-                                        
-        
+                                            </ng-container>
+
+
+                                        </div>
+
+
                                     </div>
-                                </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="transitions.length == 0 ">
+                                    <div class="fw-bold fs-4 text-center text-gray-800">Kayıt Bulunamadı!
+                                    </div>
+                                </ng-container>
                             </div>
                         </div>
-                        <!--end::Example-->
                     </div>
                 </div>
-        
+
             </mat-tab>
-        
-        
-        
-        
-            <mat-tab label="Haftalık">
+
+
+
+
+            <mat-tab label="Hafta" (click)="getTransitions('7')">
                 <div class="m-10 card card-custom gutter-b">
-                    
+
                     <div class="card-body">
-                        <!--begin::Example-->
                         <div class="row d-flex justify-content-center">
                             <div class="col-8 frame pb-20">
-        
-                                <div class="timeline timeline-4">
-                                    <div class="timeline-bar"></div>
-                                    <div class="timeline-items" *ngFor="let item of haftalikGecisler">
-        
-                                        <ng-container *ngIf="item.hareketTipi == '-1' ">
-                                            <div class="timeline-item timeline-item-left">
-                                                <div class="timeline-badge">
-                                                    <div class="bg-danger"></div>
+
+                                <ng-container *ngIf="transitions">
+
+                                    <div class="timeline timeline-4">
+                                        <div class="timeline-items" *ngFor="let item of transitions">
+
+                                            <ng-container *ngIf="item.yon == '3' ">
+                                                <div class="timeline-item timeline-item-left">
+                                                    <div class="timeline-badge">
+                                                        <div class="bg-danger"></div>
+                                                    </div>
+
+                                                    <div class="timeline-label">
+                                                        <span class="fw-bold fs-6 text-gray-600">{{item.zaman |
+                                                            date:'dd/MM/yyyy'}} - {{item.zaman |
+                                                            date : 'HH:mm:ss'}}</span>
+                                                    </div>
+
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800">
+                                                        {{item.cihaz}}
+                                                    </div>
                                                 </div>
-                    
-                                                <div class="timeline-label">
-                                                    <span class="fw-bold fs-6 text-gray-600">{{item.tarih}} - {{item.saat}}</span>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="item.yon == '2' ">
+                                                <div class="timeline-item timeline-item-right">
+                                                    <div class="timeline-badge">
+                                                        <div class="bg-success"></div>
+                                                    </div>
+                                                    <div class="timeline-label text-primary">
+                                                        <span class="fw-bold fs-6 text-gray-600">{{item.zaman |
+                                                            date:'dd/MM/yyyy'}} - {{item.zaman |
+                                                            date : 'HH:mm:ss'}}</span>
+                                                    </div>
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800">
+                                                        {{item.cihaz}}
+                                                    </div>
                                                 </div>
-                    
-                                                <div class="timeline-content fw-bold fs-6 text-gray-800">
-                                                    Zemin PDKS Cihazından Çıkış Yapıldı
-                                                </div>
-                                            </div>
-                                        </ng-container>
-        
-                                        <ng-container *ngIf="item.hareketTipi == '1' ">
-                                            <div class="timeline-item timeline-item-right">
-                                                <div class="timeline-badge">
-                                                    <div class="bg-success"></div>
-                                                </div>
-                                                <div class="timeline-label text-primary">
-                                                    <span class="fw-bold fs-6 text-gray-600">{{item.tarih}} - {{item.saat}}</span>
-                                                </div>
-                                                <div class="timeline-content fw-bold fs-6 text-gray-800">
-                                                    Zemin PDKS Cihazından Giriş Yapıldı
-                                                </div>
-                                            </div>
-                                        </ng-container>
-                                        
-        
+                                            </ng-container>
+
+
+                                        </div>
+
+
                                     </div>
-                                </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="transitions.length == 0">
+                                    <div class="fw-bold fs-4 text-center text-gray-800">Kayıt Bulunamadı!
+                                    </div>
+                                </ng-container>
                             </div>
                         </div>
-                        <!--end::Example-->
-                    </div>
-                </div>
-            </mat-tab>
-        
-        
-        
-        
-            <mat-tab label="Aylık">
-                <div class="m-10 card card-custom gutter-b">
-                    
-                    <div class="card-body">
-                        <!--begin::Example-->
-                        <div class="row d-flex justify-content-center">
-                            <div class="col-8 frame pb-20">
-        
-                                <div class="timeline timeline-4">
-                                    <div class="timeline-bar"></div>
-                                    <div class="timeline-items" *ngFor="let item of haftalikGecisler">
-        
-                                        <ng-container *ngIf="item.hareketTipi == '-1' ">
-                                            <div class="timeline-item timeline-item-left">
-                                                <div class="timeline-badge">
-                                                    <div class="bg-danger"></div>
-                                                </div>
-                    
-                                                <div class="timeline-label">
-                                                    <span class="fw-bold fs-6 text-gray-600">{{item.tarih}} - {{item.saat}}</span>
-                                                </div>
-                    
-                                                <div class="timeline-content fw-bold fs-6 text-gray-800">
-                                                    Zemin PDKS Cihazından Çıkış Yapıldı
-                                                </div>
-                                            </div>
-                                        </ng-container>
-        
-                                        <ng-container *ngIf="item.hareketTipi == '1' ">
-                                            <div class="timeline-item timeline-item-right">
-                                                <div class="timeline-badge">
-                                                    <div class="bg-success"></div>
-                                                </div>
-                                                <div class="timeline-label text-primary">
-                                                    <span class="fw-bold fs-6 text-gray-600">{{item.tarih}} - {{item.saat}}</span>
-                                                </div>
-                                                <div class="timeline-content fw-bold fs-6 text-gray-800">
-                                                    Zemin PDKS Cihazından Giriş Yapıldı
-                                                </div>
-                                            </div>
-                                        </ng-container>
-                                        
-        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end::Example-->
                     </div>
                 </div>
             </mat-tab>
-        
+
+
+
+
+            <mat-tab label="Ay" (click)="getTransitions('30')">
+                <div class="m-10 card card-custom gutter-b">
+
+                    <div class="card-body">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-8 frame pb-20">
+
+                                <ng-container *ngIf="transitions">
+
+                                    <div class="timeline timeline-4">
+                                        <div class="timeline-items" *ngFor="let item of transitions">
+
+                                            <ng-container *ngIf="item.yon == '3' ">
+                                                <div class="timeline-item timeline-item-left">
+                                                    <div class="timeline-badge">
+                                                        <div class="bg-danger"></div>
+                                                    </div>
+
+                                                    <div class="timeline-label">
+                                                        <span class="fw-bold fs-6 text-gray-600">{{item.zaman |
+                                                            date:'dd/MM/yyyy'}} - {{item.zaman |
+                                                            date : 'HH:mm:ss'}}</span>
+                                                    </div>
+
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800">
+                                                        {{item.cihaz}}
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="item.yon == '2' ">
+                                                <div class="timeline-item timeline-item-right">
+                                                    <div class="timeline-badge">
+                                                        <div class="bg-success"></div>
+                                                    </div>
+                                                    <div class="timeline-label text-primary">
+                                                        <span class="fw-bold fs-6 text-gray-600">{{item.zaman |
+                                                            date:'dd/MM/yyyy'}} - {{item.zaman |
+                                                            date : 'HH:mm:ss'}}</span>
+                                                    </div>
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800">
+                                                        {{item.cihaz}}
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="transitions.length == 0">
+                                    <div class="fw-bold fs-4 text-center text-gray-800">Kayıt Bulunamadı!
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+
         </mat-tab-group>
     </div>
 </div>

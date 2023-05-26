@@ -1,0 +1,36 @@
+export class UserInformation {
+    SicilID: number;
+    Ad: string;
+    Soyad: string;
+    PersonelNo: string;
+    FirmaAd: string;
+    BolumAd: string;
+    PozisyonAd: string;
+    GorevAd: string;
+    GirisTarih: string;
+    DonemGirisTarih: string;
+    DonemCikisTarih: string;
+    Gun: number;
+    YillikIzinHakTarihi: string;
+    Kidem: number;
+    TKidem: number;
+    Yil: number;
+    Hak: number;
+    KullanilanYillikIzin: number;
+    PlanlananIzin: number;
+    IzinDevir: number;
+    Kalan: number;
+    Yas: number;
+    Duzeltme: number;
+    Kontrol: string;
+    flag: number;
+    Firma: number;
+    Bolum: number;
+    Pozisyon: number;
+    Gorev: number;
+    FirmaAd1: string;
+    BolumAd1: string;
+    PozisyonAd1: string;
+    GorevAd1: string;
+    KurumGiris: string
+}

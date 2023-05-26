@@ -35,6 +35,12 @@ export class ResponseXloginDetail{
     '2FA': any;
     FotoImage: any | null;
     adsoyad: string;
-    CustomerCode: any | null
+    CustomerCode: any | null;
+    altfirmaad : string;
+    bolumad : string;
+    direktorlukad : string;
+    firmaad : string;
+    gorevad : string;
+    pozisyonad : string;
 }
 
