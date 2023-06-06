@@ -61,6 +61,9 @@ export class TokenInterceptor implements HttpInterceptor {
               if (item.z) {
                 item.z = JSON.parse(item.z);
               }
+              if (item.m) {
+                item.m = JSON.parse(item.m);
+              }
             })
             
             // if (responseBody[0].x) {

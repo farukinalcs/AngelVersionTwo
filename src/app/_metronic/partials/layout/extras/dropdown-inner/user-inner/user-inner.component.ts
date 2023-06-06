@@ -2,6 +2,7 @@ import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { TranslationService } from '../../../../../../modules/i18n';
 import { AuthService, UserType } from '../../../../../../modules/auth';
+import { HelperService } from 'src/app/_helpers/helper.service';
 
 @Component({
   selector: 'app-user-inner',
@@ -19,7 +20,8 @@ export class UserInnerComponent implements OnInit, OnDestroy {
 
   constructor(
     private auth: AuthService,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private helperService : HelperService
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +54,8 @@ export class UserInnerComponent implements OnInit, OnDestroy {
         language.active = false;
       }
     });
+    this.helperService.lang.next(lang);
+
   }
 
   ngOnDestroy() {

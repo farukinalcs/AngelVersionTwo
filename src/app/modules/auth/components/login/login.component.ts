@@ -148,7 +148,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         language.active = false;
       }
     });
-    this.translationService.setLanguage(lang);
+    this.helperService.lang.next(lang);
   }
 
   setSelectedLanguage(): any {

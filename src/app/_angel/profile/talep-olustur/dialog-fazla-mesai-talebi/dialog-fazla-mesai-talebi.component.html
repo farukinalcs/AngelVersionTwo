@@ -1,527 +1,276 @@
-<mat-dialog-content style="width: 1200px; height: 600px; ">
-    <div class="row border-bottom border-2 rounded">
-        <div class="col-8">
-            <h1 mat-dialog-title class="text-danger">Fazla Mesai Talep Formu</h1>
-        </div>
-
-        <div class="col-4" style="display: flex; justify-content: end;">
-            <a mat-dialog-close class="text-hover-danger">
-                <i class="fa fa-2x mt-2 mr-2" style="font-size: 30px;">&#xf00d;</i>
-            </a>
-        </div>
-    </div>
-
-    <div class="container">
+<div class="container py-10 px-15">
+    <form [formGroup]="overtimeForm">
         <div class="row">
-            <div class="col-12">
-                <mat-stepper #stepper [linear]="isLinear" [orientation]="(stepperOrientation | async)!">
-                    <mat-step [stepControl]="firstFormGroup">
-                        <form [formGroup]="firstFormGroup">
-                            <ng-template matStepLabel>Bilgiler</ng-template>
-                            <div class="card wave wave-animate-fast">
-                                <div class="container mt-15" >
-                                    <!-- style="background-image: url(../../../../../assets/media/illustrations/dozzy-1/14.png); background-size: contain;" -->
-                                    <div class="row">
-                                        <div class="col-6">
-    
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Fazla Mesai Nedeni</label>
-                                                <div class="input-group bg-transparent">
-                                                    <select class="form-control" formControlName="fmNedeni"
-                                                        [ngClass]="{
-                                                        'is-invalid': firstFormGroup.controls['fmNedeni'].invalid,
-                                                        'is-valid': firstFormGroup.controls['fmNedeni'].valid
-                                                        }">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </select>
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'required',
-                                                        message: 'Password is required',
-                                                        control: firstFormGroup.controls['fmNedeni']}">
-                                                    </ng-container>
-    
-                                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                        message: 'Success! You\'ve done it.',
-                                                        control: firstFormGroup.controls['fmNedeni']}">
-                                                    </ng-container>
-                                                </div>
-                                            </div>
-    
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Fazla Mesai Nedeni</mat-label>
-                                                <mat-select formControlName="fmNedeni" required>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                </mat-select>
-                                                <mat-icon matSuffix>message</mat-icon>
-                                            </mat-form-field> -->
-                                        </div>
-    
-                                        <div class="col-6">
-    
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Açıklama</label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" formControlName="fmAciklama" 
-                                                        [ngClass]="{
-                                                        'is-invalid': firstFormGroup.controls['fmAciklama'].invalid,
-                                                        'is-valid': firstFormGroup.controls['fmAciklama'].valid}"
-                                                    />
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'required',
-                                                        message: 'Password is required',
-                                                        control: firstFormGroup.controls['fmAciklama']}">
-                                                    </ng-container>
-    
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'minlength',
-                                                        message: 'Password should have at least 5 symbols',
-                                                        control: firstFormGroup.controls['fmAciklama']}">
-                                                    </ng-container>
-    
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'maxlength',
-                                                        message: 'Password should have maximum 25 symbols',
-                                                        control: firstFormGroup.controls['fmAciklama']}">
-                                                    </ng-container>
-    
-                                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                        message: 'Success! You\'ve done it.',
-                                                        control: firstFormGroup.controls['fmAciklama']}">
-                                                    </ng-container>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Açıklama</mat-label>
-                                                <input matInput  formControlName="fmAciklama" required>
-                                                <mat-icon matSuffix>email</mat-icon>
-                                            </mat-form-field> -->
-                                        </div>
-                                    </div>
-    
-                                    <div class="row mt-10">
-                                        <div class="col-6">
-    
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Ulaşım</label>
-                                                <div class="input-group bg-transparent">
-                                                    <select class="form-control" formControlName="ulasim"
-                                                        [ngClass]="{
-                                                            'is-invalid': firstFormGroup.controls['ulasim'].invalid,
-                                                            'is-valid': firstFormGroup.controls['ulasim'].valid
-                                                        }">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </select>
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'required',
-                                                        message: 'Password is required',
-                                                        control: firstFormGroup.controls['ulasim']}">
-                                                    </ng-container>
-    
-                                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                        message: 'Success! You\'ve done it.',
-                                                        control: firstFormGroup.controls['ulasim']}">
-                                                    </ng-container>
-                                                </div>
-                                            </div>
-    
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Ulaşım</mat-label>
-                                                <mat-select formControlName="ulasim" required>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                </mat-select>
-                                                <mat-icon matSuffix>directions_bus</mat-icon>
-                                            </mat-form-field> -->
-                                        </div>
-    
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Yemek</label>
-                                                <div class="input-group bg-transparent">
-                                                    <select class="form-control" formControlName="yemek" 
-                                                    [ngClass]="{
-                                                        'is-invalid': firstFormGroup.controls['yemek'].invalid,
-                                                        'is-valid': firstFormGroup.controls['yemek'].valid
-                                                    }">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </select>
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'required',
-                                                        message: 'Password is required',
-                                                        control: firstFormGroup.controls['yemek']}">
-                                                    </ng-container>
-    
-                                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                        message: 'Success! You\'ve done it.',
-                                                        control: firstFormGroup.controls['yemek']}">
-                                                    </ng-container>
-                                                </div>
-                                            </div>
-    
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Yemek</mat-label>
-                                                <mat-select formControlName="yemek" required>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                </mat-select>
-                                                <mat-icon matSuffix>fastfood</mat-icon>
-                                            </mat-form-field> -->
-                                        </div>
-                                    </div>
-        
-                                    
-                                </div>
-                            </div>
-                            
-                            <div class="row mt-20 ">
-                                <div class="col-12 d-flex align-items-end justify-content-end">
-                                    <button  class="w-25 btn btn-primary" [disabled]="!isFirstFormValid"   matStepperNext (click)="getFirstFormValues()">İleri</button>
-                                </div>
-                            </div>
+            <div class="col-12 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"FM_TALEP_DIALOG.FORM.ACIKLAMA" | translate}}</span>
+                </label>
 
-                        </form>
-                    </mat-step>
-                    <mat-step [stepControl]="secondFormGroup" >
-                        <form [formGroup]="secondFormGroup">
-                            <ng-template matStepLabel>Tarih</ng-template>
-                            <div class="card wave wave-animate-fast">
-                                <div class="container mt-15">
-                                    <div class="row">
-                                        <div class="col-6">
-    
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Başlangıç Tarihi</label>
-                                                    <input class="form-control" type="date" value="" formControlName="fmBaslangicTarihi"
-                                                    [ngClass]="{
-                                                        'is-invalid': secondFormGroup.controls['fmBaslangicTarihi'].invalid,
-                                                        'is-valid': secondFormGroup.controls['fmBaslangicTarihi'].valid
-                                                    }"/>
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'required',
-                                                        message: 'Password is required',
-                                                        control: secondFormGroup.controls['fmBaslangicTarihi']}">
-                                                    </ng-container>
-    
-                                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                        message: 'Success! You\'ve done it.',
-                                                        control: secondFormGroup.controls['fmBaslangicTarihi']}">
-                                                    </ng-container>
-                                            </div>
-    
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Başlangıç Tarihi</mat-label>
-                                                <input matInput [matDatepicker]="picker1" formControlName="fmBaslangicTarihi">
-                                                <mat-hint>MM/DD/YYYY</mat-hint>
-                                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                                <mat-datepicker #picker1></mat-datepicker>
-                                            </mat-form-field> -->
-                                        </div>
-    
-                                        <div class="col-6">
-    
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Bitiş Tarihi</label>
-                                                <input class="form-control" type="date" value="" formControlName="fmBitisTarihi"
-                                                [ngClass]="{
-                                                    'is-invalid': secondFormGroup.controls['fmBitisTarihi'].invalid,
-                                                    'is-valid': secondFormGroup.controls['fmBitisTarihi'].valid
-                                                }"/>
-                                                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                    validation: 'required',
-                                                    message: 'Password is required',
-                                                    control: secondFormGroup.controls['fmBitisTarihi']}">
-                                                </ng-container>
-    
-                                                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                    message: 'Success! You\'ve done it.',
-                                                    control: secondFormGroup.controls['fmBitisTarihi']}">
-                                                </ng-container>
-                                            </div>
-    
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Bitis Tarihi</mat-label>
-                                                <input matInput [matDatepicker]="picker2" formControlName="fmBitisTarihi">
-                                                <mat-hint>MM/DD/YYYY</mat-hint>
-                                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                                <mat-datepicker #picker2></mat-datepicker>
-                                            </mat-form-field> -->
-                                        </div>
-                                    </div>
-    
-                                    <div class="row mt-10">
-                                        <div class="col-6">
-    
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Başlangıç Saati</label>
-                                                <input class="form-control" type="time" formControlName="fmBaslangicSaati"
-                                                [ngClass]="{
-                                                    'is-invalid': secondFormGroup.controls['fmBaslangicSaati'].invalid,
-                                                    'is-valid': secondFormGroup.controls['fmBaslangicSaati'].valid
-                                                }"/>
-                                                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                    validation: 'required',
-                                                    message: 'Password is required',
-                                                    control: secondFormGroup.controls['fmBaslangicSaati']}">
-                                                </ng-container>
-    
-                                                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                    message: 'Success! You\'ve done it.',
-                                                    control: secondFormGroup.controls['fmBaslangicSaati']}">
-                                                </ng-container>
-                                            </div>
-    
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Başlangıç Saati</mat-label>
-                                                <input matInput type="time" formControlName="fmBaslangicSaati">
-                                                <mat-hint>HH:MM</mat-hint>
-                                            </mat-form-field> -->
-                                        </div>
-    
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Bitiş Saati</label>
-                                                <input class="form-control" type="time" formControlName="fmBitisSaati"
-                                                [ngClass]="{
-                                                    'is-invalid': secondFormGroup.controls['fmBitisSaati'].invalid,
-                                                    'is-valid': secondFormGroup.controls['fmBitisSaati'].valid
-                                                }"/>
-                                                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                    validation: 'required',
-                                                    message: 'Password is required',
-                                                    control: secondFormGroup.controls['fmBitisSaati']}">
-                                                </ng-container>
-    
-                                                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                    message: 'Success! You\'ve done it.',
-                                                    control: secondFormGroup.controls['fmBitisSaati']}">
-                                                </ng-container>
-                                            </div>
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Bitis Saati</mat-label>
-                                                <input matInput type="time" formControlName="fmBitisSaati">
-                                                <mat-hint>HH:MM</mat-hint>
-                                            </mat-form-field> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            
-                            <div class="row mt-20">
-                                <div class="col-6 d-flex justify-content-start">
-                                    <button class="w-50 btn btn-primary" matStepperPrevious>Geri</button>
-                                </div>
+                <textarea class="form-control form-control-solid" rows="3" formControlName="aciklama" placeholder="{{'FM_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate}}" style="height: 12px;"
+                [ngClass]="{
+                    'is-invalid': overtimeForm.controls['aciklama'].invalid,
+                    'is-valid': overtimeForm.controls['aciklama'].valid
+                }"></textarea>
 
-                                <div class="col-6 d-flex justify-content-end">
-                                    <button class="w-50 btn btn-primary" [disabled]="!isSecondFormValid" matStepperNext (click)="getSecondFormValues()">İleri</button>
-                                </div>
-                                
-                            </div>
-                        </form>
-                    </mat-step>
-                    <mat-step>
-                        <ng-template matStepLabel>Özet</ng-template>
-                        <div class="container">
-                            <div class="row d-flex justify-content-center mt-10">
-                                <div class="col-12">
-                                    <div class="card card-custom wave wave-animate" style="background-color: #f1f3f4;">
-                                        <div class="card-header ribbon ribbon-top ribbon-ver">
-                                            <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
-                                                OK!
-                                            </div>
-                                            <h3 class="card-title">
-                                                Talep Özeti
-                                            </h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="container">
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Password is required',
+                    control: overtimeForm.controls['aciklama']}">
+                </ng-container>
 
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'minlength',
+                    message: 'Password should have at least 5 symbols',
+                    control: overtimeForm.controls['aciklama']}">
+                </ng-container>
 
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="row">
-                                                            <div class="col-5 fw-bold fs-6 text-gray-600">
-                                                                Fazla Mesai Açıklaması :
-                                                            </div>
-                                                            <div class="col-7 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.fmAciklama}}
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                                Ulaşım :
-                                                            </div>
-                                                            <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.ulasim}}
-                                                            </div>
-                                                        </div>
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'maxlength',
+                    message: 'Password should have maximum 25 symbols',
+                    control: overtimeForm.controls['aciklama']}">
+                </ng-container>
 
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                                Başlangıç Tarihi :
-                                                            </div>
-                                                            <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.fmBaslangicTarihi}}
-                                                            </div>
-                                                        </div>
+                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                    message: 'Success! You\'ve done it.',
+                    control: overtimeForm.controls['aciklama']}">
+                </ng-container>
 
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600 ">
-                                                                Bitiş Tarihi :
-                                                            </div>
-                                                            <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.fmBitisTarihi}}
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        
-                                                    </div>
+            </div>
 
-                                                    <div class="col-6">
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                                Fazla Mesai Nedeni :
-                                                            </div>
-                                                            <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.fmNedeni}}
-                                                            </div>
-                                                        </div>
+            <div class="col-4 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"FM_TALEP_DIALOG.FORM.FM_TIPI" | translate}}</span>
+                </label>
 
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                                Yemek :
-                                                            </div>
-                                                            <div class="col-6 col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.yemek}}
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                                Başlangıç Saati :
-                                                            </div>
-                                                            <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.fmBaslangicSaati}}
-                                                            </div>
-                                                        </div>
+                <!-- <select class="form-select form-select-lg form-select-solid" formControlName="tip"
+                [ngClass]="{
+                    'is-invalid': overtimeForm.controls['tip'].invalid,
+                    'is-valid': overtimeForm.controls['tip'].valid
+                }">
+                    <option *ngFor="let item of fmNedenleri" value="{{item.ID}}">{{item.ad}}</option>
+                </select> -->
 
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                                Bitiş Saati :
-                                                            </div>
-                                                            <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.fmBitisSaati}}
-                                                            </div>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-
-
-                                                <!-- <div class="row">
-                                                    
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                        Başlangıç Tarihi :
-                                                    </div>
-                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.fmBaslangicTarihi}}
-                                                    </div>
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                        Başlangıç Saati :
-                                                    </div>
-                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.fmBaslangicSaati}}
-                                                    </div>
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    <div class="col-4 fw-bold fs-6 text-gray-600 ">
-                                                        Bitiş Tarihi :
-                                                    </div>
-                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.fmBitisTarihi}}
-                                                    </div>
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                        Bitiş Saati :
-                                                    </div>
-                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.fmBitisSaati}}
-                                                    </div>
-                                                </div> -->
-                                            </div>
-
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-
-                                
-                            </div>
+                <p-dropdown [options]="fmNedenleri" [(ngModel)]="selectedOvertime" optionLabel="ad" [filter]="true" filterBy="ad"
+                    [showClear]="true" placeholder="{{'FM_TALEP_DIALOG.FORM.FM_TIPI_SECINIZ' | translate}}" formControlName="tip"
+                    [ngClass]="{
+                        'is-invalid': overtimeForm.controls['tip'].invalid,
+                        'is-valid': overtimeForm.controls['tip'].valid
+                    }">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="selectedOvertime">
+                            <div>{{selectedOvertime.ad}}</div>
                         </div>
-                        <div class="row mt-20">
-                            <div class="col-6 d-flex justify-content-start">
-                                <button class="w-50 btn btn-primary" matStepperPrevious>Back</button>
-                            </div>
-
-                            <!-- <div class="col-1 d-flex justify-content-end">
-                                <button class="btn btn-danger" (click)="stepper.reset()">İptal</button>
-                            </div> -->
-
-                            <div class="col-6 d-flex justify-content-end">
-                                <button class="w-50 btn btn-success">Gönder</button>
-                            </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.ad}}</div>
                         </div>
-                    </mat-step>
-                </mat-stepper>
+                    </ng-template>
+                </p-dropdown>
+
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Password is required',
+                    control: overtimeForm.controls['tip']}">
+                </ng-container>
+
+                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                    message: 'Success! You\'ve done it.',
+                    control: overtimeForm.controls['tip']}">
+                </ng-container>
+            </div>
+
+
+            <div class="col-4 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"FM_TALEP_DIALOG.FORM.ULASIM" | translate}}</span>
+                </label>
+
+                <!-- <select
+                    class="form-select form-select-lg form-select-solid" formControlName="ulasim"
+                    [ngClass]="{
+                        'is-invalid': overtimeForm.controls['ulasim'].invalid,
+                        'is-valid': overtimeForm.controls['ulasim'].valid
+                    }">
+                    <option *ngFor="let item of ulasim" value="{{item.ID}}">{{item.ad}}</option>
+                </select> -->
+
+                <p-dropdown [options]="ulasim" [(ngModel)]="selectedUlasim" optionLabel="ad" [filter]="true" filterBy="ad"
+                    [showClear]="true" placeholder="{{'FM_TALEP_DIALOG.FORM.ULASIM_SECINIZ' | translate}}" formControlName="ulasim"
+                    [ngClass]="{
+                        'is-invalid': overtimeForm.controls['ulasim'].invalid,
+                        'is-valid': overtimeForm.controls['ulasim'].valid
+                    }">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="selectedUlasim">
+                            <div>{{selectedUlasim.ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Password is required',
+                    control: overtimeForm.controls['ulasim']}">
+                </ng-container>
+
+                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                    message: 'Success! You\'ve done it.',
+                    control: overtimeForm.controls['ulasim']}">
+                </ng-container>
+            </div>
+
+            <div class="col-4 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"FM_TALEP_DIALOG.FORM.YEMEK" | translate}}</span>
+                </label>
+
+                <!-- <select
+                    class="form-select form-select-lg form-select-solid" formControlName="yemek"
+                    [ngClass]="{
+                        'is-invalid': overtimeForm.controls['yemek'].invalid,
+                        'is-valid': overtimeForm.controls['yemek'].valid
+                    }">
+                    <option *ngFor="let item of yemek" value="{{item.ID}}">{{item.ad}}</option>
+                </select> -->
+
+                <p-dropdown [options]="yemek" [(ngModel)]="selectedYemek" optionLabel="ad" [filter]="true" filterBy="ad"
+                    [showClear]="true" placeholder="{{'FM_TALEP_DIALOG.FORM.YEMEK_SECINIZ' | translate}}" formControlName="yemek"
+                    [ngClass]="{
+                        'is-invalid': overtimeForm.controls['yemek'].invalid,
+                        'is-valid': overtimeForm.controls['yemek'].valid
+                    }">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="selectedYemek">
+                            <div>{{selectedYemek.ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Password is required',
+                    control: overtimeForm.controls['yemek']}">
+                </ng-container>
+
+                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                    message: 'Success! You\'ve done it.',
+                    control: overtimeForm.controls['yemek']}">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"FM_TALEP_DIALOG.FORM.BASLANGIC_TARIHI" | translate}}</span>
+                </label>
+    
+                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bastarih"
+                [ngClass]="{
+                    'is-invalid': overtimeForm.controls['bastarih'].invalid,
+                    'is-valid': overtimeForm.controls['bastarih'].valid
+                }">
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Password is required',
+                    control: overtimeForm.controls['bastarih']}">
+                </ng-container>
+
+                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                    message: 'Success! You\'ve done it.',
+                    control: overtimeForm.controls['bastarih']}">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"FM_TALEP_DIALOG.FORM.BASLANGIC_SAATI" | translate}}</span>
+                </label>
+    
+                <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bassaat"
+                [ngClass]="{
+                    'is-invalid': overtimeForm.controls['bassaat'].invalid,
+                    'is-valid': overtimeForm.controls['bassaat'].valid
+                }">
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Password is required',
+                    control: overtimeForm.controls['bassaat']}">
+                </ng-container>
+
+                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                    message: 'Success! You\'ve done it.',
+                    control: overtimeForm.controls['bassaat']}">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"FM_TALEP_DIALOG.FORM.BITIS_TARIHI" | translate}}</span>
+                </label>
+    
+                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bittarih"
+                [ngClass]="{
+                    'is-invalid': overtimeForm.controls['bittarih'].invalid,
+                    'is-valid': overtimeForm.controls['bittarih'].valid
+                }">
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Password is required',
+                    control: overtimeForm.controls['bittarih']}">
+                </ng-container>
+
+                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                    message: 'Success! You\'ve done it.',
+                    control: overtimeForm.controls['bittarih']}">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"FM_TALEP_DIALOG.FORM.BITIS_SAATI" | translate}}</span>
+                </label>
+    
+                <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bitsaat"
+                [ngClass]="{
+                    'is-invalid': overtimeForm.controls['bitsaat'].invalid,
+                    'is-valid': overtimeForm.controls['bitsaat'].valid
+                }">
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Password is required',
+                    control: overtimeForm.controls['bitsaat']}">
+                </ng-container>
+
+                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                    message: 'Success! You\'ve done it.',
+                    control: overtimeForm.controls['bitsaat']}">
+                </ng-container>
             </div>
         </div>
+    </form>
+
+    <div class="row mt-10">
+        <div class="col-12 d-flex align-items-end justify-content-end">
+            <button class="mat-stepper-next w-25 btn btn-primary" [disabled]="overtimeForm.invalid" type="submit" (click)="getOvertimeFormValues()">
+                {{"FM_TALEP_DIALOG.FORM.GONDER" | translate}}
+            </button>
+        </div>
     </div>
-</mat-dialog-content>
+</div>
 
 
 <ng-template #formError let-control="control" let-message="message" let-validation="validation">
     <ng-container *ngIf="control.hasError(validation)">
-        <!-- && (control.dirty || control.touched) -->
         <div class="invalid-feedback">
             {{message}}
         </div>

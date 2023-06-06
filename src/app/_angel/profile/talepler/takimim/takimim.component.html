@@ -1,228 +1,98 @@
 <div class="container">
-  <div class="card p-5">
-
-    <div class="row">
-      <h5>Horizontal</h5>
-      <p-splitter [style]="{ height: '100%' }" styleClass="p-mb-5">
-        <ng-template pTemplate>
-          <div class="p-col p-d-flex p-ai-center p-jc-center">
-            <div class="mb-9 p-5" *ngFor="let item of staffInside">
-              <mat-accordion>
-                <mat-expansion-panel class="mat-expansion-panel staffInside" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      <div class="text-success">
-                        {{item.durum}}
-                      </div>
-                    </mat-panel-title>
-                    <mat-panel-description>
-                      {{item.ad}} {{item.soyad}}
-                    </mat-panel-description>
-                  </mat-expansion-panel-header>
-      
-                  <div class="card card-custom">
-                    <div class="row card-header card-header-center d-flex justify-content-center">
-                      <div class="col-12 d-flex justify-content-center">
-                        <img width="110px" src="./assets/media/avatars/300-7.jpg" alt="Metronic"
-                          style="border-radius: 80px;" />
-                      </div>
-                      <div class="col-12 d-flex justify-content-center mt-4">
-                        <h3>({{item.sicilno}})</h3>
-                      </div>
-                    </div>
-                    <div class="row card-body">
-                      <div class="col-12 text-center">
-                        <h5>Bekleyen İzin Talepleri</h5>
-                        <span>{{item.bekleyenizintalep}}</span>
-                      </div>
-      
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Bekleyen FM Talepleri</h5>
-                        <span>{{item.bekleyenfmtalep}}</span>
-                      </div>
-      
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Geç Kalma Sayısı (Ay)</h5>
-                        <span>{{item.geckalma}}</span>
-                      </div>
-      
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Erken ÇıkmaSayısı(Ay)</h5>
-                        <span>{{item.erkencikma}}</span>
-                      </div>
-      
-                      <div class="col-6 mt-6 text-center">
-                        <h5>Giriş</h5>
-                        <span>{{item.ggiris}}</span>
-                      </div>
-      
-      
-                      <div class="col-6 mt-6 text-center">
-                        <h5>Çıkış</h5>
-                        <span>{{item.gcikis}}</span>
-                      </div>
-      
-                      <div class="col-12 mt-6 text-center">
-                        <button class="btn btn-primary">
-                          Mesaj Gönder
-                        </button>
-                      </div>
-      
-                    </div>
-                  </div>
-      
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
-          </div>
-        </ng-template>
-        <ng-template pTemplate>
-          <div class="p-col p-d-flex p-ai-center p-jc-center">
-            <div class="mb-9 p-5" *ngFor="let item of staffOutside">
-              <mat-accordion>
-                <mat-expansion-panel class="mat-expansion-panel staffOutside" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      <div class="text-danger">
-                        {{item.durum}}
-                      </div>
-                    </mat-panel-title>
-                    <mat-panel-description>
-                      {{item.ad}} {{item.soyad}}
-                    </mat-panel-description>
-                  </mat-expansion-panel-header>
-      
-                  <div class="card card-custom">
-                    <div class="row card-header card-header-center d-flex justify-content-center">
-                      <div class="col-12 d-flex justify-content-center">
-                        <img width="110px" src="./assets/media/avatars/300-7.jpg" alt="Metronic"
-                          style="border-radius: 80px;" />
-                      </div>
-                      <div class="col-12 d-flex justify-content-center mt-4">
-                        <h3>({{item.sicilno}})</h3>
-                      </div>
-                    </div>
-                    <div class="row card-body">
-                      <div class="col-12 text-center">
-                        <h5>Bekleyen İzin Talepleri</h5>
-                        <span>{{item.bekleyenizintalep}}</span>
-                      </div>
-      
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Bekleyen FM Talepleri</h5>
-                        <span>{{item.bekleyenfmtalep}}</span>
-                      </div>
-      
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Geç Kalma Sayısı (Ay)</h5>
-                        <span>{{item.geckalma}}</span>
-                      </div>
-      
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Erken ÇıkmaSayısı(Ay)</h5>
-                        <span>{{item.erkencikma}}</span>
-                      </div>
-      
-                      <div class="col-6 mt-6 text-center">
-                        <h5>Giriş</h5>
-                        <span>{{item.ggiris}}</span>
-                      </div>
-      
-      
-                      <div class="col-6 mt-6 text-center">
-                        <h5>Çıkış</h5>
-                        <span>{{item.gcikis}}</span>
-                      </div>
-      
-                      <div class="col-12 mt-6 text-center">
-                        <button class="btn btn-primary">
-                          Mesaj Gönder
-                        </button>
-                      </div>
-      
-                    </div>
-                  </div>
-      
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
-          </div>
-        </ng-template>
-      </p-splitter>
+  <div class="row">
+    <div class="col-12 d-flex justify-content-end py-10 px-2"> 
+      <input class="w-100 form-control bg-white" type="text" placeholder="Search.." [(ngModel)]="filterText" (ngModelChange)="filterTextChange()">
     </div>
+  </div>
 
-    <!-- <div class="row mt-5">
-      <div class="col-4 mb-9" *ngFor="let item of response">
-        <mat-accordion>
-          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <div class="text-danger">
-                  {{item.gelmedi}}
-                </div>
-                <div>
-                  -{{item.durum}}
-                </div>
-              </mat-panel-title>
-              <mat-panel-description>
-                {{item.ad}} {{item.soyad}}
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            <div class="card card-custom">
-              <div class="row card-header card-header-center d-flex justify-content-center">
-                <div class="col-12 d-flex justify-content-center">
-                  <img width="110px" src="./assets/media/avatars/300-7.jpg" alt="Metronic"
-                    style="border-radius: 80px;" />
-                </div>
-                <div class="col-12 d-flex justify-content-center mt-4">
-                  <h3>({{item.sicilno}})</h3>
-                </div>
-              </div>
-              <div class="row card-body">
-                <div class="col-12 text-center">
-                  <h5>Bekleyen İzin Talepleri</h5>
-                  <span>{{item.bekleyenizintalep}}</span>
-                </div>
-
-                <div class="col-12 mt-6 text-center">
-                  <h5>Bekleyen FM Talepleri</h5>
-                  <span>{{item.bekleyenfmtalep}}</span>
-                </div>
-
-                <div class="col-12 mt-6 text-center">
-                  <h5>Geç Kalma Sayısı (Ay)</h5>
-                  <span>{{item.geckalma}}</span>
-                </div>
-
-                <div class="col-12 mt-6 text-center">
-                  <h5>Erken ÇıkmaSayısı(Ay)</h5>
-                  <span>{{item.erkencikma}}</span>
-                </div>
-
-                <div class="col-6 mt-6 text-center">
-                  <h5>Giriş</h5>
-                  <span>{{item.ggiris}}</span>
-                </div>
-
-
-                <div class="col-6 mt-6 text-center">
-                  <h5>Çıkış</h5>
-                  <span>{{item.gcikis}}</span>
-                </div>
-
-                <div class="col-12 mt-6 text-center">
-                  <button class="btn btn-primary">
-                    Mesaj Gönder
-                  </button>
-                </div>
-
+  <div class="row">
+    <ng-container *ngIf="myTeam.length > 0">
+      <div class="col-4" *ngFor="let item of myTeam | searchFilter:filterText: ['durum', 'ad', 'soyad', 'sicilno', 'mesaiaciklama', 'ggiris', 'gcikis'];">
+        <div class="card">
+          <div class="card-body d-flex flex-center flex-column p-9">
+            <div class="mb-5">
+              <div class="symbol symbol-100px symbol-circle">
+                <ng-container>
+                  <img src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="{{item.adsoyad}}" />
+                </ng-container>
+                <ng-container *ngIf="item.durum == 'İçeride'">
+                  <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"></div>
+                </ng-container>
+  
+                <ng-container *ngIf="item.durum == 'Dışarıda'">
+                  <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-danger rounded-circle border border-4 border-white h-20px w-20px"></div>
+  
+                </ng-container>
               </div>
             </div>
-
-          </mat-expansion-panel>
-        </mat-accordion>
+  
+            <a class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0 cursor-pointer">{{item.adsoyad}}</a>
+            <div class="fw-bold text-gray-400 mb-6">{{item.mesaiaciklama}}</div>
+  
+            <div class="d-flex flex-center text-center flex-wrap mb-5">
+              <div class="border border-gray-300 border-dashed rounded py-3 mx-2 px-4 mb-3" style="min-width : 40%">
+                <div class="fs-6 fw-bolder text-gray-700">Bekleyen İzin Talepleri</div>
+                <div class="fw-bold text-gray-400">{{item.bekleyenizintalep}}</div>
+              </div>
+  
+              <div class=" border border-gray-300 border-dashed rounded py-3 mx-2 px-4 mb-3" style="min-width : 40%">
+                <div class="fs-6 fw-bolder text-gray-700">Bekleyen Fazla Mesai Talepleri</div>
+                <div class="fw-bold text-gray-400">{{item.bekleyenfmtalep}}</div>
+              </div>
+  
+              <div class="border border-gray-300 border-dashed rounded py-3 mx-2 px-4 mb-3" style="min-width : 40%">
+                <div class="fs-6 fw-bolder text-gray-700">Geç Kalma Sayısı (ay)</div>
+                <div class="fw-bold text-gray-400">{{item.geckalma}}</div>
+              </div>
+  
+              <div class="border border-gray-300 border-dashed rounded py-3 mx-2 px-4 mb-3" style="min-width : 40%">
+                <div class="fs-6 fw-bolder text-gray-700">Erken Çıkma Sayısı (ay)</div>
+                <div class="fw-bold text-gray-400">{{item.erkencikma}}</div>
+              </div>
+  
+              <div class="border border-gray-300 border-dashed rounded py-3 mx-2 px-4 mb-3" style="min-width : 40%">
+                <div class="fs-6 fw-bolder text-gray-700">Giriş</div>
+                <ng-container *ngIf="item.ggiris">
+                  <div class="fw-bold text-gray-400">{{item.ggiris | date: 'HH:mm'}}</div>
+                </ng-container>
+  
+                <ng-container *ngIf="!item.ggiris">
+                  <div class="fw-bold text-gray-400">-</div>
+                </ng-container>
+  
+              </div>
+  
+  
+              <div class="border border-gray-300 border-dashed rounded py-3 mx-2 px-4 mb-3" style="min-width : 40%">
+                <div class="fs-6 fw-bolder text-gray-700">Çıkış</div>
+                <ng-container *ngIf="item.gcikis">
+                  <div class="fw-bold text-gray-400">{{item.gcikis | date: 'HH:mm'}}</div>
+                </ng-container>
+  
+                <ng-container *ngIf="!item.gcikis">
+                  <div class="fw-bold text-gray-400">-</div>
+                </ng-container>
+              </div>
+  
+            </div>
+  
+            <a class="btn btn-block btn-sm btn-primary font-weight-bolder text-uppercase py-4">Mesaj Gönder</a>
+          </div>
+        </div>
       </div>
-    </div> -->
+    </ng-container>
+
+    <ng-container *ngIf="filteredItems && filterText != ''">
+      <div class="row mt-5 m-0">
+        <div class="col-12 d-flex justify-content-center">
+          <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
+            <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+            <div class="flex-grow-1 me-2">
+                <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>

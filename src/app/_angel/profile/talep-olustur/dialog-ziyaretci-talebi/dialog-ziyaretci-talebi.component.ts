@@ -58,16 +58,11 @@ export class DialogZiyaretciTalebiComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {    
-    this.init();
-  }
-
-  init() {
     this.setResponsiveForm();
     this.createFormGroup();
     this.checkFirstFormValid();
     this.checkSecondFormValid();
   }
-
 
   nextStep() {
     const nextStep = this.currentStep$.value + 1;

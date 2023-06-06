@@ -694,6 +694,154 @@ export const locale = {
         Yok: 'Yok'
       }
 
-    }
+    },
+
+    PUBLIC : {
+      GUNLUK : "Günlük",
+      HAFTALIK : "Haftalık",
+      AYLIK : "Aylık",
+      DATA_NOT_FOUND : 'Kayıt Bulunamadı!',
+    },
+
+    MY_DURATION : {
+      TABLE_TITLE : {
+        TARIH : "Tarih",
+        GIRIS : "Giriş",
+        CIKIS : "Çıkış",
+        NORMAL_SURE : "Normal Süre",
+        ARA_SURE : "Ara Süre",
+        IZIN_SURE : "İzin Süre",
+        FAZLA_SURE : "Fazla Süre",
+        EKSIK_SURE : "Eksik Süre",
+      }
+    },
+
+    MY_VACATION : {
+      TABLE_TITLE : {
+        IZIN_TIPI : "İzin Tipi",
+        SAATLIK_GUNLUK : "Saatlik/Günlük",
+        BASLANGIC : "Başlangıç",
+        BITIS : "Bitiş",
+        IZINLI_SURE : "İzinli Süre"
+      }
+    },
+
+    DEMANDED : {
+      TAB_GROUP : {
+        BEKLEYEN_FORMLAR : "Onayınızı Bekleyen Formalar",
+        ONAYLANANLAR : "Onaylananalar",
+        REDDEDILENLER : "Reddedilenler"
+      },
+      SUB_MENU : {
+        IZIN : "İzin",
+        FAZLA_MESAI : "Fazla Mesai",
+        ZIYARETCI : "Ziyaretçi",
+        TUMU : "Tümü"
+      },
+
+      WARNING_LIST : {
+        TALEP_SECMELISINIZ : "Talep Türü Seçmelisiniz"
+      },
+
+      BUTTON_TEXT : {
+        TUMUNU_SEC : "Tümünü Seç",
+        SECILENLERI_ONAYLA : "Seçilenleri Onayla",
+        SECILENLERI_REDDET : "Seçilenleri Reddet",
+        DETAYLI_ARAMA : "Detaylı Arama",
+        ONAY : "Onay",
+        RED : "Red",
+        SUREC : "Süreç",
+        FORM : "Form",
+        GONDER : "Gönder",
+        VAZGEC : "Vazeç",
+        KAPAT : "Kapat",
+
+      },
+
+      DEMAND : {
+        NEDENI : "Nedeni",
+        BASLANGIC : "Başlangıç",
+        BITIS_IS_BASI : "Bitiş/İş Başı",
+        ACIKLAMA : "Açıklama",
+        SON : "Son",
+      },
+
+      RED_DIALOG : {
+        HEADER : "Talep Reddet",
+      },
+
+      SUREC_DIALOG : {
+        HEADER : "Talep Sürecİ",
+      },
+
+      ARAMA_DIALOG : {
+        HEADER : "Detalı Arama",
+        FORM_TITLE : {
+          KISISEL_BILGILER : "Kişisel Bilgiler",
+          FIRMA_BILGILER : "Firma Bilgileri",
+          OKOD_BILGILER : "Özel Kod Bilgileri",
+          TALEP_BILGILER : "Talep Bilgileri"
+        },
+        FORM : {
+          AD : "Ad",
+          SOYAD : "Soyad",
+          SICIL_NO : "Sicil No",
+          PERSONEL_NO : "Personel No",
+          FIRMA : "Firma",
+          BOLUM : "Bölüm",
+          POZISYON : "Pozisyon",
+          GOREV : "Görev",
+          ALT_FIRMA : "Alt Firma",
+          YAKA : "Yaka",
+          DIREKTORLUK : "Direktörlük",
+          ARALIK_BASLANGIC : "Başlangıç Tarihi",
+          ARALIK_BITIS : "Bitiş Tarihi",
+          IZIN_TIPI : "İzin Tipi",
+          FAZLA_MESAI_TURU : "Fazla Mesai Nedeni"
+        }
+      }
+    },
+    IZIN_TALEP_DIALOG : {
+      HEADER : "İzin Talep Formu",
+      FORM : {
+        IZIN_TIPI : "İzin Tipi",
+        IZIN_HAKKI : "İzin Hakkı",
+        GUNLUK_SAATLIK : "Günlük-Saatlik",
+        GUNLUK : "Günlük",
+        SAATLIK : "Saatlik",
+        IZIN_ADRESI : "İzin Adresi",
+        BASLANGIC_TARIHI : "Başlangıç Tarihi",
+        BASLANGIC_SAATI : "Başlangıç Saati",
+        BITIS_TARIHI  :"Bitiş Tarihi",
+        BITIS_SAATI : "Bitis Saati",
+        HESAPLANAN_SURE : "Hesaplanan İzin Süresi",
+        ACIKLAMA : "Açıklama",
+        GONDER : "Gönder",
+        IZIN_TIPI_SECINIZ : 'İzin Tipi Seçiniz',
+        ACIKLAMA_GIRINIZ : 'Açıklana Giriniz',
+        ADRES_GIRINIZ : 'Adres Giriniz'
+      }
+    },
+
+    FM_TALEP_DIALOG : {
+      HEADER : "Fazla Mesai Talep Formu",
+      FORM : {
+        FM_TIPI : "İzin Tipi",
+        ULASIM : 'Ulaşım',
+        YEMEK : 'Yemek',
+        BASLANGIC_TARIHI : "Başlangıç Tarihi",
+        BASLANGIC_SAATI : "Başlangıç Saati",
+        BITIS_TARIHI  :"Bitiş Tarihi",
+        BITIS_SAATI : "Bitis Saati",
+        ACIKLAMA : "Açıklama",
+        GONDER : "Gönder",
+        FM_TIPI_SECINIZ : 'Fazla Mesai Tipi Seçiniz',
+        ACIKLAMA_GIRINIZ : 'Açıklana Giriniz',
+        YEMEK_SECINIZ : 'Yemek Seçiniz',
+        ULASIM_SECINIZ : 'Ulaşım Seçiniz'
+      }
+    },
+
+
   },
 };

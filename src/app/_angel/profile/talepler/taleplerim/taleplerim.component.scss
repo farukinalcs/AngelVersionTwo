@@ -16,7 +16,7 @@
         line-height: 1;
     }
 
-    .p-card-body{
+    .p-card-body {
         background-color: #7239ea0f;
     }
 }
@@ -40,5 +40,26 @@
                 margin-top: 1rem;
             }
         }
+    }
+}
+
+
+:host ::ng-deep {
+    .p-accordion-tab:not(.p-accordion-tab-active) {
+        .p-toggleable-content {
+            height: 0;
+            overflow: hidden;
+        }
+    }
+
+    .p-accordion-tab.p-accordion-tab-active {
+        .p-toggleable-content {
+            height: auto !important;
+            overflow: auto !important;
+        }
+    }
+
+    .p-dialog-content {
+        padding: 20px;
     }
 }

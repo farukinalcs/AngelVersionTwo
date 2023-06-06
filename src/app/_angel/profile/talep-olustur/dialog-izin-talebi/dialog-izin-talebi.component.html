@@ -1,0 +1,301 @@
+<div class="container py-10 px-15">
+    <form [formGroup]="vacationForm">
+        <div class="row">
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"IZIN_TALEP_DIALOG.FORM.IZIN_TIPI" | translate}}</span>
+                </label>
+
+                <!-- <select class="form-select form-select-lg form-select-solid" formControlName="tip"
+                [ngClass]="{
+                    'is-invalid': vacationForm.controls['tip'].invalid,
+                    'is-valid': vacationForm.controls['tip'].valid
+                }">
+                    <option *ngFor="let item of vacationReasons" value="{{item.ID}}">{{item.ad}}</option>
+                </select> -->
+
+
+                <p-dropdown [options]="vacationReasons" [(ngModel)]="selectedType" optionLabel="ad" [filter]="true" filterBy="ad"
+                    [showClear]="true" placeholder="{{'IZIN_TALEP_DIALOG.FORM.IZIN_TIPI_SECINIZ' | translate}}" formControlName="tip"
+                    [ngClass]="{
+                        'is-invalid': vacationForm.controls['tip'].invalid,
+                        'is-valid': vacationForm.controls['tip'].valid
+                    }">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="selectedType">
+                            <div>{{selectedType.ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Boş Geçilemez',
+                    control: vacationForm.controls['tip']}">
+                </ng-container>
+
+                <!-- <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                    message: 'Geçerli',
+                    control: vacationForm.controls['tip']}">
+                </ng-container> -->
+            </div>
+
+            <div class="col-6 p-5 mt-4">
+                <div class="border border-gray-300 border-dashed rounded text-center min-w-125px py-3 px-4 me-6 mb-3">
+                    <ng-container *ngIf="izinKalan">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div class="fs-2 fw-bolder">{{ izinKalan }}</div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="!izinKalan">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div class="fs-2 fw-bolder">0</div>
+                        </div>
+                    </ng-container>
+  
+                    <div class="fw-bold fs-6 text-gray-400">{{"IZIN_TALEP_DIALOG.FORM.IZIN_HAKKI" | translate}}</div>
+                </div>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"IZIN_TALEP_DIALOG.FORM.GUNLUK_SAATLIK" | translate}}</span>
+                </label>
+            
+                <div class="row">
+                    <div class="col-lg-6">
+                        <input type="radio" class="btn-check" formControlName="gunluksaatlik"  value="gunluk"
+                            id="kt_radio_buttons_2_option_1" />
+                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center mb-5"
+                            for="kt_radio_buttons_2_option_1">
+                            <i class="fa-solid fa-calendar-days fs-2x text-primary"></i>
+                    
+                            <span class="d-block fw-semibold text-start ps-3">
+                                <span class="text-dark fw-bold d-block fs-3">{{"IZIN_TALEP_DIALOG.FORM.GUNLUK" | translate}}</span>
+                            </span>
+                        </label>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <input type="radio" class="btn-check" formControlName="gunluksaatlik"  value="saatlik" id="kt_radio_buttons_2_option_2" />
+                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center"
+                            for="kt_radio_buttons_2_option_2">
+                            <i class="fa-solid fa-clock fs-2x text-primary"></i>
+                            <span class="d-block fw-semibold text-start ps-3">
+                                <span class="text-dark fw-bold d-block fs-3">{{"IZIN_TALEP_DIALOG.FORM.SAATLIK" | translate}}</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"IZIN_TALEP_DIALOG.FORM.IZIN_ADRESI" | translate}}</span>
+                </label>
+
+                <textarea class="form-control form-control-solid" rows="3" formControlName="izinadresi" placeholder="{{'IZIN_TALEP_DIALOG.FORM.ADRES_GIRINIZ' | translate}}" 
+                [ngClass]="{
+                    'is-invalid': vacationForm.controls['izinadresi'].invalid,
+                    'is-valid': vacationForm.controls['izinadresi'].valid
+                }"></textarea>
+
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Boş Geçilemez',
+                    control: vacationForm.controls['izinadresi']}">
+                </ng-container>
+
+                <!-- <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                    message: 'Geçerli',
+                    control: vacationForm.controls['izinadresi']}">
+                </ng-container> -->
+
+            </div>
+
+            
+
+            <div [ngClass]="!isHourly ? 'col-12 p-5' : 'col-6 p-5'">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BASLANGIC_TARIHI" | translate}}</span>
+                </label>
+    
+                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bastarih"
+                [ngClass]="{
+                    'is-invalid': vacationForm.controls['bastarih'].invalid,
+                    'is-valid': vacationForm.controls['bastarih'].valid
+                }">
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Boş Geçilemez',
+                    control: vacationForm.controls['bastarih']}">
+                </ng-container>
+
+                <!-- <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                    message: 'Geçerli',
+                    control: vacationForm.controls['bastarih']}">
+                </ng-container> -->
+            </div>
+
+            <ng-container *ngIf="isHourly">
+                <div class="col-6 p-5">
+                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                        <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BASLANGIC_SAATI" | translate}}</span>
+                    </label>
+        
+                    <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bassaat"
+                    [ngClass]="{
+                        'is-invalid': vacationForm.controls['bassaat'].invalid,
+                        'is-valid': vacationForm.controls['bassaat'].valid
+                    }">
+                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: 'Boş Geçilemez',
+                        control: vacationForm.controls['bassaat']}">
+                    </ng-container>
+    
+                    <!-- <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                        message: 'Geçerli',
+                        control: vacationForm.controls['bassaat']}">
+                    </ng-container> -->
+                </div>
+            </ng-container>
+
+            <div [ngClass]="!isHourly ? 'col-12 p-5' : 'col-6 p-5'">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BITIS_TARIHI" | translate}}</span>
+                </label>
+    
+                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bittarih"
+                [ngClass]="{
+                    'is-invalid': vacationForm.controls['bittarih'].invalid,
+                    'is-valid': vacationForm.controls['bittarih'].valid
+                }">
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Boş Geçilemez',
+                    control: vacationForm.controls['bittarih']}">
+                </ng-container>
+
+                <!-- <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                    message: 'Geçerli',
+                    control: vacationForm.controls['bittarih']}">
+                </ng-container> -->
+            </div>
+
+            <ng-container *ngIf="isHourly">
+                <div class="col-6 p-5">
+                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                        <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BITIS_SAATI" | translate}}</span>
+                    </label>
+        
+                    <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bitsaat"
+                    [ngClass]="{
+                        'is-invalid': vacationForm.controls['bitsaat'].invalid,
+                        'is-valid': vacationForm.controls['bitsaat'].valid
+                    }">
+                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: 'Boş Geçilemez',
+                        control: vacationForm.controls['bitsaat']}">
+                    </ng-container>
+    
+                    <!-- <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                        message: 'Geçerli',
+                        control: vacationForm.controls['bitsaat']}">
+                    </ng-container> -->
+                </div>
+            </ng-container>
+
+            <div class="col-12">
+                <div class="border border-success border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                    <!-- Saatlik -->
+                    <ng-container *ngIf="isHourly">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <ng-container *ngIf="calcTimeDesc">
+                                <div class="fs-2 fw-bolder">{{calcTimeDesc}}</div>
+                            </ng-container>
+
+                            <ng-container *ngIf="!calcTimeDesc">
+                                <div class="fs-2 fw-bolder">{{calcTimeValue}} Saat</div>                                
+                            </ng-container>
+                        </div>
+                    </ng-container>
+
+
+                    <!-- Günlük -->
+                    <ng-container *ngIf="!isHourly">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <ng-container *ngIf="calcTimeDesc">
+                                <div class="fs-2 fw-bolder">{{calcTimeDesc}}</div>
+                            </ng-container>
+
+                            <ng-container *ngIf="!calcTimeDesc">
+                                <div class="fs-2 fw-bolder">{{calcTimeValue}} Gün</div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+  
+                    <div class="fw-bold fs-6 text-gray-400 text-center">{{"IZIN_TALEP_DIALOG.FORM.HESAPLANAN_SURE" | translate}}</div>
+                </div>
+            </div>
+            
+
+            <div class="col-12 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"IZIN_TALEP_DIALOG.FORM.ACIKLAMA" | translate}}</span>
+                </label>
+
+                <textarea class="form-control form-control-solid" rows="3" formControlName="aciklama" placeholder="{{'IZIN_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate}}" 
+                [ngClass]="{
+                    'is-invalid': vacationForm.controls['aciklama'].invalid,
+                    'is-valid': vacationForm.controls['aciklama'].valid
+                }"></textarea>
+
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'Boş Geçilemez',
+                    control: vacationForm.controls['aciklama']}">
+                </ng-container>
+
+                <!-- <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
+                    message: 'Geçerli',
+                    control: vacationForm.controls['aciklama']}">
+                </ng-container> -->
+
+            </div>
+        </div>
+    </form>
+
+    <div class="row mt-10">
+        <div class="col-12 d-flex align-items-end justify-content-end">
+            <button class="mat-stepper-next w-25 btn btn-primary" [disabled]="vacationForm.invalid" type="submit" (click)="getVacationFormValues()">
+                {{"IZIN_TALEP_DIALOG.FORM.GONDER" | translate}}
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+    <ng-container *ngIf="control.hasError(validation)">
+        <div class="invalid-feedback">
+            {{message}}
+        </div>
+    </ng-container>
+</ng-template>
+
+<ng-template #formSuccess let-control="control" let-message="message" let-validation="validation">
+    <ng-container *ngIf="control.valid">
+        <div class="valid-feedback">
+            {{message}}
+        </div>
+    </ng-container>
+</ng-template>

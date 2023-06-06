@@ -1,1 +1,101 @@
-<p>ziyaretcitaleplerim works!</p>
+<div class="container">
+    <div class="row card p-5">
+        <div class="col-12 mb-9">
+            <div class="ma-elevation-z8">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    
+                    <ng-container matColumnDef="adSoyad">
+                        <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">Ad Soyad</th>
+                        <td class="" mat-cell *matCellDef="let element">
+                            <p class="text-dark-75 font-weight-bolder  mb-1 font-size-lg">
+                                {{element.Ad}} {{element.Soyad}}
+                            </p>
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="firma">
+                        <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">Firma</th>
+                        <td mat-cell *matCellDef="let element">
+                            <p class="text-dark-75 font-weight-bolder  mb-1 font-size-lg">
+                                {{element.Firma}}
+                            </p>
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="girisTarih">
+                        <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">Giriş Tarihi</th>
+                        <td mat-cell *matCellDef="let element">
+                            <ng-container>
+                                <p class="text-dark-75 font-weight-bolder  mb-1 font-size-lg">
+                                    {{element.Giris | date : 'yyyy-MM-dd HH:mm'}}
+                                </p>
+                            </ng-container>
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="cikisTarih">
+                        <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">Çıkış Tarihi</th>
+                        <td mat-cell *matCellDef="let element">
+                            <ng-container>
+                                <p class="text-dark-75 font-weight-bolder  mb-1 font-size-lg">
+                                    {{element.Cikis | date : 'yyyy-MM-dd HH:mm'}}
+                                </p>
+                            </ng-container>
+    
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="ziyaretNedeni">
+                        <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">Ziyaret Nedeni</th>
+                        <td mat-cell *matCellDef="let element">
+                            <ng-container>
+                                <span class="text-dark-75 font-weight-bolder  mb-1 font-size-lg">
+                                    {{element.ZiyaretNedeni}}
+                                </span>
+                            </ng-container>
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="durum">
+                        <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">Durum</th>
+                        <td mat-cell *matCellDef="let element">
+                            <ng-container *ngIf="element.durum == 0">
+                                <a matTooltip='Kaldır' class="btn btn-icon btn-light bg-light-danger btn-hover-danger btn-sm mx-2 pulse pulse-danger" (click)="cancelMyVisitor(element)">
+                                    <span class="svg-icon svg-icon-danger svg-icon-2x bg-light-danger pulse pulse-danger">
+                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24" />
+                                                <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+                                                <path
+                                                    d="M12.0355339,10.6213203 L14.863961,7.79289322 C15.2544853,7.40236893 15.8876503,7.40236893 16.2781746,7.79289322 C16.6686989,8.18341751 16.6686989,8.81658249 16.2781746,9.20710678 L13.4497475,12.0355339 L16.2781746,14.863961 C16.6686989,15.2544853 16.6686989,15.8876503 16.2781746,16.2781746 C15.8876503,16.6686989 15.2544853,16.6686989 14.863961,16.2781746 L12.0355339,13.4497475 L9.20710678,16.2781746 C8.81658249,16.6686989 8.18341751,16.6686989 7.79289322,16.2781746 C7.40236893,15.8876503 7.40236893,15.2544853 7.79289322,14.863961 L10.6213203,12.0355339 L7.79289322,9.20710678 C7.40236893,8.81658249 7.40236893,8.18341751 7.79289322,7.79289322 C8.18341751,7.40236893 8.81658249,7.40236893 9.20710678,7.79289322 L12.0355339,10.6213203 Z"
+                                                    fill="#000000" />
+                                            </g>
+                                        </svg> -->
+                                        <i class="fa-sharp fa-solid fa-xmark text-danger"></i>
+                                    </span>
+                                </a>
+                            </ng-container>
+                        </td>
+                    </ng-container>
+    
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell fw-bold fs-4 text-center text-gray-800 p-10" [attr.colspan]="displayedColumns.length">
+                            <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
+                                <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                                <div class="flex-grow-1 me-2">
+                                  <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                        class="example-element-row"></tr>
+    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { DialogContainerComponent } from '../_angel/shared/dialog-container/dialog-container.component';
 
 @Injectable({
@@ -19,6 +19,7 @@ export class HelperService {
   _isMobile: BehaviorSubject<any> = new BehaviorSubject<any>(false);
   isMobile$: Observable<any> = this._isMobile.asObservable();
 
+  lang = new Subject;
   constructor() { }
 
   

@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
+import { TranslationService } from 'src/app/modules/i18n';
+import { HelperService } from 'src/app/_helpers/helper.service';
 import { TransitionsModel } from '../../models/transations';
 import { ProfileService } from '../../profile.service';
 
@@ -12,21 +14,43 @@ import { ProfileService } from '../../profile.service';
 })
 export class GecislerimComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
-
+  currentLang : any;
   transitions : any[]  = [];
   
+  daily : string = 'Günlük';
+  weekly : string = 'Haftalık';
+  monthly : string = 'Aylık';
 
   constructor(
     private profileService : ProfileService,
+    private helperService : HelperService,
     private ref : ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
+    this.changeValue();
     this.getTransitions('1');
   }
-  test(event : any) {
-    console.log("EVENT :", event.tab.textLabel);
-    
+  
+  
+  getCurrentLang() {
+    this.changeValue();
+  }
+
+  changeValue(){
+    this.helperService.lang.subscribe((lang : any) => {
+      if (lang == 'en') {
+        this.daily = 'Daily';
+        this.weekly = 'Weekly';
+        this.monthly = 'Monthly';
+      } else if(lang == 'tr') {
+        this.daily = 'Günlük';
+        this.weekly = 'Haftalık';
+        this.monthly = 'Aylık';
+      }
+    });
+     
+
   }
 
   getTransitions(event : any) {

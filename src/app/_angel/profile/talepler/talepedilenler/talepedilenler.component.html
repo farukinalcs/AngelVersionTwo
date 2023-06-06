@@ -3,34 +3,35 @@
 
     <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="resetArr()">
 
-      <mat-tab label="Onayınızı Bekleyen Formlar">
-      <!-- <mat-tab label="Onayınızı Bekleyen Form Sayısı : {{onayBeklenenForm}}"> -->
+      <mat-tab label="{{'DEMANDED.TAB_GROUP.BEKLEYEN_FORMLAR' | translate}}">
+        
+        
         <div class="row mt-5 m-0">
           <div class="col-12 d-flex justify-content-center">
         
             <ul class="nav nav-pills nav-pills-custom mb-3">
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                  data-bs-toggle="pill" (click)="getDemanded('izin')" id="izinNavItem">
+                  data-bs-toggle="pill" (click)="getDemanded('izin')" id="izinNavItem1">
         
                   <div class="nav-icon mb-3">
                     <i class="fa-solid fa-umbrella-beach fs-2"></i>
                   </div>
         
-                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">İzin</span>
+                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.IZIN" | translate}}</span>
                   <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
                 </a>
               </li>
         
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                  data-bs-toggle="pill" (click)="getDemanded('fazlamesai')" id="fazlamesaiNavItem">
+                  data-bs-toggle="pill" (click)="getDemanded('fazlamesai')" id="fazlamesaiNavItem1">
         
                   <div class="nav-icon mb-3">
                     <i class="fa-solid fa-business-time fs-2"></i>
                   </div>
         
-                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Fazla Mesai</span>
+                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.FAZLA_MESAI" | translate}}</span>
                   <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
                 </a>
               </li>
@@ -38,25 +39,25 @@
         
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                  data-bs-toggle="pill" (click)="getDemanded('ziyaretci')" id="ziyaretciNavItem">
+                  data-bs-toggle="pill" (click)="getDemanded('ziyaretci')" id="ziyaretciNavItem1">
         
                   <div class="nav-icon mb-3">
                     <i class="fa-solid fa-people-group fs-2"></i>
                   </div>
         
-                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Ziyaretçi</span>
+                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.ZIYARETCI" | translate}}</span>
                   <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
                 </a>
               </li>
         
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                  data-bs-toggle="pill" (click)="getDemanded('tum')" id="digerNavItem">
+                  data-bs-toggle="pill" (click)="getDemanded('tum')" id="digerNavItem1">
         
                   <div class="nav-icon mb-3">
                     <i class="fa-solid fa-circle-question fs-2"></i>
                   </div>
-                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Diğer</span>
+                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.TUMU" | translate}}</span>
                   <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
                 </a>
               </li>
@@ -70,7 +71,7 @@
               <div class="d-flex align-items-center bg-light-info rounded p-5 text-center w-50">
                 <i class="fa-solid fa-triangle-exclamation fs-2x text-info ms-5"></i>
                 <div class="flex-grow-1 me-2">
-                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">Talep Tipi Seçmelisiniz</a>
+                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"DEMANDED.WARNING_LIST.TALEP_SECMELISINIZ" | translate}}</a>
                 </div>
               </div>
             </div>
@@ -83,7 +84,7 @@
               <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
                 <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
                 <div class="flex-grow-1 me-2">
-                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">Kayıt Bulunamadı</a>
+                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
                 </div>
               </div>
             </div>
@@ -95,26 +96,40 @@
             <div class="col-6 d-flex align-items-center">
               <mat-checkbox class="example-margin" [checked]="allComplete" [indeterminate]="someComplete()"
                 (change)="setAll($event.checked)">
-                <label class="fs-5">Tümünü Seç</label>
+                <label class="fs-5">{{"DEMANDED.BUTTON_TEXT.TUMUNU_SEC" | translate}}</label>
               </mat-checkbox>
   
-              <button type="button" class="btn btn-success mx-3" (click)="postSelected()">Seçilenleri Onayla</button>
+              <button type="button" class="btn btn-success mx-3" (click)="confirmDemandMultiple(kaynak)">{{"DEMANDED.BUTTON_TEXT.SECILENLERI_ONAYLA" | translate}}</button>
               
-              <button type="button" class="btn btn-danger">Seçilenleri Reddet</button>
+              <button type="button" class="btn btn-danger" (click)="showCancelDemandDialog(selectedItem, 2)">{{"DEMANDED.BUTTON_TEXT.SECILENLERI_REDDET" | translate}}</button>
             </div>
   
   
 
             <div class="col-3 d-flex justify-content-end">
-              <button class="btn btn-primary btn-shadow-hover font-weight-bold">
-                Detaylı Arama
+              <!-- <div class="symbol-group symbol-hover">
+                <div *ngFor="let item of uniqeFotoImage" class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Mark Stone">
+                    <img alt="Pic" src="{{'data:image/jpg;base64,' + item}}">
+                </div>
+
+                <div class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip" title="" data-original-title="More users">
+                    <span class="symbol-label font-weight-bold">5+</span>
+                </div>
+              </div> -->
+
+              <!-- <app-user-list [users]="uniqeFotoImage"></app-user-list> -->
+
+
+              <button class="btn btn-primary btn-shadow-hover font-weight-bold" (click)="showDetailSearchDialog(kaynak)">
+                {{"DEMANDED.BUTTON_TEXT.DETAYLI_ARAMA" | translate}}
                 <i class="fa fa-search"></i>
               </button>
             </div>
             
             <div class="col-3 ">
               <div class="input-group w-100 h-100">
-                <input class="input-group form-control form-control-sm" [(ngModel)]="filterText" type="text" placeholder="Search..">
+                <input class="form-control form-control-solid h-auto p-2 border-0 rounded-lg font-size-h6" [(ngModel)]="filterText" type="text" placeholder="Search..">
+                <!-- <input class="input-group form-control form-control-sm" [(ngModel)]="filterText" type="text" placeholder="Search.."> -->
               </div>
             </div>
           </div>
@@ -145,7 +160,7 @@
                     </mat-panel-description>
                   </mat-expansion-panel-header>
   
-                  <div class="">
+                  <div >
                     <div class="row d-flex justify-content-center">
                       <div class="col-12 d-flex justify-content-center">
                         <img width="150px" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
@@ -156,53 +171,64 @@
                     </div>
                     <div class="row card-body">
                       <div class="col-12 text-center">
-                        <h5>Nedeni</h5>
+                        <h5>{{"DEMANDED.DEMAND.NEDENI" | translate}}</h5>
                         <span>{{item.neden}}</span>
                       </div>
   
                       <div class="col-12 mt-6 text-center">
-                        <h5>Başlangıç</h5>
+                        <h5>{{"DEMANDED.DEMAND.BASLANGIC" | translate}}</h5>
                         <span>{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}}</span>
                       </div>
   
                       <div class="col-12 mt-6 text-center">
-                        <h5>Bitiş/İş Başı</h5>
+                        <h5>{{"DEMANDED.DEMAND.BITIS_IS_BASI" | translate}}</h5>
                         <span>{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
                       </div>
   
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Açıklama</h5>
-                        <span>{{item.nedenx}}</span>
-                      </div>
+                      <ng-container *ngIf="item.nedenx">
+                        <div class="col-12 mt-6 text-center">
+                          <h5>{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</h5>
+                          <span>{{item.nedenx}}</span>
+                        </div>
+                      </ng-container>
+                      
+
+                      <ng-container *ngIf="item.Onaylayan">
+                        <div class="col-12 mt-6 text-center">
+                          <h5>{{"DEMANDED.DEMAND.SON" | translate}}</h5>
+                          <span>{{item.Onaylayan}}</span>
+                          <p>{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
+                        </div>
+                      </ng-container>
   
                       <div class="col-12 text-center">
                         <div class="row mt-8">
                           <div class="col-3">
-                            <button class="btn btn-icon btn-light-success btn-circle">
+                            <button class="btn btn-icon btn-light-success btn-circle" (click)="confirmDemandSingle(item.Id, item.tipad, kaynak)">
                               <i class="fa-solid fa-check"></i>
                             </button>
-                            <h6>Onay</h6>
+                            <h6>{{"DEMANDED.BUTTON_TEXT.ONAY" | translate}}</h6>
                           </div>
   
                           <div class="col-3">
-                            <button class="btn btn-icon btn-light-danger btn-circle">
+                            <button class="btn btn-icon btn-light-danger btn-circle" (click)="showCancelDemandDialog(item, 1)">
                               <i class="fa-solid fa-xmark"></i>
                             </button>
-                            <h6>Red</h6>
+                            <h6>{{"DEMANDED.BUTTON_TEXT.RED" | translate}}</h6>
                           </div>
   
                           <div class="col-3">
                             <button class="btn btn-icon btn-light-info btn-circle" (click)="showDemandProcessDialog(item.Id, item.tipad)">
                               <i class="fa-solid fa-question"></i>
                             </button>
-                            <h6>Süreç</h6>
+                            <h6>{{"DEMANDED.BUTTON_TEXT.SUREC" | translate}}</h6>
                           </div>
   
                           <div class="col-3">
                             <button class="btn btn-icon btn-light-primary btn-circle">
                               <i class="fa-solid fa-print"></i>
                             </button>
-                            <h6>Form</h6>
+                            <h6>{{"DEMANDED.BUTTON_TEXT.FORM" | translate}}</h6>
                           </div>
                         </div>
                       </div>
@@ -217,7 +243,7 @@
         
       </mat-tab>
 
-      <mat-tab label="Onaylananlar">
+      <mat-tab label="{{'DEMANDED.TAB_GROUP.ONAYLANANLAR' | translate}}">
 
         <div class="row mt-5 m-0">
           <div class="col-12 d-flex justify-content-center">
@@ -225,26 +251,26 @@
             <ul class="nav nav-pills nav-pills-custom mb-3">
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                  data-bs-toggle="pill" (click)="getDemanded('izin')" id="izinNavItem">
+                  data-bs-toggle="pill" (click)="getDemanded('izin')" id="izinNavItem2">
         
                   <div class="nav-icon mb-3">
                     <i class="fa-solid fa-umbrella-beach fs-2"></i>
                   </div>
         
-                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">İzin</span>
+                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.IZIN" | translate}}</span>
                   <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
                 </a>
               </li>
         
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                  data-bs-toggle="pill" (click)="getDemanded('fazlamesai')" id="fazlamesaiNavItem">
+                  data-bs-toggle="pill" (click)="getDemanded('fazlamesai')" id="fazlamesaiNavItem2">
         
                   <div class="nav-icon mb-3">
                     <i class="fa-solid fa-business-time fs-2"></i>
                   </div>
         
-                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Fazla Mesai</span>
+                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.FAZLA_MESAI" | translate}}</span>
                   <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
                 </a>
               </li>
@@ -252,25 +278,25 @@
         
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                  data-bs-toggle="pill" (click)="getDemanded('ziyaretci')" id="ziyaretciNavItem">
+                  data-bs-toggle="pill" (click)="getDemanded('ziyaretci')" id="ziyaretciNavItem2">
         
                   <div class="nav-icon mb-3">
                     <i class="fa-solid fa-people-group fs-2"></i>
                   </div>
         
-                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Ziyaretçi</span>
+                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.ZIYARETCI" | translate}}</span>
                   <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
                 </a>
               </li>
         
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                  data-bs-toggle="pill" (click)="getDemanded('tum')" id="digerNavItem">
+                  data-bs-toggle="pill" (click)="getDemanded('tum')" id="digerNavItem2">
         
                   <div class="nav-icon mb-3">
                     <i class="fa-solid fa-circle-question fs-2"></i>
                   </div>
-                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Diğer</span>
+                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.TUMU" | translate}}</span>
                   <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
                 </a>
               </li>
@@ -284,7 +310,7 @@
               <div class="d-flex align-items-center bg-light-info rounded p-5 text-center w-50">
                 <i class="fa-solid fa-triangle-exclamation fs-2x text-info ms-5"></i>
                 <div class="flex-grow-1 me-2">
-                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">Talep Tipi Seçmelisiniz</a>
+                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"DEMANDED.WARNING_LIST.TALEP_SECMELISINIZ" | translate}}</a>
                 </div>
               </div>
             </div>
@@ -297,7 +323,7 @@
               <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
                 <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
                 <div class="flex-grow-1 me-2">
-                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">Kayıt Bulunamadı</a>
+                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
                 </div>
               </div>
             </div>
@@ -307,15 +333,15 @@
         <ng-container *ngIf="kaynak && onaylananFormlar.length > 0">
           <div class="row mt-5 m-0 d-flex justify-content-center">
             <div class="col-9 d-flex justify-content-end">
-              <button class="btn btn-primary btn-shadow-hover font-weight-bold">
-                Detaylı Arama
+              <button class="btn btn-primary btn-shadow-hover font-weight-bold" (click)="showDetailSearchDialog(kaynak)">
+                {{"DEMANDED.BUTTON_TEXT.DETAYLI_ARAMA" | translate}}
                 <i class="fa fa-search"></i>
               </button>
             </div>
             
             <div class="col-3 ">
               <div class="input-group w-100 h-100">
-                <input class="input-group form-control form-control-sm" [(ngModel)]="filterText" type="text" placeholder="Search..">
+                <input class="form-control form-control-solid h-auto p-2 border-0 rounded-lg font-size-h6" [(ngModel)]="filterText" type="text" placeholder="Search..">
               </div>
             </div>
           </div>
@@ -340,7 +366,7 @@
                     </mat-panel-description>
                   </mat-expansion-panel-header>
   
-                  <div class="">
+                  <div >
                     <div class="row d-flex justify-content-center">
                       <div class="col-12 d-flex justify-content-center">
                         <img width="150px" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
@@ -351,24 +377,35 @@
                     </div>
                     <div class="row card-body">
                       <div class="col-12 text-center">
-                        <h5>Nedeni</h5>
+                        <h5>{{"DEMANDED.DEMAND.NEDENI" | translate}}</h5>
                         <span>{{item.neden}}</span>
                       </div>
   
                       <div class="col-12 mt-6 text-center">
-                        <h5>Başlangıç</h5>
+                        <h5>{{"DEMANDED.DEMAND.BASLANGIC" | translate}}</h5>
                         <span>{{item.Baslangic | date : 'yyyy-MM-dd - HH:mm'}}</span>
                       </div>
   
                       <div class="col-12 mt-6 text-center">
-                        <h5>Bitiş/İş Başı</h5>
+                        <h5>{{"DEMANDED.DEMAND.BITIS_IS_BASI" | translate}}</h5>
                         <span>{{item.Bitis | date : 'yyyy-MM-dd - HH:mm'}}</span>
                       </div>
   
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Açıklama</h5>
-                        <span>{{item.nedenx}}</span>
-                      </div>
+                      <ng-container *ngIf="item.nedenx">
+                        <div class="col-12 mt-6 text-center">
+                          <h5>{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</h5>
+                          <span>{{item.nedenx}}</span>
+                        </div>
+                      </ng-container>
+                      
+
+                      <ng-container *ngIf="item.Onaylayan">
+                        <div class="col-12 mt-6 text-center">
+                          <h5>{{"DEMANDED.DEMAND.SON" | translate}}</h5>
+                          <span>{{item.Onaylayan}}</span>
+                          <p>{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
+                        </div>
+                      </ng-container>
   
                       <div class="col-12 text-center">
                         <div class="row mt-8">
@@ -376,21 +413,21 @@
                             <button class="btn btn-icon btn-success btn-circle" disabled>
                               <i class="fa-solid fa-check"></i>
                             </button>
-                            <h6 class="text-success">ONAYLANDI</h6>
+                            <h6 class="text-success">{{"DEMANDED.BUTTON_TEXT.ONAY" | translate}}</h6>
                           </div>
   
                           <div class="col-3">
                             <button class="btn btn-icon btn-light-info btn-circle" (click)="showDemandProcessDialog(item.Id, item.tipad)">
                               <i class="fa-solid fa-question"></i>
                             </button>
-                            <h6>Süreç</h6>
+                            <h6>{{"DEMANDED.BUTTON_TEXT.SUREC" | translate}}</h6>
                           </div>
   
                           <div class="col-4">
                             <button class="btn btn-icon btn-light-primary btn-circle">
                               <i class="fa-solid fa-print"></i>
                             </button>
-                            <h6>Form</h6>
+                            <h6>{{"DEMANDED.BUTTON_TEXT.FORM" | translate}}</h6>
                           </div>
                         </div>
                       </div>
@@ -405,33 +442,33 @@
         
       </mat-tab>
 
-      <mat-tab label="Reddedilenler">
+      <mat-tab label="{{'DEMANDED.TAB_GROUP.REDDEDILENLER' | translate}}">
         <div class="row mt-5 m-0">
           <div class="col-12 d-flex justify-content-center">
         
             <ul class="nav nav-pills nav-pills-custom mb-3">
               <li class="nav-item mb-3 me-3 me-lg-6">
-                <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                  data-bs-toggle="pill" (click)="getDemanded('izin')" id="izinNavItem">
+                <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2 active"
+                  data-bs-toggle="pill" (click)="getDemanded('izin')" id="izinNavItem3">
         
                   <div class="nav-icon mb-3">
                     <i class="fa-solid fa-umbrella-beach fs-2"></i>
                   </div>
         
-                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">İzin</span>
+                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.IZIN" | translate}}</span>
                   <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
                 </a>
               </li>
         
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                  data-bs-toggle="pill" (click)="getDemanded('fazlamesai')" id="fazlamesaiNavItem">
+                  data-bs-toggle="pill" (click)="getDemanded('fazlamesai')" id="fazlamesaiNavItem3">
         
                   <div class="nav-icon mb-3">
                     <i class="fa-solid fa-business-time fs-2"></i>
                   </div>
         
-                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Fazla Mesai</span>
+                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.FAZLA_MESAI" | translate}}</span>
                   <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
                 </a>
               </li>
@@ -439,25 +476,25 @@
         
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                  data-bs-toggle="pill" (click)="getDemanded('ziyaretci')" id="ziyaretciNavItem">
+                  data-bs-toggle="pill" (click)="getDemanded('ziyaretci')" id="ziyaretciNavItem3">
         
                   <div class="nav-icon mb-3">
                     <i class="fa-solid fa-people-group fs-2"></i>
                   </div>
         
-                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Ziyaretçi</span>
+                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.ZIYARETCI" | translate}}</span>
                   <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
                 </a>
               </li>
         
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                  data-bs-toggle="pill" (click)="getDemanded('tum')" id="digerNavItem">
+                  data-bs-toggle="pill" (click)="getDemanded('tum')" id="digerNavItem3">
         
                   <div class="nav-icon mb-3">
                     <i class="fa-solid fa-circle-question fs-2"></i>
                   </div>
-                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">Diğer</span>
+                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.TUMU" | translate}}</span>
                   <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
                 </a>
               </li>
@@ -471,7 +508,7 @@
               <div class="d-flex align-items-center bg-light-info rounded p-5 text-center w-50">
                 <i class="fa-solid fa-triangle-exclamation fs-2x text-info ms-5"></i>
                 <div class="flex-grow-1 me-2">
-                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">Talep Tipi Seçmelisiniz</a>
+                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"DEMANDED.WARNING_LIST.TALEP_SECMELISINIZ" | translate}}</a>
                 </div>
               </div>
             </div>
@@ -484,7 +521,7 @@
               <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
                 <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
                 <div class="flex-grow-1 me-2">
-                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">Kayıt Bulunamadı</a>
+                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
                 </div>
               </div>
             </div>
@@ -494,15 +531,15 @@
         <ng-container *ngIf="kaynak && reddedilenFormlar.length > 0">
           <div class="row mt-5 m-0 d-flex justify-content-center">
             <div class="col-9 d-flex justify-content-end">
-              <button class="btn btn-primary btn-shadow-hover font-weight-bold">
-                Detaylı Arama
+              <button class="btn btn-primary btn-shadow-hover font-weight-bold" (click)="showDetailSearchDialog(kaynak)">
+                {{"DEMANDED.BUTTON_TEXT.DETAYLI_ARAMA" | translate}}
                 <i class="fa fa-search"></i>
               </button>
             </div>
             
             <div class="col-3 ">
               <div class="input-group w-100 h-100">
-                <input class="input-group form-control form-control-sm" [(ngModel)]="filterText" type="text" placeholder="Search..">
+                <input class="form-control form-control-solid h-auto p-2 border-0 rounded-lg font-size-h6" [(ngModel)]="filterText" type="text" placeholder="Search..">
               </div>
             </div>
           </div>
@@ -526,7 +563,7 @@
                     </mat-panel-description>
                   </mat-expansion-panel-header>
   
-                  <div class="">
+                  <div >
                     <div class="row d-flex justify-content-center">
                       <div class="col-12 d-flex justify-content-center">
                         <img width="150px" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
@@ -537,24 +574,35 @@
                     </div>
                     <div class="row card-body">
                       <div class="col-12 text-center">
-                        <h5>Nedeni</h5>
+                        <h5>{{"DEMANDED.DEMAND.NEDENI" | translate}}</h5>
                         <span>{{item.neden}}</span>
                       </div>
   
                       <div class="col-12 mt-6 text-center">
-                        <h5>Başlangıç</h5>
+                        <h5>{{"DEMANDED.DEMAND.BASLANGIC" | translate}}</h5>
                         <span>{{item.Baslangic | date : 'yyyy-MM-dd - HH:mm'}}</span>
                       </div>
   
                       <div class="col-12 mt-6 text-center">
-                        <h5>Bitiş/İş Başı</h5>
+                        <h5>{{"DEMANDED.DEMAND.BITIS_IS_BASI" | translate}}</h5>
                         <span>{{item.Bitis | date : 'yyyy-MM-dd - HH:mm'}}</span>
                       </div>
   
-                      <div class="col-12 mt-6 text-center">
-                        <h5>Açıklama</h5>
-                        <span>{{item.nedenx}}</span>
-                      </div>
+                      <ng-container *ngIf="item.nedenx">
+                        <div class="col-12 mt-6 text-center">
+                          <h5>{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</h5>
+                          <span>{{item.nedenx}}</span>
+                        </div>
+                      </ng-container>
+                      
+
+                      <ng-container *ngIf="item.Onaylayan">
+                        <div class="col-12 mt-6 text-center">
+                          <h5>{{"DEMANDED.DEMAND.SON" | translate}}</h5>
+                          <span>{{item.Onaylayan}}</span>
+                          <p>{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
+                        </div>
+                      </ng-container>
   
                       <div class="col-12 text-center">
                         <div class="row mt-8">
@@ -562,21 +610,21 @@
                             <button class="btn btn-icon btn-danger btn-circle" disabled>
                               <i class="fa-solid fa-xmark"></i>
                             </button>
-                            <h6 class="text-danger">REDDEDİLDİ</h6>
+                            <h6 class="text-danger">{{"DEMANDED.BUTTON_TEXT.RED" | translate}}</h6>
                           </div>
   
                           <div class="col-3">
                             <button class="btn btn-icon btn-light-info btn-circle" (click)="showDemandProcessDialog(item.Id, item.tipad)">
                               <i class="fa-solid fa-question"></i>
                             </button>
-                            <h6>Süreç</h6>
+                            <h6>{{"DEMANDED.BUTTON_TEXT.SUREC" | translate}}</h6>
                           </div>
   
                           <div class="col-3">
                             <button class="btn btn-icon btn-light-primary btn-circle">
                               <i class="fa-solid fa-print"></i>
                             </button>
-                            <h6>Form</h6>
+                            <h6>{{"DEMANDED.BUTTON_TEXT.FORM" | translate}}</h6>
                           </div>
                         </div>
                       </div>
@@ -596,46 +644,254 @@
 
 
 
+<p-dialog header="{{'DEMANDED.RED_DIALOG.HEADER' | translate}}" [(visible)]="displayCancelDemand" position="top" [modal]="true" [style]="{width: '50vw'}"
+  [baseZIndex]="10000" [draggable]="false" [resizable]="false">
 
-<p-dialog header="Talep Süreci" [(visible)]="displayDemandProcess" [modal]="true" [style]="{width: '50vw'}"
-    [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+  <div class="fv-row mb-10 fv-plugins-icon-container">
 
-    <div class="card">
-      <p-timeline [value]="demandProcess" align="alternate" styleClass="customized-timeline">
-        <ng-template pTemplate="marker" let-event>
-          <span class="custom-marker p-shadow-2 bg-info">
-            
-            <ng-container *ngIf="event.islem == 'Eklendi'">
-              <i class="fa-solid fa-plus text-light"></i>
-            </ng-container>
+    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+      <span >{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</span>
+    </label>
 
-            <ng-container *ngIf="event.islem == 'Reddedildi'">
-              <i class="fa-solid fa-xmark text-light"></i>
-            </ng-container>
+    <textarea [(ngModel)]="descriptionText" class="form-control form-control-solid" rows="3"
+      placeholder="İptal açıklaması giriniz" style="height: 12px;"></textarea>
+    <div class="fv-plugins-message-container invalid-feedback"></div>
+  </div>
 
-            <ng-container *ngIf="event.islem == 'Onay Bekleniyor'">
-              <i class="fa-solid fa-clock-rotate-left text-light"></i>
-            </ng-container>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="isSingleOrMultiple(kaynak, descriptionText)" label="{{'DEMANDED.BUTTON_TEXT.GONDER' | translate}}"
+      class="p-button-text"></p-button>
+    <p-button icon="pi pi-times" (click)="displayCancelDemand=false; descriptionText = ''" label="{{'DEMANDED.BUTTON_TEXT.VAZGEC' | translate}}"></p-button>
+  </ng-template>
+</p-dialog>
 
-            <ng-container *ngIf="event.islem == 'Onaylandı'">
-              <i class="fa-solid fa-check text-light"></i>
-            </ng-container>
-            
 
-          </span>
-        </ng-template>
-        <ng-template pTemplate="content" let-event>
-          <p-card [header]="event.islem" [subheader]="event.zaman">
-            <div class="fw-bold fs-4 text-center text-gray-800 ng-star-inserted">{{event.adsoyad}}</div>
-            <div class="text-dark text-hover-info mb-1 font-size-lg">
-              {{event.islemaciklama}}
+<p-dialog header="{{'DEMANDED.SUREC_DIALOG.HEADER' | translate}}" [(visible)]="displayDemandProcess" [modal]="true" [style]="{width: '50vw'}"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+
+  <div class="card">
+    <p-timeline [value]="demandProcess" align="alternate" styleClass="customized-timeline">
+      <ng-template pTemplate="marker" let-event>
+        <span class="custom-marker p-shadow-2 bg-info">
+
+          <ng-container *ngIf="event.islem == 'Eklendi'">
+            <i class="fa-solid fa-plus text-light"></i>
+          </ng-container>
+
+          <ng-container *ngIf="event.islem == 'Reddedildi'">
+            <i class="fa-solid fa-xmark text-light"></i>
+          </ng-container>
+
+          <ng-container *ngIf="event.islem == 'Onay Bekleniyor'">
+            <i class="fa-solid fa-clock-rotate-left text-light"></i>
+          </ng-container>
+
+          <ng-container *ngIf="event.islem == 'Onaylandı'">
+            <i class="fa-solid fa-check text-light"></i>
+          </ng-container>
+
+
+        </span>
+      </ng-template>
+      <ng-template pTemplate="content" let-event>
+        <p-card [header]="event.islem" [subheader]="event.zaman">
+          <div class="fw-bold fs-4 text-center text-gray-800 ng-star-inserted">{{event.adsoyad}}</div>
+          <div class="text-dark text-hover-info mb-1 font-size-lg">
+            {{event.islemaciklama}}
+          </div>
+        </p-card>
+      </ng-template>
+    </p-timeline>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-times" (click)="displayDemandProcess=false" label="{{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}" class="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+
+
+
+<p-dialog header="{{'DEMANDED.ARAMA_DIALOG.HEADER' | translate}}" [(visible)]="displayDetailSearch" position="top" [modal]="true"
+  [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+
+  <form [formGroup]="detailSearchForm">
+    <p-accordion>
+      <p-accordionTab header="{{'DEMANDED.ARAMA_DIALOG.FORM_TITLE.KISISEL_BILGILER' | translate}}">
+        
+        <div class="row">
+          <div class="col-6 mt-5">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span >{{"DEMANDED.ARAMA_DIALOG.FORM.AD" | translate}}</span>
+            </label>    
+      
+            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"  formControlName="ad">
+          </div>
+      
+          <div class="col-6 mt-5">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span >{{"DEMANDED.ARAMA_DIALOG.FORM.SOYAD" | translate}}</span>
+            </label>    
+      
+            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"  formControlName="soyad">
+          </div>
+  
+          <div class="col-6 mt-5">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span >{{"DEMANDED.ARAMA_DIALOG.FORM.SICIL_NO" | translate}}</span>
+            </label>    
+      
+            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"  formControlName="sicilno">
+          </div>
+  
+          <div class="col-6 mt-5">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span >{{"DEMANDED.ARAMA_DIALOG.FORM.PERSONEL_NO" | translate}}</span>
+            </label>    
+      
+            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"  formControlName="personelno">
+          </div>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="{{'DEMANDED.ARAMA_DIALOG.FORM_TITLE.FIRMA_BILGILER' | translate}}">
+        <div class="row">
+          <div class="col-6 mt-5">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span >{{"DEMANDED.ARAMA_DIALOG.FORM.FIRMA" | translate}}</span>
+            </label>
+        
+            <select class="form-select form-select-lg form-select-solid" formControlName="firma">
+              <option *ngFor="let item of firma" value="{{item.id}}">{{item.ad}}</option>
+            </select>
+          </div>
+        
+          <div class="col-6 mt-5">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span >{{"DEMANDED.ARAMA_DIALOG.FORM.BOLUM" | translate}}</span>
+            </label>
+        
+            <select class="form-select form-select-lg form-select-solid" formControlName="bolum">
+              <option *ngFor="let item of bolum" value="{{item.id}}">{{item.ad}}</option>
+            </select>
+          </div>
+          
+          <div class="col-6 mt-5">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span >{{"DEMANDED.ARAMA_DIALOG.FORM.POZISYON" | translate}}</span>
+            </label>
+        
+            <select class="form-select form-select-lg form-select-solid" formControlName="pozisyon">
+              <option *ngFor="let item of pozisyon" value="{{item.id}}">{{item.ad}}</option>
+
+            </select>
+          </div>
+          
+          <div class="col-6 mt-5">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span >{{"DEMANDED.ARAMA_DIALOG.FORM.GOREV" | translate}}</span>
+            </label>
+        
+            <select class="form-select form-select-lg form-select-solid" formControlName="gorev">
+              <option *ngFor="let item of gorev" value="{{item.id}}">{{item.ad}}</option>
+
+            </select>
+          </div>
+        
+          <div class="col-6 mt-5">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span >{{"DEMANDED.ARAMA_DIALOG.FORM.ALT_FIRMA" | translate}}</span>
+            </label>
+        
+            <select class="form-select form-select-lg form-select-solid" formControlName="altfirma">
+              <option *ngFor="let item of altFirma" value="{{item.id}}">{{item.ad}}</option>
+
+            </select>
+          </div>
+        
+          <div class="col-6 mt-5">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span >{{"DEMANDED.ARAMA_DIALOG.FORM.YAKA" | translate}}</span>
+            </label>
+        
+            <select class="form-select form-select-lg form-select-solid" formControlName="yaka">
+              <option *ngFor="let item of yaka" value="{{item.id}}">{{item.ad}}</option>
+
+            </select>
+          </div>
+        
+          <div class="col-6 mt-5">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span >{{"DEMANDED.ARAMA_DIALOG.FORM.DIREKTORLUK" | translate}}</span>
+            </label>
+        
+            <select class="form-select form-select-lg form-select-solid" formControlName="direktorluk">
+              <option *ngFor="let item of direktorluk" value="{{item.id}}">{{item.ad}}</option>
+
+            </select>
+          </div>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="{{'DEMANDED.ARAMA_DIALOG.FORM_TITLE.OKOD_BILGILER' | translate}}">
+        <div class="row">
+          <div class="col-6 mt-5" *ngFor="let item of oKodFields | slice :0:6">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span >{{item.Ad}}</span>
+            </label>    
+      
+            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"  formControlName="okod{{item.ID}}">
+          </div>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="{{'DEMANDED.ARAMA_DIALOG.FORM_TITLE.TALEP_BILGILER' | translate}}">
+        <div class="row">
+          <div class="col-6 mt-5">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span>{{"DEMANDED.ARAMA_DIALOG.FORM.ARALIK_BASLANGIC" | translate}}</span>
+            </label>    
+      
+            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="date"  formControlName="tarih">
+          </div>
+  
+          <div class="col-6 mt-5">
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+              <span>{{"DEMANDED.ARAMA_DIALOG.FORM.ARALIK_BITIS" | translate}}</span>
+            </label>    
+      
+            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="date"  formControlName="tarihbit">
+          </div>
+  
+          <ng-container *ngIf="kaynak == 'izin'">
+            <div class="col-6 mt-5">
+              <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                <span >{{"DEMANDED.ARAMA_DIALOG.FORM.IZIN_TIPI" | translate}}</span>
+              </label>
+          
+              <select class="form-select form-select-lg form-select-solid"  formControlName="ftip">
+                <option *ngFor="let item of izinTipleri" value="{{item.ID}}">{{item.ad}}</option>
+              </select>
+            </div>  
+          </ng-container>
+          
+          <ng-container *ngIf="kaynak == 'fazlamesai'">
+            <div class="col-6 mt-5">
+              <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                <span>{{"DEMANDED.ARAMA_DIALOG.FORM.FAZLA_MESAI_TURU" | translate}}</span>
+              </label>
+          
+              <select class="form-select form-select-lg form-select-solid" formControlName="ftip">
+                <option *ngFor="let item of fmNedenleri" value="{{item.ID}}">{{item.ad}}</option>
+              </select>
             </div>
-          </p-card>
-        </ng-template>
-      </p-timeline>
-    </div>
+          </ng-container>
+  
+          
+        </div>
+      </p-accordionTab>
+    </p-accordion>
+  </form>
 
-    <ng-template pTemplate="footer">
-      <p-button icon="pi pi-times" (click)="displayDemandProcess=false" label="Kapat" class="p-button-text"></p-button>
-    </ng-template>
-  </p-dialog>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="getFormValues(kaynak)" label="{{'DEMANDED.BUTTON_TEXT.GONDER' | translate}}"
+      class="p-button-text"></p-button>
+    <p-button icon="pi pi-times" (click)="displayDetailSearch=false" label="{{'DEMANDED.BUTTON_TEXT.VAZGEC' | translate}}"></p-button>
+  </ng-template>
+</p-dialog>

@@ -38,30 +38,6 @@
           </span>
         </label>
       </div>
-
-
-      <!-- <label class="form-label fs-6 fw-bolder text-dark">App List</label>
-      <div class="col-lg-6" *ngFor="let item of appList">
-        <span class="form-check form-check-custom form-check-sm align-items-start mt-1">
-          <input type="radio" class="form-check-input" value="{{item.appId}}" id="{{item.appId}}">
-        </span>
-        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center"
-          for="{{item.appId}}">
-          <i class="fa-solid fa-cloud fs-3x me-5">
-            <span class="path1">
-  
-            </span>
-          </i>
-          <span class="d-block fw-semibold text-start">
-            <span class="text-dark fw-bold d-block fs-4 mb-2">
-              {{item.appName}}
-            </span>
-            <span class="text-muted fw-semibold fs-6">{{item.appId | currency}}</span>
-          </span>
-        </label>
-        <div class="fv-plugins-message-container invalid-feedback"></div>
-      </div> -->
-
     </div>
   
     <label class="form-label fs-6 fw-bolder text-dark">{{"AUTH.LOGIN.APP_LIST" | translate}}</label>
@@ -92,7 +68,7 @@
       }" />
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'required',
-        message: '{{`AUTH.LGOIN_FAILED.USERNAME_REQUIRED` | translate}}',
+        message: '{{`AUTH.LOGIN_FAILED.USERNAME_REQUIRED` | translate}}',
         control: loginForm.controls['userName']
       }"></ng-container>
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
@@ -182,14 +158,6 @@
       </ng-container>
     </button>
   </div>
-
-  <!-- <div class="text-gray-500 text-center fw-semibold fs-6">
-    Not a Member yet?
-
-    <a routerLink="/auth/registration" class="link-primary">
-      Sign up
-    </a>
-  </div> -->
 
   <!--end::Action-->
 </form>

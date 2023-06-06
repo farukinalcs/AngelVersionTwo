@@ -18,7 +18,7 @@ export class SurelerimComponent implements OnInit, OnDestroy {
   
   @ViewChild(MatPaginator, {static : true}) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns : string[] = ['tarih', 'girisCikis', 'normalSure', 'araSure', 'izinSure', 'fazlaSure', 'eksikSure']; 
+  displayedColumns : string[] = ['tarih', 'giris', 'cikis', 'normalSure', 'araSure', 'izinSure', 'fazlaSure', 'eksikSure']; 
   dataSource :MatTableDataSource<any>;
   
   durations : any[] = [];

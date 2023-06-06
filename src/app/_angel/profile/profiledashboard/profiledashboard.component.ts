@@ -35,8 +35,11 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   dialogZiyaretciComponent = DialogZiyaretciTalebiComponent;
   dialogGunlukIzinComponent = DialogGunlukIzinTalebiComponent;
   dialogSaatlikIzinComponent = DialogSaatlikIzinTalebiComponent;
+  displayOvertimeForm : boolean;
+  displayVacationForm: boolean;
 
   userInformation : UserInformation;
+
   constructor(
     private auth: AuthService,
     private authMenuService : AuthMenuService,
@@ -125,6 +128,23 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
     );
   }
 
+  showOvertimeDialog(){
+    this.displayOvertimeForm = true;
+  }
+
+  overtimeFormIsSend() {
+    this.displayOvertimeForm = false;
+  }
+
+  showVacationDialog(){
+    this.displayVacationForm = true;
+  }
+
+  vacationFormIsSend() {
+    this.displayVacationForm = false;
+  }
+
+  
 
 
   ngOnDestroy(): void {

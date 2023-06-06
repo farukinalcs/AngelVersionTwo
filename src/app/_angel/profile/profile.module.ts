@@ -42,13 +42,19 @@ import { DialogGunlukIzinTalebiComponent } from './talep-olustur/dialog-gunluk-i
 import { TranslationModule } from 'src/app/modules/i18n';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SplitterModule } from "primeng/splitter";
-import {TableModule} from 'primeng/table';
-import {InputTextModule} from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
 import { SearchFilterPipe } from 'src/app/_helpers/pipes/search-filter.pipe';
-import {DialogModule} from 'primeng/dialog';
-import {ButtonModule} from 'primeng/button';
-import {TimelineModule} from 'primeng/timeline';
-import {CardModule} from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { TimelineModule } from 'primeng/timeline';
+import { CardModule } from 'primeng/card';
+import { CardsModule } from 'src/app/_metronic/partials';
+import { AccordionModule } from 'primeng/accordion';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DataViewModule } from 'primeng/dataview';
+import { DropdownModule } from 'primeng/dropdown';
+import { DialogIzinTalebiComponent } from './talep-olustur/dialog-izin-talebi/dialog-izin-talebi.component';
 
 
 @NgModule({
@@ -69,7 +75,8 @@ import {CardModule} from 'primeng/card';
     DialogZiyaretciTalebiComponent,
     DialogSaatlikIzinTalebiComponent,
     DialogGunlukIzinTalebiComponent,
-    SearchFilterPipe
+    SearchFilterPipe,
+    DialogIzinTalebiComponent
   ],
   imports: [
     CommonModule,
@@ -105,14 +112,17 @@ import {CardModule} from 'primeng/card';
     TranslationModule,
     OverlayPanelModule,
     SplitterModule,
-
     TableModule,
     InputTextModule,
     DialogModule,
     ButtonModule,
     TimelineModule,
-    CardModule
-    
+    CardModule,
+    CardsModule, // Metronic içinden module
+    AccordionModule,
+    MatTooltipModule,
+    DataViewModule,
+    DropdownModule
   ]
 })
 export class ProfileModule { }

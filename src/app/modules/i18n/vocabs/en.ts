@@ -130,6 +130,151 @@ export const locale = {
           ADD_MESSAGE: 'Customer has been created'
         }
       }
-    }
+    },
+
+    PUBLIC : {
+      GUNLUK : "Daily",
+      HAFTALIK : "Weekly",
+      AYLIK : "Monthly",
+      DATA_NOT_FOUND : 'Data Not Found!',
+    },
+
+    MY_DURATION : {
+      TABLE_TITLE : {
+        TARIH : "Date",
+        GIRIS : "In",
+        CIKIS : "Out",
+        NORMAL_SURE : "Normal Time",
+        ARA_SURE : "Break Times",
+        IZIN_SURE : "Leave Time",
+        FAZLA_SURE : "Too Long",
+        EKSIK_SURE : "Absents",
+      }
+    },
+    
+    MY_VACATION : {
+      TABLE_TITLE : {
+        IZIN_TIPI : "Vacation Type",
+        SAATLIK_GUNLUK : "Hourly/Daily",
+        BASLANGIC : "Start Date",
+        BITIS : "End Date",
+        IZINLI_SURE : "Leave Time"
+      }
+    },
+
+    DEMANDED : {
+      TAB_GROUP : {
+        BEKLEYEN_FORMLAR : "Form Pending Approval",
+        ONAYLANANLAR : "Approved Forms",
+        REDDEDILENLER : "Rejected Forms"
+      },
+      SUB_MENU : {
+        IZIN : "Vacation",
+        FAZLA_MESAI : "Overtime",
+        ZIYARETCI : "Visitor",
+        TUMU : "All"
+      },
+
+      WARNING_LIST : {
+        TALEP_SECMELISINIZ : "You Must Select Demand Type"
+      },
+
+      BUTTON_TEXT : {
+        TUMUNU_SEC : "Select all",
+        SECILENLERI_ONAYLA : "Confirm Selected",
+        SECILENLERI_REDDET : "Reject Selected",
+        DETAYLI_ARAMA : "Detailed Search",
+        ONAY : "Approve",
+        RED : "Reject",
+        SUREC : "Process",
+        FORM : "Form",
+        GONDER : "Send",
+        VAZGEC : "Cancel",
+        KAPAT : "Close",
+
+      },
+
+      DEMAND : {
+        NEDENI : "Reason",
+        BASLANGIC : "Start",
+        BITIS_IS_BASI : "Finish/Start of Work",
+        ACIKLAMA : "Description",
+        SON : "End",
+      },
+
+      RED_DIALOG : {
+        HEADER : "Request Decline",
+      },
+
+      SUREC_DIALOG : {
+        HEADER : "Request Process",
+      },
+
+      ARAMA_DIALOG : {
+        HEADER : "Detail Search",
+        FORM_TITLE : {
+          KISISEL_BILGILER : "Personal Information",
+          FIRMA_BILGILER : "Company Information",
+          OKOD_BILGILER : "Custom Code Information",
+          TALEP_BILGILER : "Request Information"
+        },
+        FORM : {
+          AD : "Name",
+          SOYAD : "Surname",
+          SICIL_NO : "Register No",
+          PERSONEL_NO : "Person No",
+          FIRMA : "Company",
+          BOLUM : "Department",
+          POZISYON : "Position",
+          GOREV : "Job",
+          ALT_FIRMA : "Sub Company",
+          YAKA : "Collar",
+          DIREKTORLUK : "Directorship",
+          ARALIK_BASLANGIC : "Start Date",
+          ARALIK_BITIS : "End Date",
+          IZIN_TIPI : "Vacation Type",
+          FAZLA_MESAI_TURU : "Overtime Reason"
+        }
+      }
+    },
+    IZIN_TALEP_DIALOG : {
+      HEADER : "Leave Request Form",
+      FORM : {
+        IZIN_TIPI : "Type of Leave",
+        IZIN_HAKKI : "Entitlement to Leave",
+        GUNLUK_SAATLIK : "Daily-Hourly",
+        GUNLUK : "Daily",
+        SAATLIK : "Hourly",
+        IZIN_ADRESI : "Leave Address",
+        BASLANGIC_TARIHI : "Start Date",
+        BASLANGIC_SAATI : "Start Time",
+        BITIS_TARIHI  :"End Date",
+        BITIS_SAATI : "End Time",
+        HESAPLANAN_SURE : "Calculated Leave Duration",
+        ACIKLAMA : "Description",
+        GONDER : "Send",
+        IZIN_TIPI_SECINIZ : 'Select A Vacation Type',
+        ACIKLAMA_GIRINIZ : 'Enter Description',
+        ADRES_GIRINIZ : 'Enter Adress'
+      }
+    },
+    FM_TALEP_DIALOG : {
+      HEADER : "Overtime Request Form",
+      FORM : {
+        FM_TIPI : "Type of Overtime",
+        ULASIM : 'Transport',
+        YEMEK : 'Food',
+        BASLANGIC_TARIHI : "Start Date",
+        BASLANGIC_SAATI : "Start Time",
+        BITIS_TARIHI  :"End Date",
+        BITIS_SAATI : "End Time",
+        ACIKLAMA : "Description",
+        GONDER : "Send",
+        FM_TIPI_SECINIZ : 'Select A Overtime Type',
+        ACIKLAMA_GIRINIZ : 'Enter Description',
+        YEMEK_SECINIZ : 'Select A Food',
+        ULASIM_SECINIZ : 'Select A Transport'
+      }
+    },
   }
 };

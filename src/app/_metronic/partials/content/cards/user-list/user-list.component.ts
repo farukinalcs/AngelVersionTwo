@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DemandedModel } from 'src/app/_angel/profile/models/demanded';
 import { IconUserModel } from '../icon-user.model';
 
 @Component({
@@ -7,9 +8,14 @@ import { IconUserModel } from '../icon-user.model';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
-  @Input() users: Array<IconUserModel> = [];
+  // @Input() users: Array<IconUserModel> = [];
+  @Input() users: Array<DemandedModel> = [];
+
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log("USER LIST :", this.users);
+    
+  }
 }
