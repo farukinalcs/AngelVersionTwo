@@ -9,6 +9,7 @@ import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { PostFormModel } from '../../models/postForm';
 import { ToastrService } from 'ngx-toastr';
 import { formatDate } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dialog-fazla-mesai-talebi',
@@ -40,6 +41,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     private profileService : ProfileService,
     private formBuilder: FormBuilder,
     private toastrService : ToastrService,
+    private translateService: TranslateService,
     private ref : ChangeDetectorRef
   ) { }
 
@@ -114,9 +116,15 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
         this.overtimeFormIsSend.emit();
         this.overtimeForm.reset();
         
-        this.toastrService.success("FM Talebi Gönderildi", "BAŞARILI")
+        this.toastrService.success(
+          this.translateService.instant('TOASTR_MESSAGE.TALEP_GONDERILDI'),
+          this.translateService.instant('TOASTR_MESSAGE.BASARILI')
+        );
       } else {
-        this.toastrService.error(spMessage.usermessage, "HATA");
+        this.toastrService.error(
+          this.translateService.instant(spMessage.usermessage),
+          this.translateService.instant('TOASTR_MESSAGE.HATA')
+        );
       }
     });
   }

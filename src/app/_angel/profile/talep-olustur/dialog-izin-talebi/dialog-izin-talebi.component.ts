@@ -30,6 +30,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   calcTimeDesc: any;
   calcTimeValue: any;
   currentSicilId: any;
+  formDisabled: boolean = true;
 
   constructor(
     private profileService : ProfileService,
@@ -51,9 +52,9 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     this.vacationForm = this.formBuilder.group({
       tip : ['', [Validators.required]],
       bastarih : [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
-      bassaat : ['', [Validators.required]],
+      bassaat : [ {value: '', disabled: this.formDisabled }, [Validators.required]],
       bittarih : [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
-      bitsaat : ['', [Validators.required]],
+      bitsaat : [ {value: '', disabled: this.formDisabled }, [Validators.required]],
       aciklama : ['', [Validators.required]],
       izinadresi : ['', [Validators.required]],
       gunluksaatlik : ['gunluk'],
@@ -78,7 +79,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     this.vacationFormValues = Object.assign({}, this.vacationForm.value);
     console.log("İzin Formu :", this.vacationFormValues);
 
-    this.postOvertimeForm();
+    this.postVacationForm();
   }
 
   getUserInformation() {
@@ -105,13 +106,21 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
       console.log("item : ",item);
       if (item == 'saatlik') {
         this.isHourly = true;
+        this.vacationForm.get("bassaat")?.enable();
+        this.vacationForm.get("bitsaat")?.enable();
+        this.formDisabled = false;
+
       } else {
+
         this.isHourly = false;
+        this.vacationForm.get("bassaat")?.disable();
+        this.vacationForm.get("bitsaat")?.disable();
+        this.formDisabled = true;
       }
     });
   }
 
-  postOvertimeForm() {
+  postVacationForm() {
     this.profileService.postOvertimeOrVacationDemand('izin', this.vacationFormValues).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
       console.log("İzin Form gönderildi :", response);
 

@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
@@ -60,6 +61,7 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     private profilService : ProfileService,
     private toastrService : ToastrService,
     private formBuilder : FormBuilder,
+    private translateService : TranslateService,
     private ref : ChangeDetectorRef
   ) { }
 
@@ -152,7 +154,6 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
 
           }
         });
-      // }
 
       this.ref.detectChanges();
     });
@@ -236,7 +237,11 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
       this.profilService.cancelMyDemandsMultiple(checkedList, description).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
         console.log("Çoklu İptal :", response);
         this.getDemanded(aktifMenu);
-        this.toastrService.success("Talep İptal Edildi", "BAŞARILI");
+        this.toastrService.success(
+          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
+          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+        );
+
 
         this.allComplete = false;
 
@@ -259,7 +264,10 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     this.profilService.cancelMyDemands(formid, kaynak, aciklama).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
       if (response[0].x[0].islemsonuc) {
         this.getDemanded(aktifMenu);
-        this.toastrService.success("Talep İptal Edildi", "BAŞARILI");
+        this.toastrService.success(
+          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
+          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+        );
 
       }
       console.log("Talep İptal :", response);
@@ -340,7 +348,10 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
         this.demandProcess = data; 
 
       }else {
-        this.toastrService.warning("UYARI!","Gösterilecek Süreç Bulunamadı")
+        this.toastrService.warning(
+          this.translateService.instant("TOASTR_MESSAGE.SUREC_BULUNAMADI"),
+          this.translateService.instant("TOASTR_MESSAGE.UYARI")
+        );
       }
 
       this.ref.detectChanges();
@@ -362,7 +373,10 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
         this.selectedItem = item;
         this.tip = tip;    
       } else {
-        this.toastrService.error("İşaretleme Yapmalısınız!", "HATA")
+        this.toastrService.error(
+          this.translateService.instant("TOASTR_MESSAGE.ISARETLEME_YAPMALISINIZ"),
+          this.translateService.instant("TOASTR_MESSAGE.HATA")
+        );
       }
     } else {
       this.displayCancelDemand = true;
@@ -478,8 +492,11 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
       const data = response[0].x;
       console.log("Talep Onaylama :", response);
 
-      if (data.sonuc == 1) {
-        this.toastrService.success("Talep Onaylandı", "BAŞARILI");
+      if (data[0].sonuc == 1) {
+        this.toastrService.success(
+          this.translateService.instant("TOASTR_MESSAGE.TALEP_ONAYLANDI"),
+          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+        );
         this.getDemanded(aktifMenu);
       }
     });
@@ -496,7 +513,10 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
       this.profilService.confirmDemandMultiple(checkedList).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
         console.log("Çoklu Onay :", response);
         this.getDemanded(aktifMenu);
-        this.toastrService.success("Talep Onaylandı", "BAŞARILI");
+        this.toastrService.success(
+          this.translateService.instant("TOASTR_MESSAGE.TALEP_ONAYLANDI"),
+          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+        );
 
         this.allComplete = false;
         this.ref.detectChanges();

@@ -144,6 +144,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         language.active = true;
         this.language = language;
         this.selectedLanguage = lang;
+        this.translationService.setLanguage(lang);
       } else {
         language.active = false;
       }
@@ -153,6 +154,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   setSelectedLanguage(): any {
     this.setLanguage(this.translationService.getSelectedLanguage());
+    this.translationService.langObs.next(this.translationService.getSelectedLanguage());
   }
 
   ngOnDestroy() {

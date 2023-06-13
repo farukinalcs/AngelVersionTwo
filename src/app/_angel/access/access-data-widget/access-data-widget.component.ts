@@ -1,12 +1,16 @@
-import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridsterItemComponent, GridsterPush, GridType } from 'angular-gridster2';
+import { Subject, takeUntil } from 'rxjs';
+import { AccessService } from '../access.service';
 
 @Component({
   selector: 'app-access-data-widget',
   templateUrl: './access-data-widget.component.html',
   styleUrls: ['./access-data-widget.component.scss']
 })
-export class AccessDataWidgetComponent implements OnInit {
+export class AccessDataWidgetComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject();
+
   @ViewChild("fullScreen") divRef : any;
 
   options1: GridsterConfig;
@@ -20,12 +24,23 @@ export class AccessDataWidgetComponent implements OnInit {
 
   removeItems1 : any[] = [];
   removeItems2 : any[] = [];
+
+  alarmlar: any[] = [];
+  sonIslemler: any[] = [];
+  mesaiBit: any[] = [];
+  kesikCihazlar: any[] = [];
+  iceridekiler: any[] = [];
   
-  constructor() { }
+  constructor(
+    private accessService : AccessService,
+    private ref : ChangeDetectorRef
+  ) { }
+  
 
   ngOnInit(): void {
     this.dashboardHeaderOptions();
     this.dashboardBodyOptions();
+    this.getAccessDashboardHeader();
   }
 
   dashboardHeaderOptions() {
@@ -51,7 +66,7 @@ export class AccessDataWidgetComponent implements OnInit {
       compactType: CompactType.None,
       pushItems: true,
       draggable: {
-        enabled: true,
+        enabled: false,
       },
       resizable: {
         enabled: true,
@@ -64,12 +79,12 @@ export class AccessDataWidgetComponent implements OnInit {
     };
 
     this.dashboard1 = [
-      { cols: 26, rows: 5, y: 0, x: 0 ,type: 'İçerideki Personel Sayısı', class: 'row d-flex align-items-center bg-light-primary' },
-      { cols: 26, rows: 5, y: 0, x: 26 ,type: 'İçerideki Ziyaretçi Sayısı', class: 'row d-flex align-items-center bg-light-warning' },
-      { cols: 26, rows: 5, y: 0, x: 52 ,type: 'İçerideki Cihazlara Gönderilen Son 100 İşlem', class: 'row d-flex align-items-center bg-light-info' },
-      { cols: 26, rows: 5, y: 6, x: 0 ,type: 'İletişimi Kesik Cihaz Sayısı', class: 'row d-flex align-items-center bg-light-success' },
-      { cols: 26, rows: 5, y: 6, x: 27 ,type: 'Alarm Sayısı', class: 'row d-flex align-items-center bg-light-danger' }, 
-      { cols: 26, rows: 5, y: 6, x: 53 ,type: 'Mesaisi Bitip Çıkmayan Personel Sayısı', class: 'row d-flex align-items-center bg-light-dark'},
+      { cols: 26, rows: 5, y: 0, x: 0 ,type: 'İçerideki Personel Sayısı', class: 'card-header bg-primary', mkodu: 'yek001' },
+      { cols: 26, rows: 5, y: 0, x: 26 ,type: 'İçerideki Ziyaretçi Sayısı', class: 'card-header bg-warning', mkodu: '' },
+      { cols: 26, rows: 5, y: 0, x: 52 ,type: 'İçerideki Cihazlara Gönderilen Son 100 İşlem', class: 'card-header bg-info', mkodu: 'yek004' },
+      { cols: 26, rows: 5, y: 6, x: 0 ,type: 'İletişimi Kesik Cihaz Sayısı', class: 'card-header bg-success', mkodu: 'yek002' },
+      { cols: 26, rows: 5, y: 6, x: 27 ,type: 'Alarm Sayısı', class: 'card-header bg-danger', mkodu: 'yek005' }, 
+      { cols: 26, rows: 5, y: 6, x: 53 ,type: 'Mesaisi Bitip Çıkmayan Personel Sayısı', class: 'card-header bg-dark', mkodu: 'yek003'},
     ];
   }
 
@@ -141,4 +156,38 @@ export class AccessDataWidgetComponent implements OnInit {
     this.itemToPush = itemComponent;
   }
 
+  getAccessDashboardHeader() {
+    this.accessService.getAccessDashboardHeader(this.dashboard1).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
+      console.log("Access Dashboard Header Response : ", response);
+
+      response.forEach((item : any) => {
+        if (item.k == 'yek001') {
+          this.iceridekiler = item.x;        
+
+        } else if (item.k == 'yek002') {
+          this.kesikCihazlar = item.x;        
+          
+        } else if (item.k == 'yek003') {
+          this.mesaiBit = item.x;        
+
+        } else if (item.k == 'yek004') {
+          this.sonIslemler = item.x;        
+
+        } else if (item.k == 'yek005') {
+          this.alarmlar = item.x;        
+        }
+
+      });
+
+      this.ref.detectChanges();
+    })
+  }
+
+
+  
+  
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
+  }
 }

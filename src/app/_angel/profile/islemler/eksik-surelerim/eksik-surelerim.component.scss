@@ -1,3 +1,10 @@
+:host ::ng-deep {
+    .p-dropdown {
+        background-color: #f5f8fa;
+        width: 50%;
+    }
+}
+
 /* Page title */
 /* ---------------------------------------------------------- */
 .title-holder {

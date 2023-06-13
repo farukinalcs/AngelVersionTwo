@@ -26,13 +26,13 @@
 
                   <ng-container *ngIf="userInformation">
                     <a class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
-                      Giriş Tarihi : {{ userInformation.GirisTarih | date :'yyyy-MM-dd'}}
+                      {{"PROFIL_DASHBOARD.GIRIS_TARIHI" | translate}} : {{ userInformation.GirisTarih | date :'yyyy-MM-dd'}}
                     </a>
                   </ng-container>
                   
                   <ng-container *ngIf="!userInformation">
                     <a class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
-                      00.00.0000
+                      YYYY-MM-DD
                     </a>
                   </ng-container>
 
@@ -59,7 +59,7 @@
               </div>
   
   
-              <div class="col-4 d-flex flex-column flex-grow-1 mr-2">
+              <!-- <div class="col-4 d-flex flex-column flex-grow-1 mr-2">
   
                 <form class="example-form" [formGroup]="myControl">
                   <mat-form-field class="example-full-width" appearance="outline">
@@ -74,35 +74,35 @@
                   </mat-form-field>
                 </form>
   
-              </div>
+              </div> -->
   
               <div class="col-2">
-                <button class="btn btn-primary" mat-button [matMenuTriggerFor]="talepler">Talep Oluştur</button>
+                <button class="btn btn-primary" mat-button [matMenuTriggerFor]="talepler">{{"PROFIL_DASHBOARD.TALEP_OLUSTUR" | translate}}</button>
                 <mat-menu #talepler="matMenu">
 
                   <button mat-menu-item (click)="showVacationDialog()">
                     <i class="icon-l fas fa-skiing"> </i>
-                    İzin
+                    {{"PROFIL_DASHBOARD.IZIN" | translate}}
                   </button>
   
                   <button (click)="showOvertimeDialog()" mat-menu-item>
                     <i class="icon-l fas fa-calendar-alt"> </i>
-                    Fazla Mesai
+                    {{"PROFIL_DASHBOARD.FAZLA_MESAI" | translate}}
                   </button>
   
                   <button mat-menu-item (click)="openDialog(dialogZiyaretciComponent)">
                     <i class="fa-solid fa-person-walking"> </i>
-                    Ziyaretçi
+                    {{"PROFIL_DASHBOARD.ZIYARETCI" | translate}}
                   </button>
   
-                  <button mat-menu-item>
+                  <!-- <button mat-menu-item>
                     <i class="icon-l fas fa-bus-alt"> </i>
                     Servis
-                  </button>
+                  </button> -->
   
                   <button mat-menu-item>
                     <i class="icon-l fas fa-graduation-cap"> </i>
-                    Eğitim
+                    {{"PROFIL_DASHBOARD.EGITIM" | translate}}
                   </button>
                 </mat-menu>
               </div>
@@ -123,7 +123,7 @@
                       </ng-container>
                     </div>
   
-                    <div class="fw-bold fs-6 text-gray-400">Kıdem</div>
+                    <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.KIDEM" | translate}}</div>
                   </div>
   
                   <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
@@ -138,7 +138,7 @@
                       </ng-container>
                     </div>
   
-                    <div class="fw-bold fs-6 text-gray-400">İzin Hakkı</div>
+                    <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.IZIN_HAKKI" | translate}}</div>
                   </div>
   
   
@@ -155,7 +155,7 @@
                       
                     </div>
   
-                    <div class="fw-bold fs-6 text-gray-400">Kullanılan İzin</div>
+                    <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.KULLANILAN_IZIN" | translate}}</div>
                   </div>
   
                   <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
@@ -169,7 +169,7 @@
                       </ng-container>
                     </div>
   
-                    <div class="fw-bold fs-6 text-gray-400">Devir</div>
+                    <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.DEVIR" | translate}}</div>
                   </div>
 
 
@@ -183,7 +183,7 @@
                         <div class="fs-2 fw-bolder">-</div>
                       </ng-container>
                     </div>  
-                    <div class="fw-bold fs-6 text-gray-400">Kalan</div>
+                    <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.KALAN" | translate}}</div>
                   </div>
                   
                 </div>
@@ -197,6 +197,18 @@
                 <div class="h-5px mx-3 w-100 bg-light mb-3">
                   <div class="bg-success rounded h-5px" role="progressbar" [style.width]="'16.66666666666667%'"></div>
                 </div>
+              </div> -->
+
+              <!-- <div class="d-flex align-items-center bg-light-danger rounded p-5 mb-7">
+                <span class="svg-icon text-danger me-5">
+                    <span class="fs-1 ki-abstract-26 ki-duotone"></span>
+                </span>
+                <div class="flex-grow-1 me-2">
+                  <a class="fw-bolder text-gray-800 text-hover-primary fs-6">
+                    EKSİK SÜRE İÇİN FORM BEKLENİYOR... 
+                  </a>
+                </div>
+                <span class="fw-bolder text-danger py-1">{{incompleteTimes.length}}</span>
               </div> -->
             </div>
           </div>
@@ -257,6 +269,12 @@
           <ng-container *ngIf="menuConfig.pages.profil.tabMenu.takimim">
             <li class="nav-item" >
               <a class="nav-link text-active-primary me-6" routerLink="takimim" routerLinkActive="active" translate="MENU.PROFIL_SUB.TAKIMIM"></a>
+            </li>
+          </ng-container>
+
+          <ng-container>
+            <li class="nav-item" >
+              <a class="nav-link text-active-primary me-6" routerLink="eksik_surelerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.EKSIK_SURELERIM"></a>
             </li>
           </ng-container>
           

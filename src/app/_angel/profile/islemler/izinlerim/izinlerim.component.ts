@@ -33,11 +33,11 @@ export class IzinlerimComponent implements OnInit, OnDestroy {
     let zamanAralik : any = '1';
 
     if (event.tab) {
-      if (event.tab.textLabel == 'Bugün') {
+      if (event.tab.textLabel == 'Günlük' || event.tab.textLabel == 'Daily') {
         zamanAralik = '1';
-      } else if (event.tab.textLabel == 'Hafta') {
+      } else if (event.tab.textLabel == 'Haftalık' || event.tab.textLabel == 'Weekly') {
         zamanAralik = '7';
-      } else if (event.tab.textLabel == 'Ay') {
+      } else if (event.tab.textLabel == 'Aylık' || event.tab.textLabel == 'Monthly') {
         zamanAralik = '30';
       }
     }

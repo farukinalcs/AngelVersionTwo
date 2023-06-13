@@ -55,6 +55,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogIzinTalebiComponent } from './talep-olustur/dialog-izin-talebi/dialog-izin-talebi.component';
+import { EksikSurelerimComponent } from './islemler/eksik-surelerim/eksik-surelerim.component';
+import { TimeFormatPipe } from 'src/app/_helpers/pipes/time-format.pipe';
 
 
 @NgModule({
@@ -76,7 +78,9 @@ import { DialogIzinTalebiComponent } from './talep-olustur/dialog-izin-talebi/di
     DialogSaatlikIzinTalebiComponent,
     DialogGunlukIzinTalebiComponent,
     SearchFilterPipe,
-    DialogIzinTalebiComponent
+    DialogIzinTalebiComponent,
+    EksikSurelerimComponent,
+    TimeFormatPipe
   ],
   imports: [
     CommonModule,

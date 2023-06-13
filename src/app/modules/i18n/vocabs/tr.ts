@@ -75,6 +75,7 @@ export const locale = {
         MOBIL_LOKASYON: "Mobil Lokasyon",
         TASK_LISTEM: "Task Listem",
         TAKIMIM: "Takımım",
+        EKSIK_SURELERIM : "Eksik Sürelerim"
       },
       Access: "Access",
       AccessSub: {
@@ -271,13 +272,15 @@ export const locale = {
         BUTTON: "Giriş Yap",
         USERNAME: "Kullanıcı Adı",
         PASSWORD: "Şifre",
-        APP_LIST : "Uygulamalar"
+        APP_LIST : "Uygulamalar",
+        WAIT : "Lütfen Bekleyiniz..."
       },
       LOGIN_FAILED : {
-        PASSWORD_REQUIRED : "Password required!",
-        USERNAME_REQUIRED : "Username required!",
-        APP_REQUIRED : "App required!",
-        MIN_LENGTH_3 : "Password should have at least 3 symbols!"
+        LOGIN_FAILED : "Giriş Bİlgileri Yanlış",
+        PASSWORD_REQUIRED : "Şifre gerekli!",
+        USERNAME_REQUIRED : "Kullanıcı adı gerekli!",
+        APP_REQUIRED : "Uygulama gerekli!",
+        MIN_LENGTH_3 : "Alan en az 3 karakter içermelidir!"
       },
       FORGOT: {
         TITLE: "Şifremi Unuttum ? ",
@@ -701,6 +704,7 @@ export const locale = {
       HAFTALIK : "Haftalık",
       AYLIK : "Aylık",
       DATA_NOT_FOUND : 'Kayıt Bulunamadı!',
+      SEARCH : 'Arama..'
     },
 
     MY_DURATION : {
@@ -730,7 +734,8 @@ export const locale = {
       TAB_GROUP : {
         BEKLEYEN_FORMLAR : "Onayınızı Bekleyen Formalar",
         ONAYLANANLAR : "Onaylananalar",
-        REDDEDILENLER : "Reddedilenler"
+        REDDEDILENLER : "Reddedilenler",
+        SURECI_DEVAM_EDEN_FORMLAR : 'Süreci Devam Eden Formlar'
       },
       SUB_MENU : {
         IZIN : "İzin",
@@ -755,7 +760,9 @@ export const locale = {
         GONDER : "Gönder",
         VAZGEC : "Vazeç",
         KAPAT : "Kapat",
-
+        IPTAL : 'İptal',
+        ONAYLANDI : 'ONAYLANDI',
+        REDDEDILDI : 'REDDEDİLDİ',
       },
 
       DEMAND : {
@@ -768,6 +775,8 @@ export const locale = {
 
       RED_DIALOG : {
         HEADER : "Talep Reddet",
+        ACIKLAMA : "Açıklama",
+        ACIKLAMA_PLACEHOLDER : "Açıklama giriniz.."
       },
 
       SUREC_DIALOG : {
@@ -797,7 +806,8 @@ export const locale = {
           ARALIK_BASLANGIC : "Başlangıç Tarihi",
           ARALIK_BITIS : "Bitiş Tarihi",
           IZIN_TIPI : "İzin Tipi",
-          FAZLA_MESAI_TURU : "Fazla Mesai Nedeni"
+          FAZLA_MESAI_TURU : "Fazla Mesai Nedeni",
+          PLACEHOLDER : 'Bir değer giriniz..'
         }
       }
     },
@@ -820,6 +830,9 @@ export const locale = {
         IZIN_TIPI_SECINIZ : 'İzin Tipi Seçiniz',
         ACIKLAMA_GIRINIZ : 'Açıklana Giriniz',
         ADRES_GIRINIZ : 'Adres Giriniz'
+      },
+      FORM_ERROR : {
+        REQUIRED : "Boş Geçilemez!"
       }
     },
 
@@ -842,6 +855,90 @@ export const locale = {
       }
     },
 
+    TASK_LISTEM : {
+      TABLE : {
+        PROJE : 'Proje',
+        ACIKLAMA : 'Açıklama',
+        BASLANGIC_TARIHI : 'Başlangıç Tarihi',
+        BITIS_TARIHI : 'Bitiş Tarihi',
+        DURUM : 'Durum'
+      }
+    },
+
+    EKSIK_SURE : {
+      TABLE : {
+        VARDIYA : 'Vardiya',
+        EKSIK_SURE : 'Eksik Süre',
+        MESAI_TARIHI : 'Mesai Tarihi',
+        GIRIS : 'Giriş',
+        CIKIS : 'Çıkış'
+      },
+      ZAMAN_ARALIK : {
+        BIR_GUN : '1 Gün',
+        UC_GUN : '3 Gün',
+        BIR_HAFTA : '1 Hafta',
+        IKI_HAFTA : '2 Hafta',
+        BIR_AY : '1 Ay',
+        IKI_AY : '2 Ay',
+        ALTI_AY : '6 Ay',
+        BIR_YIL : '1 Yıl',
+      }
+    },
+
+    TAKIMIM : {
+      CARD : {
+        BEKLEYEN_IZIN_TALEPLERI : 'Bekleyen İzin Talepleri',
+        BEKLEYEN_FAZLA_MESAI_TALEPLERI : 'Bekleyen Fazla Mesai Talepleri',
+        GEC_KALMA_SAYISI : 'Geç Kalma Sayısı',
+        ERKEN_CIKMA_SAYISI : 'Erken Çıkma Sayısı',
+        GIRIS : 'Giriş',
+        CIKIS : 'Çıkış',
+        MESAJ_GONDER : 'Mesaj Gönder'
+      }
+    },
+
+    ZIYARETCI_TALEPLERIM : {
+      TABLE : {
+        AD_SOYAD : 'Ad Soyad',
+        FIRMA : 'Firma',
+        GIRIS_TARIHI : 'Giriş Tarihi',
+        CIKIS_TARIHI : 'Çıkış Tarihi',
+        ZIYARET_NEDENI : 'Ziyaret Nedeni',
+        DURUM : 'Durum'
+      }
+    },
+
+    PROFIL_DASHBOARD : {
+      GIRIS_TARIHI : 'Giriş Tarihi',
+      TALEP_OLUSTUR : 'Talep Oluştur',
+      IZIN : 'İzin',
+      FAZLA_MESAI : 'Fazla Mesai',
+      ZIYARETCI : 'Ziyaretçi',
+      EGITIM : 'Eğitim',
+      KIDEM : 'Kıdem',
+      IZIN_HAKKI : 'İzin Hakkı',
+      KULLANILAN_IZIN : 'Kullanılan İzin',
+      DEVIR : 'Devir',
+      KALAN : 'Kalan'
+    },
+
+    USER_INNER : {
+      ACCOUNT_SETTINGS : 'Hesap Ayarları',
+      LANGUAGE : 'Dil',
+      MY_PROJECT : 'Projelerim',
+      MY_PROFILE : 'Profilim'
+    },
+    TOASTR_MESSAGE : {
+      BASARILI : 'BAŞARILI',
+      HATA : 'HATA',
+      UYARI : 'UYARI',
+      BILGI : 'BİLGİ',
+      TALEP_GONDERILDI : 'Fazla Mesai Talep GÖnderildi',
+      TALEP_IPTAL_EDILDI : 'Talep İptal Edildi',
+      SUREC_BULUNAMADI : 'Gösterilecek Süreç Bulunamadı',
+      TALEP_ONAYLANDI : 'Talep Onaylandı',
+      ISARETLEME_YAPMALISINIZ : 'İşaretleme Yapmalısınız'
+    }
 
   },
 };

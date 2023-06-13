@@ -128,7 +128,7 @@
             
             <div class="col-3 ">
               <div class="input-group w-100 h-100">
-                <input class="form-control form-control-solid h-auto p-2 border-0 rounded-lg font-size-h6" [(ngModel)]="filterText" type="text" placeholder="Search..">
+                <input class="form-control form-control-solid h-auto p-2 border-0 rounded-lg font-size-h6" [(ngModel)]="filterText" type="text" placeholder="{{'PUBLIC.SEARCH' | translate}}">
                 <!-- <input class="input-group form-control form-control-sm" [(ngModel)]="filterText" type="text" placeholder="Search.."> -->
               </div>
             </div>
@@ -341,7 +341,7 @@
             
             <div class="col-3 ">
               <div class="input-group w-100 h-100">
-                <input class="form-control form-control-solid h-auto p-2 border-0 rounded-lg font-size-h6" [(ngModel)]="filterText" type="text" placeholder="Search..">
+                <input class="form-control form-control-solid h-auto p-2 border-0 rounded-lg font-size-h6" [(ngModel)]="filterText" type="text" placeholder="{{'PUBLIC.SEARCH' | translate}}">
               </div>
             </div>
           </div>
@@ -539,7 +539,7 @@
             
             <div class="col-3 ">
               <div class="input-group w-100 h-100">
-                <input class="form-control form-control-solid h-auto p-2 border-0 rounded-lg font-size-h6" [(ngModel)]="filterText" type="text" placeholder="Search..">
+                <input class="form-control form-control-solid h-auto p-2 border-0 rounded-lg font-size-h6" [(ngModel)]="filterText" type="text" placeholder="{{'PUBLIC.SEARCH' | translate}}">
               </div>
             </div>
           </div>
@@ -694,12 +694,22 @@
         </span>
       </ng-template>
       <ng-template pTemplate="content" let-event>
-        <p-card [header]="event.islem" [subheader]="event.zaman">
+        <p-card [header]="event.islem" subheader="{{ event.zaman | date: 'yyyy-MM-dd / HH:mm:ss' }}">
           <div class="fw-bold fs-4 text-center text-gray-800 ng-star-inserted">{{event.adsoyad}}</div>
           <div class="text-dark text-hover-info mb-1 font-size-lg">
             {{event.islemaciklama}}
           </div>
         </p-card>
+
+        <!-- <p-card [header]="event.islem">
+          <ng-container *ngIf="event.zaman">
+            <div class="subheader mb-15">{{ event.zaman | date: 'yyyy-MM-dd / HH:mm:ss' }}</div>
+          </ng-container>
+          <div class="fw-bold fs-4 text-center text-gray-800 ng-star-inserted">{{event.adsoyad}}</div>
+          <div class="text-dark text-hover-info mb-1 font-size-lg">
+            {{event.islemaciklama}}
+          </div>
+        </p-card> -->
       </ng-template>
     </p-timeline>
   </div>
@@ -724,7 +734,9 @@
               <span >{{"DEMANDED.ARAMA_DIALOG.FORM.AD" | translate}}</span>
             </label>    
       
-            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"  formControlName="ad">
+            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"
+              placeholder="{{'DEMANDED.ARAMA_DIALOG.FORM.PLACEHOLDER' | translate}}"
+              formControlName="ad">
           </div>
       
           <div class="col-6 mt-5">
@@ -732,7 +744,9 @@
               <span >{{"DEMANDED.ARAMA_DIALOG.FORM.SOYAD" | translate}}</span>
             </label>    
       
-            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"  formControlName="soyad">
+            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"
+              placeholder="{{'DEMANDED.ARAMA_DIALOG.FORM.PLACEHOLDER' | translate}}"
+              formControlName="soyad">
           </div>
   
           <div class="col-6 mt-5">
@@ -740,7 +754,9 @@
               <span >{{"DEMANDED.ARAMA_DIALOG.FORM.SICIL_NO" | translate}}</span>
             </label>    
       
-            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"  formControlName="sicilno">
+            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"
+              placeholder="{{'DEMANDED.ARAMA_DIALOG.FORM.PLACEHOLDER' | translate}}"
+              formControlName="sicilno">
           </div>
   
           <div class="col-6 mt-5">
@@ -748,7 +764,9 @@
               <span >{{"DEMANDED.ARAMA_DIALOG.FORM.PERSONEL_NO" | translate}}</span>
             </label>    
       
-            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"  formControlName="personelno">
+            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"
+              placeholder="{{'DEMANDED.ARAMA_DIALOG.FORM.PLACEHOLDER' | translate}}"
+              formControlName="personelno">
           </div>
         </div>
       </p-accordionTab>
@@ -837,7 +855,9 @@
               <span >{{item.Ad}}</span>
             </label>    
       
-            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"  formControlName="okod{{item.ID}}">
+            <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6" type="text"
+              placeholder="{{'DEMANDED.ARAMA_DIALOG.FORM.PLACEHOLDER' | translate}}"
+              formControlName="okod{{item.ID}}">
           </div>
         </div>
       </p-accordionTab>

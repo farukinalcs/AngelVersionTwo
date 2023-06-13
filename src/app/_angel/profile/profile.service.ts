@@ -617,13 +617,15 @@ export class ProfileService {
   postOvertimeOrVacationDemand(kaynak : string, form : any) {
     var ulasimID = form.ulasim?.ID ? form.ulasim.ID.toString() : "";
     var yemekID = form.yemek?.ID ? form.yemek.ID.toString() : "";
+    var bassaat = form.bassaat ? form.bassaat : "";
+    var bitsaat = form.bitsaat ? form.bitsaat : "";
 
     var sp : any[] = [{
       mkodu : 'yek049',
       kaynak : kaynak,
       tip : form.tip.ID.toString(),
-      bastarih : form.bastarih + ' ' + form.bassaat,
-      bittarih : form.bittarih + ' ' + form.bitsaat,
+      bastarih : form.bastarih + ' ' + bassaat,
+      bittarih : form.bittarih + ' ' + bitsaat,
       izinadresi : form.izinadresi,
       ulasim : ulasimID,
       yemek : yemekID,
@@ -686,4 +688,59 @@ export class ProfileService {
 
     return this.httpClient.get<any>(API_URL + '/process', options);
   }
+
+  getMyTaskList() {
+    var sp : any[] = [
+      {mkodu : 'yek051'}
+    ];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  getIncompleteTimes(zamanAralik : string) {
+    var sp : any[] = [{
+      mkodu : 'yek052',
+      zamanaralik : zamanAralik
+    }
+    ];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+  
 }

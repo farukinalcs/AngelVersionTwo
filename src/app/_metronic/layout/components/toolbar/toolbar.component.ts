@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { LoaderService } from 'src/app/_helpers/loader.service';
 import { ILayout, LayoutType } from '../../core/configs/config';
 import { LayoutService } from '../../core/layout.service';
 
@@ -34,7 +35,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   appPageTitleBreadcrumb: boolean;
   appPageTitleDescription: boolean;
 
-  constructor(private layout: LayoutService) {}
+  constructor(private layout: LayoutService, public loaderService: LoaderService) {}
 
   ngOnInit(): void {
     const subscr = this.layout.layoutConfigSubject

@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
@@ -63,6 +64,7 @@ export class TaleplerimComponent implements OnInit, OnDestroy {
     private profilService : ProfileService,
     private formBuilder : FormBuilder,
     private toastrService : ToastrService,
+    private translateService : TranslateService,
     private ref : ChangeDetectorRef
   ) { }
   
@@ -208,15 +210,19 @@ export class TaleplerimComponent implements OnInit, OnDestroy {
     }else if (kaynak == 'Fazla Mesai'){
       kaynak = 'fm'
     }
-    this.toastrService.success("Talep İptal Edildi", "BAŞARILI");
+    
+    
 
     this.profilService.cancelMyDemands(formid, kaynak, aciklama).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
       if (response[0].x[0].islemsonuc) {
+        this.toastrService.success(
+          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
+          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+        );
+
         this.getMyDemands(aktifMenu);
       }
       console.log("Talep İptal :", response);
-      
-
 
       this.ref.detectChanges();
     });
@@ -251,7 +257,10 @@ export class TaleplerimComponent implements OnInit, OnDestroy {
         this.demandProcess = data; 
 
       }else {
-        this.toastrService.warning("UYARI!","Gösterilecek Süreç Bulunamadı")
+        this.toastrService.warning(
+          this.translateService.instant("TOASTR_MESSAGE.SUREC_BULUNAMADI"),
+          this.translateService.instant("TOASTR_MESSAGE.UYARI")
+        );
       }
 
 

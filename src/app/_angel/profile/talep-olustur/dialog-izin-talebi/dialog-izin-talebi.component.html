@@ -36,7 +36,7 @@
 
                 <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                     validation: 'required',
-                    message: 'Boş Geçilemez',
+                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
                     control: vacationForm.controls['tip']}">
                 </ng-container>
 
@@ -109,7 +109,7 @@
 
                 <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                     validation: 'required',
-                    message: 'Boş Geçilemez',
+                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
                     control: vacationForm.controls['izinadresi']}">
                 </ng-container>
 
@@ -134,7 +134,7 @@
                 }">
                 <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                     validation: 'required',
-                    message: 'Boş Geçilemez',
+                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
                     control: vacationForm.controls['bastarih']}">
                 </ng-container>
 
@@ -157,7 +157,7 @@
                     }">
                     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                         validation: 'required',
-                        message: 'Boş Geçilemez',
+                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
                         control: vacationForm.controls['bassaat']}">
                     </ng-container>
     
@@ -169,9 +169,18 @@
             </ng-container>
 
             <div [ngClass]="!isHourly ? 'col-12 p-5' : 'col-6 p-5'">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BITIS_TARIHI" | translate}}</span>
-                </label>
+                <ng-container *ngIf="isHourly">
+                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                        <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BITIS_TARIHI" | translate}}</span>
+                    </label>
+                </ng-container>
+                
+                <ng-container *ngIf="!isHourly">
+                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                        <span class="required">İş Başı Tarihi</span>
+                    </label>
+                </ng-container>
+                
     
                 <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bittarih"
                 [ngClass]="{
@@ -180,7 +189,7 @@
                 }">
                 <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                     validation: 'required',
-                    message: 'Boş Geçilemez',
+                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
                     control: vacationForm.controls['bittarih']}">
                 </ng-container>
 
@@ -203,7 +212,7 @@
                     }">
                     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                         validation: 'required',
-                        message: 'Boş Geçilemez',
+                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
                         control: vacationForm.controls['bitsaat']}">
                     </ng-container>
     
@@ -261,7 +270,7 @@
 
                 <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                     validation: 'required',
-                    message: 'Boş Geçilemez',
+                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
                     control: vacationForm.controls['aciklama']}">
                 </ng-container>
 
@@ -287,7 +296,7 @@
 <ng-template #formError let-control="control" let-message="message" let-validation="validation">
     <ng-container *ngIf="control.hasError(validation)">
         <div class="invalid-feedback">
-            {{message}}
+            {{message | translate}}
         </div>
     </ng-container>
 </ng-template>
@@ -295,7 +304,7 @@
 <ng-template #formSuccess let-control="control" let-message="message" let-validation="validation">
     <ng-container *ngIf="control.valid">
         <div class="valid-feedback">
-            {{message}}
+            {{message | translate}}
         </div>
     </ng-container>
 </ng-template>

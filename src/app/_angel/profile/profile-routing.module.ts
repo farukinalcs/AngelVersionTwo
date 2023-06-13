@@ -11,6 +11,7 @@ import { ZiyaretcitaleplerimComponent } from './talepler/ziyaretcitaleplerim/ziy
 import { MobillokasyonComponent } from './talepler/mobillokasyon/mobillokasyon.component';
 import { TasklistemComponent } from './talepler/tasklistem/tasklistem.component';
 import { TakimimComponent } from './talepler/takimim/takimim.component';
+import { EksikSurelerimComponent } from './islemler/eksik-surelerim/eksik-surelerim.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
       {
         path: 'takimim',
         component: TakimimComponent,
+      },
+      {
+        path: 'eksik_surelerim',
+        component: EksikSurelerimComponent,
       },
       { path: '', redirectTo: 'gecislerim', pathMatch: 'full' },
       { path: '**', redirectTo: 'gecislerim', pathMatch: 'full' },

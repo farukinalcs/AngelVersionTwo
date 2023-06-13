@@ -24,6 +24,7 @@ export const locale = {
         MOBIL_LOKASYON: "Mobile Location",
         TASK_LISTEM: "My Task List",
         TAKIMIM: "My Team",
+        EKSIK_SURELERIM : "Incomplete Time"
       },
       Access: "Access",
       AccessSub: {
@@ -46,19 +47,22 @@ export const locale = {
         PRIVACY: 'Privacy',
         LEGAL: 'Legal',
         CONTACT: 'Contact',
+        SIGN_OUT : 'Sign Out'
       },
       LOGIN: {
         TITLE: 'Login Account',
         BUTTON: 'Sign In',
         USERNAME: "Username",
         PASSWORD: "Password",
-        APP_LIST : "APP List"
+        APP_LIST : "APP List",
+        WAIT : "Please Wait..."
       },
       LOGIN_FAILED : {
-        PASSWORD_REQUIRED : "Şifre gerekli!",
-        USERNAME_REQUIRED : "Kullanıcı adı gerekli!",
-        APP_REQUIRED : "Uygulama gerekli!",
-        MIN_LENGTH_3 : "Şifre en az 3 karakter içermelidir!"
+        LOGIN_FAILED : "The Login Details Are Incorrect",
+        PASSWORD_REQUIRED : "Password required!",
+        USERNAME_REQUIRED : "Username required!",
+        APP_REQUIRED : "App required!",
+        MIN_LENGTH_3 : "Field should have at least 3 symbols!"
       },
       FORGOT: {
         TITLE: 'Forgotten Password?',
@@ -137,6 +141,7 @@ export const locale = {
       HAFTALIK : "Weekly",
       AYLIK : "Monthly",
       DATA_NOT_FOUND : 'Data Not Found!',
+      SEARCH : 'Search..'
     },
 
     MY_DURATION : {
@@ -166,7 +171,8 @@ export const locale = {
       TAB_GROUP : {
         BEKLEYEN_FORMLAR : "Form Pending Approval",
         ONAYLANANLAR : "Approved Forms",
-        REDDEDILENLER : "Rejected Forms"
+        REDDEDILENLER : "Rejected Forms",
+        SURECI_DEVAM_EDEN_FORMLAR : 'Awaiting Approval'
       },
       SUB_MENU : {
         IZIN : "Vacation",
@@ -191,7 +197,9 @@ export const locale = {
         GONDER : "Send",
         VAZGEC : "Cancel",
         KAPAT : "Close",
-
+        IPTAL : 'Cancel',
+        ONAYLANDI : 'CONFIRMED',
+        REDDEDILDI : 'REJECTED'
       },
 
       DEMAND : {
@@ -204,10 +212,12 @@ export const locale = {
 
       RED_DIALOG : {
         HEADER : "Request Decline",
+        ACIKLAMA : "Description",
+        ACIKLAMA_PLACEHOLDER : "Enter a description.."
       },
 
       SUREC_DIALOG : {
-        HEADER : "Request Process",
+        HEADER : "Request Process"
       },
 
       ARAMA_DIALOG : {
@@ -233,7 +243,8 @@ export const locale = {
           ARALIK_BASLANGIC : "Start Date",
           ARALIK_BITIS : "End Date",
           IZIN_TIPI : "Vacation Type",
-          FAZLA_MESAI_TURU : "Overtime Reason"
+          FAZLA_MESAI_TURU : "Overtime Reason",
+          PLACEHOLDER : 'Enter a value..'
         }
       }
     },
@@ -256,6 +267,9 @@ export const locale = {
         IZIN_TIPI_SECINIZ : 'Select A Vacation Type',
         ACIKLAMA_GIRINIZ : 'Enter Description',
         ADRES_GIRINIZ : 'Enter Adress'
+      },
+      FORM_ERROR : {
+        REQUIRED : "Required!"
       }
     },
     FM_TALEP_DIALOG : {
@@ -276,5 +290,89 @@ export const locale = {
         ULASIM_SECINIZ : 'Select A Transport'
       }
     },
+    TASK_LISTEM : {
+      TABLE : {
+        PROJE : 'Project',
+        ACIKLAMA : 'Description',
+        BASLANGIC_TARIHI : 'Start Date',
+        BITIS_TARIHI : 'End Date',
+        DURUM : 'State'
+      }
+    },
+
+    EKSIK_SURE : {
+      TABLE : {
+        VARDIYA : 'Shift',
+        EKSIK_SURE : 'Incomplete Time',
+        MESAI_TARIHI : 'Working Date',
+        GIRIS : 'Entry',
+        CIKIS : 'Exit'
+      },
+      ZAMAN_ARALIK : {
+        BIR_GUN : '1 Day',
+        UC_GUN : '3 Day',
+        BIR_HAFTA : '1 Week',
+        IKI_HAFTA : '2 Week',
+        BIR_AY : '1 Month',
+        IKI_AY : '2 Month',
+        ALTI_AY : '6 Month',
+        BIR_YIL : '1 Year',
+      }
+    },
+    TAKIMIM : {
+      CARD : {
+        BEKLEYEN_IZIN_TALEPLERI : 'Pending Permission Requests',
+        BEKLEYEN_FAZLA_MESAI_TALEPLERI : 'Pending Overtime Requests',
+        GEC_KALMA_SAYISI : 'Number Of Delays',
+        ERKEN_CIKMA_SAYISI : 'Number of Early Exits',
+        GIRIS : 'Entry',
+        CIKIS : 'Exit',
+        MESAJ_GONDER : 'Send Message'
+      }
+    },
+
+    ZIYARETCI_TALEPLERIM : {
+      TABLE : {
+        AD_SOYAD : 'Full Name',
+        FIRMA : 'Company',
+        GIRIS_TARIHI : 'Entry Date',
+        CIKIS_TARIHI : 'Exit Date',
+        ZIYARET_NEDENI : 'Reason For Visit',
+        DURUM : 'State'
+      }
+    },
+
+    PROFIL_DASHBOARD : {
+      GIRIS_TARIHI : 'Entry Date',
+      TALEP_OLUSTUR : 'Create Request',
+      IZIN : 'Vacation',
+      FAZLA_MESAI : 'Overtime',
+      ZIYARETCI : 'Visitors',
+      EGITIM : 'Education',
+      KIDEM : 'Seniority',
+      IZIN_HAKKI : 'Vacation Rights',
+      KULLANILAN_IZIN : 'Used Vacation',
+      DEVIR : 'Trasnfer',
+      KALAN : 'Remaining'
+    },
+     
+    USER_INNER : {
+      ACCOUNT_SETTINGS : 'Account Settings',
+      LANGUAGE : 'Language',
+      MY_PROJECT : 'My Project',
+      MY_PROFILE : 'My Profile'
+    },
+
+    TOASTR_MESSAGE : {
+      BASARILI : 'SUCCESS',
+      HATA : 'ERROR',
+      UYARI : 'WARNING',
+      BILGI : 'INFO',
+      TALEP_GONDERILDI : 'Overtime Request Sended',
+      TALEP_IPTAL_EDILDI : 'Your Demand Cancelled',
+      SUREC_BULUNAMADI : 'No Process Found to Display',
+      TALEP_ONAYLANDI : 'Demand Comfirmed',
+      ISARETLEME_YAPMALISINIZ : 'You Must Markup'
+    }
   }
 };

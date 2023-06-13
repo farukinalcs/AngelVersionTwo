@@ -1,3 +1,20 @@
 :host {
   height: 100%;
 }
+.loader-container{
+  position : absolute;
+  width: 100%;
+  height: 100%;
+  // background-color: black;
+  // opacity: 0.8;
+  z-index: 99;
+}
+
+::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #e33a37; 
+  height: 30px;
+}
+
+::ng-deep .mat-progress-spinner svg {
+  height: 30px !important;
+}

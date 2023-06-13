@@ -17,50 +17,23 @@ export class GecislerimComponent implements OnInit, OnDestroy {
   currentLang : any;
   transitions : any[]  = [];
   
-  daily : string = 'Günlük';
-  weekly : string = 'Haftalık';
-  monthly : string = 'Aylık';
-
   constructor(
     private profileService : ProfileService,
-    private helperService : HelperService,
     private ref : ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    this.changeValue();
     this.getTransitions('1');
-  }
-  
-  
-  getCurrentLang() {
-    this.changeValue();
-  }
-
-  changeValue(){
-    this.helperService.lang.subscribe((lang : any) => {
-      if (lang == 'en') {
-        this.daily = 'Daily';
-        this.weekly = 'Weekly';
-        this.monthly = 'Monthly';
-      } else if(lang == 'tr') {
-        this.daily = 'Günlük';
-        this.weekly = 'Haftalık';
-        this.monthly = 'Aylık';
-      }
-    });
-     
-
   }
 
   getTransitions(event : any) {
     var zamanAralik : any = '1';
     if (event.tab) {
-      if (event.tab.textLabel == 'Bugün') {
+      if (event.tab.textLabel == 'Günlük' || event.tab.textLabel == 'Daily') {
         zamanAralik = '1';
-      } else if (event.tab.textLabel == 'Hafta') {
+      } else if (event.tab.textLabel == 'Haftalık' || event.tab.textLabel == 'Weekly') {
         zamanAralik = '7';
-      } else if (event.tab.textLabel == 'Ay'){
+      } else if (event.tab.textLabel == 'Aylık' || event.tab.textLabel == 'Monthly'){
         zamanAralik = '30';
       }  
     }

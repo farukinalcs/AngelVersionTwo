@@ -13,6 +13,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 
+<style>
+  ::ng-deep .mat-progress-spinner circle,
+  .mat-spinner circle {
+    stroke: #e33a37;
+    height: 30px;
+  }
+
+  ::ng-deep .mat-progress-spinner svg {
+    height: 30px !important;
+  }
+</style>
+
 <body root id="kt_body" class="mat-typography">
   <!-- <body root id="kt_body" class="mat-typography" direction="rtl" dir="rtl" style="direction: rtl"></body> -->
   <!--begin::Theme mode setup on page load-->
@@ -38,7 +50,8 @@
   <!--end::Theme mode setup on page load-->
   <div id="splash-screen" class="splash-screen">
     <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo" />
-    <span>Loading ...</span>
+    <mat-spinner></mat-spinner>
+    <!-- <span>Loading ...</span> -->
   </div>
 </body>
 

@@ -6,9 +6,10 @@ import {
   HttpInterceptor,
   HttpEventType
 } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { finalize, Observable, tap } from 'rxjs';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { AuthService } from '../auth.service';
+import { LoaderService } from 'src/app/_helpers/loader.service';
 
 
 
@@ -19,13 +20,21 @@ export class TokenInterceptor implements HttpInterceptor {
 
   constructor(
     private helperService: HelperService,
-    private authService : AuthService
+    private authService : AuthService,
+    private loaderService : LoaderService
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    this.loaderService.isLoading.next(true);
+
     if (!this.flag) {
       this.flag = true;
-      return next.handle(request);
+      return next.handle(request)
+      .pipe(
+        finalize(() => {
+        this.loaderService.isLoading.next(false);
+        })
+      );
     }
 
     let headers = {};
@@ -52,6 +61,8 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap((event: HttpEvent<any>) => {
         if (event.type === HttpEventType.Response) {
+          this.loaderService.isLoading.next(false);
+          
           if (event.body && event.body instanceof Object) {
             const responseBody = event.body;
             responseBody.forEach((item : any) => {
@@ -65,19 +76,12 @@ export class TokenInterceptor implements HttpInterceptor {
                 item.m = JSON.parse(item.m);
               }
             })
-            
-            // if (responseBody[0].x) {
-            //   responseBody[0].x = JSON.parse(responseBody[0].x);
-            // }
-            // if (responseBody[0].z) {
-            //   responseBody[0].z = JSON.parse(responseBody[0].z);
-            // }
 
             this.authService.setAuthFromLocalStorage(responseBody[0].y);
           }
           
         }
-      })
+      })  
     );
   }
 }
