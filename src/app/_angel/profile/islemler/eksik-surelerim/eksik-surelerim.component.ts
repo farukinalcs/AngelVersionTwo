@@ -1,12 +1,22 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
+import { ChartComponent } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { TranslationService } from 'src/app/modules/i18n';
 import { MyIncompleteTimeModel } from '../../models/myIncompleteTime';
 import { ProfileService } from '../../profile.service';
+
+// export type ChartOptions = {
+//   series: ApexAxisChartSeries;
+//   chart: ApexChart;
+//   markers: ApexMarkers;
+//   stroke: ApexStroke;
+//   dataLabels: ApexDataLabels;
+//   title: ApexTitleSubtitle;
+// };
 
 @Component({
   selector: 'app-eksik-surelerim',
@@ -16,16 +26,8 @@ import { ProfileService } from '../../profile.service';
 export class EksikSurelerimComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   
-  // timeRange : any[] = [
-  //   {text : '1 Gün', value : '1'},
-  //   {text : '3 Gün', value : '3'},
-  //   {text : '1 Hafta', value : '7'},
-  //   {text : '2 Hafta', value : '14'},
-  //   {text : '1 Ay', value : '30'},
-  //   {text : '2 Ay', value : '60'},
-  //   {text : '6 Ay', value : '180'},
-  //   {text : '1 Yıl', value : '365'}
-  // ]
+  // @ViewChild("chart") chart: ChartComponent;
+  // public chartOptions: Partial<ChartOptions> | any;
 
   timeRange : any[] = [
     {text : this.translateService.instant('EKSIK_SURE.ZAMAN_ARALIK.BIR_GUN'), value : '1'},
@@ -50,7 +52,35 @@ export class EksikSurelerimComponent implements OnInit, OnDestroy {
     private translationService : TranslationService,
     private translateService : TranslateService,
     private ref : ChangeDetectorRef
-  ) { }
+  ) {
+    // this.chartOptions = {
+    //   series: [
+    //     {
+    //       name: "stepline-series",
+    //       data: []
+    //     }
+    //   ],
+    //   chart: {
+    //     type: "line",
+    //     height: 350
+    //   },
+    //   stroke: {
+    //     curve: "stepline"
+    //   },
+    //   dataLabels: {
+    //     enabled: false
+    //   },
+    //   title: {
+    //     text: "Stepline Chart",
+    //     align: "left"
+    //   },
+    //   markers: {
+    //     hover: {
+    //       sizeOffset: 4
+    //     }
+    //   }
+    // };
+   }
 
 
   ngOnInit(): void {    
@@ -85,6 +115,10 @@ export class EksikSurelerimComponent implements OnInit, OnDestroy {
       this.incompleteTimes = data;
       this.dataSource = new MatTableDataSource(this.incompleteTimes);
       console.log("Eksik Sürelerim :", data);
+
+      // this.incompleteTimes.forEach((item) => {
+      //   this.chartOptions.series[0].data.push(item.eksiksure)
+      // })
 
       this.ref.detectChanges();
     });

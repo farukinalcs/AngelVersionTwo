@@ -1,4 +1,222 @@
 <div class="container">
+    <div class="card card-xl-stretch mb-xl-8 m-10">
+        <div class="col-12 d-flex justify-content-center py-5">
+            <div id="container">
+                <button mat-icon-button (click)="goToBack()">
+                    <i class="fa-solid fa-circle-left fs-2x text-dark text-hover-danger"></i>
+                </button>
+
+                <div class="date-container">
+                    <span class="month">{{ month }}</span>
+                    <span class="year text-dark">{{ year }}</span>
+                </div>
+
+                <button mat-icon-button (click)="goToNext()">
+                    <i class="fa-solid fa-circle-right fs-2x text-dark text-hover-danger"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <ng-container *ngIf="durationsMobile.length > 0">
+                <!--begin::Header-->
+                <!-- <div class="card-header border-0 pt-5">
+                        <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bold fs-3 mb-1">Sürelerim</span>
+            
+                            <span class="text-muted mt-1 fw-semibold fs-7">{{month}}-{{year}} Giriş Çıkışlar</span>
+                        </h3>
+                    </div> -->
+                <!--end::Header-->
+
+                <!--begin::Body-->
+                <div class="card-body py-3">
+                    <div class="tab-content">
+
+                        <!--begin::Tap pane-->
+                        <div class="tab-pane fade active show">
+                            <!--begin::Table container-->
+                            <div class="table-responsive">
+                                <!--begin::Table-->
+                                <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                                    <!--begin::Table head-->
+                                    <thead>
+                                        <tr class="border-0">
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <!--end::Table head-->
+
+                                    <!--begin::Table body-->
+                                    <tbody>
+                                        <tr *ngFor="let item of durationsMobile"
+                                            [ngClass]="{'bg-light-info': item.simge == '4'}">
+                                            <td>
+                                                <ng-container *ngIf="item.simge == '1'">
+                                                    <div matTooltip="Başarılı Giriş/Çıkış"
+                                                        class="symbol symbol-50px me-2">
+                                                        <span class="symbol-label bg-light-success">
+                                                            <i class="fa-solid fa-circle-check text-success fs-2x"></i>
+                                                        </span>
+                                                    </div>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="item.simge == '2'">
+                                                    <div matTooltip="Giriş/Çıkış Bulunamadı"
+                                                        class="symbol symbol-50px me-2">
+                                                        <span class="symbol-label bg-light-danger">
+                                                            <i class="fa-solid fa-circle-xmark text-danger fs-2x"></i>
+                                                        </span>
+                                                    </div>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="item.simge == '3'">
+                                                    <div matTooltip="Hatalı Giriş/Çıkış"
+                                                        class="symbol symbol-50px me-2">
+                                                        <span class="symbol-label bg-light-warning">
+                                                            <i
+                                                                class="fa-solid fa-triangle-exclamation text-warning fs-2x"></i>
+                                                        </span>
+                                                    </div>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="item.simge == '4'">
+                                                    <div matTooltip="Tatil" class="symbol symbol-50px me-2">
+                                                        <span class="symbol-label bg-light-info">
+                                                            <i class="fa-solid fa-umbrella-beach text-info fs-2x"></i>
+                                                        </span>
+                                                    </div>
+                                                </ng-container>
+                                            </td>
+                                            <td>
+                                                <a
+                                                    class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.tarih}}</a>
+                                                <span class="text-muted fw-semibold d-block">{{item.gun}}</span>
+                                            </td>
+
+                                            <ng-container *ngIf="item.simge == '3'">
+                                                <td class="text-end">
+                                                    <span class="badge badge-light-danger fs-5">
+                                                        {{item.girissaat}}
+                                                    </span>
+                                                </td>
+
+                                                <td class="text-end">
+                                                    <span class="badge badge-light-danger fs-5">
+                                                        {{item.cikissaat}}
+                                                    </span>
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="item.simge != '3'">
+                                                <td class="text-end text-muted fw-bold fs-4">
+                                                    <span class="fs-5">
+                                                        {{item.girissaat}}
+                                                    </span>
+                                                </td>
+
+                                                <td class="text-end text-muted fw-bold fs-4">
+                                                    <span class="fs-5">
+                                                        {{item.cikissaat}}
+                                                    </span>
+                                                </td>
+                                            </ng-container>
+
+                                            <td class="text-end text-muted fw-bold fs-4">
+                                                <span class="border border-gray-300 border-2 border-dashed rounded p-3">
+                                                    {{item.mesaiaciklama}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <!--end::Table body-->
+                                </table>
+                            </div>
+                            <!--end::Table-->
+                        </div>
+                        <!--end::Tap pane-->
+                    </div>
+                </div>
+                <!--end::Body-->
+            </ng-container>
+
+
+            <ng-container *ngIf="durationsMobile.length == 0">
+                <div class="p-20">
+                    <div class="col-12 d-flex justify-content-center align-items-center">
+                        <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
+                            <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                            <div class="flex-grow-1 me-2">
+                                <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" |
+                                    translate}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+    </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container" [ngClass]="{ 'loading': isLoading }">
+    <button mat-icon-button (click)="goToBack()" [disabled]="isLoading">
+        <i class="fa-solid fa-circle-left fs-2x text-hover-danger"></i>
+    </button>
+  
+    <div class="date-container">
+      <span class="month">{{ month }}</span>
+      <span class="year">{{ year }}</span>
+    </div>
+  
+    <button mat-icon-button (click)="goToNext()" [disabled]="isLoading">
+        <i class="fa-solid fa-circle-right fs-2x text-hover-danger"></i>
+    </button>
+  
+    <div class="loading-overlay" *ngIf="isLoading"></div>
+</div> -->
+
+
+
+
+
+
+<!-- <div class="container">
     <div class="row card p-5">
 
         <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="getDurations($event)">
@@ -337,4 +555,4 @@
 
         </mat-tab-group>
     </div>
-</div>
+</div> -->

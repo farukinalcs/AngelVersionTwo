@@ -743,4 +743,32 @@ export class ProfileService {
     return this.httpClient.get<any>(API_URL + '/process', options);
   }
   
+
+  getDurationsMobile(yilay : string) {
+    var sp : any[] = [{
+      mkodu : 'yek053',
+      yilay : yilay
+    }
+    ];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
 }

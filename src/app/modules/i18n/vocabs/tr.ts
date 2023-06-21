@@ -704,7 +704,21 @@ export const locale = {
       HAFTALIK : "Haftalık",
       AYLIK : "Aylık",
       DATA_NOT_FOUND : 'Kayıt Bulunamadı!',
-      SEARCH : 'Arama..'
+      SEARCH : 'Arama..',
+      AYLAR : {
+        OCAK : 'Ocak',
+        SUBAT : 'Şubat',
+        MART : 'Mart',
+        NISAN : 'Nisan',
+        MAYIS : 'Mayıs',
+        HAZIRAN : 'Haziran',
+        TEMMUZ : 'Temmuz',
+        AGUSTOS : 'Ağustos',
+        EYLUL : 'Eylül',
+        EKIM : 'Ekim',
+        KASIM : 'Kasım',
+        ARALIK : 'Aralık'
+      }
     },
 
     MY_DURATION : {

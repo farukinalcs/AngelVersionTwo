@@ -57,6 +57,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogIzinTalebiComponent } from './talep-olustur/dialog-izin-talebi/dialog-izin-talebi.component';
 import { EksikSurelerimComponent } from './islemler/eksik-surelerim/eksik-surelerim.component';
 import { TimeFormatPipe } from 'src/app/_helpers/pipes/time-format.pipe';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 @NgModule({
@@ -126,7 +127,8 @@ import { TimeFormatPipe } from 'src/app/_helpers/pipes/time-format.pipe';
     AccordionModule,
     MatTooltipModule,
     DataViewModule,
-    DropdownModule
+    DropdownModule,
+    NgApexchartsModule,
   ]
 })
 export class ProfileModule { }

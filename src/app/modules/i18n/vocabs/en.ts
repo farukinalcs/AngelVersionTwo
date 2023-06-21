@@ -141,7 +141,21 @@ export const locale = {
       HAFTALIK : "Weekly",
       AYLIK : "Monthly",
       DATA_NOT_FOUND : 'Data Not Found!',
-      SEARCH : 'Search..'
+      SEARCH : 'Search..',
+      AYLAR : {
+        OCAK : 'January',
+        SUBAT : 'February',
+        MART : 'March',
+        NISAN : 'April',
+        MAYIS : 'May',
+        HAZIRAN : 'June',
+        TEMMUZ : 'July',
+        AGUSTOS : 'August',
+        EYLUL : 'September',
+        EKIM : 'October',
+        KASIM : 'November',
+        ARALIK : 'December'
+      }
     },
 
     MY_DURATION : {

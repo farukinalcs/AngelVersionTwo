@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { map, Observable, startWith, Subject, Subscription, takeUntil } from 'rxjs';
@@ -23,6 +23,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   menuConfig : any;
   private ngUnsubscribe = new Subject();
   user$: Observable<UserType>;
+  @HostBinding('attr.data-kt-menu') dataKtMenu = 'true';
 
   links : any[];
 
