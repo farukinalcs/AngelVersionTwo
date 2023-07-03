@@ -25,14 +25,14 @@ export class TokenInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    this.loaderService.isLoading.next(true);
+    // this.loaderService.isLoading.next(true);
 
     if (!this.flag) {
       this.flag = true;
       return next.handle(request)
       .pipe(
         finalize(() => {
-        this.loaderService.isLoading.next(false);
+        // this.loaderService.isLoading.next(false);
         })
       );
     }
@@ -61,7 +61,7 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap((event: HttpEvent<any>) => {
         if (event.type === HttpEventType.Response) {
-          this.loaderService.isLoading.next(false);
+          // this.loaderService.isLoading.next(false);
           
           if (event.body && event.body instanceof Object) {
             const responseBody = event.body;

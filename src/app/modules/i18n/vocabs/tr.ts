@@ -929,6 +929,8 @@ export const locale = {
       FAZLA_MESAI : 'Fazla Mesai',
       ZIYARETCI : 'Ziyaretçi',
       EGITIM : 'Eğitim',
+      ARAC : 'Araç',
+      AVANS : 'Avans',
       KIDEM : 'Kıdem',
       IZIN_HAKKI : 'İzin Hakkı',
       KULLANILAN_IZIN : 'Kullanılan İzin',

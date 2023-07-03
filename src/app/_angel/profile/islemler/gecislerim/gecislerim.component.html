@@ -15,13 +15,17 @@
                                                         <div class="bg-danger"></div>
                                                     </div>
                             
-                                                    <div class="timeline-label">
-                                                        <span class="fw-bold fs-6 text-gray-600">{{item.zaman |
-                                                            date:'dd/MM/yyyy'}} - {{item.zaman |
-                                                            date : 'HH:mm:ss'}}</span>
+                                                    <div class="timeline-label" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}">
+                                                        <span class="fw-bold fs-6 text-gray-600">
+                                                            {{item.zaman | date:'yyyy-MM-dd'}}
+                                                        </span>
+
+                                                        <span class="fw-bold fs-6 text-gray-600">
+                                                            {{item.zaman | date : 'HH:mm:ss'}}
+                                                        </span>
                                                     </div>
                             
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800">
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center" [ngClass]="{'p-2': this.layoutService.isMobile | async}">
                                                         {{item.cihaz}}
                                                     </div>
                                                 </div>
@@ -32,12 +36,16 @@
                                                     <div class="timeline-badge">
                                                         <div class="bg-success"></div>
                                                     </div>
-                                                    <div class="timeline-label text-primary">
-                                                        <span class="fw-bold fs-6 text-gray-600">{{item.zaman |
-                                                            date:'dd/MM/yyyy'}} - {{item.zaman |
-                                                            date : 'HH:mm:ss'}}</span>
+                                                    <div class="timeline-label" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}">
+                                                        <span class="fw-bold fs-6 text-gray-600">
+                                                            {{item.zaman | date:'yyyy-MM-dd'}}
+                                                        </span>
+
+                                                        <span class="fw-bold fs-6 text-gray-600">
+                                                            {{item.zaman | date : 'HH:mm:ss'}}
+                                                        </span>
                                                     </div>
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800">
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center" [ngClass]="{'p-2': this.layoutService.isMobile | async}">
                                                         {{item.cihaz}}
                                                     </div>
                                                 </div>
@@ -49,7 +57,7 @@
 
                             <ng-container *ngIf="transitions.length == 0">
                                 <div class="col-12 d-flex justify-content-center align-items-center">
-                                    <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
+                                    <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
                                         <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
                                         <div class="flex-grow-1 me-2">
                                           <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
@@ -81,13 +89,17 @@
                                                         <div class="bg-danger"></div>
                                                     </div>
                             
-                                                    <div class="timeline-label">
-                                                        <span class="fw-bold fs-6 text-gray-600">{{item.zaman |
-                                                            date:'dd/MM/yyyy'}} - {{item.zaman |
-                                                            date : 'HH:mm:ss'}}</span>
+                                                    <div class="timeline-label" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}">
+                                                        <span class="fw-bold fs-6 text-gray-600">
+                                                            {{item.zaman | date:'yyyy-MM-dd'}}
+                                                        </span>
+
+                                                        <span class="fw-bold fs-6 text-gray-600">
+                                                            {{item.zaman | date : 'HH:mm:ss'}}
+                                                        </span>
                                                     </div>
                             
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800">
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center" [ngClass]="{'p-2': this.layoutService.isMobile | async}">
                                                         {{item.cihaz}}
                                                     </div>
                                                 </div>
@@ -98,12 +110,16 @@
                                                     <div class="timeline-badge">
                                                         <div class="bg-success"></div>
                                                     </div>
-                                                    <div class="timeline-label text-primary">
-                                                        <span class="fw-bold fs-6 text-gray-600">{{item.zaman |
-                                                            date:'dd/MM/yyyy'}} - {{item.zaman |
-                                                            date : 'HH:mm:ss'}}</span>
+                                                    <div class="timeline-label" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}">
+                                                        <span class="fw-bold fs-6 text-gray-600">
+                                                            {{item.zaman | date:'yyyy-MM-dd'}}
+                                                        </span>
+
+                                                        <span class="fw-bold fs-6 text-gray-600">
+                                                            {{item.zaman | date : 'HH:mm:ss'}}
+                                                        </span>
                                                     </div>
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800">
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center" [ngClass]="{'p-2': this.layoutService.isMobile | async}">
                                                         {{item.cihaz}}
                                                     </div>
                                                 </div>
@@ -115,7 +131,7 @@
 
                             <ng-container *ngIf="transitions.length == 0">
                                 <div class="col-12 d-flex justify-content-center align-items-center">
-                                    <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
+                                    <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
                                         <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
                                         <div class="flex-grow-1 me-2">
                                           <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
@@ -147,13 +163,18 @@
                                                         <div class="bg-danger"></div>
                                                     </div>
                             
-                                                    <div class="timeline-label">
-                                                        <span class="fw-bold fs-6 text-gray-600">{{item.zaman |
-                                                            date:'dd/MM/yyyy'}} - {{item.zaman |
-                                                            date : 'HH:mm:ss'}}</span>
+                                                    <div class="timeline-label" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}">
+                                                        <span class="fw-bold fs-6 text-gray-600">
+                                                            {{item.zaman | date:'yyyy-MM-dd'}}
+                                                        </span>
+
+                                                        <span class="fw-bold fs-6 text-gray-600">
+                                                            {{item.zaman | date : 'HH:mm:ss'}}
+                                                        </span>
+                                                        
                                                     </div>
                             
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800">
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center" [ngClass]="{'p-2': this.layoutService.isMobile | async}">
                                                         {{item.cihaz}}
                                                     </div>
                                                 </div>
@@ -164,12 +185,16 @@
                                                     <div class="timeline-badge">
                                                         <div class="bg-success"></div>
                                                     </div>
-                                                    <div class="timeline-label text-primary">
-                                                        <span class="fw-bold fs-6 text-gray-600">{{item.zaman |
-                                                            date:'dd/MM/yyyy'}} - {{item.zaman |
-                                                            date : 'HH:mm:ss'}}</span>
+                                                    <div class="timeline-label" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}">
+                                                        <span class="fw-bold fs-6 text-gray-600">
+                                                            {{item.zaman | date:'yyyy-MM-dd'}}
+                                                        </span>
+
+                                                        <span class="fw-bold fs-6 text-gray-600">
+                                                            {{item.zaman | date : 'HH:mm:ss'}}
+                                                        </span>
                                                     </div>
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800">
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center" [ngClass]="{'p-2': this.layoutService.isMobile | async}">
                                                         {{item.cihaz}}
                                                     </div>
                                                 </div>
@@ -181,7 +206,7 @@
 
                             <ng-container *ngIf="transitions.length == 0">
                                 <div class="col-12 d-flex justify-content-center align-items-center">
-                                    <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
+                                    <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
                                         <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
                                         <div class="flex-grow-1 me-2">
                                           <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>

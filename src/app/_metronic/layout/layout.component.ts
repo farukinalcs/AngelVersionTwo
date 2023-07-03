@@ -4,6 +4,7 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
+  HostListener,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -102,6 +103,24 @@ export class LayoutComponent implements OnInit, OnDestroy {
         this.updateProps(config);
       });
     this.unsubscribe.push(subscr);
+
+    this.onWindowResize();
+
+    this.layout.isMobile.subscribe(_ => {
+      console.log("is mobile : ", _);
+      
+    })
+  }
+
+  @HostListener("window:resize", ["$event"])
+  onWindowResize() {
+    let innerWidth = window.innerWidth;
+
+    if (innerWidth > 990) {
+      this.layout.isMobile.next(false);
+    } else if (innerWidth <= 990) {
+      this.layout.isMobile.next(true);
+    }
   }
 
   updateProps(config: ILayout) {

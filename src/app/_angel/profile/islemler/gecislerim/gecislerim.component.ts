@@ -4,6 +4,7 @@ import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { TranslationService } from 'src/app/modules/i18n';
 import { HelperService } from 'src/app/_helpers/helper.service';
+import { LayoutService } from 'src/app/_metronic/layout';
 import { TransitionsModel } from '../../models/transations';
 import { ProfileService } from '../../profile.service';
 
@@ -19,7 +20,8 @@ export class GecislerimComponent implements OnInit, OnDestroy {
   
   constructor(
     private profileService : ProfileService,
-    private ref : ChangeDetectorRef
+    private ref : ChangeDetectorRef,
+    public layoutService : LayoutService
   ) { }
 
   ngOnInit(): void {

@@ -15,7 +15,7 @@
     <!--begin::Form-->
     <div class="d-flex flex-center flex-column flex-lg-row-fluid">
       <!--begin::Wrapper-->
-      <div class="<?php echo $params['wrapperClass']?> p-10 w-50">
+      <div class="<?php echo $params['wrapperClass']?> p-10" id="auth-login">
         <router-outlet></router-outlet>
       </div>
       <!--end::Wrapper-->
@@ -73,10 +73,10 @@
   <!--end::Aside-->
 </div>
 
-<div *ngIf="loaderService.isLoading | async" class="loader-container">
+<!-- <div *ngIf="loaderService.isLoading | async" class="loader-container"> -->
   <!-- <mat-spinner style="top: 50%; left: 50%;"></mat-spinner> -->
-  <div id="splash-screen" class="splash-screen">
+  <!-- <div id="splash-screen" class="splash-screen">
     <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo" />
     <mat-spinner></mat-spinner>
   </div>
-</div>
+</div> -->

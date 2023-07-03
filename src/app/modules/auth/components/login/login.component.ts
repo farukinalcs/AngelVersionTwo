@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   hasError: boolean;
   returnUrl: string;
   isLoading$: Observable<boolean>;
+  public isLoading : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
 
   selectedLanguage : any;
   language : LanguageFlag;
@@ -127,6 +129,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       this.appList = JSON.parse(response.m);
       
+      this.isLoading.next(false);
       this.ref.detectChanges();
     });
 

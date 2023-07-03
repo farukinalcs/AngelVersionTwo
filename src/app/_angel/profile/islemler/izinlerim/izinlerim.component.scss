@@ -269,3 +269,47 @@
     font-weight: bolder;
 }
 /* ---------------------------------------------------------- */
+
+
+
+#container {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+    padding: 8px;
+    background-color: #ffffff7a;
+    border: 2px solid #311d3f;
+    border-radius: 45px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.date-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.month {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.year {
+    font-size: 16px;
+    color: #888888;
+}
+
+
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #e33a37;
+    height: 30px;
+}
+
+::ng-deep .mat-progress-spinner svg {
+    height: 30px !important;
+}
+

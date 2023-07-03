@@ -1,12 +1,14 @@
 import { ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { map, Observable, startWith, Subject, Subscription, takeUntil } from 'rxjs';
+import { BehaviorSubject, map, Observable, startWith, Subject, Subscription, takeUntil } from 'rxjs';
 import { AuthService, UserType } from 'src/app/modules/auth';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { HelperService } from 'src/app/_helpers/helper.service';
+import { LoaderService } from 'src/app/_helpers/loader.service';
 import { AuthMenuService } from 'src/app/_metronic/core/services/auth-menu.service';
+import { LayoutService } from 'src/app/_metronic/layout';
 import { UserInformation } from '../models/user-information';
 import { ProfileService } from '../profile.service';
 import { DialogFazlaMesaiTalebiComponent } from '../talep-olustur/dialog-fazla-mesai-talebi/dialog-fazla-mesai-talebi.component';
@@ -40,6 +42,8 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   displayVacationForm: boolean;
 
   userInformation : UserInformation;
+  public isLoading : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
 
   constructor(
     private auth: AuthService,
@@ -47,6 +51,8 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
     private fomrBuilder : FormBuilder,
     public dialog: MatDialog,
     private profileService : ProfileService,
+    public loaderService : LoaderService,
+    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
 
@@ -74,7 +80,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
         console.log("USER :", this.userInformation);
       }
       
-      
+      this.isLoading.next(false);
       this.ref.detectChanges();
     })
   }

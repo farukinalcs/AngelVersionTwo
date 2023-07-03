@@ -58,6 +58,7 @@ import { DialogIzinTalebiComponent } from './talep-olustur/dialog-izin-talebi/di
 import { EksikSurelerimComponent } from './islemler/eksik-surelerim/eksik-surelerim.component';
 import { TimeFormatPipe } from 'src/app/_helpers/pipes/time-format.pipe';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -129,6 +130,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     DataViewModule,
     DropdownModule,
     NgApexchartsModule,
+    MatProgressSpinnerModule
   ]
 })
 export class ProfileModule { }

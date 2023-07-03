@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <div class="row card p-5">
 
         <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="getMyPermissions($event)">
@@ -249,4 +249,223 @@
 
         </mat-tab-group>
     </div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+    <div class="card card-xl-stretch mb-xl-8 m-10">
+        <div class="col-12 d-flex justify-content-center py-5">
+            <div id="container" [ngStyle]="{'width':!(layoutService.isMobile | async) ? '30%' : '55%' }">
+                <button mat-icon-button (click)="goToBack()">
+                    <i class="fa-solid fa-circle-left fs-2x text-dark text-hover-danger"></i>
+                </button>
+
+                <div class="date-container bg-hover-light-dark p-2" (click)="openDialog()">
+                    <span class="month">{{ month }}</span>
+                    <span class="year text-dark">{{ year }}</span>
+                </div>
+
+                <button mat-icon-button (click)="goToNext()">
+                    <i class="fa-solid fa-circle-right fs-2x text-dark text-hover-danger"></i>
+                </button>
+            </div>
+        </div>
+
+        <ng-container *ngIf="isLoading | async">
+            <div class="col-12 pt-10">
+                <div class="loader-container">
+                    <div id="splash-screen" class="splash-screen" style="position: inherit; color:transparent; background-color: transparent;">
+                        <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo" style="margin-left: 0; height: 0;"/>
+                        <mat-spinner></mat-spinner>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        
+        
+        <ng-container *ngIf="!(isLoading | async)">
+            <div class="col-12">
+                <!-- <ng-container *ngIf="durationsMobile.length > 0">
+                    <div class="card-body py-3">
+                        <div class="tab-content">
+                            <div class="tab-pane fade active show">
+                                <div class="table-responsive">
+                                    <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                                        <thead>
+                                            <tr class="border-0">
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+    
+                                        <tbody>
+                                            <tr *ngFor="let item of durationsMobile"
+                                                [ngClass]="{'bg-light-info': item.simge == '4'}">
+                                                <td>
+                                                    <ng-container *ngIf="item.simge == '1'">
+                                                        <div matTooltip="Başarılı Giriş/Çıkış"
+                                                            class="symbol symbol-50px me-2">
+                                                            <span class="symbol-label bg-light-success">
+                                                                <i class="fa-solid fa-circle-check text-success fs-2x"></i>
+                                                            </span>
+                                                        </div>
+                                                    </ng-container>
+    
+                                                    <ng-container *ngIf="item.simge == '2'">
+                                                        <div matTooltip="Giriş/Çıkış Bulunamadı"
+                                                            class="symbol symbol-50px me-2">
+                                                            <span class="symbol-label bg-light-danger">
+                                                                <i class="fa-solid fa-circle-xmark text-danger fs-2x"></i>
+                                                            </span>
+                                                        </div>
+                                                    </ng-container>
+    
+                                                    <ng-container *ngIf="item.simge == '3'">
+                                                        <div matTooltip="Hatalı Giriş/Çıkış"
+                                                            class="symbol symbol-50px me-2">
+                                                            <span class="symbol-label bg-light-warning">
+                                                                <i class="fa-solid fa-triangle-exclamation text-warning fs-2x"></i>
+                                                            </span>
+                                                        </div>
+                                                    </ng-container>
+    
+                                                    <ng-container *ngIf="item.simge == '4'">
+                                                        <div matTooltip="Tatil" class="symbol symbol-50px me-2">
+                                                            <span class="symbol-label bg-light-info">
+                                                                <i class="fa-solid fa-umbrella-beach text-info fs-2x"></i>
+                                                            </span>
+                                                        </div>
+                                                    </ng-container>
+                                                </td>
+                                                <td>
+                                                    <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.tarih}}</a>
+                                                    <span class="text-muted fw-semibold d-block">{{item.gun}}</span>
+                                                </td>
+    
+                                                <ng-container *ngIf="item.simge == '3'">
+                                                    <td class="text-end">
+                                                        <span class="badge badge-light-danger fs-5">
+                                                            {{item.girissaat}}
+                                                        </span>
+                                                    </td>
+    
+                                                    <td class="text-end">
+                                                        <span class="badge badge-light-danger fs-5">
+                                                            {{item.cikissaat}}
+                                                        </span>
+                                                    </td>
+                                                </ng-container>
+    
+                                                <ng-container *ngIf="item.simge != '3'">
+                                                    <td class="text-end text-muted fw-bold fs-4">
+                                                        <span class="fs-5">
+                                                            {{item.girissaat}}
+                                                        </span>
+                                                    </td>
+    
+                                                    <td class="text-end text-muted fw-bold fs-4">
+                                                        <span class="fs-5">
+                                                            {{item.cikissaat}}
+                                                        </span>
+                                                    </td>
+                                                </ng-container>
+    
+                                                <td class="text-end text-muted fw-bold fs-4">
+                                                    <span class="border border-gray-500 border-2 border-dashed rounded p-3">
+                                                        {{item.mesaiaciklama}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container> -->
+    
+                <!-- <ng-container *ngIf="durationsMobile.length == 0">
+                    <div class="p-20">
+                        <div class="col-12 d-flex justify-content-center align-items-center">
+                            <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
+                                <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                                <div class="flex-grow-1 me-2">
+                                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" |
+                                        translate}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container> -->
+            </div>
+        </ng-container>
+        
+    </div>
 </div>
+
+
+
+
+<ng-template #datepickerDialog>
+    <div class="card">
+        <ng-container *ngIf="!isSelected">
+            <div class="row">
+                <div class="col-12 p-5">
+                    <div class="row">
+                        <div class="col-lg-3 p-3" *ngFor="let item of months">
+                            <input type="radio" class="btn-check" (click)="selectMonth(item)"  value="{{item}}" id="{{item}}" />
+                            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-4 d-flex align-items-center justify-content-center" for="{{item}}">
+                                <span class="d-block fw-semibold text-start ps-3">
+                                    <span class="text-dark fw-bold d-block fs-6">{{item}}</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="isSelected">
+            <div class="row">
+                <div class="col-12 p-5" (click)="isSelected = false">
+                    <label class="btn btn-outline btn-outline-dashed bg-light-primary p-7 d-flex align-items-center justify-content-center">
+                        <span class="d-block fw-semibold text-start ps-3">
+                            <span class="text-dark fw-bold d-block fs-3">{{ selectedMonth }}</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 p-5">
+                    <div class="row">
+                        <div class="col-lg-6 p-3" *ngFor="let item of years">
+                            <input type="radio" class="btn-check" (click)="selectYear(item)"  value="{{item}}" id="{{item}}" />
+                            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-4 d-flex align-items-center justify-content-center" for="{{item}}">
+                                <span class="d-block fw-semibold text-start ps-3">
+                                    <span class="text-dark fw-bold d-block fs-6">{{item}}</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </ng-container>
+
+    </div>
+</ng-template>

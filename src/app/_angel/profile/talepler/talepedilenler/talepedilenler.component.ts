@@ -509,19 +509,25 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     console.log("SELECTED :", checkedList);
 
 
-    if (checkedList.length > 0) {
-      this.profilService.confirmDemandMultiple(checkedList).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
-        console.log("Çoklu Onay :", response);
-        this.getDemanded(aktifMenu);
-        this.toastrService.success(
-          this.translateService.instant("TOASTR_MESSAGE.TALEP_ONAYLANDI"),
-          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
-        );
+    // if (checkedList.length > 0) {
+    //   this.profilService.confirmDemandMultiple(checkedList).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
+    //     console.log("Çoklu Onay :", response);
+    //     this.getDemanded(aktifMenu);
+    //     this.toastrService.success(
+    //       this.translateService.instant("TOASTR_MESSAGE.TALEP_ONAYLANDI"),
+    //       this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+    //     );
 
-        this.allComplete = false;
-        this.ref.detectChanges();
-      });  
-    }   
+    //     this.allComplete = false;
+    //     this.ref.detectChanges();
+    //   });  
+    // }   
+    
+  }
+
+  isCardOpen() {
+    this.panelOpenState = true
+    console.log("Kard Açıldı : ");
     
   }
 

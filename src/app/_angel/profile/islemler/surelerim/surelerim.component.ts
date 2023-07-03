@@ -1,12 +1,11 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
-import { Durations } from '../../models/durations';
+import { LoaderService } from 'src/app/_helpers/loader.service';
+import { LayoutService } from 'src/app/_metronic/layout';
 import { DurationsMobileModel } from '../../models/durationsMobile';
 import { ProfileService } from '../../profile.service';
 
@@ -17,26 +16,50 @@ import { ProfileService } from '../../profile.service';
 })
 export class SurelerimComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
-  
-  @ViewChild(MatPaginator, {static : true}) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  displayedColumns : string[] = ['tarih', 'giris', 'cikis', 'normalSure', 'araSure', 'izinSure', 'fazlaSure', 'eksikSure']; 
-  dataSource :MatTableDataSource<any>;
-  
-  durations : any[] = [];
+  @ViewChild('datepickerDialog') datepickerDialog: TemplateRef<any>;
 
+  months: string[] = [
+    this.tranlateService.instant("PUBLIC.AYLAR.OCAK"),
+    this.tranlateService.instant("PUBLIC.AYLAR.SUBAT"),
+    this.tranlateService.instant("PUBLIC.AYLAR.MART"),
+    this.tranlateService.instant("PUBLIC.AYLAR.NISAN"),
+    this.tranlateService.instant("PUBLIC.AYLAR.MAYIS"),
+    this.tranlateService.instant("PUBLIC.AYLAR.HAZIRAN"),
+    this.tranlateService.instant("PUBLIC.AYLAR.TEMMUZ"),
+    this.tranlateService.instant("PUBLIC.AYLAR.AGUSTOS"),
+    this.tranlateService.instant("PUBLIC.AYLAR.EYLUL"),
+    this.tranlateService.instant("PUBLIC.AYLAR.EKIM"),
+    this.tranlateService.instant("PUBLIC.AYLAR.KASIM"),
+    this.tranlateService.instant("PUBLIC.AYLAR.ARALIK")
+  ];
+  
+  years: number[] = []; // Gerektiğinde yılları güncelleyin
+  selectedMonth: string;
+  selectedYear: number;
+  
   month: string;
   year: number;
-  isLoading: boolean = false;
   durationsMobile: DurationsMobileModel[] = [];
+  public isLoading : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  isSelected: boolean = false;
+  dialogRef: any;
+
+
   constructor(
     private profilService : ProfileService,
     private tranlateService : TranslateService,
+    public loaderService : LoaderService,
+    private dialog : MatDialog,
+    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    // this.getDurations('1');
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    for (let i = currentYear - 4; i <= currentYear + 1; i++) {
+      this.years.push(i);
+    }
 
     // İlk olarak mevcut ay ve yıl değerlerini ata
     const bugun = new Date();
@@ -46,111 +69,40 @@ export class SurelerimComponent implements OnInit, OnDestroy {
   }
 
   getMonthName(ayIndex: number): string {
-    const aylar = [
-      this.tranlateService.instant("PUBLIC.AYLAR.OCAK"),
-      this.tranlateService.instant("PUBLIC.AYLAR.SUBAT"),
-      this.tranlateService.instant("PUBLIC.AYLAR.MART"),
-      this.tranlateService.instant("PUBLIC.AYLAR.NISAN"),
-      this.tranlateService.instant("PUBLIC.AYLAR.MAYIS"),
-      this.tranlateService.instant("PUBLIC.AYLAR.HAZIRAN"),
-      this.tranlateService.instant("PUBLIC.AYLAR.TEMMUZ"),
-      this.tranlateService.instant("PUBLIC.AYLAR.AGUSTOS"),
-      this.tranlateService.instant("PUBLIC.AYLAR.EYLUL"),
-      this.tranlateService.instant("PUBLIC.AYLAR.EKIM"),
-      this.tranlateService.instant("PUBLIC.AYLAR.KASIM"),
-      this.tranlateService.instant("PUBLIC.AYLAR.ARALIK")
-    ];
-
     // Ay ismini döndür
-    return aylar[ayIndex];
+    return this.months[ayIndex];
   }// "2023-06" istek atma
 
   goToBack() {
     // Ayı bir önceki aya güncelle
-
-    this.isLoading = true;
-    
     const oncekiAy = new Date(this.year, this.getMonthIndex(this.month) - 1, 1);
     this.month = this.getMonthName(oncekiAy.getMonth());
     this.year = oncekiAy.getFullYear();
-
-    setTimeout(() => {
-      this.isLoading = false; // Loading durumunu devre dışı bırak
-    }, 200);
 
     this.getDurationsMobile(this.getMonthIndex(this.month) + 1, this.year);
   }
 
   goToNext() {
     // Ayı bir sonraki aya güncelle
-
-    this.isLoading = true;
-    
     const sonrakiAy = new Date(this.year, this.getMonthIndex(this.month) + 1, 1);
     this.month = this.getMonthName(sonrakiAy.getMonth());
     this.year = sonrakiAy.getFullYear();
-
-    setTimeout(() => {
-      this.isLoading = false; // Loading durumunu devre dışı bırak
-    }, 200);
     
     this.getDurationsMobile(this.getMonthIndex(this.month) + 1, this.year);
   }
 
   getMonthIndex(month: string): number {
     // Ay ismini kullanarak ayın indeksini döndür
-    const aylar = [
-      this.tranlateService.instant("PUBLIC.AYLAR.OCAK"),
-      this.tranlateService.instant("PUBLIC.AYLAR.SUBAT"),
-      this.tranlateService.instant("PUBLIC.AYLAR.MART"),
-      this.tranlateService.instant("PUBLIC.AYLAR.NISAN"),
-      this.tranlateService.instant("PUBLIC.AYLAR.MAYIS"),
-      this.tranlateService.instant("PUBLIC.AYLAR.HAZIRAN"),
-      this.tranlateService.instant("PUBLIC.AYLAR.TEMMUZ"),
-      this.tranlateService.instant("PUBLIC.AYLAR.AGUSTOS"),
-      this.tranlateService.instant("PUBLIC.AYLAR.EYLUL"),
-      this.tranlateService.instant("PUBLIC.AYLAR.EKIM"),
-      this.tranlateService.instant("PUBLIC.AYLAR.KASIM"),
-      this.tranlateService.instant("PUBLIC.AYLAR.ARALIK")
-    ];
-    
-    return aylar.indexOf(month);
+    return this.months.indexOf(month);
   }
 
-  getDurations(event : any) {
-    let zamanAralik : any = '30';
-
-    if (event.tab) {
-      if (event.tab.textLabel == 'Günlük' || event.tab.textLabel == 'Daily') {
-        zamanAralik = '1';
-      } else if (event.tab.textLabel == 'Haftalık' || event.tab.textLabel == 'Weekly') {
-        zamanAralik = '7';
-      } else if (event.tab.textLabel == 'Aylık' || event.tab.textLabel == 'Monthly') {
-        zamanAralik = '30';
-      }
-    }
-
-    this.profilService.getDurations(zamanAralik).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<Durations, ResponseDetailZ>[]) => {
-      let data = response[0].x;
-      let message = response[0].z;
-      let responseToken = response[0].y;
-
-      console.log("SÜRELERİM :", data);
-      this.durations = data;
-
-      this.dataSource = new MatTableDataSource(this.durations);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;  
-      
-      this.ref.detectChanges();
-    });
-  }
 
   getDurationsMobile(month : any, year : any) {
     let yearMonth = year + "-" + month.toString().padStart(2, '0');
     console.log(yearMonth);
     
     this.durationsMobile = [];
+    this.isSelected = false;
 
     this.profilService.getDurationsMobile(yearMonth).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<DurationsMobileModel, ResponseDetailZ>[]) => {
       const data = response[0].x;
@@ -158,11 +110,34 @@ export class SurelerimComponent implements OnInit, OnDestroy {
       this.durationsMobile = data;
       console.log("Sürelerim Mobil Puantaj :", this.durationsMobile);
 
+      this.isLoading.next(false);
       this.ref.detectChanges();
     });
     
   }
 
+  openDialog() {
+    this.dialogRef = this.dialog.open(this.datepickerDialog, {
+      disableClose: true
+    });
+  }
+
+  selectMonth(item : any) {
+    this.selectedMonth = item;
+    this.isSelected = true;
+  }
+
+  selectYear(item : any) {
+    this.selectedYear = item;
+    this.month = this.selectedMonth;
+    this.year = this.selectedYear;
+
+    let monthIndex = this.getMonthIndex(this.selectedMonth);
+    this.getDurationsMobile(monthIndex + 1, this.selectedYear);
+
+    this.dialogRef.close();
+    this.ref.detectChanges();
+  }
 
 
   ngOnDestroy(): void {

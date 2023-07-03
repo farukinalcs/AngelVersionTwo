@@ -1,150 +1,169 @@
 <!--begin::Form-->
-<form class="form w-100" [formGroup]="loginForm" novalidate="novalidate" id="kt_login_signin_form" >
+<form class="form w-100" [formGroup]="loginForm" novalidate="novalidate" id="kt_login_signin_form">
 
-  <div class="text-center mb-2">
-    <img src="../../../../../assets/media/logos/me-ware-logo.svg" alt="meyerLogo" class="w-100">
-  </div>
 
-  <!-- begin::Alert error-->
-  <ng-container *ngIf="hasError">
-    <div class="mb-lg-15 alert alert-danger">
-      <div class="alert-text font-weight-bold">
-        {{"AUTH.LOGIN_FAILED.LOGIN_FAILED" | translate}}
+  <ng-container *ngIf="isLoading | async">
+    <div class="col-12 pt-10">
+      <div class="loader-container">
+        <div id="splash-screen" class="splash-screen"
+          style="position: inherit; color:transparent; background-color: transparent;">
+          <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo" style="margin-left: 0; height: 0;" />
+          <mat-spinner></mat-spinner>
+        </div>
       </div>
     </div>
   </ng-container>
-  <!-- end::Alert error-->
 
-
-  <!-- begin::Form group -->
-  <div class="fv-row mb-8">
-  
-    <div class="row">
-
-      <div class="col-12">
-        <label class="form-label fs-6 fw-bolder text-dark">{{"AUTH.LOGIN.APP_LIST" | translate}}</label>
-        <label *ngFor="let item of appList" class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 active" data-kt-button="true">
-          <!--begin::Radio button-->
-          <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-            <input class="form-check-input" type="radio" value="{{item.appId}}" checked="checked">
-          </span>
-          <!--end::Radio button-->
-          <i class="fa-solid fa-cloud fs-2x me-4 ms-10 align-items-center"></i>
-          <span class="ms-5">
-            <span class="fs-4 fw-bold mb-1 d-block">{{item.appName}}</span>
-            <span class="text-muted fw-semibold fs-6">
-              {{item.appId | currency}}
-            </span>
-          </span>
-        </label>
-      </div>
+  <ng-container *ngIf="!(isLoading | async)">
+    <div class="text-center mb-2">
+      <img src="../../../../../assets/media/logos/me-ware-logo.svg" alt="meyerLogo" class="w-100">
     </div>
-  
-    <label class="form-label fs-6 fw-bolder text-dark">{{"AUTH.LOGIN.APP_LIST" | translate}}</label>
-        <select class="form-control bg-transparent" formControlName="appList" 
-        [ngClass]="{
-          'is-invalid': loginForm.controls['appList'].invalid,
-          'is-valid': loginForm.controls['appList'].valid
-        }">
+
+    <!-- begin::Alert error-->
+    <ng-container *ngIf="hasError">
+      <div class="mb-lg-15 alert alert-danger">
+        <div class="alert-text font-weight-bold">
+          {{"AUTH.LOGIN_FAILED.LOGIN_FAILED" | translate}}
+        </div>
+      </div>
+    </ng-container>
+    <!-- end::Alert error-->
+
+
+    <!-- begin::Form group -->
+    <div class="fv-row mb-8">
+
+      <div class="row">
+
+        <div class="col-12">
+          <label class="form-label fs-6 fw-bolder text-dark">{{"AUTH.LOGIN.APP_LIST" | translate}}</label>
+          <label *ngFor="let item of appList"
+            class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 active"
+            data-kt-button="true">
+            <!--begin::Radio button-->
+            <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+              <input class="form-check-input" type="radio" value="{{item.appId}}" checked="checked">
+            </span>
+            <!--end::Radio button-->
+            <i class="fa-solid fa-cloud fs-2x me-4 ms-10 align-items-center"></i>
+            <span class="ms-5">
+              <span class="fs-4 fw-bold mb-1 d-block">{{item.appName}}</span>
+              <span class="text-muted fw-semibold fs-6">
+                {{item.appId | currency}}
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <label class="form-label fs-6 fw-bolder text-dark">{{"AUTH.LOGIN.APP_LIST" | translate}}</label>
+      <select class="form-control bg-transparent" formControlName="appList" [ngClass]="{
+            'is-invalid': loginForm.controls['appList'].invalid,
+            'is-valid': loginForm.controls['appList'].valid
+          }">
         <option *ngFor="let item of appList" value="{{item.appId}}">{{item.appName}}</option>
       </select>
-  
-    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'required',
-        message: 'AUTH.LOGIN_FAILED.APP_REQUIRED',
-        control: loginForm.controls['appList']
-      }"></ng-container>
-  </div>
-  <!-- end::Form group -->
 
-  
-  <!--begin::Form group-->
-  <div class="fv-row mb-8">
-    <label class="form-label fs-6 fw-bolder text-dark">{{"AUTH.LOGIN.USERNAME" | translate}}</label>
-    <input class="form-control bg-transparent" type="text" name="userName" formControlName="userName" autocomplete="off"
-      [ngClass]="{
-        'is-invalid': loginForm.controls['userName'].invalid,
-        'is-valid': loginForm.controls['userName'].valid
-      }" />
-    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'required',
-        message: 'AUTH.LOGIN_FAILED.USERNAME_REQUIRED',
-        control: loginForm.controls['userName']
-      }"></ng-container>
-    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'minLength',
-        message: 'AUTH.LOGIN_FAILED.MIN_LENGTH_3',
-        control: loginForm.controls['userName']
-      }"></ng-container>
-  </div>
-  <!--end::Form group-->
-
-  <!--begin::Form group-->
-  <div class="fv-row mb-3">
-
-    <label class="form-label fw-bolder text-dark fs-6 mb-0">{{"AUTH.LOGIN.PASSWORD" |translate}}</label>
-
-    <input class="form-control bg-transparent" type="password" name="password" autocomplete="off"
-      formControlName="password" [ngClass]="{
-        'is-invalid': loginForm.controls['password'].invalid,
-        'is-valid': loginForm.controls['password'].valid
-      }" />
-    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'required',
-        message: 'AUTH.LOGIN_FAILED.PASSWORD_REQUIRED',
-        control: loginForm.controls['password']
-      }"></ng-container>
-    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'minlength',
-        message: 'AUTH.LOGIN_FAILED.MIN_LENGTH_3',
-        control: loginForm.controls['password']
-      }"></ng-container>
-
-  </div>
-  <!--end::Form group-->
-
-  <!--begin::Wrapper-->
-  <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
-
-    <div ngbDropdown class="d-inline-block">
-      <button type="button" class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1" id="dropdownBasic1"
-        ngbDropdownToggle>
-        <img class="h-25px w-25px rounded" src="{{ language?.flag }}" alt="language" />
-      </button>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button *ngFor="let language of languages" ngbDropdownItem (click)="setLanguageWithRefresh(language.lang)"
-          [ngClass]="{ active: language.active }">
-          <span class="symbol symbol-20 mr-3">
-            <img src="{{ language.flag }}" style="width: 20%;" />
-            <span class="navi-text" style="margin-left: 20px;">{{ language.name }}</span>
-          </span>
-        </button>
-      </div>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'required',
+          message: 'AUTH.LOGIN_FAILED.APP_REQUIRED',
+          control: loginForm.controls['appList']
+        }"></ng-container>
     </div>
-    <!--begin::Link-->
-    <a routerLink="/auth/forgot-password" class="link-primary">
-      {{"AUTH.FORGOT.TITLE" |translate}}
-    </a>
-    <!--end::Link-->
-  </div>
-  <!--end::Wrapper-->
+    <!-- end::Form group -->
 
-  <!--begin::Action-->
-  <div class="d-grid mb-10">
-    <button type="submit" (click)="submit()" id="kt_sign_in_submit" class="btn btn-primary" [disabled]="loginForm.invalid">
-      <ng-container *ngIf="isLoading$ | async">
-        <span class="indicator-progress" [style.display]="'block'">
-          {{"AUTH.LOGIN.WAIT" | translate}}
-          <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-        </span>
-      </ng-container>
-      <ng-container *ngIf="(isLoading$ | async) === false">
-        <span class="indicator-label">{{"AUTH.LOGIN.BUTTON" |translate}}</span>
-      </ng-container>
-    </button>
-  </div>
 
-  <!--end::Action-->
+    <!--begin::Form group-->
+    <div class="fv-row mb-8">
+      <label class="form-label fs-6 fw-bolder text-dark">{{"AUTH.LOGIN.USERNAME" | translate}}</label>
+      <input class="form-control bg-transparent" type="text" name="userName" formControlName="userName"
+        autocomplete="off" [ngClass]="{
+          'is-invalid': loginForm.controls['userName'].invalid,
+          'is-valid': loginForm.controls['userName'].valid
+        }" />
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'required',
+          message: 'AUTH.LOGIN_FAILED.USERNAME_REQUIRED',
+          control: loginForm.controls['userName']
+        }"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'minLength',
+          message: 'AUTH.LOGIN_FAILED.MIN_LENGTH_3',
+          control: loginForm.controls['userName']
+        }"></ng-container>
+    </div>
+    <!--end::Form group-->
+
+    <!--begin::Form group-->
+    <div class="fv-row mb-3">
+
+      <label class="form-label fw-bolder text-dark fs-6 mb-0">{{"AUTH.LOGIN.PASSWORD" |translate}}</label>
+
+      <input class="form-control bg-transparent" type="password" name="password" autocomplete="off"
+        formControlName="password" [ngClass]="{
+          'is-invalid': loginForm.controls['password'].invalid,
+          'is-valid': loginForm.controls['password'].valid
+        }" />
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'required',
+          message: 'AUTH.LOGIN_FAILED.PASSWORD_REQUIRED',
+          control: loginForm.controls['password']
+        }"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'minlength',
+          message: 'AUTH.LOGIN_FAILED.MIN_LENGTH_3',
+          control: loginForm.controls['password']
+        }"></ng-container>
+
+    </div>
+    <!--end::Form group-->
+
+    <!--begin::Wrapper-->
+    <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+
+      <div ngbDropdown class="d-inline-block">
+        <button type="button" class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1" id="dropdownBasic1"
+          ngbDropdownToggle>
+          <img class="h-25px w-25px rounded" src="{{ language?.flag }}" alt="language" />
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button *ngFor="let language of languages" ngbDropdownItem (click)="setLanguageWithRefresh(language.lang)"
+            [ngClass]="{ active: language.active }">
+            <span class="symbol symbol-20 mr-3">
+              <img src="{{ language.flag }}" style="width: 20%;" />
+              <span class="navi-text" style="margin-left: 20px;">{{ language.name }}</span>
+            </span>
+          </button>
+        </div>
+      </div>
+      <!--begin::Link-->
+      <a routerLink="/auth/forgot-password" class="link-primary">
+        {{"AUTH.FORGOT.TITLE" |translate}}
+      </a>
+      <!--end::Link-->
+    </div>
+    <!--end::Wrapper-->
+
+    <!--begin::Action-->
+    <div class="d-grid mb-10">
+      <button type="submit" (click)="submit()" id="kt_sign_in_submit" class="btn btn-primary"
+        [disabled]="loginForm.invalid">
+        <ng-container *ngIf="isLoading$ | async">
+          <span class="indicator-progress" [style.display]="'block'">
+            {{"AUTH.LOGIN.WAIT" | translate}}
+            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+          </span>
+        </ng-container>
+        <ng-container *ngIf="(isLoading$ | async) === false">
+          <span class="indicator-label">{{"AUTH.LOGIN.BUTTON" |translate}}</span>
+        </ng-container>
+      </button>
+    </div>
+
+    <!--end::Action-->
+  </ng-container>
+
+
 </form>
 <!--end::Form-->
 
