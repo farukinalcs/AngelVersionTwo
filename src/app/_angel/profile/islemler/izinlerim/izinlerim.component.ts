@@ -139,15 +139,16 @@ export class IzinlerimComponent implements OnInit, OnDestroy {
     this.myPermissions = [];
     this.isSelected = false;
 
-    this.profilService.getMyPermissions('30').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<MyPermissions, ResponseDetailZ>[]) => {
+    this.profilService.getMyPermissions(yearMonth).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<MyPermissions, ResponseDetailZ>[]) => {
       let data = response[0].x;
       let message = response[0].z;
       let responseToken = response[0].y;
 
       console.log("İZİNLERİM : ", data);
       this.myPermissions = data;  
-
+      
       this.dataSource = new MatTableDataSource(this.myPermissions);
+      this.isLoading.next(false);
       
 
       this.ref.detectChanges();

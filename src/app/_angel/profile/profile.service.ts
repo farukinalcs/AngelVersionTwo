@@ -137,10 +137,10 @@ export class ProfileService {
     return this.httpClient.get<any>(API_URL + '/process', options);
   }
 
-  getMyPermissions(zaman : string) {
+  getMyPermissions(yilay : string) {
     var sp : any[] = [{
       mkodu : 'yek035',
-      zamanaralik : zaman,
+      yilay : yilay,
     }]
 
     var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);

@@ -9,7 +9,7 @@
         <div class="row mt-5 m-0">
           <div class="col-12 d-flex justify-content-center">
         
-            <ul class="nav nav-pills nav-pills-custom mb-3">
+            <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3">
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
                   data-bs-toggle="pill" (click)="getDemanded('izin')" id="izinNavItem1">
@@ -68,7 +68,7 @@
         <ng-container *ngIf="!kaynak && onayBeklenenFormlar.length == 0">
           <div class="row mt-5 m-0">
             <div class="col-12 d-flex justify-content-center">
-              <div class="d-flex align-items-center bg-light-info rounded p-5 text-center w-50">
+              <div class="d-flex align-items-center bg-light-info rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
                 <i class="fa-solid fa-triangle-exclamation fs-2x text-info ms-5"></i>
                 <div class="flex-grow-1 me-2">
                     <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"DEMANDED.WARNING_LIST.TALEP_SECMELISINIZ" | translate}}</a>
@@ -81,7 +81,7 @@
         <ng-container *ngIf="kaynak && onayBeklenenFormlar.length == 0">
           <div class="row mt-5 m-0">
             <div class="col-12 d-flex justify-content-center">
-              <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
+              <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
                 <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
                 <div class="flex-grow-1 me-2">
                     <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
@@ -93,50 +93,37 @@
 
         <ng-container *ngIf="kaynak && onayBeklenenFormlar.length > 0">
           <div class="row mt-5 m-0 d-flex justify-content-center">
-            <div class="col-6 d-flex align-items-center">
+            <div class="d-flex align-items-center" [ngClass]="{'col-12': layoutService.isMobile | async, 'col-6' : !(layoutService.isMobile | async)}">
               <mat-checkbox class="example-margin" [checked]="allComplete" [indeterminate]="someComplete()"
                 (change)="setAll($event.checked)">
                 <label class="fs-5">{{"DEMANDED.BUTTON_TEXT.TUMUNU_SEC" | translate}}</label>
               </mat-checkbox>
   
-              <button type="button" class="btn btn-success mx-3" (click)="confirmDemandMultiple(kaynak)">{{"DEMANDED.BUTTON_TEXT.SECILENLERI_ONAYLA" | translate}}</button>
+              <button type="button" class="btn btn-success mx-3" (click)="openDialog('+')">{{"DEMANDED.BUTTON_TEXT.SECILENLERI_ONAYLA" | translate}}</button>
               
-              <button type="button" class="btn btn-danger" (click)="showCancelDemandDialog(selectedItem, 2)">{{"DEMANDED.BUTTON_TEXT.SECILENLERI_REDDET" | translate}}</button>
+              <button type="button" class="btn btn-danger" (click)="openDialog('-')">{{"DEMANDED.BUTTON_TEXT.SECILENLERI_REDDET" | translate}}</button>
+              <!-- <button type="button" class="btn btn-danger" (click)="showCancelDemandDialog(selectedItem, 2)">{{"DEMANDED.BUTTON_TEXT.SECILENLERI_REDDET" | translate}}</button> -->
             </div>
   
   
 
-            <div class="col-3 d-flex justify-content-end">
-              <!-- <div class="symbol-group symbol-hover">
-                <div *ngFor="let item of uniqeFotoImage" class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Mark Stone">
-                    <img alt="Pic" src="{{'data:image/jpg;base64,' + item}}">
-                </div>
-
-                <div class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip" title="" data-original-title="More users">
-                    <span class="symbol-label font-weight-bold">5+</span>
-                </div>
-              </div> -->
-
-              <!-- <app-user-list [users]="uniqeFotoImage"></app-user-list> -->
-
-
-              <button class="btn btn-primary btn-shadow-hover font-weight-bold" (click)="showDetailSearchDialog(kaynak)">
+            <div class="d-flex" [ngClass]="{'col-12 justify-content-center mt-2': layoutService.isMobile | async, 'col-3 justify-content-end' : !(layoutService.isMobile | async)}">
+              <button class="btn btn-primary btn-shadow-hover font-weight-bold" [ngClass]="{'w-100': layoutService.isMobile | async}"  (click)="showDetailSearchDialog(kaynak)">
                 {{"DEMANDED.BUTTON_TEXT.DETAYLI_ARAMA" | translate}}
                 <i class="fa fa-search"></i>
               </button>
             </div>
             
-            <div class="col-3 ">
+            <div class="" [ngClass]="{'col-12 mt-2': layoutService.isMobile | async, 'col-3' : !(layoutService.isMobile | async)}">
               <div class="input-group w-100 h-100">
                 <input class="form-control form-control-solid h-auto p-2 border-0 rounded-lg font-size-h6" [(ngModel)]="filterText" type="text" placeholder="{{'PUBLIC.SEARCH' | translate}}">
-                <!-- <input class="input-group form-control form-control-sm" [(ngModel)]="filterText" type="text" placeholder="Search.."> -->
               </div>
             </div>
           </div>
   
   
           <div class="row mt-5 m-0 p-1">
-            <div class="col-4 mb-9" *ngFor="let item of onayBeklenenFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
+            <!-- <div class="mb-9" [ngClass]="{'col-12': layoutService.isMobile | async, 'col-3' : !(layoutService.isMobile | async)}" *ngFor="let item of onayBeklenenFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
               <mat-accordion>
                 <mat-expansion-panel (opened)="isCardOpen()" (closed)="panelOpenState = false">
                   <mat-expansion-panel-header #panelA>
@@ -149,10 +136,6 @@
                           </mat-checkbox>
                         </p>
                       </section>
-  
-                      <!-- <div class="ml-4">
-                        {{item.tipad}}
-                      </div> -->
                       <span class="badge badge-info ml-4">{{item.tipad}}</span>
   
                     </mat-panel-title>
@@ -161,49 +144,46 @@
                     </mat-panel-description>
                   </mat-expansion-panel-header>
   
-                  <div >
+                  <div>
                     <div class="row d-flex justify-content-center">
                       <div class="col-12 d-flex justify-content-center">
-                        <img width="150px" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
-                      </div>
-                      <div class="col-12 d-flex justify-content-center mt-4">
-                        <h3>{{item.Personel}}</h3>
+                        <img width="25%" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
                       </div>
                     </div>
-                    <div class="row card-body">
-                      <div class="col-12 text-center">
+                    <div class="row card-body p-1">
+                      <div class="col-12 mt-3 text-center">
                         <h5>{{"DEMANDED.DEMAND.NEDENI" | translate}}</h5>
-                        <span>{{item.neden}}</span>
+                        <span class="text-gray-600">{{item.neden}}</span>
                       </div>
   
-                      <div class="col-12 mt-6 text-center">
+                      <div class="col-12 mt-3 text-center">
                         <h5>{{"DEMANDED.DEMAND.BASLANGIC" | translate}}</h5>
-                        <span>{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}}</span>
+                        <span class="text-gray-600">{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}}</span>
                       </div>
   
-                      <div class="col-12 mt-6 text-center">
+                      <div class="col-12 mt-3 text-center">
                         <h5>{{"DEMANDED.DEMAND.BITIS_IS_BASI" | translate}}</h5>
-                        <span>{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
+                        <span class="text-gray-600">{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
                       </div>
   
                       <ng-container *ngIf="item.nedenx">
-                        <div class="col-12 mt-6 text-center">
+                        <div class="col-12 mt-3 text-center scroll h-45px">
                           <h5>{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</h5>
-                          <span>{{item.nedenx}}</span>
+                          <span class="text-gray-600">{{item.nedenx}}</span>
                         </div>
                       </ng-container>
                       
 
                       <ng-container *ngIf="item.Onaylayan">
-                        <div class="col-12 mt-6 text-center">
+                        <div class="col-12 mt-3 text-center">
                           <h5>{{"DEMANDED.DEMAND.SON" | translate}}</h5>
-                          <span>{{item.Onaylayan}}</span>
+                          <span class="text-gray-600">{{item.Onaylayan}}</span>
                           <p>{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
                         </div>
                       </ng-container>
   
                       <div class="col-12 text-center">
-                        <div class="row mt-8">
+                        <div class="row mt-3">
                           <div class="col-3">
                             <button class="btn btn-icon btn-light-success btn-circle" (click)="confirmDemandSingle(item.Id, item.tipad, kaynak)">
                               <i class="fa-solid fa-check"></i>
@@ -238,6 +218,66 @@
   
                 </mat-expansion-panel>
               </mat-accordion>
+            </div> -->
+
+            <div class="col-12 mb-9">
+              <div class="table-responsive">
+                <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                  <thead>
+                    <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
+                      <th class="text-center"></th>
+                      <th class="text-center">Personel</th>
+                      <th class="text-center">Talep Tipi</th>
+                      <th class="text-center">Başlangıç Tarihi</th>
+                      <th class="text-center">Bitiş Tarihi</th>
+                      <th class="text-center w-150px">Açıklama</th>
+                      <th class="text-center"></th>
+                    </tr>
+                  </thead>
+            
+                  <tbody>
+                    <tr *ngFor="let item of onayBeklenenFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
+                      <td class="text-center">
+                        <div class="symbol symbol-50px me-2">
+                          <img src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto">
+                        </div>
+                      </td>
+            
+                      <td class="text-center text-muted fw-bold fs-4">
+                        <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">
+                          {{item.Personel}}
+                        </span>
+                      </td>
+            
+                      <td class="text-center">
+                        <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.tipad}}</p>
+                        <span class="text-muted fw-semibold d-block">{{item.neden}}</span>
+                      </td>
+
+                      <td class="text-center">
+                        <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.Baslangic | date: 'yyyy-MM-dd'}}</p>
+                        <span class="text-muted fw-semibold d-block">{{item.Baslangic | date: 'HH:mm'}}</span>
+                      </td>
+
+                      <td class="text-center">
+                        <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.Bitis | date: 'yyyy-MM-dd'}}</p>
+                        <span class="text-muted fw-semibold d-block">{{item.Bitis | date: 'HH:mm'}}</span>
+                      </td>
+            
+                      <td class="text-center">
+                        <p class="text-dark fw-bold text-hover-primary hover-scroll h-100px mb-1 fs-6">{{item.nedenx}}</p>
+                      </td>
+
+                      <td class="text-center text-muted fw-bold fs-4">
+                        <span class="border border-gray-500 border-2 border-dashed rounded p-3">
+                          Yazılım Geliştirme
+                        </span>
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </ng-container>
@@ -249,7 +289,7 @@
         <div class="row mt-5 m-0">
           <div class="col-12 d-flex justify-content-center">
         
-            <ul class="nav nav-pills nav-pills-custom mb-3">
+            <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3">
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
                   data-bs-toggle="pill" (click)="getDemanded('izin')" id="izinNavItem2">
@@ -308,7 +348,7 @@
         <ng-container *ngIf="!kaynak && onaylananFormlar.length == 0">
           <div class="row mt-5 m-0">
             <div class="col-12 d-flex justify-content-center">
-              <div class="d-flex align-items-center bg-light-info rounded p-5 text-center w-50">
+              <div class="d-flex align-items-center bg-light-info rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
                 <i class="fa-solid fa-triangle-exclamation fs-2x text-info ms-5"></i>
                 <div class="flex-grow-1 me-2">
                     <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"DEMANDED.WARNING_LIST.TALEP_SECMELISINIZ" | translate}}</a>
@@ -321,7 +361,7 @@
         <ng-container *ngIf="kaynak && onaylananFormlar.length == 0">
           <div class="row mt-5 m-0">
             <div class="col-12 d-flex justify-content-center">
-              <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
+              <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
                 <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
                 <div class="flex-grow-1 me-2">
                     <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
@@ -349,7 +389,7 @@
   
   
           <div class="row mt-5 m-0">
-            <div class="col-4 mb-9" *ngFor="let item of onaylananFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
+            <div class="mb-9" [ngClass]="{'col-12': layoutService.isMobile | async, 'col-3' : !(layoutService.isMobile | async)}" *ngFor="let item of onaylananFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
               <mat-accordion>
                 <mat-expansion-panel (opened)="isCardOpen()" (closed)="panelOpenState = false">
                   <mat-expansion-panel-header #panelB>
@@ -371,46 +411,46 @@
                   <div >
                     <div class="row d-flex justify-content-center">
                       <div class="col-12 d-flex justify-content-center">
-                        <img width="150px" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
+                        <img width="25%" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
                       </div>
                       <div class="col-12 d-flex justify-content-center mt-4">
-                        <h3>{{item.Personel}}</h3>
+                        <!-- <h3>{{item.Personel}}</h3> -->
                       </div>
                     </div>
-                    <div class="row card-body">
-                      <div class="col-12 text-center">
+                    <div class="row card-body p-1">
+                      <div class="col-12 mt-3 text-center">
                         <h5>{{"DEMANDED.DEMAND.NEDENI" | translate}}</h5>
-                        <span>{{item.neden}}</span>
+                        <span class="text-gray-600">{{item.neden}}</span>
                       </div>
   
-                      <div class="col-12 mt-6 text-center">
+                      <div class="col-12 mt-3 text-center">
                         <h5>{{"DEMANDED.DEMAND.BASLANGIC" | translate}}</h5>
-                        <span>{{item.Baslangic | date : 'yyyy-MM-dd - HH:mm'}}</span>
+                        <span class="text-gray-600">{{item.Baslangic | date : 'yyyy-MM-dd - HH:mm'}}</span>
                       </div>
   
-                      <div class="col-12 mt-6 text-center">
+                      <div class="col-12 mt-3 text-center">
                         <h5>{{"DEMANDED.DEMAND.BITIS_IS_BASI" | translate}}</h5>
-                        <span>{{item.Bitis | date : 'yyyy-MM-dd - HH:mm'}}</span>
+                        <span class="text-gray-600">{{item.Bitis | date : 'yyyy-MM-dd - HH:mm'}}</span>
                       </div>
   
                       <ng-container *ngIf="item.nedenx">
-                        <div class="col-12 mt-6 text-center">
+                        <div class="col-12 mt-3 text-center scroll h-45px">
                           <h5>{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</h5>
-                          <span>{{item.nedenx}}</span>
+                          <span class="text-gray-600">{{item.nedenx}}</span>
                         </div>
                       </ng-container>
                       
 
                       <ng-container *ngIf="item.Onaylayan">
-                        <div class="col-12 mt-6 text-center">
+                        <div class="col-12 mt-3 text-center">
                           <h5>{{"DEMANDED.DEMAND.SON" | translate}}</h5>
-                          <span>{{item.Onaylayan}}</span>
-                          <p>{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
+                          <span class="text-gray-600">{{item.Onaylayan}}</span>
+                          <p class="text-gray-600">{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
                         </div>
                       </ng-container>
   
                       <div class="col-12 text-center">
-                        <div class="row mt-8">
+                        <div class="row mt-3">
                           <div class="col-5">
                             <button class="btn btn-icon btn-success btn-circle" disabled>
                               <i class="fa-solid fa-check"></i>
@@ -448,7 +488,7 @@
         <div class="row mt-5 m-0">
           <div class="col-12 d-flex justify-content-center">
         
-            <ul class="nav nav-pills nav-pills-custom mb-3">
+            <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3">
               <li class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2 active"
                   data-bs-toggle="pill" (click)="getDemanded('izin')" id="izinNavItem3">
@@ -507,7 +547,7 @@
         <ng-container *ngIf="!kaynak && reddedilenFormlar.length == 0">
           <div class="row mt-5 m-0">
             <div class="col-12 d-flex justify-content-center">
-              <div class="d-flex align-items-center bg-light-info rounded p-5 text-center w-50">
+              <div class="d-flex align-items-center bg-light-info rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
                 <i class="fa-solid fa-triangle-exclamation fs-2x text-info ms-5"></i>
                 <div class="flex-grow-1 me-2">
                     <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"DEMANDED.WARNING_LIST.TALEP_SECMELISINIZ" | translate}}</a>
@@ -520,7 +560,7 @@
         <ng-container *ngIf="kaynak && reddedilenFormlar.length == 0">
           <div class="row mt-5 m-0">
             <div class="col-12 d-flex justify-content-center">
-              <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
+              <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
                 <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
                 <div class="flex-grow-1 me-2">
                     <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
@@ -547,7 +587,7 @@
           </div>
   
           <div class="row mt-5 m-0">
-            <div class="col-4 mb-9" *ngFor="let item of reddedilenFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
+            <div class="mb-9" [ngClass]="{'col-12': layoutService.isMobile | async, 'col-3' : !(layoutService.isMobile | async)}" *ngFor="let item of reddedilenFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
               <mat-accordion>
                 <mat-expansion-panel (opened)="isCardOpen()" (closed)="panelOpenState = false">
                   <mat-expansion-panel-header #panelC>
@@ -569,46 +609,46 @@
                   <div >
                     <div class="row d-flex justify-content-center">
                       <div class="col-12 d-flex justify-content-center">
-                        <img width="150px" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
+                        <img width="25%" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
                       </div>
                       <div class="col-12 d-flex justify-content-center mt-4">
-                        <h3>{{item.Personel}}</h3>
+                        <!-- <h3>{{item.Personel}}</h3> -->
                       </div>
                     </div>
-                    <div class="row card-body">
-                      <div class="col-12 text-center">
+                    <div class="row card-body p-1">
+                      <div class="col-12 mt-3 text-center">
                         <h5>{{"DEMANDED.DEMAND.NEDENI" | translate}}</h5>
-                        <span>{{item.neden}}</span>
+                        <span class="text-gray-600">{{item.neden}}</span>
                       </div>
   
-                      <div class="col-12 mt-6 text-center">
+                      <div class="col-12 mt-3 text-center">
                         <h5>{{"DEMANDED.DEMAND.BASLANGIC" | translate}}</h5>
-                        <span>{{item.Baslangic | date : 'yyyy-MM-dd - HH:mm'}}</span>
+                        <span class="text-gray-600">{{item.Baslangic | date : 'yyyy-MM-dd - HH:mm'}}</span>
                       </div>
   
-                      <div class="col-12 mt-6 text-center">
+                      <div class="col-12 mt-3 text-center">
                         <h5>{{"DEMANDED.DEMAND.BITIS_IS_BASI" | translate}}</h5>
-                        <span>{{item.Bitis | date : 'yyyy-MM-dd - HH:mm'}}</span>
+                        <span class="text-gray-600">{{item.Bitis | date : 'yyyy-MM-dd - HH:mm'}}</span>
                       </div>
   
                       <ng-container *ngIf="item.nedenx">
-                        <div class="col-12 mt-6 text-center">
+                        <div class="col-12 mt-3 text-center scroll h-45px">
                           <h5>{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</h5>
-                          <span>{{item.nedenx}}</span>
+                          <span class="text-gray-600">{{item.nedenx}}</span>
                         </div>
                       </ng-container>
                       
 
                       <ng-container *ngIf="item.Onaylayan">
-                        <div class="col-12 mt-6 text-center">
+                        <div class="col-12 mt-3 text-center">
                           <h5>{{"DEMANDED.DEMAND.SON" | translate}}</h5>
-                          <span>{{item.Onaylayan}}</span>
-                          <p>{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
+                          <span class="text-gray-600">{{item.Onaylayan}}</span>
+                          <p class="text-gray-600">{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
                         </div>
                       </ng-container>
   
                       <div class="col-12 text-center">
-                        <div class="row mt-8">
+                        <div class="row mt-3">
                           <div class="col-5">
                             <button class="btn btn-icon btn-danger btn-circle" disabled>
                               <i class="fa-solid fa-xmark"></i>
@@ -644,6 +684,215 @@
 </div>
 
 
+
+
+<ng-template #confirmAlert>
+  <div class="alert alert-dismissible bg-light-danger d-flex flex-center flex-column px-10 px-lg-20">
+    <i class="ki-duotone ki-information-5 fs-5tx text-danger mb-5"></i>
+    <!--begin::Wrapper-->
+    <div class="text-center">
+      <!--begin::Title-->
+      <h1 class="fw-bold mb-5">Seçilen Talepleri Onaylamak İstediğinize Emin Misiniz?</h1>
+      <!--end::Title-->
+
+      <!--begin::Separator-->
+      <div class="separator separator-dashed border-danger opacity-25 mb-5"></div>
+      <!--end::Separator-->
+
+      <!--begin::Content-->
+      <div class="mb-9 text-dark">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                    <thead>
+                      <tr class="border-0">
+                        <th></th>
+                        <th class="text-gray-800 text-hover-primary fs-5 fw-bolder me-1 cursor-pointer">Başlangıç</th>
+                        <th class="text-gray-800 text-hover-primary fs-5 fw-bolder me-1 cursor-pointer">Bitiş</th>
+                        <th class="text-gray-800 text-hover-primary fs-5 fw-bolder me-1 cursor-pointer">Personel</th>
+                        <th class="text-gray-800 text-hover-primary fs-5 fw-bolder me-1 cursor-pointer">Tip</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+              
+                    <tbody>
+                      <tr *ngFor="let item of checkedList" [ngClass]="{'bg-light-info': item.simge == '4'}">
+                        <td>
+                          <ng-container *ngIf="item.tipad == 'İzin'">
+                            <div matTooltip="İzin" class="symbol symbol-50px me-2">
+                              <span class="symbol-label bg-light-info">
+                                <img width="80%" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
+                              </span>
+                            </div>
+                          </ng-container>
+              
+                          <ng-container *ngIf="item.tipad == 'Fazla Mesai'">
+                            <div matTooltip="Fazl Mesai" class="symbol symbol-50px me-2">
+                              <span class="symbol-label bg-light-info">
+                                <i class="fa-solid fa-business-time text-info fs-2x"></i>
+                              </span>
+                            </div>
+                          </ng-container>
+                        </td>
+    
+                        <td>
+                          <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.Baslangic | date : 'yyyy-MM-dd'}}</a>
+                          <span class="text-muted fw-semibold d-block">{{item.Baslangic | date :'HH:mm'}}</span>
+                        </td>
+    
+                        <td>
+                          <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.Bitis | date : 'yyyy-MM-dd'}}</a>
+                          <span class="text-muted fw-semibold d-block">{{item.Bitis | date :'HH:mm'}}</span>
+                        </td>
+              
+                        <td class="text-end text-muted fw-bold fs-4">
+                          <span class="border border-gray-500 border-2 border-dashed rounded p-3">
+                            {{item.Personel}}
+                          </span>
+                        </td>
+              
+                        <td class="text-end text-muted fw-bold fs-4">
+                          <span class="border border-gray-500 border-2 border-dashed rounded p-3">
+                            {{item.neden}}
+                          </span>
+                        </td>
+    
+                        <td>
+                          <span class="symbol-label bg-light-danger cursor-pointer" (click)="removeItemInCheckedList(item)">
+                            <i class="fa-solid fa-circle-xmark text-danger fs-2x"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <!--end::Content-->
+
+      <!--begin::Buttons-->
+      <div class="d-flex flex-center flex-wrap">
+        <a mat-dialog-close class="btn btn-outline btn-outline-danger btn-active-danger m-2">Vazgeç</a>
+        <a class="btn btn-danger m-2" (click)="confirmDemandMultiple(kaynak)">Gönder</a>
+      </div>
+      <!--end::Buttons-->
+    </div>
+    <!--end::Wrapper-->
+  </div>
+  <!--end::Alert-->
+
+</ng-template>
+
+<ng-template #cancelAlert>
+  <div class="alert alert-dismissible bg-light-danger d-flex flex-center flex-column px-10 px-lg-20">
+    <i class="ki-duotone ki-information-5 fs-5tx text-danger mb-5"></i>
+    <!--begin::Wrapper-->
+    <div class="text-center">
+      <!--begin::Title-->
+      <h1 class="fw-bold mb-5">Seçilen Talepleri Reddetmek İstediğinize Emin Misiniz?</h1>
+      <!--end::Title-->
+
+      <!--begin::Separator-->
+      <div class="separator separator-dashed border-danger opacity-25 mb-5"></div>
+      <!--end::Separator-->
+
+      <!--begin::Content-->
+      <div class="mb-9 text-dark">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                    <thead>
+                      <tr class="border-0">
+                        <th></th>
+                        <th class="text-gray-800 text-hover-primary fs-5 fw-bolder me-1 cursor-pointer">Başlangıç</th>
+                        <th class="text-gray-800 text-hover-primary fs-5 fw-bolder me-1 cursor-pointer">Bitiş</th>
+                        <th class="text-gray-800 text-hover-primary fs-5 fw-bolder me-1 cursor-pointer">Personel</th>
+                        <th class="text-gray-800 text-hover-primary fs-5 fw-bolder me-1 cursor-pointer">Tip</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+              
+                    <tbody>
+                      <tr *ngFor="let item of checkedList" [ngClass]="{'bg-light-info': item.simge == '4'}">
+                        <td>
+                          <ng-container *ngIf="item.tipad == 'İzin'">
+                            <div matTooltip="İzin" class="symbol symbol-50px me-2">
+                              <span class="symbol-label bg-light-info">
+                                <img width="80%" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
+                              </span>
+                            </div>
+                          </ng-container>
+              
+                          <ng-container *ngIf="item.tipad == 'Fazla Mesai'">
+                            <div matTooltip="Fazl Mesai" class="symbol symbol-50px me-2">
+                              <span class="symbol-label bg-light-info">
+                                <i class="fa-solid fa-business-time text-info fs-2x"></i>
+                              </span>
+                            </div>
+                          </ng-container>
+                        </td>
+    
+                        <td>
+                          <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.Baslangic | date : 'yyyy-MM-dd'}}</a>
+                          <span class="text-muted fw-semibold d-block">{{item.Baslangic | date :'HH:mm'}}</span>
+                        </td>
+    
+                        <td>
+                          <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.Bitis | date : 'yyyy-MM-dd'}}</a>
+                          <span class="text-muted fw-semibold d-block">{{item.Bitis | date :'HH:mm'}}</span>
+                        </td>
+              
+                        <td class="text-end text-muted fw-bold fs-4">
+                          <span class="border border-gray-500 border-2 border-dashed rounded p-3">
+                            {{item.Personel}}
+                          </span>
+                        </td>
+              
+                        <td class="text-end text-muted fw-bold fs-4">
+                          <span class="border border-gray-500 border-2 border-dashed rounded p-3">
+                            {{item.neden}}
+                          </span>
+                        </td>
+    
+                        <td>
+                          <span class="symbol-label bg-light-danger cursor-pointer" (click)="removeItemInCheckedList(item)">
+                            <i class="fa-solid fa-circle-xmark text-danger fs-2x"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <!--end::Content-->
+
+      <!--begin::Buttons-->
+      <div class="d-flex flex-center flex-wrap">
+        <a mat-dialog-close class="btn btn-outline btn-outline-danger btn-active-danger m-2">Vazgeç</a>
+        <a class="btn btn-danger m-2" (click)="showCancelDemandDialog(selectedItem, 2)">Gönder</a>
+      </div>
+      <!--end::Buttons-->
+    </div>
+    <!--end::Wrapper-->
+  </div>
+  <!--end::Alert-->
+
+</ng-template>
 
 
 

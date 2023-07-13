@@ -193,61 +193,61 @@
           <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fw-bolder flex-nowrap">
             <ng-container *ngIf="menuConfig.pages.profil.tabMenu.gecislerim">
               <li class="nav-item" >
-                <a class="nav-link text-active-primary me-6" routerLink="gecislerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.GECISLERIM"></a>
+                <a class="nav-link text-active-primary text-center me-6" routerLink="gecislerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.GECISLERIM"></a>
               </li>
             </ng-container>
             
             <ng-container *ngIf="menuConfig.pages.profil.tabMenu.surelerim">
               <li class="nav-item" >
-                <a class="nav-link text-active-primary me-6" routerLink="surelerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.SURELERIM"></a>
+                <a class="nav-link text-active-primary text-center me-6" routerLink="surelerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.SURELERIM"></a>
               </li>
             </ng-container>
   
             <ng-container *ngIf="menuConfig.pages.profil.tabMenu.izinlerim">
               <li class="nav-item" >
-                <a class="nav-link text-active-primary me-6" routerLink="izinlerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.IZINLERIM"></a>
+                <a class="nav-link text-active-primary text-center me-6" routerLink="izinlerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.IZINLERIM"></a>
               </li>
             </ng-container>
   
             <ng-container *ngIf="menuConfig.pages.profil.tabMenu.talepEdilenler">
               <li class="nav-item" >
-                <a class="nav-link text-active-primary me-6" routerLink="talep_edilenler" routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEP_EDILENLER"></a>
+                <a class="nav-link text-active-primary text-center me-6" routerLink="talep_edilenler" routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEP_EDILENLER"></a>
               </li>
             </ng-container>
             
             <ng-container *ngIf="menuConfig.pages.profil.tabMenu.taleplerim">
               <li class="nav-item" >
-                <a class="nav-link text-active-primary me-6" routerLink="taleplerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEPLERIM"></a>
+                <a class="nav-link text-active-primary text-center me-6" routerLink="taleplerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEPLERIM"></a>
               </li>
             </ng-container>
             
             <ng-container *ngIf="menuConfig.pages.profil.tabMenu.ziyaretciTaleplerim">
               <li class="nav-item" >
-                <a class="nav-link text-active-primary me-6" routerLink="ziyaretci_taleplerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.ZIYARETCI_TALEPLERIM"></a>
+                <a class="nav-link text-active-primary text-center me-6" routerLink="ziyaretci_taleplerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.ZIYARETCI_TALEPLERIM"></a>
               </li>
             </ng-container>
   
             <ng-container *ngIf="menuConfig.pages.profil.tabMenu.mobilLokasyon">
               <li class="nav-item" >
-                <a class="nav-link text-active-primary me-6" routerLink="mobil_lokasyon" routerLinkActive="active" translate="MENU.PROFIL_SUB.MOBIL_LOKASYON"></a>
+                <a class="nav-link text-active-primary text-center me-6" routerLink="mobil_lokasyon" routerLinkActive="active" translate="MENU.PROFIL_SUB.MOBIL_LOKASYON"></a>
               </li>
             </ng-container>
   
             <ng-container *ngIf="menuConfig.pages.profil.tabMenu.taskListem">
               <li class="nav-item" >
-                <a class="nav-link text-active-primary me-6" routerLink="task_listem" routerLinkActive="active" translate="MENU.PROFIL_SUB.TASK_LISTEM"></a>
+                <a class="nav-link text-active-primary text-center me-6" routerLink="task_listem" routerLinkActive="active" translate="MENU.PROFIL_SUB.TASK_LISTEM"></a>
               </li>
             </ng-container>
           
             <ng-container *ngIf="menuConfig.pages.profil.tabMenu.takimim">
               <li class="nav-item" >
-                <a class="nav-link text-active-primary me-6" routerLink="takimim" routerLinkActive="active" translate="MENU.PROFIL_SUB.TAKIMIM"></a>
+                <a class="nav-link text-active-primary text-center me-6" routerLink="takimim" routerLinkActive="active" translate="MENU.PROFIL_SUB.TAKIMIM"></a>
               </li>
             </ng-container>
   
             <ng-container>
               <li class="nav-item" >
-                <a class="nav-link text-active-primary me-6" routerLink="eksik_surelerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.EKSIK_SURELERIM"></a>
+                <a class="nav-link text-active-primary text-center me-6" routerLink="eksik_surelerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.EKSIK_SURELERIM"></a>
               </li>
             </ng-container>
             
@@ -496,63 +496,70 @@
               <div class="col-12">
                 <div class="d-flex overflow-auto h-55px" [ngClass]="{'justify-content-center': !(this.layoutService.isMobile | async)}">
                   <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fw-bolder flex-nowrap">
+
+                    <ng-container>
+                      <li class="nav-item" >
+                        <a class="nav-link text-active-primary text-center me-6" routerLink="genel_bakis" routerLinkActive="active">Genel Bakış</a>
+                      </li>
+                    </ng-container>
+                    
                     <ng-container *ngIf="menuConfig.pages.profil.tabMenu.gecislerim">
                       <li class="nav-item" >
-                        <a class="nav-link text-active-primary me-6" routerLink="gecislerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.GECISLERIM"></a>
+                        <a class="nav-link text-active-primary text-center me-6" routerLink="gecislerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.GECISLERIM"></a>
                       </li>
                     </ng-container>
                     
                     <ng-container *ngIf="menuConfig.pages.profil.tabMenu.surelerim">
                       <li class="nav-item" >
-                        <a class="nav-link text-active-primary me-6" routerLink="surelerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.SURELERIM"></a>
+                        <a class="nav-link text-active-primary text-center me-6" routerLink="surelerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.SURELERIM"></a>
                       </li>
                     </ng-container>
           
                     <ng-container *ngIf="menuConfig.pages.profil.tabMenu.izinlerim">
                       <li class="nav-item" >
-                        <a class="nav-link text-active-primary me-6" routerLink="izinlerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.IZINLERIM"></a>
+                        <a class="nav-link text-active-primary text-center me-6" routerLink="izinlerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.IZINLERIM"></a>
                       </li>
                     </ng-container>
           
                     <ng-container *ngIf="menuConfig.pages.profil.tabMenu.talepEdilenler">
                       <li class="nav-item" >
-                        <a class="nav-link text-active-primary me-6" routerLink="talep_edilenler" routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEP_EDILENLER"></a>
+                        <a class="nav-link text-active-primary text-center me-6" routerLink="talep_edilenler" routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEP_EDILENLER"></a>
                       </li>
                     </ng-container>
                     
                     <ng-container *ngIf="menuConfig.pages.profil.tabMenu.taleplerim">
                       <li class="nav-item" >
-                        <a class="nav-link text-active-primary me-6" routerLink="taleplerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEPLERIM"></a>
+                        <a class="nav-link text-active-primary text-center me-6" routerLink="taleplerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEPLERIM"></a>
                       </li>
                     </ng-container>
                     
                     <ng-container *ngIf="menuConfig.pages.profil.tabMenu.ziyaretciTaleplerim">
                       <li class="nav-item" >
-                        <a class="nav-link text-active-primary me-6" routerLink="ziyaretci_taleplerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.ZIYARETCI_TALEPLERIM"></a>
+                        <a class="nav-link text-active-primary text-center me-6" routerLink="ziyaretci_taleplerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.ZIYARETCI_TALEPLERIM"></a>
                       </li>
                     </ng-container>
           
                     <ng-container *ngIf="menuConfig.pages.profil.tabMenu.mobilLokasyon">
                       <li class="nav-item" >
-                        <a class="nav-link text-active-primary me-6" routerLink="mobil_lokasyon" routerLinkActive="active" translate="MENU.PROFIL_SUB.MOBIL_LOKASYON"></a>
+                        <a class="nav-link text-active-primary text-center me-6" routerLink="mobil_lokasyon" routerLinkActive="active" translate="MENU.PROFIL_SUB.MOBIL_LOKASYON"></a>
                       </li>
                     </ng-container>
           
                     <ng-container *ngIf="menuConfig.pages.profil.tabMenu.taskListem">
                       <li class="nav-item" >
-                        <a class="nav-link text-active-primary me-6" routerLink="task_listem" routerLinkActive="active" translate="MENU.PROFIL_SUB.TASK_LISTEM"></a>
+                        <a class="nav-link text-active-primary text-center me-6" routerLink="task_listem" routerLinkActive="active" translate="MENU.PROFIL_SUB.TASK_LISTEM"></a>
                       </li>
                     </ng-container>
                   
                     <ng-container *ngIf="menuConfig.pages.profil.tabMenu.takimim">
                       <li class="nav-item" >
-                        <a class="nav-link text-active-primary me-6" routerLink="takimim" routerLinkActive="active" translate="MENU.PROFIL_SUB.TAKIMIM"></a>
+                        <a class="nav-link text-active-primary text-center me-6" routerLink="takimim" routerLinkActive="active" translate="MENU.PROFIL_SUB.TAKIMIM"></a>
                       </li>
                     </ng-container>
           
                     <ng-container>
                       <li class="nav-item" >
-                        <a class="nav-link text-active-primary me-6" routerLink="eksik_surelerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.EKSIK_SURELERIM"></a>
+                        <a class="nav-link text-active-primary text-center me-6" routerLink="eksik_surelerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.EKSIK_SURELERIM"></a>
                       </li>
                     </ng-container>
                     

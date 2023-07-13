@@ -1,0 +1,208 @@
+<div class="card card-flush h-md-100" style="background-image: url(&quot;./assets/media/stock/my-svg-background/food-6.png&quot;);">
+    <div class="card-header pt-5" style="display: block;">
+        <div class="card-title" style="display: block;">
+            <div class="row">
+                <div class="col-8">
+                    <i class="fa-solid fa-pizza-slice text-danger fs-2 pe-2"></i>
+                    <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">Günün Menüsü</span>
+                </div>
+
+                <div class="col-4 d-flex justify-content-end align-items-center" (click)="showAllFoodMenu()">
+                    <span class="text-gray-400 text-hover-primary cursor-pointer pt-1 fw-semibold fs-7">
+                        Tümü
+                    <i class="fa-solid fa-chevron-right ps-2 fs-7"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="card-body p-4">
+        <div class="mb-5">
+            <div class="row">
+                <!-- <div class="col-2 d-flex align-items-center">
+                    <i class="fa-solid fa-chevron-left text-hover-danger fs-2" (click)="previousItem()"></i>
+                </div> -->
+
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="fs-2x fw-bold text-gray-800 text-center">
+                        <span class="me-2"> {{ currentItem.tarih }} </span>
+                    </div>
+                </div>
+
+                <!-- <div class="col-2 d-flex align-items-center justify-content-end">
+                    <i class="fa-solid fa-chevron-right text-hover-danger fs-2" (click)="nextItem()"></i>
+                </div> -->
+            </div>
+
+            <div class="row pt-20">
+                <div class="col-5">
+                    <hr>
+                </div>
+
+                <div class="col-2 d-flex justify-content-center">
+                    <i class="fa-solid fa-utensils fs-2x"></i>
+                </div>
+
+                <div class="col-5">
+                    <hr>
+                </div>
+
+                <div class="col-12 fs-4 fw-bold text-gray-800 text-center">
+                    <div class="py-1" *ngFor="let item of currentItem.menu">
+                        {{item}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <p-carousel [value]="items" [numVisible]="1" [numScroll]="3" [circular]="true" [showIndicators]="false">
+            <ng-template let-item pTemplate="item">
+                <div class="tanimlar-item">
+                    <div class="tanimlar-item-content">
+                        <div class="mb-5">
+                            <div class="row">
+                            
+        
+                                <div class="col-12 d-flex justify-content-center">
+                                    <div class="fs-2x fw-bold text-gray-800 text-center">
+                                        <span class="me-2"> {{ currentItem.tarih }} </span>
+                                    </div>
+                                </div>
+        
+                                
+                            </div>
+        
+                            <div class="row pt-13">
+                                <div class="col-5">
+                                    <hr>
+                                </div>
+        
+                                <div class="col-2 d-flex justify-content-center">
+                                    <i class="fa-solid fa-utensils fs-2x"></i>
+                                </div>
+        
+                                <div class="col-5">
+                                    <hr>
+                                </div>
+        
+                                <div class="col-12 fs-4 fw-bold text-gray-800 text-center">
+                                    <div class="py-1" *ngFor="let item of currentItem.menu">
+                                        {{item}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-carousel> -->
+    </div>
+</div>
+
+
+<p-dialog header="Haftalık Yemek Menüsü" [(visible)]="displayAllFoodMenu" [modal]="true" [style]="{width: '50vw'}"
+    [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+
+    <!-- <div class="container" style="height: 500px;">
+        <div class="card p-5">
+            <div class="card-body pt-7 px-0">
+            
+                <div class="row mb-8">
+                    <p-carousel [value]="weeks" [numVisible]="7" [numScroll]="7" [circular]="true" [showIndicators]="false">
+                        <ng-template let-item pTemplate="item">
+                            <div class="tanimlar-item">
+                                <div class="tanimlar-item-content">
+                                    <div class="col-12">
+                                        <ul class="nav nav-stretch nav-pills nav-pills-custom nav-pills-active-custom d-flex justify-content-between px-5"
+                                            role="tablist">
+                                            <li class="nav-item p-0 ms-0" role="presentation">
+                                                <a class="nav-link btn d-flex flex-column flex-center rounded-pill min-w-45px py-4 px-3 btn-active-danger "
+                                                    data-bs-toggle="tab" aria-selected="false" tabindex="-1" role="tab"
+                                                    id={{item.date}} (click)="getDateForMenu(item)">
+                                                    <span class="fs-7 fw-semibold">{{item.day}}</span>
+                                                    <span class="fs-6 fw-bold">{{item.date}}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-carousel>
+                </div>
+            
+            
+            
+                <div class="d-flex align-items-center mb-6" *ngFor="let value of currentMenu.menus">
+                    <span data-kt-element="bullet"
+                        class="bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-4 bg-info"></span>
+            
+                    <div class="flex-grow-1 me-5">
+                        <div class="text-gray-800 fw-semibold fs-2">
+                            {{value}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+    <div class="container" style="height: 500px;">
+        <div class="card p-5">
+            <div class="card-body pt-7 px-0">
+                <div class="row mb-10">
+                    <div class="col-12 d-flex justify-content-center">
+                        <span class="fw-bold fs-2x text-gray-800">{{currentMonth}}</span>
+                    </div>
+                </div>
+                <div class="row mb-8">
+                    <p-carousel [value]="weeks" [numVisible]="7" [numScroll]="7" [circular]="true" [showIndicators]="false">
+                        <ng-template let-item pTemplate="item">
+                            <div class="tanimlar-item">
+                                <div class="tanimlar-item-content">
+                                    <div class="col-12">
+                                        <ul class="nav nav-stretch nav-pills nav-pills-custom nav-pills-active-custom d-flex justify-content-between px-5"
+                                            role="tablist">
+                                            <li class="nav-item p-0 ms-0" role="presentation">
+                                                <a class="nav-link btn d-flex flex-column flex-center rounded-pill min-w-45px py-4 px-3 btn-active-danger"
+                                                    [ngClass]="{ 'active': item === currentMenu }"
+                                                    data-bs-toggle="tab" aria-selected="false" tabindex="-1" role="tab"
+                                                    [attr.id]="'date-' + item.date" (click)="getDateForMenu(item)">
+                                                    <span class="fs-7 fw-semibold">{{item.day}}</span>
+                                                    <span class="fs-6 fw-bold">{{item.date}}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-carousel>
+                </div>
+    
+                <div class="d-flex align-items-center mb-6" *ngFor="let value of currentMenu.menus">
+                    <span data-kt-element="bullet"
+                        class="bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-4 bg-info"></span>
+    
+                    <div class="flex-grow-1 me-5">
+                        <div class="text-gray-800 fw-semibold fs-2">
+                            {{value}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayAllFoodMenu=false"
+            label="{{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}" class="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+
+

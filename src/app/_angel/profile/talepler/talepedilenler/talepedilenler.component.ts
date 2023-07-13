@@ -1,10 +1,12 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
+import { LayoutService } from 'src/app/_metronic/layout';
 import { AccessDataModel } from '../../models/accessData';
 import { DemandedModel } from '../../models/demanded';
 import { DemandProcessModel } from '../../models/demandProcess';
@@ -18,6 +20,9 @@ import { ProfileService } from '../../profile.service';
 })
 export class TalepedilenlerComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
+  @ViewChild('confirmAlert') confirmAlert: TemplateRef<any>;
+  @ViewChild('cancelAlert') cancelAlert: TemplateRef<any>;
+
 
   filterText : string = ''; // Arama yapmak için
   kaynak : string; // Nav Linklerden seçilen
@@ -57,11 +62,16 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
   direktorluk : any[] = [];
 
   currentDate : any = new Date().toISOString().substring(0,10);
+  checkedList: any[] = [];
+  cancelAlertRef: any;
+  confirmAlertRef: any;
   constructor(
     private profilService : ProfileService,
     private toastrService : ToastrService,
     private formBuilder : FormBuilder,
     private translateService : TranslateService,
+    private dialog : MatDialog,
+    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
 
@@ -227,30 +237,30 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
   }
 
   cancelDemandMultiple(aktifMenu : any, description : string){
-    let checkedList = this.onayBeklenenFormlar.filter((c : any) => {
+    this.checkedList = this.onayBeklenenFormlar.filter((c : any) => {
       return c.completed == true;
     });
-    console.log("SELECTED :", checkedList);
+    console.log("SELECTED :", this.checkedList);
 
 
-    if (checkedList.length > 0) {
-      this.profilService.cancelMyDemandsMultiple(checkedList, description).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
-        console.log("Çoklu İptal :", response);
-        this.getDemanded(aktifMenu);
-        this.toastrService.success(
-          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
-          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
-        );
+    // if (this.checkedList.length > 0) {
+    //   this.profilService.cancelMyDemandsMultiple(this.checkedList, description).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
+    //     console.log("Çoklu İptal :", response);
+    //     this.getDemanded(aktifMenu);
+    //     this.toastrService.success(
+    //       this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
+    //       this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+    //     );
 
 
-        this.allComplete = false;
+    //     this.allComplete = false;
 
-        this.ref.detectChanges();
-      });  
+    //     this.ref.detectChanges();
+    //   });  
 
-      this.descriptionText = '';    
-      this.displayCancelDemand = false;
-    }   
+    //   this.descriptionText = '';    
+    //   this.displayCancelDemand = false;
+    // }   
     
   }
 
@@ -261,20 +271,20 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
       kaynak = 'fm'
     }
 
-    this.profilService.cancelMyDemands(formid, kaynak, aciklama).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
-      if (response[0].x[0].islemsonuc) {
-        this.getDemanded(aktifMenu);
-        this.toastrService.success(
-          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
-          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
-        );
+    // this.profilService.cancelMyDemands(formid, kaynak, aciklama).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
+    //   if (response[0].x[0].islemsonuc) {
+    //     this.getDemanded(aktifMenu);
+    //     this.toastrService.success(
+    //       this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
+    //       this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+    //     );
 
-      }
-      console.log("Talep İptal :", response);
+    //   }
+    //   console.log("Talep İptal :", response);
 
 
-      this.ref.detectChanges();
-    });
+    //   this.ref.detectChanges();
+    // });
 
 
     this.descriptionText = '';    
@@ -364,6 +374,7 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
   }
 
   showCancelDemandDialog(item : any, tip : number) {
+    this.cancelAlertRef.close();
     if (tip == 2) {
       let checkedList = this.onayBeklenenFormlar.filter((c : any) => {
         return c.completed == true;
@@ -503,27 +514,50 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
   }
 
   confirmDemandMultiple(aktifMenu : any){
-    let checkedList = this.onayBeklenenFormlar.filter((c : any) => {
-      return c.completed == true;
-    });
-    console.log("SELECTED :", checkedList);
-
-
-    // if (checkedList.length > 0) {
-    //   this.profilService.confirmDemandMultiple(checkedList).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
+    if (this.checkedList.length > 0) {
+      // this.profilService.confirmDemandMultiple(this.checkedList).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
     //     console.log("Çoklu Onay :", response);
     //     this.getDemanded(aktifMenu);
     //     this.toastrService.success(
     //       this.translateService.instant("TOASTR_MESSAGE.TALEP_ONAYLANDI"),
     //       this.translateService.instant("TOASTR_MESSAGE.BASARILI")
     //     );
+    // this.confirmAlertRef.close();
 
     //     this.allComplete = false;
     //     this.ref.detectChanges();
     //   });  
-    // }   
+    }   
     
   }
+
+  removeItemInCheckedList(removeItem : any) {
+    this.checkedList = this.checkedList.filter(item => item.Id !== removeItem.Id);
+    this.ref.detectChanges();
+  }
+
+  openDialog(tip : any) {
+    this.checkedList = this.onayBeklenenFormlar.filter((c : any) => {
+      return c.completed == true;
+    });
+    console.log("SELECTED :", this.checkedList);
+
+    if (this.checkedList.length > 0) {
+      if (tip == '+') {
+        this.confirmAlertRef = this.dialog.open(this.confirmAlert);
+
+      } else if (tip == '-') {
+        this.cancelAlertRef = this.dialog.open(this.cancelAlert);
+        
+      }
+    } else {
+      this.toastrService.error(
+        this.translateService.instant("TOASTR_MESSAGE.ISARETLEME_YAPMALISINIZ"),
+        this.translateService.instant("TOASTR_MESSAGE.HATA")
+      );
+    }
+  }
+
 
   isCardOpen() {
     this.panelOpenState = true

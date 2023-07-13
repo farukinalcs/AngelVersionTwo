@@ -12,12 +12,17 @@ import { MobillokasyonComponent } from './talepler/mobillokasyon/mobillokasyon.c
 import { TasklistemComponent } from './talepler/tasklistem/tasklistem.component';
 import { TakimimComponent } from './talepler/takimim/takimim.component';
 import { EksikSurelerimComponent } from './islemler/eksik-surelerim/eksik-surelerim.component';
+import { ProfileDataWidgetComponent } from './profile-data-widget/profile-data-widget.component';
 
 const routes: Routes = [
   {
     path: '',
     component: ProfiledashboardComponent,
     children: [
+      {
+        path: 'genel_bakis',
+        component : ProfileDataWidgetComponent
+      },
       {
         path: 'gecislerim',
         component: GecislerimComponent,
@@ -58,8 +63,8 @@ const routes: Routes = [
         path: 'eksik_surelerim',
         component: EksikSurelerimComponent,
       },
-      { path: '', redirectTo: 'gecislerim', pathMatch: 'full' },
-      { path: '**', redirectTo: 'gecislerim', pathMatch: 'full' },
+      { path: '', redirectTo: 'genel_bakis', pathMatch: 'full' },
+      { path: '**', redirectTo: 'genel_bakis', pathMatch: 'full' },
     ],
   },
 ];

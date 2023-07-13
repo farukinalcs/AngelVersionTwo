@@ -124,7 +124,7 @@
 
 
             <div class="row mt-5 m-0">
-              <div class="col-4 mb-9"
+              <div class="col-3 mb-9"
                 *ngFor="let item of sureciDevamEdenFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']; trackBy: trackBy">
                 <mat-accordion>
                   <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
@@ -153,40 +153,40 @@
                     <div class="card card-custom">
                       <div class="row card-header card-header-center d-flex justify-content-center">
                         <div class="col-12 d-flex justify-content-center">
-                          <img width="150px" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
+                          <img width="25%" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
                         </div>
                         <div class="col-12 d-flex justify-content-center mt-4">
-                          <h3>{{item.Personel}}</h3>
+                          <!-- <h3>{{item.Personel}}</h3> -->
                         </div>
                       </div>
-                      <div class="row card-body">
-                        <div class="col-12 text-center">
+                      <div class="row card-body p-1">
+                        <div class="col-12 mt-3 text-center">
                           <h5>{{"DEMANDED.DEMAND.NEDENI" | translate}}</h5>
-                          <span>{{item.neden}}</span>
+                          <span class="text-gray-600">{{item.neden}}</span>
                         </div>
 
-                        <div class="col-12 mt-6 text-center">
+                        <div class="col-12 mt-3 text-center">
                           <h5>{{"DEMANDED.DEMAND.BASLANGIC" | translate}}</h5>
-                          <span>{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}} </span>
+                          <span class="text-gray-600">{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}} </span>
                         </div>
 
-                        <div class="col-12 mt-6 text-center">
+                        <div class="col-12 mt-3 text-center">
                           <h5>{{"DEMANDED.DEMAND.BITIS_IS_BASI" | translate}}</h5>
-                          <span>{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
+                          <span class="text-gray-600">{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
                         </div>
 
                         <ng-container *ngIf="item.nedenx">
-                          <div class="col-12 mt-6 text-center">
+                          <div class="col-12 mt-3 text-center scroll h-45px">
                             <h5>{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</h5>
-                            <span>{{item.nedenx}}</span>
+                            <span class="text-gray-600">{{item.nedenx}}</span>
                           </div>
                         </ng-container>
 
 
                         <ng-container *ngIf="item.Onaylayan">
-                          <div class="col-12 mt-6 text-center">
+                          <div class="col-12 mt-3 text-center">
                             <h5>{{"DEMANDED.DEMAND.SON" | translate}}</h5>
-                            <span>{{item.Onaylayan}}</span>
+                            <span class="text-gray-600">{{item.Onaylayan}}</span>
                             <p>{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
                           </div>
                         </ng-container>
@@ -342,7 +342,7 @@
 
             <div class="row mt-5 m-0">
               <ng-container *ngIf="onaylananFormlar.length > 0">
-                <div class="col-4 mb-9"
+                <div class="col-3 mb-9"
                   *ngFor="let item of onaylananFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']; trackBy: trackBy">
                   <mat-accordion>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
@@ -370,40 +370,40 @@
                       <div class="card card-custom">
                         <div class="row card-header card-header-center d-flex justify-content-center">
                           <div class="col-12 d-flex justify-content-center">
-                            <img width="150px" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
+                            <img width="25%" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
                           </div>
                           <div class="col-12 d-flex justify-content-center mt-4">
-                            <h3>{{item.Personel}}</h3>
+                            <!-- <h3>{{item.Personel}}</h3> -->
                           </div>
                         </div>
-                        <div class="row card-body">
-                          <div class="col-12 text-center">
+                        <div class="row card-body p-1">
+                          <div class="col-12 mt-3 text-center">
                             <h5>{{"DEMANDED.DEMAND.NEDENI" | translate}}</h5>
-                            <span>{{item.neden}}</span>
+                            <span class="text-gray-600">{{item.neden}}</span>
                           </div>
                 
-                          <div class="col-12 mt-6 text-center">
+                          <div class="col-12 mt-3 text-center">
                             <h5>{{"DEMANDED.DEMAND.BASLANGIC" | translate}}</h5>
-                            <span>{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}} </span>
+                            <span class="text-gray-600">{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}} </span>
                           </div>
                 
-                          <div class="col-12 mt-6 text-center">
+                          <div class="col-12 mt-3 text-center">
                             <h5>{{"DEMANDED.DEMAND.BITIS_IS_BASI" | translate}}</h5>
-                            <span>{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
+                            <span class="text-gray-600">{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
                           </div>
                 
                           <ng-container *ngIf="item.nedenx">
-                            <div class="col-12 mt-6 text-center">
+                            <div class="col-12 mt-3 text-center scroll h-45px">
                               <h5>{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</h5>
-                              <span>{{item.nedenx}}</span>
+                              <span class="text-gray-600">{{item.nedenx}}</span>
                             </div>
                           </ng-container>
                 
                 
                           <ng-container *ngIf="item.Onaylayan">
-                            <div class="col-12 mt-6 text-center">
+                            <div class="col-12 mt-3 text-center">
                               <h5>{{"DEMANDED.DEMAND.SON" | translate}}</h5>
-                              <span>{{item.Onaylayan}}</span>
+                              <span class="text-gray-600">{{item.Onaylayan}}</span>
                               <p>{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
                             </div>
                           </ng-container>
@@ -575,7 +575,7 @@
 
             <div class="row mt-5 m-0">
               <ng-container *ngIf="reddedilenFormlar.length > 0">
-                <div class="col-4 mb-9"
+                <div class="col-3 mb-9"
                   *ngFor="let item of reddedilenFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']; trackBy: trackBy">
                   <mat-accordion>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
@@ -603,40 +603,40 @@
                       <div class="card card-custom">
                         <div class="row card-header card-header-center d-flex justify-content-center">
                           <div class="col-12 d-flex justify-content-center">
-                            <img width="150px" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
+                            <img width="25%" src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
                           </div>
                           <div class="col-12 d-flex justify-content-center mt-4">
-                            <h3>{{item.Personel}}</h3>
+                            <!-- <h3>{{item.Personel}}</h3> -->
                           </div>
                         </div>
-                        <div class="row card-body">
-                          <div class="col-12 text-center">
+                        <div class="row card-body p-1">
+                          <div class="col-12 mt-3 text-center">
                             <h5>{{"DEMANDED.DEMAND.NEDENI" | translate}}</h5>
-                            <span>{{item.neden}}</span>
+                            <span class="text-gray-600">{{item.neden}}</span>
                           </div>
                 
-                          <div class="col-12 mt-6 text-center">
+                          <div class="col-12 mt-3 text-center">
                             <h5>{{"DEMANDED.DEMAND.BASLANGIC" | translate}}</h5>
-                            <span>{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}} </span>
+                            <span class="text-gray-600">{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}} </span>
                           </div>
                 
-                          <div class="col-12 mt-6 text-center">
+                          <div class="col-12 mt-3 text-center">
                             <h5>{{"DEMANDED.DEMAND.BITIS_IS_BASI" | translate}}</h5>
-                            <span>{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
+                            <span class="text-gray-600">{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
                           </div>
                 
                           <ng-container *ngIf="item.nedenx">
-                            <div class="col-12 mt-6 text-center">
+                            <div class="col-12 mt-3 text-center scroll h-45px">
                               <h5>{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</h5>
-                              <span>{{item.nedenx}}</span>
+                              <span class="text-gray-600">{{item.nedenx}}</span>
                             </div>
                           </ng-container>
                 
                 
                           <ng-container *ngIf="item.Onaylayan">
-                            <div class="col-12 mt-6 text-center">
+                            <div class="col-12 mt-3 text-center">
                               <h5>{{"DEMANDED.DEMAND.SON" | translate}}</h5>
-                              <span>{{item.Onaylayan}}</span>
+                              <span class="text-gray-600">{{item.Onaylayan}}</span>
                               <p>{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
                             </div>
                           </ng-container>

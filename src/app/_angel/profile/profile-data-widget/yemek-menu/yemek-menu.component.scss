@@ -1,0 +1,12 @@
+.slide-right-animation {
+    transition: transform 0.3s;
+    transform: translateX(100%);
+}
+
+.slide-left-animation {
+    transition: transform 0.3s;
+    transform: translateX(-100%);
+}
+
+
+

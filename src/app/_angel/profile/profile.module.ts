@@ -49,7 +49,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
-import { CardsModule } from 'src/app/_metronic/partials';
+import { CardsModule, EngagesModule, WidgetsModule } from 'src/app/_metronic/partials';
 import { AccordionModule } from 'primeng/accordion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataViewModule } from 'primeng/dataview';
@@ -59,6 +59,19 @@ import { EksikSurelerimComponent } from './islemler/eksik-surelerim/eksik-surele
 import { TimeFormatPipe } from 'src/app/_helpers/pipes/time-format.pipe';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CardsWidget20Component } from 'src/app/_metronic/partials/content/widgets/_new/cards/cards-widget20/cards-widget20.component';
+import { EngageWidget10Component } from 'src/app/_metronic/partials/content/widgets/_new/engage/engage-widget10/engage-widget10.component';
+import { ListsWidget26Component } from 'src/app/_metronic/partials/content/widgets/_new/lists/lists-widget26/lists-widget26.component';
+import { CardsWidget17Component } from 'src/app/_metronic/partials/content/widgets/_new/cards/cards-widget17/cards-widget17.component';
+import { CardsWidget7Component } from 'src/app/_metronic/partials/content/widgets/_new/cards/cards-widget7/cards-widget7.component';
+import { DogumGunuComponent } from './profile-data-widget/dogum-gunu/dogum-gunu.component';
+import { YemekMenuComponent } from './profile-data-widget/yemek-menu/yemek-menu.component';
+import { YeniKatilanlarComponent } from './profile-data-widget/yeni-katilanlar/yeni-katilanlar.component';
+import { DuyurularComponent } from './profile-data-widget/duyurular/duyurular.component';
+import { OnerilerComponent } from './profile-data-widget/oneriler/oneriler.component';
+import { CarouselModule } from 'primeng/carousel';
+import { AnketComponent } from './profile-data-widget/anket/anket.component';
+import { KidemlilerComponent } from './profile-data-widget/kidemliler/kidemliler.component';
 
 
 @NgModule({
@@ -82,7 +95,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     SearchFilterPipe,
     DialogIzinTalebiComponent,
     EksikSurelerimComponent,
-    TimeFormatPipe
+    TimeFormatPipe,
+    DogumGunuComponent,
+    YemekMenuComponent,
+    YeniKatilanlarComponent,
+    DuyurularComponent,
+    OnerilerComponent,
+    AnketComponent,
+    KidemlilerComponent
   ],
   imports: [
     CommonModule,
@@ -130,7 +150,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     DataViewModule,
     DropdownModule,
     NgApexchartsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    WidgetsModule,
+    CarouselModule
   ]
 })
 export class ProfileModule { }

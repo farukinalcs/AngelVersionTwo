@@ -145,6 +145,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     if (
       pageTitle == 'Light' ||
+      pageTitle == 'Genel Bakış' ||
+      pageTitle == 'Dashboard' ||
       pageTitle == 'Geçişlerim' ||
       pageTitle == 'Sürelerim' ||
       pageTitle == 'İzinlerim' ||

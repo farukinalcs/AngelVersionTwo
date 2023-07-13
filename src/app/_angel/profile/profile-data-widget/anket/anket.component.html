@@ -1,0 +1,114 @@
+<div class="card card-flush h-md-100" >
+    <div class="card-header pt-5" style="display: block;">
+        <div class="card-title" style="display: block;">
+            <div class="row">
+                <div class="col-8">
+                    <i class="fa-solid fa-list-check fs-2 text-danger pe-2"></i>
+                    <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">Anket</span>
+                </div>
+
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                    <span class="text-gray-400 text-hover-primary cursor-pointer pt-1 fw-semibold fs-7">
+                        Tümü
+                    <i class="fa-solid fa-chevron-right ps-2 fs-7"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <!-- <div class="mb-5">
+            <div class="row">
+                <div class="col-12">
+                    <div class="fs-2x fw-bold text-gray-800 text-center mb-13">
+                        <span class="badge badge-dark fs-6">{{currentItem.bolum}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2 d-flex align-items-center">
+                    <i class="fa-solid fa-chevron-left text-hover-danger fs-2" (click)="previousItem()"></i>
+                </div>
+
+                <div class="col-8 d-flex justify-content-center">
+                    <div class="fs-3 fw-bold text-gray-800 text-center">
+                        <span>{{currentItem.aciklama}}</span>
+                    </div>
+                </div>
+
+                <div class="col-2 d-flex align-items-center justify-content-end">
+                    <i class="fa-solid fa-chevron-right text-hover-danger fs-2" (click)="nextItem()"></i>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="text-gray-400 fw-semibold fs-7 text-end">
+                        <span>{{currentItem.tarih}}</span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <p-carousel [value]="items" [numVisible]="1" [numScroll]="3" [circular]="true" [autoplayInterval]="150000"
+            [showIndicators]="false">
+            <ng-template let-item pTemplate="item">
+                <div class="tanimlar-item">
+                    <div class="tanimlar-item-content">
+                        <div class="mb-5">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="fs-2x fw-bold text-gray-800 text-center mb-13">
+                                        <span class="badge badge-dark fs-6">{{item.bolum}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 scroll h-50px d-flex justify-content-center">
+                                    <div class="fs-3 fw-bold text-gray-800 text-center">
+                                        <span>{{item.aciklama}}</span>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <div class="text-gray-400 fw-semibold fs-7 text-end">
+                                        <span>{{item.tarih}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" [formGroup]="surveyForm">
+                                <div class="col-lg-6">
+                                    <input type="radio" class="btn-check" formControlName="survey" value="1" id="kt_radio_buttons_2_option_1" />
+                                    <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center mb-5"
+                                        for="kt_radio_buttons_2_option_1">
+                                        <i class="fa-solid fa-thumbs-up fs-2x text-primary"></i>
+                                
+                                        <span class="d-block fw-semibold text-start ps-3">
+                                            <span class="text-dark fw-bold d-block fs-3">Evet</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                
+                                <div class="col-lg-6">
+                                    <input type="radio" class="btn-check" formControlName="survey" value="-1" id="kt_radio_buttons_2_option_2" />
+                                    <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center"
+                                        for="kt_radio_buttons_2_option_2">
+                                        <i class="fa-solid fa-thumbs-down fs-2x text-primary"></i>
+                                        <span class="d-block fw-semibold text-start ps-3">
+                                            <span class="text-dark fw-bold d-block fs-3">Hayır</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-carousel>
+    </div>
+</div>
+
+

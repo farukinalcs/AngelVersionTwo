@@ -112,7 +112,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
 
         if (data) {
-          this.router.navigate([this.returnUrl]);
+          this.router.navigate(['profile/genel_bakis']);
           this.helperService.gateResponseX = '';
         } else {
           this.hasError = true;
