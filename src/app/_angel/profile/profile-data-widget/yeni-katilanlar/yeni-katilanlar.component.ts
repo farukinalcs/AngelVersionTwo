@@ -1,54 +1,72 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
+import { ResponseModel } from 'src/app/modules/auth/models/response-model';
+import { LayoutService } from 'src/app/_metronic/layout';
+import { NewPerson } from '../../models/newPerson';
+import { ProfileService } from '../../profile.service';
 
 @Component({
   selector: 'app-yeni-katilanlar',
   templateUrl: './yeni-katilanlar.component.html',
   styleUrls: ['./yeni-katilanlar.component.scss']
 })
-export class YeniKatilanlarComponent implements OnInit {
+export class YeniKatilanlarComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject();
 
-  // items: any[] = [
-  //   {tarih : '04 Temmuz 2023', aciklama : 'Şirketimizde ilaçlama yapılacaktır.', bolum : 'İnsan Kaynakları'},
-  //   {tarih : '05 Temmuz 2023', aciklama : 'Araç Talep Modülü Yayınlanmıştır.', bolum : 'Yazılım Geliştirme'},
-  // ];
-
-  items : any[] = [
-    {isim : 'Işık', soyisim : 'Ekrem', img : './assets/media/avatars/300-5.jpg'},
-    {isim : 'Ekrem', soyisim : 'Işık', img : './assets/media/avatars/300-17.jpg'},
-  ]
-  currentItemIndex = 0;
+  newPersons : NewPerson[] = [];
+  todayNewPerson: NewPerson[] = [];
+  displayAllNewPerson : boolean;
 
   constructor(
+    private profileService : ProfileService,
+    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    // this.autoNavigate();
+    this.getNewPersons('1');
   }
 
-  autoNavigate(): void {
-    setInterval(() => {
-      this.nextItem();
-      this.ref.detectChanges();      
-    }, 10000); // 5 saniye (5000 milisaniye) aralıkla bir sonraki öğeye geç
+  showAllNewPerson() {
+    this.displayAllNewPerson = true;
   }
 
-  get currentItem(): any {
-    return this.items[this.currentItemIndex];
-  }
-
-  nextItem(): void {
-    this.currentItemIndex++;
-    if (this.currentItemIndex >= this.items.length) {
-      this.currentItemIndex = 0; // Dizinin son elemanıysa başa dön
+  getNewPersons(event : any) {
+    var zamanAralik = '1';
+    this.newPersons = [];
+    if (event.index) {
+      if (event.index == 0) {
+        zamanAralik = '1';
+      } else if (event.index == 1) {
+        zamanAralik = '7';
+      } else if (event.index == 2){
+        zamanAralik = '30';
+      }  
     }
+
+    this.profileService.getNewPersons(zamanAralik).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<NewPerson, ResponseDetailZ>[]) => {
+      const data = response[0].x;
+      const message = response[0].z;
+      
+      if (message.islemsonuc == 1) {
+
+        if (zamanAralik == '1') {
+          this.todayNewPerson = data;
+        } else {
+          this.newPersons = data;
+        }
+        
+      }
+      console.log("Yeni Katılanlar :", this.newPersons);
+      
+      this.ref.detectChanges();
+    });
   }
 
-  previousItem(): void {
-    this.currentItemIndex--;
-    if (this.currentItemIndex < 0) {
-      this.currentItemIndex = this.items.length - 1; // Dizinin ilk elemanıysa sona git
-    }
-  }
 
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
+  }
 }

@@ -767,8 +767,8 @@ export const locale = {
         SECILENLERI_ONAYLA : "Seçilenleri Onayla",
         SECILENLERI_REDDET : "Seçilenleri Reddet",
         DETAYLI_ARAMA : "Detaylı Arama",
-        ONAY : "Onay",
-        RED : "Red",
+        ONAY : "Onayla",
+        RED : "Reddet",
         SUREC : "Süreç",
         FORM : "Form",
         GONDER : "Gönder",
@@ -869,6 +869,25 @@ export const locale = {
       }
     },
 
+    ZIYARETCI_TALEP_DIALOG : {
+      HEADER : "Ziyaretçi Talep Formu",
+      FORM : {
+        AD : "Ad",
+        SOYAD : 'Soyad',
+        FIRMA : 'Firma',
+        GIRIS_TARIHI : "Giriş Tarihi",
+        GIRIS_SAATI : "Giriş Saati",
+        CIKIS_TARIHI  :"Çıkış Tarihi",
+        CIKIS_SAATI : "Çıkış Saati",
+        ACIKLAMA : "Açıklama",
+        GONDER : "Gönder",
+        FIRMA_SEC : 'Firma Seçiniz',
+        ACIKLAMA_GIRINIZ : 'Açıklana Giriniz',
+        EMAIL : 'Email',
+        ZIYARET_TIPI : 'Ziyaret Tipi'
+      }
+    },
+
     TASK_LISTEM : {
       TABLE : {
         PROJE : 'Proje',
@@ -931,6 +950,8 @@ export const locale = {
       EGITIM : 'Eğitim',
       ARAC : 'Araç',
       AVANS : 'Avans',
+      MALZEME_ENVANTER : 'Malzeme/Envanter',
+      SERVIS : 'Servis',
       KIDEM : 'Kıdem',
       IZIN_HAKKI : 'İzin Hakkı',
       KULLANILAN_IZIN : 'Kullanılan İzin',

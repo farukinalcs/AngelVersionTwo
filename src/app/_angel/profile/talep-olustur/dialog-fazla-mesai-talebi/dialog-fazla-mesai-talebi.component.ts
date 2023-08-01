@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from '../../profile.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { OKodFieldsModel } from '../../models/oKodFields';
@@ -25,6 +25,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   @Output() overtimeFormIsSend: EventEmitter<void> = new EventEmitter<void>();
+  @Input() closedForm: BehaviorSubject<boolean>;
 
   overtimeForm : FormGroup;
   fmNedenleri : any[] = [];
@@ -50,6 +51,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     this.getOvertimeReason('cbo_fmnedenleri');
     this.getOvertimeReason('cbo_ulasim');
     this.getOvertimeReason('cbo_yemek');
+    this.closedFormDialog();
   }
 
 
@@ -129,6 +131,12 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     });
   }
   
+  closedFormDialog() {
+    this.closedForm.subscribe(_ => {
+      console.log("Closed Form : ", _);
+      this.overtimeForm.reset();
+    });
+  }
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

@@ -72,7 +72,11 @@ import { OnerilerComponent } from './profile-data-widget/oneriler/oneriler.compo
 import { CarouselModule } from 'primeng/carousel';
 import { AnketComponent } from './profile-data-widget/anket/anket.component';
 import { KidemlilerComponent } from './profile-data-widget/kidemliler/kidemliler.component';
-
+import { BultenComponent } from './profile-data-widget/bulten/bulten.component';
+import { DosyalarimComponent } from './profile-data-widget/dosyalarim/dosyalarim.component';
+import { ImageModule } from 'primeng/image';
+import { EnvanterComponent } from './profile-data-widget/envanter/envanter.component';
+import { DialogAvansTalebiComponent } from './talep-olustur/dialog-avans-talebi/dialog-avans-talebi.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +106,11 @@ import { KidemlilerComponent } from './profile-data-widget/kidemliler/kidemliler
     DuyurularComponent,
     OnerilerComponent,
     AnketComponent,
-    KidemlilerComponent
+    KidemlilerComponent,
+    BultenComponent,
+    DosyalarimComponent,
+    EnvanterComponent,
+    DialogAvansTalebiComponent
   ],
   imports: [
     CommonModule,
@@ -152,7 +160,8 @@ import { KidemlilerComponent } from './profile-data-widget/kidemliler/kidemliler
     NgApexchartsModule,
     MatProgressSpinnerModule,
     WidgetsModule,
-    CarouselModule
+    CarouselModule,
+    ImageModule
   ]
 })
 export class ProfileModule { }

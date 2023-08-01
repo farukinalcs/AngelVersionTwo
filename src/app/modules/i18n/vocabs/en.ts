@@ -304,6 +304,26 @@ export const locale = {
         ULASIM_SECINIZ : 'Select A Transport'
       }
     },
+
+    ZIYARETCI_TALEP_DIALOG : {
+      HEADER : "Visitor Request Form",
+      FORM : {
+        AD : "Name",
+        SOYAD : 'Surname',
+        FIRMA : 'Company',
+        GIRIS_TARIHI : "Entry Date",
+        GIRIS_SAATI : "Entry Time",
+        CIKIS_TARIHI  :"Exist Date",
+        CIKIS_SAATI : "Exist Time",
+        ACIKLAMA : "Description",
+        GONDER : "Send",
+        FIRMA_SEC : 'Select Company',
+        ACIKLAMA_GIRINIZ : 'Enter Description',
+        EMAIL : 'E-mail',
+        ZIYARET_TIPI : 'Visit Type'
+      }
+    },
+
     TASK_LISTEM : {
       TABLE : {
         PROJE : 'Project',
@@ -365,6 +385,8 @@ export const locale = {
       EGITIM : 'Education',
       ARAC : 'Vehicle',
       AVANS : 'Advance Payment',
+      MALZEME_ENVANTER : 'Material/Inventory',
+      SERVIS : 'Shuttle Service',
       KIDEM : 'Seniority',
       IZIN_HAKKI : 'Vacation Rights',
       KULLANILAN_IZIN : 'Used Vacation',

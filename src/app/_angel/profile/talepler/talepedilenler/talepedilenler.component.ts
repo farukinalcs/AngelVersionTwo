@@ -65,6 +65,17 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
   checkedList: any[] = [];
   cancelAlertRef: any;
   confirmAlertRef: any;
+  checkGrid : boolean = true;
+
+  menuItems = [
+    { id: 'izinNavItem1', key: 'izin', icon: 'fa-umbrella-beach', label: 'DEMANDED.SUB_MENU.IZIN' },
+    { id: 'fazlamesaiNavItem1', key: 'fazlamesai', icon: 'fa-business-time', label: 'DEMANDED.SUB_MENU.FAZLA_MESAI' },
+    { id: 'ziyaretciNavItem1', key: 'ziyaretci', icon: 'fa-people-group', label: 'DEMANDED.SUB_MENU.ZIYARETCI' },
+    { id: 'envanterNavItem1', key: 'envanter', icon: 'fa-screwdriver-wrench', label: 'Malzeme' },
+    { id: 'digerNavItem1', key: 'tum', icon: 'fa-circle-question', label: 'DEMANDED.SUB_MENU.TUMU' }
+  ];
+  
+  
   constructor(
     private profilService : ProfileService,
     private toastrService : ToastrService,
@@ -292,13 +303,70 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
 
   }
 
+  // resetArr() {
+  //   this.kaynak = '';
+  //   this.allComplete = false;
+  //   this.onayBeklenenFormlar = [];
+  //   this.onaylananFormlar = [];
+  //   this.reddedilenFormlar = [];
+
+  //   this.firma = [];
+  //   this.bolum = [];
+  //   this.pozisyon = [];
+  //   this.gorev = [];
+  //   this.yaka = [];
+  //   this.altFirma = [];
+  //   this.direktorluk = [];
+
+  //   var izinNavItem1 = document.getElementById('izinNavItem1');
+  //   var izinNavItem2 = document.getElementById('izinNavItem2');
+  //   var izinNavItem3 = document.getElementById('izinNavItem3');
+
+  //   var fazlamesaiNavItem1 = document.getElementById('fazlamesaiNavItem1');
+  //   var fazlamesaiNavItem2 = document.getElementById('fazlamesaiNavItem2');
+  //   var fazlamesaiNavItem3 = document.getElementById('fazlamesaiNavItem3');
+
+  //   var ziyaretciNavItem1 = document.getElementById('ziyaretciNavItem1');
+  //   var ziyaretciNavItem2 = document.getElementById('ziyaretciNavItem2');
+  //   var ziyaretciNavItem3 = document.getElementById('ziyaretciNavItem3');
+
+  //   var digerNavItem1 = document.getElementById('digerNavItem1');
+  //   var digerNavItem2 = document.getElementById('digerNavItem2');
+  //   var digerNavItem3 = document.getElementById('digerNavItem3');
+
+  //   var envanterNavItem1 = document.getElementById('envanterNavItem1');
+  //   var envanterNavItem2 = document.getElementById('envanterNavItem2');
+  //   var envanterNavItem3 = document.getElementById('envanterNavItem3');
+
+  //   izinNavItem1?.classList.remove('active');
+  //   izinNavItem2?.classList.remove('active');
+  //   izinNavItem3?.classList.remove('active');
+
+  //   fazlamesaiNavItem1?.classList.remove('active');
+  //   fazlamesaiNavItem2?.classList.remove('active');
+  //   fazlamesaiNavItem3?.classList.remove('active');
+
+  //   ziyaretciNavItem1?.classList.remove('active');
+  //   ziyaretciNavItem2?.classList.remove('active');
+  //   ziyaretciNavItem3?.classList.remove('active');
+
+  //   digerNavItem1?.classList.remove('active');
+  //   digerNavItem2?.classList.remove('active');
+  //   digerNavItem3?.classList.remove('active');
+
+  //   envanterNavItem1?.classList.remove('active');
+  //   envanterNavItem2?.classList.remove('active');
+  //   envanterNavItem3?.classList.remove('active');
+
+  // }
+
   resetArr() {
     this.kaynak = '';
     this.allComplete = false;
     this.onayBeklenenFormlar = [];
     this.onaylananFormlar = [];
     this.reddedilenFormlar = [];
-
+  
     this.firma = [];
     this.bolum = [];
     this.pozisyon = [];
@@ -306,39 +374,11 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     this.yaka = [];
     this.altFirma = [];
     this.direktorluk = [];
-
-    var izinNavItem1 = document.getElementById('izinNavItem1');
-    var izinNavItem2 = document.getElementById('izinNavItem2');
-    var izinNavItem3 = document.getElementById('izinNavItem3');
-
-    var fazlamesaiNavItem1 = document.getElementById('fazlamesaiNavItem1');
-    var fazlamesaiNavItem2 = document.getElementById('fazlamesaiNavItem2');
-    var fazlamesaiNavItem3 = document.getElementById('fazlamesaiNavItem3');
-
-    var ziyaretciNavItem1 = document.getElementById('ziyaretciNavItem1');
-    var ziyaretciNavItem2 = document.getElementById('ziyaretciNavItem2');
-    var ziyaretciNavItem3 = document.getElementById('ziyaretciNavItem3');
-
-    var digerNavItem1 = document.getElementById('digerNavItem1');
-    var digerNavItem2 = document.getElementById('digerNavItem2');
-    var digerNavItem3 = document.getElementById('digerNavItem3');
-
-    izinNavItem1?.classList.remove('active');
-    izinNavItem2?.classList.remove('active');
-    izinNavItem3?.classList.remove('active');
-
-    fazlamesaiNavItem1?.classList.remove('active');
-    fazlamesaiNavItem2?.classList.remove('active');
-    fazlamesaiNavItem3?.classList.remove('active');
-
-    ziyaretciNavItem1?.classList.remove('active');
-    ziyaretciNavItem2?.classList.remove('active');
-    ziyaretciNavItem3?.classList.remove('active');
-
-    digerNavItem1?.classList.remove('active');
-    digerNavItem2?.classList.remove('active');
-    digerNavItem3?.classList.remove('active');
-
+  
+    for (const menuItem of this.menuItems) {
+      const itemElement = document.getElementById(menuItem.id);
+      itemElement?.classList.remove('active');
+    }
   }
 
 
@@ -559,8 +599,9 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
   }
 
 
-  isCardOpen() {
-    this.panelOpenState = true
+  isCardOpen(item : any) {
+    item.panelOpenState = true;
+    // this.panelOpenState = true
     console.log("Kard Açıldı : ");
     
   }

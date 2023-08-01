@@ -3,6 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { SearchFilterPipe } from 'src/app/_helpers/pipes/search-filter.pipe';
+import { LayoutService } from 'src/app/_metronic/layout';
 import { MyTeamModel } from '../../models/myTeam';
 import { ProfileService } from '../../profile.service';
 
@@ -19,6 +20,7 @@ export class TakimimComponent implements OnInit, OnDestroy {
 
   constructor(
     private profileService : ProfileService,
+    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
   

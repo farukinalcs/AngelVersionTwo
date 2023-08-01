@@ -1,299 +1,19 @@
-<!-- <mat-dialog-content style="width: 1200px; height: 600px;">
-    <div class="row border-bottom border-2 rounded">
-        <div class="col-8">
-            <h1 mat-dialog-title class="text-danger">Ziyaretçi Talep Formu</h1>
-        </div>
-
-        <div class="col-4" style="display: flex; justify-content: end;">
-            <a mat-dialog-close class="text-hover-danger">
-                <i class="fa fa-2x mt-2 mr-2" style="font-size: 30px;">&#xf00d;</i>
-            </a>
-        </div>
-    </div>
-
+<div class="container py-10 px-15">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <mat-stepper #stepper [linear]="isLinear" [orientation]="(stepperOrientation | async)!" (click)="getFormsValues()">
-                    <mat-step [stepControl]="firstFormGroup">
-                        <form [formGroup]="firstFormGroup">
-                            <ng-template matStepLabel>Bilgiler</ng-template>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <mat-form-field appearance="fill">
-                                            <mat-label>Ad</mat-label>
-                                            <input matInput  formControlName="ad" required>
-                                            <mat-icon matSuffix>person</mat-icon>
-                                        </mat-form-field>
-                                    </div>
+            <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
 
-                                    <div class="col-6">
-                                        <mat-form-field appearance="fill">
-                                            <mat-label>Soyad</mat-label>
-                                            <input matInput  formControlName="soyad" required>
-                                            <mat-icon matSuffix>person</mat-icon>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-10">
-                                    <div class="col-6">
-                                        <mat-form-field appearance="fill">
-                                            <mat-label>E-mail</mat-label>
-                                            <input matInput  formControlName="email" required>
-                                            <mat-icon matSuffix>mail</mat-icon>
-                                        </mat-form-field>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <mat-form-field appearance="fill">
-                                            <mat-label>Firma</mat-label>
-                                            <mat-select formControlName="firma" required>
-                                                <mat-option value="Firma1">Firma1</mat-option>
-                                                <mat-option value="Firma2">Firma2</mat-option>
-                                                <mat-option value="Firma3">Firma3</mat-option>
-                                            </mat-select>
-                                            <mat-icon matSuffix>business</mat-icon>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-10">
-                                    <div class="col-6">
-                                        <mat-form-field appearance="fill">
-                                            <mat-label>Açıklama</mat-label>
-                                            <input matInput  formControlName="aciklama" required>
-                                            <mat-icon matSuffix>message</mat-icon>
-                                        </mat-form-field>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <mat-form-field appearance="fill">
-                                            <mat-label>Ziyaret Tipi</mat-label>
-                                            <mat-select formControlName="ziyaretTipi" required>
-                                                <mat-option value="Ziyaret Tipi 1">Ziyaret Tipi 1</mat-option>
-                                                <mat-option value="Ziyaret Tipi 2">Ziyaret Tipi 2</mat-option>
-                                                <mat-option value="Ziyaret Tipi 3">Ziyaret Tipi 3</mat-option>
-                                            </mat-select>
-                                            <mat-icon matSuffix>fastfood</mat-icon>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-    
-                                <div class="row mt-20 ">
-                                    <div class="col-12 d-flex align-items-end justify-content-end">
-                                        <button  class="w-25 btn btn-primary" [disabled]="!isFirstFormValid"  matStepperNext (click)="getFormsValues()">İleri</button>
-                                    </div>
-                                </div>
-                            </div>
-                        
-
-                        </form>
-                    </mat-step>
-                    <mat-step [stepControl]="secondFormGroup" >
-                        <form [formGroup]="secondFormGroup">
-                            <ng-template matStepLabel>Tarih</ng-template>
-
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <mat-form-field appearance="fill">
-                                            <mat-label>Giriş Tarihi</mat-label>
-                                            <input matInput [matDatepicker]="picker1" formControlName="girisTarihi">
-                                            <mat-hint>MM/DD/YYYY</mat-hint>
-                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker1></mat-datepicker>
-                                        </mat-form-field>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <mat-form-field appearance="fill">
-                                            <mat-label>Çıkış Tarihi</mat-label>
-                                            <input matInput [matDatepicker]="picker2" formControlName="cikisTarihi">
-                                            <mat-hint>MM/DD/YYYY</mat-hint>
-                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker2></mat-datepicker>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-10">
-                                    <div class="col-6">
-                                        <mat-form-field appearance="fill">
-                                            <mat-label>Giriş Saati</mat-label>
-                                            <input matInput type="time" formControlName="girisSaati">
-                                            <mat-hint>HH:MM</mat-hint>
-                                        </mat-form-field>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <mat-form-field appearance="fill">
-                                            <mat-label>Çıkış Saati</mat-label>
-                                            <input matInput type="time" formControlName="cikisSaati">
-                                            <mat-hint>HH:MM</mat-hint>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="row mt-20">
-                                <div class="col-6 d-flex justify-content-start">
-                                    <button class="w-50 btn btn-primary" matStepperPrevious>Geri</button>
-                                </div>
-
-                                <div class="col-6 d-flex justify-content-end">
-                                    <button class="w-50 btn btn-primary" [disabled]="!isSecondFormValid" matStepperNext >İleri</button>
-                                </div>
-                                
-                            </div>
-                        </form>
-                    </mat-step>
-                    <mat-step>
-                        <ng-template matStepLabel>Özet</ng-template>
-                        <div class="container">
-                            <div class="row d-flex justify-content-center mt-10">
-                                <div class="col-8">
-                                    <div class="card card-custom" style="background-color: #f1f3f4;">
-                                        <div class="card-header ribbon ribbon-top ribbon-ver">
-                                            <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
-                                                OK!
-                                            </div>
-                                            <h3 class="card-title">
-                                                Talep Özeti
-                                            </h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
-                                                        Ad :
-                                                    </div>
-                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.ad}}
-                                                    </div>
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
-                                                        Soyad :
-                                                    </div>
-                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.soyad}}
-                                                    </div>
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
-                                                        E-Mail :
-                                                    </div>
-                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.email}}
-                                                    </div>
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
-                                                        Firma :
-                                                    </div>
-                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.firma}}
-                                                    </div>
-                                                </div>
-
-                                                <div class="row"> 
-                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
-                                                        Ziyaret Tipi :
-                                                    </div>
-                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.ziyaretTipi}}
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
-                                                        Açıklama :
-                                                    </div>
-                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.aciklama}}
-                                                    </div>
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    <div class="col-3 fw-bold fs-6 text-gray-600">
-                                                        Giriş Zamanı :
-                                                    </div>
-                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.girisTarihi}} - {{formsValues.girisSaati}}
-                                                    </div>
-                                                </div>
-                                            
-                                            
-                                                <div class="row">
-                                                    <div class="col-3 fw-bold fs-6 text-gray-600 ">
-                                                        Çıkış Zamanı :
-                                                    </div>
-                                                    <div class="col-10 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.cikisTarihi}} - {{formsValues.cikisSaati}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-20">
-                            <div class="col-6 d-flex justify-content-start">
-                                <button class="w-50 btn btn-primary" matStepperPrevious>Back</button>
-                            </div>
-
-
-                            <div class="col-6 d-flex justify-content-end">
-                                <button class="w-50 btn btn-success">Gönder</button>
-                            </div>
-                        </div>
-                    </mat-step>
-                </mat-stepper>
-            </div>
-        </div>
-    </div>
-</mat-dialog-content> -->
-
-
-<mat-dialog-content style="max-height: 85vh;">
-    <div class="container">
-        <div class="row border-bottom border-2 rounded">
-            <div class="col-8">
-                <h1 mat-dialog-title class="text-danger">Ziyaretçi Talep Formu</h1>
-            </div>
-    
-            <div class="col-4" style="display: flex; justify-content: end;">
-                <a mat-dialog-close class="text-hover-danger">
-                    <i class="fa fa-2x mt-2 mr-2" style="font-size: 30px;">&#xf00d;</i>
-                </a>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid m-10">
-                <!--begin::Aside-->
                 <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-                    <!--begin::Nav-->
                     <div class="stepper-nav ps-lg-10">
-                        <!--begin::Step 1-->
-                        <div class="{{item.class}}"  *ngFor="let item of stepperFields">
-                            <!--begin::Wrapper-->
+
+                        <div class="{{item.class}}" *ngFor="let item of stepperFields">
                             <div class="stepper-wrapper">
-                                <!--begin::Icon-->
+
                                 <div class="stepper-icon w-40px h-40px">
                                     <i class="stepper-check fas fa-check"></i>
                                     <span class="stepper-number">{{item.number}}</span>
                                 </div>
-                                <!--end::Icon-->
 
-                                <!--begin::Label-->
                                 <div class="stepper-label">
                                     <h3 class="stepper-title">
                                         {{item.title}}
@@ -303,667 +23,675 @@
                                         {{item.desc}}
                                     </div>
                                 </div>
-                                <!--end::Label-->
                             </div>
-                            <!--end::Wrapper-->
 
-                            <!--begin::Line-->
                             <div class="stepper-line h-40px"></div>
-                            <!--end::Line-->
                         </div>
-                        <!--end::Step 1-->
                     </div>
-                    <!--end::Nav-->
                 </div>
-                <!--begin::Aside-->
 
-                <!--begin::Content py-lg-5 -->
-                <div class="flex-row-fluid  px-lg-15">
-                    <!--begin::Form-->
-                    <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="firstFormGroup">
-                        <!--begin::Step 1-->
+
+                <div class="flex-row-fluid  px-lg-15 w-xl-700px">
+
+                    <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="visitTypeForm">
+
                         <ng-container *ngIf="currentStep$.value == 1">
                             <div class="current">
                                 <div class="w-100">
-                                    <!--begin::Input group-->
-                                    <div class="fv-row mb-10 fv-plugins-icon-container">
-                                        <!--begin::Label-->
-                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                            <span class="required">İsim</span>
-                                        </label>
-                                        <!--end::Label-->
-    
-                                        <!--begin::Input-->
-                                        <input type="text" class="form-control form-control-lg form-control-solid" formControlName="ad"
-                                        [ngClass]="{
-                                            'is-invalid': firstFormGroup.controls['ad'].invalid,
-                                            'is-valid': firstFormGroup.controls['ad'].valid
-                                        }">
-                                        <!--end::Input-->
-                                        <!--begin::Validation-->
-                                        <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                            validation: 'required',
-                                            message: 'Field is required',
-                                            control: firstFormGroup.controls['ad']}">
-                                        </ng-container>
+                                    <div class="row">
+                                        <div class="col-6 d-flex justify-content-end">
+                                            <input type="radio" class="btn-check" formControlName="visitType" value="1"
+                                                id="kt_radio_buttons_2_option_1" />
+                                            <label
+                                                class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center mb-5 h-200px w-200px"
+                                                for="kt_radio_buttons_2_option_1">
+                                                <i class="fa-solid fa-person-walking-luggage fs-3x text-primary"></i>
 
-                                        <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                            message: 'Success! You\'ve done it.',
-                                            control: firstFormGroup.controls['ad']}">
-                                        </ng-container> -->
-                                        <!--end::Validation-->
-                                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                                    </div>
-                                    <!--end::Input group-->
-    
-                                    <!--begin::Input group-->
-                                    <div class="fv-row mb-10 fv-plugins-icon-container">
-                                        <!--begin::Label-->
-                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                            <span class="required">Soyisim</span>
-                                        </label>
-                                        <!--end::Label-->
-    
-                                        <!--begin::Input-->
-                                        <input type="text" class="form-control form-control-lg form-control-solid" formControlName="soyad"
-                                        [ngClass]="{
-                                            'is-invalid': firstFormGroup.controls['soyad'].invalid,
-                                            'is-valid': firstFormGroup.controls['soyad'].valid
-                                        }">
-                                        <!--end::Input-->
-                                        <!--begin::Validation-->
-                                        <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                            validation: 'required',
-                                            message: 'Field is required',
-                                            control: firstFormGroup.controls['soyad']}">
-                                        </ng-container>
+                                                <span class="d-block fw-semibold text-start ps-3">
+                                                    <span class="text-dark fw-bold d-block fs-3">Ziyaret Edeceğim</span>
+                                                </span>
+                                            </label>
+                                        </div>
 
-                                        <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                            message: 'Success! You\'ve done it.',
-                                            control: firstFormGroup.controls['soyad']}">
-                                        </ng-container> -->
-                                        <!--end::Validation-->
-                                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                                        <div class="col-6">
+                                            <input type="radio" class="btn-check" formControlName="visitType" value="0"
+                                                id="kt_radio_buttons_2_option_2" />
+                                            <label
+                                                class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center h-200px w-200px"
+                                                for="kt_radio_buttons_2_option_2">
+                                                <i class="fa-solid fa-person fs-3x text-primary"></i>
+                                                <span class="d-block fw-semibold text-start ps-3">
+                                                    <span class="text-dark fw-bold d-block fs-3">Ziyaret
+                                                        Edileceğim</span>
+                                                </span>
+                                            </label>
+                                        </div>
                                     </div>
-                                    <!--end::Input group-->
-    
-                                    <!--begin::Input group-->
-                                    <div class="fv-row mb-10 fv-plugins-icon-container">
-                                        <!--begin::Label-->
-                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                            <span class="required">E-Mail</span>
-                                        </label>
-                                        <!--end::Label-->
-    
-                                        <!--begin::Input-->
-                                        <input type="email" class="form-control form-control-lg form-control-solid" formControlName="email"
-                                        [ngClass]="{
-                                            'is-invalid': firstFormGroup.controls['email'].invalid,
-                                            'is-valid': firstFormGroup.controls['email'].valid
-                                        }">
-                                        <!--end::Input-->
-                                        <!--begin::Validation-->
-                                        <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                            validation: 'required',
-                                            message: 'Field is required',
-                                            control: firstFormGroup.controls['email']}">
-                                        </ng-container>
-
-                                        <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                            message: 'Success! You\'ve done it.',
-                                            control: firstFormGroup.controls['email']}">
-                                        </ng-container> -->
-                                        <!--end::Validation-->
-                                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                                    </div>
-                                    <!--end::Input group-->
-    
-                                    <!--begin::Input group-->
-                                    <div class="fv-row mb-10 fv-plugins-icon-container">
-                                        <!--begin::Label-->
-                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                            <span class="required">Firma</span>
-                                        </label>
-                                        <!--end::Label-->
-    
-                                        <!--begin::Input-->
-                                        <select
-                                            class="form-select form-select-lg form-select-solid" formControlName="firma"
-                                            [ngClass]="{
-                                                'is-invalid': firstFormGroup.controls['firma'].invalid,
-                                                'is-valid': firstFormGroup.controls['firma'].valid
-                                            }">
-                                            <option value="1">S Corporation</option>
-                                            <option value="1">C Corporation</option>
-                                            <option value="2">Sole Proprietorship</option>
-                                            <option value="3">Non-profit</option>
-                                            <option value="4">Limited Liability</option>
-                                            <option value="5">General Partnership</option>
-                                        </select>
-                                        <!--end::Input-->
-                                        <!--begin::Validation-->
-                                        <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                            validation: 'required',
-                                            message: 'Field is required',
-                                            control: firstFormGroup.controls['firma']}">
-                                        </ng-container>
-
-                                        <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                            message: 'Success! You\'ve done it.',
-                                            control: firstFormGroup.controls['firma']}">
-                                        </ng-container> -->
-                                        <!--end::Validation-->
-                                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                                    </div>
-                                    <!--end::Input group-->
-                                    
                                 </div>
                             </div>
                         </ng-container>
 
                         <ng-container *ngIf="currentStep$.value == 2">
-                            <div class="fv-row">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-5 fw-semibold mb-4">
-                                    <span class="required">Ziyaret Tipi</span>
-                                </label>
-                                <!--end::Label-->
-                            
-                                <!--begin:Options-->
-                                <div class="fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
-                                    <!--begin:Option-->
-                                    <label class="d-flex flex-stack mb-5 cursor-pointer">
-                                        <!--begin:Label-->
-                                        <span class="d-flex align-items-center me-2">
-                                            <!--begin:Icon-->
-                                            <span class="symbol symbol-50px me-6">
-                                                <span class="symbol-label bg-light-primary">
-                                                    <!--begin::Svg Icon | path: icons/duotune/maps/map004.svg-->
-                                                    <i class="fa-solid fa-users text-primary" style="font-size: x-large;"></i>
-                                                    <!--end::Svg Icon--> </span>
-                                            </span>
-                                            <!--end:Icon-->
-                            
-                                            <!--begin:Info-->
-                                            <span class="d-flex flex-column">
-                                                <span class="fw-bold fs-6">Misafir</span>
-                            
-                                            </span>
-                                            <!--end:Info-->
-                                        </span>
-                                        <!--end:Label-->
-                            
-                                        <!--begin:Input-->
-                                        <span class="form-check form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="radio" formControlName="ziyaretTipi" value="1"
-                                            [ngClass]="{
-                                                'is-invalid': firstFormGroup.controls['ziyaretTipi'].invalid,
-                                                'is-valid': firstFormGroup.controls['ziyaretTipi'].valid
-                                            }">
-                                        </span>
-                                        <!--end:Input-->
-                                    </label>
-                                    <!--end::Option-->
-                            
-                                    <!--begin:Option-->
-                                    <label class="d-flex flex-stack mb-5 cursor-pointer">
-                                        <!--begin:Label-->
-                                        <span class="d-flex align-items-center me-2">
-                                            <!--begin:Icon-->
-                                            <span class="symbol symbol-50px me-6">
-                                                <span class="symbol-label bg-light-danger  ">
-                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                                                    <i class="fa-solid fa-cake-candles text-danger" style="font-size: x-large;"></i>
-                                                    <!--end::Svg Icon--> </span>
-                                            </span>
-                                            <!--end:Icon-->
-                            
-                                            <!--begin:Info-->
-                                            <span class="d-flex flex-column">
-                                                <span class="fw-bold fs-6">Etkinlik</span>
-                            
-                                            </span>
-                                            <!--end:Info-->
-                                        </span>
-                                        <!--end:Label-->
-                            
-                                        <!--begin:Input-->
-                                        <span class="form-check form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="radio" formControlName="ziyaretTipi" value="2"
-                                            [ngClass]="{
-                                                'is-invalid': firstFormGroup.controls['ziyaretTipi'].invalid,
-                                                'is-valid': firstFormGroup.controls['ziyaretTipi'].valid
-                                            }">
-                                        </span>
-                                        <!--end:Input-->
-                                    </label>
-                                    <!--end::Option-->
-                            
-                                    <!--begin:Option-->
-                                    <label class="d-flex flex-stack mb-5 cursor-pointer">
-                                        <!--begin:Label-->
-                                        <span class="d-flex align-items-center me-2">
-                                            <!--begin:Icon-->
-                                            <span class="symbol symbol-50px me-6">
-                                                <span class="symbol-label bg-light-success">
-                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen013.svg-->
-                                                    <i class="fa-solid fa-handshake text-success" style="font-size: x-large;"></i>
-                                                    <!--end::Svg Icon--> </span>
-                                            </span>
-                                            <!--end:Icon-->
-                            
-                                            <!--begin:Info-->
-                                            <span class="d-flex flex-column">
-                                                <span class="fw-bold fs-6">İş Görüşmesi</span>
-                            
-                                            </span>
-                                            <!--end:Info-->
-                                        </span>
-                                        <!--end:Label-->
-                            
-                                        <!--begin:Input-->
-                                        <span class="form-check form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="radio" formControlName="ziyaretTipi" value="3"
-                                            [ngClass]="{
-                                                'is-invalid': firstFormGroup.controls['ziyaretTipi'].invalid,
-                                                'is-valid': firstFormGroup.controls['ziyaretTipi'].valid
-                                            }">
-                                        </span>
-                                        <!--end:Input-->
-                                    </label>
-                                    <!--end::Option-->
+                            <div [ngSwitch]="visitType">
+                                <div *ngSwitchCase="0">
+                                    <div class="current">
+                                        <div class="w-100">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <input type="radio" class="btn-check"
+                                                        formControlName="personInformation" value="1"
+                                                        id="kt_radio_buttons_2_option_1" />
+                                                    <label
+                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center mb-5 h-200px"
+                                                        for="kt_radio_buttons_2_option_1">
+                                                        <i class="fa-solid fa-people-line fs-3x text-primary"></i>
+                                                        <span class="d-block fw-semibold text-start ps-3">
+                                                            <span class="text-dark fw-bold d-block fs-3">Toplu
+                                                                Ziyaret</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
 
-                                    <!--begin:Option-->
-                                    <label class="d-flex flex-stack mb-5 cursor-pointer">
-                                        <!--begin:Label-->
-                                        <span class="d-flex align-items-center me-2">
-                                            <!--begin:Icon-->
-                                            <span class="symbol symbol-50px me-6">
-                                                <span class="symbol-label bg-light-info">
-                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen013.svg-->
-                                                    <i class="fa-solid fa-truck-ramp-box text-info" style="font-size: x-large;"></i>
-                                                    <!--end::Svg Icon--> </span>
-                                            </span>
-                                            <!--end:Icon-->
-                            
-                                            <!--begin:Info-->
-                                            <span class="d-flex flex-column">
-                                                <span class="fw-bold fs-6">Yük Girişi</span>
-                    
-                                            </span>
-                                            <!--end:Info-->
-                                        </span>
-                                        <!--end:Label-->
-                            
-                                        <!--begin:Input-->
-                                        <span class="form-check form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="radio" formControlName="ziyaretTipi" value="4"
-                                            [ngClass]="{
-                                                'is-invalid': firstFormGroup.controls['ziyaretTipi'].invalid,
-                                                'is-valid': firstFormGroup.controls['ziyaretTipi'].valid
-                                            }">
-                                        </span>
-                                        <!--end:Input-->
+                                                <div class="col-6">
+                                                    <input type="radio" class="btn-check"
+                                                        formControlName="personInformation" value="2"
+                                                        id="kt_radio_buttons_2_option_2" />
+                                                    <label
+                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center h-200px"
+                                                        for="kt_radio_buttons_2_option_2">
+                                                        <i class="fa-solid fa-user fs-3x text-primary"></i>
+                                                        <span class="d-block fw-semibold text-start ps-3">
+                                                            <span class="text-dark fw-bold d-block fs-3">Tek
+                                                                Ziyaret</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
 
-                                        <!--begin::Validation-->
-                                        <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                            validation: 'required',
-                                            message: 'Field is required',
-                                            control: firstFormGroup.controls['ziyaretTipi']}">
-                                        </ng-container>
 
-                                        <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                            message: 'Success! You\'ve done it.',
-                                            control: firstFormGroup.controls['ziyaretTipi']}">
-                                        </ng-container> -->
-                                        <!--end::Validation-->
-                                    </label>
-                                    <!--end::Option-->
-
-                                    <!--begin:Option-->
-                                    <label class="d-flex flex-stack mb-5 cursor-pointer">
-                                        <!--begin:Label-->
-                                        <span class="d-flex align-items-center me-2">
-                                            <!--begin:Icon-->
-                                            <span class="symbol symbol-50px me-6">
-                                                <span class="symbol-label bg-light-waring">
-                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen013.svg-->
-                                                    <i class="fa-solid fa-circle-question text-warning" style="font-size: x-large;"></i>
-                                                    <!--end::Svg Icon--> </span>
-                                            </span>
-                                            <!--end:Icon-->
-                            
-                                            <!--begin:Info-->
-                                            <span class="d-flex flex-column">
-                                                <span class="fw-bold fs-6">Diğer</span>
-                            
-                                            </span>
-                                            <!--end:Info-->
-                                        </span>
-                                        <!--end:Label-->
-                            
-                                        <!--begin:Input-->
-                                        <span class="form-check form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="radio" formControlName="ziyaretTipi" value="5"
-                                            [ngClass]="{
-                                                'is-invalid': firstFormGroup.controls['ziyaretTipi'].invalid,
-                                                'is-valid': firstFormGroup.controls['ziyaretTipi'].valid
-                                            }">
-                                        </span>
-                                        <!--end:Input-->
-
-                                        <!--begin::Validation-->
-                                        <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                            validation: 'required',
-                                            message: 'Field is required',
-                                            control: firstFormGroup.controls['ziyaretTipi']}">
-                                        </ng-container>
-
-                                        <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                            message: 'Success! You\'ve done it.',
-                                            control: firstFormGroup.controls['ziyaretTipi']}">
-                                        </ng-container> -->
-                                        <!--end::Validation-->
-                                    </label>
-                                    <!--end::Option-->
-                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!--end:Options-->
+
+                                <div *ngSwitchCase="1">
+                                    <div class="current">
+                                        <div class="w-100">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <input type="radio" class="btn-check"
+                                                        formControlName="personInformation" value="3"
+                                                        id="kt_radio_buttons_2_option_1" />
+                                                    <label
+                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center mb-5 h-200px w-200px"
+                                                        for="kt_radio_buttons_2_option_1">
+
+                                                        <span class="d-block fw-semibold text-start ps-3">
+                                                            <span class="text-dark fw-bold d-block fs-3">Kendim İçin
+                                                                Talep Oluşturuyorum</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <input type="radio" class="btn-check"
+                                                        formControlName="personInformation" value="4"
+                                                        id="kt_radio_buttons_2_option_2" />
+                                                    <label
+                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center h-200px w-200px"
+                                                        for="kt_radio_buttons_2_option_2">
+                                                        <span class="d-block fw-semibold text-start ps-3">
+                                                            <span class="text-dark fw-bold d-block fs-3">Ekibim İçin
+                                                                Talep Oluşturuyorum</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <input type="radio" class="btn-check"
+                                                        formControlName="personInformation" value="5"
+                                                        id="kt_radio_buttons_3_option_3" />
+                                                    <label
+                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center h-200px w-200px"
+                                                        for="kt_radio_buttons_3_option_3">
+                                                        <span class="d-block fw-semibold text-start ps-3">
+                                                            <span class="text-dark fw-bold d-block fs-3">Ekibim ve
+                                                                Kendim İçin Talep Oluşturuyorum</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+
                         </ng-container>
 
-
                         <ng-container *ngIf="currentStep$.value == 3">
-                            <!--begin::Input group-->
-                            <div class="fv-row mb-10 fv-plugins-icon-container">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                    <span class="required">Açıklama</span>
-                                </label>
-                                <!--end::Label-->
+                            <ng-container
+                                *ngIf="personInformation == '1' || personInformation == '4' || personInformation == '5' ">
+                                <div class="current">
+                                    <div class="w-100">
+                                        <div class="row">
+                                            <div class="col-12">
 
-                                <!--begin::Input-->
-                                <textarea class="form-control form-control-solid" rows="3" formControlName="aciklama" placeholder="Type Target Details" style="height: 12px;"
-                                [ngClass]="{
-                                    'is-invalid': firstFormGroup.controls['aciklama'].invalid,
-                                    'is-valid': firstFormGroup.controls['aciklama'].valid
-                                }">
-                                </textarea>
-                                <!--end::Input-->
-                                <!--begin::Validation-->
-                                <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                    validation: 'required',
-                                    message: 'Field is required',
-                                    control: firstFormGroup.controls['aciklama']}">
-                                </ng-container>
+                                                <div class="fv-row mb-10 fv-plugins-icon-container">
 
-                                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                    message: 'Success! You\'ve done it.',
-                                    control: firstFormGroup.controls['aciklama']}">
-                                </ng-container> -->
-                                <!--end::Validation-->
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                            </div>
-                            <!--end::Input group-->
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">İsim</span>
+                                                    </label>
 
-                            <!--begin::Input group-->
-                            <div class="fv-row mb-10 fv-plugins-icon-container">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                    <span class="required">Giriş Tarihi</span>
-                                </label>
-                                <!--end::Label-->
 
-                                <!--begin::Input-->
-                                <div class="position-relative d-flex align-items-center">
-                                    <!--begin::Datepicker-->
-                                
-                                    <input type="date" class="form-control form-control-lg form-control-solid" formControlName="girisTarihi" 
-                                    [ngClass]="
-                                    {
-                                        'is-invalid': firstFormGroup.controls['girisTarihi'].invalid,
-                                        'is-valid': firstFormGroup.controls['girisTarihi'].valid
-                                    }">
-                                
-                                    <!--end::Datepicker-->
 
-                                    <!--begin::Validation-->
-                                    <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                        validation: 'required',
-                                        message: 'Field is required',
-                                        control: firstFormGroup.controls['girisTarihi']}">
-                                    </ng-container>
+                                                    <input type="text"
+                                                        class="form-control form-control-lg form-control-solid"
+                                                        formControlName="name">
 
-                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                        message: 'Success! You\'ve done it.',
-                                        control: firstFormGroup.controls['girisTarihi']}">
-                                    </ng-container> -->
-                                    <!--end::Validation-->
+                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                                </div>
+
+
+
+                                                <div class="fv-row mb-10 fv-plugins-icon-container">
+
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">Soyisim</span>
+                                                    </label>
+
+
+
+                                                    <input type="text"
+                                                        class="form-control form-control-lg form-control-solid"
+                                                        formControlName="surname">
+
+                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                                </div>
+
+
+                                                <div
+                                                    class="fv-row mb-10 fv-plugins-icon-container d-flex justify-content-center align-items-center">
+                                                    <button class="btn btn-danger btn-sm px-4 py-2"
+                                                        (click)="addVisitor()"
+                                                        [disabled]="visitTypeForm.controls['name'].invalid || visitTypeForm.controls['surname'].invalid">
+                                                        <i class="fa-solid fa-plus m-0 p-0"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <ng-container *ngIf="visitors.length > 0 ">
+                                                <div class="col-12 hover-scroll h-200px">
+                                                    <div class="tab-content">
+                                                        <div class="tab-pane fade active show">
+                                                            <div class="table-responsive">
+                                                                <table
+                                                                    class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                                                                    <thead>
+                                                                        <tr
+                                                                            class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
+                                                                            <th class="text-center"></th>
+                                                                            <th class="text-center">İsim</th>
+                                                                            <th class="text-center">Soyisim</th>
+                                                                            <th class="text-center"></th>
+                                                                        </tr>
+                                                                    </thead>
+
+                                                                    <tbody>
+                                                                        <tr *ngFor="let item of visitors; index as i">
+                                                                            <!-- [ngClass]="{'bg-warning': isFirstVisitor(i)}" -->
+                                                                            <td class="text-center">
+                                                                                <div class="symbol symbol-50px">
+                                                                                    <ng-container
+                                                                                        *ngIf="isFirstVisitor(i)">
+                                                                                        <div
+                                                                                            class="symbol-label fs-2 fw-semibold text-dark">
+                                                                                            <i
+                                                                                                class="fa-solid fa-crown fs-2x text-warning"></i>
+                                                                                        </div>
+                                                                                    </ng-container>
+
+                                                                                    <ng-container
+                                                                                        *ngIf="!isFirstVisitor(i)">
+                                                                                        <div
+                                                                                            class="symbol-label fs-2 fw-semibold text-dark">
+                                                                                            {{i + 1}}</div>
+                                                                                    </ng-container>
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td
+                                                                                class="text-center text-muted fw-bold fs-4">
+                                                                                <span class="fs-5 text-dark">
+                                                                                    {{item.name}}
+                                                                                </span>
+                                                                            </td>
+
+                                                                            <td
+                                                                                class="text-center text-muted fw-bold fs-4">
+                                                                                <span class="fs-5 text-dark">
+                                                                                    {{item.surname}}
+                                                                                </span>
+                                                                            </td>
+
+                                                                            <td class="text-center">
+                                                                                <button
+                                                                                    class="btn btn-icon btn-light-danger btn-circle"
+                                                                                    (click)="removeVisitor(item)">
+                                                                                    <i class="fa-solid fa-trash"></i>
+                                                                                </button>
+                                                                            </td>
+
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                        </div>
+
+
+
+
+                                    </div>
                                 </div>
-                                <!--end::Input-->
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                            </div>
-                            <!--end::Input group-->
+                            </ng-container>
 
-                            <!--begin::Input group-->
-                            <div class="fv-row mb-10 fv-plugins-icon-container">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                    <span class="required">Giriş Saati</span>
-                                </label>
-                                <!--end::Label-->
+                            <ng-container *ngIf="personInformation == '2' || personInformation == '3' ">
+                                <div class="current">
+                                    <div class="w-100">
+                                        <div class="row">
+                                            <div class="col-12">
 
-                                <!--begin::Input-->
-                                <div class="position-relative d-flex align-items-center">
-                                    <!--begin::Datepicker-->
-                                    <input type="time" class="form-control form-control-lg form-control-solid" formControlName="girisSaati"
-                                    [ngClass]="{
-                                        'is-invalid': firstFormGroup.controls['girisSaati'].invalid,
-                                        'is-valid': firstFormGroup.controls['girisSaati'].valid
-                                    }">
-                                    <!--end::Datepicker-->
+                                                <div class="fv-row mb-10 fv-plugins-icon-container">
 
-                                    <!--begin::Validation-->
-                                    <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                        validation: 'required',
-                                        message: 'Field is required',
-                                        control: firstFormGroup.controls['girisSaati']}">
-                                    </ng-container>
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">İsim</span>
+                                                    </label>
 
-                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                        message: 'Success! You\'ve done it.',
-                                        control: firstFormGroup.controls['girisSaati']}">
-                                    </ng-container> -->
-                                    <!--end::Validation-->
+
+
+                                                    <input type="text"
+                                                        class="form-control form-control-lg form-control-solid"
+                                                        formControlName="name">
+
+                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                                </div>
+
+
+
+                                                <div class="fv-row mb-10 fv-plugins-icon-container">
+
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">Soyisim</span>
+                                                    </label>
+
+
+
+                                                    <input type="text"
+                                                        class="form-control form-control-lg form-control-solid"
+                                                        formControlName="surname">
+
+                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!--end::Input-->
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                            </div>
-                            <!--end::Input group-->
+                            </ng-container>
                         </ng-container>
 
                         <ng-container *ngIf="currentStep$.value == 4">
-                            <!--begin::Input group-->
-                            <div class="fv-row mb-10 fv-plugins-icon-container">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                    <span class="required">Çıkış Tarihi</span>
-                                </label>
-                                <!--end::Label-->
+                            <div class="current">
+                                <div class="w-100">
 
-                                <!--begin::Input-->
-                                <div class="position-relative d-flex align-items-center">
-                                    <!--begin::Datepicker-->
-                                    
-                                    <input class="form-control form-control-lg form-control-solid" type="date" formControlName="cikisTarihi"
-                                    [ngClass]="{
-                                        'is-invalid': firstFormGroup.controls['cikisTarihi'].invalid,
-                                        'is-valid': firstFormGroup.controls['cikisTarihi'].valid
-                                    }">
-                                    <!--end::Datepicker-->
+                                    <div class="fv-row mb-10 fv-plugins-icon-container">
 
-                                    <!--begin::Validation-->
-                                    <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                        validation: 'required',
-                                        message: 'Field is required',
-                                        control: firstFormGroup.controls['cikisTarihi']}">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span class="required">Email</span>
+                                        </label>
+
+
+
+                                        <input type="text" class="form-control form-control-lg form-control-solid"
+                                            formControlName="email">
+
+                                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+
+
+
+                                    <div class="fv-row mb-10 fv-plugins-icon-container">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" |
+                                                translate}}</span>
+                                        </label>
+
+
+                                        <p-dropdown [options]="company" [(ngModel)]="selectedCompany" optionLabel="ad"
+                                            [filter]="true" filterBy="ad" [showClear]="true"
+                                            placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.FIRMA_SEC' | translate}}"
+                                            formControlName="company">
+                                            <ng-template pTemplate="selectedItem">
+                                                <div class="item-item item-item-value" *ngIf="selectedCompany">
+                                                    <div>{{selectedCompany.ad}}</div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template let-item pTemplate="item">
+                                                <div class="item-item">
+                                                    <div>{{item.ad}}</div>
+                                                </div>
+                                            </ng-template>
+                                        </p-dropdown>
+                                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+
+                                    <ng-container *ngIf="isOtherCompany">
+                                        <div class="fv-row mb-10 fv-plugins-icon-container">
+                                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                <span class="required">Diğer Firma</span>
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg form-control-solid" formControlName="otherCompany" placeholder="Diğer Firmayı Girmelisiniz">
+                                        </div>
                                     </ng-container>
 
-                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                        message: 'Success! You\'ve done it.',
-                                        control: firstFormGroup.controls['cikisTarihi']}">
-                                    </ng-container> -->
-                                    <!--end::Validation-->
+
+                                    <div class="fv-row mb-10 fv-plugins-icon-container">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA" |
+                                                translate}}</span>
+                                        </label>
+
+                                        <textarea class="form-control form-control-solid" rows="3"
+                                            formControlName="description"
+                                            placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate}}"></textarea>
+                                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+
+                                    <div class="scroll h-200px fv-row mb-10 fv-plugins-icon-container">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_TIPI" |
+                                                translate}}</span>
+                                        </label>
+
+                                        <div class="row d-flex justify-content-center">
+                                            <label class="col-12 d-flex flex-stack mb-5 cursor-pointer"
+                                                *ngFor="let item of visitTypes">
+                                                <span class="d-flex align-items-center me-2">
+                                                    <span class="symbol symbol-50px me-6">
+                                                        <div [ngSwitch]="item.Ad">
+
+                                                            <div *ngSwitchCase="'Misafir'">
+                                                                <span class="symbol-label bg-light-info">
+                                                                    <i class="fa-solid fa-users text-info"
+                                                                        style="font-size: x-large;"></i>
+                                                                </span>
+                                                            </div>
+
+                                                            <div *ngSwitchCase="'Etkinlik'">
+                                                                <span class="symbol-label bg-light-info  ">
+                                                                    <i class="fa-solid fa-cake-candles text-info"
+                                                                        style="font-size: x-large;"></i>
+                                                                </span>
+                                                            </div>
+
+                                                            <div *ngSwitchCase="'İnsan Kaynakları Görüşmesi'">
+                                                                <span class="symbol-label bg-light-info">
+                                                                    <i class="fa-solid fa-handshake text-info"
+                                                                        style="font-size: x-large;"></i>
+                                                                </span>
+                                                            </div>
+
+                                                            <div *ngSwitchCase="'Ürün Girişi'">
+                                                                <span class="symbol-label bg-light-info">
+                                                                    <i class="fa-solid fa-truck-ramp-box text-info"
+                                                                        style="font-size: x-large;"></i>
+                                                                </span>
+                                                            </div>
+
+
+                                                            <div *ngSwitchDefault>
+                                                                <span class="symbol-label bg-light-info">
+                                                                    <i class="fa-solid fa-thumbtack text-info"
+                                                                        style="font-size: x-large;"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </span>
+
+                                                    <span class="d-flex flex-column">
+                                                        <span class="fw-bold fs-6">{{item.Ad}}</span>
+                                                    </span>
+                                                </span>
+
+                                                <span class="form-check form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="radio" formControlName="type"
+                                                        value="{{item.ID}}">
+                                                </span>
+                                            </label>
+                                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                                        </div>
+                                    </div>
+
+
                                 </div>
-                                <!--end::Input-->
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
                             </div>
-                            <!--end::Input group-->
-
-                            <!--begin::Input group-->
-                            <div class="fv-row mb-10 fv-plugins-icon-container">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                    <span class="required">Çıkış Saati</span>
-                                </label>
-                                <!--end::Label-->
-
-                                <!--begin::Input-->
-                                <div class="position-relative d-flex align-items-center">
-                                    <!--begin::Datepicker-->
-                                    <input type="time" class="form-control form-control-lg form-control-solid" formControlName="cikisSaati"
-                                    [ngClass]="{
-                                        'is-invalid': firstFormGroup.controls['cikisSaati'].invalid,
-                                        'is-valid': firstFormGroup.controls['cikisSaati'].valid
-                                    }">
-                                    <!--end::Datepicker-->
-
-                                    <!--begin::Validation-->
-                                    <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                        validation: 'required',
-                                        message: 'Field is required',
-                                        control: firstFormGroup.controls['cikisSaati']}">
-                                    </ng-container>
-
-                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                        message: 'Success! You\'ve done it.',
-                                        control: firstFormGroup.controls['cikisSaati']}">
-                                    </ng-container> -->
-                                    <!--end::Validation-->
-
-                                </div>
-                                <!--end::Input-->
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                            </div>
-                            <!--end::Input group-->
                         </ng-container>
 
                         <ng-container *ngIf="currentStep$.value == 5">
-    
+
                             <div class="fv-row mb-10 fv-plugins-icon-container">
-                                <div class="title text-primary text-center h3">Ziyarteçi Bilgileri</div>
-                                <div class="list-group rounded-lg" style="width: 550px;">
-                                    <a class="list-group-item list-group-item-action fw-bold fs-6 text-gray-400" style="display: flex; justify-content: space-between;">
-                                        <p class="h6">Ziyaretçi Ad </p>
-                                        {{visitorFormValues.ad}}
-                                    </a>
-                                    <a class="list-group-item list-group-item-action fw-bold fs-6 text-gray-400" style="display: flex; justify-content: space-between;">
-                                        <p class="h6">Ziyaretçi Soyad</p>
-                                        {{visitorFormValues.soyad}}
-                                    </a>
-                                    <a class="list-group-item list-group-item-action fw-bold fs-6 text-gray-400" style="display: flex; justify-content: space-between;">
-                                        <p class="h6">Ziyaretçi E-Mail </p>
-                                        {{visitorFormValues.email}}
-                                    </a>
-                                    <a class="list-group-item list-group-item-action fw-bold fs-6 text-gray-400" style="display: flex; justify-content: space-between;">
-                                        <p class="h6">Ziyaretçi Firma </p>
-                                        {{visitorFormValues.firma}}
-                                    </a>
-                                    <a class="list-group-item list-group-item-action fw-bold fs-6 text-gray-400" style="display: flex; justify-content: space-between;">
-                                        <p class="h6">Ziyaret Tipi </p>
-                                        {{visitorFormValues.ziyaretTipi}}
-                                    </a>
-                                    <a class="list-group-item list-group-item-action fw-bold fs-6 text-gray-400" style="display: flex; justify-content: space-between;">
-                                        <p class="h6">Açıklama </p>
-                                        {{visitorFormValues.aciklama}}
-                                    </a>
-                                    <a class="list-group-item list-group-item-action fw-bold fs-6 text-gray-400" style="display: flex; justify-content: space-between;">
-                                        <p class="h6">Giriş Zamanı </p>
-                                        {{visitorFormValues.girisTarihi}} / {{visitorFormValues.girisSaati}}
-                                    </a>
-                                    <a class="list-group-item list-group-item-action fw-bold fs-6 text-gray-400" style="display: flex; justify-content: space-between;">
-                                        <p class="h6">Çıkış Zamanı </p>
-                                        {{visitorFormValues.cikisTarihi}} / {{visitorFormValues.cikisSaati}}
-                                    </a>
+
+                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                    <span class="required">Giriş Tarihi</span>
+                                </label>
+
+
+
+                                <div class="position-relative d-flex align-items-center">
+
+
+                                    <input type="date" class="form-control form-control-lg form-control-solid"
+                                        formControlName="entryDate">
+
+
                                 </div>
+
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
                             </div>
+
+
+
+                            <div class="fv-row mb-10 fv-plugins-icon-container">
+
+                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                    <span class="required">Giriş Saati</span>
+                                </label>
+
+
+
+                                <div class="position-relative d-flex align-items-center">
+
+                                    <input type="time" class="form-control form-control-lg form-control-solid"
+                                        formControlName="entryTime">
+
+                                </div>
+
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+
+
+
+                            <div class="fv-row mb-10 fv-plugins-icon-container">
+
+                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                    <span class="required">Çıkış Tarihi</span>
+                                </label>
+
+
+
+                                <div class="position-relative d-flex align-items-center">
+
+
+                                    <input class="form-control form-control-lg form-control-solid" type="date"
+                                        formControlName="exitDate">
+
+                                </div>
+
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+
+
+
+                            <div class="fv-row mb-10 fv-plugins-icon-container">
+
+                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                    <span class="required">Çıkış Saati</span>
+                                </label>
+
+
+
+                                <div class="position-relative d-flex align-items-center">
+
+                                    <input type="time" class="form-control form-control-lg form-control-solid"
+                                        formControlName="exitTime">
+
+                                </div>
+
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+
                         </ng-container>
-                        
-                        <!--end::Step 1-->
-                        <!--begin::Actions-->
+
+                        <ng-container *ngIf="currentStep$.value == 6">
+                            <div class="row">
+                                <div class="col-12 mb-10">
+                                    <input type="file" id="upload" style="display: none;" multiple="true"
+                                        (change)="getFile($event)">
+                                    <label for="upload" class="btn btn-primary w-100">
+                                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                        Yükle
+                                    </label>
+                                </div>
+
+                                <div class="col-12 card bg-gray-300 mb-5 p-5" *ngFor="let item of uploadedFiles">
+                                    <div class="row">
+                                        <ng-container *ngIf="!item.type.startsWith('image')">
+                                            <div class="col-3 text-center">
+                                                <div [ngSwitch]="item.type">
+                                                    <div
+                                                        *ngSwitchCase="['image/jpeg', 'image/png', 'image/svg'].includes(item.type) ? item.type : !item.type">
+                                                        <i class="fa-solid fa-file-image text-dark fs-3x"></i></div>
+                                                    <div
+                                                        *ngSwitchCase="['text/plain'].includes(item.type) ? item.type : !item.type">
+                                                        <i class="fa-solid fa-file-lines text-dark fs-3x"></i></div>
+                                                    <div
+                                                        *ngSwitchCase="['application/pdf'].includes(item.type) ? item.type : !item.type">
+                                                        <i class="fa-solid fa-file-pdf text-dark fs-3x"></i></div>
+                                                    <div *ngSwitchDefault><i
+                                                            class="fa-solid fa-file text-dark fs-3x"></i></div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+
+
+                                        <ng-container *ngIf="item.type.startsWith('image')">
+                                            <div class="col-3 d-flex justify-content-center align-items-center">
+                                                <div class="symbol symbol-75px">
+                                                    <img alt="Uploaded File" src="{{item.url}}">
+                                                </div>
+                                            </div>
+                                        </ng-container>
+
+
+                                        <div class="col-5 d-flex justify-content-center align-items-center">
+                                            <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                {{item.name}}
+                                            </div>
+
+                                            <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                {{item.fileSize}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2 d-flex justify-content-center align-items-center">
+                                            <a class="btn btn-sm btn btn-primary">Kaydet</a>
+                                        </div>
+
+                                        <div class="col-2 d-flex justify-content-center align-items-center">
+                                            <a (click)="removeUploadedFile(item)"
+                                                class="btn btn-sm btn btn-light-primary">İptal</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </ng-container>
+
                         <div class="d-flex flex-stack pt-10">
                             <div class="mr-2">
-                              <ng-container *ngIf=" 5 > currentStep$.value && currentStep$.value > 1">
-                                <button type="button" class="btn btn-lg btn-light-primary me-3" (click)="prevStep()">
-                                  <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
-                                    class="svg-icon svg-icon-4 me-1"></span>
-                                  Back
-                                </button>
-                              </ng-container>
+                                <ng-container *ngIf=" 7 > currentStep$.value && currentStep$.value > 1">
+                                    <button type="button" class="btn btn-lg btn-light-primary me-3"
+                                        (click)="prevStep()">
+                                        <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                                            class="svg-icon svg-icon-4 me-1"></span>
+                                        Geri
+                                    </button>
+                                </ng-container>
 
-                              <ng-container *ngIf="currentStep$.value == formsCount">
-                                <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
-                                  <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
-                                    class="svg-icon svg-icon-4 me-1"></span>
-                                  Close
-                                </button>
-                              </ng-container>
+                                <ng-container *ngIf="currentStep$.value == formsCount">
+                                    <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
+                                        <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                                            class="svg-icon svg-icon-4 me-1"></span>
+                                        Kapat
+                                    </button>
+                                </ng-container>
                             </div>
-                    
+
                             <ng-container *ngIf="currentStep$.value !== formsCount">
                                 <div>
                                     <ng-container *ngIf="currentStep$.value < formsCount - 1">
                                         <button type="button" class="btn btn-lg btn-primary me-3" (click)="nextStep()">
                                             <span class="indicator-label">
-                                                    Continue {{ " " }}
-                                                    <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' " class="svg-icon svg-icon-3 ms-2 me-0"></span>
-                                                <ng-container *ngIf="currentStep$.value === formsCount - 1" (click)="getFormsValues()">
-                                                    Submit
+                                                İleri {{ " " }}
+                                                <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
+                                                    class="svg-icon svg-icon-3 ms-2 me-0"></span>
+                                                <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                    Gönder
                                                 </ng-container>
                                             </span>
                                         </button>
                                     </ng-container>
-                                    <ng-container *ngIf="currentStep$.value === formsCount - 1" >
-                                        <button type="button" class="btn btn-lg btn-primary me-3" [disabled]="firstFormGroup.invalid" (click)="getFormsValues(); nextStep()">
+                                    <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                        <button type="button" class="btn btn-lg btn-primary me-3" (click)="nextStep()">
                                             <span class="indicator-label">
-                                                    Submit
+                                                Gönder
                                             </span>
                                         </button>
-                                        <!-- <ng-container *ngIf="!firstFormGroup.valid">
-                                            <div class="valid-feedback">
-                                                Fields are required
-                                            </div>
-                                        </ng-container> -->
+
                                     </ng-container>
-                                    
+
                                 </div>
                             </ng-container>
-                          </div>
-                        <!--end::Actions-->
+                        </div>
                     </form>
-                    <!--end::Form-->
                 </div>
-                <!--end::Content-->
             </div>
         </div>
     </div>
-</mat-dialog-content>
+</div>
 
 
 <ng-template #formError let-control="control" let-message="message" let-validation="validation">
     <ng-container *ngIf="control.hasError(validation)">
         <div class="invalid-feedback">
-            {{message}}
+            {{message | translate}}
         </div>
     </ng-container>
 </ng-template>
@@ -971,7 +699,7 @@
 <ng-template #formSuccess let-control="control" let-message="message" let-validation="validation">
     <ng-container *ngIf="control.valid">
         <div class="valid-feedback">
-            {{message}}
+            {{message | translate}}
         </div>
     </ng-container>
 </ng-template>

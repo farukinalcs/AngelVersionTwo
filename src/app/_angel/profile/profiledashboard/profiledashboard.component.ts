@@ -1,20 +1,15 @@
 import { ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject, map, Observable, startWith, Subject, Subscription, takeUntil } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService, UserType } from 'src/app/modules/auth';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
-import { HelperService } from 'src/app/_helpers/helper.service';
 import { LoaderService } from 'src/app/_helpers/loader.service';
 import { AuthMenuService } from 'src/app/_metronic/core/services/auth-menu.service';
 import { LayoutService } from 'src/app/_metronic/layout';
 import { UserInformation } from '../models/user-information';
 import { ProfileService } from '../profile.service';
-import { DialogFazlaMesaiTalebiComponent } from '../talep-olustur/dialog-fazla-mesai-talebi/dialog-fazla-mesai-talebi.component';
-import { DialogGunlukIzinTalebiComponent } from '../talep-olustur/dialog-gunluk-izin-talebi/dialog-gunluk-izin-talebi.component';
-import { DialogSaatlikIzinTalebiComponent } from '../talep-olustur/dialog-saatlik-izin-talebi/dialog-saatlik-izin-talebi.component';
-import { DialogZiyaretciTalebiComponent } from '../talep-olustur/dialog-ziyaretci-talebi/dialog-ziyaretci-talebi.component';
 
 @Component({
   selector: 'app-profiledashboard',
@@ -22,27 +17,24 @@ import { DialogZiyaretciTalebiComponent } from '../talep-olustur/dialog-ziyaretc
   styleUrls: ['./profiledashboard.component.scss']
 })
 export class ProfiledashboardComponent implements OnInit, OnDestroy {
+  public closedVisitorForm : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public closedOvertimeForm : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public closedVacationForm : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
   menuConfig : any;
   private ngUnsubscribe = new Subject();
   user$: Observable<UserType>;
   @HostBinding('attr.data-kt-menu') dataKtMenu = 'true';
 
-  links : any[];
 
-  myControl : any = FormGroup;
-  options: string[] = ['Test 1', 'Test 2', 'Test 3', 'Test 4', 'Test 5'];
-  filteredOptions: Observable<string[]>;
-
-
-  dialogFazlaMesaiComponent = DialogFazlaMesaiTalebiComponent;
-  dialogZiyaretciComponent = DialogZiyaretciTalebiComponent;
-  dialogGunlukIzinComponent = DialogGunlukIzinTalebiComponent;
-  dialogSaatlikIzinComponent = DialogSaatlikIzinTalebiComponent;
   displayOvertimeForm : boolean;
   displayVacationForm: boolean;
 
   userInformation : UserInformation;
   public isLoading : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+  displayVisitRequestForm: boolean;
+  displayAdvancePaymentForm: boolean;
 
 
   constructor(
@@ -60,8 +52,6 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
     this.getMenuConfig();
     this.getUserInformation();
     this.getCurrentUserInformations();
-    this.setVekilForm();
-    this.filtered();
   }
 
   getUserInformation() {
@@ -94,64 +84,52 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
     console.log("ben ekranı menü config :", this.menuConfig);
   }
 
-  openDialog(component: any) {
-    this.dialog.open(component);
-
-    // var dialogRes = this.helper.dynamicDialog(false, '530px', '550px', 'fmTalepFormu', 'form', this.dialog, this);
-
-    // const ruleDialogSubs = dialogRes.afterClosed().subscribe((result: any) => {
-    //   this.helper.refreshComponent(this);
-                          
-    //   if (result == "OK") {
-    //     console.log("result :", result);
-        
-    //   }
-
-    // });
-
-    // this.unsubscribe.push(ruleDialogSubs);
-  }  
-
   getCurrentUserInformations() {
     this.user$ = this.auth.currentUserSubject.asObservable();
   }
 
-  setVekilForm() {
-    this.myControl = this.fomrBuilder.group({
-      vekilSec : ['']
-    })
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
-  }
-
-  filtered() {
-    this.filteredOptions = this.myControl.get("vekilSec").valueChanges.pipe(
-      startWith(''),
-      map((value : any) => this._filter(value || '')),
-    );
-  }
-
+  /* Fazla Mesai Form Dialog Penceresi */
   showOvertimeDialog(){
     this.displayOvertimeForm = true;
   }
-
   overtimeFormIsSend() {
     this.displayOvertimeForm = false;
+    this.closedOvertimeForm.next(false);
   }
+  /* --------------------------------- */
 
+
+  /* İzin Form Dialog Penceresi */
   showVacationDialog(){
     this.displayVacationForm = true;
   }
-
   vacationFormIsSend() {
     this.displayVacationForm = false;
+    this.closedVacationForm.next(false);
   }
+  /* --------------------------------- */
 
-  
+
+  /* Ziyaretçi Form Dialog Penceresi */
+  showVisitRequestDialog() {
+    this.displayVisitRequestForm = true;
+  }
+  visitRequestFormIsSend() {
+    this.displayVisitRequestForm = false;
+    this.closedVisitorForm.next(false);
+  }
+  /* --------------------------------- */
+
+
+  /* Avans Form Dialog Penceresi */
+  showAdvancePaymentDialog() {
+    this.displayAdvancePaymentForm = true;
+  }
+  advancePaymentIsSend() {
+    this.displayAdvancePaymentForm = false;
+  }
+  /* --------------------------------- */
+
 
 
   ngOnDestroy(): void {

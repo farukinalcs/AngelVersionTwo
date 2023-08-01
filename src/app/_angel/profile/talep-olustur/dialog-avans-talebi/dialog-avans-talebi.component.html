@@ -1,0 +1,329 @@
+<div class="container py-10 px-15">
+    <form [formGroup]="visitorForm">
+        <div class="row">
+
+            <div class="col-5 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-lg form-control-solid" formControlName="ad"
+                    [ngClass]="{
+                        'is-invalid': visitorForm.controls['ad'].invalid,
+                        'is-valid': visitorForm.controls['ad'].valid
+                    }">
+
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
+                        control: visitorForm.controls['ad']}">
+                </ng-container>
+            </div>
+
+
+
+            <div class="col-5 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-lg form-control-solid" formControlName="soyad"
+                    [ngClass]="{
+                        'is-invalid': visitorForm.controls['soyad'].invalid,
+                        'is-valid': visitorForm.controls['soyad'].valid
+                    }">
+
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
+                        control: visitorForm.controls['soyad']}">
+                </ng-container>
+            </div>
+
+            <div class="col-2 p-5 d-flex justify-content-center align-items-center">
+                <button class="btn btn-primary btn-sm px-4 py-2 w-50" (click)="addNewFields()">
+                    <i class="fa-solid fa-plus m-0 p-0"></i>
+                </button>
+            </div>
+
+            <div class="row bg-gray-300 border-bottom border-3 border-white "
+                *ngFor="let index of getFieldCountArray()">
+                <div class="col-5 p-5">
+                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                        <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate}}</span>
+                    </label>
+
+                    <input type="text" class="form-control form-control-lg form-control-solid"
+                        formControlName="ad{{index}}">
+
+                </div>
+
+                <div class="col-5 p-5">
+                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                        <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate}}</span>
+                    </label>
+
+                    <input type="text" class="form-control form-control-lg form-control-solid"
+                        formControlName="soyad{{index}}">
+                </div>
+
+                <div class="col-2 p-5 d-flex justify-content-center align-items-center">
+                    <button class="btn btn-danger btn-sm px-4 py-2 w-50" (click)="removeNewFields(index)">
+                        <i class="fa-solid fa-xmark m-0 p-0"></i>
+                    </button>
+                </div>
+            </div>
+
+
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.EMAIL" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-lg form-control-solid" formControlName="email"
+                    [ngClass]="{
+                        'is-invalid': visitorForm.controls['email'].invalid,
+                        'is-valid': visitorForm.controls['email'].valid
+                    }">
+
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
+                        control: visitorForm.controls['email']}">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" | translate}}</span>
+                </label>
+
+
+                <p-dropdown [options]="company" [(ngModel)]="selectedCompany" optionLabel="ad" [filter]="true"
+                    filterBy="ad" [showClear]="true"
+                    placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.FIRMA_SEC' | translate}}" formControlName="firma"
+                    [ngClass]="{
+                            'is-invalid': visitorForm.controls['firma'].invalid,
+                            'is-valid': visitorForm.controls['firma'].valid
+                        }">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="selectedCompany">
+                            <div>{{selectedCompany.ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
+                        control: visitorForm.controls['firma']}">
+                </ng-container>
+            </div>
+
+            <ng-container *ngIf="isOtherCompany">
+                <div class="col-12 p-5">
+                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                        <span class="required">Diğer Firma</span>
+                    </label>
+            
+                    <input type="text" class="form-control form-control-lg form-control-solid" formControlName="otherCompany" placeholder="Diğer Firmayı Girmelisiniz"
+                        [ngClass]="{
+                                        'is-invalid': visitorForm.controls['otherCompany'].invalid,
+                                        'is-valid': visitorForm.controls['otherCompany'].valid
+                                    }">
+            
+                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                        validation: 'required',
+                                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
+                                        control: visitorForm.controls['otherCompany']}">
+                    </ng-container>
+                </div>
+            </ng-container>
+
+
+            <div class="col-12 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_TIPI" | translate}}</span>
+                </label>
+
+                <div class="row d-flex justify-content-center">
+                    <label class="col-6 d-flex flex-stack mb-5 cursor-pointer" *ngFor="let item of visitTypes">
+                        <span class="d-flex align-items-center me-2">
+                            <span class="symbol symbol-50px me-6">
+                                <div [ngSwitch]="item.Ad">
+
+                                    <div *ngSwitchCase="'Misafir'">
+                                        <span class="symbol-label bg-light-info">
+                                            <i class="fa-solid fa-users text-info" style="font-size: x-large;"></i>
+                                        </span>
+                                    </div>
+
+                                    <div *ngSwitchCase="'Etkinlik'">
+                                        <span class="symbol-label bg-light-info  ">
+                                            <i class="fa-solid fa-cake-candles text-info"
+                                                style="font-size: x-large;"></i>
+                                        </span>
+                                    </div>
+
+                                    <div *ngSwitchCase="'İnsan Kaynakları Görüşmesi'">
+                                        <span class="symbol-label bg-light-info">
+                                            <i class="fa-solid fa-handshake text-info" style="font-size: x-large;"></i>
+                                        </span>
+                                    </div>
+
+                                    <div *ngSwitchCase="'Ürün Girişi'">
+                                        <span class="symbol-label bg-light-info">
+                                            <i class="fa-solid fa-truck-ramp-box text-info"
+                                                style="font-size: x-large;"></i>
+                                        </span>
+                                    </div>
+
+
+                                    <div *ngSwitchDefault>
+                                        <span class="symbol-label bg-light-info">
+                                            <i class="fa-solid fa-thumbtack text-info" style="font-size: x-large;"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+
+                            <span class="d-flex flex-column">
+                                <span class="fw-bold fs-6">{{item.Ad}}</span>
+                            </span>
+                        </span>
+
+                        <span class="form-check form-check-custom form-check-solid">
+                            <input class="form-check-input" type="radio" formControlName="ziyaretTipi"
+                                value="{{item.ID}}" [ngClass]="{
+                                    'is-invalid': visitorForm.controls['ziyaretTipi'].invalid,
+                                    'is-valid': visitorForm.controls['ziyaretTipi'].valid
+                                }">
+                        </span>
+                    </label>
+                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                </div>
+            </div>
+
+            <div class="col-12 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA" | translate}}</span>
+                </label>
+
+                <textarea class="form-control form-control-solid" rows="3" formControlName="aciklama"
+                    placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate}}" [ngClass]="{
+                        'is-invalid': visitorForm.controls['aciklama'].invalid,
+                        'is-valid': visitorForm.controls['aciklama'].valid
+                    }"></textarea>
+
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
+                        control: visitorForm.controls['aciklama']}">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_TARIHI" | translate}}</span>
+                </label>
+
+                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="girisTarihi"
+                    [ngClass]="{
+                        'is-invalid': visitorForm.controls['girisTarihi'].invalid,
+                        'is-valid': visitorForm.controls['girisTarihi'].valid
+                    }">
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
+                        control: visitorForm.controls['girisTarihi']}">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_SAATI" | translate}}</span>
+                </label>
+
+                <input type="time" class="form-control form-control-lg form-control-solid" formControlName="girisSaati"
+                    [ngClass]="{
+                                                        'is-invalid': visitorForm.controls['girisSaati'].invalid,
+                                                        'is-valid': visitorForm.controls['girisSaati'].valid
+                                                    }">
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                        validation: 'required',
+                                                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
+                                                        control: visitorForm.controls['girisSaati']}">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_TARIHI" | translate}}</span>
+                </label>
+
+                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="cikisTarihi"
+                    [ngClass]="{
+                        'is-invalid': visitorForm.controls['cikisTarihi'].invalid,
+                        'is-valid': visitorForm.controls['cikisTarihi'].valid
+                    }">
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
+                        control: visitorForm.controls['cikisTarihi']}">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_SAATI" | translate}}</span>
+                </label>
+
+                <input type="time" class="form-control form-control-lg form-control-solid" formControlName="cikisSaati"
+                    [ngClass]="{
+                                                        'is-invalid': visitorForm.controls['cikisSaati'].invalid,
+                                                        'is-valid': visitorForm.controls['cikisSaati'].valid
+                                                    }">
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                        validation: 'required',
+                                                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
+                                                        control: visitorForm.controls['cikisSaati']}">
+                </ng-container>
+            </div>
+
+
+        </div>
+    </form>
+
+    <div class="row mt-10">
+        <div class="col-12 d-flex align-items-end justify-content-end">
+            <button class="mat-stepper-next w-25 btn btn-primary" [disabled]="visitorForm.invalid" type="submit"
+                (click)="getFormsValues()">
+                {{"ZIYARETCI_TALEP_DIALOG.FORM.GONDER" | translate}}
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+    <ng-container *ngIf="control.hasError(validation)">
+        <div class="invalid-feedback">
+            {{message | translate}}
+        </div>
+    </ng-container>
+</ng-template>
+
+<ng-template #formSuccess let-control="control" let-message="message" let-validation="validation">
+    <ng-container *ngIf="control.valid">
+        <div class="valid-feedback">
+            {{message | translate}}
+        </div>
+    </ng-container>
+</ng-template>

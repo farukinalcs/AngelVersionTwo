@@ -1,22 +1,14 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { ChartComponent } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { TranslationService } from 'src/app/modules/i18n';
+import { LayoutService } from 'src/app/_metronic/layout';
 import { MyIncompleteTimeModel } from '../../models/myIncompleteTime';
 import { ProfileService } from '../../profile.service';
 
-// export type ChartOptions = {
-//   series: ApexAxisChartSeries;
-//   chart: ApexChart;
-//   markers: ApexMarkers;
-//   stroke: ApexStroke;
-//   dataLabels: ApexDataLabels;
-//   title: ApexTitleSubtitle;
-// };
 
 @Component({
   selector: 'app-eksik-surelerim',
@@ -25,9 +17,7 @@ import { ProfileService } from '../../profile.service';
 })
 export class EksikSurelerimComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
-  
-  // @ViewChild("chart") chart: ChartComponent;
-  // public chartOptions: Partial<ChartOptions> | any;
+
 
   timeRange : any[] = [
     {text : this.translateService.instant('EKSIK_SURE.ZAMAN_ARALIK.BIR_GUN'), value : '1'},
@@ -47,44 +37,17 @@ export class EksikSurelerimComponent implements OnInit, OnDestroy {
   displayedColumns : string[] = ['aciklama', 'eksiksure', 'mesaitarih', 'ggiris', 'gcikis'];
   dataSource : MatTableDataSource<any>;
 
+  filterText : string = '';
   constructor(
     private profileService : ProfileService,
     private translationService : TranslationService,
     private translateService : TranslateService,
+    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
-  ) {
-    // this.chartOptions = {
-    //   series: [
-    //     {
-    //       name: "stepline-series",
-    //       data: []
-    //     }
-    //   ],
-    //   chart: {
-    //     type: "line",
-    //     height: 350
-    //   },
-    //   stroke: {
-    //     curve: "stepline"
-    //   },
-    //   dataLabels: {
-    //     enabled: false
-    //   },
-    //   title: {
-    //     text: "Stepline Chart",
-    //     align: "left"
-    //   },
-    //   markers: {
-    //     hover: {
-    //       sizeOffset: 4
-    //     }
-    //   }
-    // };
-   }
+  ) {}
 
 
   ngOnInit(): void {    
-    // this.timeRangeChangeLang();
     this.getIncompleteTimes('1');
   }
 
@@ -115,10 +78,6 @@ export class EksikSurelerimComponent implements OnInit, OnDestroy {
       this.incompleteTimes = data;
       this.dataSource = new MatTableDataSource(this.incompleteTimes);
       console.log("Eksik Sürelerim :", data);
-
-      // this.incompleteTimes.forEach((item) => {
-      //   this.chartOptions.series[0].data.push(item.eksiksure)
-      // })
 
       this.ref.detectChanges();
     });

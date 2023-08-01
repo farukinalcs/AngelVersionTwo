@@ -1,0 +1,86 @@
+<div class="card card-flush h-md-100">
+    <div class="card-header pt-5" style="display: block;">
+        <div class="card-title" style="display: block;">
+            <div class="row">
+                <div class="col-8">
+                    <i class="fa-solid fa-newspaper fs-2 text-danger pe-2"></i>
+                    <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">Bültenler</span>
+                </div>
+
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                    <span class="text-gray-400 text-hover-primary cursor-pointer pt-1 fw-semibold fs-7">
+                        Tümü
+                        <i class="fa-solid fa-chevron-right ps-2 fs-7"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row">
+            <p-carousel [value]="items" [numVisible]="1" [numScroll]="3" [circular]="true" [autoplayInterval]="50000"
+                [showIndicators]="false">
+                <ng-template let-item pTemplate="item">
+                    <div class="tanimlar-item">
+                        <div class="tanimlar-item-content">
+                            <div class="mb-5">
+                                <div class="row">
+                                    <div class="col-6 d-flex justify-content-center">
+                                        <img src="{{item.foto}}" alt="" width="100%">
+                                    </div>
+
+                                    <div class="col-6">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="text-gray-400 fw-semibold fs-7 text-end">
+                                                    <span>{{item.tarih}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 scroll h-200px d-flex justify-content-center align-items-center">
+                                                <div class="fs-3 h-100px fw-bold text-gray-800 text-center">
+                                                    <span>{{item.aciklama}}</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="text-gray-400 fw-semibold fs-7 text-end">
+                                                    <a class="btn btn-sm btn-primary" (click)="showAllNews(item)">Daha Fazla ></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<p-dialog header="{{currentItem.baslik}}" [(visible)]="displayAllNews" [modal]="true" [style]="{width: '50vw'}"
+    [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+
+    <div class="container">
+        <div class="row card p-5">
+            <div class="col-12 d-flex justify-content-center align-items-center pb-5">
+                <img src="{{currentItem.foto}}" width="35%">
+            </div>
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <div class="fs-3 fw-bold text-gray-800 text-center">
+                    <span>{{currentItem.aciklama}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayAllNews=false"
+            label="{{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}" class="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

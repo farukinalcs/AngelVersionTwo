@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { HelperService } from 'src/app/_helpers/helper.service';
@@ -17,6 +17,8 @@ import { ProfileService } from '../../profile.service';
 export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   @Output() vacationFormIsSend: EventEmitter<void> = new EventEmitter<void>();
+  @Input() closedForm: BehaviorSubject<boolean>;
+
 
   vacationForm : FormGroup;
   vacationReasons : any[] = [];
@@ -45,7 +47,8 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     this.getVacationReason();
     this.getUserInformation();
     this.valueChanges();
-    this.dateChanges()
+    this.dateChanges();
+    this.closedFormDialog();
   }
 
   createVacationForm() {
@@ -159,6 +162,13 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
       
 
       this.ref.detectChanges();
+    });
+  }
+
+  closedFormDialog() {
+    this.closedForm.subscribe(_ => {
+      console.log("Closed Form : ", _);
+      this.vacationForm.reset();
     });
   }
 

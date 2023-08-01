@@ -16,17 +16,106 @@
                     </ng-template>
                 </p-dropdown>
             </div>
-            
+
             <div class="col-6 d-flex justify-content-end">
-                <input class="form-control form-control-solid w-50" type="text" placeholder="{{'PUBLIC.SEARCH' | translate}}" (keyup)="applyFilter($event)">
+                <input class="form-control form-control-solid w-50" type="text" [(ngModel)]="filterText"
+                    placeholder="{{'PUBLIC.SEARCH' | translate}}" (keyup)="applyFilter($event)">
             </div>
 
-            <div class="col-12 my-9">
+            <div class="col-12 pt-5">
+                <ng-container *ngIf="incompleteTimes.length == 0">
+                    <div class="p-20">
+                        <div class="col-12 d-flex justify-content-center align-items-center">
+                            <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
+                                <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                                <div class="flex-grow-1 me-2">
+                                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" |
+                                        translate}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="incompleteTimes.length > 0">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="table-responsive">
+                                <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                                    <thead>
+                                        <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
+                                            <th class="text-center">{{"EKSIK_SURE.TABLE.VARDIYA" | translate}}</th>
+                                            <th class="text-center">{{"EKSIK_SURE.TABLE.EKSIK_SURE" | translate}}</th>
+                                            <th class="text-center">{{"EKSIK_SURE.TABLE.MESAI_TARIHI" | translate}}</th>
+                                            <th class="text-center">{{"EKSIK_SURE.TABLE.GIRIS" | translate}}</th>
+                                            <th class="text-center">{{"EKSIK_SURE.TABLE.CIKIS" | translate}}</th>
+                                            <th class="text-center"></th>
+                                        </tr>
+                                    </thead>
+    
+                                    <tbody>
+                                        <tr *ngFor="let item of incompleteTimes | searchFilter:filterText: ['aciklama', 'eksiksure', 'mesaitarih', 'ggiris', 'gcikis']">
+                                            <td class="text-center">
+                                                <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.aciklama}}</a>
+                                            </td>
+    
+                                            <td class="text-center text-muted fw-bold fs-4">
+                                                <span class="badge badge-danger fs-5">
+                                                    {{item.eksiksure | timeFormat}}
+                                                </span>
+                                            </td>
+    
+                                            <td class="text-center">
+                                                <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.mesaitarih | date : 'yyyy-MM-dd'}}</a>
+                                                <span class="text-muted fw-semibold d-block">{{item.mesaitarih | date : 'HH:mm'}}</span>
+                                            </td>
+    
+                                            <td class="text-center text-muted fw-bold fs-4">
+                                                <span class="p-3">
+                                                    <ng-container *ngIf="item.ggiris">
+                                                        <span> {{item.ggiris | date : 'HH:mm'}} </span>
+                                                    </ng-container>
+    
+                                                    <ng-container *ngIf="!item.ggiris">
+                                                        <span> __:__ </span>
+                                                    </ng-container>
+                                                </span>
+                                            </td>
+    
+                                            <td class="text-center text-muted fw-bold fs-4">
+                                                <span class="p-3">
+                                                    <ng-container *ngIf="item.gcikis">
+                                                        <span> {{item.gcikis | date : 'HH:mm'}} </span>
+                                                    </ng-container>
+    
+                                                    <ng-container *ngIf="!item.gcikis">
+                                                        <span> __:__ </span>
+                                                    </ng-container>
+    
+                                                </span>
+                                            </td>
+
+                                            <td class="text-center text-muted fw-bold fs-4">
+                                                <a class="btn btn-icon btn-light-danger btn-sm me-3"  matTooltip="Eksik Süre Formu">
+                                                    <i class="fa-solid fa-file-lines fs-4"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                
+            </div>
+            <!-- <div class="col-12 my-9">
                 <div class="ma-elevation-z8">
                     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
                         <ng-container matColumnDef="aciklama">
-                            <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">{{"EKSIK_SURE.TABLE.VARDIYA" | translate}}</th>
+                            <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">
+                                {{"EKSIK_SURE.TABLE.VARDIYA" | translate}}</th>
                             <td class="" mat-cell *matCellDef="let element">
                                 <p class="text-dark-75 font-weight-bolder  mb-1 font-size-lg">
                                     {{element.aciklama}}
@@ -35,17 +124,18 @@
                         </ng-container>
 
                         <ng-container matColumnDef="eksiksure">
-                            <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">{{"EKSIK_SURE.TABLE.EKSIK_SURE" | translate}}</th>
+                            <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">
+                                {{"EKSIK_SURE.TABLE.EKSIK_SURE" | translate}}</th>
                             <td mat-cell *matCellDef="let element">
-                                <!-- <p class="text-dark-75 font-weight-bolder  mb-1 font-size-lg">
-                                    {{element.eksiksure}}
-                                </p> -->
-                                <span class="badge badge-light-danger fs-5 fw-bolder">{{element.eksiksure | timeFormat}}</span>
+                                
+                                <span class="badge badge-light-danger fs-5 fw-bolder">{{element.eksiksure |
+                                    timeFormat}}</span>
                             </td>
                         </ng-container>
 
                         <ng-container matColumnDef="mesaitarih">
-                            <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">{{"EKSIK_SURE.TABLE.MESAI_TARIHI" | translate}}</th>
+                            <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">
+                                {{"EKSIK_SURE.TABLE.MESAI_TARIHI" | translate}}</th>
                             <td mat-cell *matCellDef="let element">
                                 <ng-container>
                                     <p class="text-dark-75 font-weight-bolder  mb-1 font-size-lg">
@@ -56,7 +146,8 @@
                         </ng-container>
 
                         <ng-container matColumnDef="ggiris">
-                            <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">{{"EKSIK_SURE.TABLE.GIRIS" | translate}}</th>
+                            <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">{{"EKSIK_SURE.TABLE.GIRIS"
+                                | translate}}</th>
                             <td mat-cell *matCellDef="let element">
                                 <ng-container>
                                     <p class="text-dark-75 font-weight-bolder  mb-1 font-size-lg">
@@ -68,7 +159,8 @@
                         </ng-container>
 
                         <ng-container matColumnDef="gcikis">
-                            <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">{{"EKSIK_SURE.TABLE.CIKIS" | translate}}</th>
+                            <th mat-header-cell *matHeaderCellDef class="tableHeaderCellDiv">{{"EKSIK_SURE.TABLE.CIKIS"
+                                | translate}}</th>
                             <td mat-cell *matCellDef="let element">
                                 <ng-container>
                                     <span class="text-dark-75 font-weight-bolder  mb-1 font-size-lg">
@@ -98,7 +190,7 @@
 
                     </table>
                 </div>
-            </div>
+            </div> -->
         </div>
 
 

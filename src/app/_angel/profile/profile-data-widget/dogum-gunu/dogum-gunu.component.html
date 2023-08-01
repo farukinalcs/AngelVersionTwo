@@ -39,51 +39,69 @@
                 <div class="col-12">
                     <div class="fs-1 fw-bold text-gray-800 text-center mb-13">
                         <div>İyi ki Doğdun</div>
-                        <div>{{currentItem.isim}} {{currentItem.soyisim}}</div>
+                        <div>{{currentItem.ad}} {{currentItem.soyisim}}</div>
                     </div>
                 </div>
 
                 <div class="col-12 scroll h-50px">
                     <div class="fs-6 fw-bold text-gray-800 text-center">
-                        <span>Merhaba {{currentItem.isim}}, doğum gününüzü kutlar, sevdiklerinizle mutlu bir ömür dileriz.</span>
+                        <span>Merhaba {{currentItem.ad}}, doğum gününüzü kutlar, sevdiklerinizle mutlu bir ömür dileriz.</span>
                     </div>
                 </div>
             </div>
         </div> -->
 
-        <p-carousel [value]="items" [numVisible]="1" [numScroll]="3" [circular]="true" [autoplayInterval]="50000"
-            [showIndicators]="false">
-            <ng-template let-item pTemplate="item">
-                <div class="tanimlar-item">
-                    <div class="tanimlar-item-content">
-                        <div class="mb-5">
-                            <div class="row">
-                                <div class="col-12 d-flex justify-content-center">
-                                    <div class="symbol symbol-75px"><img alt="Logo" src="{{item.img}}">
-                                    </div>
-                                </div>
-                            </div>
-        
-                            <div class="row mt-10">
-                                <div class="col-12">
-                                    <div class="fs-1 fw-bold text-gray-800 text-center mb-13">
-                                        <div>İyi ki Doğdun</div>
-                                        <div>{{item.isim}} {{item.soyisim}}</div>
+        <ng-container *ngIf="todayPersonsBirthday.length > 0">
+            <p-carousel [value]="todayPersonsBirthday" [numVisible]="1" [numScroll]="3" [circular]="true"
+                [autoplayInterval]="50000" [showIndicators]="false">
+                <ng-template let-item pTemplate="item">
+                    <div class="tanimlar-item">
+                        <div class="tanimlar-item-content">
+                            <div class="mb-5">
+                                <div class="row">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div class="symbol symbol-75px"><img alt="Logo"
+                                                src="{{'data:image/jpg;base64,' + item.fotoimage}}">
+                                        </div>
                                     </div>
                                 </div>
         
-                                <div class="col-12 scroll h-50px">
-                                    <div class="fs-6 fw-bold text-gray-800 text-center">
-                                        <span>Merhaba {{item.isim}}, doğum gününüzü kutlar, sevdiklerinizle mutlu bir
-                                            ömür dileriz.</span>
+                                <div class="row mt-10">
+                                    <div class="col-12">
+                                        <div class="fs-1 fw-bold text-gray-800 text-center mb-13">
+                                            <div>İyi ki Doğdun</div>
+                                            <div>{{item.ad}}</div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-12">
+                                        <div class="fs-6 fw-bold text-gray-800 text-center">
+                                            <span>Merhaba {{item.ad}}, doğum gününüzü kutlar, sevdiklerinizle mutlu bir
+                                                ömür dileriz.</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </ng-template>
+            </p-carousel>
+        </ng-container>
+
+        <ng-container *ngIf="todayPersonsBirthday.length == 0">
+            <div class="row pt-20">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-100">
+                        <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                        <div class="flex-grow-1 me-2">
+                            <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" |
+                                translate}}</a>
+                        </div>
+                    </div>
                 </div>
-            </ng-template>
-        </p-carousel>
+            </div>
+        </ng-container>
+        
     </div>
 </div>
 
@@ -100,55 +118,72 @@
     <div class="container" style="height: 500px;">
         <div class="row card p-5">
             <div class="col-12">
-                <mat-tab-group mat-stretch-tabs="false">
+                <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="getPersonsBirthday($event)">
                     <mat-tab label="Bugün">
                         <div class="card">
                             <div class="card-body py-3">
-                                <div class="tab-content">
-                                    <div class="tab-pane fade active show">
-                                        <div class="table-responsive">
-                                            <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
-                                                <thead>
-                                                    <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
-                                                        <th class="text-center"></th>
-                                                        <th class="text-center">İsim Soyisim</th>
-                                                        <th class="text-center">Doğum Tarihi</th>
-                                                        <th class="text-center">Bölüm</th>
-                                                    </tr>
-                                                </thead>
-            
-                                                <tbody>
-                                                    <tr *ngFor="let item of items">
-                                                        <td class="text-center">
-                                                            <div class="symbol symbol-50px me-2">
-                                                                <img alt="Logo" src="{{item.img}}">
-                                                            </div>
-                                                        </td>
-
-                                                        <td class="text-center text-muted fw-bold fs-4">
-                                                            <span class="fs-5">
-                                                                {{item.isim}}
-                                                                {{item.soyisim}} 
-                                                            </span>
-                                                        </td>
-                                                        
-                                                        <td class="text-center">
-                                                            <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.tarih}}</a>
-                                                            <span class="text-muted fw-semibold d-block">{{item.gun}}</span>
-                                                        </td>
-
-                                                        <td class="text-center text-muted fw-bold fs-4">
-                                                            <span class="border border-gray-500 border-2 border-dashed rounded p-3">
-                                                                Yazılım Geliştirme
-                                                            </span>
-                                                        </td>
-
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                <ng-container *ngIf="todayPersonsBirthday.length > 0">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade active show">
+                                            <div class="table-responsive">
+                                                <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                                                    <thead>
+                                                        <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
+                                                            <th class="text-center"></th>
+                                                            <th class="text-center">İsim Soyisim</th>
+                                                            <th class="text-center">Doğum Tarihi</th>
+                                                            <th class="text-center">Bölüm</th>
+                                                        </tr>
+                                                    </thead>
+                
+                                                    <tbody>
+                                                        <tr *ngFor="let item of todayPersonsBirthday">
+                                                            <td class="text-center">
+                                                                <div class="symbol symbol-50px me-2">
+                                                                    <img alt="Logo" src="{{'data:image/jpg;base64,' + item.fotoimage}}">
+                                                                </div>
+                                                            </td>
+    
+                                                            <td class="text-center text-muted fw-bold fs-4">
+                                                                <span class="fs-5">
+                                                                    {{item.ad}}
+                                                                    {{item.soyad}} 
+                                                                </span>
+                                                            </td>
+                                                            
+                                                            <td class="text-center">
+                                                                <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.dogumtarih | date : 'yyyy-MM-dd'}}</a>
+                                                                <!-- <span class="text-muted fw-semibold d-block">{{item.gun}}</span> -->
+                                                            </td>
+    
+                                                            <td class="text-center text-muted fw-bold fs-4">
+                                                                <span class="border border-gray-500 border-2  rounded p-3">
+                                                                    {{item.bolum}}
+                                                                </span>
+                                                            </td>
+    
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </ng-container>
+                                
+
+                                <ng-container *ngIf="todayPersonsBirthday.length == 0">
+                                    <div class="row pt-20">
+                                        <div class="col-12 d-flex justify-content-center align-items-center">
+                                            <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-100">
+                                                <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                                                <div class="flex-grow-1 me-2">
+                                                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" |
+                                                        translate}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
                             </div>
                         </div> 
                     </mat-tab>
@@ -156,50 +191,67 @@
                     <mat-tab label="Bu Hafta">
                         <div class="card">
                             <div class="card-body py-3">
-                                <div class="tab-content">
-                                    <div class="tab-pane fade active show">
-                                        <div class="table-responsive">
-                                            <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
-                                                <thead>
-                                                    <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
-                                                        <th class="text-center"></th>
-                                                        <th class="text-center">İsim Soyisim</th>
-                                                        <th class="text-center">Doğum Tarihi</th>
-                                                        <th class="text-center">Bölüm</th>
-                                                    </tr>
-                                                </thead>
-            
-                                                <tbody>
-                                                    <tr *ngFor="let item of items">
-                                                        <td class="text-center">
-                                                            <div class="symbol symbol-50px me-2">
-                                                                <img alt="Logo" src="{{item.img}}">
-                                                            </div>
-                                                        </td>
-                                                        
-                                                        <td class="text-center text-muted fw-bold fs-4">
-                                                            <span class="fs-5">
-                                                                {{item.isim}}
-                                                                {{item.soyisim}} 
-                                                            </span>
-                                                        </td>
-
-                                                        <td class="text-center">
-                                                            <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.tarih}}</a>
-                                                            <span class="text-muted fw-semibold d-block">{{item.gun}}</span>
-                                                        </td>
-            
-                                                        <td class="text-center text-muted fw-bold fs-4">
-                                                            <span class="border border-gray-500 border-2 border-dashed rounded p-3">
-                                                                Yazılım Geliştirme
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                <ng-container *ngIf="personsBirthday.length > 0">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade active show">
+                                            <div class="table-responsive">
+                                                <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                                                    <thead>
+                                                        <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
+                                                            <th class="text-center"></th>
+                                                            <th class="text-center">İsim Soyisim</th>
+                                                            <th class="text-center">Doğum Tarihi</th>
+                                                            <th class="text-center">Bölüm</th>
+                                                        </tr>
+                                                    </thead>
+                
+                                                    <tbody>
+                                                        <tr *ngFor="let item of personsBirthday">
+                                                            <td class="text-center">
+                                                                <div class="symbol symbol-50px me-2">
+                                                                    <img alt="Logo" src="{{'data:image/jpg;base64,' + item.fotoimage}}">
+                                                                </div>
+                                                            </td>
+                                                            
+                                                            <td class="text-center text-muted fw-bold fs-4">
+                                                                <span class="fs-5">
+                                                                    {{item.ad}}
+                                                                    {{item.soyad}} 
+                                                                </span>
+                                                            </td>
+    
+                                                            <td class="text-center">
+                                                                <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.dogumtarih | date : 'yyyy-MM-dd'}}</a>
+                                                                <!-- <span class="text-muted fw-semibold d-block">{{item.gun}}</span> -->
+                                                            </td>
+                
+                                                            <td class="text-center text-muted fw-bold fs-4">
+                                                                <span class="border border-gray-500 border-2  rounded p-3">
+                                                                    {{item.bolum}}
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </ng-container>
+                                
+
+                                <ng-container *ngIf="personsBirthday.length == 0">
+                                    <div class="row pt-20">
+                                        <div class="col-12 d-flex justify-content-center align-items-center">
+                                            <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-100">
+                                                <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                                                <div class="flex-grow-1 me-2">
+                                                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" |
+                                                        translate}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
                             </div>
                         </div>
                     </mat-tab>
@@ -207,51 +259,68 @@
                     <mat-tab label="Bu Ay">
                         <div class="card">
                             <div class="card-body py-3">
-                                <div class="tab-content">
-                                    <div class="tab-pane fade active show">
-                                        <div class="table-responsive">
-                                            <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
-                                                <thead>
-                                                    <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
-                                                        <th class="text-center"></th>
-                                                        <th class="text-center">İsim Soyisim</th>
-                                                        <th class="text-center">Doğum Tarihi</th>
-                                                        <th class="text-center">Bölüm</th>
-                                                    </tr>
-                                                </thead>
-            
-                                                <tbody>
-                                                    <tr *ngFor="let item of items">
-                                                        <td class="text-center">
-                                                            <div class="symbol symbol-50px me-2">
-                                                                <img alt="Logo" src="{{item.img}}">
-                                                            </div>
-                                                        </td>
-
-                                                        <td class="text-center text-muted fw-bold fs-4">
-                                                            <span class="fs-5">
-                                                                {{item.isim}}
-                                                                {{item.soyisim}} 
-                                                            </span>
-                                                        </td>
-                                                        
-                                                        <td class="text-center">
-                                                            <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.tarih}}</a>
-                                                            <span class="text-muted fw-semibold d-block">{{item.gun}}</span>
-                                                        </td>
-            
-                                                        <td class="text-center text-muted fw-bold fs-4">
-                                                            <span class="border border-gray-500 border-2 border-dashed rounded p-3">
-                                                                Yazılım Geliştirme
-                                                            </span>
-                                                        </td>
-
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                <ng-container *ngIf="personsBirthday.length > 0">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade active show">
+                                            <div class="table-responsive">
+                                                <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                                                    <thead>
+                                                        <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
+                                                            <th class="text-center"></th>
+                                                            <th class="text-center">İsim Soyisim</th>
+                                                            <th class="text-center">Doğum Tarihi</th>
+                                                            <th class="text-center">Bölüm</th>
+                                                        </tr>
+                                                    </thead>
+                
+                                                    <tbody>
+                                                        <tr *ngFor="let item of personsBirthday">
+                                                            <td class="text-center">
+                                                                <div class="symbol symbol-50px me-2">
+                                                                    <img alt="Logo" src="{{'data:image/jpg;base64,' + item.fotoimage}}">
+                                                                </div>
+                                                            </td>
+    
+                                                            <td class="text-center text-muted fw-bold fs-4">
+                                                                <span class="fs-5">
+                                                                    {{item.ad}}
+                                                                    {{item.soyad}} 
+                                                                </span>
+                                                            </td>
+                                                            
+                                                            <td class="text-center">
+                                                                <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.dogumtarih | date : 'yyyy-MM-dd'}}</a>
+                                                                <!-- <span class="text-muted fw-semibold d-block">{{item.gun}}</span> -->
+                                                            </td>
+                
+                                                            <td class="text-center text-muted fw-bold fs-4">
+                                                                <span class="border border-gray-500 border-2  rounded p-3">
+                                                                    {{item.bolum}}
+                                                                </span>
+                                                            </td>
+    
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="personsBirthday.length == 0">
+                                    <div class="row pt-20">
+                                        <div class="col-12 d-flex justify-content-center align-items-center">
+                                            <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-100">
+                                                <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                                                <div class="flex-grow-1 me-2">
+                                                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" |
+                                                        translate}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                
                             </div>
                         </div>
                     </mat-tab>
