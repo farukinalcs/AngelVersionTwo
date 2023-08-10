@@ -9,6 +9,7 @@ import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ProfileService } from '../../profile.service';
 import { OKodFieldsModel } from '../../models/oKodFields';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/modules/auth';
 
 @Component({
   selector: 'app-dialog-ziyaretci-talebi',
@@ -55,12 +56,17 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
   src: any;
   uploadedFiles: any[] = [];
   isOtherCompany: boolean = false;
+  selectedVisitor: any;
+  selectedVisitorIndex: number;
+
+
 
   constructor(
     private formBuilder: FormBuilder,
     private breakpointObserver: BreakpointObserver,
     private profileService: ProfileService,
     private toastrService : ToastrService,
+    public authService : AuthService,
     private ref: ChangeDetectorRef
   ) { }
 
@@ -109,6 +115,12 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
         this.stepperFields[nextStep - 2].class = "stepper-item completed";
       }
     }
+
+    let visitorFormValues = Object.assign({}, this.visitTypeForm.value);
+    visitorFormValues.visitors = this.visitors;
+
+    this.visitorFormValues = visitorFormValues;
+    console.log("Form Values : ", this.visitorFormValues);
   }
   
   prevStep() {
@@ -207,7 +219,8 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
 
     this.visitors.push({
       name: formValues.name,
-      surname: formValues.surname
+      surname: formValues.surname,
+      files : []
     });
 
     console.log("Visitors :", this.visitors);
@@ -230,39 +243,47 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
     return index === 0;
   }
 
-  getFile(event: any) {
+  getFile(event: any, item: any) {
+    this.selectedVisitor = item;
+    console.log("Dosya Yükleme İtem : ", item);
+
     let files: FileList = event.target.files;
     console.log(event.target.files);
-  
-    for (const item of event.target.files) {
-      this.readAndPushFile(item);
+
+    for (const file of event.target.files) {
+      this.readAndPushFile(file, item);
     }
-  
+
     console.log("Uploaded Files:", this.uploadedFiles);
   }
-  
-  readAndPushFile(file: File) {
+
+  readAndPushFile(file: File, item: any) {
     let fileSize: any = (file.size / 1024).toFixed(1);
     let fileSizeType = 'KB';
     if (fileSize >= 1024) {
       fileSize = (fileSize / 1024).toFixed(1);
       fileSizeType = 'MB';
     }
-  
+
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (event) => {
       let url = event.target?.result;
-      this.uploadedFiles.push({
-        name: file.name,
+
+      item.files.push({
+        fileName: file.name,
         type: file.type,
         size: file.size,
         fileSize: fileSize + ' ' + fileSizeType,
         url: url,
       });
+
+      console.log("İtem : ", this.visitors);
+
       this.ref.detectChanges();
     };
   }
+
 
   isThereCompany() {
     this.visitTypeForm.get('company')?.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value : any) => {
@@ -275,10 +296,10 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
     });
   }
 
-  removeUploadedFile(item: any) {
-    const index = this.uploadedFiles.indexOf(item);
+  removeUploadedFile(item: any, file: any) {
+    const index = item.files.indexOf(file);
     if (index !== -1) {
-      this.uploadedFiles.splice(index, 1);
+      item.files.splice(index, 1);
     }
   }
 
@@ -299,6 +320,12 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
     this.stepperFields.forEach((item, index) => {
       item.class = index === 0 ? "stepper-item current" : "stepper-item";
     });
+  }
+
+  getFormValues() {
+    let visitorFormValues = Object.assign({}, this.visitTypeForm.value);
+    visitorFormValues.visitors = this.visitors;
+    console.log("Form Values : ", visitorFormValues);
   }
   
 

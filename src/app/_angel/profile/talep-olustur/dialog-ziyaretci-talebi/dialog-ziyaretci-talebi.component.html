@@ -1,18 +1,35 @@
-<div class="container py-10 px-15">
+<div class="container py-0 px-15">
     <div class="container">
         <div class="row">
             <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
 
                 <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-                    <div class="stepper-nav ps-lg-10">
+                    <div class="stepper-nav d-flex justify-content-center ps-lg-10">
 
                         <div class="{{item.class}}" *ngFor="let item of stepperFields">
                             <div class="stepper-wrapper">
 
-                                <div class="stepper-icon w-40px h-40px">
-                                    <i class="stepper-check fas fa-check"></i>
-                                    <span class="stepper-number">{{item.number}}</span>
-                                </div>
+                                <ng-container *ngIf="item.class == 'stepper-item current' ">
+                                    <div class="stepper-icon bg-danger w-40px h-40px">
+                                        <i class="stepper-check fas fa-check"></i>
+                                        <span class="stepper-number">{{item.number}}</span>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="item.class == 'stepper-item completed' ">
+                                    <div class="stepper-icon bg-light-danger w-40px h-40px">
+                                        <i class="stepper-check fas fa-check text-danger"></i>
+                                        <span class="stepper-number">{{item.number}}</span>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="item.class == 'stepper-item' ">
+                                    <div class="stepper-icon bg-light-danger w-40px h-40px">
+                                        <i class="stepper-check fas fa-check"></i>
+                                        <span class="stepper-number text-danger">{{item.number}}</span>
+                                    </div>
+                                </ng-container>
+                                
 
                                 <div class="stepper-label">
                                     <h3 class="stepper-title">
@@ -30,614 +47,796 @@
                     </div>
                 </div>
 
+                <div class="row w-xl-700px">
+                    <div class="col-12">
+                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="visitTypeForm">
 
-                <div class="flex-row-fluid  px-lg-15 w-xl-700px">
-
-                    <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="visitTypeForm">
-
-                        <ng-container *ngIf="currentStep$.value == 1">
-                            <div class="current">
-                                <div class="w-100">
-                                    <div class="row">
-                                        <div class="col-6 d-flex justify-content-end">
-                                            <input type="radio" class="btn-check" formControlName="visitType" value="1"
-                                                id="kt_radio_buttons_2_option_1" />
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center mb-5 h-200px w-200px"
-                                                for="kt_radio_buttons_2_option_1">
-                                                <i class="fa-solid fa-person-walking-luggage fs-3x text-primary"></i>
-
-                                                <span class="d-block fw-semibold text-start ps-3">
-                                                    <span class="text-dark fw-bold d-block fs-3">Ziyaret Edeceğim</span>
-                                                </span>
-                                            </label>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <input type="radio" class="btn-check" formControlName="visitType" value="0"
-                                                id="kt_radio_buttons_2_option_2" />
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center h-200px w-200px"
-                                                for="kt_radio_buttons_2_option_2">
-                                                <i class="fa-solid fa-person fs-3x text-primary"></i>
-                                                <span class="d-block fw-semibold text-start ps-3">
-                                                    <span class="text-dark fw-bold d-block fs-3">Ziyaret
-                                                        Edileceğim</span>
-                                                </span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-container>
-
-                        <ng-container *ngIf="currentStep$.value == 2">
-                            <div [ngSwitch]="visitType">
-                                <div *ngSwitchCase="0">
-                                    <div class="current">
-                                        <div class="w-100">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <input type="radio" class="btn-check"
-                                                        formControlName="personInformation" value="1"
-                                                        id="kt_radio_buttons_2_option_1" />
-                                                    <label
-                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center mb-5 h-200px"
-                                                        for="kt_radio_buttons_2_option_1">
-                                                        <i class="fa-solid fa-people-line fs-3x text-primary"></i>
-                                                        <span class="d-block fw-semibold text-start ps-3">
-                                                            <span class="text-dark fw-bold d-block fs-3">Toplu
-                                                                Ziyaret</span>
-                                                        </span>
-                                                    </label>
-                                                </div>
-
-                                                <div class="col-6">
-                                                    <input type="radio" class="btn-check"
-                                                        formControlName="personInformation" value="2"
-                                                        id="kt_radio_buttons_2_option_2" />
-                                                    <label
-                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center h-200px"
-                                                        for="kt_radio_buttons_2_option_2">
-                                                        <i class="fa-solid fa-user fs-3x text-primary"></i>
-                                                        <span class="d-block fw-semibold text-start ps-3">
-                                                            <span class="text-dark fw-bold d-block fs-3">Tek
-                                                                Ziyaret</span>
-                                                        </span>
-                                                    </label>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div *ngSwitchCase="1">
-                                    <div class="current">
-                                        <div class="w-100">
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <input type="radio" class="btn-check"
-                                                        formControlName="personInformation" value="3"
-                                                        id="kt_radio_buttons_2_option_1" />
-                                                    <label
-                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center mb-5 h-200px w-200px"
-                                                        for="kt_radio_buttons_2_option_1">
-
-                                                        <span class="d-block fw-semibold text-start ps-3">
-                                                            <span class="text-dark fw-bold d-block fs-3">Kendim İçin
-                                                                Talep Oluşturuyorum</span>
-                                                        </span>
-                                                    </label>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <input type="radio" class="btn-check"
-                                                        formControlName="personInformation" value="4"
-                                                        id="kt_radio_buttons_2_option_2" />
-                                                    <label
-                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center h-200px w-200px"
-                                                        for="kt_radio_buttons_2_option_2">
-                                                        <span class="d-block fw-semibold text-start ps-3">
-                                                            <span class="text-dark fw-bold d-block fs-3">Ekibim İçin
-                                                                Talep Oluşturuyorum</span>
-                                                        </span>
-                                                    </label>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <input type="radio" class="btn-check"
-                                                        formControlName="personInformation" value="5"
-                                                        id="kt_radio_buttons_3_option_3" />
-                                                    <label
-                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-5 d-flex align-items-center h-200px w-200px"
-                                                        for="kt_radio_buttons_3_option_3">
-                                                        <span class="d-block fw-semibold text-start ps-3">
-                                                            <span class="text-dark fw-bold d-block fs-3">Ekibim ve
-                                                                Kendim İçin Talep Oluşturuyorum</span>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </ng-container>
-
-                        <ng-container *ngIf="currentStep$.value == 3">
-                            <ng-container
-                                *ngIf="personInformation == '1' || personInformation == '4' || personInformation == '5' ">
+                            <ng-container *ngIf="currentStep$.value == 1">
                                 <div class="current">
                                     <div class="w-100">
                                         <div class="row">
-                                            <div class="col-12">
-
-                                                <div class="fv-row mb-10 fv-plugins-icon-container">
-
-                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">İsim</span>
-                                                    </label>
-
-
-
-                                                    <input type="text"
-                                                        class="form-control form-control-lg form-control-solid"
-                                                        formControlName="name">
-
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                </div>
-
-
-
-                                                <div class="fv-row mb-10 fv-plugins-icon-container">
-
-                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">Soyisim</span>
-                                                    </label>
-
-
-
-                                                    <input type="text"
-                                                        class="form-control form-control-lg form-control-solid"
-                                                        formControlName="surname">
-
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                </div>
-
-
-                                                <div
-                                                    class="fv-row mb-10 fv-plugins-icon-container d-flex justify-content-center align-items-center">
-                                                    <button class="btn btn-danger btn-sm px-4 py-2"
-                                                        (click)="addVisitor()"
-                                                        [disabled]="visitTypeForm.controls['name'].invalid || visitTypeForm.controls['surname'].invalid">
-                                                        <i class="fa-solid fa-plus m-0 p-0"></i>
-                                                    </button>
+                                            <div class="col-6 d-flex justify-content-end">
+                                                <input type="radio" class="btn-check" formControlName="visitType" value="1"
+                                                    id="kt_radio_buttons_2_option_1" />
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center mb-5 h-200px w-200px"
+                                                    for="kt_radio_buttons_2_option_1">
+                                                    <i class="fa-solid fa-person-walking-luggage fs-3x text-danger"></i>
+    
+                                                    <span class="d-block fw-semibold text-start ps-3">
+                                                        <span class="text-dark fw-bold d-block fs-3">Ziyaret Edeceğim</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+    
+                                            <div class="col-6">
+                                                <input type="radio" class="btn-check" formControlName="visitType" value="0"
+                                                    id="kt_radio_buttons_2_option_2" />
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center h-200px w-200px"
+                                                    for="kt_radio_buttons_2_option_2">
+                                                    <i class="fa-solid fa-person fs-3x text-danger"></i>
+                                                    <span class="d-block fw-semibold text-start ps-3">
+                                                        <span class="text-dark fw-bold d-block fs-3">Ziyaret
+                                                            Edileceğim</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+    
+                            <ng-container *ngIf="currentStep$.value == 2">
+                                <div [ngSwitch]="visitType">
+                                    <div *ngSwitchCase="0">
+                                        <div class="current">
+                                            <div class="w-100">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <input type="radio" class="btn-check"
+                                                            formControlName="personInformation" value="1"
+                                                            id="kt_radio_buttons_2_option_1" />
+                                                        <label
+                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center mb-5 h-200px"
+                                                            for="kt_radio_buttons_2_option_1">
+                                                            <i class="fa-solid fa-people-line fs-3x text-danger"></i>
+                                                            <span class="d-block fw-semibold text-start ps-3">
+                                                                <span class="text-dark fw-bold d-block fs-3">Toplu
+                                                                    Ziyaret</span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+    
+                                                    <div class="col-6">
+                                                        <input type="radio" class="btn-check"
+                                                            formControlName="personInformation" value="2"
+                                                            id="kt_radio_buttons_2_option_2" />
+                                                        <label
+                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center h-200px"
+                                                            for="kt_radio_buttons_2_option_2">
+                                                            <i class="fa-solid fa-user fs-3x text-danger"></i>
+                                                            <span class="d-block fw-semibold text-start ps-3">
+                                                                <span class="text-dark fw-bold d-block fs-3">Tek
+                                                                    Ziyaret</span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+    
+    
                                                 </div>
                                             </div>
-
-                                            <ng-container *ngIf="visitors.length > 0 ">
-                                                <div class="col-12 hover-scroll h-200px">
-                                                    <div class="tab-content">
-                                                        <div class="tab-pane fade active show">
-                                                            <div class="table-responsive">
-                                                                <table
-                                                                    class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
-                                                                    <thead>
-                                                                        <tr
-                                                                            class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
-                                                                            <th class="text-center"></th>
-                                                                            <th class="text-center">İsim</th>
-                                                                            <th class="text-center">Soyisim</th>
-                                                                            <th class="text-center"></th>
-                                                                        </tr>
-                                                                    </thead>
-
-                                                                    <tbody>
-                                                                        <tr *ngFor="let item of visitors; index as i">
-                                                                            <!-- [ngClass]="{'bg-warning': isFirstVisitor(i)}" -->
-                                                                            <td class="text-center">
-                                                                                <div class="symbol symbol-50px">
-                                                                                    <ng-container
-                                                                                        *ngIf="isFirstVisitor(i)">
-                                                                                        <div
-                                                                                            class="symbol-label fs-2 fw-semibold text-dark">
-                                                                                            <i
-                                                                                                class="fa-solid fa-crown fs-2x text-warning"></i>
-                                                                                        </div>
-                                                                                    </ng-container>
-
-                                                                                    <ng-container
-                                                                                        *ngIf="!isFirstVisitor(i)">
-                                                                                        <div
-                                                                                            class="symbol-label fs-2 fw-semibold text-dark">
-                                                                                            {{i + 1}}</div>
-                                                                                    </ng-container>
-                                                                                </div>
-                                                                            </td>
-
-                                                                            <td
-                                                                                class="text-center text-muted fw-bold fs-4">
-                                                                                <span class="fs-5 text-dark">
-                                                                                    {{item.name}}
-                                                                                </span>
-                                                                            </td>
-
-                                                                            <td
-                                                                                class="text-center text-muted fw-bold fs-4">
-                                                                                <span class="fs-5 text-dark">
-                                                                                    {{item.surname}}
-                                                                                </span>
-                                                                            </td>
-
-                                                                            <td class="text-center">
-                                                                                <button
-                                                                                    class="btn btn-icon btn-light-danger btn-circle"
-                                                                                    (click)="removeVisitor(item)">
-                                                                                    <i class="fa-solid fa-trash"></i>
-                                                                                </button>
-                                                                            </td>
-
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
+                                        </div>
+                                    </div>
+    
+                                    <div *ngSwitchCase="1">
+                                        <div class="current">
+                                            <div class="w-100">
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <input type="radio" class="btn-check"
+                                                            formControlName="personInformation" value="3"
+                                                            id="kt_radio_buttons_2_option_1" />
+                                                        <label
+                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center mb-5 h-200px w-200px"
+                                                            for="kt_radio_buttons_2_option_1">
+    
+                                                            <span class="d-block fw-semibold text-start ps-3">
+                                                                <span class="text-dark fw-bold d-block fs-3">Kendim İçin
+                                                                    Talep Oluşturuyorum</span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+    
+                                                    <div class="col-4">
+                                                        <input type="radio" class="btn-check"
+                                                            formControlName="personInformation" value="4"
+                                                            id="kt_radio_buttons_2_option_2" />
+                                                        <label
+                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center h-200px w-200px"
+                                                            for="kt_radio_buttons_2_option_2">
+                                                            <span class="d-block fw-semibold text-start ps-3">
+                                                                <span class="text-dark fw-bold d-block fs-3">Ekibim İçin
+                                                                    Talep Oluşturuyorum</span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+    
+                                                    <div class="col-4">
+                                                        <input type="radio" class="btn-check"
+                                                            formControlName="personInformation" value="5"
+                                                            id="kt_radio_buttons_3_option_3" />
+                                                        <label
+                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center h-200px w-200px"
+                                                            for="kt_radio_buttons_3_option_3">
+                                                            <span class="d-block fw-semibold text-start ps-3">
+                                                                <span class="text-dark fw-bold d-block fs-3">Ekibim ve
+                                                                    Kendim İçin Talep Oluşturuyorum</span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+    
+                            </ng-container>
+    
+                            <ng-container *ngIf="currentStep$.value == 3">
+                                <ng-container *ngIf="personInformation == '1' || personInformation == '4' || personInformation == '5' ">
+                                    <div class="current">
+                                        <div class="w-100">
+                                            <div class="row">
+                                                <div class="col-12">
+    
+                                                    <div class="fv-row mb-10 fv-plugins-icon-container">
+    
+                                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                            <span class="required">İsim</span>
+                                                        </label>
+    
+    
+    
+                                                        <input type="text"
+                                                            class="form-control form-control-lg form-control-solid"
+                                                            formControlName="name">
+    
+                                                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                                                    </div>
+    
+    
+    
+                                                    <div class="fv-row mb-10 fv-plugins-icon-container">
+    
+                                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                            <span class="required">Soyisim</span>
+                                                        </label>
+    
+    
+    
+                                                        <input type="text"
+                                                            class="form-control form-control-lg form-control-solid"
+                                                            formControlName="surname">
+    
+                                                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                                                    </div>
+    
+    
+                                                    <div
+                                                        class="fv-row mb-10 fv-plugins-icon-container d-flex justify-content-center align-items-center">
+                                                        <button class="btn btn-danger btn-sm px-4 py-2"
+                                                            (click)="addVisitor()"
+                                                            [disabled]="visitTypeForm.controls['name'].invalid || visitTypeForm.controls['surname'].invalid">
+                                                            <i class="fa-solid fa-plus m-0 p-0"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+    
+                                                <ng-container *ngIf="visitors.length > 0 ">
+                                                    <div class="col-12 hover-scroll h-200px">
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane fade active show">
+                                                                <div class="table-responsive">
+                                                                    <table
+                                                                        class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                                                                        <thead>
+                                                                            <tr
+                                                                                class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
+                                                                                <th class="text-center"></th>
+                                                                                <th class="text-center">İsim</th>
+                                                                                <th class="text-center">Soyisim</th>
+                                                                                <th class="text-center"></th>
+                                                                            </tr>
+                                                                        </thead>
+    
+                                                                        <tbody>
+                                                                            <tr *ngFor="let item of visitors; index as i">
+                                                                                <!-- [ngClass]="{'bg-warning': isFirstVisitor(i)}" -->
+                                                                                <td class="text-center">
+                                                                                    <div class="symbol symbol-50px">
+                                                                                        <ng-container
+                                                                                            *ngIf="isFirstVisitor(i)">
+                                                                                            <div
+                                                                                                class="symbol-label fs-2 fw-semibold text-dark">
+                                                                                                <i
+                                                                                                    class="fa-solid fa-sitemap fs-2x text-dark"></i>
+                                                                                            </div>
+                                                                                        </ng-container>
+    
+                                                                                        <ng-container
+                                                                                            *ngIf="!isFirstVisitor(i)">
+                                                                                            <div
+                                                                                                class="symbol-label fs-2 fw-semibold text-dark">
+                                                                                                {{i + 1}}</div>
+                                                                                        </ng-container>
+                                                                                    </div>
+                                                                                </td>
+    
+                                                                                <td
+                                                                                    class="text-center text-muted fw-bold fs-4">
+                                                                                    <span class="fs-5 text-dark">
+                                                                                        {{item.name}}
+                                                                                    </span>
+                                                                                </td>
+    
+                                                                                <td
+                                                                                    class="text-center text-muted fw-bold fs-4">
+                                                                                    <span class="fs-5 text-dark">
+                                                                                        {{item.surname}}
+                                                                                    </span>
+                                                                                </td>
+    
+                                                                                <td class="text-center">
+                                                                                    <button
+                                                                                        class="btn btn-icon btn-light-danger btn-circle"
+                                                                                        (click)="removeVisitor(item)">
+                                                                                        <i class="fa-solid fa-trash"></i>
+                                                                                    </button>
+                                                                                </td>
+    
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+    
+                                            </div>
+    
+    
+    
+    
+                                        </div>
+                                    </div>
+                                </ng-container>
+    
+                                <ng-container *ngIf="personInformation == '2' || personInformation == '3' ">
+                                    <div class="current">
+                                        <div class="w-100">
+                                            <div class="row">
+                                                <div class="col-12">
+    
+                                                    <div class="fv-row mb-10 fv-plugins-icon-container">
+    
+                                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                            <span class="required">İsim</span>
+                                                        </label>
+    
+    
+    
+                                                        <input type="text"
+                                                            class="form-control form-control-lg form-control-solid"
+                                                            formControlName="name">
+    
+                                                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                                                    </div>
+    
+    
+    
+                                                    <div class="fv-row mb-10 fv-plugins-icon-container">
+    
+                                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                            <span class="required">Soyisim</span>
+                                                        </label>
+    
+    
+    
+                                                        <input type="text"
+                                                            class="form-control form-control-lg form-control-solid"
+                                                            formControlName="surname">
+    
+                                                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                                                    </div>
+    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+    
+                            <ng-container *ngIf="currentStep$.value == 4">
+                                <div class="current">
+                                    <div class="w-100">
+    
+                                        <div class="fv-row mb-10 fv-plugins-icon-container">
+    
+                                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                <span class="required">Email</span>
+                                            </label>
+    
+    
+    
+                                            <input type="text" class="form-control form-control-lg form-control-solid"
+                                                formControlName="email">
+    
+                                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                                        </div>
+    
+    
+    
+                                        <div class="fv-row mb-10 fv-plugins-icon-container">
+                                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" |
+                                                    translate}}</span>
+                                            </label>
+    
+    
+                                            <p-dropdown [options]="company" [(ngModel)]="selectedCompany" optionLabel="ad"
+                                                [filter]="true" filterBy="ad" [showClear]="true"
+                                                placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.FIRMA_SEC' | translate}}"
+                                                formControlName="company">
+                                                <ng-template pTemplate="selectedItem">
+                                                    <div class="item-item item-item-value" *ngIf="selectedCompany">
+                                                        <div>{{selectedCompany.ad}}</div>
+                                                    </div>
+                                                </ng-template>
+                                                <ng-template let-item pTemplate="item">
+                                                    <div class="item-item">
+                                                        <div>{{item.ad}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-dropdown>
+                                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                                        </div>
+    
+                                        <ng-container *ngIf="isOtherCompany">
+                                            <div class="fv-row mb-10 fv-plugins-icon-container">
+                                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                    <span class="required">Diğer Firma</span>
+                                                </label>
+                                                <input type="text" class="form-control form-control-lg form-control-solid" formControlName="otherCompany" placeholder="Diğer Firmayı Girmelisiniz">
+                                            </div>
+                                        </ng-container>
+    
+    
+                                        <div class="fv-row mb-10 fv-plugins-icon-container">
+                                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA" |
+                                                    translate}}</span>
+                                            </label>
+    
+                                            <textarea class="form-control form-control-solid" rows="3"
+                                                formControlName="description"
+                                                placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate}}"></textarea>
+                                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                                        </div>
+    
+                                        <div class="scroll h-200px fv-row mb-10 fv-plugins-icon-container">
+                                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_TIPI" |
+                                                    translate}}</span>
+                                            </label>
+    
+                                            <div class="row d-flex justify-content-center">
+                                                <label class="col-12 d-flex flex-stack mb-5 cursor-pointer"
+                                                    *ngFor="let item of visitTypes">
+                                                    <span class="d-flex align-items-center me-2">
+                                                        <span class="symbol symbol-50px me-6">
+                                                            <div [ngSwitch]="item.Ad">
+    
+                                                                <div *ngSwitchCase="'Misafir'">
+                                                                    <span class="symbol-label bg-light-danger">
+                                                                        <i class="fa-solid fa-users text-danger"
+                                                                            style="font-size: x-large;"></i>
+                                                                    </span>
+                                                                </div>
+    
+                                                                <div *ngSwitchCase="'Etkinlik'">
+                                                                    <span class="symbol-label bg-light-danger  ">
+                                                                        <i class="fa-solid fa-cake-candles text-danger"
+                                                                            style="font-size: x-large;"></i>
+                                                                    </span>
+                                                                </div>
+    
+                                                                <div *ngSwitchCase="'İnsan Kaynakları Görüşmesi'">
+                                                                    <span class="symbol-label bg-light-danger">
+                                                                        <i class="fa-solid fa-handshake text-danger"
+                                                                            style="font-size: x-large;"></i>
+                                                                    </span>
+                                                                </div>
+    
+                                                                <div *ngSwitchCase="'Ürün Girişi'">
+                                                                    <span class="symbol-label bg-light-danger">
+                                                                        <i class="fa-solid fa-truck-ramp-box text-danger"
+                                                                            style="font-size: x-large;"></i>
+                                                                    </span>
+                                                                </div>
+    
+    
+                                                                <div *ngSwitchDefault>
+                                                                    <span class="symbol-label bg-light-danger">
+                                                                        <i class="fa-solid fa-thumbtack text-danger"
+                                                                            style="font-size: x-large;"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+    
+                                                        <span class="d-flex flex-column">
+                                                            <span class="fw-bold fs-6">{{item.Ad}}</span>
+                                                        </span>
+                                                    </span>
+    
+                                                    <span class="form-check form-check-custom form-check-solid">
+                                                        <input class="form-check-input bg-danger" type="radio" formControlName="type"
+                                                            value="{{item.ID}}">
+                                                    </span>
+                                                </label>
+                                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                                            </div>
+                                        </div>
+    
+    
+                                    </div>
+                                </div>
+                            </ng-container>
+    
+                            <ng-container *ngIf="currentStep$.value == 5">
+    
+                                <div class="fv-row mb-10 fv-plugins-icon-container">
+    
+                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                        <span class="required">Giriş Tarihi</span>
+                                    </label>
+    
+    
+    
+                                    <div class="position-relative d-flex align-items-center">
+    
+    
+                                        <input type="date" class="form-control form-control-lg form-control-solid"
+                                            formControlName="entryDate">
+    
+    
+                                    </div>
+    
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+    
+    
+    
+                                <div class="fv-row mb-10 fv-plugins-icon-container">
+    
+                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                        <span class="required">Giriş Saati</span>
+                                    </label>
+    
+    
+    
+                                    <div class="position-relative d-flex align-items-center">
+    
+                                        <input type="time" class="form-control form-control-lg form-control-solid"
+                                            formControlName="entryTime">
+    
+                                    </div>
+    
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+    
+    
+    
+                                <div class="fv-row mb-10 fv-plugins-icon-container">
+    
+                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                        <span class="required">Çıkış Tarihi</span>
+                                    </label>
+    
+    
+    
+                                    <div class="position-relative d-flex align-items-center">
+    
+    
+                                        <input class="form-control form-control-lg form-control-solid" type="date"
+                                            formControlName="exitDate">
+    
+                                    </div>
+    
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+    
+    
+    
+                                <div class="fv-row mb-10 fv-plugins-icon-container">
+    
+                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                        <span class="required">Çıkış Saati</span>
+                                    </label>
+    
+    
+    
+                                    <div class="position-relative d-flex align-items-center">
+    
+                                        <input type="time" class="form-control form-control-lg form-control-solid"
+                                            formControlName="exitTime">
+    
+                                    </div>
+    
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+    
+                            </ng-container>
+    
+                            <ng-container *ngIf="currentStep$.value == 6">
+                                <div class="row">
+                                    
+                                    <ng-container *ngIf="visitors.length > 0">
+                                        <div class="col-12 hover-scroll h-550px">
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade active show">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                                                            <thead>
+                                                                <tr class="bg-dark fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase">
+                                                                    <th class="text-center rounded-start"></th>
+                                                                    <th class="text-center">İsim</th>
+                                                                    <th class="text-center">Soyisim</th>
+                                                                    <th class="text-center rounded-end"></th>
+                                                                </tr>
+                                                            </thead>
+                                    
+                                                            <tbody>
+                                                                <ng-container *ngFor="let item of visitors; index as i">
+                                                                    <tr>
+                                                                        <td class="text-center">
+                                                                            <div class="symbol symbol-50px">
+                                                                                <ng-container *ngIf="isFirstVisitor(i)">
+                                                                                    <div class="symbol-label fs-2 fw-semibold text-dark">
+                                                                                        <i class="fa-solid fa-crown fs-2x text-dark"></i>
+                                                                                    </div>
+                                                                                </ng-container>
+                                    
+                                                                                <ng-container *ngIf="!isFirstVisitor(i)">
+                                                                                    <div class="symbol-label fs-2 fw-semibold text-dark">
+                                                                                        {{i + 1}}
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                            </div>
+                                                                        </td>
+                                    
+                                                                        <td class="text-center text-muted fw-bold fs-4">
+                                                                            <span class="fs-5 text-dark">{{item.name}}</span>
+                                                                        </td>
+                                    
+                                                                        <td class="text-center text-muted fw-bold fs-4">
+                                                                            <span class="fs-5 text-dark">{{item.surname}}</span>
+                                                                        </td>
+                                    
+                                                                        <td class="text-center">
+                                                                            <input type="file" [id]="'upload_' + i" style="display: none;" multiple="true"
+                                                                                (change)="getFile($event, item)">
+                                                                            <label [for]="'upload_' + i"
+                                                                                class="btn btn-icon btn-danger btn-circle">
+                                                                                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                                                            </label>
+                                                                        </td>
+                                                                    </tr>
+                                    
+                                                                    <tr>
+                                                                        <td colspan="4">
+                                                                            <ng-container *ngIf="item.files.length != 0">
+                                                                                <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4 my-10 mx-0">
+                                                                                    <thead>
+                                                                                        <tr
+                                                                                            class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
+                                                                                            <th class="text-center rounded-start"></th>
+                                                                                            <th class="text-center w-50px">Dosya İsmi</th>
+                                                                                            <th class="text-center w-100px">Dosya Boyutu</th>
+                                                                                            <th class="text-center rounded-end"></th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                    
+                                                                                    <tbody>
+                                                                                        <tr *ngFor="let value of item.files; index as j">
+                                                                                            <td class="text-center">
+                                                                                                <div class="symbol symbol-50px">
+                                                                                                    <div class="symbol-label fs-2 fw-semibold text-dark">
+                                                                                                        <ng-container *ngIf="!value.type.startsWith('image')">
+                                                                                                            <div [ngSwitch]="value.type">
+                                                                                                                <div
+                                                                                                                    *ngSwitchCase="'image/jpeg' || 'image/png' || 'image/svg' || !value.type">
+                                                                                                                    <i
+                                                                                                                        class="fa-solid fa-file-image text-dark fs-3x"></i>
+                                                                                                                </div>
+                                                                                                                <div
+                                                                                                                    *ngSwitchCase="'text/plain' || !value.type">
+                                                                                                                    <i
+                                                                                                                        class="fa-solid fa-file-lines text-dark fs-3x"></i>
+                                                                                                                </div>
+                                                                                                                <div
+                                                                                                                    *ngSwitchCase="'application/pdf' || !value.type">
+                                                                                                                    <i
+                                                                                                                        class="fa-solid fa-file-pdf text-dark fs-3x"></i>
+                                                                                                                </div>
+                                                                                                                <div *ngSwitchDefault>
+                                                                                                                    <i class="fa-solid fa-file text-dark fs-3x"></i>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </ng-container>
+                                    
+                                                                                                        <ng-container *ngIf="value.type.startsWith('image')">
+                                                                                                            <div class="symbol symbol-50px">
+                                                                                                                <img alt="Uploaded File" [src]="value.url">
+                                                                                                            </div>
+                                                                                                        </ng-container>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                    
+                                                                                            <td class="text-center text-muted fw-bold fs-4">
+                                                                                                <span class="fs-5 text-dark">{{value.fileName}}</span>
+                                                                                            </td>
+                                    
+                                                                                            <!-- <td class="text-center text-muted fw-bold fs-4">
+                                                                                                <span class="fs-5 text-dark">{{value.type}}</span>
+                                                                                            </td> -->
+                                    
+                                                                                            <td class="text-center text-muted fw-bold fs-4">
+                                                                                                <span class="fs-5 text-dark">{{value.fileSize}}</span>
+                                                                                            </td>
+                                    
+                                                                                            <td class="text-center">
+                                                                                                <a (click)="removeUploadedFile(item, value)" class="btn btn-danger btn-sm px-4 py-2 ng-star-inserted">
+                                                                                                    <i class="fa-solid fa-xmark m-0 p-0"></i>
+                                                                                                </a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                    </tr>
+                                                                </ng-container>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+    
+    
+                            </ng-container>
+    
+                            <ng-container *ngIf="currentStep$.value == 7">
+                                <div class="border border-3">
+                                    <div class="row py-8 px-10">
+                                        
+                                        <div class="col-12 d-flex justify-content-center pb-3">
+                                            <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">Talep Sahibi</span>
+                                        </div>
+                                        
+                                        <div class="col-12 d-flex justify-content-center  pb-10" *ngIf="this.authService.currentUserSubject | async as _user">
+                                            <span class="text-gray-800 fs-6 fw-bolder">{{_user.adsoyad}}</span>
+                                            <span class="text-muted fw-bold d-block fs-7"></span>
+                                        </div>
+    
+                                        <div class="separator mb-10"></div>
+    
+                                        <div style="background-image: url(../../../../../assets/media/logos/Mediamodifier-Design-Template\ \(11\).png); background-repeat: no-repeat; background-size: contain; background-position: center;">
+                                            <div class="col-12 d-flex justify-content-center">
+                                                <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">Ziyaretçi Bilgileri</span>
+                                            </div>
+        
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="row">
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">Email:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.email}} </span>
+                                                            </div>
+                        
+                                                            <ng-container *ngIf="visitorFormValues.company.id != '0' ">
+                                                                <div class="col-12 py-3">
+                                                                    <span class="text-gray-800  fs-6 fw-bolder">Firma:</span>
+                                                                    <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.company}} </span>
+                                                                </div>
+                                                            </ng-container>
+                        
+                                                            <ng-container *ngIf="visitorFormValues.company.id == '0' ">
+                                                                <div class="col-12 py-3">
+                                                                    <span class="text-gray-800  fs-6 fw-bolder">Firma:</span>
+                                                                    <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.otherCompany}} </span>
+                                                                </div>
+                                                            </ng-container>
+                                                            
+                        
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">Açıklama:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.description}} </span>
+                                                            </div>
+                        
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">Ziyaret Tipi:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.type}} </span>
+                                                            </div>
+                        
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">Giriş Tarihi:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.entryDate}} </span>
+                                                            </div>
+                        
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">Giriş Saati:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.entryTime}} </span>
+                                                            </div>
+                        
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">Çıkış Tarihi:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.exitDate}} </span>
+                                                            </div>
+                        
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">Çıkış Saati:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.exitTime}} </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-6">
+                                                        <div class="row">
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">Ziyaretçiler:</span>
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <ul>
+                                                                            <li class="my-4" *ngFor="let item of visitorFormValues.visitors">
+                                                                                <span class="badge badge-light-dark text-muted fw-bold d-block fs-7"> {{item.name}} {{item.surname}}</span>
+                        
+                                                                                <ng-container *ngIf="item.files.length != 0">
+                                                                                    <ul class="my-2">
+                                                                                        <li *ngFor="let value of item.files">
+                                                                                            <span class="text-muted fw-bold d-block fs-7"> {{value.fileName}}</span>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </ng-container>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </ng-container>
-
-                                        </div>
-
-
-
-
-                                    </div>
-                                </div>
-                            </ng-container>
-
-                            <ng-container *ngIf="personInformation == '2' || personInformation == '3' ">
-                                <div class="current">
-                                    <div class="w-100">
-                                        <div class="row">
-                                            <div class="col-12">
-
-                                                <div class="fv-row mb-10 fv-plugins-icon-container">
-
-                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">İsim</span>
-                                                    </label>
-
-
-
-                                                    <input type="text"
-                                                        class="form-control form-control-lg form-control-solid"
-                                                        formControlName="name">
-
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                </div>
-
-
-
-                                                <div class="fv-row mb-10 fv-plugins-icon-container">
-
-                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">Soyisim</span>
-                                                    </label>
-
-
-
-                                                    <input type="text"
-                                                        class="form-control form-control-lg form-control-solid"
-                                                        formControlName="surname">
-
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </ng-container>
-                        </ng-container>
-
-                        <ng-container *ngIf="currentStep$.value == 4">
-                            <div class="current">
-                                <div class="w-100">
-
-                                    <div class="fv-row mb-10 fv-plugins-icon-container">
-
-                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                            <span class="required">Email</span>
-                                        </label>
-
-
-
-                                        <input type="text" class="form-control form-control-lg form-control-solid"
-                                            formControlName="email">
-
-                                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                                    </div>
-
-
-
-                                    <div class="fv-row mb-10 fv-plugins-icon-container">
-                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                            <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" |
-                                                translate}}</span>
-                                        </label>
-
-
-                                        <p-dropdown [options]="company" [(ngModel)]="selectedCompany" optionLabel="ad"
-                                            [filter]="true" filterBy="ad" [showClear]="true"
-                                            placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.FIRMA_SEC' | translate}}"
-                                            formControlName="company">
-                                            <ng-template pTemplate="selectedItem">
-                                                <div class="item-item item-item-value" *ngIf="selectedCompany">
-                                                    <div>{{selectedCompany.ad}}</div>
-                                                </div>
-                                            </ng-template>
-                                            <ng-template let-item pTemplate="item">
-                                                <div class="item-item">
-                                                    <div>{{item.ad}}</div>
-                                                </div>
-                                            </ng-template>
-                                        </p-dropdown>
-                                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                                    </div>
-
-                                    <ng-container *ngIf="isOtherCompany">
-                                        <div class="fv-row mb-10 fv-plugins-icon-container">
-                                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                <span class="required">Diğer Firma</span>
-                                            </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" formControlName="otherCompany" placeholder="Diğer Firmayı Girmelisiniz">
-                                        </div>
-                                    </ng-container>
-
-
-                                    <div class="fv-row mb-10 fv-plugins-icon-container">
-                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                            <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA" |
-                                                translate}}</span>
-                                        </label>
-
-                                        <textarea class="form-control form-control-solid" rows="3"
-                                            formControlName="description"
-                                            placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate}}"></textarea>
-                                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                                    </div>
-
-                                    <div class="scroll h-200px fv-row mb-10 fv-plugins-icon-container">
-                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                            <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_TIPI" |
-                                                translate}}</span>
-                                        </label>
-
-                                        <div class="row d-flex justify-content-center">
-                                            <label class="col-12 d-flex flex-stack mb-5 cursor-pointer"
-                                                *ngFor="let item of visitTypes">
-                                                <span class="d-flex align-items-center me-2">
-                                                    <span class="symbol symbol-50px me-6">
-                                                        <div [ngSwitch]="item.Ad">
-
-                                                            <div *ngSwitchCase="'Misafir'">
-                                                                <span class="symbol-label bg-light-info">
-                                                                    <i class="fa-solid fa-users text-info"
-                                                                        style="font-size: x-large;"></i>
-                                                                </span>
-                                                            </div>
-
-                                                            <div *ngSwitchCase="'Etkinlik'">
-                                                                <span class="symbol-label bg-light-info  ">
-                                                                    <i class="fa-solid fa-cake-candles text-info"
-                                                                        style="font-size: x-large;"></i>
-                                                                </span>
-                                                            </div>
-
-                                                            <div *ngSwitchCase="'İnsan Kaynakları Görüşmesi'">
-                                                                <span class="symbol-label bg-light-info">
-                                                                    <i class="fa-solid fa-handshake text-info"
-                                                                        style="font-size: x-large;"></i>
-                                                                </span>
-                                                            </div>
-
-                                                            <div *ngSwitchCase="'Ürün Girişi'">
-                                                                <span class="symbol-label bg-light-info">
-                                                                    <i class="fa-solid fa-truck-ramp-box text-info"
-                                                                        style="font-size: x-large;"></i>
-                                                                </span>
-                                                            </div>
-
-
-                                                            <div *ngSwitchDefault>
-                                                                <span class="symbol-label bg-light-info">
-                                                                    <i class="fa-solid fa-thumbtack text-info"
-                                                                        style="font-size: x-large;"></i>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </span>
-
-                                                    <span class="d-flex flex-column">
-                                                        <span class="fw-bold fs-6">{{item.Ad}}</span>
-                                                    </span>
-                                                </span>
-
-                                                <span class="form-check form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="radio" formControlName="type"
-                                                        value="{{item.ID}}">
-                                                </span>
-                                            </label>
-                                            <div class="fv-plugins-message-container invalid-feedback"></div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </ng-container>
-
-                        <ng-container *ngIf="currentStep$.value == 5">
-
-                            <div class="fv-row mb-10 fv-plugins-icon-container">
-
-                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                    <span class="required">Giriş Tarihi</span>
-                                </label>
-
-
-
-                                <div class="position-relative d-flex align-items-center">
-
-
-                                    <input type="date" class="form-control form-control-lg form-control-solid"
-                                        formControlName="entryDate">
-
-
-                                </div>
-
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                            </div>
-
-
-
-                            <div class="fv-row mb-10 fv-plugins-icon-container">
-
-                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                    <span class="required">Giriş Saati</span>
-                                </label>
-
-
-
-                                <div class="position-relative d-flex align-items-center">
-
-                                    <input type="time" class="form-control form-control-lg form-control-solid"
-                                        formControlName="entryTime">
-
-                                </div>
-
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                            </div>
-
-
-
-                            <div class="fv-row mb-10 fv-plugins-icon-container">
-
-                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                    <span class="required">Çıkış Tarihi</span>
-                                </label>
-
-
-
-                                <div class="position-relative d-flex align-items-center">
-
-
-                                    <input class="form-control form-control-lg form-control-solid" type="date"
-                                        formControlName="exitDate">
-
-                                </div>
-
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                            </div>
-
-
-
-                            <div class="fv-row mb-10 fv-plugins-icon-container">
-
-                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                    <span class="required">Çıkış Saati</span>
-                                </label>
-
-
-
-                                <div class="position-relative d-flex align-items-center">
-
-                                    <input type="time" class="form-control form-control-lg form-control-solid"
-                                        formControlName="exitTime">
-
-                                </div>
-
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                            </div>
-
-                        </ng-container>
-
-                        <ng-container *ngIf="currentStep$.value == 6">
-                            <div class="row">
-                                <div class="col-12 mb-10">
-                                    <input type="file" id="upload" style="display: none;" multiple="true"
-                                        (change)="getFile($event)">
-                                    <label for="upload" class="btn btn-primary w-100">
-                                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                                        Yükle
-                                    </label>
-                                </div>
-
-                                <div class="col-12 card bg-gray-300 mb-5 p-5" *ngFor="let item of uploadedFiles">
-                                    <div class="row">
-                                        <ng-container *ngIf="!item.type.startsWith('image')">
-                                            <div class="col-3 text-center">
-                                                <div [ngSwitch]="item.type">
-                                                    <div
-                                                        *ngSwitchCase="['image/jpeg', 'image/png', 'image/svg'].includes(item.type) ? item.type : !item.type">
-                                                        <i class="fa-solid fa-file-image text-dark fs-3x"></i></div>
-                                                    <div
-                                                        *ngSwitchCase="['text/plain'].includes(item.type) ? item.type : !item.type">
-                                                        <i class="fa-solid fa-file-lines text-dark fs-3x"></i></div>
-                                                    <div
-                                                        *ngSwitchCase="['application/pdf'].includes(item.type) ? item.type : !item.type">
-                                                        <i class="fa-solid fa-file-pdf text-dark fs-3x"></i></div>
-                                                    <div *ngSwitchDefault><i
-                                                            class="fa-solid fa-file text-dark fs-3x"></i></div>
-                                                </div>
-                                            </div>
-                                        </ng-container>
-
-
-                                        <ng-container *ngIf="item.type.startsWith('image')">
-                                            <div class="col-3 d-flex justify-content-center align-items-center">
-                                                <div class="symbol symbol-75px">
-                                                    <img alt="Uploaded File" src="{{item.url}}">
-                                                </div>
-                                            </div>
-                                        </ng-container>
-
-
-                                        <div class="col-5 d-flex justify-content-center align-items-center">
-                                            <div class="fs-6 fw-bold text-gray-800 text-center">
-                                                {{item.name}}
-                                            </div>
-
-                                            <div class="fs-6 fw-bold text-gray-800 text-center">
-                                                {{item.fileSize}}
-                                            </div>
-                                        </div>
-
-                                        <div class="col-2 d-flex justify-content-center align-items-center">
-                                            <a class="btn btn-sm btn btn-primary">Kaydet</a>
-                                        </div>
-
-                                        <div class="col-2 d-flex justify-content-center align-items-center">
-                                            <a (click)="removeUploadedFile(item)"
-                                                class="btn btn-sm btn btn-light-primary">İptal</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                        </ng-container>
-
-                        <div class="d-flex flex-stack pt-10">
+                        </form>
+                    </div>
+
+                    <div class="col-12 d-flex align-items-start justify-content-end">
+                        <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
                                 <ng-container *ngIf=" 7 > currentStep$.value && currentStep$.value > 1">
-                                    <button type="button" class="btn btn-lg btn-light-primary me-3"
+                                    <button type="button" class="btn btn-lg btn-light-danger me-3"
                                         (click)="prevStep()">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
@@ -657,7 +856,7 @@
                             <ng-container *ngIf="currentStep$.value !== formsCount">
                                 <div>
                                     <ng-container *ngIf="currentStep$.value < formsCount - 1">
-                                        <button type="button" class="btn btn-lg btn-primary me-3" (click)="nextStep()">
+                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="nextStep()">
                                             <span class="indicator-label">
                                                 İleri {{ " " }}
                                                 <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
@@ -669,7 +868,7 @@
                                         </button>
                                     </ng-container>
                                     <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                        <button type="button" class="btn btn-lg btn-primary me-3" (click)="nextStep()">
+                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="getFormValues()">
                                             <span class="indicator-label">
                                                 Gönder
                                             </span>
@@ -680,12 +879,15 @@
                                 </div>
                             </ng-container>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
 
 
 <ng-template #formError let-control="control" let-message="message" let-validation="validation">

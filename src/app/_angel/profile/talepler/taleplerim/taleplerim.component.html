@@ -9,69 +9,15 @@
           <div class="row mt-5 m-0">
             <div class="col-12 d-flex justify-content-center">
 
-              <!-- <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3">
-                <li class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="getMyDemands('izin')" id="izinNavItem1">
-
-                    <div class="nav-icon mb-3">
-                      <i class="fa-solid fa-umbrella-beach fs-2"></i>
-                    </div>
-
-                    <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.IZIN" | translate}}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                  </a>
-                </li>
-
-                <li class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="getMyDemands('fazlamesai')" id="fazlamesaiNavItem1">
-
-                    <div class="nav-icon mb-3">
-                      <i class="fa-solid fa-business-time fs-2"></i>
-                    </div>
-
-                    <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.FAZLA_MESAI" | translate}}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                  </a>
-                </li>
-
-
-                <li class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="getMyDemands('ziyaretci')" id="ziyaretciNavItem1">
-
-                    <div class="nav-icon mb-3">
-                      <i class="fa-solid fa-people-group fs-2"></i>
-                    </div>
-
-                    <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.ZIYARETCI" | translate}}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                  </a>
-                </li>
-
-                <li class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="getMyDemands('tum')" id="digerNavItem1">
-
-                    <div class="nav-icon mb-3">
-                      <i class="fa-solid fa-circle-question fs-2"></i>
-                    </div>
-                    <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.TUMU" | translate}}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                  </a>
-                </li>
-              </ul> -->
-
               <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3">
                 <li *ngFor="let menuItem of menuItems" class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
+                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
                     data-bs-toggle="pill" (click)="getMyDemands(menuItem.key)" [attr.id]="menuItem.id">
                     <div class="nav-icon mb-3">
                       <i class="fa-solid {{ menuItem.icon }} fs-2"></i>
                     </div>
                     <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{ menuItem.label | translate }}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-danger"></span>
                   </a>
                 </li>
               </ul>
@@ -82,10 +28,10 @@
           <ng-container *ngIf="!kaynak && sureciDevamEdenFormlar.length == 0">
             <div class="row mt-5 m-0">
               <div class="col-12 d-flex justify-content-center">
-                <div class="d-flex align-items-center bg-light-info rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
-                  <i class="fa-solid fa-triangle-exclamation fs-2x text-info ms-5"></i>
+                <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
+                  <i class="fa-solid fa-arrow-pointer fs-2x text-danger ms-5"></i>
                   <div class="flex-grow-1 me-2">
-                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"DEMANDED.WARNING_LIST.TALEP_SECMELISINIZ" | translate}}</a>
+                    <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"DEMANDED.WARNING_LIST.TALEP_SECMELISINIZ" | translate}}</a>
                   </div>
                 </div>
               </div>
@@ -96,9 +42,9 @@
             <div class="row mt-5 m-0">
               <div class="col-12 d-flex justify-content-center">
                 <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
-                  <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                  <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
                   <div class="flex-grow-1 me-2">
-                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
+                    <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
                   </div>
                 </div>
               </div>
@@ -311,70 +257,16 @@
         <mat-tab label="{{'DEMANDED.TAB_GROUP.ONAYLANANLAR' | translate}}">
           <div class="row mt-5 m-0">
             <div class="col-12 d-flex justify-content-center">
-
-              <!-- <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3">
-                <li class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="getMyDemands('izin')" id="izinNavItem2">
-
-                    <div class="nav-icon mb-3">
-                      <i class="fa-solid fa-umbrella-beach fs-2"></i>
-                    </div>
-
-                    <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.IZIN" | translate}}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                  </a>
-                </li>
-
-                <li class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="getMyDemands('fazlamesai')" id="fazlamesaiNavItem2">
-
-                    <div class="nav-icon mb-3">
-                      <i class="fa-solid fa-business-time fs-2"></i>
-                    </div>
-
-                    <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.FAZLA_MESAI" | translate}}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                  </a>
-                </li>
-
-
-                <li class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="getMyDemands('ziyaretci')" id="ziyaretciNavItem2">
-
-                    <div class="nav-icon mb-3">
-                      <i class="fa-solid fa-people-group fs-2"></i>
-                    </div>
-
-                    <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.ZIYARETCI" | translate}}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                  </a>
-                </li>
-
-                <li class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="getMyDemands('tum')" id="digerNavItem2">
-
-                    <div class="nav-icon mb-3">
-                      <i class="fa-solid fa-circle-question fs-2"></i>
-                    </div>
-                    <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.TUMU" | translate}}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                  </a>
-                </li>
-              </ul> -->
-
+          
               <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3">
                 <li *ngFor="let menuItem of menuItems" class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
+                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
                     data-bs-toggle="pill" (click)="getMyDemands(menuItem.key)" [attr.id]="menuItem.id">
                     <div class="nav-icon mb-3">
                       <i class="fa-solid {{ menuItem.icon }} fs-2"></i>
                     </div>
                     <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{ menuItem.label | translate }}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-danger"></span>
                   </a>
                 </li>
               </ul>
@@ -385,10 +277,10 @@
           <ng-container *ngIf="!kaynak && onaylananFormlar.length == 0">
             <div class="row mt-5 m-0">
               <div class="col-12 d-flex justify-content-center">
-                <div class="d-flex align-items-center bg-light-info rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
-                  <i class="fa-solid fa-triangle-exclamation fs-2x text-info ms-5"></i>
+                <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
+                  <i class="fa-solid fa-arrow-pointer fs-2x text-danger ms-5"></i>
                   <div class="flex-grow-1 me-2">
-                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"DEMANDED.WARNING_LIST.TALEP_SECMELISINIZ" | translate}}</a>
+                    <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"DEMANDED.WARNING_LIST.TALEP_SECMELISINIZ" | translate}}</a>
                   </div>
                 </div>
               </div>
@@ -399,9 +291,9 @@
             <div class="row mt-5 m-0">
               <div class="col-12 d-flex justify-content-center">
                 <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
-                  <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                  <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
                   <div class="flex-grow-1 me-2">
-                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
+                    <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
                   </div>
                 </div>
               </div>
@@ -550,9 +442,9 @@
                 <div class="row mt-5 m-0">
                   <div class="col-12 d-flex justify-content-center">
                     <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
-                      <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                      <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
                       <div class="flex-grow-1 me-2">
-                        <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
+                        <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
                       </div>
                     </div>
                   </div>
@@ -568,69 +460,15 @@
           <div class="row mt-5 m-0">
             <div class="col-12 d-flex justify-content-center">
 
-              <!-- <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3" role="tablist3">
-                <li class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="getMyDemands('izin')" id="izinNavItem3">
-
-                    <div class="nav-icon mb-3">
-                      <i class="fa-solid fa-umbrella-beach fs-2"></i>
-                    </div>
-
-                    <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.IZIN" | translate}}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                  </a>
-                </li>
-
-                <li class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="getMyDemands('fazlamesai')" id="fazlamesaiNavItem3">
-
-                    <div class="nav-icon mb-3">
-                      <i class="fa-solid fa-business-time fs-2"></i>
-                    </div>
-
-                    <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.FAZLA_MESAI" | translate}}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                  </a>
-                </li>
-
-
-                <li class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="getMyDemands('ziyaretci')" id="ziyaretciNavItem3">
-
-                    <div class="nav-icon mb-3">
-                      <i class="fa-solid fa-people-group fs-2"></i>
-                    </div>
-
-                    <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.ZIYARETCI" | translate}}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                  </a>
-                </li>
-
-                <li class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="getMyDemands('tum')" id="digerNavItem3">
-
-                    <div class="nav-icon mb-3">
-                      <i class="fa-solid fa-circle-question fs-2"></i>
-                    </div>
-                    <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{"DEMANDED.SUB_MENU.TUMU" | translate}}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                  </a>
-                </li>
-              </ul> -->
-
               <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3">
                 <li *ngFor="let menuItem of menuItems" class="nav-item mb-3 me-3 me-lg-6">
-                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
+                  <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
                     data-bs-toggle="pill" (click)="getMyDemands(menuItem.key)" [attr.id]="menuItem.id">
                     <div class="nav-icon mb-3">
                       <i class="fa-solid {{ menuItem.icon }} fs-2"></i>
                     </div>
                     <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{ menuItem.label | translate }}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
+                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-danger"></span>
                   </a>
                 </li>
               </ul>
@@ -641,10 +479,10 @@
           <ng-container *ngIf="!kaynak && reddedilenFormlar.length == 0">
             <div class="row mt-5 m-0">
               <div class="col-12 d-flex justify-content-center">
-                <div class="d-flex align-items-center bg-light-info rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
-                  <i class="fa-solid fa-triangle-exclamation fs-2x text-info ms-5"></i>
+                <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
+                  <i class="fa-solid fa-arrow-pointer fs-2x text-danger ms-5"></i>
                   <div class="flex-grow-1 me-2">
-                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"DEMANDED.WARNING_LIST.TALEP_SECMELISINIZ" | translate}}</a>
+                    <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"DEMANDED.WARNING_LIST.TALEP_SECMELISINIZ" | translate}}</a>
                   </div>
                 </div>
               </div>
@@ -655,9 +493,9 @@
             <div class="row mt-5 m-0">
               <div class="col-12 d-flex justify-content-center">
                 <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
-                  <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                  <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
                   <div class="flex-grow-1 me-2">
-                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
+                    <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
                   </div>
                 </div>
               </div>
@@ -809,9 +647,9 @@
                 <div class="row mt-5 m-0">
                   <div class="col-12 d-flex justify-content-center">
                     <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center " [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
-                      <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                      <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
                       <div class="flex-grow-1 me-2">
-                        <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
+                        <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
                       </div>
                     </div>
                   </div>

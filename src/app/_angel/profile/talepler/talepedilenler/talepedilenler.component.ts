@@ -68,11 +68,11 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
   checkGrid : boolean = true;
 
   menuItems = [
-    { id: 'izinNavItem1', key: 'izin', icon: 'fa-umbrella-beach', label: 'DEMANDED.SUB_MENU.IZIN' },
-    { id: 'fazlamesaiNavItem1', key: 'fazlamesai', icon: 'fa-business-time', label: 'DEMANDED.SUB_MENU.FAZLA_MESAI' },
-    { id: 'ziyaretciNavItem1', key: 'ziyaretci', icon: 'fa-people-group', label: 'DEMANDED.SUB_MENU.ZIYARETCI' },
-    { id: 'envanterNavItem1', key: 'envanter', icon: 'fa-screwdriver-wrench', label: 'Malzeme' },
-    { id: 'digerNavItem1', key: 'tum', icon: 'fa-circle-question', label: 'DEMANDED.SUB_MENU.TUMU' }
+    { id: 'izinNavItem', key: 'izin', icon: 'fa-umbrella-beach', label: 'DEMANDED.SUB_MENU.IZIN' },
+    { id: 'fazlamesaiNavItem', key: 'fazlamesai', icon: 'fa-business-time', label: 'DEMANDED.SUB_MENU.FAZLA_MESAI' },
+    { id: 'ziyaretciNavItem', key: 'ziyaretci', icon: 'fa-people-group', label: 'DEMANDED.SUB_MENU.ZIYARETCI' },
+    { id: 'envanterNavItem', key: 'envanter', icon: 'fa-screwdriver-wrench', label: 'DEMANDED.SUB_MENU.MALZEME' },
+    { id: 'tumuNavItem', key: 'tum', icon: 'fa-circle-question', label: 'DEMANDED.SUB_MENU.TUMU' }
   ];
   
   
@@ -254,24 +254,24 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     console.log("SELECTED :", this.checkedList);
 
 
-    // if (this.checkedList.length > 0) {
-    //   this.profilService.cancelMyDemandsMultiple(this.checkedList, description).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
-    //     console.log("Çoklu İptal :", response);
-    //     this.getDemanded(aktifMenu);
-    //     this.toastrService.success(
-    //       this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
-    //       this.translateService.instant("TOASTR_MESSAGE.BASARILI")
-    //     );
+    if (this.checkedList.length > 0) {
+      this.profilService.cancelMyDemandsMultiple(this.checkedList, description).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
+        console.log("Çoklu İptal :", response);
+        this.getDemanded(aktifMenu);
+        this.toastrService.success(
+          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
+          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+        );
 
 
-    //     this.allComplete = false;
+        this.allComplete = false;
 
-    //     this.ref.detectChanges();
-    //   });  
+        this.ref.detectChanges();
+      });  
 
-    //   this.descriptionText = '';    
-    //   this.displayCancelDemand = false;
-    // }   
+      this.descriptionText = '';    
+      this.displayCancelDemand = false;
+    }   
     
   }
 
@@ -282,83 +282,26 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
       kaynak = 'fm'
     }
 
-    // this.profilService.cancelMyDemands(formid, kaynak, aciklama).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
-    //   if (response[0].x[0].islemsonuc) {
-    //     this.getDemanded(aktifMenu);
-    //     this.toastrService.success(
-    //       this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
-    //       this.translateService.instant("TOASTR_MESSAGE.BASARILI")
-    //     );
+    this.profilService.cancelMyDemands(formid, kaynak, aciklama).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
+      if (response[0].x[0].islemsonuc) {
+        this.getDemanded(aktifMenu);
+        this.toastrService.success(
+          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
+          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+        );
 
-    //   }
-    //   console.log("Talep İptal :", response);
+      }
+      console.log("Talep İptal :", response);
 
 
-    //   this.ref.detectChanges();
-    // });
+      this.ref.detectChanges();
+    });
 
 
     this.descriptionText = '';    
     this.displayCancelDemand = false;
 
   }
-
-  // resetArr() {
-  //   this.kaynak = '';
-  //   this.allComplete = false;
-  //   this.onayBeklenenFormlar = [];
-  //   this.onaylananFormlar = [];
-  //   this.reddedilenFormlar = [];
-
-  //   this.firma = [];
-  //   this.bolum = [];
-  //   this.pozisyon = [];
-  //   this.gorev = [];
-  //   this.yaka = [];
-  //   this.altFirma = [];
-  //   this.direktorluk = [];
-
-  //   var izinNavItem1 = document.getElementById('izinNavItem1');
-  //   var izinNavItem2 = document.getElementById('izinNavItem2');
-  //   var izinNavItem3 = document.getElementById('izinNavItem3');
-
-  //   var fazlamesaiNavItem1 = document.getElementById('fazlamesaiNavItem1');
-  //   var fazlamesaiNavItem2 = document.getElementById('fazlamesaiNavItem2');
-  //   var fazlamesaiNavItem3 = document.getElementById('fazlamesaiNavItem3');
-
-  //   var ziyaretciNavItem1 = document.getElementById('ziyaretciNavItem1');
-  //   var ziyaretciNavItem2 = document.getElementById('ziyaretciNavItem2');
-  //   var ziyaretciNavItem3 = document.getElementById('ziyaretciNavItem3');
-
-  //   var digerNavItem1 = document.getElementById('digerNavItem1');
-  //   var digerNavItem2 = document.getElementById('digerNavItem2');
-  //   var digerNavItem3 = document.getElementById('digerNavItem3');
-
-  //   var envanterNavItem1 = document.getElementById('envanterNavItem1');
-  //   var envanterNavItem2 = document.getElementById('envanterNavItem2');
-  //   var envanterNavItem3 = document.getElementById('envanterNavItem3');
-
-  //   izinNavItem1?.classList.remove('active');
-  //   izinNavItem2?.classList.remove('active');
-  //   izinNavItem3?.classList.remove('active');
-
-  //   fazlamesaiNavItem1?.classList.remove('active');
-  //   fazlamesaiNavItem2?.classList.remove('active');
-  //   fazlamesaiNavItem3?.classList.remove('active');
-
-  //   ziyaretciNavItem1?.classList.remove('active');
-  //   ziyaretciNavItem2?.classList.remove('active');
-  //   ziyaretciNavItem3?.classList.remove('active');
-
-  //   digerNavItem1?.classList.remove('active');
-  //   digerNavItem2?.classList.remove('active');
-  //   digerNavItem3?.classList.remove('active');
-
-  //   envanterNavItem1?.classList.remove('active');
-  //   envanterNavItem2?.classList.remove('active');
-  //   envanterNavItem3?.classList.remove('active');
-
-  // }
 
   resetArr() {
     this.kaynak = '';
@@ -375,11 +318,25 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     this.altFirma = [];
     this.direktorluk = [];
   
+    const classList = ['active'];
+  
     for (const menuItem of this.menuItems) {
-      const itemElement = document.getElementById(menuItem.id);
-      itemElement?.classList.remove('active');
+      const bekleyenNavItem = document.getElementById('bekleyen-' + menuItem.id);
+      const onaylananNavItem = document.getElementById('onaylanan-' + menuItem.id);
+      const reddedilenNavItem = document.getElementById('reddedilen-' + menuItem.id);
+  
+      if (bekleyenNavItem) {
+        bekleyenNavItem.classList.remove(...classList);
+      }
+      if (onaylananNavItem) {
+        onaylananNavItem.classList.remove(...classList);
+      }
+      if (reddedilenNavItem) {
+        reddedilenNavItem.classList.remove(...classList);
+      }
     }
   }
+  
 
 
   getDemandProcess(formId : any, formTip : any) {
@@ -414,15 +371,17 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
   }
 
   showCancelDemandDialog(item : any, tip : number) {
-    this.cancelAlertRef.close();
+    // this.cancelAlertRef.close();
     if (tip == 2) {
       let checkedList = this.onayBeklenenFormlar.filter((c : any) => {
         return c.completed == true;
       });
       if (checkedList.length > 0) {
+        this.cancelAlertRef.close();
         this.displayCancelDemand = true;
         this.selectedItem = item;
         this.tip = tip;    
+
       } else {
         this.toastrService.error(
           this.translateService.instant("TOASTR_MESSAGE.ISARETLEME_YAPMALISINIZ"),
@@ -434,6 +393,8 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
       this.selectedItem = item;
       this.tip = tip;
     }
+
+    this.ref.detectChanges();
     
   }
 
@@ -553,26 +514,30 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     });
   }
 
-  confirmDemandMultiple(aktifMenu : any){
+  confirmDemandMultiple(aktifMenu: any) {
     if (this.checkedList.length > 0) {
-      // this.profilService.confirmDemandMultiple(this.checkedList).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
-    //     console.log("Çoklu Onay :", response);
-    //     this.getDemanded(aktifMenu);
-    //     this.toastrService.success(
-    //       this.translateService.instant("TOASTR_MESSAGE.TALEP_ONAYLANDI"),
-    //       this.translateService.instant("TOASTR_MESSAGE.BASARILI")
-    //     );
-    // this.confirmAlertRef.close();
+      this.profilService.confirmDemandMultiple(this.checkedList).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+        console.log("Çoklu Onay :", response);
+        this.getDemanded(aktifMenu);
+        this.toastrService.success(
+          this.translateService.instant("TOASTR_MESSAGE.TALEP_ONAYLANDI"),
+          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+        );
+        this.confirmAlertRef.close();
 
-    //     this.allComplete = false;
-    //     this.ref.detectChanges();
-    //   });  
-    }   
-    
+        this.allComplete = false;
+        this.ref.detectChanges();
+      });
+    }
   }
 
-  removeItemInCheckedList(removeItem : any) {
+  removeItemInCheckedList(removeItem : any, dialog : any) {
     this.checkedList = this.checkedList.filter(item => item.Id !== removeItem.Id);
+
+    if (this.checkedList.length == 0) {
+      dialog.close();
+    }
+    
     this.ref.detectChanges();
   }
 

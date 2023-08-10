@@ -755,6 +755,7 @@ export const locale = {
         IZIN : "İzin",
         FAZLA_MESAI : "Fazla Mesai",
         ZIYARETCI : "Ziyaretçi",
+        MALZEME : "Malzeme",
         TUMU : "Tümü"
       },
 
@@ -809,6 +810,7 @@ export const locale = {
           AD : "Ad",
           SOYAD : "Soyad",
           SICIL_NO : "Sicil No",
+          PERSONEL : "Personel",
           PERSONEL_NO : "Personel No",
           FIRMA : "Firma",
           BOLUM : "Bölüm",
@@ -821,8 +823,14 @@ export const locale = {
           ARALIK_BITIS : "Bitiş Tarihi",
           IZIN_TIPI : "İzin Tipi",
           FAZLA_MESAI_TURU : "Fazla Mesai Nedeni",
-          PLACEHOLDER : 'Bir değer giriniz..'
+          PLACEHOLDER : 'Bir değer giriniz..',
+          TIP : 'Tip'
         }
+      },
+
+      ALERT : {
+        ONAY_MESAJ : 'Seçilen Talepleri Onaylamak İstediğinize Emin Misiniz?',
+        RET_MESAJ : 'Seçilen Talepleri Reddetmek İstediğinize Emin Misiniz?',
       }
     },
     IZIN_TALEP_DIALOG : {
@@ -975,6 +983,61 @@ export const locale = {
       SUREC_BULUNAMADI : 'Gösterilecek Süreç Bulunamadı',
       TALEP_ONAYLANDI : 'Talep Onaylandı',
       ISARETLEME_YAPMALISINIZ : 'İşaretleme Yapmalısınız'
+    },
+
+
+    PROFILE_WIDGETS : {
+      BIRTHDAY : {
+        BUGUN_DOGANLAR : 'Bugün Doğanlar',
+        BU_HAFTA_DOGANLAR : 'Bu Hafta Doğanlar',
+        BU_AY_DOGANLAR : 'Bu Ay Doğanlar',
+        IYIKI_DOGDUN : 'İyi ki Doğdun',
+        DOGUM_MESAJ : 'Merhaba {{value1}}, doğum gününüzü kutlar, sevdiklerinizle mutlu bir ömür dileriz.',
+        TUM_DOGUM_GUNLERI : 'Tüm Doğum Günleri'
+      },
+
+      KIDEM : {
+        KIDEMLILER : 'Kıdemliler',
+        MESAJ : '{{value1}}. Yılın Kutlu Olsun',
+        TEBRIKLER : 'Tebrikler'
+      },
+
+      NEW_PERSON : {
+        HEADER : 'Aramıza Katılanlar',
+        TUM_YENILER : 'Tüm Yeni Katılanlar',
+        HOSGELDIN : 'Hoşgeldin',
+        MESAJ : 'Aramıza Hoşgeldin'
+      },
+
+      DUYURULAR : {
+        HEADER : 'Duyurular',
+        TUM_DUYURULAR : 'Tüm Duyurular'
+      },
+
+      DOSYALARIM : {
+        HEADER : 'Dosyalarım',
+        YUKLE : 'Yükle',
+        KAYDET : 'Kaydet',
+        IPTAL : 'İptal'
+      },
+
+      ANKET : {
+        HEADER : 'Anket',
+        EVET : 'EVET',
+        HAYIR : 'Hayır',
+        ANKET_OLUSTUR : 'Anket Oluştur',
+        TUM_ANKETLER : 'Tüm Anketler'
+      },
+
+      SHARRED : {
+        TUMU : 'Tümü',
+        ISIM_SOYISIM : 'İsim Soyisim',
+        DOGUM_TARIHI : 'Doğum Tarihi',
+        BASLANGIC_TARIHI : 'Başlangıç Tarihi',
+        BOLUM : 'Bölüm',
+        KIDEM : 'Kıdem',
+        TARIH : 'Tarih'
+      }
     }
 
   },

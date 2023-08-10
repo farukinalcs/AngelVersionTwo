@@ -24,3 +24,24 @@
 
 // ngx-toastr
 @import '~ngx-toastr/toastr';
+
+
+/* Angular Material CSS */
+/*--------------------------------------------*/
+
+// Angular material mat-tab border bottom background color
+.mat-ink-bar {
+    background-color: #ed1b24 !important
+}
+
+
+// Angular materil checkbox background color (Hepsi İşaretlendiğinde)
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #ed1b24 !important
+}
+
+// Angular materil checkbox background color (Tekli İşaretlendiğinde)
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #ed1b24 !important
+}
+/*--------------------------------------------*/

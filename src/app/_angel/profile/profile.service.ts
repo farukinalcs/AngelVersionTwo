@@ -854,4 +854,9 @@ export class ProfileService {
 
     return this.httpClient.get<any>(API_URL + '/process', options);
   }
+
+
+  getImage(path : any) {
+    return this.httpClient.get<any>(API_URL + '/Image?sicilId=233');
+  }
 }

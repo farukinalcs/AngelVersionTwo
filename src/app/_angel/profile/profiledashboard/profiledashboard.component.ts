@@ -52,6 +52,10 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
     this.getMenuConfig();
     this.getUserInformation();
     this.getCurrentUserInformations();
+
+    // this.profileService.getImage('path').subscribe(response => {
+    //   console.log("Image : ", response);
+    // });
   }
 
   getUserInformation() {

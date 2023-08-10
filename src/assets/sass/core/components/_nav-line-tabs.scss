@@ -42,7 +42,7 @@
 	.nav-item .nav-link:hover:not(.disabled) {
 		background-color: transparent;
 		border: 0;
-		border-bottom: 1px solid var(--kt-primary);
+		border-bottom: 1px solid var(--kt-danger);
 		transition: $transition-link;
   	}
 

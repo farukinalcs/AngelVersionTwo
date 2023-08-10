@@ -17,8 +17,6 @@
         </div>
     </div>
 
-
-
     <div class="card-body p-4">
         <div class="mb-5">
             <div class="row">
@@ -52,19 +50,27 @@
     </div>
 </div>
 
-
 <p-dialog header="Haftalık Yemek Menüsü" [(visible)]="displayAllFoodMenu" [modal]="true" [style]="{width: '50vw'}"
     [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
     <div class="container" style="height: 500px;">
         <div class="card p-5">
             <div class="card-body pt-7 px-0">
                 <div class="row mb-10">
-                    <div class="col-12 d-flex justify-content-center">
-                        <span class="fw-bold fs-2x text-gray-800">{{currentMonth}}</span>
+                    <div class="col-3 d-flex align-items-center justify-content-end">
+                        <i class="fa-solid fa-chevron-left text-hover-danger fs-2" (click)="prevMonth()"></i>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center">
+                        <span class="fw-bold fs-2x text-gray-800">
+                            {{currentMonth}} {{currentDate.getFullYear()}}
+                        </span>
+                    </div>
+                    <div class="col-3 d-flex align-items-center">
+                        <i class="fa-solid fa-chevron-right text-hover-danger fs-2" (click)="nextMonth()"></i>
                     </div>
                 </div>
                 <div class="row mb-8">
-                    <p-carousel [value]="weeks" [numVisible]="7" [numScroll]="7" [circular]="true" [showIndicators]="false">
+                    <p-carousel [value]="weeks" [numVisible]="7" [numScroll]="7" [circular]="true" [showIndicators]="false"
+                        #menuCarousel>
                         <ng-template let-item pTemplate="item">
                             <div class="tanimlar-item">
                                 <div class="tanimlar-item-content">
@@ -102,11 +108,22 @@
         </div>
     </div>
 
+
     <ng-template pTemplate="footer">
-        <p-button icon="pi pi-times" (click)="displayAllFoodMenu=false"
-            label="{{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}" class="p-button-text"></p-button>
-    </ng-template>
+        <div class="d-flex justify-content-between">
+          <p-button label="{{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}" (click)="closeMenuDialog()" class="p-button-outlined"></p-button>
+        </div>
+      </ng-template>
 </p-dialog>
+
+
+
+
+
+
+
+
+
 
 
 

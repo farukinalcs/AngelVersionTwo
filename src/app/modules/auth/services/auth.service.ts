@@ -50,22 +50,11 @@ export class AuthService implements OnDestroy {
     return this.authHttpService.cryptoLogin(email, password, lang, appList)
       .pipe(map((auth : ResponseModel<ResponseXloginDetail, ResponseDetailZ>[]) => {
         console.log("AUTH :", auth);
-
-        // let response : ResponseXloginDetail[] = JSON.parse(auth[0].x.toString());
         let response : ResponseXloginDetail[] = auth[0].x;
-
         console.log("response :", response[0]);
-        
-        // let response_z : ResponseDetailZ = JSON.parse(auth[0].z.toString());        
         let response_z : ResponseDetailZ = auth[0].z;        
         
         if (response_z.islemsonuc == 1) {
-          // const result = this.setAuthFromLocalStorage(auth[0].y);
-          // if (result) {
-            // var token = this.getAuthFromLocalStorage();
-            // if (token == null) {
-            //   return of(undefined);
-            // }
             var user = response[0];
             
             this.helper.userLoginModel = response[0];
@@ -73,7 +62,6 @@ export class AuthService implements OnDestroy {
             this.isLoadingSubject.next(false)
 
             return this.currentUserSubject;
-          // }
         }
       }),
 

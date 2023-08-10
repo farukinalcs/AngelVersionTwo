@@ -39,20 +39,20 @@
                       {{ _user.adsoyad }}
                     </a>
 
-                    <a class="cursor-pointer">
+                    <!-- <a class="cursor-pointer">
                       <span [inlineSVG]="'./assets/media/icons/duotune/general/gen026.svg'"
                         class="svg-icon svg-icon-1 svg-icon-primary"></span>
-                    </a>
+                    </a> -->
 
                     <ng-container *ngIf="userInformation">
-                      <a class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
+                      <a class="btn btn-sm btn-light-danger fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
                         {{"PROFIL_DASHBOARD.GIRIS_TARIHI" | translate}} : {{ userInformation.GirisTarih | date
                         :'yyyy-MM-dd'}}
                       </a>
                     </ng-container>
 
                     <ng-container *ngIf="!userInformation">
-                      <a class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
+                      <a class="btn btn-sm btn-light-danger fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
                         YYYY-MM-DD
                       </a>
                     </ng-container>
@@ -62,7 +62,7 @@
 
                 <div
                   [ngClass]="{'col-4': !(this.layoutService.isMobile | async), 'col-12 pt-4 d-flex justify-content-center' : this.layoutService.isMobile | async}">
-                  <button class="btn btn-primary w-50 h-100"
+                  <button class="btn btn-danger w-50 h-100"
                     [matMenuTriggerFor]="talepler">{{"PROFIL_DASHBOARD.TALEP_OLUSTUR" | translate}}</button>
                   <mat-menu #talepler="matMenu">
 
@@ -228,35 +228,35 @@
 
                   <ng-container>
                     <li class="nav-item">
-                      <a class="nav-link text-active-primary text-center me-6" routerLink="genel_bakis"
-                        routerLinkActive="active">Genel Bakış</a>
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="genel_bakis"
+                        routerLinkActive="active" translate="MENU.DASHBOARD"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.pages.profil.tabMenu.gecislerim">
                     <li class="nav-item">
-                      <a class="nav-link text-active-primary text-center me-6" routerLink="gecislerim"
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="gecislerim"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.GECISLERIM"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.pages.profil.tabMenu.surelerim">
                     <li class="nav-item">
-                      <a class="nav-link text-active-primary text-center me-6" routerLink="surelerim"
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="surelerim"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.SURELERIM"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.pages.profil.tabMenu.izinlerim">
                     <li class="nav-item">
-                      <a class="nav-link text-active-primary text-center me-6" routerLink="izinlerim"
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="izinlerim"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.IZINLERIM"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.pages.profil.tabMenu.talepEdilenler">
                     <li class="nav-item">
-                      <a class="nav-link text-active-primary text-center me-6" routerLink="talep_edilenler"
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="talep_edilenler"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEP_EDILENLER">
                         <span class="badge badge-circle badge-danger ms-2">5</span>
                       </a>
@@ -265,42 +265,42 @@
 
                   <ng-container *ngIf="menuConfig.pages.profil.tabMenu.taleplerim">
                     <li class="nav-item">
-                      <a class="nav-link text-active-primary text-center me-6" routerLink="taleplerim"
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="taleplerim"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEPLERIM"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.pages.profil.tabMenu.ziyaretciTaleplerim">
                     <li class="nav-item">
-                      <a class="nav-link text-active-primary text-center me-6" routerLink="ziyaretci_taleplerim"
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_taleplerim"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.ZIYARETCI_TALEPLERIM"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.pages.profil.tabMenu.mobilLokasyon">
                     <li class="nav-item">
-                      <a class="nav-link text-active-primary text-center me-6" routerLink="mobil_lokasyon"
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="mobil_lokasyon"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.MOBIL_LOKASYON"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.pages.profil.tabMenu.taskListem">
                     <li class="nav-item">
-                      <a class="nav-link text-active-primary text-center me-6" routerLink="task_listem"
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="task_listem"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.TASK_LISTEM"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.pages.profil.tabMenu.takimim">
                     <li class="nav-item">
-                      <a class="nav-link text-active-primary text-center me-6" routerLink="takimim"
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="takimim"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.TAKIMIM"></a>
                     </li>
                   </ng-container>
 
                   <ng-container>
                     <li class="nav-item">
-                      <a class="nav-link text-active-primary text-center me-6" routerLink="eksik_surelerim"
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="eksik_surelerim"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.EKSIK_SURELERIM"></a>
                     </li>
                   </ng-container>

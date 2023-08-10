@@ -67,7 +67,7 @@ export class TaleplerimComponent implements OnInit, OnDestroy {
     { id: 'izinNavItem1', key: 'izin', icon: 'fa-umbrella-beach', label: 'DEMANDED.SUB_MENU.IZIN' },
     { id: 'fazlamesaiNavItem1', key: 'fazlamesai', icon: 'fa-business-time', label: 'DEMANDED.SUB_MENU.FAZLA_MESAI' },
     { id: 'ziyaretciNavItem1', key: 'ziyaretci', icon: 'fa-people-group', label: 'DEMANDED.SUB_MENU.ZIYARETCI' },
-    { id: 'envanterNavItem1', key: 'envanter', icon: 'fa-screwdriver-wrench', label: 'Malzeme' },
+    { id: 'envanterNavItem1', key: 'envanter', icon: 'fa-screwdriver-wrench', label: 'DEMANDED.SUB_MENU.MALZEME' },
     { id: 'digerNavItem1', key: 'tum', icon: 'fa-circle-question', label: 'DEMANDED.SUB_MENU.TUMU' }
   ];
 

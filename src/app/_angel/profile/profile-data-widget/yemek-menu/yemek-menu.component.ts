@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Carousel } from 'primeng/carousel';
 
 @Component({
   selector: 'app-yemek-menu',
@@ -8,37 +9,41 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 export class YemekMenuComponent implements OnInit {
 
   items: any[] = [
-    {tarih : '04 Temmuz Salı', menu : ['Brokoli Çorbası', 'Dana Güveç', 'Roka Salatası', 'Çikolatalı Browni']},
-    {tarih : '05 Temmuz Çarşamba', menu : ['Mercimek Çorbası', 'Tavuk', 'Salata', 'Browni']},
-    {tarih : '06 Temmuz Perşembe', menu : ['Mercimek Çorbası', 'Tavuk', 'Salata', 'Browni']},
-    {tarih : '07 Temmuz Cuma', menu : ['Mercimek Çorbası', 'Tavuk', 'Salata', 'Browni']},
-    {tarih : '08 Temmuz Cumartesi', menu : ['Mercimek Çorbası', 'Tavuk', 'Salata', 'Browni']},
+    { tarih: '04 Temmuz Salı', menu: ['Brokoli Çorbası', 'Dana Güveç', 'Roka Salatası', 'Çikolatalı Browni'] },
+    { tarih: '05 Temmuz Çarşamba', menu: ['Mercimek Çorbası', 'Tavuk', 'Salata', 'Browni'] },
+    { tarih: '06 Temmuz Perşembe', menu: ['Mercimek Çorbası', 'Tavuk', 'Salata', 'Browni'] },
+    { tarih: '07 Temmuz Cuma', menu: ['Mercimek Çorbası', 'Tavuk', 'Salata', 'Browni'] },
+    { tarih: '08 Temmuz Cumartesi', menu: ['Mercimek Çorbası', 'Tavuk', 'Salata', 'Browni'] },
   ];
   currentItemIndex = 0;
 
-  displayAllFoodMenu : boolean;
-
+  displayAllFoodMenu: boolean;
   weeks: any[] = [];
-  currentDate: any;
+  currentDate: Date;
   currentMenu: any;
   currentMonth: string;
+  currentPageIndex = 0;
+  itemsPerPage = 7;
 
+  @ViewChild('menuCarousel', { static: false }) menuCarousel!: Carousel;
+
+  activeDate: number;
   constructor(
-    private ref : ChangeDetectorRef
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
     this.generateWeeks();
-    this.currentDate = this.getCurrentDate();
-    this.currentMenu = this.weeks.find((item) => item.date === this.currentDate);
+    this.currentDate = new Date();
+    this.currentMenu = this.weeks.find((item) => item.date === this.currentDate.getDate());
+    this.activeDate = this.currentDate.getDate();
   }
-
 
   autoNavigate(): void {
     setInterval(() => {
       this.nextItem();
-      this.ref.detectChanges();      
-    }, 5000); // 5 saniye (5000 milisaniye) aralıkla bir sonraki öğeye geç
+      this.ref.detectChanges();
+    }, 5000);
   }
 
   get currentItem(): any {
@@ -48,23 +53,25 @@ export class YemekMenuComponent implements OnInit {
   nextItem(): void {
     this.currentItemIndex++;
     if (this.currentItemIndex >= this.items.length) {
-      this.currentItemIndex = 0; // Dizinin son elemanıysa başa dön
+      this.currentItemIndex = 0;
     }
   }
 
   previousItem(): void {
     this.currentItemIndex--;
     if (this.currentItemIndex < 0) {
-      this.currentItemIndex = this.items.length - 1; // Dizinin ilk elemanıysa sona git
+      this.currentItemIndex = this.items.length - 1;
     }
   }
 
   showAllFoodMenu() {
     this.displayAllFoodMenu = true;
+    const index = this.weeks.findIndex(item => item.date === this.currentDate.getDate());
+    this.setMenuPage(index);
   }
 
   getDateForMenu(item: any) {
-    this.currentDate = item.date;
+    this.currentDate.setDate(item.date);
     this.currentMenu = item;
   }
 
@@ -75,19 +82,87 @@ export class YemekMenuComponent implements OnInit {
 
   generateWeeks(): void {
     const today = new Date();
-    this.currentMonth = today.toLocaleString('default', {month:'long'});
-    const startDay = new Date(today.getFullYear(), today.getMonth(), 1); // Ayın başlangıç tarihi
-    const endDay = new Date(today.getFullYear(), today.getMonth() + 1, 0); // Ayın son günü
+    this.currentMonth = today.toLocaleString('default', { month: 'long' });
+    const startDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    const endDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
     for (let i = startDay.getDate(); i <= endDay.getDate(); i++) {
       const day = new Date(today.getFullYear(), today.getMonth(), i).toLocaleDateString('tr-TR', { weekday: 'short' });
       const date = new Date(today.getFullYear(), today.getMonth(), i).getDate();
-      const menus = ['Menü 1', 'Menü 2', 'Menü 3']; // Örnek menüler, istediğiniz menüleri burada oluşturabilirsiniz
+      const menus = this.items.find(item => item.tarih.includes(i.toString()))?.menu || ['Menü Yok'];
 
       this.weeks.push({ day, date, menus });
     }
   }
+
+  closeMenuDialog() {
+    this.displayAllFoodMenu = false;
+  }
+
+  showMonthMenus(month: number, year: number) {
+    this.weeks = [];
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+
+    for (let i = firstDay.getDate(); i <= lastDay.getDate(); i++) {
+      const day = new Date(year, month, i).toLocaleDateString('tr-TR', { weekday: 'short' });
+      const date = new Date(year, month, i).getDate();
+      const menus = this.items.find(item => item.tarih.includes(i.toString()))?.menu || ['Menü Yok'];
+
+      this.weeks.push({ day, date, menus });
+    }
+
+    this.currentMenu = this.weeks.find((item) => item.date === this.currentDate.getDate());
+    this.ref.detectChanges();
+    this.currentPageIndex = 0;
+  }
+
+  nextMonth() {
+    const nextMonth = this.currentDate.getMonth() + 1;
+    const nextYear = this.currentDate.getFullYear();
+    if (nextMonth > 11) {
+      this.currentDate.setFullYear(nextYear + 1);
+      this.currentDate.setMonth(0);
+    } else {
+      this.currentDate.setMonth(nextMonth);
+    }
+
+    this.currentMonth = this.currentDate.toLocaleString('default', { month: 'long' });
+    this.showMonthMenus(this.currentDate.getMonth(), this.currentDate.getFullYear());
+  }
+
+  prevMonth() {
+    const prevMonth = this.currentDate.getMonth() - 1;
+    const prevYear = this.currentDate.getFullYear();
+    if (prevMonth < 0) {
+      this.currentDate.setFullYear(prevYear - 1);
+      this.currentDate.setMonth(11);
+    } else {
+      this.currentDate.setMonth(prevMonth);
+    }
+
+    this.currentMonth = this.currentDate.toLocaleString('default', { month: 'long' });
+    this.showMonthMenus(this.currentDate.getMonth(), this.currentDate.getFullYear());
+  }
+
+  setMenuPage(pageIndex: number) {
+    this.currentPageIndex = pageIndex;
+  }
+
+  get visibleWeeks() {
+    const startIndex = this.currentPageIndex * this.itemsPerPage;
+    return this.weeks.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  
 }
+
+
+
+
+
+
+
 
 
 

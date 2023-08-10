@@ -12,14 +12,14 @@
                                             <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                                 <thead>
                                                     <tr
-                                                        class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
-                                                        <th class="text-center"></th>
+                                                        class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                                        <th class="text-center rounded-start"></th>
                                                         <th class="text-center">Ad Soyad</th>
                                                         <th class="text-center">Firma</th>
                                                         <th class="text-center">Açıklama</th>
                                                         <th class="text-center">Giriş</th>
                                                         <th class="text-center">Çıkış</th>
-                                                        <th class="text-center"></th>
+                                                        <th class="text-center rounded-end"></th>
                                                     </tr>
                                                 </thead>
         
@@ -29,26 +29,26 @@
                                                             <div [ngSwitch]="item.ZiyaretNedeni">
                                                                 <div *ngSwitchCase="'Misafir'">
                                                                     <div matTooltip="Misafir" class="symbol symbol-50px me-2">
-                                                                        <span class="symbol-label bg-light-info">
-                                                                            <i class="fa-solid fa-users text-info fs-2x"></i>
+                                                                        <span class="symbol-label bg-light-danger">
+                                                                            <i class="fa-solid fa-users text-danger fs-2x"></i>
                                                                         </span>
                                                                     </div>
                                                                 </div>
         
                                                                 <div *ngSwitchCase="'Etkinlik'">
                                                                     <div matTooltip="Etkinlik" class="symbol symbol-50px me-2">
-                                                                        <span class="symbol-label bg-light-info">
+                                                                        <span class="symbol-label bg-light-danger">
                                                                             <i
-                                                                                class="fa-solid fa-cake-candles text-info fs-2x"></i>
+                                                                                class="fa-solid fa-cake-candles text-danger fs-2x"></i>
                                                                         </span>
                                                                     </div>
                                                                 </div>
         
                                                                 <div *ngSwitchCase="'İş Görüşmesi'">
                                                                     <div matTooltip="Etkinlik" class="symbol symbol-50px me-2">
-                                                                        <span class="symbol-label bg-light-info">
+                                                                        <span class="symbol-label bg-light-danger">
                                                                             <i
-                                                                                class="fa-solid fa-handshake text-info fs-2x"></i>
+                                                                                class="fa-solid fa-handshake text-danger fs-2x"></i>
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -56,9 +56,9 @@
                                                                 <div *ngSwitchCase="'Yük Girişi'">
                                                                     <div matTooltip="Yük Girişi"
                                                                         class="symbol symbol-50px me-2">
-                                                                        <span class="symbol-label bg-light-info">
+                                                                        <span class="symbol-label bg-light-danger">
                                                                             <i
-                                                                                class="fa-solid fa-truck-ramp-box text-info fs-2x"></i>
+                                                                                class="fa-solid fa-truck-ramp-box text-danger fs-2x"></i>
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -66,9 +66,9 @@
         
                                                                 <div *ngSwitchDefault>
                                                                     <div matTooltip="Diğer" class="symbol symbol-50px me-2">
-                                                                        <span class="symbol-label bg-light-info">
+                                                                        <span class="symbol-label bg-light-danger">
                                                                             <i
-                                                                                class="fa-solid fa-truck-ramp-box text-info fs-2x"></i>
+                                                                                class="fa-solid fa-truck-ramp-box text-danger fs-2x"></i>
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -111,7 +111,7 @@
                                                         <td class="text-center">
                                                             <ng-container *ngIf="item.durum == 0">
                                                                 <a (click)="cancelMyVisitor(item)" matTooltip='Kaldır'
-                                                                    class="btn btn-light-danger btn-sm px-4 py-2">
+                                                                    class="btn btn-danger btn-sm px-4 py-2">
                                                                     <i class="fa-solid fa-xmark m-0 p-0"></i>
                                                                 </a>
                                                             </ng-container>
@@ -131,9 +131,9 @@
                         <ng-container *ngIf="myVisitorDemanded.length == 0">
                             <div class="col-12 d-flex justify-content-center align-items-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
                                 <div class="d-flex align-items-center bg-light-danger rounded p-5 m-20 text-center w-100">
-                                    <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                                    <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
                                     <div class="flex-grow-1 me-2">
-                                        <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" |
+                                        <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" |
                                             translate}}</a>
                                     </div>
                                 </div>
@@ -149,8 +149,8 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
-                                            <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>    
+                                            <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
+                                            <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>    
                                         </div>
                                     </div>
                                 </div>

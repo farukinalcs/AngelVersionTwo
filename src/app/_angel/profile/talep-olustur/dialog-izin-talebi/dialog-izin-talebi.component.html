@@ -73,9 +73,9 @@
                     <div class="col-lg-6">
                         <input type="radio" class="btn-check" formControlName="gunluksaatlik"  value="gunluk"
                             id="kt_radio_buttons_2_option_1" />
-                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center mb-5"
+                        <label class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center mb-5"
                             for="kt_radio_buttons_2_option_1">
-                            <i class="fa-solid fa-calendar-days fs-2x text-primary"></i>
+                            <i class="fa-solid fa-calendar-days fs-2x text-danger"></i>
                     
                             <span class="d-block fw-semibold text-start ps-3">
                                 <span class="text-dark fw-bold d-block fs-3">{{"IZIN_TALEP_DIALOG.FORM.GUNLUK" | translate}}</span>
@@ -85,9 +85,9 @@
                     
                     <div class="col-lg-6">
                         <input type="radio" class="btn-check" formControlName="gunluksaatlik"  value="saatlik" id="kt_radio_buttons_2_option_2" />
-                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center"
+                        <label class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center"
                             for="kt_radio_buttons_2_option_2">
-                            <i class="fa-solid fa-clock fs-2x text-primary"></i>
+                            <i class="fa-solid fa-clock fs-2x text-danger"></i>
                             <span class="d-block fw-semibold text-start ps-3">
                                 <span class="text-dark fw-bold d-block fs-3">{{"IZIN_TALEP_DIALOG.FORM.SAATLIK" | translate}}</span>
                             </span>
@@ -224,7 +224,7 @@
             </ng-container>
 
             <div class="col-12">
-                <div class="border border-success border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                <div class="border border-danger border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                     <!-- Saatlik -->
                     <ng-container *ngIf="isHourly">
                         <div class="d-flex align-items-center justify-content-center">
@@ -285,7 +285,7 @@
 
     <div class="row mt-10">
         <div class="col-12 d-flex align-items-end justify-content-end">
-            <button class="mat-stepper-next w-25 btn btn-primary" [disabled]="vacationForm.invalid" type="submit" (click)="getVacationFormValues()">
+            <button class="mat-stepper-next w-25 btn btn-danger" [disabled]="vacationForm.invalid" type="submit" (click)="getVacationFormValues()">
                 {{"IZIN_TALEP_DIALOG.FORM.GONDER" | translate}}
             </button>
         </div>

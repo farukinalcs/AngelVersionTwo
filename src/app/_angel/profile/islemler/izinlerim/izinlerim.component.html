@@ -64,9 +64,9 @@
                                 <tr class="mat-row" *matNoDataRow>
                                     <td class="mat-cell fw-bold fs-4 text-center text-gray-800 p-10" [attr.colspan]="displayedColumns.length">
                                         <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
-                                            <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                                            <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
                                             <div class="flex-grow-1 me-2">
-                                                <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
+                                                <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
                                             </div>
                                         </div>
                                     </td>
@@ -145,9 +145,9 @@
                                 <tr class="mat-row" *matNoDataRow>
                                     <td class="mat-cell fw-bold fs-4 text-center text-gray-800 p-10" [attr.colspan]="displayedColumns.length">
                                         <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
-                                            <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                                            <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
                                             <div class="flex-grow-1 me-2">
-                                                <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
+                                                <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
                                             </div>
                                         </div>
                                     </td>
@@ -228,9 +228,9 @@
                                 <tr class="mat-row" *matNoDataRow>
                                     <td class="mat-cell fw-bold fs-4 text-center text-gray-800 p-10" [attr.colspan]="displayedColumns.length">
                                         <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-50">
-                                            <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                                            <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
                                             <div class="flex-grow-1 me-2">
-                                                <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
+                                                <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
                                             </div>
                                         </div>
                                     </td>
@@ -391,9 +391,9 @@
                         <div class="col-12 d-flex justify-content-center align-items-center">
                             <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center"
                                 [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
-                                <i class="fa-solid fa-triangle-exclamation fs-2x text-warning ms-5"></i>
+                                <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
                                 <div class="flex-grow-1 me-2">
-                                    <a class="fw-bold text-gray-800 text-hover-primary fs-6">{{"PUBLIC.DATA_NOT_FOUND" |
+                                    <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" |
                                         translate}}</a>
                                 </div>
                             </div>
@@ -419,7 +419,7 @@
                             <input type="radio" class="btn-check" (click)="selectMonth(item)" value="{{item}}"
                                 id="{{item}}" />
                             <label
-                                class="btn btn-outline btn-outline-dashed btn-active-light-primary p-4 d-flex align-items-center justify-content-center"
+                                class="btn btn-outline btn-outline-dashed btn-active-light-danger p-4 d-flex align-items-center justify-content-center"
                                 for="{{item}}">
                                 <span class="d-block fw-semibold text-start ps-3">
                                     <span class="text-dark fw-bold d-block fs-6">{{item}}</span>
@@ -451,7 +451,7 @@
                             <input type="radio" class="btn-check" (click)="selectYear(item)" value="{{item}}"
                                 id="{{item}}" />
                             <label
-                                class="btn btn-outline btn-outline-dashed btn-active-light-primary p-4 d-flex align-items-center justify-content-center"
+                                class="btn btn-outline btn-outline-dashed btn-active-light-danger p-4 d-flex align-items-center justify-content-center"
                                 for="{{item}}">
                                 <span class="d-block fw-semibold text-start ps-3">
                                     <span class="text-dark fw-bold d-block fs-6">{{item}}</span>

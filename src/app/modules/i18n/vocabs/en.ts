@@ -192,6 +192,7 @@ export const locale = {
         IZIN : "Vacation",
         FAZLA_MESAI : "Overtime",
         ZIYARETCI : "Visitor",
+        MALZEME : "Material",
         TUMU : "All"
       },
 
@@ -246,6 +247,7 @@ export const locale = {
           AD : "Name",
           SOYAD : "Surname",
           SICIL_NO : "Register No",
+          PERSONEL : "Person",
           PERSONEL_NO : "Person No",
           FIRMA : "Company",
           BOLUM : "Department",
@@ -258,8 +260,14 @@ export const locale = {
           ARALIK_BITIS : "End Date",
           IZIN_TIPI : "Vacation Type",
           FAZLA_MESAI_TURU : "Overtime Reason",
-          PLACEHOLDER : 'Enter a value..'
+          PLACEHOLDER : 'Enter a value..',
+          TIP : 'Type'
         }
+      },
+
+      ALERT : {
+        ONAY_MESAJ : 'Are You Sure You Want To Approve The Selected Requests?',
+        RET_MESAJ : 'Are You Sure You Want To Reject The Selected Requests?',
       }
     },
     IZIN_TALEP_DIALOG : {
@@ -390,7 +398,7 @@ export const locale = {
       KIDEM : 'Seniority',
       IZIN_HAKKI : 'Vacation Rights',
       KULLANILAN_IZIN : 'Used Vacation',
-      DEVIR : 'Trasnfer',
+      DEVIR : 'Transfer',
       KALAN : 'Remaining'
     },
      
@@ -411,6 +419,60 @@ export const locale = {
       SUREC_BULUNAMADI : 'No Process Found to Display',
       TALEP_ONAYLANDI : 'Demand Comfirmed',
       ISARETLEME_YAPMALISINIZ : 'You Must Markup'
+    },
+
+    PROFILE_WIDGETS : {
+      BIRTHDAY : {
+        BUGUN_DOGANLAR : 'Those Born Today',
+        BU_HAFTA_DOGANLAR : 'Those Born This Week',
+        BU_AY_DOGANLAR : 'Those Born This Month',
+        IYIKI_DOGDUN : 'Happy Birthday ',
+        DOGUM_MESAJ : 'Hello {{value1}}, we wish you a happy birthday and a joyful life with your loved ones.',
+        TUM_DOGUM_GUNLERI : 'All Birthdays'
+      },
+
+      KIDEM : {
+        KIDEMLILER : 'Seniors',
+        MESAJ : 'Happy {{value1}}. Year',
+        TEBRIKLER : 'Congratulations'
+      },
+
+      NEW_PERSON : {
+        HEADER : 'New Persons',
+        TUM_YENILER : 'All New Persons',
+        HOSGELDIN : 'Welcome',
+        MESAJ : 'Welcome Among Us'
+      },
+
+      DUYURULAR : {
+        HEADER : 'Announcements',
+        TUM_DUYURULAR : 'All Announcements'
+      },
+
+      DOSYALARIM : {
+        HEADER : 'My Files',
+        YUKLE : 'Upload',
+        KAYDET : 'Save',
+        IPTAL : 'Cancel'
+      },
+
+      ANKET : {
+        HEADER : 'Surveys',
+        EVET : 'Yes',
+        HAYIR : 'No',
+        ANKET_OLUSTUR : 'Create Survey',
+        TUM_ANKETLER : 'All Surveys'
+      },
+
+      SHARRED : {
+        TUMU : 'All',
+        ISIM_SOYISIM : 'Name Surname',
+        DOGUM_TARIHI : 'Birth Date',
+        BASLANGIC_TARIHI : 'Start Date',
+        BOLUM : 'Department',
+        KIDEM : 'Seniority',
+        TARIH : 'Date'
+      }
     }
   }
 };
