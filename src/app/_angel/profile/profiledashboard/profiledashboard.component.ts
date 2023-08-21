@@ -36,7 +36,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   displayVisitRequestForm: boolean;
   displayAdvancePaymentForm: boolean;
 
-
+  fotoImage : any;
   constructor(
     private auth: AuthService,
     private authMenuService : AuthMenuService,
@@ -55,6 +55,9 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
 
     // this.profileService.getImage('path').subscribe(response => {
     //   console.log("Image : ", response);
+    //   this.fotoImage = response;
+
+    //   this.ref.detectChanges();
     // });
   }
 

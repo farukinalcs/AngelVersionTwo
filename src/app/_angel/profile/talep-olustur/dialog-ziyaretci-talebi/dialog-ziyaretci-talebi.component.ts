@@ -10,6 +10,7 @@ import { ProfileService } from '../../profile.service';
 import { OKodFieldsModel } from '../../models/oKodFields';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dialog-ziyaretci-talebi',
@@ -21,13 +22,13 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
   @Input() closedForm: BehaviorSubject<boolean>;
 
   stepperFields: any[] = [
-    { class: 'stepper-item current', number: 1, title: 'Tip', desc: 'Ziyaret Tipi' },
-    { class: 'stepper-item', number: 2, title: 'Kişi', desc: 'Ziyaret Edecek Kişi Bilgileri' },
-    { class: 'stepper-item', number: 3, title: 'Ziyaretçiler', desc: '' },
-    { class: 'stepper-item', number: 4, title: 'İletişim', desc: 'Diğer Bilgiler' },
-    { class: 'stepper-item', number: 5, title: 'Giriş-Çıkış', desc: 'Zaman Bilgileri' },
-    { class: 'stepper-item', number: 6, title: 'Dosya Yükle', desc: 'Gerekli belgeler' },
-    { class: 'stepper-item', number: 7, title: 'Tamamlandı', desc: 'Özet bilgiler' },
+    { class: 'stepper-item current', number: 1, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_1'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_1') },
+    { class: 'stepper-item', number: 2, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_2'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_2') },
+    { class: 'stepper-item', number: 3, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_3'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_3') },
+    { class: 'stepper-item', number: 4, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_4'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_4') },
+    { class: 'stepper-item', number: 5, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_5'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_5') },
+    { class: 'stepper-item', number: 6, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_6'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_6') },
+    { class: 'stepper-item', number: 7, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_7'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_7') },
   ];
 
   formsCount: any = 8;
@@ -67,6 +68,7 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private toastrService : ToastrService,
     public authService : AuthService,
+    private translateService : TranslateService,
     private ref: ChangeDetectorRef
   ) { }
 

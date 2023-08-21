@@ -49,6 +49,14 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="col-12 d-flex justify-content-center align-items-center pt-7">
+                                        <a class="btn" (click)="showBulletinFormDialog()">
+                                            <i class="fa-solid fa-circle-plus text-gray-400 fs-1 pe-2"></i>
+                                            <span class="text-gray-400 fs-4">Bülten Oluştur</span>
+                                        </a>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -83,4 +91,27 @@
         <p-button icon="pi pi-times" (click)="displayAllNews=false"
             label="{{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}" class="p-button-text"></p-button>
     </ng-template>
+</p-dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p-dialog header="Bülten Oluştur" [(visible)]="displayBulletinForm"
+  (visibleChange)="bulletinFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000" [draggable]="true"
+  [resizable]="false">
+
+  <app-dialog-bulten-formu (bulletinFormIsSend)="bulletinFormIsSend()"
+    [closedForm]="closedBulletinForm"></app-dialog-bulten-formu>
+
 </p-dialog>

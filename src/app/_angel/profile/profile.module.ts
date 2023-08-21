@@ -49,7 +49,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
-import { CardsModule, EngagesModule, WidgetsModule } from 'src/app/_metronic/partials';
+import { CardsModule, EngagesModule, ExtrasModule, WidgetsModule } from 'src/app/_metronic/partials';
 import { AccordionModule } from 'primeng/accordion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataViewModule } from 'primeng/dataview';
@@ -77,6 +77,9 @@ import { DosyalarimComponent } from './profile-data-widget/dosyalarim/dosyalarim
 import { ImageModule } from 'primeng/image';
 import { EnvanterComponent } from './profile-data-widget/envanter/envanter.component';
 import { DialogAvansTalebiComponent } from './talep-olustur/dialog-avans-talebi/dialog-avans-talebi.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { DialogBultenFormuComponent } from './talep-olustur/dialog-bulten-formu/dialog-bulten-formu.component';
+import { DialogDuyuruFormuComponent } from './talep-olustur/dialog-duyuru-formu/dialog-duyuru-formu.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +113,9 @@ import { DialogAvansTalebiComponent } from './talep-olustur/dialog-avans-talebi/
     BultenComponent,
     DosyalarimComponent,
     EnvanterComponent,
-    DialogAvansTalebiComponent
+    DialogAvansTalebiComponent,
+    DialogBultenFormuComponent,
+    DialogDuyuruFormuComponent,
   ],
   imports: [
     CommonModule,
@@ -161,7 +166,9 @@ import { DialogAvansTalebiComponent } from './talep-olustur/dialog-avans-talebi/
     MatProgressSpinnerModule,
     WidgetsModule,
     CarouselModule,
-    ImageModule
+    ImageModule,
+    FullCalendarModule,
+    ExtrasModule,
   ]
 })
 export class ProfileModule { }

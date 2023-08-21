@@ -45,3 +45,12 @@
     background-color: #ed1b24 !important
 }
 /*--------------------------------------------*/
+
+
+
+.menu-state-bg .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here),
+.menu-state-bg .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here){
+    transition: color 0.2s ease;
+    background-color: #ed82a23d;
+    color: #ed1b24;
+}

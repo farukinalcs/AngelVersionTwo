@@ -56,7 +56,7 @@
 
         <ng-container *ngIf="kaynak && onayBeklenenFormlar.length > 0">
           <div class="row mt-5 m-0 d-flex justify-content-center">
-            <div class="card bg-light p-4">
+            <div class="card bg-light-danger p-4">
               <div class="row">
                 <div class="d-flex align-items-center"
                   [ngClass]="{'col-12 justify-content-center pb-2': layoutService.isMobile | async, 'col-2 justify-content-end' : !(layoutService.isMobile | async)}">
@@ -130,15 +130,21 @@
                           </div>
 
                           <ng-container *ngIf="!item.panelOpenState">
-                            <span class="badge badge-light-danger ml-4">00000606</span>
+                            <span class="badge badge-light-danger ml-4">{{item.sicilno}}</span>
                           </ng-container>
                         </div>
                       </mat-panel-title>
 
                       <mat-panel-description class="fw-bolder text-dark">
                         <div class="text-center">
-                          <div class="fs-5">
-                            {{item.neden}}
+                          <div class="fs-5 short-text">
+                            <ng-container *ngIf="item.panelOpenState">
+                              {{item.neden}}
+                            </ng-container>
+
+                            <ng-container *ngIf="!item.panelOpenState">
+                              {{ (item.neden.length>12)? (item.neden | slice:0:12)+'...':(item.neden) }}
+                            </ng-container>
                           </div>
 
                           <ng-container *ngIf="!item.panelOpenState">
@@ -159,8 +165,9 @@
                     <div>
                       <div class="row d-flex justify-content-center">
                         <div class="col-12 d-flex justify-content-center">
-                          <img width="25%" style="border-radius: 5px;"
-                            src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
+                          <img width="25%" style="border-radius: 5px;" src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}" alt="Personel Foto"/>
+                             <!-- src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" -->
+
                         </div>
                       </div>
                       <div class="row card-body p-1">
@@ -253,7 +260,8 @@
                 <div class="table-responsive">
                   <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                     <thead>
-                      <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
+                      <tr class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                        <th class="text-center rounded-start"></th>
                         <th class="text-center"></th>
                         <th class="text-center">{{"DEMANDED.ARAMA_DIALOG.FORM.PERSONEL" | translate}}</th>
                         <th class="text-center">{{"IZIN_TALEP_DIALOG.FORM.IZIN_TIPI" | translate}}</th>
@@ -262,16 +270,21 @@
                         <th class="text-center">{{"DEMANDED.ARAMA_DIALOG.FORM.BOLUM" | translate}}</th>
                         <th class="text-center">{{"DEMANDED.ARAMA_DIALOG.FORM.POZISYON" | translate}}</th>
                         <th class="text-center w-150px">{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</th>
-                        <th class="text-center"></th>
+                        <th class="text-center rounded-end"></th>
                       </tr>
                     </thead>
 
                     <tbody>
-                      <tr
-                        *ngFor="let item of onayBeklenenFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
+                      <tr *ngFor="let item of onayBeklenenFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
+                        <td class="text-center ps-5">
+                          <div class="symbol symbol-50px me-2">
+                            <mat-checkbox [(ngModel)]="item.completed" (ngModelChange)="updateAllComplete()"></mat-checkbox>
+                          </div>
+                        </td>
+                        
                         <td class="text-center">
                           <div class="symbol symbol-50px me-2">
-                            <img src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto">
+                            <img src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}" alt="Personel Foto">
                           </div>
                         </td>
 
@@ -398,7 +411,7 @@
 
         <ng-container *ngIf="kaynak && onaylananFormlar.length > 0">
           <div class="row mt-5 m-0 d-flex justify-content-center">
-            <div class="card bg-light p-4">
+            <div class="card bg-light-danger p-4">
               <div class="row">
                 <div class="d-flex justify-content-start"
                   [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-6' : !(layoutService.isMobile | async)}">
@@ -455,15 +468,21 @@
                           </div>
 
                           <ng-container *ngIf="!item.panelOpenState">
-                            <span class="badge badge-light-danger ml-4">00000606</span>
+                            <span class="badge badge-light-danger ml-4">{{item.sicilno}}</span>
                           </ng-container>
                         </div>
                       </mat-panel-title>
 
                       <mat-panel-description class="fw-bolder text-dark">
                         <div class="text-center">
-                          <div class="fs-5">
-                            {{item.neden}}
+                          <div class="fs-5 short-text">
+                            <ng-container *ngIf="item.panelOpenState">
+                              {{item.neden}}
+                            </ng-container>
+
+                            <ng-container *ngIf="!item.panelOpenState">
+                              {{ (item.neden.length>12)? (item.neden | slice:0:12)+'...':(item.neden) }}
+                            </ng-container>
                           </div>
 
                           <ng-container *ngIf="!item.panelOpenState">
@@ -485,7 +504,7 @@
                       <div class="row d-flex justify-content-center">
                         <div class="col-12 d-flex justify-content-center">
                           <img width="25%" style="border-radius: 5px;"
-                            src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
+                            src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}" alt="Personel Foto" />
                         </div>
                       </div>
                       <div class="row card-body p-1">
@@ -568,8 +587,8 @@
                 <div class="table-responsive">
                   <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                     <thead>
-                      <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
-                        <th class="text-center"></th>
+                      <tr class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                        <th class="text-center rounded-start"></th>
                         <th class="text-center">{{"DEMANDED.ARAMA_DIALOG.FORM.PERSONEL" | translate}}</th>
                         <th class="text-center">{{"IZIN_TALEP_DIALOG.FORM.IZIN_TIPI" | translate}}</th>
                         <th class="text-center">{{"DEMANDED.ARAMA_DIALOG.FORM.ARALIK_BASLANGIC" | translate}}</th>
@@ -577,7 +596,7 @@
                         <th class="text-center">{{"DEMANDED.ARAMA_DIALOG.FORM.BOLUM" | translate}}</th>
                         <th class="text-center">{{"DEMANDED.ARAMA_DIALOG.FORM.POZISYON" | translate}}</th>
                         <th class="text-center w-150px">{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</th>
-                        <th class="text-center"></th>
+                        <th class="text-center rounded-end"></th>
                       </tr>
                     </thead>
 
@@ -586,7 +605,7 @@
                         *ngFor="let item of onaylananFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
                         <td class="text-center">
                           <div class="symbol symbol-50px me-2">
-                            <img src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto">
+                            <img src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}" alt="Personel Foto">
                           </div>
                         </td>
 
@@ -701,7 +720,7 @@
 
         <ng-container *ngIf="kaynak && reddedilenFormlar.length > 0">
           <div class="row mt-5 m-0 d-flex justify-content-center">
-            <div class="card bg-light p-4">
+            <div class="card bg-light-danger p-4">
               <div class="row">
                 <div class="d-flex justify-content-start"
                   [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-6' : !(layoutService.isMobile | async)}">
@@ -756,15 +775,21 @@
                           </div>
 
                           <ng-container *ngIf="!item.panelOpenState">
-                            <span class="badge badge-light-danger ml-4">00000606</span>
+                            <span class="badge badge-light-danger ml-4">{{item.sicilno}}</span>
                           </ng-container>
                         </div>
                       </mat-panel-title>
 
                       <mat-panel-description class="fw-bolder text-dark">
                         <div class="text-center">
-                          <div class="fs-5">
-                            {{item.neden}}
+                          <div class="fs-5 short-text">
+                            <ng-container *ngIf="item.panelOpenState">
+                              {{item.neden}}
+                            </ng-container>
+
+                            <ng-container *ngIf="!item.panelOpenState">
+                              {{ (item.neden.length>12)? (item.neden | slice:0:12)+'...':(item.neden) }}
+                            </ng-container>
                           </div>
 
                           <ng-container *ngIf="!item.panelOpenState">
@@ -786,7 +811,7 @@
                       <div class="row d-flex justify-content-center">
                         <div class="col-12 d-flex justify-content-center">
                           <img width="25%" style="border-radius: 5px;"
-                            src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto" />
+                            src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}" alt="Personel Foto" />
                         </div>
                       </div>
                       <div class="row card-body p-1">
@@ -869,8 +894,8 @@
                 <div class="table-responsive">
                   <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                     <thead>
-                      <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
-                        <th class="text-center"></th>
+                      <tr class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                        <th class="text-center rounded-start"></th>
                         <th class="text-center">{{"DEMANDED.ARAMA_DIALOG.FORM.PERSONEL" | translate}}</th>
                         <th class="text-center">{{"IZIN_TALEP_DIALOG.FORM.IZIN_TIPI" | translate}}</th>
                         <th class="text-center">{{"DEMANDED.ARAMA_DIALOG.FORM.ARALIK_BASLANGIC" | translate}}</th>
@@ -878,7 +903,7 @@
                         <th class="text-center">{{"DEMANDED.ARAMA_DIALOG.FORM.BOLUM" | translate}}</th>
                         <th class="text-center">{{"DEMANDED.ARAMA_DIALOG.FORM.POZISYON" | translate}}</th>
                         <th class="text-center w-150px">{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</th>
-                        <th class="text-center"></th>
+                        <th class="text-center rounded-end"></th>
                       </tr>
                     </thead>
 
@@ -887,7 +912,7 @@
                         *ngFor="let item of reddedilenFormlar | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
                         <td class="text-center">
                           <div class="symbol symbol-50px me-2">
-                            <img src="{{'data:image/jpg;base64,' + item.fotoimage}}" alt="Personel Foto">
+                            <img src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}" alt="Personel Foto">
                           </div>
                         </td>
 

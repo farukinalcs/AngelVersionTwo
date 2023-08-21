@@ -5,6 +5,7 @@ export const locale = {
     TRANSLATOR: {
       SELECT: 'Select your language',
     },
+    
     MENU: {
       NEW: "new",
       ACTIONS: "Actions",
@@ -36,6 +37,7 @@ export const locale = {
         GatewayList: "Gateway Listesi",
       },
     },
+
     AUTH: {
       GENERAL: {
         OR: 'Or',
@@ -92,47 +94,6 @@ export const locale = {
         MIN_LENGTH_FIELD: 'Minimum field length:',
         MAX_LENGTH_FIELD: 'Maximum field length:',
         INVALID_FIELD: 'Field is not valid',
-      }
-    },
-    ECOMMERCE: {
-      COMMON: {
-        SELECTED_RECORDS_COUNT: 'Selected records count: ',
-        ALL: 'All',
-        SUSPENDED: 'Suspended',
-        ACTIVE: 'Active',
-        FILTER: 'Filter',
-        BY_STATUS: 'by Status',
-        BY_TYPE: 'by Type',
-        BUSINESS: 'Business',
-        INDIVIDUAL: 'Individual',
-        SEARCH: 'Search',
-        IN_ALL_FIELDS: 'in all fields'
-      },
-      ECOMMERCE: 'eCommerce',
-      CUSTOMERS: {
-        CUSTOMERS: 'Customers',
-        CUSTOMERS_LIST: 'Customers list',
-        NEW_CUSTOMER: 'New Customer',
-        DELETE_CUSTOMER_SIMPLE: {
-          TITLE: 'Customer Delete',
-          DESCRIPTION: 'Are you sure to permanently delete this customer?',
-          WAIT_DESCRIPTION: 'Customer is deleting...',
-          MESSAGE: 'Customer has been deleted'
-        },
-        DELETE_CUSTOMER_MULTY: {
-          TITLE: 'Customers Delete',
-          DESCRIPTION: 'Are you sure to permanently delete selected customers?',
-          WAIT_DESCRIPTION: 'Customers are deleting...',
-          MESSAGE: 'Selected customers have been deleted'
-        },
-        UPDATE_STATUS: {
-          TITLE: 'Status has been updated for selected customers',
-          MESSAGE: 'Selected customers status have successfully been updated'
-        },
-        EDIT: {
-          UPDATE_MESSAGE: 'Customer has been updated',
-          ADD_MESSAGE: 'Customer has been created'
-        }
       }
     },
 
@@ -270,8 +231,23 @@ export const locale = {
         RET_MESAJ : 'Are You Sure You Want To Reject The Selected Requests?',
       }
     },
+
     IZIN_TALEP_DIALOG : {
       HEADER : "Leave Request Form",
+      STEPPER : {
+        HEADER_1 : 'Kind',
+        MESSAGE_1 : 'Daily-Hourly',
+        HEADER_2 : 'Type',
+        MESSAGE_2 : '',
+        HEADER_3 : 'Time',
+        MESSAGE_3 : 'Permission Periods',
+        HEADER_4 : 'Information',
+        MESSAGE_4 : '',
+        HEADER_5 : 'File Upload',
+        MESSAGE_5 : 'Required documents',
+        HEADER_6 : 'Completed',
+        MESSAGE_6 : 'Summary',
+      },
       FORM : {
         IZIN_TIPI : "Type of Leave",
         IZIN_HAKKI : "Entitlement to Leave",
@@ -294,6 +270,7 @@ export const locale = {
         REQUIRED : "Required!"
       }
     },
+
     FM_TALEP_DIALOG : {
       HEADER : "Overtime Request Form",
       FORM : {
@@ -315,20 +292,84 @@ export const locale = {
 
     ZIYARETCI_TALEP_DIALOG : {
       HEADER : "Visitor Request Form",
+      STEPPER : {
+        HEADER_1 : 'Type',
+        MESSAGE_1 : 'Visit Type',
+        HEADER_2 : 'Person',
+        MESSAGE_2 : 'Visitor Information',
+        HEADER_3 : 'Visitors',
+        MESSAGE_3 : '',
+        HEADER_4 : 'Communication',
+        MESSAGE_4 : 'Other Information',
+        HEADER_5 : 'Entry-Exit',
+        MESSAGE_5 : 'Time Information',
+        HEADER_6 : 'Upload File',
+        MESSAGE_6 : 'Required documents',
+        HEADER_7 : 'Completed',
+        MESSAGE_7 : 'Summary',
+      },
       FORM : {
+        ZIYARET_EDECEGIM : 'I\'ll Visit',
+        ZIYARET_EDILECEGIM : 'They\'ll Visit Me',
+        KENDIM_ICIN : 'Creating a Demand for Myself',
+        EKIP_ICIN : 'Creating a Demand for My Team',
+        EKIP_VE_KENDI : 'I Create Demand for My Team and Myself',
+        TOPLU : 'Collective Visit',
+        TEK : 'Single Visit',
         AD : "Name",
         SOYAD : 'Surname',
         FIRMA : 'Company',
+        OTHER_FIRMA : 'Other Company',
         GIRIS_TARIHI : "Entry Date",
         GIRIS_SAATI : "Entry Time",
-        CIKIS_TARIHI  :"Exist Date",
-        CIKIS_SAATI : "Exist Time",
+        CIKIS_TARIHI  :"Exit Date",
+        CIKIS_SAATI : "Exit Time",
         ACIKLAMA : "Description",
         GONDER : "Send",
         FIRMA_SEC : 'Select Company',
-        ACIKLAMA_GIRINIZ : 'Enter Description',
-        EMAIL : 'E-mail',
-        ZIYARET_TIPI : 'Visit Type'
+        ACIKLAMA_GIRINIZ : 'Enter a Description',
+        EMAIL : 'Email',
+        ZIYARET_TIPI : 'Visit Type',
+        DOSYA_ISMI : 'File Name',
+        DOSYA_BOYUTU : 'File Size',
+        TALEP_SAHIBI : 'Demand Owner',
+        ZIYARETCI_BILGILERI : 'Visitor Information',
+        ZIYARETCILER : 'Visitors',
+        ILERI : 'Next',
+        GERI : 'Back',
+        KAPAT : 'Close',
+        OTHER_FIRMA_PLACEHOLDER : 'Enter Other Company',
+      }
+    },
+
+    BULTEN_FORM_DIALOG : {
+      HEADER : "Bulletin Form",
+      STEPPER : {
+        HEADER_1 : 'Bullitin',
+        MESSAGE_1 : 'Bulletin Information',
+        HEADER_2 : 'Time',
+        MESSAGE_2 : 'Date and Owner',
+        HEADER_3 : 'File Upload',
+        MESSAGE_3 : 'Bullitin PDF',
+        HEADER_4 : 'Selecet Image',
+        MESSAGE_4 : 'Avatar',
+        HEADER_5 : 'Completed',
+        MESSAGE_5 : 'Summary',
+      },
+      FORM : {
+        BASLIK : 'Title',
+        BASLIK_PLACEHOLDER : 'Enter a Title',
+        ACIKLAMA : 'Description',
+        ACIKLAMA_PLACEHOLDER : 'Enter a Description',
+        BASLANGIC_TARIHI : "Start Date",
+        BITIS_TARIHI  :"End Date",
+        YAYINLAYAN : "Owner",
+        DOSYA_YUKLE : "Upload Your Required File",
+        AVATAR : "Select Avatar",
+        GONDER : "Send",
+        ILERI : 'Next',
+        GERI : 'Back',
+        KAPAT : 'Close',
       }
     },
 
@@ -414,7 +455,7 @@ export const locale = {
       HATA : 'ERROR',
       UYARI : 'WARNING',
       BILGI : 'INFO',
-      TALEP_GONDERILDI : 'Overtime Request Sended',
+      TALEP_GONDERILDI : 'Your Demand Sended',
       TALEP_IPTAL_EDILDI : 'Your Demand Cancelled',
       SUREC_BULUNAMADI : 'No Process Found to Display',
       TALEP_ONAYLANDI : 'Demand Comfirmed',

@@ -144,6 +144,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     });
 
     if (
+      pageTitle == '' ||
       pageTitle == 'Light' ||
       pageTitle == 'Genel Bakış' ||
       pageTitle == 'Dashboard' ||

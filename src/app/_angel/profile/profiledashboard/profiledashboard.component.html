@@ -20,7 +20,9 @@
               [ngClass]="{'col-2': !(this.layoutService.isMobile | async), 'col-12 d-flex justify-content-center' : (this.layoutService.isMobile | async)}">
               <div class="me-7 mb-4">
                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                  <img alt="Logo" src="{{'data:image/jpg;base64,' + _user.FotoImage}}" />
+                  <!-- <img alt="Logo" src="{{'data:image/jpg;base64,' + _user.FotoImage}}" /> -->
+
+                  <img alt="Logo" src="http://localhost:5075/api/Image?sicilid={{_user.xSicilID}}" />
                   <div
                     class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
                   </div>
@@ -102,6 +104,7 @@
                     </button>
                   </mat-menu>
                 </div>
+
               </div>
 
               <div class="row pt-4">
@@ -317,32 +320,38 @@
 </div>
 
 
-<p-dialog header="{{'FM_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayOvertimeForm" (visibleChange)="overtimeFormIsSend()" [modal]="true"
-  [style]="{width: '50vw'}" [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+<p-dialog header="{{'FM_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayOvertimeForm"
+  (visibleChange)="overtimeFormIsSend()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+  [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
-  <app-dialog-fazla-mesai-talebi (overtimeFormIsSend)="overtimeFormIsSend()" [closedForm]="closedOvertimeForm"></app-dialog-fazla-mesai-talebi>
-
-</p-dialog>
-
-
-
-<p-dialog header="{{'IZIN_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVacationForm" (visibleChange)="vacationFormIsSend()" [modal]="true"
-  [style]="{width: '50vw'}" [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
-
-  <app-dialog-izin-talebi (vacationFormIsSend)="vacationFormIsSend()" [closedForm]="closedVacationForm"></app-dialog-izin-talebi>
+  <app-dialog-fazla-mesai-talebi (overtimeFormIsSend)="overtimeFormIsSend()"
+    [closedForm]="closedOvertimeForm"></app-dialog-fazla-mesai-talebi>
 
 </p-dialog>
 
 
-<p-dialog header="{{'ZIYARETCI_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVisitRequestForm" (visibleChange)="visitRequestFormIsSend()" [modal]="true"
-   [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
-  <app-dialog-ziyaretci-talebi (visitRequestFormIsSend)="visitRequestFormIsSend()" [closedForm]="closedVisitorForm"></app-dialog-ziyaretci-talebi>
+<p-dialog header="{{'IZIN_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVacationForm"
+  (visibleChange)="vacationFormIsSend()" [modal]="true" [style]="{width: '65vw'}" [maximizable]="true"
+  [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+
+  <app-dialog-izin-talebi (vacationFormIsSend)="vacationFormIsSend()"
+    [closedForm]="closedVacationForm"></app-dialog-izin-talebi>
+
+</p-dialog>
+
+
+<p-dialog header="{{'ZIYARETCI_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVisitRequestForm"
+  (visibleChange)="visitRequestFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000" [draggable]="true"
+  [resizable]="false">
+
+  <app-dialog-ziyaretci-talebi (visitRequestFormIsSend)="visitRequestFormIsSend()"
+    [closedForm]="closedVisitorForm"></app-dialog-ziyaretci-talebi>
 
 </p-dialog>
 
 <p-dialog header="{{'PROFIL_DASHBOARD.AVANS' | translate}}" [(visible)]="displayAdvancePaymentForm" [modal]="true"
-   [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
   <app-dialog-avans-talebi (visitRequestFormIsSend)="advancePaymentIsSend()"></app-dialog-avans-talebi>
 

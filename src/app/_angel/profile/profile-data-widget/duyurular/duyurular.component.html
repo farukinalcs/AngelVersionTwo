@@ -45,6 +45,15 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-center align-items-center pt-7">
+                                    <a class="btn" (click)="showAnnouncementFormDialog()">
+                                        <i class="fa-solid fa-circle-plus text-gray-400 fs-1 pe-2"></i>
+                                        <span class="text-gray-400 fs-4">Duyuru Oluştur</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -244,5 +253,18 @@
         <p-button icon="pi pi-times" (click)="displayAllAnnouncements=false"
             label="{{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}" class="p-button-text"></p-button>
     </ng-template>
+</p-dialog>
+
+
+
+
+
+<p-dialog header="Duyuru Oluştur" [(visible)]="displayAnnouncementForm"
+  (visibleChange)="announcementFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000" [draggable]="true"
+  [resizable]="false">
+
+  <app-dialog-duyuru-formu (announcementFormIsSend)="announcementFormIsSend()"
+    [closedForm]="closedAnnouncementForm"></app-dialog-duyuru-formu>
+
 </p-dialog>
 

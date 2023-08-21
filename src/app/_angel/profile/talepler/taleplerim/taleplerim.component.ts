@@ -147,6 +147,59 @@ export class TaleplerimComponent implements OnInit, OnDestroy {
     console.log("setAll else :", arr);    
   }
 
+  // resetArr() {
+  //   this.kaynak = '';
+  //   this.sureciDevamEdenFormlar = [];
+  //   this.sureciDevamEdenFormSayisi = 0;
+  //   this.onaylananFormlar = [];
+  //   this.reddedilenFormlar = [];
+
+  //   this.firma = [];
+  //   this.bolum = [];
+  //   this.pozisyon = [];
+  //   this.gorev = [];
+  //   this.yaka = [];
+  //   this.altFirma = [];
+  //   this.direktorluk = [];
+    
+  //   // var izinNavItem1 = document.getElementById('izinNavItem1');
+  //   // var izinNavItem2 = document.getElementById('izinNavItem2');
+  //   // var izinNavItem3 = document.getElementById('izinNavItem3');
+
+  //   // var fazlamesaiNavItem1 = document.getElementById('fazlamesaiNavItem1');
+  //   // var fazlamesaiNavItem2 = document.getElementById('fazlamesaiNavItem2');
+  //   // var fazlamesaiNavItem3 = document.getElementById('fazlamesaiNavItem3');
+
+  //   // var ziyaretciNavItem1 = document.getElementById('ziyaretciNavItem1');
+  //   // var ziyaretciNavItem2 = document.getElementById('ziyaretciNavItem2');
+  //   // var ziyaretciNavItem3 = document.getElementById('ziyaretciNavItem3');
+
+  //   // var digerNavItem1 = document.getElementById('digerNavItem1');
+  //   // var digerNavItem2 = document.getElementById('digerNavItem2');
+  //   // var digerNavItem3 = document.getElementById('digerNavItem3');
+
+  //   // izinNavItem1?.classList.remove('active');
+  //   // izinNavItem2?.classList.remove('active');
+  //   // izinNavItem3?.classList.remove('active');
+
+  //   // fazlamesaiNavItem1?.classList.remove('active');
+  //   // fazlamesaiNavItem2?.classList.remove('active');
+  //   // fazlamesaiNavItem3?.classList.remove('active');
+
+  //   // ziyaretciNavItem1?.classList.remove('active');
+  //   // ziyaretciNavItem2?.classList.remove('active');
+  //   // ziyaretciNavItem3?.classList.remove('active');
+
+  //   // digerNavItem1?.classList.remove('active');
+  //   // digerNavItem2?.classList.remove('active');
+  //   // digerNavItem3?.classList.remove('active');
+
+  //   for (const menuItem of this.menuItems) {
+  //     const itemElement = document.getElementById(menuItem.id);
+  //     itemElement?.classList.remove('active');
+  //   }
+  // }
+
   resetArr() {
     this.kaynak = '';
     this.sureciDevamEdenFormlar = [];
@@ -161,42 +214,23 @@ export class TaleplerimComponent implements OnInit, OnDestroy {
     this.yaka = [];
     this.altFirma = [];
     this.direktorluk = [];
-    
-    // var izinNavItem1 = document.getElementById('izinNavItem1');
-    // var izinNavItem2 = document.getElementById('izinNavItem2');
-    // var izinNavItem3 = document.getElementById('izinNavItem3');
-
-    // var fazlamesaiNavItem1 = document.getElementById('fazlamesaiNavItem1');
-    // var fazlamesaiNavItem2 = document.getElementById('fazlamesaiNavItem2');
-    // var fazlamesaiNavItem3 = document.getElementById('fazlamesaiNavItem3');
-
-    // var ziyaretciNavItem1 = document.getElementById('ziyaretciNavItem1');
-    // var ziyaretciNavItem2 = document.getElementById('ziyaretciNavItem2');
-    // var ziyaretciNavItem3 = document.getElementById('ziyaretciNavItem3');
-
-    // var digerNavItem1 = document.getElementById('digerNavItem1');
-    // var digerNavItem2 = document.getElementById('digerNavItem2');
-    // var digerNavItem3 = document.getElementById('digerNavItem3');
-
-    // izinNavItem1?.classList.remove('active');
-    // izinNavItem2?.classList.remove('active');
-    // izinNavItem3?.classList.remove('active');
-
-    // fazlamesaiNavItem1?.classList.remove('active');
-    // fazlamesaiNavItem2?.classList.remove('active');
-    // fazlamesaiNavItem3?.classList.remove('active');
-
-    // ziyaretciNavItem1?.classList.remove('active');
-    // ziyaretciNavItem2?.classList.remove('active');
-    // ziyaretciNavItem3?.classList.remove('active');
-
-    // digerNavItem1?.classList.remove('active');
-    // digerNavItem2?.classList.remove('active');
-    // digerNavItem3?.classList.remove('active');
-
+  
+    const classList = ['active'];
+  
     for (const menuItem of this.menuItems) {
-      const itemElement = document.getElementById(menuItem.id);
-      itemElement?.classList.remove('active');
+      const bekleyenNavItem = document.getElementById('bekleyen-' + menuItem.id);
+      const onaylananNavItem = document.getElementById('onaylanan-' + menuItem.id);
+      const reddedilenNavItem = document.getElementById('reddedilen-' + menuItem.id);
+  
+      if (bekleyenNavItem) {
+        bekleyenNavItem.classList.remove(...classList);
+      }
+      if (onaylananNavItem) {
+        onaylananNavItem.classList.remove(...classList);
+      }
+      if (reddedilenNavItem) {
+        reddedilenNavItem.classList.remove(...classList);
+      }
     }
   }
 

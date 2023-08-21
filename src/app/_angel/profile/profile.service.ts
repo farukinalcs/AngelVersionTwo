@@ -856,7 +856,71 @@ export class ProfileService {
   }
 
 
-  getImage(path : any) {
-    return this.httpClient.get<any>(API_URL + '/Image?sicilId=233');
+  postBulletinForm(formValues : any) {
+    var sp : any[] = [{
+      mkodu : 'yek057',
+      baslik : formValues.title,
+      aciklama : formValues.description,
+      bastarih : formValues.startDate,
+      bittarih : formValues.endDate,
+      yayinlayan : formValues.owner,
+      resimtip : formValues.image,
+      filepath : formValues.file
+    }
+    ];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
   }
+
+  getImage(path : any) {
+    return this.httpClient.get<any>(API_URL + '/Image?sicilid=233');
+  }
+
+  postVacationFile(file : any, formId : any, kaynak : any) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('formid', formId);
+    formData.append('kaynak', kaynak)
+    return this.httpClient.post<any>(API_URL + '/File', formData);
+
+    // return this.httpClient.post<any>(API_URL + '/File', {file : file, formid : formId});
+  }
+
+
+
+
+
+  
+
+  // postVacationFile(file : any, formId : any) {
+  //   // const commaIndex = file.indexOf(',');
+  //   // const result = file.substring(commaIndex + 1);
+
+  //   const form = new FormData();
+  //   form.append('file', file);
+  //   const formid = formId; 
+
+  //   // return this.httpClient.post<any>(API_URL + '/File', form, { params : { formid }});
+  //   return this.httpClient.post<any>(API_URL + '/File', {file : file, formid : formId});
+  // }
+
+  
 }

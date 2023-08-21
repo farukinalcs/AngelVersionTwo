@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { DialogContainerComponent } from '../_angel/shared/dialog-container/dialog-container.component';
 
@@ -20,7 +21,13 @@ export class HelperService {
   isMobile$: Observable<any> = this._isMobile.asObservable();
 
   lang = new Subject;
-  constructor() { }
+
+  dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
+
+  
+  constructor(
+    private translateService : TranslateService
+  ) { }
 
   
   dynamicDialog(disableClose: any, width: any, height: any, componentType: any, dialogType: any, dialog: any, component: any) {
