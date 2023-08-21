@@ -6,7 +6,10 @@
 @import "./assets/sass/style.angular.scss";
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-// @import "~@angular/material/prebuilt-themes/pink-blue-grey.css";
+
+.dark-theme {
+    @import "~@angular/material/prebuilt-themes/pink-blue-grey.css";
+}
 
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 
@@ -21,3 +24,33 @@
 
 // ngx-toastr
 @import '~ngx-toastr/toastr';
+
+
+/* Angular Material CSS */
+/*--------------------------------------------*/
+
+// Angular material mat-tab border bottom background color
+.mat-ink-bar {
+    background-color: #ed1b24 !important
+}
+
+
+// Angular materil checkbox background color (Hepsi İşaretlendiğinde)
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #ed1b24 !important
+}
+
+// Angular materil checkbox background color (Tekli İşaretlendiğinde)
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #ed1b24 !important
+}
+/*--------------------------------------------*/
+
+
+
+.menu-state-bg .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here),
+.menu-state-bg .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here){
+    transition: color 0.2s ease;
+    background-color: #ed82a23d;
+    color: #ed1b24;
+}

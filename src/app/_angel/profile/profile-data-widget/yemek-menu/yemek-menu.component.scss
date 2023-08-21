@@ -1,0 +1,65 @@
+.week-container {
+    padding: 10px;
+}
+
+.week-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.week-arrow {
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    /* Add arrow icon styles */
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.week-title {
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.day-list {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.day {
+    flex: 1;
+    padding: 0 5px;
+}
+
+.day a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.day a.active {
+    background-color: #000;
+    color: #fff;
+}
+
+.day a.dimmed {
+    opacity: 0.5;
+}
+
+.day-list li:not(:last-child) {
+    margin-right: 5px;
+}
+
+
+.p-carousel .p-carousel-content .tanimlar-item .btn-active-danger.active {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}

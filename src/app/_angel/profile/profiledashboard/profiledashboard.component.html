@@ -1,275 +1,361 @@
 <div class="container-fluid">
   <div class="card mb-5 mb-xl-10">
     <div class="card-body pt-9 pb-0">
-      <div class="d-flex flex-wrap flex-sm-nowrap mb-3" *ngIf="user$ | async as _user">
-        
-        <div class="me-7 mb-4">
-          <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-            <img alt="Logo" src="{{'data:image/jpg;base64,' + _user.FotoImage}}" />
-            <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"></div>
-          </div>
-        </div>
-
-        <ng-container>
-          <div class="flex-grow-1">
-            <div class="row d-flex justify-content-between align-items-start flex-wrap mb-2">
-              <div class="col-6 d-flex flex-column">
-                <div class="d-flex align-items-center mb-2">
-
-                  <a class="text-gray-800 text-hover-primary fs-2 fw-bolder me-1 cursor-pointer">
-                    {{ _user.adsoyad }}
-                  </a>
-
-                  <a class="cursor-pointer">
-                    <span [inlineSVG]="'./assets/media/icons/duotune/general/gen026.svg'" class="svg-icon svg-icon-1 svg-icon-primary"></span>
-                  </a>
-
-                  <ng-container *ngIf="userInformation">
-                    <a class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
-                      Giriş Tarihi : {{ userInformation.GirisTarih | date :'yyyy-MM-dd'}}
-                    </a>
-                  </ng-container>
-                  
-                  <ng-container *ngIf="!userInformation">
-                    <a class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
-                      00.00.0000
-                    </a>
-                  </ng-container>
-
-                </div>
-  
-                <div class="d-flex flex-wrap fw-bold fs-6 mb-4 pe-2">
-
-                  <a class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2 cursor-pointer ">
-                    <span [inlineSVG]="'./assets/media/icons/duotune/general/gen001.svg'" class="svg-icon svg-icon-4 me-1"></span>
-                    {{ _user.firmaad }}
-                  </a>
-
-                  <a class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2 cursor-pointer">
-                    <span [inlineSVG]="'./assets/media/icons/duotune/communication/com009.svg'" class="svg-icon svg-icon-4 me-1"></span>
-                    {{ _user.gorevad }}
-                  </a>
-
-                  <a class="d-flex align-items-center text-gray-400 text-hover-primary mb-2 cursor-pointer">
-                    <span [inlineSVG]="'./assets/media/icons/duotune/communication/com008.svg'" class="svg-icon svg-icon-4 me-1"></span>
-                    {{ _user.LoginName }}
-                  </a>
-
-                </div>
-              </div>
-  
-  
-              <div class="col-4 d-flex flex-column flex-grow-1 mr-2">
-  
-                <form class="example-form" [formGroup]="myControl">
-                  <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Vekalet Profil Değişimi</mat-label>
-                    <input type="text" placeholder="Pick one" aria-label="Vekalet Profil Değişimi" matInput
-                      formControlName="vekilSec" [matAutocomplete]="auto">
-                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                        {{option}}
-                      </mat-option>
-                    </mat-autocomplete>
-                  </mat-form-field>
-                </form>
-  
-              </div>
-  
-              <div class="col-2">
-                <button class="btn btn-primary" mat-button [matMenuTriggerFor]="talepler">Talep Oluştur</button>
-                <mat-menu #talepler="matMenu">
-
-                  <button mat-menu-item [matMenuTriggerFor]="izin">
-                    <i class="icon-l fas fa-skiing"> </i>
-                    İzin
-                  </button>
-  
-                  <button (click)="openDialog(dialogFazlaMesaiComponent)" mat-menu-item>
-                    <i class="icon-l fas fa-calendar-alt"> </i>
-                    Fazla Mesai
-                  </button>
-  
-                  <button mat-menu-item (click)="openDialog(dialogZiyaretciComponent)">
-                    <i class="fa-solid fa-person-walking"> </i>
-                    Ziyaretçi
-                  </button>
-  
-                  <button mat-menu-item>
-                    <i class="icon-l fas fa-bus-alt"> </i>
-                    Servis
-                  </button>
-  
-                  <button mat-menu-item>
-                    <i class="icon-l fas fa-graduation-cap"> </i>
-                    Eğitim
-                  </button>
-                </mat-menu>
-  
-                <mat-menu #izin="matMenu">
-                  <button mat-menu-item (click)="openDialog(dialogSaatlikIzinComponent)">Saatlik İzin</button>
-                  <button mat-menu-item (click)="openDialog(dialogGunlukIzinComponent)">Günlük İzin</button>
-                </mat-menu>
-              </div>
-            </div>
-  
-            <div class="d-flex flex-wrap flex-stack">
-              <div class="d-flex flex-column flex-grow-1 pe-8">
-                <div class="d-flex flex-wrap">
-                  
-                  <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                    <div class="d-flex align-items-center">
-                      <ng-container *ngIf="userInformation">
-                        <div class="fs-2 fw-bolder">{{ userInformation.Kidem }}</div>
-                      </ng-container>
-
-                      <ng-container *ngIf="!userInformation">
-                        <div class="fs-2 fw-bolder">0</div>
-                      </ng-container>
-                    </div>
-  
-                    <div class="fw-bold fs-6 text-gray-400">Kıdem</div>
-                  </div>
-  
-                  <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                    <div class="d-flex align-items-center">
-                      <ng-container *ngIf="userInformation">
-                        <div class="fs-2 fw-bolder">{{ userInformation.Hak }}</div>
-
-                      </ng-container>
-
-                      <ng-container *ngIf="!userInformation">
-                        <div class="fs-2 fw-bolder">0</div>
-                      </ng-container>
-                    </div>
-  
-                    <div class="fw-bold fs-6 text-gray-400">İzin Hakkı</div>
-                  </div>
-  
-  
-                  <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                    <div class="d-flex align-items-center">
-                      <ng-container *ngIf="userInformation">
-                        <div class="fs-2 fw-bolder"> {{ userInformation.KullanilanYillikIzin }} </div>
-                      </ng-container>
-
-                      <ng-container *ngIf="!userInformation">
-                        <div class="fs-2 fw-bolder"> 0 </div>
-                        
-                      </ng-container>
-                      
-                    </div>
-  
-                    <div class="fw-bold fs-6 text-gray-400">Kullanılan İzin</div>
-                  </div>
-  
-                  <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                    <div class="d-flex align-items-center">
-                      <ng-container *ngIf="userInformation">
-                        <div class="fs-2 fw-bolder">{{ userInformation.IzinDevir }}</div>
-                      </ng-container>
-
-                      <ng-container *ngIf="!userInformation">
-                        <div class="fs-2 fw-bolder">0</div>
-                      </ng-container>
-                    </div>
-  
-                    <div class="fw-bold fs-6 text-gray-400">Devir</div>
-                  </div>
-
-
-                  <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                    <div class="d-flex align-items-center">
-                      <ng-container *ngIf="userInformation">
-                        <div class="fs-2 fw-bolder">{{ userInformation.Kalan }}</div>
-                      </ng-container>
-
-                      <ng-container *ngIf="!userInformation">
-                        <div class="fs-2 fw-bolder">0</div>
-                      </ng-container>
-                    </div>  
-                    <div class="fw-bold fs-6 text-gray-400">Kalan</div>
-                  </div>
-                  
-                </div>
-              </div>
-  
-              <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3 me-20 pe-10">
-                <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                  <span class="fw-bold fs-6 text-gray-400">Kullanılan izin yüzdesi</span>
-                  <span class="fw-bolder fs-6">50%</span>
-                </div>
-                <div class="h-5px mx-3 w-100 bg-light mb-3">
-                  <div class="bg-success rounded h-5px" role="progressbar" [style.width]="'16.66666666666667%'"></div>
-                </div>
+      <div class="row">
+        <ng-container *ngIf="isLoading | async">
+          <div class="col-12 pt-10">
+            <div class="loader-container">
+              <div id="splash-screen" class="splash-screen"
+                style="position: inherit; color:transparent; background-color: transparent;">
+                <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo" style="margin-left: 0; height: 0;" />
+                <mat-spinner></mat-spinner>
               </div>
             </div>
           </div>
         </ng-container>
-        
-      </div>
 
-      <div class="d-flex overflow-auto h-55px justify-content-center">
-        <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fw-bolder flex-nowrap">
-          <ng-container *ngIf="menuConfig.pages.profil.tabMenu.gecislerim">
-            <li class="nav-item" >
-              <a class="nav-link text-active-primary me-6" routerLink="gecislerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.GECISLERIM"></a>
-            </li>
-          </ng-container>
-          
-          <ng-container *ngIf="menuConfig.pages.profil.tabMenu.surelerim">
-            <li class="nav-item" >
-              <a class="nav-link text-active-primary me-6" routerLink="surelerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.SURELERIM"></a>
-            </li>
-          </ng-container>
+        <ng-container *ngIf="!(isLoading | async)">
+          <div [ngClass]="{'row': !(this.layoutService.isMobile | async)}" *ngIf="user$ | async as _user">
+            <div
+              [ngClass]="{'col-2': !(this.layoutService.isMobile | async), 'col-12 d-flex justify-content-center' : (this.layoutService.isMobile | async)}">
+              <div class="me-7 mb-4">
+                <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+                  <!-- <img alt="Logo" src="{{'data:image/jpg;base64,' + _user.FotoImage}}" /> -->
 
-          <ng-container *ngIf="menuConfig.pages.profil.tabMenu.izinlerim">
-            <li class="nav-item" >
-              <a class="nav-link text-active-primary me-6" routerLink="izinlerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.IZINLERIM"></a>
-            </li>
-          </ng-container>
+                  <img alt="Logo" src="http://localhost:5075/api/Image?sicilid={{_user.xSicilID}}" />
+                  <div
+                    class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          <ng-container *ngIf="menuConfig.pages.profil.tabMenu.talepEdilenler">
-            <li class="nav-item" >
-              <a class="nav-link text-active-primary me-6" routerLink="talep_edilenler" routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEP_EDILENLER"></a>
-            </li>
-          </ng-container>
-          
-          <ng-container *ngIf="menuConfig.pages.profil.tabMenu.taleplerim">
-            <li class="nav-item" >
-              <a class="nav-link text-active-primary me-6" routerLink="taleplerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEPLERIM"></a>
-            </li>
-          </ng-container>
-          
-          <ng-container *ngIf="menuConfig.pages.profil.tabMenu.ziyaretciTaleplerim">
-            <li class="nav-item" >
-              <a class="nav-link text-active-primary me-6" routerLink="ziyaretci_taleplerim" routerLinkActive="active" translate="MENU.PROFIL_SUB.ZIYARETCI_TALEPLERIM"></a>
-            </li>
-          </ng-container>
+            <div
+              [ngClass]="{'col-10': !(this.layoutService.isMobile | async), 'col-12' : this.layoutService.isMobile | async}">
+              <div class="row">
+                <div
+                  [ngClass]="{'col-8': !(this.layoutService.isMobile | async), 'col-12 pt-4 d-flex justify-content-center' : this.layoutService.isMobile | async}">
+                  <div class="d-flex align-items-center mb-2">
 
-          <ng-container *ngIf="menuConfig.pages.profil.tabMenu.mobilLokasyon">
-            <li class="nav-item" >
-              <a class="nav-link text-active-primary me-6" routerLink="mobil_lokasyon" routerLinkActive="active" translate="MENU.PROFIL_SUB.MOBIL_LOKASYON"></a>
-            </li>
-          </ng-container>
+                    <a class="text-gray-800 text-hover-primary fs-2 fw-bolder me-1 cursor-pointer">
+                      {{ _user.adsoyad }}
+                    </a>
 
-          <ng-container *ngIf="menuConfig.pages.profil.tabMenu.taskListem">
-            <li class="nav-item" >
-              <a class="nav-link text-active-primary me-6" routerLink="task_listem" routerLinkActive="active" translate="MENU.PROFIL_SUB.TASK_LISTEM"></a>
-            </li>
-          </ng-container>
-        
-          <ng-container *ngIf="menuConfig.pages.profil.tabMenu.takimim">
-            <li class="nav-item" >
-              <a class="nav-link text-active-primary me-6" routerLink="takimim" routerLinkActive="active" translate="MENU.PROFIL_SUB.TAKIMIM"></a>
-            </li>
-          </ng-container>
-          
-        </ul>
+                    <!-- <a class="cursor-pointer">
+                      <span [inlineSVG]="'./assets/media/icons/duotune/general/gen026.svg'"
+                        class="svg-icon svg-icon-1 svg-icon-primary"></span>
+                    </a> -->
+
+                    <ng-container *ngIf="userInformation">
+                      <a class="btn btn-sm btn-light-danger fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
+                        {{"PROFIL_DASHBOARD.GIRIS_TARIHI" | translate}} : {{ userInformation.GirisTarih | date
+                        :'yyyy-MM-dd'}}
+                      </a>
+                    </ng-container>
+
+                    <ng-container *ngIf="!userInformation">
+                      <a class="btn btn-sm btn-light-danger fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
+                        YYYY-MM-DD
+                      </a>
+                    </ng-container>
+
+                  </div>
+                </div>
+
+                <div
+                  [ngClass]="{'col-4': !(this.layoutService.isMobile | async), 'col-12 pt-4 d-flex justify-content-center' : this.layoutService.isMobile | async}">
+                  <button class="btn btn-danger w-50 h-100"
+                    [matMenuTriggerFor]="talepler">{{"PROFIL_DASHBOARD.TALEP_OLUSTUR" | translate}}</button>
+                  <mat-menu #talepler="matMenu">
+
+                    <button mat-menu-item (click)="showVacationDialog()">
+                      <i class="icon-l fas fa-skiing pe-4 fs-3"> </i>
+                      {{"PROFIL_DASHBOARD.IZIN" | translate}}
+                    </button>
+
+                    <button (click)="showOvertimeDialog()" mat-menu-item>
+                      <i class="icon-l fas fa-calendar-alt pe-4 fs-3"> </i>
+                      {{"PROFIL_DASHBOARD.FAZLA_MESAI" | translate}}
+                    </button>
+
+                    <button mat-menu-item (click)="showVisitRequestDialog()">
+                      <i class="fa-solid fa-person-walking pe-4 fs-3"> </i>
+                      {{"PROFIL_DASHBOARD.ZIYARETCI" | translate}}
+                    </button>
+
+                    <button mat-menu-item>
+                      <i class="fa-solid fa-car-side pe-4 fs-3"></i>
+                      {{"PROFIL_DASHBOARD.ARAC" | translate}}
+                    </button>
+
+                    <button mat-menu-item (click)="showAdvancePaymentDialog()">
+                      <i class="fa-solid fa-sack-dollar pe-4 fs-3"></i>
+                      {{"PROFIL_DASHBOARD.AVANS" | translate}}
+                    </button>
+
+                    <button mat-menu-item>
+                      <i class="fa-solid fa-van-shuttle pe-4 fs-3"></i>
+                      {{"PROFIL_DASHBOARD.SERVIS" | translate}}
+                    </button>
+
+                    <button mat-menu-item>
+                      <i class="fa-solid fa-screwdriver-wrench pe-4 fs-3"></i>
+                      {{"PROFIL_DASHBOARD.MALZEME_ENVANTER" | translate}}
+                    </button>
+                  </mat-menu>
+                </div>
+
+              </div>
+
+              <div class="row pt-4">
+                <div class="col-12" [ngClass]="{'d-flex justify-content-center': this.layoutService.isMobile | async}">
+                  <!-- flex-wrap -->
+                  <div class="d-flex  fw-bold fs-6 mb-4 pe-2">
+
+                    <a class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2 cursor-pointer ">
+                      <span [inlineSVG]="'./assets/media/icons/duotune/general/gen001.svg'"
+                        class="svg-icon svg-icon-4 me-1"></span>
+                      {{ _user.firmaad }}
+                    </a>
+
+                    <a class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2 cursor-pointer">
+                      <span [inlineSVG]="'./assets/media/icons/duotune/communication/com009.svg'"
+                        class="svg-icon svg-icon-4 me-1"></span>
+                      {{ _user.gorevad }}
+                    </a>
+
+                    <a class="d-flex align-items-center text-gray-400 text-hover-primary mb-2 cursor-pointer">
+                      <span [inlineSVG]="'./assets/media/icons/duotune/communication/com008.svg'"
+                        class="svg-icon svg-icon-4 me-1"></span>
+                      {{ _user.LoginName }}
+                    </a>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="d-flex flex-wrap flex-stack">
+                    <div class="d-flex flex-column flex-grow-1">
+                      <div class="d-flex flex-wrap"
+                        [ngClass]="{'justify-content-center': this.layoutService.isMobile | async}">
+
+                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                          <div class="d-flex align-items-center">
+                            <ng-container *ngIf="userInformation">
+                              <div class="fs-2 fw-bolder">{{ userInformation.Kidem }}</div>
+                            </ng-container>
+
+                            <ng-container *ngIf="!userInformation">
+                              <div class="fs-2 fw-bolder">-</div>
+                            </ng-container>
+                          </div>
+
+                          <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.KIDEM" | translate}}</div>
+                        </div>
+
+                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                          <div class="d-flex align-items-center">
+                            <ng-container *ngIf="userInformation">
+                              <div class="fs-2 fw-bolder">{{ userInformation.Hak }}</div>
+
+                            </ng-container>
+
+                            <ng-container *ngIf="!userInformation">
+                              <div class="fs-2 fw-bolder">-</div>
+                            </ng-container>
+                          </div>
+
+                          <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.IZIN_HAKKI" | translate}}</div>
+                        </div>
+
+
+                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                          <div class="d-flex align-items-center">
+                            <ng-container *ngIf="userInformation">
+                              <div class="fs-2 fw-bolder"> {{ userInformation.KullanilanYillikIzin }} </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="!userInformation">
+                              <div class="fs-2 fw-bolder"> - </div>
+
+                            </ng-container>
+
+                          </div>
+
+                          <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.KULLANILAN_IZIN" | translate}}
+                          </div>
+                        </div>
+
+                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                          <div class="d-flex align-items-center">
+                            <ng-container *ngIf="userInformation">
+                              <div class="fs-2 fw-bolder">{{ userInformation.IzinDevir }}</div>
+                            </ng-container>
+
+                            <ng-container *ngIf="!userInformation">
+                              <div class="fs-2 fw-bolder">-</div>
+                            </ng-container>
+                          </div>
+
+                          <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.DEVIR" | translate}}</div>
+                        </div>
+
+
+                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                          <div class="d-flex align-items-center">
+                            <ng-container *ngIf="userInformation">
+                              <div class="fs-2 fw-bolder">{{ userInformation.Kalan }}</div>
+                            </ng-container>
+
+                            <ng-container *ngIf="!userInformation">
+                              <div class="fs-2 fw-bolder">-</div>
+                            </ng-container>
+                          </div>
+                          <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.KALAN" | translate}}</div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-12">
+              <div class="d-flex overflow-auto h-55px"
+                [ngClass]="{'justify-content-center': !(this.layoutService.isMobile | async)}">
+                <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fw-bolder flex-nowrap">
+
+                  <ng-container>
+                    <li class="nav-item">
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="genel_bakis"
+                        routerLinkActive="active" translate="MENU.DASHBOARD"></a>
+                    </li>
+                  </ng-container>
+
+                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.gecislerim">
+                    <li class="nav-item">
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="gecislerim"
+                        routerLinkActive="active" translate="MENU.PROFIL_SUB.GECISLERIM"></a>
+                    </li>
+                  </ng-container>
+
+                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.surelerim">
+                    <li class="nav-item">
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="surelerim"
+                        routerLinkActive="active" translate="MENU.PROFIL_SUB.SURELERIM"></a>
+                    </li>
+                  </ng-container>
+
+                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.izinlerim">
+                    <li class="nav-item">
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="izinlerim"
+                        routerLinkActive="active" translate="MENU.PROFIL_SUB.IZINLERIM"></a>
+                    </li>
+                  </ng-container>
+
+                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.talepEdilenler">
+                    <li class="nav-item">
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="talep_edilenler"
+                        routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEP_EDILENLER">
+                        <span class="badge badge-circle badge-danger ms-2">5</span>
+                      </a>
+                    </li>
+                  </ng-container>
+
+                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.taleplerim">
+                    <li class="nav-item">
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="taleplerim"
+                        routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEPLERIM"></a>
+                    </li>
+                  </ng-container>
+
+                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.ziyaretciTaleplerim">
+                    <li class="nav-item">
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_taleplerim"
+                        routerLinkActive="active" translate="MENU.PROFIL_SUB.ZIYARETCI_TALEPLERIM"></a>
+                    </li>
+                  </ng-container>
+
+                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.mobilLokasyon">
+                    <li class="nav-item">
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="mobil_lokasyon"
+                        routerLinkActive="active" translate="MENU.PROFIL_SUB.MOBIL_LOKASYON"></a>
+                    </li>
+                  </ng-container>
+
+                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.taskListem">
+                    <li class="nav-item">
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="task_listem"
+                        routerLinkActive="active" translate="MENU.PROFIL_SUB.TASK_LISTEM"></a>
+                    </li>
+                  </ng-container>
+
+                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.takimim">
+                    <li class="nav-item">
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="takimim"
+                        routerLinkActive="active" translate="MENU.PROFIL_SUB.TAKIMIM"></a>
+                    </li>
+                  </ng-container>
+
+                  <ng-container>
+                    <li class="nav-item">
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="eksik_surelerim"
+                        routerLinkActive="active" translate="MENU.PROFIL_SUB.EKSIK_SURELERIM"></a>
+                    </li>
+                  </ng-container>
+
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>
 </div>
+
+
+<p-dialog header="{{'FM_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayOvertimeForm"
+  (visibleChange)="overtimeFormIsSend()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+  [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+
+  <app-dialog-fazla-mesai-talebi (overtimeFormIsSend)="overtimeFormIsSend()"
+    [closedForm]="closedOvertimeForm"></app-dialog-fazla-mesai-talebi>
+
+</p-dialog>
+
+
+
+<p-dialog header="{{'IZIN_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVacationForm"
+  (visibleChange)="vacationFormIsSend()" [modal]="true" [style]="{width: '65vw'}" [maximizable]="true"
+  [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+
+  <app-dialog-izin-talebi (vacationFormIsSend)="vacationFormIsSend()"
+    [closedForm]="closedVacationForm"></app-dialog-izin-talebi>
+
+</p-dialog>
+
+
+<p-dialog header="{{'ZIYARETCI_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVisitRequestForm"
+  (visibleChange)="visitRequestFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000" [draggable]="true"
+  [resizable]="false">
+
+  <app-dialog-ziyaretci-talebi (visitRequestFormIsSend)="visitRequestFormIsSend()"
+    [closedForm]="closedVisitorForm"></app-dialog-ziyaretci-talebi>
+
+</p-dialog>
+
+<p-dialog header="{{'PROFIL_DASHBOARD.AVANS' | translate}}" [(visible)]="displayAdvancePaymentForm" [modal]="true"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+
+  <app-dialog-avans-talebi (visitRequestFormIsSend)="advancePaymentIsSend()"></app-dialog-avans-talebi>
+
+</p-dialog>
 
 
 <router-outlet></router-outlet>

@@ -1,50 +1,60 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
+import { ResponseModel } from 'src/app/modules/auth/models/response-model';
+import { SearchFilterPipe } from 'src/app/_helpers/pipes/search-filter.pipe';
+import { LayoutService } from 'src/app/_metronic/layout';
+import { MyTeamModel } from '../../models/myTeam';
+import { ProfileService } from '../../profile.service';
 
 @Component({
   selector: 'app-takimim',
   templateUrl: './takimim.component.html',
   styleUrls: ['./takimim.component.scss']
 })
-export class TakimimComponent implements OnInit {
+export class TakimimComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject;
+  myTeam : any[] = [];
+  filterText : string = "";
+  filteredItems: any[] = [];
 
-  panelOpenState = false;
-
-  response : any[] = [
-    {durum : 'Dışarıda', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'Dışarıda', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'İçeride', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'Dışarıda', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'İçeride', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'İçeride', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'İçeride', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'Dışarıda', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'Dışarıda', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'İçeride', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'Dışarıda', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'İçeride', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'Dışarıda', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'Dışarıda', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'Dışarıda', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-    {durum : 'İçeride', gelmedi : 'Gelmedi', bekleyenizintalep : '0', bekleyenfmtalep : '6', geckalma : '0', erkencikma : '0', fotoimage : '', ad : 'Ad', soyad : 'Soyad', ggiris : '16-01-2023 07:58:09', gcikis : '16-01-2023 18:02:29', sicilno : '00000233', mesaiaciklama : 'Hafta İçi'},
-  ]
-
-  staffInside : any[] = [];
-  staffOutside : any[] = [];
-
-  constructor() { }
+  constructor(
+    private profileService : ProfileService,
+    public layoutService : LayoutService,
+    private ref : ChangeDetectorRef
+  ) { }
+  
 
   ngOnInit(): void {
-    this.classification();
+    this.getMyTeam();
   }
 
-  classification() {
-    this.response.forEach((item) => {
-      if (item.durum === 'Dışarıda') {
-        this.staffOutside.push(item);
-      } else {
-        this.staffInside.push(item);
+  getMyTeam() {
+    this.profileService.getMyTeam().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<MyTeamModel, ResponseDetailZ>[]) => {
+      const data = response[0].x;
+      const message = response[0].z;
+
+      console.log("Takımım :", response);
+      if (message.islemsonuc == 1) {
+        this.myTeam = data;
       }
-    })
+
+      this.ref.detectChanges();
+    });
   }
 
+  filterTextChange() {
+    const searchPipe = new SearchFilterPipe();
+    this.filteredItems = this.myTeam.filter(item => {
+      const searchFilter = searchPipe.transform([item], this.filterText, ['durum', 'ad', 'soyad', 'sicilno', 'mesaiaciklama', 'ggiris', 'gcikis']);
+      return searchFilter.length > 0;
+    });
+  }
+
+
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
+  }
 }

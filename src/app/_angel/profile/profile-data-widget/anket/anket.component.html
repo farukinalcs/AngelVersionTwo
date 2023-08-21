@@ -1,0 +1,391 @@
+<div class="card card-flush h-md-100" >
+    <div class="card-header pt-5" style="display: block;">
+        <div class="card-title" style="display: block;">
+            <div class="row">
+                <div class="col-8">
+                    <i class="fa-solid fa-list-check fs-2 text-danger pe-2"></i>
+                    <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"PROFILE_WIDGETS.ANKET.HEADER" | translate}}</span>
+                </div>
+
+                <div class="col-4 d-flex justify-content-end align-items-center" (click)="showAllSurveys()">
+                    <span class="text-gray-400 text-hover-primary cursor-pointer pt-1 fw-semibold fs-7">
+                        {{"PROFILE_WIDGETS.SHARRED.TUMU" | translate}}
+                    <i class="fa-solid fa-chevron-right ps-2 fs-7"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-12">
+                <p-carousel [value]="items" [numVisible]="1" [numScroll]="3" [circular]="true" [autoplayInterval]="150000"
+                    [showIndicators]="false">
+                    <ng-template let-item pTemplate="item">
+                        <div class="tanimlar-item">
+                            <div class="tanimlar-item-content">
+                                <div class="mb-5">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="fs-2x fw-bold text-gray-800 text-center mb-13">
+                                                <span class="badge badge-dark fs-6">{{item.bolum}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 scroll h-50px d-flex justify-content-center">
+                                            <div class="fs-3 fw-bold text-gray-800 text-center">
+                                                <span>{{item.aciklama}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                    <div class="row mt-2">
+                                        <div class="col-12">
+                                            <div class="text-gray-400 fw-semibold fs-7 text-end">
+                                                <span>{{item.tarih}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                    <div class="row" [formGroup]="surveyForm">
+                                        <div class="col-lg-6">
+                                            <input type="radio" class="btn-check" formControlName="survey" value="1" 
+                                            [attr.id]="'yes-' + item.id" (change)="onOptionSelect(item, 1)" [checked]="item.selectedOption === 1" />
+                                            <label
+                                                class="btn btn-outline btn-outline-dashed btn-active-light-danger p-3 d-flex align-items-center justify-content-center mb-5"
+                                                for="yes-{{item.id}}">
+                                                <i class="fa-solid fa-thumbs-up fs-2x text-primary"></i>
+            
+                                                <span class="d-block fw-semibold text-start ps-3">
+                                                    <span class="text-dark fw-bold d-block fs-3">{{"PROFILE_WIDGETS.ANKET.EVET" | translate}}</span>
+                                                </span>
+                                            </label>
+                                        </div>
+            
+                                        <div class="col-lg-6">
+                                            <input type="radio" class="btn-check" formControlName="survey" value="-1"
+                                            [attr.id]="'no-' + item.id" (change)="onOptionSelect(item, -1)" [checked]="item.selectedOption === -1" />
+                                            <label
+                                                class="btn btn-outline btn-outline-dashed btn-active-light-danger p-3 d-flex align-items-center justify-content-center"
+                                                for="no-{{item.id}}">
+                                                <i class="fa-solid fa-thumbs-down fs-2x text-primary"></i>
+                                                <span class="d-block fw-semibold text-start ps-3">
+                                                    <span class="text-dark fw-bold d-block fs-3">{{"PROFILE_WIDGETS.ANKET.HAYIR" | translate}}</span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel>
+            </div>
+
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <a class="btn" (click)="getValues()">
+                    <i class="fa-solid fa-circle-plus text-gray-400 fs-1 pe-2"></i>
+                    <span class="text-gray-400 fs-4">{{"PROFILE_WIDGETS.ANKET.ANKET_OLUSTUR" | translate}}</span>
+                </a>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<p-dialog header="{{'PROFILE_WIDGETS.ANKET.TUM_ANKETLER' | translate}}" [(visible)]="displayAllSurveys" [modal]="true" [style]="{width: '50vw'}"
+    [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+
+    <div class="container" style="height: 500px;">
+        <div class="row card p-5">
+            <div class="col-12">
+                <mat-tab-group mat-stretch-tabs="false">
+                    <mat-tab label="{{'PUBLIC.GUNLUK' | translate}}">
+                        <div class="card">
+                            <div class="card-body py-3">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header" style="display: flow-root;">
+                                                <div class="row mt-4">
+                                                    <div class="col-12 d-flex align-items-center">
+                                                        <h4 class="card-label text-danger mt-2 font-weight-bolder">{{"PROFILE_WIDGETS.SHARRED.BOLUM" | translate}}</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body  d-flex p-0 card-rounded">
+                                                <div style="padding: 20px 0px 15px 15px ;" class="flex-grow-1 card-rounded flex-grow-1">
+                                                    <div class="container">
+                                                        <div class="row d-flex justify-content-center">
+                                                            <ng-container>
+                                                                <div class="card pt-3" *ngFor="let item of uniqueDepartments"
+                                                                    style="width:18rem;border:0 !important;background-color: white;">
+                                                                    <a class="btn btn-light-danger btn-xl mr-2 text-left"
+                                                                        (click)="onSelect(item);"
+                                                                        [ngClass]="{active: selectedItem == item}">
+                                                                        <i class="icon-l fas fa-angle-right"></i> {{item}}
+                                                                    </a>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 border border-5 px-20 my-3" *ngFor="let item of filteredItems">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="fs-2x fw-bold text-gray-800 text-center mb-13">
+                                                    <span class="badge badge-dark fs-6">{{item.bolum}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 scroll h-50px d-flex justify-content-center">
+                                                <div class="fs-3 fw-bold text-gray-800 text-center">
+                                                    <span>{{item.aciklama}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                
+                                        <div class="row mt-2">
+                                            <div class="col-12">
+                                                <div class="text-gray-400 fw-semibold fs-7 text-end">
+                                                    <span>{{item.tarih}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" [formGroup]="surveyForm">
+                                            <div class="col-lg-6">
+                                                <input type="radio" class="btn-check" formControlName="survey" value="1" 
+                                                [attr.id]="'yes-' + item.id" (change)="onOptionSelect(item, 1)" [checked]="item.selectedOption === 1" />
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger p-3 d-flex align-items-center justify-content-center mb-5"
+                                                    for="yes-{{item.id}}">
+                                                    <i class="fa-solid fa-thumbs-up fs-2x text-primary"></i>
+                
+                                                    <span class="d-block fw-semibold text-start ps-3">
+                                                        <span class="text-dark fw-bold d-block fs-3">{{"PROFILE_WIDGETS.ANKET.EVET" | translate}}</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                
+                                            <div class="col-lg-6">
+                                                <input type="radio" class="btn-check" formControlName="survey" value="-1"
+                                                [attr.id]="'no-' + item.id" (change)="onOptionSelect(item, -1)" [checked]="item.selectedOption === -1" />
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger p-3 d-flex align-items-center justify-content-center"
+                                                    for="no-{{item.id}}">
+                                                    <i class="fa-solid fa-thumbs-down fs-2x text-primary"></i>
+                                                    <span class="d-block fw-semibold text-start ps-3">
+                                                        <span class="text-dark fw-bold d-block fs-3">{{"PROFILE_WIDGETS.ANKET.HAYIR" | translate}}</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </mat-tab>
+
+                    <mat-tab label="{{'PUBLIC.HAFTALIK' | translate}}">
+                        <div class="card">
+                            <div class="card-body py-3">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header" style="display: flow-root;">
+                                                <div class="row mt-4">
+                                                    <div class="col-12 d-flex align-items-center">
+                                                        <h4 class="card-label text-danger mt-2 font-weight-bolder">{{"PROFILE_WIDGETS.SHARRED.BOLUM" | translate}}</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body  d-flex p-0 card-rounded">
+                                                <div style="padding: 20px 0px 15px 15px ;" class="flex-grow-1 card-rounded flex-grow-1">
+                                                    <div class="container">
+                                                        <div class="row d-flex justify-content-center">
+                                                            <ng-container>
+                                                                <div class="card pt-3" *ngFor="let item of uniqueDepartments"
+                                                                    style="width:18rem;border:0 !important;background-color: white;">
+                                                                    <a class="btn btn-light-danger btn-xl mr-2 text-left"
+                                                                        (click)="onSelect(item);"
+                                                                        [ngClass]="{active: selectedItem == item}">
+                                                                        <i class="icon-l fas fa-angle-right"></i> {{item}}
+                                                                    </a>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 border border-5 px-20 my-3" *ngFor="let item of filteredItems">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="fs-2x fw-bold text-gray-800 text-center mb-13">
+                                                    <span class="badge badge-dark fs-6">{{item.bolum}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 scroll h-50px d-flex justify-content-center">
+                                                <div class="fs-3 fw-bold text-gray-800 text-center">
+                                                    <span>{{item.aciklama}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                
+                                        <div class="row mt-2">
+                                            <div class="col-12">
+                                                <div class="text-gray-400 fw-semibold fs-7 text-end">
+                                                    <span>{{item.tarih}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" [formGroup]="surveyForm">
+                                            <div class="col-lg-6">
+                                                <input type="radio" class="btn-check" formControlName="survey" value="1" 
+                                                [attr.id]="'yes-' + item.id" (change)="onOptionSelect(item, 1)" [checked]="item.selectedOption === 1" />
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger p-3 d-flex align-items-center justify-content-center mb-5"
+                                                    for="yes-{{item.id}}">
+                                                    <i class="fa-solid fa-thumbs-up fs-2x text-primary"></i>
+                
+                                                    <span class="d-block fw-semibold text-start ps-3">
+                                                        <span class="text-dark fw-bold d-block fs-3">{{"PROFILE_WIDGETS.ANKET.EVET" | translate}}</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                
+                                            <div class="col-lg-6">
+                                                <input type="radio" class="btn-check" formControlName="survey" value="-1"
+                                                [attr.id]="'no-' + item.id" (change)="onOptionSelect(item, -1)" [checked]="item.selectedOption === -1" />
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger p-3 d-flex align-items-center justify-content-center"
+                                                    for="no-{{item.id}}">
+                                                    <i class="fa-solid fa-thumbs-down fs-2x text-primary"></i>
+                                                    <span class="d-block fw-semibold text-start ps-3">
+                                                        <span class="text-dark fw-bold d-block fs-3">{{"PROFILE_WIDGETS.ANKET.HAYIR" | translate}}</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="{{'PUBLIC.AYLIK' | translate}}">
+                        <div class="card">
+                            <div class="card-body py-3">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header" style="display: flow-root;">
+                                                <div class="row mt-4">
+                                                    <div class="col-12 d-flex align-items-center">
+                                                        <h4 class="card-label text-danger mt-2 font-weight-bolder">{{"PROFILE_WIDGETS.SHARRED.BOLUM" | translate}}</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body  d-flex p-0 card-rounded">
+                                                <div style="padding: 20px 0px 15px 15px ;" class="flex-grow-1 card-rounded flex-grow-1">
+                                                    <div class="container">
+                                                        <div class="row d-flex justify-content-center">
+                                                            <ng-container>
+                                                                <div class="card pt-3" *ngFor="let item of uniqueDepartments"
+                                                                    style="width:18rem;border:0 !important;background-color: white;">
+                                                                    <a class="btn btn-light-danger btn-xl mr-2 text-left"
+                                                                        (click)="onSelect(item);"
+                                                                        [ngClass]="{active: selectedItem == item}">
+                                                                        <i class="icon-l fas fa-angle-right"></i> {{item}}
+                                                                    </a>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 border border-5 px-20 my-3" *ngFor="let item of filteredItems">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="fs-2x fw-bold text-gray-800 text-center mb-13">
+                                                    <span class="badge badge-dark fs-6">{{item.bolum}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 scroll h-50px d-flex justify-content-center">
+                                                <div class="fs-3 fw-bold text-gray-800 text-center">
+                                                    <span>{{item.aciklama}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                
+                                        <div class="row mt-2">
+                                            <div class="col-12">
+                                                <div class="text-gray-400 fw-semibold fs-7 text-end">
+                                                    <span>{{item.tarih}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" [formGroup]="surveyForm">
+                                            <div class="col-lg-6">
+                                                <input type="radio" class="btn-check" formControlName="survey" value="1" 
+                                                [attr.id]="'yes-' + item.id" (change)="onOptionSelect(item, 1)" [checked]="item.selectedOption === 1" />
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger p-3 d-flex align-items-center justify-content-center mb-5"
+                                                    for="yes-{{item.id}}">
+                                                    <i class="fa-solid fa-thumbs-up fs-2x text-primary"></i>
+                
+                                                    <span class="d-block fw-semibold text-start ps-3">
+                                                        <span class="text-dark fw-bold d-block fs-3">{{"PROFILE_WIDGETS.ANKET.EVET" | translate}}</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                
+                                            <div class="col-lg-6">
+                                                <input type="radio" class="btn-check" formControlName="survey" value="-1"
+                                                [attr.id]="'no-' + item.id" (change)="onOptionSelect(item, -1)" [checked]="item.selectedOption === -1" />
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger p-3 d-flex align-items-center justify-content-center"
+                                                    for="no-{{item.id}}">
+                                                    <i class="fa-solid fa-thumbs-down fs-2x text-primary"></i>
+                                                    <span class="d-block fw-semibold text-start ps-3">
+                                                        <span class="text-dark fw-bold d-block fs-3">{{"PROFILE_WIDGETS.ANKET.HAYIR" | translate}}</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayAllSurveys=false"
+            label="{{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}" class="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+

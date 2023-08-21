@@ -2,6 +2,9 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
+import { TranslationService } from 'src/app/modules/i18n';
+import { HelperService } from 'src/app/_helpers/helper.service';
+import { LayoutService } from 'src/app/_metronic/layout';
 import { TransitionsModel } from '../../models/transations';
 import { ProfileService } from '../../profile.service';
 
@@ -12,31 +15,27 @@ import { ProfileService } from '../../profile.service';
 })
 export class GecislerimComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
-
+  currentLang : any;
   transitions : any[]  = [];
   
-
   constructor(
     private profileService : ProfileService,
-    private ref : ChangeDetectorRef
+    private ref : ChangeDetectorRef,
+    public layoutService : LayoutService
   ) { }
 
   ngOnInit(): void {
     this.getTransitions('1');
   }
-  test(event : any) {
-    console.log("EVENT :", event.tab.textLabel);
-    
-  }
 
   getTransitions(event : any) {
     var zamanAralik : any = '1';
     if (event.tab) {
-      if (event.tab.textLabel == 'Bugün') {
+      if (event.tab.textLabel == 'Günlük' || event.tab.textLabel == 'Daily') {
         zamanAralik = '1';
-      } else if (event.tab.textLabel == 'Hafta') {
+      } else if (event.tab.textLabel == 'Haftalık' || event.tab.textLabel == 'Weekly') {
         zamanAralik = '7';
-      } else if (event.tab.textLabel == 'Ay'){
+      } else if (event.tab.textLabel == 'Aylık' || event.tab.textLabel == 'Monthly'){
         zamanAralik = '30';
       }  
     }

@@ -1,5 +1,5 @@
 <!--begin::Toolbar container-->
-<div id="kt_app_toolbar_container" class="app-container" [ngClass]="appToolbarContainerCSSClass">
+<div id="kt_app_toolbar_container" class="app-container" [ngClass]="appToolbarContainerCSSClass" style="padding: 10px;">
   <ng-container *ngIf="showPageTitle()">
     <app-page-title [appPageTitleDirection]="appPageTitleDirection" [appPageTitleBreadcrumb]="appPageTitleBreadcrumb"
       [appPageTitleDescription]="appPageTitleDescription" class="page-title d-flex flex-wrap me-3"
@@ -23,5 +23,21 @@
   <ng-container *ngIf="appToolbarLayout === 'saas'">
     <app-saas class="d-flex align-items-center gap-2" [appPageTitleDisplay]="appPageTitleDisplay"></app-saas>
   </ng-container>
+
+  <div class="d-flex justify-content-end">
+    <div class="symbol symbol-45px me-2" (click)="setPageTitle()">
+      <span class="symbol-label symbol-label bg-hover-secondary">
+        <i class="fa-solid fa-gear fs-2 text-hover-danger"></i>
+      </span>
+    </div>
+  </div>
 </div>
 <!--end::Toolbar container-->
+
+<!-- <div *ngIf="loaderService.isLoading | async" class="loader-container">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div> -->
+
+<!-- <div *ngIf="loaderService.isLoading | async" class="loader-container">
+  <mat-spinner style="top: 50%; left: 50%;"></mat-spinner>
+</div> -->

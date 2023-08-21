@@ -1,5 +1,14 @@
 <!--begin::App-->
 <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+  
+
+  <!-- <div *ngIf="loaderService.isLoading | async" class="loader-container">
+    <div id="splash-screen" class="splash-screen">
+      <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo" />
+      <mat-spinner></mat-spinner>
+    </div>
+  </div> -->
+
   <!--begin::Page-->
   <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
     <ng-container *ngIf="appHeaderDisplay">
@@ -64,6 +73,7 @@
 <!-- end:: Engage -->
 <!-- <app-engages></app-engages> -->
 <!-- end:: Engage -->
+
 
 <!-- begin:: Modals -->
 <app-main-modal></app-main-modal>

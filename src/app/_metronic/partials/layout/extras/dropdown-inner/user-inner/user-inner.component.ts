@@ -2,6 +2,7 @@ import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { TranslationService } from '../../../../../../modules/i18n';
 import { AuthService, UserType } from '../../../../../../modules/auth';
+import { HelperService } from 'src/app/_helpers/helper.service';
 
 @Component({
   selector: 'app-user-inner',
@@ -9,7 +10,7 @@ import { AuthService, UserType } from '../../../../../../modules/auth';
 })
 export class UserInnerComponent implements OnInit, OnDestroy {
   @HostBinding('class')
-  class = `menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px`;
+  class = `menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-danger fw-bold py-4 fs-6 w-275px`;
   @HostBinding('attr.data-kt-menu') dataKtMenu = 'true';
 
   language: LanguageFlag;
@@ -19,7 +20,8 @@ export class UserInnerComponent implements OnInit, OnDestroy {
 
   constructor(
     private auth: AuthService,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private helperService : HelperService
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +54,8 @@ export class UserInnerComponent implements OnInit, OnDestroy {
         language.active = false;
       }
     });
+    this.helperService.lang.next(lang);
+
   }
 
   ngOnDestroy() {
@@ -72,31 +76,31 @@ const languages = [
     name: 'English',
     flag: './assets/media/flags/united-states.svg',
   },
-  {
-    lang: 'zh',
-    name: 'Mandarin',
-    flag: './assets/media/flags/china.svg',
-  },
-  {
-    lang: 'es',
-    name: 'Spanish',
-    flag: './assets/media/flags/spain.svg',
-  },
-  {
-    lang: 'ja',
-    name: 'Japanese',
-    flag: './assets/media/flags/japan.svg',
-  },
-  {
-    lang: 'de',
-    name: 'German',
-    flag: './assets/media/flags/germany.svg',
-  },
-  {
-    lang: 'fr',
-    name: 'French',
-    flag: './assets/media/flags/france.svg',
-  },
+  // {
+  //   lang: 'zh',
+  //   name: 'Mandarin',
+  //   flag: './assets/media/flags/china.svg',
+  // },
+  // {
+  //   lang: 'es',
+  //   name: 'Spanish',
+  //   flag: './assets/media/flags/spain.svg',
+  // },
+  // {
+  //   lang: 'ja',
+  //   name: 'Japanese',
+  //   flag: './assets/media/flags/japan.svg',
+  // },
+  // {
+  //   lang: 'de',
+  //   name: 'German',
+  //   flag: './assets/media/flags/germany.svg',
+  // },
+  // {
+  //   lang: 'fr',
+  //   name: 'French',
+  //   flag: './assets/media/flags/france.svg',
+  // },
   {
     lang: 'tr',
     name: 'Turkish',

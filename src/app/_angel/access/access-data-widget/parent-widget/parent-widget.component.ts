@@ -6,9 +6,15 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./parent-widget.component.scss']
 })
 export class ParentWidgetComponent implements OnInit {
-  @Input() widget : any;
-  @Input() resizeEvent : any;
-  
+  @Input() widget: any;
+  @Input() resizeEvent: any;
+  @Input() personeller: any[];
+  @Input() ziyaretciler: any[];
+  @Input() alarmlar: any[];
+  @Input() sonIslemler: any[];
+  @Input() kesikCihazlar: any[];
+  @Input() mesaiBit: any[];
+
   constructor() { }
 
   ngOnInit(): void {

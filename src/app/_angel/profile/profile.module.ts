@@ -42,14 +42,44 @@ import { DialogGunlukIzinTalebiComponent } from './talep-olustur/dialog-gunluk-i
 import { TranslationModule } from 'src/app/modules/i18n';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SplitterModule } from "primeng/splitter";
-import {TableModule} from 'primeng/table';
-import {InputTextModule} from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
 import { SearchFilterPipe } from 'src/app/_helpers/pipes/search-filter.pipe';
-import {DialogModule} from 'primeng/dialog';
-import {ButtonModule} from 'primeng/button';
-import {TimelineModule} from 'primeng/timeline';
-import {CardModule} from 'primeng/card';
-
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { TimelineModule } from 'primeng/timeline';
+import { CardModule } from 'primeng/card';
+import { CardsModule, EngagesModule, ExtrasModule, WidgetsModule } from 'src/app/_metronic/partials';
+import { AccordionModule } from 'primeng/accordion';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DataViewModule } from 'primeng/dataview';
+import { DropdownModule } from 'primeng/dropdown';
+import { DialogIzinTalebiComponent } from './talep-olustur/dialog-izin-talebi/dialog-izin-talebi.component';
+import { EksikSurelerimComponent } from './islemler/eksik-surelerim/eksik-surelerim.component';
+import { TimeFormatPipe } from 'src/app/_helpers/pipes/time-format.pipe';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CardsWidget20Component } from 'src/app/_metronic/partials/content/widgets/_new/cards/cards-widget20/cards-widget20.component';
+import { EngageWidget10Component } from 'src/app/_metronic/partials/content/widgets/_new/engage/engage-widget10/engage-widget10.component';
+import { ListsWidget26Component } from 'src/app/_metronic/partials/content/widgets/_new/lists/lists-widget26/lists-widget26.component';
+import { CardsWidget17Component } from 'src/app/_metronic/partials/content/widgets/_new/cards/cards-widget17/cards-widget17.component';
+import { CardsWidget7Component } from 'src/app/_metronic/partials/content/widgets/_new/cards/cards-widget7/cards-widget7.component';
+import { DogumGunuComponent } from './profile-data-widget/dogum-gunu/dogum-gunu.component';
+import { YemekMenuComponent } from './profile-data-widget/yemek-menu/yemek-menu.component';
+import { YeniKatilanlarComponent } from './profile-data-widget/yeni-katilanlar/yeni-katilanlar.component';
+import { DuyurularComponent } from './profile-data-widget/duyurular/duyurular.component';
+import { OnerilerComponent } from './profile-data-widget/oneriler/oneriler.component';
+import { CarouselModule } from 'primeng/carousel';
+import { AnketComponent } from './profile-data-widget/anket/anket.component';
+import { KidemlilerComponent } from './profile-data-widget/kidemliler/kidemliler.component';
+import { BultenComponent } from './profile-data-widget/bulten/bulten.component';
+import { DosyalarimComponent } from './profile-data-widget/dosyalarim/dosyalarim.component';
+import { ImageModule } from 'primeng/image';
+import { EnvanterComponent } from './profile-data-widget/envanter/envanter.component';
+import { DialogAvansTalebiComponent } from './talep-olustur/dialog-avans-talebi/dialog-avans-talebi.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { DialogBultenFormuComponent } from './talep-olustur/dialog-bulten-formu/dialog-bulten-formu.component';
+import { DialogDuyuruFormuComponent } from './talep-olustur/dialog-duyuru-formu/dialog-duyuru-formu.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +99,23 @@ import {CardModule} from 'primeng/card';
     DialogZiyaretciTalebiComponent,
     DialogSaatlikIzinTalebiComponent,
     DialogGunlukIzinTalebiComponent,
-    SearchFilterPipe
+    SearchFilterPipe,
+    DialogIzinTalebiComponent,
+    EksikSurelerimComponent,
+    TimeFormatPipe,
+    DogumGunuComponent,
+    YemekMenuComponent,
+    YeniKatilanlarComponent,
+    DuyurularComponent,
+    OnerilerComponent,
+    AnketComponent,
+    KidemlilerComponent,
+    BultenComponent,
+    DosyalarimComponent,
+    EnvanterComponent,
+    DialogAvansTalebiComponent,
+    DialogBultenFormuComponent,
+    DialogDuyuruFormuComponent,
   ],
   imports: [
     CommonModule,
@@ -105,14 +151,24 @@ import {CardModule} from 'primeng/card';
     TranslationModule,
     OverlayPanelModule,
     SplitterModule,
-
     TableModule,
     InputTextModule,
     DialogModule,
     ButtonModule,
     TimelineModule,
-    CardModule
-    
+    CardModule,
+    CardsModule, // Metronic içinden module
+    AccordionModule,
+    MatTooltipModule,
+    DataViewModule,
+    DropdownModule,
+    NgApexchartsModule,
+    MatProgressSpinnerModule,
+    WidgetsModule,
+    CarouselModule,
+    ImageModule,
+    FullCalendarModule,
+    ExtrasModule,
   ]
 })
 export class ProfileModule { }

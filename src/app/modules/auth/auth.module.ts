@@ -10,6 +10,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { AuthComponent } from './auth.component';
 import { TranslationModule } from '../i18n/translation.module';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,9 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    MatProgressSpinnerModule
+
   ],
 })
 export class AuthModule {}

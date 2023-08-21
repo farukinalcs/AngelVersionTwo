@@ -1,0 +1,10 @@
+:host ::ng-deep {
+    .p-dropdown {
+        background-color: #f5f8fa;
+        width: 100%;
+    }
+}
+
+:host ::ng-deep .btn.btn-outline.btn-outline-dashed.active {
+    border-color: #ed1c24;
+}

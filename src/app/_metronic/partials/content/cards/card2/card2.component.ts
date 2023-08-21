@@ -15,7 +15,7 @@ export class Card2Component {
   @Input() date: string = '';
   @Input() budget: string = '';
   @Input() progress: number = 50;
-  @Input() users: Array<IconUserModel> = [];
+  // @Input() users: Array<IconUserModel> = [];
 
   constructor() {}
 }

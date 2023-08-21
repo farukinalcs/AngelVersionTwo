@@ -1,0 +1,270 @@
+<div class="card card-flush h-md-100" >
+    <div class="card-header pt-5" style="display: block;">
+        <div class="card-title" style="display: block;">
+            <div class="row">
+                <div class="col-8">
+                    <i class="fa-solid fa-bullhorn fs-2 text-danger pe-2"></i>
+                    <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"PROFILE_WIDGETS.DUYURULAR.HEADER" | translate}}</span>
+                </div>
+
+                <div class="col-4 d-flex justify-content-end align-items-center" (click)="showAllAnnouncements()">
+                    <span class="text-gray-400 text-hover-primary cursor-pointer pt-1 fw-semibold fs-7">
+                        {{"PROFILE_WIDGETS.SHARRED.TUMU" | translate}}
+                    <i class="fa-solid fa-chevron-right ps-2 fs-7"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <p-carousel [value]="items" [numVisible]="1" [numScroll]="3" [circular]="true" [autoplayInterval]="150000"
+            [showIndicators]="false">
+            <ng-template let-item pTemplate="item">
+                <div class="tanimlar-item">
+                    <div class="tanimlar-item-content">
+                        <div class="mb-5">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="fs-2x fw-bold text-gray-800 text-center mb-13">
+                                        <span class="badge badge-dark fs-6">{{item.bolum}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-10 scroll h-100px d-flex justify-content-center">
+                                    <div class="fs-3 fw-bold text-gray-800 text-center">
+                                        <span>{{item.aciklama}}</span>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <div class="text-gray-400 fw-semibold fs-7 text-end">
+                                        <span>{{item.tarih}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-center align-items-center pt-7">
+                                    <a class="btn" (click)="showAnnouncementFormDialog()">
+                                        <i class="fa-solid fa-circle-plus text-gray-400 fs-1 pe-2"></i>
+                                        <span class="text-gray-400 fs-4">Duyuru Oluştur</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-carousel>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<p-dialog header="{{'PROFILE_WIDGETS.DUYURULAR.TUM_DUYURULAR' | translate}}" [(visible)]="displayAllAnnouncements" [modal]="true" [style]="{width: '50vw'}"
+    [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+
+    <div class="container" style="height: 500px;">
+        <div class="row card p-5">
+            <div class="col-12">
+                <mat-tab-group mat-stretch-tabs="false">
+                    <mat-tab label="{{'PUBLIC.GUNLUK' | translate}}">
+                        <div class="card">
+                            <div class="card-body py-3">
+                                <div class="row">
+                                    <div class="col-12 py-5" *ngFor="let item of items">
+                                        <div class="card h-lg-100" style="background: linear-gradient(112.14deg, #e33a37 0%, #631b2c 100%);">
+                                            <div class="card-body py-2 px-5">
+                                                <div class="row align-items-center">
+                                                    <div class="col-sm-12 pe-0 mb-5 mb-sm-0">
+                                                        <div class="d-flex justify-content-between h-100 flex-column pt-xl-5 pb-xl-2 ps-xl-7">
+                                                            <div class="mb-7">
+                                                                <div class="mb-6">
+                                                                    <h3 class="fs-2x fw-semibold text-white">Başlık</h3>
+                                                                    <div class="fw-semibold text-white opacity-75 scroll h-75px">{{item.aciklama}}</div>
+                                                                </div>
+                                                                
+                                                                <div class="d-flex align-items-center flex-wrap d-grid gap-2 ">
+                                                                    <div class="d-flex align-items-center me-5 me-xl-13">
+                                                                        <div class="symbol symbol-30px symbol-circle me-3">
+                                                                            <span class="symbol-label" style="background: rgba(255, 255, 255, 0.15);">
+                                                                                <i class="fa-solid fa-tag fs-4 text-white"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                        
+                                                                        <div class="m-0">
+                                                                            <a class="text-white text-opacity-75 fs-8">{{"PROFILE_WIDGETS.SHARRED.BOLUM" | translate}}</a>
+                                                                            <span class="fw-bold text-white fs-7 d-block">{{item.bolum}}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="symbol symbol-30px symbol-circle me-3">
+                                                                            <span class="symbol-label" style="background: rgba(255, 255, 255, 0.15);">
+                                                                                <i class="fa-solid fa-calendar-days fs-4 text-white"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                        
+                                                                        <div class="m-0">
+                                                                            <a
+                                                                                class="text-white text-opacity-75 fs-8">{{"PROFILE_WIDGETS.SHARRED.TARIH" | translate}}</a>
+                                                                            <span class="fw-bold text-white fs-7 d-block">{{item.tarih}}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </mat-tab>
+
+                    <mat-tab label="{{'PUBLIC.HAFTALIK' | translate}}">
+                        <div class="card">
+                            <div class="card-body py-3">
+                                <div class="row">
+                                    <div class="col-12 py-5" *ngFor="let item of items">
+                                        <div class="card h-lg-100" style="background: linear-gradient(112.14deg, #e33a37 0%, #631b2c 100%);">
+                                            <div class="card-body py-2 px-5">
+                                                <div class="row align-items-center">
+                                                    <div class="col-sm-12 pe-0 mb-5 mb-sm-0">
+                                                        <div class="d-flex justify-content-between h-100 flex-column pt-xl-5 pb-xl-2 ps-xl-7">
+                                                            <div class="mb-7">
+                                                                <div class="mb-6">
+                                                                    <h3 class="fs-2x fw-semibold text-white">Başlık</h3>
+                                                                    <div class="fw-semibold text-white opacity-75 scroll h-75px">{{item.aciklama}}</div>
+                                                                </div>
+                                                                
+                                                                <div class="d-flex align-items-center flex-wrap d-grid gap-2 ">
+                                                                    <div class="d-flex align-items-center me-5 me-xl-13">
+                                                                        <div class="symbol symbol-30px symbol-circle me-3">
+                                                                            <span class="symbol-label" style="background: rgba(255, 255, 255, 0.15);">
+                                                                                <i class="fa-solid fa-tag fs-4 text-white"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                        
+                                                                        <div class="m-0">
+                                                                            <a class="text-white text-opacity-75 fs-8">{{"PROFILE_WIDGETS.SHARRED.BOLUM" | translate}}</a>
+                                                                            <span class="fw-bold text-white fs-7 d-block">{{item.bolum}}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="symbol symbol-30px symbol-circle me-3">
+                                                                            <span class="symbol-label" style="background: rgba(255, 255, 255, 0.15);">
+                                                                                <i class="fa-solid fa-calendar-days fs-4 text-white"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                        
+                                                                        <div class="m-0">
+                                                                            <a class="text-white text-opacity-75 fs-8">{{"PROFILE_WIDGETS.SHARRED.TARIH" | translate}}</a>
+                                                                            <span class="fw-bold text-white fs-7 d-block">{{item.tarih}}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="{{'PUBLIC.AYLIK' | translate}}">
+                        <div class="card">
+                            <div class="card-body py-3">
+                                <div class="row">
+                                    <div class="col-12 py-5" *ngFor="let item of items">
+                                        <div class="card h-lg-100" style="background: linear-gradient(112.14deg, #e33a37 0%, #631b2c 100%);">
+                                            <div class="card-body py-2 px-5">
+                                                <div class="row align-items-center">
+                                                    <div class="col-sm-12 pe-0 mb-5 mb-sm-0">
+                                                        <div class="d-flex justify-content-between h-100 flex-column pt-xl-5 pb-xl-2 ps-xl-7">
+                                                            <div class="mb-7">
+                                                                <div class="mb-6">
+                                                                    <h3 class="fs-2x fw-semibold text-white">Başlık</h3>
+                                                                    <div class="fw-semibold text-white opacity-75 scroll h-75px">{{item.aciklama}}</div>
+                                                                </div>
+                                                                
+                                                                <div class="d-flex align-items-center flex-wrap d-grid gap-2 ">
+                                                                    <div class="d-flex align-items-center me-5 me-xl-13">
+                                                                        <div class="symbol symbol-30px symbol-circle me-3">
+                                                                            <span class="symbol-label" style="background: rgba(255, 255, 255, 0.15);">
+                                                                                <i class="fa-solid fa-tag fs-4 text-white"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                        
+                                                                        <div class="m-0">
+                                                                            <a class="text-white text-opacity-75 fs-8">{{"PROFILE_WIDGETS.SHARRED.BOLUM" | translate}}</a>
+                                                                            <span class="fw-bold text-white fs-7 d-block">{{item.bolum}}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="symbol symbol-30px symbol-circle me-3">
+                                                                            <span class="symbol-label" style="background: rgba(255, 255, 255, 0.15);">
+                                                                                <i class="fa-solid fa-calendar-days fs-4 text-white"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                        
+                                                                        <div class="m-0">
+                                                                            <a
+                                                                                class="text-white text-opacity-75 fs-8">{{"PROFILE_WIDGETS.SHARRED.TARIH" | translate}}</a>
+                                                                            <span class="fw-bold text-white fs-7 d-block">{{item.tarih}}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayAllAnnouncements=false"
+            label="{{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}" class="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+
+
+
+
+<p-dialog header="Duyuru Oluştur" [(visible)]="displayAnnouncementForm"
+  (visibleChange)="announcementFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000" [draggable]="true"
+  [resizable]="false">
+
+  <app-dialog-duyuru-formu (announcementFormIsSend)="announcementFormIsSend()"
+    [closedForm]="closedAnnouncementForm"></app-dialog-duyuru-formu>
+
+</p-dialog>
+

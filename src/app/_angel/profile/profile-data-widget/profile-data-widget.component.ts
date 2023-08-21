@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-profile-data-widget',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileDataWidgetComponent implements OnInit {
 
-  constructor() { }
+  isRefresh : boolean = false;
+  constructor(
+    public layoutService : LayoutService,
+    private ref : ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
   }
-
 }

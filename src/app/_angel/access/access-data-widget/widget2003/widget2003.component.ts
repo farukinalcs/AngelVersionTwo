@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { GridsterItem } from 'angular-gridster2';
 import { Subscription } from 'rxjs';
 import { ApexChart, ApexLegend, ApexNonAxisChartSeries, ApexPlotOptions, ApexResponsive, ChartComponent } from 'ng-apexcharts';
@@ -23,6 +23,7 @@ export type ChartOptions = {
 export class Widget2003Component implements OnInit, OnDestroy {
   @Input() widget : any;
   @Input() resizeEvent: EventEmitter<GridsterItem>;
+  @Input() iceridekiler : any[];
 
   resizeSub: Subscription;
 
@@ -45,9 +46,22 @@ export class Widget2003Component implements OnInit, OnDestroy {
 
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    for (const propName in changes) {
+      if (propName == 'iceridekiler') {
+        const chng = changes[propName];
+        const cur  = chng.currentValue;
+        const prev = chng.previousValue;  
+
+        this.iceridekiler = cur;
+      }
+      
+    }
+  }
+
   setChartValue(){
     this.chartOptions = {
-      series: [150,130,20],
+      series: [this.iceridekiler.length,130,20],
       chart: {
         width: 430,
         type: "radialBar"

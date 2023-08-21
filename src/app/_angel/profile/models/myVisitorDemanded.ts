@@ -1,0 +1,31 @@
+export class MyVisitorDemandedModel {
+    Id: number;
+    Imza: any | null;
+    Gorevli: number;
+    Bilgi: string;
+    Ad: string;
+    Soyad: string;
+    Plaka: any | null;
+    Arac: any | null;
+    UserID: string;
+    KimlikTipi: number;
+    Firma: string;
+    ZiyaretNedeni: string;
+    ZiyaretNedeniId: number;
+    Sicilid1adsoyad: string;
+    SicilId1: number;
+    SicilId3: number;
+    Giris: string;
+    Cikis: string;
+    islemno: string;
+    ziyaretid: number;
+    durum: number;
+    islemsonuc: string;
+    ZOKod1: string;
+    ZOKod2: string;
+    ZOKod3: string;
+    ZOKod4: string;
+    ZOKod5: string;
+    ZOKod6: string;
+    belgeler: string; 
+}

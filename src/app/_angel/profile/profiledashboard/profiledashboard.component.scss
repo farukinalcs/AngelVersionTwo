@@ -7,3 +7,13 @@
 .example-full-width {
     width: 100%;
 }
+
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #e33a37;
+    height: 30px;
+}
+
+::ng-deep .mat-progress-spinner svg {
+    height: 30px !important;
+}

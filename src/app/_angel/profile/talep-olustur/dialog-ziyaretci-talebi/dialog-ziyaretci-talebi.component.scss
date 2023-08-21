@@ -1,8 +1,42 @@
-.mat-stepper-horizontal {
-    margin-top: 8px;
-}
+:host ::ng-deep {
+    .p-dropdown {
+        background-color: #f5f8fa;
+        width: 100%;
+    }
 
-.mat-form-field {
-    width: 100%;
-    margin-top: 16px;
+    // .btn.btn-outline.btn-outline-dashed {
+    //     border-color: #ed1c24;
+    // }
+
+    // .btn.btn-outline.btn-outline-dashed:hover {
+    //     border-color: #ed1c24;
+    // }
+
+    // .btn.btn-outline.btn-outline-dashed:focus {
+    //     border-color: #ed1c24;
+    // }
+
+    // .btn.btn-outline.btn-outline-dashed:active {
+    //     border-color: #ed1c24;
+    // }
+
+    // .btn.btn-outline.btn-outline-dashed:checked {
+    //     border-color: #ed1c24;
+    // }
+
+    // .btn.btn-outline.btn-outline-dashed:active {
+    //     border-color: #ed1c24;
+    // }
+
+    // .btn.btn-outline.btn-outline-dashed:focus:not(.btn-active) {
+    //     border-color: #ed1c24;
+    // }
+
+    // .btn-check:checked + &,
+    // .btn-check:active + &,
+    // &:focus:not(.btn-active),
+    // &:hover:not(.btn-active),
+    // &:active:not(.btn-active),
+    // &.active,
+    // &.show,
 }

@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { AuthHTTPService } from '../../services/auth-http';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { TranslationService } from 'src/app/modules/i18n';
+import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   hasError: boolean;
   returnUrl: string;
   isLoading$: Observable<boolean>;
+  public isLoading : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
 
   selectedLanguage : any;
   language : LanguageFlag;
@@ -57,6 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private helperService : HelperService,
     private translationService : TranslationService,
+    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) {
     this.isLoading$ = this.authService.isLoading$;
@@ -110,7 +114,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
 
         if (data) {
-          this.router.navigate([this.returnUrl]);
+          this.router.navigate(['profile/genel_bakis']);
           this.helperService.gateResponseX = '';
         } else {
           this.hasError = true;
@@ -127,6 +131,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       this.appList = JSON.parse(response.m);
       
+      this.isLoading.next(false);
       this.ref.detectChanges();
     });
 
@@ -144,15 +149,17 @@ export class LoginComponent implements OnInit, OnDestroy {
         language.active = true;
         this.language = language;
         this.selectedLanguage = lang;
+        this.translationService.setLanguage(lang);
       } else {
         language.active = false;
       }
     });
-    this.translationService.setLanguage(lang);
+    this.helperService.lang.next(lang);
   }
 
   setSelectedLanguage(): any {
     this.setLanguage(this.translationService.getSelectedLanguage());
+    this.translationService.langObs.next(this.translationService.getSelectedLanguage());
   }
 
   ngOnDestroy() {

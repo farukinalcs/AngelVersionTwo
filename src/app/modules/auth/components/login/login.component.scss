@@ -1,6 +1,6 @@
 :host {
   width: 100%;
-  @media (min-width: 992px) {
+  @media (min-width: 990px) {
     .login-form {
       width: 100%;
       max-width: 450px;
@@ -10,4 +10,23 @@
       }
     }
   }
+}
+
+@media (max-width: 990px) {
+  .width {
+    width: 100%;
+  }
+}
+
+
+::ng-deep .btn.btn-outline.btn-outline-dashed.active {
+  border-color: #ed1c24;
+}
+
+::ng-deep .btn.btn-outline.btn-outline-dashed.active:focus {
+  border-color: #ed1c24;
+}
+
+::ng-deep .btn.btn-outline.btn-outline-dashed.active:hover {
+  border-color: #263238;
 }

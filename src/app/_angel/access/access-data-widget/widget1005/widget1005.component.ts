@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 export class Widget1005Component implements OnInit, OnDestroy {
   @Input() widget : any;
   @Input() resizeEvent : EventEmitter<GridsterItem>;
-
+  @Input() alarmlar : any[]; 
   resizeSub: Subscription;
 
   constructor() { }
