@@ -1,6 +1,8 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
@@ -16,12 +18,25 @@ import { ProfileService } from '../../profile.service';
 @Component({
   selector: 'app-talepedilenler',
   templateUrl: './talepedilenler.component.html',
-  styleUrls: ['./talepedilenler.component.scss']
+  styleUrls: ['./talepedilenler.component.scss'],
+  animations: [
+    trigger("fileUploaded", [
+      state("uploaded", style({ transform: "translateY(0)" })),
+      transition(":enter", [
+        style({ transform: 'translateY(-50%)' }),
+        animate("500ms")
+      ]),
+      transition(':leave', [
+        animate(200, style({ transform: 'translateY(-100%)' }))
+      ])
+    ])
+  ]
 })
 export class TalepedilenlerComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
-  @ViewChild('confirmAlert') confirmAlert: TemplateRef<any>;
-  @ViewChild('cancelAlert') cancelAlert: TemplateRef<any>;
+  @ViewChild('confirmAlert') confirmAlert: TemplateRef<any>; // Toplu onayda özet ekran dialog penceresinin açılması için
+  @ViewChild('cancelAlert') cancelAlert: TemplateRef<any>; // Toplu reddetmek için özet ekran dialog pencersinin açılması için
+  @ViewChild('base64Iframe') base64Iframe: ElementRef | undefined;
 
 
   filterText : string = ''; // Arama yapmak için
@@ -63,9 +78,9 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
 
   currentDate : any = new Date().toISOString().substring(0,10);
   checkedList: any[] = [];
-  cancelAlertRef: any;
-  confirmAlertRef: any;
-  checkGrid : boolean = true;
+  cancelAlertRef: any; // Dialog pencersini kapatmak için
+  confirmAlertRef: any; // Dialog pencersini kapatmak için
+  checkGrid : boolean = true; // Liste görünümüne geçiş yapmak için 
 
   menuItems = [
     { id: 'izinNavItem', key: 'izin', icon: 'fa-umbrella-beach', label: 'DEMANDED.SUB_MENU.IZIN' },
@@ -74,7 +89,18 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     { id: 'envanterNavItem', key: 'envanter', icon: 'fa-screwdriver-wrench', label: 'DEMANDED.SUB_MENU.MALZEME' },
     { id: 'tumuNavItem', key: 'tum', icon: 'fa-circle-question', label: 'DEMANDED.SUB_MENU.TUMU' }
   ];
-  
+  fileTypes: any[];
+  uploadedFiles: any[];
+  displayUploadedFiles : boolean = false;
+  displayUploadedFile: boolean;
+  currentUploadedFile: any;
+  path: any;
+  base64Data: any;
+  selectedFormId: any;
+
+
+
+  selectedDemand: any;
   
   constructor(
     private profilService : ProfileService,
@@ -83,6 +109,7 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     private translateService : TranslateService,
     private dialog : MatDialog,
     public layoutService : LayoutService,
+    private sanitizer: DomSanitizer,
     private ref : ChangeDetectorRef
   ) { }
 
@@ -193,9 +220,10 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
       this.reddedilenFormlar = [];
       this.onaylananFormlar = [];
 
-
+      let bosBelgeSayisi : any = 0;
       data.forEach((item : any) => {
         item.completed = false;
+        item.atananlar = JSON.parse(item.atananlar);
         if (item.sectim == 0) {
           this.onayBeklenenFormlar.push(item);
 
@@ -204,11 +232,21 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
           
         } else if (item.sectim == 1){
           this.onaylananFormlar.push(item);
-          
         }
+
+        item.atananlar.forEach((belge : any) => {
+          if (belge.link == 'boş') {
+            bosBelgeSayisi++
+          }
+        })
+
+        item.bosBelgeSayisi = bosBelgeSayisi;
+        bosBelgeSayisi = 0;
       });
+      
 
       this.uniqeFotoImage = this.getUniqeValue(this.onayBeklenenFormlar, 'fotoimage')
+      console.log("Talep Edilenler YENİİ:", data);
       
       this.ref.detectChanges();
     });
@@ -533,6 +571,8 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
 
   removeItemInCheckedList(removeItem : any, dialog : any) {
     this.checkedList = this.checkedList.filter(item => item.Id !== removeItem.Id);
+    removeItem.completed = false;
+    this.updateAllComplete();
 
     if (this.checkedList.length == 0) {
       dialog.close();
@@ -563,13 +603,166 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     }
   }
 
-
   isCardOpen(item : any) {
     item.panelOpenState = true;
     // this.panelOpenState = true
     console.log("Kard Açıldı : ");
     
   }
+
+  showUploadedFiles(selectedDemand: any) {
+    this.displayUploadedFiles = true;
+    this.selectedDemand = selectedDemand;
+  }
+
+  OnHideUploadedFiles() {
+    this.displayUploadedFiles = false;
+    this.selectedDemand = undefined;
+  }
+
+  // getUploadedFiles(formId : any, kaynak : any){
+  //   this.selectedFormId = null;
+  //   this.uploadedFiles = [];
+  //   this.profilService.getUploadedFiles(formId, kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+  //     const data = response[0].x;
+
+  //     this.uploadedFiles = data;
+  //     console.log("Yüklenen Belgeler : ", data);
+      
+  //     this.selectedFormId = formId;
+  //     this.getFileTypeForDemandType(data[0].formtipi, 'izin');
+  //   });
+  // }
+
+  // getFileTypeForDemandType(typeId : any, kaynak : any) {
+  //   this.fileTypes = [];
+  //   this.profilService
+  //   .getFileTypeForDemandType(typeId, kaynak)
+  //   .pipe(takeUntil(this.ngUnsubscribe))
+  //   .subscribe((response: any) => {
+  //     const data = response[0].x;
+  //     const message = response[0].z;
+
+  //     this.fileTypes = data;
+  //     console.log("Tipi geldi", data);
+
+  //     let file;
+  //     this.fileTypes.forEach((item : any) => {
+  //       file = this.uploadedFiles.filter((value : any) => {
+  //         if (item.ID == value.Tip) {
+  //           item.uploadedFile = value;
+  //         }
+  //       });
+  //     });
+
+  //     console.log("Dosya Eşitlendi", this.fileTypes);
+  //     console.log("Dosya Atandı", file);
+
+  //     this.displayUploadedFiles = true;
+  //     this.ref.detectChanges();
+  //   });
+  // }
+
+  // getFileForDemand(id : any, uzanti : any, contentType : any){
+  //   this.base64Data = null;
+  //   this.profilService
+  //   .getFileForDemand(id, uzanti)
+  //   .pipe(takeUntil(this.ngUnsubscribe))
+  //   .subscribe((response: any) => {
+  //     const data = response[0].x;
+  //     console.log("Dosya geldi", data);
+      
+  //     this.base64Data = this.sanitizer.bypassSecurityTrustResourceUrl('data:'+ contentType +  ';base64,' + data.base64Data);
+
+
+  //     const base64Data = data.base64Data;
+  //     const blob = new Blob([atob(base64Data)], { type: contentType });
+
+  //     const fileName = `${contentType}.${uzanti}`;
+  //     let file : any = new File([blob], fileName, { type: contentType });
+
+  //     console.log("File : ", file);
+
+  //     console.log("İframe :", this.base64Iframe);
+      
+      
+  //     // this.downloadFile(contentType, uzanti, data.base64Data, fileName);
+      
+  //     this.ref.detectChanges();
+  //   });
+  // }
+
+  // showUploadedFile(item : any, isItUpload : boolean) {
+  //   this.displayUploadedFile = true;
+
+  //   if (isItUpload) {
+  //     this.currentUploadedFile = item;
+  //   } else {
+  //     this.getFileForDemand(item.uploadedFile.UniqueId, item.uploadedFile.DosyaTipi, item.uploadedFile.ContentType);
+  //   }
+     
+  // }
+
+
+  // getFile(event: any, item: any) {
+  //   let files: FileList = event.target.files[0];
+  //   console.log(files);
+  //   item.sendFile = files;
+
+  //   for (let file of event.target.files) {
+  //     this.readAndPushFile(file, item);
+  //   }
+  // }
+
+  // readAndPushFile(file: File, item: any) {
+  //   let fileSize: any = (file.size / 1024).toFixed(1);
+  //   let fileSizeType = 'KB';
+  //   if (fileSize >= 1024) {
+  //     fileSize = (fileSize / 1024).toFixed(1);
+  //     fileSizeType = 'MB';
+  //   }
+
+  //   let reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = (event) => {
+  //     const url = this.sanitizer.bypassSecurityTrustResourceUrl(event.target?.result as string);
+  //     item.files = {
+  //       name : file.name,
+  //       type : file.type,
+  //       url : url,
+  //       fileSize : fileSize,
+  //       fileSizeType : fileSizeType  
+  //     };
+
+  //     console.log("Uploaded Fileee : ", item);
+  //     this.ref.detectChanges();
+  //   };    
+  // }
+
+  // onHideUploadedFile() {
+  //   this.displayUploadedFile = false;
+  //   this.currentUploadedFile = null;
+  //   this.base64Data = null
+  // }
+  
+  // postVacationFile(item : any, formId : any, kaynak : any) {
+  //   this.profilService.postFileForDemand(item.sendFile, formId, kaynak, item.ID)
+  //   .pipe(takeUntil(this.ngUnsubscribe))
+  //   .subscribe((response : any) => {
+      
+  //     console.log("İzin için dosya gönderildi : ", response);
+  //     this.getUploadedFiles(formId, 'izin');
+  //     this.ref.detectChanges();
+  //   });
+  // }
+
+  // downloadFile(contentType : any, uzanti : any, base64Data : any, fileName : any) {
+  //   const source = `data:${contentType};base64,${base64Data}`;
+  //   const link = document.createElement("a");
+  //   link.href = source;
+  //   link.download = `${fileName}.${uzanti}`
+  //   link.click();
+  // }
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

@@ -25,7 +25,8 @@ export const locale = {
         MOBIL_LOKASYON: "Mobile Location",
         TASK_LISTEM: "My Task List",
         TAKIMIM: "My Team",
-        EKSIK_SURELERIM : "Incomplete Time"
+        EKSIK_SURELERIM : "Incomplete Time",
+        PROFIL_TANIMLAMALAR : "Profile Definitions"
       },
       Access: "Access",
       AccessSub: {
@@ -103,6 +104,7 @@ export const locale = {
       AYLIK : "Monthly",
       DATA_NOT_FOUND : 'Data Not Found!',
       SEARCH : 'Search..',
+      SELECT : 'Make Your Choice..',
       AYLAR : {
         OCAK : 'January',
         SUBAT : 'February',
@@ -116,6 +118,15 @@ export const locale = {
         EKIM : 'October',
         KASIM : 'November',
         ARALIK : 'December'
+      },
+      GUNLER : {
+        PAZARTESI : 'Mon',
+        SALI : 'Tue',
+        CARSAMBA : 'Wed',
+        PERSEMBE : 'Thu',
+        CUMA : 'Fri',
+        CUMARTESI : 'Sat',
+        PAZAR : 'Sun'
       }
     },
 
@@ -169,6 +180,7 @@ export const locale = {
         ONAY : "Approve",
         RED : "Reject",
         SUREC : "Process",
+        DOSYALAR : "Files",
         FORM : "Form",
         GONDER : "Send",
         VAZGEC : "Cancel",
@@ -364,7 +376,8 @@ export const locale = {
         BASLANGIC_TARIHI : "Start Date",
         BITIS_TARIHI  :"End Date",
         YAYINLAYAN : "Owner",
-        DOSYA_YUKLE : "Upload Your Required File",
+        DOSYA_YUKLE : "Upload Your Required File \"{{ fileType }}\"",
+        YUKLENMIS_DOSYA : "Uploaded File for \"{{ fileType }}\"",
         AVATAR : "Select Avatar",
         GONDER : "Send",
         ILERI : 'Next',

@@ -17,11 +17,13 @@
   <div class="row">
     <div class="col-12">
       <div class="text-center mb-2">
-        <img src="../../../../../assets/media/logos/MECLOUD (13).png" alt="meyerLogo" [ngStyle]="{'width':(layoutService.isMobile | async) ? '270px' : '430px' }">
+        <img src="../../../../../assets/media/logos/MECLOUD (13).png" alt="meyerLogo" [ngStyle]="{'width':(isMobile | async) ? '270px' : '430px' }">
       </div>
+    </div>
 
+    <div class="col-12 d-flex justify-content-center mt-3">
       <ng-container *ngIf="hasError">
-        <div class="mb-lg-15 alert alert-danger">
+        <div class="mb-lg-15 alert alert-danger text-center" [ngStyle]="{'width': (isMobile | async) ? '100%' : '50%' }">
           <div class="alert-text font-weight-bold">
             {{"AUTH.LOGIN_FAILED.LOGIN_FAILED" | translate}}
           </div>
@@ -36,7 +38,7 @@
         <div class="row d-flex justify-content-center">
 
           <div class="col-12 d-flex justify-content-center">
-            <div class="width" style="width: 50%;">
+            <div class="width" [ngStyle]="{'width': (isMobile | async) ? '100%' : '50%' }">
               <label class="form-label fs-6 fw-bolder text-dark">{{"AUTH.LOGIN.APP_LIST" | translate}}</label>
               <label *ngFor="let item of appList"
                 class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex text-start p-6 active"
@@ -54,7 +56,7 @@
           </div>
 
           <div class="col-12 d-flex justify-content-center">
-            <div class="width" style="width: 50%;">
+            <div class="width" [ngStyle]="{'width': (isMobile | async) ? '100%' : '50%' }">
               <label class="form-label fs-6 fw-bolder text-dark">{{"AUTH.LOGIN.APP_LIST" | translate}}</label>
               <select class="form-control form-control-solid border border-4 bg-light-dark" formControlName="appList">
                 <option *ngFor="let item of appList" value="{{item.appId}}">{{item.appName}}</option>
@@ -63,7 +65,7 @@
           </div>
 
           <div class="col-12 d-flex justify-content-center">
-            <div class="width" style="width: 50%;">
+            <div class="width" [ngStyle]="{'width': (isMobile | async) ? '100%' : '50%' }">
               <label class="form-label fs-6 fw-bolder text-dark">{{"AUTH.LOGIN.USERNAME" | translate}}</label>
               <input class="form-control form-control-solid border border-4 ng-touched bg-light-dark" type="text"
                 name="userName" formControlName="userName" autocomplete="off"/>
@@ -71,14 +73,14 @@
           </div>
 
           <div class="col-12 d-flex justify-content-center">
-            <div class="width" style="width: 50%;">
+            <div class="width" [ngStyle]="{'width': (isMobile | async) ? '100%' : '50%' }">
               <label class="form-label fw-bolder text-dark fs-6 mb-0">{{"AUTH.LOGIN.PASSWORD" |translate}}</label>
               <input class="form-control form-control-solid border border-4 ng-touched bg-light-dark" type="password"
                 name="password" autocomplete="off" formControlName="password" />
             </div>
           </div>
 
-          <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8 width" style="width: 50%;">
+          <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8 width" [ngStyle]="{'width': (isMobile | async) ? '100%' : '50%' }">
             <div ngbDropdown class="d-inline-block">
               <button type="button" class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1" id="dropdownBasic1"
                 ngbDropdownToggle>
@@ -94,14 +96,14 @@
                 </button>
               </div>
             </div>
-            <a routerLink="/auth/forgot-password" class="link-primary">
+            <a routerLink="/auth/forgot-password" class="link-danger">
               {{"AUTH.FORGOT.TITLE" |translate}}
             </a>
 
           </div>
 
           <div class="d-grid d-flex justify-content-center mb-10">
-            <button type="submit" (click)="submit()" id="kt_sign_in_submit" class="btn btn-dark width" style="width: 50%;"
+            <button type="submit" (click)="submit()" id="kt_sign_in_submit" class="btn btn-dark width" [ngStyle]="{'width': (isMobile | async) ? '100%' : '50%' }"
               [disabled]="loginForm.invalid">
               <ng-container *ngIf="isLoading$ | async">
                 <span class="indicator-progress" [style.display]="'block'">

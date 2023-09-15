@@ -16,6 +16,7 @@ import { PdksReducer } from './_angel/NGRX/pdks.reducer';
 import { TokenInterceptor } from './modules/auth/services/auth-http/token.interceptor';
 import { SearchFilterPipe } from './_helpers/pipes/search-filter.pipe';
 import { ToastrModule } from 'ngx-toastr';
+import { FirstSevenPipe } from './_helpers/pipes/first-seven.pipe';
 // #fake-start#
 // import { FakeAPIService } from './_fake/fake-api.service';
 

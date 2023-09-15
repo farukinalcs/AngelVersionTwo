@@ -40,6 +40,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   title$: Observable<string>;
   description$: Observable<string>;
   bc$: Observable<Array<PageLink>>;
+  pageTitle: string = '';
 
   constructor(private layout: LayoutService, public loaderService: LoaderService, private pageInfo : PageInfoService, private router : Router) {}
 
@@ -139,12 +140,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     
     let pageTitle;
     this.title$.subscribe(v => {
+      this.pageTitle = v;
       pageTitle = v;
       console.log("title$ : ", v);
     });
 
-    if (
-      pageTitle == '' ||
+    if (pageTitle == '' ||
       pageTitle == 'Light' ||
       pageTitle == 'Genel Bakış' ||
       pageTitle == 'Dashboard' ||
@@ -167,8 +168,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       pageTitle == 'Mobile Location' ||
       pageTitle == 'My Task List' ||
       pageTitle == 'My Team' ||
-      pageTitle == 'Incomplete Time'
-      ) {
+      pageTitle == 'Incomplete Time') {
+        
+      this.router.navigate(['profile/profil_tanimlamalar']);
         
     } else {
       this.router.navigate(['access/tanimlamalar']);

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-envanter',
@@ -13,7 +14,9 @@ export class EnvanterComponent implements OnInit {
   ];
 
   displayMyInventory : boolean;
-  constructor() { }
+  constructor(
+    public layoutService : LayoutService,
+  ) { }
 
   ngOnInit(): void {
   }

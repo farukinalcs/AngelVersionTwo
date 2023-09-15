@@ -37,7 +37,7 @@
                   [ngClass]="{'col-8': !(this.layoutService.isMobile | async), 'col-12 pt-4 d-flex justify-content-center' : this.layoutService.isMobile | async}">
                   <div class="d-flex align-items-center mb-2">
 
-                    <a class="text-gray-800 text-hover-primary fs-2 fw-bolder me-1 cursor-pointer">
+                    <a class="text-gray-800 text-hover-danger fs-2 fw-bolder me-1 cursor-pointer">
                       {{ _user.adsoyad }}
                     </a>
 
@@ -112,19 +112,19 @@
                   <!-- flex-wrap -->
                   <div class="d-flex  fw-bold fs-6 mb-4 pe-2">
 
-                    <a class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2 cursor-pointer ">
+                    <a class="d-flex align-items-center text-gray-400 text-hover-danger me-5 mb-2 cursor-pointer ">
                       <span [inlineSVG]="'./assets/media/icons/duotune/general/gen001.svg'"
                         class="svg-icon svg-icon-4 me-1"></span>
                       {{ _user.firmaad }}
                     </a>
 
-                    <a class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2 cursor-pointer">
+                    <a class="d-flex align-items-center text-gray-400 text-hover-danger me-5 mb-2 cursor-pointer">
                       <span [inlineSVG]="'./assets/media/icons/duotune/communication/com009.svg'"
                         class="svg-icon svg-icon-4 me-1"></span>
                       {{ _user.gorevad }}
                     </a>
 
-                    <a class="d-flex align-items-center text-gray-400 text-hover-primary mb-2 cursor-pointer">
+                    <a class="d-flex align-items-center text-gray-400 text-hover-danger mb-2 cursor-pointer">
                       <span [inlineSVG]="'./assets/media/icons/duotune/communication/com008.svg'"
                         class="svg-icon svg-icon-4 me-1"></span>
                       {{ _user.LoginName }}
@@ -321,7 +321,7 @@
 
 
 <p-dialog header="{{'FM_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayOvertimeForm"
-  (visibleChange)="overtimeFormIsSend()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+  (visibleChange)="overtimeFormIsSend()" [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '65vw' : 'none'}" [maximizable]="true"
   [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
   <app-dialog-fazla-mesai-talebi (overtimeFormIsSend)="overtimeFormIsSend()"
@@ -332,7 +332,7 @@
 
 
 <p-dialog header="{{'IZIN_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVacationForm"
-  (visibleChange)="vacationFormIsSend()" [modal]="true" [style]="{width: '65vw'}" [maximizable]="true"
+  (visibleChange)="vacationFormIsSend()" [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '80vw' : 'none'}" [maximizable]="true"
   [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
   <app-dialog-izin-talebi (vacationFormIsSend)="vacationFormIsSend()"

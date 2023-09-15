@@ -1,0 +1,25 @@
+.fa-chevron-left:hover, .fa-chevron-right:hover {
+    background-color: #eff2f5;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+:host ::ng-deep {
+    .p-rating .p-rating-icon {
+        font-size: 1.643rem;
+    }
+
+    .p-rating:not(.p-disabled):not(.p-readonly) .p-rating-icon:hover {
+        color: #ed1b24;
+    }
+
+    .p-rating .p-rating-icon:focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: 0 0 0 0.2rem #ed1b2433;
+    }
+
+    .p-rating .p-rating-icon.pi-star-fill {
+        color: #ed1b24;
+    }
+}

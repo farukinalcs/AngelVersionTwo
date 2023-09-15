@@ -4,6 +4,12 @@
             <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
 
                 <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                    <div class="stepper-nav d-flex justify-content-center">
+                        <img src="../../../../../assets/media/illustrations/storyset-1/7.svg" width="100%" alt="">
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
                     <div class="stepper-nav d-flex justify-content-center ps-lg-10">
 
                         <div class="{{item.class}}" *ngFor="let item of stepperFields">
@@ -49,7 +55,7 @@
 
                 <div class="row w-xl-700px">
                     <div class="col-12">
-                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="bulletinForm">
+                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10" [formGroup]="bulletinForm">
 
                             <ng-container *ngIf="currentStep$.value == 1">
                                 <div class="current">
@@ -72,7 +78,7 @@
                                             </div>
 
                                             <div class="col-12">
-                                                <div class="fv-row mb-10 fv-plugins-icon-container">
+                                                <div class="fv-row fv-plugins-icon-container">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"BULTEN_FORM_DIALOG.FORM.ACIKLAMA" | translate}}</span>
                                                     </label>
@@ -121,7 +127,7 @@
                                             </div>
 
                                             <div class="col-12">
-                                                <div class="fv-row mb-10 fv-plugins-icon-container">
+                                                <div class="fv-row fv-plugins-icon-container">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"BULTEN_FORM_DIALOG.FORM.YAYINLAYAN" | translate}}</span>
                                                     </label>
@@ -141,12 +147,12 @@
                                 <div class="current">
                                     <div class="w-100">
                                         <div class="row">
-                                            <div class="col-12">
+                                            <div class="col-12 text-center">
                                                 <input type="file" id="upload" style="display: none;" (change)="getFile($event)" accept="application/pdf" formControlName="file">
                                                 <label for="upload">
-                                                    <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center" style="padding: 2.5rem 17.5rem;">
+                                                    <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center px-20">
                                                         <div class="dropzone-msg dz-message needsclick">
-                                                            <h3 class="dropzone-msg-title">{{"BULTEN_FORM_DIALOG.FORM.DOSYA_YUKLE" | translate}}</h3>
+                                                            <h3 class="dropzone-msg-title text-center">{{"BULTEN_FORM_DIALOG.FORM.DOSYA_YUKLE" | translate}}</h3>
                                                         </div>
                                                     </div>
                                                 </label>
@@ -196,15 +202,15 @@
                                             </label>
 
                                             <ng-container *ngFor="let item of pagedAvatars; let i = index">
-                                                <div class="col-4 pb-6">
+                                                <div class="d-flex justify-content-center align-items-center pb-6" [ngClass]="{ 'col-4': !(this.layoutService.isMobile | async), 'col-12': (this.layoutService.isMobile | async) }">
                                                     <input type="radio" class="btn-check" formControlName="image" [value]="item.path" [id]="'image-' + item.path" />
                                                     <label
-                                                        class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center w-xl-200px"
+                                                        class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center" style="width: 165px; height: 165px;"
                                                         [for]="'image-' + item.path">
                                 
                                                         <span class="d-block fw-semibold text-start">
                                                             <span class="text-dark fw-bold d-block">
-                                                                <img [src]="'./assets/media/illustrations/' + item.path" width="175px">
+                                                                <img [src]="'./assets/media/illustrations/' + item.path" width="100%">
                                                             </span>
                                                         </span>
                                                     </label>
@@ -258,9 +264,10 @@
                             <ng-container *ngIf="currentStep$.value == 5">
                                 <div class="current">
                                     <div class="w-100">
-                                        <div class="row bg-light-danger rounded p-10">
-                                            <div class="col-6 d-flex justify-content-center">
-                                                <img src=" {{'./assets/media/illustrations/' + bulletinFormValues.image}}" alt="" width="100%">
+                                        <div class="row bg-light-danger rounded" [ngClass]="{'p-2': (this.layoutService.isMobile | async), 'p-10': !(this.layoutService.isMobile | async)}">
+                                            <div class="col-6 d-flex justify-content-center align-items-center">
+                                                <img src=" {{'./assets/media/illustrations/' + bulletinFormValues.image}}" alt="" style="width: 100%"
+                                                [ngStyle]="{'height': (this.layoutService.isMobile | async) ? '60%' : '100%'}">
                                             </div>
         
                                             <div class="col-6">
@@ -278,7 +285,7 @@
                                                     </div>
 
                                                     <div class="col-12 scroll h-200px d-flex justify-content-center align-items-center">
-                                                        <div class="fs-3 h-100px fw-bold text-gray-800 text-center">
+                                                        <div class="fs-3 h-100px fw-bold text-gray-600 text-center">
                                                             <span>{{bulletinFormValues.description}}</span>
                                                         </div>
                                                     </div>
@@ -300,7 +307,7 @@
                         </form>
                     </div>
 
-                    <div class="col-12 d-flex align-items-start justify-content-end">
+                    <div class="col-12 d-flex align-items-start" [ngClass]="{'justify-content-center': (this.layoutService.isMobile | async), 'justify-content-end': !(this.layoutService.isMobile | async) }">
                         <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
                                 <ng-container *ngIf=" 7 > currentStep$.value && currentStep$.value > 1">
