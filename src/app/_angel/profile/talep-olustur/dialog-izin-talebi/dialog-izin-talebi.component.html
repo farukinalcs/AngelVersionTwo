@@ -1,284 +1,14 @@
-<!-- <div class="container py-10 px-15">
-    <form [formGroup]="vacationForm">
-        <div class="row">
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"IZIN_TALEP_DIALOG.FORM.IZIN_TIPI" | translate}}</span>
-                </label>
-
-                <p-dropdown [options]="vacationReasons" [(ngModel)]="selectedType" optionLabel="ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad"
-                    [showClear]="true" placeholder="{{'IZIN_TALEP_DIALOG.FORM.IZIN_TIPI_SECINIZ' | translate}}" formControlName="tip"
-                    [ngClass]="{
-                        'is-invalid': vacationForm.controls['tip'].invalid,
-                        'is-valid': vacationForm.controls['tip'].valid
-                    }">
-                    <ng-template pTemplate="selectedItem">
-                        <div class="item-item item-item-value" *ngIf="selectedType">
-                            <div>{{selectedType.ad}}</div>
-                        </div>
-                    </ng-template>
-                    <ng-template let-item pTemplate="item">
-                        <div class="item-item">
-                            <div>{{item.ad}}</div>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                    control: vacationForm.controls['tip']}">
-                </ng-container>
-            </div>
-
-            <div class="col-6 p-5 mt-4">
-                <div class="border border-gray-300 border-dashed rounded text-center min-w-125px py-3 px-4 me-6 mb-3">
-                    <ng-container *ngIf="izinKalan">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <div class="fs-2 fw-bolder">{{ izinKalan }}</div>
-                        </div>
-                    </ng-container>
-
-                    <ng-container *ngIf="!izinKalan">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <div class="fs-2 fw-bolder">0</div>
-                        </div>
-                    </ng-container>
-  
-                    <div class="fw-bold fs-6 text-gray-400">{{"IZIN_TALEP_DIALOG.FORM.IZIN_HAKKI" | translate}}</div>
-                </div>
-            </div>
-
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"IZIN_TALEP_DIALOG.FORM.GUNLUK_SAATLIK" | translate}}</span>
-                </label>
-            
-                <div class="row">
-                    <div class="col-lg-6">
-                        <input type="radio" class="btn-check" formControlName="gunluksaatlik"  value="gunluk"
-                            id="kt_radio_buttons_2_option_1" />
-                        <label class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center mb-5"
-                            for="kt_radio_buttons_2_option_1">
-                            <i class="fa-solid fa-calendar-days fs-2x text-danger"></i>
-                    
-                            <span class="d-block fw-semibold text-start ps-3">
-                                <span class="text-dark fw-bold d-block fs-3">{{"IZIN_TALEP_DIALOG.FORM.GUNLUK" | translate}}</span>
-                            </span>
-                        </label>
-                    </div>
-                    
-                    <div class="col-lg-6">
-                        <input type="radio" class="btn-check" formControlName="gunluksaatlik"  value="saatlik" id="kt_radio_buttons_2_option_2" />
-                        <label class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center"
-                            for="kt_radio_buttons_2_option_2">
-                            <i class="fa-solid fa-clock fs-2x text-danger"></i>
-                            <span class="d-block fw-semibold text-start ps-3">
-                                <span class="text-dark fw-bold d-block fs-3">{{"IZIN_TALEP_DIALOG.FORM.SAATLIK" | translate}}</span>
-                            </span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"IZIN_TALEP_DIALOG.FORM.IZIN_ADRESI" | translate}}</span>
-                </label>
-
-                <textarea class="form-control form-control-solid" rows="3" formControlName="izinadresi" placeholder="{{'IZIN_TALEP_DIALOG.FORM.ADRES_GIRINIZ' | translate}}" 
-                [ngClass]="{
-                    'is-invalid': vacationForm.controls['izinadresi'].invalid,
-                    'is-valid': vacationForm.controls['izinadresi'].valid
-                }"></textarea>
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                    control: vacationForm.controls['izinadresi']}">
-                </ng-container>
-
-            </div>
-
-            
-
-            <div [ngClass]="!isHourly ? 'col-12 p-5' : 'col-6 p-5'">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BASLANGIC_TARIHI" | translate}}</span>
-                </label>
-    
-                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bastarih"
-                [ngClass]="{
-                    'is-invalid': vacationForm.controls['bastarih'].invalid,
-                    'is-valid': vacationForm.controls['bastarih'].valid
-                }">
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                    control: vacationForm.controls['bastarih']}">
-                </ng-container>
-
-            </div>
-
-            <ng-container *ngIf="isHourly">
-                <div class="col-6 p-5">
-                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                        <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BASLANGIC_SAATI" | translate}}</span>
-                    </label>
-        
-                    <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bassaat"
-                    [ngClass]="{
-                        'is-invalid': vacationForm.controls['bassaat'].invalid,
-                        'is-valid': vacationForm.controls['bassaat'].valid
-                    }">
-                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                        validation: 'required',
-                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                        control: vacationForm.controls['bassaat']}">
-                    </ng-container>
-    
-                </div>
-            </ng-container>
-
-            <div [ngClass]="!isHourly ? 'col-12 p-5' : 'col-6 p-5'">
-                <ng-container *ngIf="isHourly">
-                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                        <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BITIS_TARIHI" | translate}}</span>
-                    </label>
-                </ng-container>
-                
-                <ng-container *ngIf="!isHourly">
-                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                        <span class="required">İş Başı Tarihi</span>
-                    </label>
-                </ng-container>
-                
-    
-                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bittarih"
-                [ngClass]="{
-                    'is-invalid': vacationForm.controls['bittarih'].invalid,
-                    'is-valid': vacationForm.controls['bittarih'].valid
-                }">
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                    control: vacationForm.controls['bittarih']}">
-                </ng-container>
-
-            </div>
-
-            <ng-container *ngIf="isHourly">
-                <div class="col-6 p-5">
-                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                        <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BITIS_SAATI" | translate}}</span>
-                    </label>
-        
-                    <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bitsaat"
-                    [ngClass]="{
-                        'is-invalid': vacationForm.controls['bitsaat'].invalid,
-                        'is-valid': vacationForm.controls['bitsaat'].valid
-                    }">
-                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                        validation: 'required',
-                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                        control: vacationForm.controls['bitsaat']}">
-                    </ng-container>
-
-                </div>
-            </ng-container>
-
-            <div class="col-12">
-                <div class="border border-danger border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                    <ng-container *ngIf="isHourly">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <ng-container *ngIf="calcTimeDesc">
-                                <div class="fs-2 fw-bolder">{{calcTimeDesc}}</div>
-                            </ng-container>
-
-                            <ng-container *ngIf="!calcTimeDesc">
-                                <div class="fs-2 fw-bolder">{{calcTimeValue}} Saat</div>                                
-                            </ng-container>
-                        </div>
-                    </ng-container>
-
-
-                    <ng-container *ngIf="!isHourly">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <ng-container *ngIf="calcTimeDesc">
-                                <div class="fs-2 fw-bolder">{{calcTimeDesc}}</div>
-                            </ng-container>
-
-                            <ng-container *ngIf="!calcTimeDesc">
-                                <div class="fs-2 fw-bolder">{{calcTimeValue}} Gün</div>
-                            </ng-container>
-                        </div>
-                    </ng-container>
-  
-                    <div class="fw-bold fs-6 text-gray-400 text-center">{{"IZIN_TALEP_DIALOG.FORM.HESAPLANAN_SURE" | translate}}</div>
-                </div>
-            </div>
-            
-
-            <div class="col-12 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"IZIN_TALEP_DIALOG.FORM.ACIKLAMA" | translate}}</span>
-                </label>
-
-                <textarea class="form-control form-control-solid" rows="3" formControlName="aciklama" placeholder="{{'IZIN_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate}}" 
-                [ngClass]="{
-                    'is-invalid': vacationForm.controls['aciklama'].invalid,
-                    'is-valid': vacationForm.controls['aciklama'].valid
-                }"></textarea>
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                    control: vacationForm.controls['aciklama']}">
-                </ng-container>
-
-            </div>
-        </div>
-    </form>
-
-    <div class="row mt-10">
-        <div class="col-12 d-flex align-items-end justify-content-end">
-            <button class="mat-stepper-next w-25 btn btn-danger" [disabled]="vacationForm.invalid" type="submit" (click)="getVacationFormValues()">
-                {{"IZIN_TALEP_DIALOG.FORM.GONDER" | translate}}
-            </button>
-        </div>
-    </div>
-</div>
-
-
-<ng-template #formError let-control="control" let-message="message" let-validation="validation">
-    <ng-container *ngIf="control.hasError(validation)">
-        <div class="invalid-feedback">
-            {{message | translate}}
-        </div>
-    </ng-container>
-</ng-template>
-
-<ng-template #formSuccess let-control="control" let-message="message" let-validation="validation">
-    <ng-container *ngIf="control.valid">
-        <div class="valid-feedback">
-            {{message | translate}}
-        </div>
-    </ng-container>
-</ng-template> -->
-
-
-
-
-
-
-
-
-
-<div class="container py-0 px-15">
+<div class="container py-0 px-5">
     <div class="container">
         <div class="row">
             <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
 
+                <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                    <div class="stepper-nav d-flex justify-content-center">
+                        <img src="../../../../../assets/media/illustrations/storyset-1/3.svg" width="100%" alt="">
+                    </div>
+                </div>
+                
                 <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
                     <div class="stepper-nav d-flex justify-content-center ps-lg-10">
 
@@ -325,14 +55,14 @@
 
                 <div class="row w-xl-700px">
                     <div class="col-12">
-                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="vacationForm">
+                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10" [formGroup]="vacationForm">
 
                             <ng-container *ngIf="currentStep$.value == 1">
                                 <div class="current">
                                     <div class="w-100">
                                         <div class="row">
-                                            <div class="col-12 mb-20">
-                                                <div class="border border-gray-300 border-dashed rounded text-center bg-light-dark min-w-125px py-3 px-4 me-6 mb-3">
+                                            <div class="col-12 mb-10 theme-light-show">
+                                                <div class="border border-gray-300 border-dashed rounded text-center bg-light-dark min-w-125px py-3 px-4">
                                                     <ng-container *ngIf="izinKalan">
                                                         <div class="d-flex align-items-center justify-content-center">
                                                             <div class="fs-2 fw-bolder">{{ izinKalan }}</div>
@@ -346,6 +76,24 @@
                                                     </ng-container>
                                   
                                                     <div class="fw-bold fs-6 text-gray-400">{{"IZIN_TALEP_DIALOG.FORM.IZIN_HAKKI" | translate}}</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 mb-10 theme-dark-show">
+                                                <div class="border border-danger border-dashed rounded text-center bg-light-danger min-w-125px py-3 px-4">
+                                                    <ng-container *ngIf="izinKalan">
+                                                        <div class="d-flex align-items-center justify-content-center">
+                                                            <div class="fs-2 fw-bolder text-white">{{ izinKalan }}</div>
+                                                        </div>
+                                                    </ng-container>
+                                
+                                                    <ng-container *ngIf="!izinKalan">
+                                                        <div class="d-flex align-items-center justify-content-center">
+                                                            <div class="fs-2 fw-bolder text-white">0</div>
+                                                        </div>
+                                                    </ng-container>
+                                  
+                                                    <div class="fw-bold fs-6 text-gray-700">{{"IZIN_TALEP_DIALOG.FORM.IZIN_HAKKI" | translate}}</div>
                                                 </div>
                                             </div>
 
@@ -419,7 +167,7 @@
                                 <div class="current">
                                     <div class="w-100">
                                         <div class="row">
-                                            <div [ngClass]="!isHourly ? 'col-12 p-5' : 'col-6 p-5'">
+                                            <div [ngClass]="!isHourly || (this.layoutService.isMobile | async) ? 'col-12 p-5' : 'col-6 p-5'">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                     <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BASLANGIC_TARIHI" | translate}}</span>
                                                 </label>
@@ -429,7 +177,7 @@
                                             </div>
                             
                                             <ng-container *ngIf="isHourly">
-                                                <div class="col-6 p-5">
+                                                <div class="p-5" [ngClass]="(this.layoutService.isMobile | async) ? 'col-12' : 'col-6'">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BASLANGIC_SAATI" | translate}}</span>
                                                     </label>
@@ -439,7 +187,7 @@
                                                 </div>
                                             </ng-container>
                             
-                                            <div [ngClass]="!isHourly ? 'col-12 p-5' : 'col-6 p-5'">
+                                            <div [ngClass]="!isHourly || (this.layoutService.isMobile | async) ? 'col-12 p-5' : 'col-6 p-5'">
                                                 <ng-container *ngIf="isHourly">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BITIS_TARIHI" | translate}}</span>
@@ -458,7 +206,7 @@
                                             </div>
                             
                                             <ng-container *ngIf="isHourly">
-                                                <div class="col-6 p-5">
+                                                <div class="col-6 p-5" class="p-5" [ngClass]="(this.layoutService.isMobile | async) ? 'col-12' : 'col-6'">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"IZIN_TALEP_DIALOG.FORM.BITIS_SAATI" | translate}}</span>
                                                     </label>
@@ -468,7 +216,7 @@
                                             </ng-container>
 
                                             <div class="col-12 mt-10">
-                                                <div class="border border-danger border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                <div class="border border-danger border-dashed rounded text-center min-w-125px py-3 px-4 me-6 mb-3">
                                                     <ng-container *ngIf="isHourly">
                                                         <div class="d-flex align-items-center justify-content-center">
                                                             <ng-container *ngIf="calcTimeDesc">
@@ -545,7 +293,8 @@
     
                                         <div class="separator mb-10"></div>
     
-                                        <div style="background-image: url(../../../../../assets/media/logos/Mediamodifier-Design-Template\ \(11\).png); background-repeat: no-repeat; background-size: contain; background-position: center;">
+                                        <!-- style="background-image: url(../../../../../assets/media/logos/Mediamodifier-Design-Template\ \(11\).png); background-repeat: no-repeat; background-size: contain; background-position: center;" -->
+                                        <div>
                                             <div class="col-12 d-flex justify-content-center">
                                                 <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"IZIN_TALEP_DIALOG.HEADER" | translate}}</span>
                                             </div>
@@ -600,51 +349,113 @@
                             </ng-container>
 
                             <ng-container *ngIf="currentStep$.value == 6">
-                                <div class="current">
+                                <div class="current h-xl-500px scroll">
                                     <div class="w-100">
-                                        <div class="row">
-                                            <input type="file" id="upload" style="display: none;" (change)="getFile($event)"
-                                                formControlName="file">
-                                            <label for="upload">
-                                                <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center" style="padding: 2.5rem 0;">
-                                                    <div class="dropzone-msg dz-message needsclick">
-                                                        <h3 class="dropzone-msg-title">{{"BULTEN_FORM_DIALOG.FORM.DOSYA_YUKLE" | translate}}</h3>
+                                        <div class="row pb-3" *ngFor="let item of fileTypes; index as i">
+                                            <div class="col-12 d-flex justify-content-center align-items-center">
+                                                <input type="file" [id]="'upload_' + i" style="display: none;" (change)="getFile($event, item)" formControlName="file">
+                                                <label [for]="'upload_' + i" class="w-100">
+                                                    <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center" style="padding: 1.5rem 0;">
+                                                        <div class="dropzone-msg dz-message needsclick">
+                                                            <h3 class="dropzone-msg-title text-center">{{"BULTEN_FORM_DIALOG.FORM.DOSYA_YUKLE" | translate: { fileType: item.ad } }}</h3>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </label>
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                                <ng-container *ngIf="item.files">
+                                                    <div [@fileUploaded]="'uploaded'" class="card bg-light-dark mx-8 my-5">
+                                                        <div class="card-body">
+                                                            <div class="row d-flex justify-content-center align-items-center">
+                            
+                                                                <!-- <ng-container *ngIf="!item.files.type.startsWith('image')"> -->
+                                                                    <div class="col-3 text-center">
+                                                                        <div [ngSwitch]="item.files.type">
+                                                                            <div *ngSwitchCase="['image/jpeg', 'image/png', 'image/svg'].includes(item.files.type) ? item.files.type : !item.files.type">
+                                                                                <i class="file-type cursor-pointer fa-solid fa-file-image text-dark fs-3x" (click)="showUploadedFile(item)"></i>
+                                                                            </div>
+
+                                                                            <div *ngSwitchCase="['text/plain'].includes(item.files.type) ? item.files.type : !item.files.type">
+                                                                                <i class="file-type cursor-pointer fa-solid fa-file-lines text-dark fs-3x" (click)="showUploadedFile(item)"></i>
+                                                                            </div>
+
+                                                                            <div *ngSwitchCase="['application/pdf'].includes(item.files.type) ? item.files.type : !item.files.type">
+                                                                                <i class="file-type cursor-pointer fa-solid fa-file-pdf text-dark fs-3x" (click)="showUploadedFile(item)"></i>
+                                                                            </div>
+
+                                                                            <div *ngSwitchDefault>
+                                                                                <i class="fa-solid cursor-pointer fa-file text-dark fs-3x" (click)="showUploadedFile(item)"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                <!-- </ng-container> -->
+                                                                
+                            
+                                                                <div class="col-7">
+                                                                    <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                                        {{ item.files.name }}
+                                                                    </div>
+                            
+                                                                    <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                                        {{ item.files.fileSize }} {{ item.files.fileSizeType }}
+                                                                    </div>
+                                                                </div>
+                                       
+                                                                <div class="col-2">
+                                                                    <a (click)="item.files = null" class="btn btn-icon btn-danger btn-sm me-3">
+                                                                        <i class="fa-solid fa-xmark fs-4"></i>
+                                                                    </a>
+                                                                </div>
+
+                                                                <!-- <ng-container *ngIf="item.files.type.startsWith('image')">
+                                                                    <div class="col-12 d-flex justify-content-center">
+                                                                        <div class="symbol symbol-75px">
+                                                                            <img alt="Uploaded File" src="{{item.files.url}}">
+                                                                            <iframe [src]="item.files.url" iframeborder="0"></iframe>
+                                                                        </div>
+                                                                    </div>    
+                                                                </ng-container> -->
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </ng-container>
+                                            </div>
                                         
-                                            <ng-container *ngIf="uploadedFile">
+                                            <!-- <ng-container *ngIf="uploadedFile">
                                                 <div [@fileUploaded]="'uploaded'" class="card bg-light-dark m-3">
                                                     <div class="card-body">
                                                         <div class="row d-flex justify-content-center align-items-center">
                                         
+                                                            <div class="col-12 d-flex justify-content-end mb-3">
+                                                                <a (click)="uploadedFile = null" class="btn btn-icon btn-danger btn-sm me-3">
+                                                                    <i class="fa-solid fa-xmark fs-4"></i>
+                                                                </a>
+                                                            </div>
+                                                            
                                                             <div class="col-12">
-                                                                <iframe [src]="uploadedFile.url" width="100%" height="400px"></iframe>
+                                                                <iframe [src]="uploadedFile.url" width="100%" height="300px"></iframe>
                                                             </div>
                                         
-                                                            <div class="col-5">
+                                                            <div class="col-4">
                                                                 <div class="fs-6 fw-bold text-gray-800 text-center">
                                                                     {{uploadedFile.name}}
                                                                 </div>
-                                        
+                                                            </div>
+
+                                                            <div class="col-4">
                                                                 <div class="fs-6 fw-bold text-gray-800 text-center">
-                                                                    {{uploadedFile.fileSize}}
+                                                                    {{uploadedFile.fileSize}} {{uploadedFile.fileSizeType}}
                                                                 </div>
                                                             </div>
                                         
-                                                            <div class="col-2">
-                                                                <a class="btn btn-sm btn btn-primary">{{"PROFILE_WIDGETS.DOSYALARIM.KAYDET" | translate}}</a>
-                                                            </div>
-                                        
-                                                            <div class="col-2">
-                                                                <a (click)="uploadedFile = null"
-                                                                    class="btn btn-sm btn btn-light-primary">{{"PROFILE_WIDGETS.DOSYALARIM.IPTAL" |
-                                                                    translate}}</a>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </ng-container>
+                                            </ng-container> -->
+
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -654,10 +465,10 @@
                         </form>
                     </div>
 
-                    <div class="col-12 d-flex align-items-start justify-content-end">
+                    <div class="col-12 d-flex align-items-start" [ngClass]="{'justify-content-center': (this.layoutService.isMobile | async), 'justify-content-end': !(this.layoutService.isMobile | async) }">
                         <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
-                                <ng-container *ngIf=" 7 > currentStep$.value && currentStep$.value > 1">
+                                <ng-container *ngIf=" 5 > currentStep$.value && currentStep$.value > 1">
                                     <button type="button" class="btn btn-lg btn-light-danger me-3"
                                         (click)="prevStep()">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
@@ -727,3 +538,27 @@
         </div>
     </ng-container>
 </ng-template>
+
+
+
+
+<p-dialog header="{{'DEMANDED.RED_DIALOG.HEADER' | translate}}" [(visible)]="displayUploadedFile" position="center"
+    [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '50vw' : 'none'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    
+    <ng-container *ngIf="currentUploadedFile">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="symbol symbol-75px">
+                <iframe [src]="currentUploadedFile?.files?.url" iframeborder="0" width="600px" height="600px"></iframe>
+            </div>
+        </div>    
+    </ng-container>
+    
+    
+
+    <ng-template pTemplate="footer">
+        <a (click)="displayUploadedFile=false" class="btn btn-danger">
+          <i class="fa-solid fa-xmark fs-1"></i>
+          {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+        </a>
+      </ng-template>
+</p-dialog>

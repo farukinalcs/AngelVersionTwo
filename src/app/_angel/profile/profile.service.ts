@@ -890,37 +890,194 @@ export class ProfileService {
     return this.httpClient.get<any>(API_URL + '/process', options);
   }
 
-  getImage(path : any) {
-    return this.httpClient.get<any>(API_URL + '/Image?sicilid=233');
-  }
 
-  postVacationFile(file : any, formId : any, kaynak : any) {
+  postFileForDemand(file : any, formId : any, kaynak : any, tip : any) {
     const formData = new FormData();
+
     formData.append('file', file);
     formData.append('formid', formId);
-    formData.append('kaynak', kaynak)
-    return this.httpClient.post<any>(API_URL + '/File', formData);
+    formData.append('kaynak', kaynak);
+    formData.append('tip', tip.toString());
+    
+    return this.httpClient.post<any>(API_URL + '/SetFile', formData);
+  }
 
-    // return this.httpClient.post<any>(API_URL + '/File', {file : file, formid : formId});
+  postFileTypeForDemandType(id : any, kaynak : any, belge : any[]) {
+    var sp : any[] = [];
+
+    belge.forEach(item => {
+      sp.push({
+        mkodu : 'yek060',
+        tip : id.toString(),
+        belge : item.ID.toString(),
+        kaynak : kaynak  
+      });
+    });
+    // var sp : any[] = [{
+    //   mkodu : 'yek060',
+    //   tip : id.toString(),
+    //   belge : belge.toString(),
+    //   kaynak : kaynak
+    // }];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  deleteFileTypeForDemandType(belge : any[], kaynak : any) {
+    var sp : any[] = [];
+
+    belge.forEach(item => {
+      sp.push({
+        mkodu : 'yek061',
+        id : item.id.toString(),
+        kaynak : kaynak  
+      });
+    });
+    
+    // var sp : any[] = [{
+    //   mkodu : 'yek061',
+    //   id : id.toString(),
+    //   kaynak : kaynak
+    // }];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  getFileTypeForDemandType(tip : any, kaynak : any) {
+    var sp : any[] = [{
+      mkodu : 'yek062',
+      tip : tip.toString(),
+      kaynak : kaynak
+    }];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  getSelectedDayMenus() {
+    var sp : any[] = [{
+      mkodu : 'yek063',
+    }];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
   }
 
 
+  getUploadedFiles(formid : any, kaynak : any) {
+    var sp : any[] = [{
+      mkodu : 'yek066',
+      formId : formid.toString(),
+      kaynak : kaynak
+    }];
 
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
 
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
 
-  
+    var data = {
+      securedata : encryptedParam.toString()
+    };
 
-  // postVacationFile(file : any, formId : any) {
-  //   // const commaIndex = file.indexOf(',');
-  //   // const result = file.substring(commaIndex + 1);
+    let options = {
+      params : data
+    };
 
-  //   const form = new FormData();
-  //   form.append('file', file);
-  //   const formid = formId; 
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
 
-  //   // return this.httpClient.post<any>(API_URL + '/File', form, { params : { formid }});
-  //   return this.httpClient.post<any>(API_URL + '/File', {file : file, formid : formId});
-  // }
+  getFileForDemand(id : any, uzanti : any) {
+    const formData = new FormData();
 
-  
+    formData.append('uniqueid', id);
+    formData.append('filetype', uzanti);
+    
+    return this.httpClient.post<any>(API_URL + '/GetFile?uniqueid=' + id + '&filetype=' + uzanti, {});
+  }
+
+  deleteFileForDemand(id : any, uzanti : any) {
+    const formData = new FormData();
+
+    formData.append('uniqueid', id);
+    formData.append('filetype', uzanti);
+    
+    return this.httpClient.post<any>(API_URL + '/DeleteFile?uniqueid=' + id + '&filetype=' + uzanti, {});
+  }
+
 }

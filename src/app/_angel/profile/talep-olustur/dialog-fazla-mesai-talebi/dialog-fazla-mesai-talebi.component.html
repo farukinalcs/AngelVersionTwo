@@ -1,233 +1,13 @@
-<!-- <div class="container py-10 px-15">
-    <form [formGroup]="overtimeForm">
-        <div class="row">
-            <div class="col-12 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"FM_TALEP_DIALOG.FORM.ACIKLAMA" | translate}}</span>
-                </label>
-
-                <textarea class="form-control form-control-solid" rows="3" formControlName="aciklama" placeholder="{{'FM_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate}}" style="height: 12px;"
-                [ngClass]="{
-                    'is-invalid': overtimeForm.controls['aciklama'].invalid,
-                    'is-valid': overtimeForm.controls['aciklama'].valid
-                }"></textarea>
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                    control: overtimeForm.controls['aciklama']}">
-                </ng-container>
-
-            </div>
-
-            <div class="col-4 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"FM_TALEP_DIALOG.FORM.FM_TIPI" | translate}}</span>
-                </label>
-
-                <p-dropdown [options]="fmNedenleri" [(ngModel)]="selectedOvertime" optionLabel="ad" [filter]="true" filterBy="ad"
-                    [showClear]="true" placeholder="{{'FM_TALEP_DIALOG.FORM.FM_TIPI_SECINIZ' | translate}}" formControlName="tip"
-                    [ngClass]="{
-                        'is-invalid': overtimeForm.controls['tip'].invalid,
-                        'is-valid': overtimeForm.controls['tip'].valid
-                    }">
-                    <ng-template pTemplate="selectedItem">
-                        <div class="item-item item-item-value" *ngIf="selectedOvertime">
-                            <div>{{selectedOvertime.ad}}</div>
-                        </div>
-                    </ng-template>
-                    <ng-template let-item pTemplate="item">
-                        <div class="item-item">
-                            <div>{{item.ad}}</div>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                    control: overtimeForm.controls['tip']}">
-                </ng-container>
-            </div>
-
-
-            <div class="col-4 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"FM_TALEP_DIALOG.FORM.ULASIM" | translate}}</span>
-                </label>
-
-                <p-dropdown [options]="ulasim" [(ngModel)]="selectedUlasim" optionLabel="ad" [filter]="true" filterBy="ad"
-                    [showClear]="true" placeholder="{{'FM_TALEP_DIALOG.FORM.ULASIM_SECINIZ' | translate}}" formControlName="ulasim"
-                    [ngClass]="{
-                        'is-invalid': overtimeForm.controls['ulasim'].invalid,
-                        'is-valid': overtimeForm.controls['ulasim'].valid
-                    }">
-                    <ng-template pTemplate="selectedItem">
-                        <div class="item-item item-item-value" *ngIf="selectedUlasim">
-                            <div>{{selectedUlasim.ad}}</div>
-                        </div>
-                    </ng-template>
-                    <ng-template let-item pTemplate="item">
-                        <div class="item-item">
-                            <div>{{item.ad}}</div>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                    control: overtimeForm.controls['ulasim']}">
-                </ng-container>
-            </div>
-
-            <div class="col-4 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"FM_TALEP_DIALOG.FORM.YEMEK" | translate}}</span>
-                </label>
-
-                <p-dropdown [options]="yemek" [(ngModel)]="selectedYemek" optionLabel="ad" [filter]="true" filterBy="ad"
-                    [showClear]="true" placeholder="{{'FM_TALEP_DIALOG.FORM.YEMEK_SECINIZ' | translate}}" formControlName="yemek"
-                    [ngClass]="{
-                        'is-invalid': overtimeForm.controls['yemek'].invalid,
-                        'is-valid': overtimeForm.controls['yemek'].valid
-                    }">
-                    <ng-template pTemplate="selectedItem">
-                        <div class="item-item item-item-value" *ngIf="selectedYemek">
-                            <div>{{selectedYemek.ad}}</div>
-                        </div>
-                    </ng-template>
-                    <ng-template let-item pTemplate="item">
-                        <div class="item-item">
-                            <div>{{item.ad}}</div>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                    control: overtimeForm.controls['yemek']}">
-                </ng-container>
-            </div>
-
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"FM_TALEP_DIALOG.FORM.BASLANGIC_TARIHI" | translate}}</span>
-                </label>
-    
-                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bastarih"
-                [ngClass]="{
-                    'is-invalid': overtimeForm.controls['bastarih'].invalid,
-                    'is-valid': overtimeForm.controls['bastarih'].valid
-                }">
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                    control: overtimeForm.controls['bastarih']}">
-                </ng-container>
-            </div>
-
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"FM_TALEP_DIALOG.FORM.BASLANGIC_SAATI" | translate}}</span>
-                </label>
-    
-                <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bassaat"
-                [ngClass]="{
-                    'is-invalid': overtimeForm.controls['bassaat'].invalid,
-                    'is-valid': overtimeForm.controls['bassaat'].valid
-                }">
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                    control: overtimeForm.controls['bassaat']}">
-                </ng-container>
-            </div>
-
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"FM_TALEP_DIALOG.FORM.BITIS_TARIHI" | translate}}</span>
-                </label>
-    
-                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bittarih"
-                [ngClass]="{
-                    'is-invalid': overtimeForm.controls['bittarih'].invalid,
-                    'is-valid': overtimeForm.controls['bittarih'].valid
-                }">
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                    control: overtimeForm.controls['bittarih']}">
-                </ng-container>
-            </div>
-
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"FM_TALEP_DIALOG.FORM.BITIS_SAATI" | translate}}</span>
-                </label>
-    
-                <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bitsaat"
-                [ngClass]="{
-                    'is-invalid': overtimeForm.controls['bitsaat'].invalid,
-                    'is-valid': overtimeForm.controls['bitsaat'].valid
-                }">
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                    control: overtimeForm.controls['bitsaat']}">
-                </ng-container>
-            </div>
-        </div>
-    </form>
-
-    <div class="row mt-10">
-        <div class="col-12 d-flex align-items-end justify-content-end">
-            <button class="mat-stepper-next w-25 btn btn-danger" [disabled]="overtimeForm.invalid" type="submit" (click)="getOvertimeFormValues()">
-                {{"FM_TALEP_DIALOG.FORM.GONDER" | translate}}
-            </button>
-        </div>
-    </div>
-</div>
-
-
-<ng-template #formError let-control="control" let-message="message" let-validation="validation">
-    <ng-container *ngIf="control.hasError(validation)">
-        <div class="invalid-feedback">
-            {{message | translate}}
-        </div>
-    </ng-container>
-</ng-template>
-
-<ng-template #formSuccess let-control="control" let-message="message" let-validation="validation">
-    <ng-container *ngIf="control.valid">
-        <div class="valid-feedback">
-            {{message | translate}}
-        </div>
-    </ng-container>
-</ng-template> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="container py-0 px-15">
+<div class="container py-0 px-5">
     <div class="container">
         <div class="row">
             <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
+
+                <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                    <div class="stepper-nav d-flex justify-content-center">
+                        <img src="../../../../../assets/media/illustrations/storyset-1/5.svg" width="100%" alt="">
+                    </div>
+                </div>
 
                 <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
                     <div class="stepper-nav d-flex justify-content-center ps-lg-10">
@@ -275,7 +55,7 @@
 
                 <div class="row w-xl-700px">
                     <div class="col-12">
-                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="overtimeForm">
+                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10" [formGroup]="overtimeForm">
 
                             <ng-container *ngIf="currentStep$.value == 1">
                                 <div class="current">
@@ -479,7 +259,7 @@
                                 <div class="current">
                                     <div class="w-100">
                                         <div class="row">
-                                            <input type="file" id="upload" style="display: none;" (change)="getFile($event)" accept="application/pdf"
+                                            <input type="file" id="upload" style="display: none;" (change)="getFile($event)" accept=".pdf, .txt ,image/*" max-file-size="1"
                                                 formControlName="file">
                                             <label for="upload">
                                                 <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center" style="padding: 2.5rem 0;">
@@ -493,29 +273,26 @@
                                                 <div [@fileUploaded]="'uploaded'" class="card bg-light-dark m-3">
                                                     <div class="card-body">
                                                         <div class="row d-flex justify-content-center align-items-center">
+                                                            <div class="col-12 d-flex justify-content-end mb-3">
+                                                                <a (click)="uploadedFile = null" class="btn btn-icon btn-danger btn-sm me-3">
+                                                                    <i class="fa-solid fa-xmark fs-4"></i>
+                                                                </a>
+                                                            </div>
                                         
                                                             <div class="col-12">
                                                                 <iframe [src]="uploadedFile.url" width="100%" height="400px"></iframe>
                                                             </div>
-                                        
-                                                            <div class="col-5">
+
+                                                            <div class="col-4">
                                                                 <div class="fs-6 fw-bold text-gray-800 text-center">
                                                                     {{uploadedFile.name}}
                                                                 </div>
+                                                            </div>
                                         
+                                                            <div class="col-4">
                                                                 <div class="fs-6 fw-bold text-gray-800 text-center">
-                                                                    {{uploadedFile.fileSize}}
+                                                                    {{uploadedFile.fileSize}} {{uploadedFile.fileSizeType}}
                                                                 </div>
-                                                            </div>
-                                        
-                                                            <div class="col-2">
-                                                                <a class="btn btn-sm btn btn-primary">{{"PROFILE_WIDGETS.DOSYALARIM.KAYDET" | translate}}</a>
-                                                            </div>
-                                        
-                                                            <div class="col-2">
-                                                                <a (click)="uploadedFile = null"
-                                                                    class="btn btn-sm btn btn-light-primary">{{"PROFILE_WIDGETS.DOSYALARIM.IPTAL" |
-                                                                    translate}}</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -530,10 +307,10 @@
                         </form>
                     </div>
 
-                    <div class="col-12 d-flex align-items-start justify-content-end">
+                    <div class="col-12 d-flex align-items-start" [ngClass]="{'justify-content-center': (this.layoutService.isMobile | async), 'justify-content-end': !(this.layoutService.isMobile | async) }">
                         <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
-                                <ng-container *ngIf=" 7 > currentStep$.value && currentStep$.value > 1">
+                                <ng-container *ngIf=" 5 > currentStep$.value && currentStep$.value > 1">
                                     <button type="button" class="btn btn-lg btn-light-danger me-3"
                                         (click)="prevStep()">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
@@ -566,7 +343,7 @@
                                         </button>
                                     </ng-container>
                                     <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                        <button type="button" class="btn btn-lg btn-danger me-3">
+                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="getOvertimeFormValues()">
                                             <span class="indicator-label">
                                                 {{"ZIYARETCI_TALEP_DIALOG.FORM.GONDER" | translate}}
                                             </span>

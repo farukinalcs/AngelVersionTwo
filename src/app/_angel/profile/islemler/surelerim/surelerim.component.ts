@@ -19,18 +19,18 @@ export class SurelerimComponent implements OnInit, OnDestroy {
   @ViewChild('datepickerDialog') datepickerDialog: TemplateRef<any>;
 
   months: string[] = [
-    this.tranlateService.instant("PUBLIC.AYLAR.OCAK"),
-    this.tranlateService.instant("PUBLIC.AYLAR.SUBAT"),
-    this.tranlateService.instant("PUBLIC.AYLAR.MART"),
-    this.tranlateService.instant("PUBLIC.AYLAR.NISAN"),
-    this.tranlateService.instant("PUBLIC.AYLAR.MAYIS"),
-    this.tranlateService.instant("PUBLIC.AYLAR.HAZIRAN"),
-    this.tranlateService.instant("PUBLIC.AYLAR.TEMMUZ"),
-    this.tranlateService.instant("PUBLIC.AYLAR.AGUSTOS"),
-    this.tranlateService.instant("PUBLIC.AYLAR.EYLUL"),
-    this.tranlateService.instant("PUBLIC.AYLAR.EKIM"),
-    this.tranlateService.instant("PUBLIC.AYLAR.KASIM"),
-    this.tranlateService.instant("PUBLIC.AYLAR.ARALIK")
+    this.translateService.instant("PUBLIC.AYLAR.OCAK"),
+    this.translateService.instant("PUBLIC.AYLAR.SUBAT"),
+    this.translateService.instant("PUBLIC.AYLAR.MART"),
+    this.translateService.instant("PUBLIC.AYLAR.NISAN"),
+    this.translateService.instant("PUBLIC.AYLAR.MAYIS"),
+    this.translateService.instant("PUBLIC.AYLAR.HAZIRAN"),
+    this.translateService.instant("PUBLIC.AYLAR.TEMMUZ"),
+    this.translateService.instant("PUBLIC.AYLAR.AGUSTOS"),
+    this.translateService.instant("PUBLIC.AYLAR.EYLUL"),
+    this.translateService.instant("PUBLIC.AYLAR.EKIM"),
+    this.translateService.instant("PUBLIC.AYLAR.KASIM"),
+    this.translateService.instant("PUBLIC.AYLAR.ARALIK")
   ];
   
   years: number[] = []; // Gerektiğinde yılları güncelleyin
@@ -47,7 +47,7 @@ export class SurelerimComponent implements OnInit, OnDestroy {
 
   constructor(
     private profilService : ProfileService,
-    private tranlateService : TranslateService,
+    private translateService : TranslateService,
     public loaderService : LoaderService,
     private dialog : MatDialog,
     public layoutService : LayoutService,

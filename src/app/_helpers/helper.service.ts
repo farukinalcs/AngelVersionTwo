@@ -24,6 +24,7 @@ export class HelperService {
 
   dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
 
+  configureComponentBehavior: BehaviorSubject<any> = new BehaviorSubject<any>(1);
   
   constructor(
     private translateService : TranslateService

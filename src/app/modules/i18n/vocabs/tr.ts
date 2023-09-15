@@ -25,7 +25,8 @@ export const locale = {
         MOBIL_LOKASYON: "Mobil Lokasyon",
         TASK_LISTEM: "Task Listem",
         TAKIMIM: "Takımım",
-        EKSIK_SURELERIM : "Eksik Sürelerim"
+        EKSIK_SURELERIM : "Eksik Sürelerim",
+        PROFIL_TANIMLAMALAR : "Profil Tanımlamalar"
       },
       Access: "Access",
       AccessSub: {
@@ -105,6 +106,7 @@ export const locale = {
       AYLIK : "Aylık",
       DATA_NOT_FOUND : 'Kayıt Bulunamadı!',
       SEARCH : 'Arama..',
+      SELECT : 'Seçim Yapınız..',
       AYLAR : {
         OCAK : 'Ocak',
         SUBAT : 'Şubat',
@@ -118,6 +120,15 @@ export const locale = {
         EKIM : 'Ekim',
         KASIM : 'Kasım',
         ARALIK : 'Aralık'
+      },
+      GUNLER : {
+        PAZARTESI : 'Pzt',
+        SALI : 'Sal',
+        CARSAMBA : 'Çar',
+        PERSEMBE : 'Per',
+        CUMA : 'Cum',
+        CUMARTESI : 'Cmt',
+        PAZAR : 'Pzr'
       }
     },
 
@@ -171,6 +182,7 @@ export const locale = {
         ONAY : "Onayla",
         RED : "Reddet",
         SUREC : "Süreç",
+        DOSYALAR : "Dosyalar",
         FORM : "Form",
         GONDER : "Gönder",
         VAZGEC : "Vazeç",
@@ -367,7 +379,8 @@ export const locale = {
         BASLANGIC_TARIHI : "Başlangıç Tarihi",
         BITIS_TARIHI  :"Bitiş Tarihi",
         YAYINLAYAN : "Yayınlayan",
-        DOSYA_YUKLE : "Gerekli Dosyanızı Yükleyiniz",
+        DOSYA_YUKLE : "\"{{ fileType }}\" İçin Gerekli Dosyanızı Yükleyiniz",
+        YUKLENMIS_DOSYA : "\"{{ fileType }}\" İçin Yüklenmiş Dosya",
         AVATAR : "Avatar Seçiniz",
         GONDER : "Gönder",
         ILERI : 'İleri',

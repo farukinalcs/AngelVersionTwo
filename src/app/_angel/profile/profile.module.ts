@@ -80,6 +80,13 @@ import { DialogAvansTalebiComponent } from './talep-olustur/dialog-avans-talebi/
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { DialogBultenFormuComponent } from './talep-olustur/dialog-bulten-formu/dialog-bulten-formu.component';
 import { DialogDuyuruFormuComponent } from './talep-olustur/dialog-duyuru-formu/dialog-duyuru-formu.component';
+import { ProfilTanimlamalarComponent } from './profil-tanimlamalar/profil-tanimlamalar.component';
+import { PickListModule } from 'primeng/picklist';
+import { DosyaTipiTanimlamaComponent } from './profil-tanimlamalar/dosya-tipi-tanimlama/dosya-tipi-tanimlama.component';
+import { FirstSevenPipe } from 'src/app/_helpers/pipes/first-seven.pipe';
+import { YemekMenuTumuComponent } from './profile-data-widget/yemek-menu/yemek-menu-tumu/yemek-menu-tumu.component';
+import { RatingModule } from 'primeng/rating';
+import { UploadedFilesComponent } from './talepler/talepedilenler/uploaded-files/uploaded-files.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +123,11 @@ import { DialogDuyuruFormuComponent } from './talep-olustur/dialog-duyuru-formu/
     DialogAvansTalebiComponent,
     DialogBultenFormuComponent,
     DialogDuyuruFormuComponent,
+    ProfilTanimlamalarComponent,
+    DosyaTipiTanimlamaComponent,
+    FirstSevenPipe,
+    YemekMenuTumuComponent,
+    UploadedFilesComponent
   ],
   imports: [
     CommonModule,
@@ -169,6 +181,8 @@ import { DialogDuyuruFormuComponent } from './talep-olustur/dialog-duyuru-formu/
     ImageModule,
     FullCalendarModule,
     ExtrasModule,
+    PickListModule,
+    RatingModule
   ]
 })
 export class ProfileModule { }

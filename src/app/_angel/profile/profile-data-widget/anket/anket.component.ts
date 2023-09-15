@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-anket',
@@ -27,6 +28,7 @@ export class AnketComponent implements OnInit, OnDestroy {
   uniqueDepartments: any[] = this.getUniqueBolumValues(this.items);
   constructor(
     private formBuilder: FormBuilder,
+    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
 

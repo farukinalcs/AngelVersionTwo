@@ -52,13 +52,6 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
     this.getMenuConfig();
     this.getUserInformation();
     this.getCurrentUserInformations();
-
-    // this.profileService.getImage('path').subscribe(response => {
-    //   console.log("Image : ", response);
-    //   this.fotoImage = response;
-
-    //   this.ref.detectChanges();
-    // });
   }
 
   getUserInformation() {
@@ -112,7 +105,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   }
   vacationFormIsSend() {
     this.displayVacationForm = false;
-    this.closedVacationForm.next(false);
+    // this.closedVacationForm.next(false);
   }
   /* --------------------------------- */
 
