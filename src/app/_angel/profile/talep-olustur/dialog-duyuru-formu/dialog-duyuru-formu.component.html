@@ -4,6 +4,12 @@
             <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
 
                 <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                    <div class="stepper-nav d-flex justify-content-center">
+                        <img src="../../../../../assets/media/illustrations/storyset-1/8.svg" width="100%" alt="">
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
                     <div class="stepper-nav d-flex justify-content-center ps-lg-10">
 
                         <div class="{{item.class}}" *ngFor="let item of stepperFields">
@@ -49,7 +55,7 @@
 
                 <div class="row w-xl-700px">
                     <div class="col-12">
-                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="announcementForm">
+                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10" [formGroup]="announcementForm">
 
                             <ng-container *ngIf="currentStep$.value == 1">
                                 <div class="current">
@@ -146,7 +152,7 @@
                                                     <span class="badge badge-dark fs-6">{{announcementFormValues.owner}}</span>
                                                 </div>
                                             </div>
-                                            <div class="col-10 scroll h-100px d-flex justify-content-center">
+                                            <div class="col-12 scroll h-100px d-flex justify-content-center">
                                                 <div class="fs-3 fw-bold text-gray-800 text-center">
                                                     <span>{{announcementFormValues.description}}</span>
                                                 </div>
@@ -167,7 +173,7 @@
                         </form>
                     </div>
 
-                    <div class="col-12 d-flex align-items-start justify-content-end">
+                    <div class="col-12 d-flex align-items-start" [ngClass]="{'justify-content-center': (this.layoutService.isMobile | async), 'justify-content-end': !(this.layoutService.isMobile | async) }">
                         <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
                                 <ng-container *ngIf=" 7 > currentStep$.value && currentStep$.value > 1">

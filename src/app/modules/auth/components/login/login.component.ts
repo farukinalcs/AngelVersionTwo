@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
@@ -52,6 +52,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
+
+  public isMobile : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -71,12 +74,18 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.onWindowResize();
     this.setSelectedLanguage();
     this.gate();
     this.initForm();
     // get return url from route parameters or default to '/'
-    this.returnUrl =
-      this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
+
+    // const mobileSubscr = this.isMobile.subscribe((value : any) => {
+      
+    // });
+
+    // this.unsubscribe.push(mobileSubscr);
   }
 
   // convenience getter for easy access to form fields
@@ -160,6 +169,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   setSelectedLanguage(): any {
     this.setLanguage(this.translationService.getSelectedLanguage());
     this.translationService.langObs.next(this.translationService.getSelectedLanguage());
+  }
+
+  @HostListener("window:resize", ["$event"])
+  onWindowResize() {
+    let innerWidth = window.innerWidth;
+
+    if (innerWidth > 990) {
+      this.isMobile.next(false);
+    } else if (innerWidth <= 990) {
+      this.isMobile.next(true);
+    }
   }
 
   ngOnDestroy() {

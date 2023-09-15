@@ -44,13 +44,98 @@
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
     background-color: #ed1b24 !important
 }
+
 /*--------------------------------------------*/
 
 
 
 .menu-state-bg .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here),
-.menu-state-bg .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here){
+.menu-state-bg .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) {
     transition: color 0.2s ease;
     background-color: #ed82a23d;
     color: #ed1b24;
 }
+
+
+
+// PrimeNG Dialog Pencersi Dark Mod İçin Renk Değişimi
+[data-theme="dark"] .p-dialog .p-dialog-content {
+    background: #1e1e2d;
+}
+
+[data-theme="dark"] .p-dialog .p-dialog-header {
+    background: #1e1e2d;
+    color: #ed1c24;
+}
+
+[data-theme="dark"] .p-dialog .p-dialog-footer {
+    background: #1e1e2d;
+}
+
+
+[data-theme="dark"] .p-dialog .p-dialog-header .p-dialog-header-icon {
+    color: #ed1c24;
+}
+
+[data-theme="dark"] .p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
+    color: #ed1c24;
+    border-color: #1e1e2d;
+    background: #434365;
+}
+
+[data-theme="dark"] .p-dialog .p-dialog-header .p-dialog-header-icon:focus {
+    box-shadow: 0 0 0 0.2rem #ed1b248a;
+}
+/*--------------------------------------------*/
+
+
+
+// Angular Material Mat-Tab Dark Mod İçin Renk Değişimi
+[data-theme="dark"] .mat-tab-label, .mat-tab-link {
+    color: rgb(255 255 255);
+}
+/*--------------------------------------------*/
+
+// Angular Material Mat-Expansion-Panel Dark Mod İçin Renk Değişimi
+[data-theme="dark"] .mat-expansion-panel {
+    background: #151521;
+    color: rgb(255 255 255 / 87%);
+}
+/*--------------------------------------------*/
+
+// Angular Material Mat-Container Dark Mod İçin Renk Değişimi
+[data-theme="dark"] .mat-dialog-container {
+    background: #1e1e2d;
+}
+/*--------------------------------------------*/
+
+// PrimeNG PickList Dark Mod İçin Renk Değişimi
+[data-theme="dark"] .p-picklist .p-picklist-header {
+    background: #ed1b24;
+    color: #ffffff;
+    border: 1px solid #3a2434;
+}
+
+[data-theme="dark"] .p-picklist .p-picklist-filter-container {
+    padding: 1.25rem;
+    background: #1e1e2d;
+    border: 1px solid #ffffff;
+    border-bottom: 0 none;
+}
+
+[data-theme="dark"] .p-picklist .p-picklist-list {
+    border: 1px solid #fcfdff;
+    background: #1e1e2d;
+    color: #ffffff;
+    padding: 0.75rem 0;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+/*--------------------------------------------*/
+
+
+// Angular Material Mat-Checkbox Dark Mod İçin Renk Değişimi
+[data-theme="dark"] .mat-checkbox-frame {
+    border-color: #ed1b24;
+}
+/*--------------------------------------------*/

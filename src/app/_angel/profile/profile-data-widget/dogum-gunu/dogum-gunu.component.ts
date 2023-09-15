@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
+import { LayoutService } from 'src/app/_metronic/layout';
 import { PersonBirthday } from '../../models/personsBirthday';
 import { ProfileService } from '../../profile.service';
 
@@ -20,6 +21,7 @@ export class DogumGunuComponent implements OnInit, OnDestroy {
   todayPersonsBirthday: PersonBirthday[] = [];
   constructor(
     private profileService : ProfileService,
+    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
 

@@ -1,8 +1,14 @@
-<div class="container py-0 px-15">
+<div class="container py-0 px-5">
     <div class="container">
         <div class="row">
             <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
 
+                <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                    <div class="stepper-nav d-flex justify-content-center">
+                        <img src="../../../../../assets/media/illustrations/storyset-1/4.svg" width="100%" alt="">
+                    </div>
+                </div>
+                
                 <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
                     <div class="stepper-nav d-flex justify-content-center ps-lg-10">
 
@@ -431,7 +437,7 @@
                                                     *ngFor="let item of visitTypes">
                                                     <span class="d-flex align-items-center me-2">
                                                         <span class="symbol symbol-50px me-6">
-                                                            <div [ngSwitch]="item.Ad">
+                                                            <div [ngSwitch]="item.ad">
     
                                                                 <div *ngSwitchCase="'Misafir'">
                                                                     <span class="symbol-label bg-light-danger">
@@ -472,7 +478,7 @@
                                                         </span>
     
                                                         <span class="d-flex flex-column">
-                                                            <span class="fw-bold fs-6">{{item.Ad}}</span>
+                                                            <span class="fw-bold fs-6">{{item.ad}}</span>
                                                         </span>
                                                     </span>
     
@@ -585,7 +591,7 @@
                                                     <div class="table-responsive">
                                                         <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                                             <thead>
-                                                                <tr class="bg-dark fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase">
+                                                                <tr class="bg-danger fs-7 fw-bold text-white border-bottom-0 text-uppercase">
                                                                     <th class="text-center rounded-start"></th>
                                                                     <th class="text-center">{{"ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate}}</th>
                                                                     <th class="text-center">{{"ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate}}</th>
@@ -600,7 +606,7 @@
                                                                             <div class="symbol symbol-50px">
                                                                                 <ng-container *ngIf="isFirstVisitor(i)">
                                                                                     <div class="symbol-label fs-2 fw-semibold text-dark">
-                                                                                        <i class="fa-solid fa-crown fs-2x text-dark"></i>
+                                                                                        <i class="fa-solid fa-sitemap fs-2x text-dark"></i>
                                                                                     </div>
                                                                                 </ng-container>
                                     

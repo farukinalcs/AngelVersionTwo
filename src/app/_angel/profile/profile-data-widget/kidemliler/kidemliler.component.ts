@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
+import { LayoutService } from 'src/app/_metronic/layout';
 import { SeniorPerson } from '../../models/seniorPerson';
 import { ProfileService } from '../../profile.service';
 
@@ -26,6 +27,7 @@ export class KidemlilerComponent implements OnInit, OnDestroy {
   
   constructor(
     private profileService : ProfileService,
+    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
 

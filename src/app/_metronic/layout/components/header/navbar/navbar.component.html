@@ -33,16 +33,16 @@
 <!--end::Activities-->
 
 <!--begin::Notifications-->
-<div class="app-navbar-item" [ngClass]="itemClass">
+<!-- <div class="app-navbar-item" [ngClass]="itemClass"> -->
   <!--begin::Menu- wrapper-->
-  <div [ngClass]="btnClass" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
+  <!-- <div [ngClass]="btnClass" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
     data-kt-menu-placement="bottom-end">
     <span [inlineSVG]="'./assets/media/icons/duotune/general/gen022.svg'" class="svg-icon"
       [ngClass]="btnIconClass"></span>
   </div>
-  <app-notifications-inner></app-notifications-inner>
+  <app-notifications-inner></app-notifications-inner> -->
   <!--end::Menu wrapper-->
-</div>
+<!-- </div> -->
 <!--end::Notifications-->
 
 <!--begin::Chat-->
@@ -58,16 +58,16 @@
 <!--end::Chat-->
 
 <!--begin::Quick links-->
-<div class="app-navbar-item" [ngClass]="itemClass">
+<!-- <div class="app-navbar-item" [ngClass]="itemClass"> -->
   <!--begin::Menu wrapper-->
-  <div [ngClass]="btnClass" data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+  <!-- <div [ngClass]="btnClass" data-kt-menu-trigger="click" data-kt-menu-attach="parent"
     data-kt-menu-placement="bottom-end">
     <span [inlineSVG]="'./assets/media/icons/duotune/general/gen025.svg'" class="svg-icon"
       [ngClass]="btnIconClass"></span>
-  </div>
+  </div> -->
   <!--end::Menu wrapper-->
-  <app-quick-links-inner></app-quick-links-inner>
-</div>
+  <!-- <app-quick-links-inner></app-quick-links-inner> -->
+<!-- </div> -->
 <!--end::Quick links-->
 
 <!--begin::Theme mode-->
@@ -82,7 +82,7 @@
 <div class="app-navbar-item" [ngClass]="itemClass" *ngIf="user$ | async as _user">
   <!--begin::Menu wrapper-->
   <div class="cursor-pointer symbol" [ngClass]="userAvatarClass" data-kt-menu-trigger="{default: 'click'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-    <img alt="Logo" src="{{'data:image/jpg;base64,' + _user.FotoImage}}" />
+    <img alt="user-foto" src="http://localhost:5075/api/Image?sicilid={{_user.xSicilID}}" />
   </div>
   <app-user-inner data-kt-menu='true'></app-user-inner>
   <!--end::Menu wrapper-->

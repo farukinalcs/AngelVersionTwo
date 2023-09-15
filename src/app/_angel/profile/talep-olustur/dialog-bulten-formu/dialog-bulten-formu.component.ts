@@ -8,6 +8,7 @@ import { ProfileService } from '../../profile.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DomSanitizer } from '@angular/platform-browser';
+import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-dialog-bulten-formu',
@@ -54,14 +55,14 @@ export class DialogBultenFormuComponent implements OnInit, OnDestroy {
   uploadedFiles: any[] = [];
 
   avatars : any[] = [
-    {path : 'sigma-1/1.png'},
-    {path : 'sigma-1/2.png'},
-    {path : 'sigma-1/3.png'},
-    {path : 'sigma-1/4.png'},
-    {path : 'sigma-1/5.png'},
-    {path : 'sigma-1/6.png'},
-    {path : 'sigma-1/7.png'},
-    {path : 'sigma-1/8.png'},
+    {path : 'storyset-1/1.svg'},
+    {path : 'storyset-1/2.svg'},
+    {path : 'storyset-1/3.svg'},
+    {path : 'storyset-1/4.svg'},
+    {path : 'storyset-1/5.svg'},
+    {path : 'storyset-1/6.svg'},
+    {path : 'storyset-1/7.svg'},
+    {path : 'storyset-1/8.svg'},
     {path : 'sigma-1/9.png'},
     {path : 'sigma-1/10.png'},
     {path : 'sigma-1/11.png'},
@@ -102,6 +103,7 @@ export class DialogBultenFormuComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private breakpointObserver: BreakpointObserver,
     private sanitizer: DomSanitizer,
+    public layoutService : LayoutService,
     private ref: ChangeDetectorRef
   ) { }
 

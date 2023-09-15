@@ -86,6 +86,13 @@
     .mat-expansion-panel-body {
         padding: 0.50rem;
     }
+
+    .mat-content {
+        display: block;
+        flex: 1;
+        flex-direction: row;
+        overflow: hidden;
+    }
 }
 
 
