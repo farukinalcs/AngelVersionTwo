@@ -35,6 +35,12 @@ const Routing: Routes = [
       data: { layout: 'light-sidebar' },
 
   },
+  {
+    path:'guvenlik',
+    loadChildren:() => 
+    import('../_angel/guvenlik/guvenlik.module').then((m) => m.GuvenlikModule),
+    data: { layout: 'light-sidebar' },
+  },
   // {
   //   path: 'crafted/pages/profile',
   //   loadChildren: () =>
