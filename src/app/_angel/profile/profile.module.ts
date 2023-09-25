@@ -87,6 +87,9 @@ import { FirstSevenPipe } from 'src/app/_helpers/pipes/first-seven.pipe';
 import { YemekMenuTumuComponent } from './profile-data-widget/yemek-menu/yemek-menu-tumu/yemek-menu-tumu.component';
 import { RatingModule } from 'primeng/rating';
 import { UploadedFilesComponent } from './talepler/talepedilenler/uploaded-files/uploaded-files.component';
+import { YemekmenuTipiTanimlamaComponent } from './profil-tanimlamalar/yemekmenu-tipi-tanimlama/yemekmenu-tipi-tanimlama.component';
+import { YemekTipiTanimlamaComponent } from './profil-tanimlamalar/yemek-tipi-tanimlama/yemek-tipi-tanimlama.component';
+import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-tanimlama/yemek-menu-tanimlama.component';
 
 @NgModule({
   declarations: [
@@ -127,7 +130,10 @@ import { UploadedFilesComponent } from './talepler/talepedilenler/uploaded-files
     DosyaTipiTanimlamaComponent,
     FirstSevenPipe,
     YemekMenuTumuComponent,
-    UploadedFilesComponent
+    UploadedFilesComponent,
+    YemekmenuTipiTanimlamaComponent,
+    YemekTipiTanimlamaComponent,
+    YemekMenuTanimlamaComponent
   ],
   imports: [
     CommonModule,

@@ -38,7 +38,11 @@ export class ProfilTanimlamalarComponent implements OnInit, OnDestroy {
     { id: 1, name: 'İzin Tipleri Dosya Gereklilik Tanımı', tip : 'İzin Tipi', params: [{ name: '@ad', labelName: 'Ad', type: 'text' }, { name: '@soyad', labelName: 'Soyad', type: 'text' }, { name: '@firma', labelName: 'Firma', type: 'select' }] },
     { id: 2, name: 'FM Nedenleri Dosya Gereklilik Tanımı', tip : 'Fazla Mesai Nedeni', params: [{ name: '@sicil_no', labelName: 'Sicil No', type: 'text' }, { name: '@kart_no', labelName: 'Kart No', type: 'text' }, { name: '@terminal', labelName: 'Terminal', type: 'select' }, { name: '@alt_firma', labelName: 'Alt Firma', type: 'select' }] },
     { id: 3, name: 'Ziyaret Tipleri Dosya Gereklilik Tanımı', tip : 'Ziyaret Tipi', params: [{ name: '@ad', labelName: 'Ad', type: 'text' }, { name: '@soyad', labelName: 'Soyad', type: 'text' }, { name: '@sicil_no', labelName: 'Sicil No', type: 'text' }] },
+    { id: 4, name: 'Yemek Tipleri Tanımı', tip : 'Yemek Tipi', params: [{ name: '@ad', labelName: 'Ad', type: 'text' }, { name: '@id', labelName: 'ID', type: 'number' }] },
+    { id: 5, name: 'Yemek Menü Tanımı', tip : 'Menu Tipi', params: [{ name: '@ad', labelName: 'Ad', type: 'text' }, { name: '@id', labelName: 'ID', type: 'number' }] },
   ];
+
+
   selectedItem: any;
   animation: string = 'out';
   animationReport: string = 'in';
