@@ -1,1 +1,52 @@
-<p>yemek-tipi-tanimlama works!</p>
+<div class="card" style="min-height: 450px;">
+    <div class="card-header" style="display: flow-root;">
+        <div class="row mt-4">
+            <div class="col-10 d-flex align-items-center">
+                <h4 class="card-label text-danger mt-2 font-weight-bolder">
+                    {{selectedItem.name}}
+                </h4>
+            </div>
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <a (click)="onCloseButtonClick()" class="btn font-weight-bold mr-2">
+                    <i class="fa-solid fa-circle-xmark text-danger" style="font-size: 2rem;"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body d-flex p-0 card-rounded">
+        <div style="padding: 20px 0px 15px 15px ;" class="flex-grow-1 card-rounded flex-grow-1">
+            <div class="container">
+                <div class="w-100">
+                    <div class="row">
+                        <div class="col-12 mb-4">
+                            <label class="required" for="inputMeal">Yemek Türü</label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option *ngFor="let item of foodType">{{item.name}}</option>
+                              
+                            </select>
+                           
+                        </div>
+                
+                    </div>
+                        
+                    <div class="row">
+                        <div class="col-12 mb-5">
+                            <label class="required" for="inputMeal">Yemek Adı</label>
+                            <input type="text" class="form-control" id="inputMeal" placeholder="Eklemek istediğiniz yemeğin adını giriniz">
+                            
+                        </div>
+                    </div>
+                
+                    <div class="row">
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-danger">Tanımla</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

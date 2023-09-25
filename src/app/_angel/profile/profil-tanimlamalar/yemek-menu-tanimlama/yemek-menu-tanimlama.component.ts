@@ -162,7 +162,7 @@ export class YemekMenuTanimlamaComponent implements OnInit {
       const week: any[] = [];
       for (let j = 0; j < 7; j++) {
         const isCurrentMonth = currentDate.getMonth() === this.currentMonth;
-        const dayMenu = [{rating : '', name :'menü 1', joinType : '0'}, {rating : '', name : 'menü 2', joinType : '0'} , {rating : '', name : 'menü 3', joinType : '0'}];
+        // const dayMenu = [{rating : '', name :'menü 1', joinType : '0'}, {rating : '', name : 'menü 2', joinType : '0'} , {rating : '', name : 'menü 3', joinType : '0'}];
         week.push({
           date: currentDate,
           monthName: this.getMonthName(currentDate.getMonth()).substring(0, 3),
@@ -170,7 +170,7 @@ export class YemekMenuTanimlamaComponent implements OnInit {
           dayName: this.getDayName(currentDate.getDay()),
           day: currentDate.getDate().toString(),
           isCurrentMonth: isCurrentMonth,
-          menu: dayMenu
+          // menu: dayMenu
         });
         currentDate = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
       }
