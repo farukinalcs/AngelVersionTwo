@@ -8,5 +8,8 @@ export class LoaderService {
 
   public isLoading : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  constructor() { }
+  constructor() {
+    console.log("Loader Service Çalıştı");
+
+   }
 }

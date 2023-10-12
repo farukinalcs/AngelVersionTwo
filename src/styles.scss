@@ -26,35 +26,33 @@
 @import '~ngx-toastr/toastr';
 
 
-/* Angular Material CSS */
+/* Angular Material Ve PrimeNG CSS */
 /*--------------------------------------------*/
-
 // Angular material mat-tab border bottom background color
 .mat-ink-bar {
-    background-color: #ed1b24 !important
+    background-color: var(--kt-danger) !important
 }
+/*--------------------------------------------*/
 
 
 // Angular materil checkbox background color (Hepsi İşaretlendiğinde)
 .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-    background-color: #ed1b24 !important
+    background-color: var(--kt-danger) !important
 }
-
-// Angular materil checkbox background color (Tekli İşaretlendiğinde)
-.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-    background-color: #ed1b24 !important
-}
-
 /*--------------------------------------------*/
 
 
 
-.menu-state-bg .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here),
-.menu-state-bg .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) {
-    transition: color 0.2s ease;
-    background-color: #ed82a23d;
-    color: #ed1b24;
+
+
+// Angular materil checkbox background color (Tekli İşaretlendiğinde)
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: var(--kt-danger) !important
 }
+/*--------------------------------------------*/
+
+
+
 
 
 
@@ -65,7 +63,7 @@
 
 [data-theme="dark"] .p-dialog .p-dialog-header {
     background: #1e1e2d;
-    color: #ed1c24;
+    color: var(--kt-danger);
 }
 
 [data-theme="dark"] .p-dialog .p-dialog-footer {
@@ -74,34 +72,46 @@
 
 
 [data-theme="dark"] .p-dialog .p-dialog-header .p-dialog-header-icon {
-    color: #ed1c24;
+    color: var(--kt-danger);
 }
 
 [data-theme="dark"] .p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
-    color: #ed1c24;
+    color: var(--kt-danger);
     border-color: #1e1e2d;
     background: #434365;
 }
 
 [data-theme="dark"] .p-dialog .p-dialog-header .p-dialog-header-icon:focus {
-    box-shadow: 0 0 0 0.2rem #ed1b248a;
+    box-shadow: 0 0 0 0.2rem var(--kt-danger)8a;
 }
 /*--------------------------------------------*/
+
 
 
 
 // Angular Material Mat-Tab Dark Mod İçin Renk Değişimi
-[data-theme="dark"] .mat-tab-label, .mat-tab-link {
+[data-theme="dark"] .mat-tab-label,
+.mat-tab-link {
     color: rgb(255 255 255);
 }
+
 /*--------------------------------------------*/
+
+
+
 
 // Angular Material Mat-Expansion-Panel Dark Mod İçin Renk Değişimi
 [data-theme="dark"] .mat-expansion-panel {
     background: #151521;
     color: rgb(255 255 255 / 87%);
 }
+
 /*--------------------------------------------*/
+
+
+
+
+
 
 // Angular Material Mat-Container Dark Mod İçin Renk Değişimi
 [data-theme="dark"] .mat-dialog-container {
@@ -109,9 +119,12 @@
 }
 /*--------------------------------------------*/
 
+
+
+
 // PrimeNG PickList Dark Mod İçin Renk Değişimi
 [data-theme="dark"] .p-picklist .p-picklist-header {
-    background: #ed1b24;
+    background: var(--kt-danger);
     color: #ffffff;
     border: 1px solid #3a2434;
 }
@@ -131,11 +144,352 @@
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
 }
+
 /*--------------------------------------------*/
+
+
+
+
 
 
 // Angular Material Mat-Checkbox Dark Mod İçin Renk Değişimi
 [data-theme="dark"] .mat-checkbox-frame {
-    border-color: #ed1b24;
+    border-color: var(--kt-danger);
+}
+
+/*--------------------------------------------*/
+
+
+
+
+// PrimeNG Dropdown Dark Mod İçin Renk Değişimi
+[data-theme="dark"] .p-dropdown {
+    background-color: #1b1b29 !important;
+    width: 100% !important;
+    border: 1px solid var(--kt-danger) !important;
+
+}
+
+[data-theme="dark"] .p-dropdown-panel .p-dropdown-header {
+    border-bottom: 1px solid #1b1b29 !important;
+    color: #343a40 !important;
+    background: #1b1b29 !important;
+}
+
+[data-theme="dark"] .p-dropdown-panel {
+    background: #1a1a28;
+    color: #ffffff;
+    box-shadow: 0 2px 12px 0 rgb(255 255 255 / 10%);
+}
+
+[data-theme="dark"] .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
+    color: #ffffff !important;
+    background: #3a2434 !important;
+}
+
+[data-theme="dark"] .p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
+    background-color: #1b1b29 !important;
+}
+
+[data-theme="dark"] .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    color: #ffffff !important;
+    background: var(--kt-danger) !important;
+}
+
+[data-theme="dark"] .p-inputtext:enabled:focus {
+    box-shadow: none !important;
+    border-color: var(--kt-danger) !important;
+}
+
+// [data-theme="dark"] .p-inputtext {
+//     border: 1px solid var(--kt-danger) !important;
+// }
+
+
+[data-theme="dark"] .p-inputtext {
+    color: #d1d9e0 !important;
+}
+
+.p-dropdown {
+    background-color: #f5f8fa !important;
+    width: 100% !important;
+}
+
+.btn.btn-outline.btn-outline-dashed.active {
+    border-color: var(--kt-danger) !important;
+}
+
+.p-dropdown:not(.p-disabled):hover {
+    border-color: var(--kt-danger) !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    color: var(--kt-danger) !important;
+    background: #fff5f8 !important;
+}
+
+.p-dropdown {
+    width: 100% !important;
+}
+
+.p-dropdown:not(.p-disabled).p-focus {
+    outline: 0 none !important;
+    outline-offset: 0 !important;
+    box-shadow: 0 0 0 0.2rem #fff5f8 !important;
+    border-color: var(--kt-danger) !important;
+}
+
+.p-inputtext:enabled:focus {
+    outline: 0 none !important;
+    outline-offset: 0 !important;
+    box-shadow: 0 0 0 0.2rem #fff5f8 !important;
+    border-color: var(--kt-danger) !important;
+}
+
+.p-inputtext:enabled:hover {
+    border-color: var(--kt-danger) !important;
+}
+
+.p-inputtext:enabled:focus {
+    box-shadow: none !important;
+    border-color: var(--kt-danger) !important;
+}
+
+/*--------------------------------------------*/
+
+
+
+
+
+
+// "form-control" Class'ı İçin Hover ve Focus İçin Renk Ayarı
+// [data-theme="dark"] .form-control.form-control-solid:hover {
+//     border: 1px solid var(--kt-danger) !important;
+// }
+
+// [data-theme="dark"] .form-control.form-control-solid:focus {
+//     border: 1px solid var(--kt-danger) !important;
+// }
+
+[data-theme="dark"] .form-control.form-control-solid {
+    border: 1px solid var(--kt-danger) !important;
+}
+
+/*--------------------------------------------*/
+
+
+
+
+
+// Header için renk değişimi
+.menu-state-primary .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here) .menu-title,
+.menu-state-primary .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-title {
+    color: var(--kt-danger) !important;
+}
+
+.menu-state-primary .menu-item .menu-link.active .menu-title {
+    color: var(--kt-danger) !important;
+}
+
+.btn-check:checked+.btn.btn-active-color-primary i,
+.btn-check:checked+.btn.btn-active-color-primary .svg-icon,
+.btn-check:active+.btn.btn-active-color-primary i,
+.btn-check:active+.btn.btn-active-color-primary .svg-icon,
+.btn.btn-active-color-primary:focus:not(.btn-active) i,
+.btn.btn-active-color-primary:focus:not(.btn-active) .svg-icon,
+.btn.btn-active-color-primary:hover:not(.btn-active) i,
+.btn.btn-active-color-primary:hover:not(.btn-active) .svg-icon,
+.btn.btn-active-color-primary:active:not(.btn-active) i,
+.btn.btn-active-color-primary:active:not(.btn-active) .svg-icon,
+.btn.btn-active-color-primary.active i,
+.btn.btn-active-color-primary.active .svg-icon,
+.btn.btn-active-color-primary.show i,
+.btn.btn-active-color-primary.show .svg-icon,
+.show>.btn.btn-active-color-primary i,
+.show>.btn.btn-active-color-primary .svg-icon {
+    color: var(--kt-text-danger) !important;
+}
+
+.menu-state-bg .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here) .menu-title,
+.menu-state-bg .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-title {
+    color: var(--kt-danger) !important;
+}
+
+.menu-state-bg .menu-item .menu-link.active {
+    color: var(--kt-danger) !important;
+}
+
+
+.menu-state-bg .menu-item.show>.menu-link {
+    color: var(--kt-danger) !important;
+}
+
+
+.menu-state-bg .menu-item.show>.menu-link .menu-title {
+    color: var(--kt-danger) !important;
+}
+
+.menu-state-primary .menu-item .menu-link.active .menu-icon,
+.menu-state-primary .menu-item .menu-link.active .menu-icon .svg-icon,
+.menu-state-primary .menu-item .menu-link.active .menu-icon i {
+    color: var(--kt-danger) !important;
+}
+
+.menu-state-primary .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here) .menu-icon,
+.menu-state-primary .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here) .menu-icon .svg-icon,
+.menu-state-primary .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here) .menu-icon i,
+.menu-state-primary .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon,
+.menu-state-primary .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon .svg-icon,
+.menu-state-primary .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon i {
+    color: var(--kt-danger) !important;
+}
+
+
+.menu-state-bg .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here),
+.menu-state-bg .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) {
+    color: var(--kt-danger) !important;
+}
+/*--------------------------------------------*/
+
+
+// Sidebar için renk değişimi
+[data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here) .menu-title,
+[data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-title {
+    color: var(--kt-danger) !important;
+}
+/*--------------------------------------------*/
+
+
+
+// Angular Material Panel Aç-Kapat İkonu İçin Renk Değişimi
+[data-theme="dark"] .mat-expansion-panel-header-description, .mat-expansion-indicator::after {
+    color: rgb(255 255 255) !important;
+}
+
+[data-theme="light"] .mat-expansion-panel-header-description, .mat-expansion-indicator::after {
+    color: rgb(175, 50, 50) !important;
+}
+/*--------------------------------------------*/
+
+
+
+
+// Talep Süreç Ekranında Bulnunan PrimeNG Card Yapısı İçin Renklendirme
+[data-theme="dark"] .p-card-body {
+    background-color: #151521 !important;
+}
+
+[data-theme="light"] .p-card-body {
+    background-color: var(--kt-danger-light) !important;
+}
+
+.p-card .p-card-title {
+    color: var(--kt-danger) !important;
+}
+/*--------------------------------------------*/
+
+
+
+
+// Angular Material Expansion Panel Gölgelendirme
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: 0px 3px 1px -2px rgb(205 114 114 / 41%), 0px 2px 2px 0px rgb(212 19 19 / 34%), 0px 1px 5px 0px rgb(223 10 10 / 47%) !important;
+}
+/*--------------------------------------------*/
+
+
+// İnputlar İçin Renk Ayarı
+[data-theme="dark"] input {
+    color-scheme: dark !important;
+}
+
+[data-theme="light"] input {
+    color-scheme: light !important;
+}
+/*--------------------------------------------*/
+
+
+// Textlerin Bir Kısmı Dark Mod İçin Renk Ayarı
+[data-theme="dark"] .nav-line-tabs .nav-item .nav-link {
+    color: var(--kt-gray-800) !important;
+}
+/*--------------------------------------------*/
+
+
+
+// PrimeNG Accordion Header Renk Ayarı
+.p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+    background: #ed1b24 !important;
+    border-color: #ed1b24 !important;
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .p-accordion .p-accordion-content {
+    border: 1px solid #12121b !important;
+    background: #12121b !important;
+    color: #f0f3f5 !important;
+}
+
+// [data-theme="light"].p-accordion .p-accordion-content {
+//     border: 1px solid #12121b !important;
+//     background: #12121b !important;
+//     color: #f0f3f5 !important;
+// }
+
+.p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
+    box-shadow: 0 0 0 0.2rem #ed1b246b !important;
+}
+/*--------------------------------------------*/
+
+
+
+// PrimeNG Dialog Pencerisi Aksiyon Butonları İçin Renk Ayarı
+.p-dialog .p-dialog-header .p-dialog-header-icon:focus {
+    box-shadow: 0 0 0 0.2rem var(--kt-danger) !important;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon {
+    color: var(--kt-danger) !important;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
+    background: var(--kt-danger-light) !important;
+}
+/*--------------------------------------------*/
+
+
+
+// Timeline İçin Dark Mod Ayarı
+[data-theme="dark"] .timeline.timeline-4 .timeline-items .timeline-item .timeline-content {
+    background-color: var(--kt-danger-light) !important;
+}
+
+[data-theme="dark"] .timeline.timeline-4 .timeline-items .timeline-item.timeline-item-right:after {
+    border-right: solid 10px var(--kt-danger-light) !important;
+    border-left: solid 17px transparent !important;
+}
+
+[data-theme="dark"] .timeline.timeline-4 .timeline-items .timeline-item:after {
+    border-left: solid 10px var(--kt-danger-light) !important;
+}
+/*--------------------------------------------*/
+
+
+
+
+
+
+// PrimeNG Carousel İçin Renk Ayarı
+.p-carousel .p-carousel-content .p-carousel-prev, .p-carousel .p-carousel-content .p-carousel-next {
+    color: var(--kt-danger) !important;
+}
+
+.p-carousel .p-carousel-content .p-carousel-prev:enabled:hover, .p-carousel .p-carousel-content .p-carousel-next:enabled:hover {
+    color: var(--kt-danger) !important;
+    background: var(--kt-danger-light) !important;
+}
+
+.p-carousel .p-carousel-content .p-carousel-prev:focus, .p-carousel .p-carousel-content .p-carousel-next:focus {
+    box-shadow: 0 0 0 0.2rem var(--kt-danger) !important;
 }
 /*--------------------------------------------*/

@@ -37,8 +37,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { DialogSaatlikIzinTalebiComponent } from './talep-olustur/dialog-saatlik-izin-talebi/dialog-saatlik-izin-talebi.component';
-import { DialogGunlukIzinTalebiComponent } from './talep-olustur/dialog-gunluk-izin-talebi/dialog-gunluk-izin-talebi.component';
 import { TranslationModule } from 'src/app/modules/i18n';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SplitterModule } from "primeng/splitter";
@@ -87,6 +85,10 @@ import { FirstSevenPipe } from 'src/app/_helpers/pipes/first-seven.pipe';
 import { YemekMenuTumuComponent } from './profile-data-widget/yemek-menu/yemek-menu-tumu/yemek-menu-tumu.component';
 import { RatingModule } from 'primeng/rating';
 import { UploadedFilesComponent } from './talepler/talepedilenler/uploaded-files/uploaded-files.component';
+import { ProfileService } from './profile.service';
+import { VisitorUploadedFilesComponent } from './talepler/ziyaretcitaleplerim/visitor-uploaded-files/visitor-uploaded-files.component';
+import { DataNotFoundComponent } from '../shared/data-not-found/data-not-found.component';
+import { FormStepperComponent } from '../shared/form-stepper/form-stepper.component';
 
 @NgModule({
   declarations: [
@@ -104,8 +106,6 @@ import { UploadedFilesComponent } from './talepler/talepedilenler/uploaded-files
     DialogLokasyonDetayComponent,
     DialogFazlaMesaiTalebiComponent,
     DialogZiyaretciTalebiComponent,
-    DialogSaatlikIzinTalebiComponent,
-    DialogGunlukIzinTalebiComponent,
     SearchFilterPipe,
     DialogIzinTalebiComponent,
     EksikSurelerimComponent,
@@ -127,7 +127,10 @@ import { UploadedFilesComponent } from './talepler/talepedilenler/uploaded-files
     DosyaTipiTanimlamaComponent,
     FirstSevenPipe,
     YemekMenuTumuComponent,
-    UploadedFilesComponent
+    UploadedFilesComponent,
+    VisitorUploadedFilesComponent,
+    DataNotFoundComponent,
+    FormStepperComponent
   ],
   imports: [
     CommonModule,
@@ -183,6 +186,8 @@ import { UploadedFilesComponent } from './talepler/talepedilenler/uploaded-files
     ExtrasModule,
     PickListModule,
     RatingModule
-  ]
+  ],
+  // providers:[ProfileService]
+
 })
 export class ProfileModule { }

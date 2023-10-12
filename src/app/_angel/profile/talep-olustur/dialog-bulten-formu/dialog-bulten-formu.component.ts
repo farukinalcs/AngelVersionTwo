@@ -132,7 +132,11 @@ export class DialogBultenFormuComponent implements OnInit, OnDestroy {
 
   nextStep() {
     if (!this.canProceedToNextStep()) {
-      this.toastrService.error("Form Alanlarını Doldurmalısınız", "HATA");
+      this.toastrService.error(
+        this.translateService.instant("TOASTR_MESSAGE.ALANLARI_DOLDURMALISINIZ"),
+        this.translateService.instant("TOASTR_MESSAGE.HATA")
+      );
+      
       return;
     }
 

@@ -34,6 +34,8 @@ export class ResponseXloginDetail{
     Bilgilendirme: boolean;
     '2FA': any;
     FotoImage: any | null;
+    ad : string;
+    soyad : string;
     adsoyad: string;
     CustomerCode: any | null;
     altfirmaad : string;

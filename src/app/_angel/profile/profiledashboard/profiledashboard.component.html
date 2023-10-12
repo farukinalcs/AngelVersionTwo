@@ -319,36 +319,44 @@
   </div>
 </div>
 
+<ng-container *ngIf="displayOvertimeForm">
+  <p-dialog header="{{'FM_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayOvertimeForm"
+    (visibleChange)="overtimeFormIsSend()" [modal]="true"
+    [style]="{width: !(this.layoutService.isMobile | async) ? '65vw' : 'none'}" [maximizable]="true"
+    [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
-<p-dialog header="{{'FM_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayOvertimeForm"
-  (visibleChange)="overtimeFormIsSend()" [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '65vw' : 'none'}" [maximizable]="true"
-  [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+    <app-dialog-fazla-mesai-talebi (overtimeFormIsSend)="overtimeFormIsSend()"
+      [closedForm]="closedOvertimeForm"></app-dialog-fazla-mesai-talebi>
 
-  <app-dialog-fazla-mesai-talebi (overtimeFormIsSend)="overtimeFormIsSend()"
-    [closedForm]="closedOvertimeForm"></app-dialog-fazla-mesai-talebi>
-
-</p-dialog>
-
-
-
-<p-dialog header="{{'IZIN_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVacationForm"
-  (visibleChange)="vacationFormIsSend()" [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '80vw' : 'none'}" [maximizable]="true"
-  [baseZIndex]="10000" [draggable]="true" [resizable]="false">
-
-  <app-dialog-izin-talebi (vacationFormIsSend)="vacationFormIsSend()"
-    [closedForm]="closedVacationForm"></app-dialog-izin-talebi>
-
-</p-dialog>
+  </p-dialog>
+</ng-container>
 
 
-<p-dialog header="{{'ZIYARETCI_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVisitRequestForm"
-  (visibleChange)="visitRequestFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000" [draggable]="true"
-  [resizable]="false">
 
-  <app-dialog-ziyaretci-talebi (visitRequestFormIsSend)="visitRequestFormIsSend()"
-    [closedForm]="closedVisitorForm"></app-dialog-ziyaretci-talebi>
+<ng-container *ngIf="displayVacationForm">
+  <p-dialog header="{{'IZIN_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVacationForm"
+    (visibleChange)="vacationFormIsSend()" [modal]="true"
+    [style]="{width: !(this.layoutService.isMobile | async) ? '80vw' : 'none'}" [maximizable]="true"
+    [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
-</p-dialog>
+    <app-dialog-izin-talebi (vacationFormIsSend)="vacationFormIsSend()"
+      [closedForm]="closedVacationForm"></app-dialog-izin-talebi>
+
+  </p-dialog>
+</ng-container>
+
+
+<ng-container *ngIf="displayVisitRequestForm">
+  <p-dialog header="{{'ZIYARETCI_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVisitRequestForm"
+    (visibleChange)="visitRequestFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000"
+    [draggable]="true" [resizable]="false">
+
+    <app-dialog-ziyaretci-talebi (visitRequestFormIsSend)="visitRequestFormIsSend()"
+      [closedForm]="closedVisitorForm"></app-dialog-ziyaretci-talebi>
+
+  </p-dialog>
+</ng-container>
+
 
 <p-dialog header="{{'PROFIL_DASHBOARD.AVANS' | translate}}" [(visible)]="displayAdvancePaymentForm" [modal]="true"
   [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">

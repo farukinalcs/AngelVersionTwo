@@ -44,7 +44,7 @@
                 class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex text-start p-6 active"
                 data-kt-button="true">
                 <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                  <input class="form-check-input bg-danger" type="radio" value="{{item.appId}}" checked="checked">
+                  <input class="form-check-input bg-danger" type="radio" formControlName="appList" value="{{item.appId}}" checked="checked">
                 </span>
                 <i class="fa-solid fa-cloud fs-2x me-4 ms-10 align-items-center"></i>
                 <span class="ms-5">
@@ -55,14 +55,14 @@
             </div>
           </div>
 
-          <div class="col-12 d-flex justify-content-center">
+          <!-- <div class="col-12 d-flex justify-content-center">
             <div class="width" [ngStyle]="{'width': (isMobile | async) ? '100%' : '50%' }">
               <label class="form-label fs-6 fw-bolder text-dark">{{"AUTH.LOGIN.APP_LIST" | translate}}</label>
               <select class="form-control form-control-solid border border-4 bg-light-dark" formControlName="appList">
                 <option *ngFor="let item of appList" value="{{item.appId}}">{{item.appName}}</option>
               </select>
             </div>
-          </div>
+          </div> -->
 
           <div class="col-12 d-flex justify-content-center">
             <div class="width" [ngStyle]="{'width': (isMobile | async) ? '100%' : '50%' }">

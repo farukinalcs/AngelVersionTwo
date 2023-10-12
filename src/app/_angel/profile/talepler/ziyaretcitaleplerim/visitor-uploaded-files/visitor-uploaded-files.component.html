@@ -1,21 +1,19 @@
-<div class="container d-flex justify-content-center align-items-center" [ngClass]="{'d-flex justify-content-center align-items-center': isLoading | async}"
-    style="height: 600px;">
-    <div class="row">
-
-        <ng-container *ngIf="isLoading | async">
-            <div class="col-12 pt-10">
-                <div class="loader-container">
-                    <div id="splash-screen" class="splash-screen"
-                        style="position: inherit; color:transparent; background-color: transparent;">
-                        <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
-                            style="margin-left: 0; height: 0;" />
-                        <mat-spinner></mat-spinner>
-                    </div>
-                </div>
+<ng-container *ngIf="isLoading | async">
+    <div class="col-12 pt-10">
+        <div class="loader-container">
+            <div id="splash-screen" class="splash-screen"
+                style="position: inherit; color:transparent; background-color: transparent;">
+                <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                    style="margin-left: 0; height: 0;" />
+                <mat-spinner></mat-spinner>
             </div>
-        </ng-container>
-        
-        <ng-container *ngIf="!(isLoading | async)">
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="!(isLoading | async) && selectedVisit">
+    <div class="container"  style="height: 600px;">
+        <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
@@ -25,151 +23,157 @@
                                     <tr class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                                         <th class="text-center rounded-start"> </th>
                                         <th class="text-center"> {{ "UPLOAD_FILE.BELGE_ADI" | translate }} </th>
-                                        <th class="text-center"> {{ "UPLOAD_FILE.YUKLENME_TARIHI" | translate }} </th>
+                                        <th class="text-center"> {{ "UPLOAD_FILE.YUKLENME_TARIHI" | translate }}</th>
                                         <th class="text-center"> {{ "UPLOAD_FILE.BOYUTU" | translate }} </th>
                                         <th class="text-center rounded-end"> </th>
                                     </tr>
                                 </thead>
-            
+        
                                 <tbody>
-                                    <ng-container *ngFor="let item of fileTypes; index as i">
-                                        <tr  [ngClass]="{ 'bg-light-danger' : !item.uploadedFile }">
+                                    <ng-container *ngFor="let item of selectedVisit.Dosyalar; index as i">
+                                        <tr [ngClass]="{ 'bg-light-danger' : !item.uploadedFile }">
                                             <td class="text-center">
                                                 <ng-container *ngIf="item.uploadedFile">
                                                     <div [ngSwitch]="item.uploadedFile.DosyaTipi">
                                                         <div
                                                             *ngSwitchCase="['jpeg', 'jpg', 'png', 'svg'].includes(item.uploadedFile.DosyaTipi) ? item.uploadedFile.DosyaTipi : !item.uploadedFile.DosyaTipi">
                                                             <i class="file-type cursor-pointer fa-solid fa-file-image text-dark fs-3x"
-                                                                (click)="showUploadedFile(item, false)"></i>
+                                                            (click)="showUploadedFile(item.uploadedFile)"></i>
                                                         </div>
-                        
+        
                                                         <div *ngSwitchCase=" 'txt' ">
                                                             <i class="file-type cursor-pointer fa-solid fa-file-lines text-dark fs-3x"
-                                                                (click)="showUploadedFile(item, false)"></i>
+                                                            (click)="showUploadedFile(item.uploadedFile)"></i>
                                                         </div>
-                        
+        
                                                         <div *ngSwitchCase=" 'pdf' ">
                                                             <i class="file-type cursor-pointer fa-solid fa-file-pdf text-dark fs-3x"
-                                                                (click)="showUploadedFile(item, false)"></i>
+                                                            (click)="showUploadedFile(item.uploadedFile)"></i>
                                                         </div>
-                        
+        
                                                         <div *ngSwitchDefault>
                                                             <i class="fa-solid cursor-pointer fa-file text-dark fs-3x"
-                                                                (click)="showUploadedFile(item, false)"></i>
+                                                            (click)="showUploadedFile(item.uploadedFile)"></i>
                                                         </div>
                                                     </div>
                                                 </ng-container>
                                             </td>
-                
+        
                                             <td class="text-center">
-                                                <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{ item.ad }}</a>
+                                                <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{ item.BelgeAdi }}</a>
                                             </td>
-
+        
                                             <td class="text-center">
                                                 <ng-container *ngIf="item.uploadedFile">
                                                     <div>
                                                         <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{ item.uploadedFile.Zaman | date : 'yyyy-MM-dd' }}</a>
                                                     </div>
-
+        
                                                     <div>
                                                         <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{ item.uploadedFile.Zaman | date : 'HH:mm:ss' }}</a>
                                                     </div>
                                                 </ng-container>
-                                            </td>
 
+                                                <ng-container *ngIf="!item.uploadedFile">
+                                                    <div>
+                                                        <a class="text-dark fw-bold text-hover-danger mb-1 fs-6"> ------- </a>
+                                                    </div>
+                                                </ng-container>
+                                            </td>
+        
                                             <td class="text-center">
                                                 <ng-container *ngIf="item.uploadedFile">
                                                     <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{ item.uploadedFile.FileLength }} bytes</a>
                                                 </ng-container>
+
+                                                <ng-container *ngIf="!item.uploadedFile">
+                                                    <a class="text-dark fw-bold text-hover-danger mb-1 fs-6"> ------- </a>
+                                                </ng-container>
                                             </td>
-                
+        
                                             <td class="text-center text-muted fw-bold fs-4">
                                                 <ng-container *ngIf="item.uploadedFile">
-                                                    <a matTooltip="Önizleme" class="btn btn-icon btn-danger btn-sm me-3"
-                                                    (click)="showUploadedFile(item, false)">
+                                                    <a matTooltip="Önizleme" class="btn btn-icon bg-light-danger btn-light-danger btn-sm me-3"
+                                                        (click)="showUploadedFile(item.uploadedFile)">
                                                         <i class="fa-solid fa-eye fs-4"></i>
                                                     </a>
                                                 </ng-container>
-                                                
+        
                                                 <ng-container *ngIf="item.uploadedFile">
-                                                    <!-- <a matTooltip="İndir" class="btn btn-icon btn-danger btn-sm me-3" [href]="base64DataD" [download]="contentType">
-                                                        <i class="fa-solid fa-download fs-4"></i>
-                                                    </a> -->
-                                                    <a matTooltip="İndir" class="btn btn-icon btn-danger btn-sm me-3" (click)="downloadFile(item)">
+                                                    <a matTooltip="İndir" class="btn btn-icon bg-light-danger btn-light-danger btn-sm me-3"
+                                                    (click)="downloadFile(item)">
                                                         <i class="fa-solid fa-download fs-4"></i>
                                                     </a>
                                                 </ng-container>
-                                                
+        
                                                 <ng-container *ngIf="item.uploadedFile">
-                                                    <a matTooltip="Kaldır" class="btn btn-icon btn-danger btn-sm me-3"
-                                                    (click)="deleteFileForDemand(item, selectedDemand)">
+                                                    <a matTooltip="Kaldır" class="btn btn-icon bg-light-danger btn-light-danger btn-sm me-3"
+                                                        (click)="deleteFileForDemand(item)">
                                                         <i class="fa-solid fa-trash fs-4"></i>
                                                     </a>
                                                 </ng-container>
-                                                
+        
                                                 <ng-container *ngIf="!item.uploadedFile">
-                                                    <input type="file" [id]="'upload_' + i" style="display: none;" (change)="getFile($event, item)" max-size="10">
-                                                    <label matTooltip="Karşıya Yükle" class="btn btn-icon btn-danger btn-sm me-3" [for]="'upload_' + i">
+                                                    <input type="file" [id]="'upload_' + i" style="display: none;"
+                                                        max-size="10" (change)="getFile($event, item)">
+                                                    <label matTooltip="Karşıya Yükle"
+                                                        class="btn btn-icon bg-light-danger btn-light-danger btn-sm me-3" [for]="'upload_' + i">
                                                         <i class="fa-solid fa-upload fs-4"></i>
                                                     </label>
                                                 </ng-container>
-                                                
                                             </td>
                                         </tr>
-        
+
                                         <ng-container *ngIf="item.files">
                                             <tr>
                                                 <td colspan="5">
                                                     <div class="card bg-light-dark mx-8 my-5">
                                                         <div class="card-body">
                                                             <div class="row d-flex justify-content-center align-items-center">
-                                        
+                                                    
                                                                 <div class="col-3 text-center">
                                                                     <div [ngSwitch]="item.files.type">
                                                                         <div
                                                                             *ngSwitchCase="['image/jpeg', 'image/png', 'image/svg'].includes(item.files.type) ? item.files.type : !item.files.type">
                                                                             <i class="file-type cursor-pointer fa-solid fa-file-image text-dark fs-3x"
-                                                                                (click)="showUploadedFile(item, true)"></i>
+                                                                                (click)="showUploadedFile(item)"></i>
                                                                         </div>
-                                        
-                                                                        <div
-                                                                            *ngSwitchCase="['text/plain'].includes(item.files.type) ? item.files.type : !item.files.type">
+                                                    
+                                                                        <div *ngSwitchCase="['text/plain'].includes(item.files.type) ? item.files.type : !item.files.type">
                                                                             <i class="file-type cursor-pointer fa-solid fa-file-lines text-dark fs-3x"
-                                                                                (click)="showUploadedFile(item, true)"></i>
+                                                                                (click)="showUploadedFile(item)"></i>
                                                                         </div>
-                                        
+                                                    
                                                                         <div
                                                                             *ngSwitchCase="['application/pdf'].includes(item.files.type) ? item.files.type : !item.files.type">
                                                                             <i class="file-type cursor-pointer fa-solid fa-file-pdf text-dark fs-3x"
-                                                                                (click)="showUploadedFile(item, true)"></i>
+                                                                                (click)="showUploadedFile(item)"></i>
                                                                         </div>
-                                        
+                                                    
                                                                         <div *ngSwitchDefault>
-                                                                            <i class="fa-solid cursor-pointer fa-file text-dark fs-3x"
-                                                                                (click)="showUploadedFile(item, true)"></i>
+                                                                            <i class="fa-solid cursor-pointer fa-file text-dark fs-3x" (click)="showUploadedFile(item)"></i>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                        
-                                        
+                                                    
+                                                    
                                                                 <div class="col-5">
                                                                     <div class="fs-6 fw-bold text-gray-800 text-center">
                                                                         {{ item.files.name }}
                                                                     </div>
-                                        
+                                                    
                                                                     <div class="fs-6 fw-bold text-gray-800 text-center">
                                                                         {{ item.files.fileSize }} {{ item.files.fileSizeType }}
                                                                     </div>
                                                                 </div>
-                                        
+                                                    
                                                                 <div class="col-2">
-                                                                    <a class="btn btn-icon btn-danger btn-sm w-100"
-                                                                        (click)="postVacationFile(item, selectedDemand)">
+                                                                    <a class="btn btn-icon btn-danger btn-sm w-100" (click)="postVacationFile(item)">
                                                                         <i class="fa-solid fa-arrow-up-from-bracket"></i>
                                                                         {{"PROFILE_WIDGETS.DOSYALARIM.YUKLE" | translate}}
                                                                     </a>
                                                                 </div>
-                                        
+                                                    
                                                                 <div class="col-2">
                                                                     <a (click)="item.files = null" class="btn btn-icon btn-danger btn-sm me-3">
                                                                         <i class="fa-solid fa-xmark fs-4"></i>
@@ -188,39 +192,38 @@
                     </div>
                 </div>
             </div>
-        </ng-container>
-    </div>
-</div>
-
-
-
-
-<p-dialog header="{{ 'UPLOAD_FILE.ONIZLEME' | translate }}" [(visible)]="displayUploadedFile" position="center" (onHide)="onHideUploadedFile()"
-    [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '60vw' : 'none'}" [baseZIndex]="10000"
-    [draggable]="false" [resizable]="false">
-
-    <div class="col-12 d-flex justify-content-center">
-        <div class="symbol symbol-75px">
-            <ng-container *ngIf="base64Data">
-                <iframe #base64Iframe id="base64Iframe" [src]="base64Data" width="600px" height="600px" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
-                <!-- <a [href]="base64Data" download="UploadedFile" class="btn">İndir</a> -->
-            </ng-container>
-
-            <ng-container *ngIf="currentUploadedFile">
-                <iframe #base64Iframe2 id="base64Iframe2" [src]="currentUploadedFile?.files?.url" width="600px"
-                    height="600px"
-                    allowfullscreen webkitallowfullscreen mozallowfullscreen>
-
-                </iframe>
-            </ng-container>
         </div>
     </div>
 
 
-    <ng-template pTemplate="footer">
-        <a (click)="displayUploadedFile = false; currentUploadedFile = null; base64Data = null" class="btn btn-danger">
-            <i class="fa-solid fa-xmark fs-1"></i>
-            {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
-        </a>
-    </ng-template>
-</p-dialog>
+    <p-dialog header="{{ 'UPLOAD_FILE.ONIZLEME' | translate }}" [(visible)]="displayUploadedFile" position="center"
+        (onHide)="onHideUploadedFile()" [modal]="true"
+        [style]="{width: !(this.layoutService.isMobile | async) ? '60vw' : 'none'}" [baseZIndex]="10000"
+        [draggable]="false" [resizable]="false">
+
+        <div class="col-12 d-flex justify-content-center">
+            <div class="symbol symbol-75px">
+                <ng-container *ngIf="base64Data">
+                    <iframe #base64Iframe id="base64Iframe" [src]="base64Data" width="600px" height="600px"
+                        allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
+                </ng-container>
+
+                <!-- <ng-container *ngIf="currentUploadedFile">
+                    <iframe #base64Iframe2 id="base64Iframe2" [src]="currentUploadedFile?.files?.url" width="600px"
+                        height="600px" allowfullscreen webkitallowfullscreen mozallowfullscreen>
+
+                    </iframe>
+                </ng-container> -->
+            </div>
+        </div>
+
+
+        <ng-template pTemplate="footer">
+            <a (click)="displayUploadedFile = false; base64Data = null"
+                class="btn btn-danger">
+                <i class="fa-solid fa-xmark fs-1"></i>
+                {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+            </a>
+        </ng-template>
+    </p-dialog>
+</ng-container>

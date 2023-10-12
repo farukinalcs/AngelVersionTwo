@@ -13,7 +13,7 @@ import { DialogLokasyonDetayComponent } from './dialog-lokasyon-detay/dialog-lok
   styleUrls: ['./mobillokasyon.component.scss'],
 })
 export class MobillokasyonComponent implements OnInit, OnDestroy {
-  private ngUnsubscribe = new Subject;
+  private ngUnsubscribe = new Subject();
   @ViewChild(MatPaginator, {static : true}) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns : string[] = ['id', 'harita', 'yerAd', 'adSoyad', 'eventTime', 'IO', 'adres']; 

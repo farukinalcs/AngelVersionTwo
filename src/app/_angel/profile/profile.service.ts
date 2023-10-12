@@ -15,7 +15,9 @@ export class ProfileService {
   constructor(
     private httpClient : HttpClient,
     private helperService : HelperService
-  ) { }
+  ) {
+    console.log("Profile Service Çalıştı");
+   }
 
   getMenuAuthorization() {
     // const authData = JSON.parse(localStorage.getItem("token") || '{}');
@@ -1063,21 +1065,73 @@ export class ProfileService {
   }
 
   getFileForDemand(id : any, uzanti : any) {
-    const formData = new FormData();
-
-    formData.append('uniqueid', id);
-    formData.append('filetype', uzanti);
-    
     return this.httpClient.post<any>(API_URL + '/GetFile?uniqueid=' + id + '&filetype=' + uzanti, {});
   }
 
   deleteFileForDemand(id : any, uzanti : any) {
-    const formData = new FormData();
-
-    formData.append('uniqueid', id);
-    formData.append('filetype', uzanti);
-    
     return this.httpClient.post<any>(API_URL + '/DeleteFile?uniqueid=' + id + '&filetype=' + uzanti, {});
+  }
+
+  postVisitForm(formValues : any) {
+    var sp : any[] = [{
+      mkodu : 'yek072',
+      ziyaretciler : formValues.visitorsNameSurname,
+      aciklama : formValues.description,
+      email : formValues.email,
+      firma : formValues.otherCompany,
+      ziyarettipi : formValues.type,
+      giristarih : formValues.entryDateTime,
+      cikistarih : formValues.exitDateTime
+    }
+    ];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  removeVisit(visitId : any, description : any) {
+    var sp : any[] = [{
+      mkodu : 'yek073',
+      talepid : visitId.toString(),
+      aciklama : description
+    }];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
   }
 
 }

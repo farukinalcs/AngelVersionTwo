@@ -1,7 +1,7 @@
 :host ::ng-deep {
     .p-button {
         color: #ed1b24;
-        background: #fff5f8;
+        background: var(--kt-danger-light);
         border: 1px solid #ed1b24;
     }
 

@@ -129,6 +129,15 @@ export const locale = {
         CUMA : 'Cum',
         CUMARTESI : 'Cmt',
         PAZAR : 'Pzr'
+      },
+
+      TOOLTIP : {
+        SAATLIK_IZIN : 'Saatlik İzin',
+        GUNLUK_IZIN : 'Günlük İzin',
+        BASARILI_GIRIS_CIKIS : 'Başarılı Giriş/Çıkış',
+        GIRIS_CIKIS_BULUNAMADI : 'Giriş/Çıkış Bulunamadı',
+        HATALI_GIRIS_CIKIS : 'Hatalı Giriş/Çıkış',
+        TATIL : 'Tatil'
       }
     },
 
@@ -137,6 +146,7 @@ export const locale = {
         TARIH : "Tarih",
         GIRIS : "Giriş",
         CIKIS : "Çıkış",
+        ACIKLAMA : "Açıklama",
         NORMAL_SURE : "Normal Süre",
         ARA_SURE : "Ara Süre",
         IZIN_SURE : "İzin Süre",
@@ -288,7 +298,7 @@ export const locale = {
     FM_TALEP_DIALOG : {
       HEADER : "Fazla Mesai Talep Formu",
       FORM : {
-        FM_TIPI : "İzin Tipi",
+        FM_TIPI : "Fazla Mesai Tipi",
         ULASIM : 'Ulaşım',
         YEMEK : 'Yemek',
         BASLANGIC_TARIHI : "Başlangıç Tarihi",
@@ -395,7 +405,8 @@ export const locale = {
         ACIKLAMA : 'Açıklama',
         BASLANGIC_TARIHI : 'Başlangıç Tarihi',
         BITIS_TARIHI : 'Bitiş Tarihi',
-        DURUM : 'Durum'
+        DURUM : 'Durum',
+        TALEP_TIPI : 'Talep Tipi'
       }
     },
 
@@ -476,7 +487,9 @@ export const locale = {
       TALEP_IPTAL_EDILDI : 'Talep İptal Edildi',
       SUREC_BULUNAMADI : 'Gösterilecek Süreç Bulunamadı',
       TALEP_ONAYLANDI : 'Talep Onaylandı',
-      ISARETLEME_YAPMALISINIZ : 'İşaretleme Yapmalısınız'
+      ISARETLEME_YAPMALISINIZ : 'İşaretleme Yapmalısınız',
+      ALANLARI_DOLDURMALISINIZ : 'Form Alanlarını Doldurmalısınız',
+      DOSYA_BOYUTU_YUKSEK : 'Dosya Boyutu Yüksek'
     },
 
     PROFILE_WIDGETS : {
@@ -522,6 +535,11 @@ export const locale = {
         TUM_ANKETLER : 'Tüm Anketler'
       },
 
+      BULTEN :{
+        BULTENLER : 'Bültenler',
+        BULTEN_OLUSTUR : 'Bülten Oluştur',
+      },
+
       SHARRED : {
         TUMU : 'Tümü',
         ISIM_SOYISIM : 'İsim Soyisim',
@@ -529,8 +547,17 @@ export const locale = {
         BASLANGIC_TARIHI : 'Başlangıç Tarihi',
         BOLUM : 'Bölüm',
         KIDEM : 'Kıdem',
-        TARIH : 'Tarih'
+        TARIH : 'Tarih',
+        DAHA_FAZLA : 'Daha Fazla'
       }
+    },
+
+    UPLOAD_FILE : {
+      BELGE_ADI : 'Belge Adı',
+      YUKLENME_TARIHI : 'Yüklenme Tarihi',
+      BOYUTU : 'Boyutu',
+      ONIZLEME : 'Önizleme',
+      YUKLENMIS_DOSYALAR : "Yüklenmiş Dosyalar"
     }
   },
 };

@@ -42,6 +42,8 @@ export class AuthService implements OnDestroy {
     this.isLoading$ = this.isLoadingSubject.asObservable();
     // const subscr = this.getUserByToken().subscribe();
     // this.unsubscribe.push(subscr);
+    console.log("Auth Service Çalıştı");
+
   }
 
   login(email: string, password: string, lang: any, appList : any): Observable<any> {

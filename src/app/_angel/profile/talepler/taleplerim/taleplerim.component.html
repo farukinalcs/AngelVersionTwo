@@ -50,16 +50,7 @@
               </div>
             </div> -->
             <div class="row pt-10 m-0">
-              <div class="col-12 d-flex justify-content-center">
-                <img src="../../../../../assets/media/illustrations/sigma-1/24.svg" width="30%" alt="">
-              </div>
-          
-              <div class="col-12">
-                <div class="flex-grow-1 my-5 text-center">
-                  <a class="text-gray-800 text-hover-danger fs-2 fw-bolder me-1 cursor-pointer">{{"PUBLIC.DATA_NOT_FOUND"
-                    | translate}}</a>
-                </div>
-              </div>
+              <app-data-not-found [imgWidth]=" '30%' "></app-data-not-found>
             </div>
           </ng-container>
 
@@ -97,8 +88,8 @@
                   <mat-accordion>
                     <mat-expansion-panel (opened)="isCardOpen(item)" (closed)="item.panelOpenState = false">
                       <mat-expansion-panel-header #panelA class="p-0">
-                        <mat-panel-title>
-                          <span class="badge badge-info ml-4">00000606</span>
+                        <mat-panel-title class="d-flex justify-content-center">
+                          <span class="badge badge-danger ml-4">00000606</span>
                         </mat-panel-title>
   
                         <mat-panel-description class="fw-bolder text-dark">
@@ -204,11 +195,11 @@
                       <thead>
                         <tr class="rounded fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                           <th class="text-center rounded-start"></th>
-                          <th class="text-center">Personel</th>
-                          <th class="text-center">Talep Tipi</th>
-                          <th class="text-center">Başlangıç Tarihi</th>
-                          <th class="text-center">Bitiş Tarihi</th>
-                          <th class="text-center w-150px">Açıklama</th>
+                          <th class="text-center">{{ "DEMANDED.ARAMA_DIALOG.FORM.PERSONEL" | translate }}</th>
+                          <th class="text-center">{{ "TASK_LISTEM.TABLE.TALEP_TIPI" | translate }}</th>
+                          <th class="text-center">{{ "TASK_LISTEM.TABLE.BASLANGIC_TARIHI" | translate }}</th>
+                          <th class="text-center">{{ "TASK_LISTEM.TABLE.BITIS_TARIHI" | translate }}</th>
+                          <th class="text-center w-150px">{{ "TASK_LISTEM.TABLE.ACIKLAMA" | translate }}</th>
                           <th class="text-center rounded-end"></th>
                         </tr>
                       </thead>
@@ -322,16 +313,7 @@
               </div>
             </div> -->
             <div class="row pt-10 m-0">
-              <div class="col-12 d-flex justify-content-center">
-                <img src="../../../../../assets/media/illustrations/sigma-1/24.svg" width="30%" alt="">
-              </div>
-          
-              <div class="col-12">
-                <div class="flex-grow-1 my-5 text-center">
-                  <a class="text-gray-800 text-hover-danger fs-2 fw-bolder me-1 cursor-pointer">{{"PUBLIC.DATA_NOT_FOUND"
-                    | translate}}</a>
-                </div>
-              </div>
+              <app-data-not-found [imgWidth]=" '30%' "></app-data-not-found>
             </div>
           </ng-container>
 
@@ -380,7 +362,7 @@
                           <!-- <div class="ml-4">
                             {{item.tipad}}
                           </div> -->
-                          <span class="badge badge-info ml-4">{{item.tipad}}</span>
+                          <span class="badge badge-danger ml-4">{{item.tipad}}</span>
                 
                         </mat-panel-title>
                         <mat-panel-description class="fw-bolder text-dark">
@@ -488,11 +470,11 @@
                       <thead>
                         <tr class="rounded fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                           <th class="text-center rounded-start"></th>
-                          <th class="text-center">Personel</th>
-                          <th class="text-center">Talep Tipi</th>
-                          <th class="text-center">Başlangıç Tarihi</th>
-                          <th class="text-center">Bitiş Tarihi</th>
-                          <th class="text-center w-150px">Açıklama</th>
+                          <th class="text-center">{{ "DEMANDED.ARAMA_DIALOG.FORM.PERSONEL" | translate }}</th>
+                          <th class="text-center">{{ "TASK_LISTEM.TABLE.TALEP_TIPI" | translate }}</th>
+                          <th class="text-center">{{ "TASK_LISTEM.TABLE.BASLANGIC_TARIHI" | translate }}</th>
+                          <th class="text-center">{{ "TASK_LISTEM.TABLE.BITIS_TARIHI" | translate }}</th>
+                          <th class="text-center w-150px">{{ "TASK_LISTEM.TABLE.ACIKLAMA" | translate }}</th>
                           <th class="text-center rounded-end"></th>
                         </tr>
                       </thead>
@@ -602,16 +584,7 @@
               </div>
             </div> -->
             <div class="row pt-10 m-0">
-              <div class="col-12 d-flex justify-content-center">
-                <img src="../../../../../assets/media/illustrations/sigma-1/24.svg" width="30%" alt="">
-              </div>
-          
-              <div class="col-12">
-                <div class="flex-grow-1 my-5 text-center">
-                  <a class="text-gray-800 text-hover-danger fs-2 fw-bolder me-1 cursor-pointer">{{"PUBLIC.DATA_NOT_FOUND"
-                    | translate}}</a>
-                </div>
-              </div>
+              <app-data-not-found [imgWidth]=" '30%' "></app-data-not-found>
             </div>
           </ng-container>
 
@@ -661,7 +634,7 @@
                           <!-- <div class="ml-4">
                                         {{item.tipad}}
                                       </div> -->
-                          <span class="badge badge-info ml-4">{{item.tipad}}</span>
+                          <span class="badge badge-danger ml-4">{{item.tipad}}</span>
               
                         </mat-panel-title>
                         <mat-panel-description class="fw-bolder text-dark">
@@ -771,11 +744,11 @@
                       <thead>
                         <tr class="rounded fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                           <th class="text-center rounded-start"></th>
-                          <th class="text-center">Personel</th>
-                          <th class="text-center">Talep Tipi</th>
-                          <th class="text-center">Başlangıç Tarihi</th>
-                          <th class="text-center">Bitiş Tarihi</th>
-                          <th class="text-center w-150px">Açıklama</th>
+                          <th class="text-center">{{ "DEMANDED.ARAMA_DIALOG.FORM.PERSONEL" | translate }}</th>
+                          <th class="text-center">{{ "TASK_LISTEM.TABLE.TALEP_TIPI" | translate }}</th>
+                          <th class="text-center">{{ "TASK_LISTEM.TABLE.BASLANGIC_TARIHI" | translate }}</th>
+                          <th class="text-center">{{ "TASK_LISTEM.TABLE.BITIS_TARIHI" | translate }}</th>
+                          <th class="text-center w-150px">{{ "TASK_LISTEM.TABLE.ACIKLAMA" | translate }}</th>
                           <th class="text-center rounded-end"></th>
                         </tr>
                       </thead>

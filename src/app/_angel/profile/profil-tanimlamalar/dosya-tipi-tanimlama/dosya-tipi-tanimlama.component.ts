@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
@@ -11,7 +11,8 @@ import { ProfileService } from '../../profile.service';
 @Component({
   selector: 'app-dosya-tipi-tanimlama',
   templateUrl: './dosya-tipi-tanimlama.component.html',
-  styleUrls: ['./dosya-tipi-tanimlama.component.scss']
+  styleUrls: ['./dosya-tipi-tanimlama.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class DosyaTipiTanimlamaComponent implements OnInit, OnDestroy {
   @Input() selectedItem: any; 
@@ -40,7 +41,7 @@ export class DosyaTipiTanimlamaComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.createVacationForm();
+    this.createForm();
     this.configureComponentBehavior();
     this.getFormValue();
   }
@@ -49,18 +50,22 @@ export class DosyaTipiTanimlamaComponent implements OnInit, OnDestroy {
     this.helperService.configureComponentBehavior
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((value : any) => {
-      if (value == 1) {
-        this.demandParam = 'cbo_izintipleri';
-        this.fileParam = 'izin';
+      // if (value == 1) {
+      //   this.demandParam = 'cbo_izintipleri';
+      //   this.fileParam = 'izin';
   
-      } else if (value == 2) {
-        this.demandParam = 'cbo_fmnedenleri';
-        this.fileParam = 'fm';
+      // } else if (value == 2) {
+      //   this.demandParam = 'cbo_fmnedenleri';
+      //   this.fileParam = 'fm';
         
-      } else if (value == 3) {
-        this.demandParam = 'cbo_ziyaretnedeni';
-        this.fileParam = 'ziyaret';
-      }
+      // } else if (value == 3) {
+      //   this.demandParam = 'cbo_ziyaretnedeni';
+      //   this.fileParam = 'ziyaret';
+      // }
+
+      
+      this.demandParam = value.demandParam;
+      this.fileParam = value.fileParam;
 
       this.targetItems = [];
       this.sourceItems = [];
@@ -71,7 +76,7 @@ export class DosyaTipiTanimlamaComponent implements OnInit, OnDestroy {
     
   }
 
-  createVacationForm() {
+  createForm() {
     this.form = this.formBuilder.group({
       type : ['']
     });
@@ -132,7 +137,7 @@ export class DosyaTipiTanimlamaComponent implements OnInit, OnDestroy {
 
   removeItemsWithMatchingIds(mainArray: any[], nestedArray: any[]): any[] {
     return mainArray.filter(mainItem => {
-      const matchingItem = nestedArray.find(nestedItem => nestedItem.ID === mainItem.ID);
+      const matchingItem = nestedArray.find(nestedItem => nestedItem.BelgeId === mainItem.ID);
       return !matchingItem;
     });
   }  
@@ -204,6 +209,8 @@ export class DosyaTipiTanimlamaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    console.log("Bitti");
+    
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
   }

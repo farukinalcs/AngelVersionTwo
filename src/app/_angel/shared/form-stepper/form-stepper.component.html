@@ -1,0 +1,43 @@
+<div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+    <div class="stepper-nav d-flex justify-content-center ps-lg-10">
+
+        <div class="{{item.class}}" *ngFor="let item of stepperFields">
+            <div class="stepper-wrapper">
+
+                <ng-container *ngIf="item.class == 'stepper-item current' ">
+                    <div class="stepper-icon bg-danger w-40px h-40px">
+                        <i class="stepper-check fas fa-check"></i>
+                        <span class="stepper-number">{{item.number}}</span>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="item.class == 'stepper-item completed' ">
+                    <div class="stepper-icon bg-light-danger w-40px h-40px">
+                        <i class="stepper-check fas fa-check text-danger"></i>
+                        <span class="stepper-number">{{item.number}}</span>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="item.class == 'stepper-item' ">
+                    <div class="stepper-icon bg-light-danger w-40px h-40px">
+                        <i class="stepper-check fas fa-check"></i>
+                        <span class="stepper-number text-danger">{{item.number}}</span>
+                    </div>
+                </ng-container>
+                
+
+                <div class="stepper-label">
+                    <h3 class="stepper-title">
+                        {{item.title}}
+                    </h3>
+
+                    <div class="stepper-desc">
+                        {{item.desc}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="stepper-line h-40px"></div>
+        </div>
+    </div>
+</div>

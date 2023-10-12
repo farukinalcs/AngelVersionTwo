@@ -107,13 +107,30 @@ export class SurelerimComponent implements OnInit, OnDestroy {
     this.profilService.getDurationsMobile(yearMonth).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<DurationsMobileModel, ResponseDetailZ>[]) => {
       const data = response[0].x;
       
-      this.durationsMobile = data;
+      // this.durationsMobile = data;
+      this.sortDataByDate(data);
       console.log("Sürelerim Mobil Puantaj :", this.durationsMobile);
 
       this.isLoading.next(false);
       this.ref.detectChanges();
     });
     
+  }
+
+  sortDataByDate(data: any[]): void {
+    const parseDate = (dateStr: string) => {
+      const [day, month, year] = dateStr.split('/').map(Number);
+      return new Date(year, month - 1, day);
+    };
+
+    // Verileri tarih sırasına göre sırala
+    data.sort((a, b) => {
+      const dateA = parseDate(a.tarih).getTime();
+      const dateB = parseDate(b.tarih).getTime();
+      return dateA - dateB;
+    });
+
+    this.durationsMobile = data;
   }
 
   openDialog() {

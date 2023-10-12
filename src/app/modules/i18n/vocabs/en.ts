@@ -127,6 +127,15 @@ export const locale = {
         CUMA : 'Fri',
         CUMARTESI : 'Sat',
         PAZAR : 'Sun'
+      },
+
+      TOOLTIP : {
+        SAATLIK_IZIN : 'Hourly Vacation',
+        GUNLUK_IZIN : 'Daily Vacation ',
+        BASARILI_GIRIS_CIKIS : 'Successful Entry/Exit',
+        GIRIS_CIKIS_BULUNAMADI : 'Entry/Exit Not Found',
+        HATALI_GIRIS_CIKIS : 'Erroneous Entry/Exit',
+        TATIL : 'Holiday'
       }
     },
 
@@ -135,6 +144,7 @@ export const locale = {
         TARIH : "Date",
         GIRIS : "In",
         CIKIS : "Out",
+        ACIKLAMA : "Description",
         NORMAL_SURE : "Normal Time",
         ARA_SURE : "Break Times",
         IZIN_SURE : "Leave Time",
@@ -392,7 +402,8 @@ export const locale = {
         ACIKLAMA : 'Description',
         BASLANGIC_TARIHI : 'Start Date',
         BITIS_TARIHI : 'End Date',
-        DURUM : 'State'
+        DURUM : 'State',
+        TALEP_TIPI : 'Demant Type'
       }
     },
 
@@ -472,7 +483,9 @@ export const locale = {
       TALEP_IPTAL_EDILDI : 'Your Demand Cancelled',
       SUREC_BULUNAMADI : 'No Process Found to Display',
       TALEP_ONAYLANDI : 'Demand Comfirmed',
-      ISARETLEME_YAPMALISINIZ : 'You Must Markup'
+      ISARETLEME_YAPMALISINIZ : 'You Must Markup',
+      ALANLARI_DOLDURMALISINIZ : 'You Must Fill Out the Form Fields',
+      DOSYA_BOYUTU_YUKSEK : 'File Size is Large'
     },
 
     PROFILE_WIDGETS : {
@@ -518,6 +531,11 @@ export const locale = {
         TUM_ANKETLER : 'All Surveys'
       },
 
+      BULTEN :{
+        BULTENLER : 'Bulletins',
+        BULTEN_OLUSTUR : 'Create Bulletin',
+      },
+
       SHARRED : {
         TUMU : 'All',
         ISIM_SOYISIM : 'Name Surname',
@@ -525,8 +543,17 @@ export const locale = {
         BASLANGIC_TARIHI : 'Start Date',
         BOLUM : 'Department',
         KIDEM : 'Seniority',
-        TARIH : 'Date'
+        TARIH : 'Date',
+        DAHA_FAZLA : 'More'
       }
+    },
+
+    UPLOAD_FILE : {
+      BELGE_ADI : 'File Name',
+      YUKLENME_TARIHI : 'Uploaded Date',
+      BOYUTU : 'File Size',
+      ONIZLEME : 'Prewiev',
+      YUKLENMIS_DOSYALAR : "Uploaded Files"
     }
   }
 };

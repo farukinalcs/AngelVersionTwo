@@ -2,6 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HelperService } from 'src/app/_helpers/helper.service';
+import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-profil-tanimlamalar',
@@ -34,10 +35,10 @@ import { HelperService } from 'src/app/_helpers/helper.service';
 export class ProfilTanimlamalarComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
 
-  reports: any[] = [
-    { id: 1, name: 'İzin Tipleri Dosya Gereklilik Tanımı', tip : 'İzin Tipi', params: [{ name: '@ad', labelName: 'Ad', type: 'text' }, { name: '@soyad', labelName: 'Soyad', type: 'text' }, { name: '@firma', labelName: 'Firma', type: 'select' }] },
-    { id: 2, name: 'FM Nedenleri Dosya Gereklilik Tanımı', tip : 'Fazla Mesai Nedeni', params: [{ name: '@sicil_no', labelName: 'Sicil No', type: 'text' }, { name: '@kart_no', labelName: 'Kart No', type: 'text' }, { name: '@terminal', labelName: 'Terminal', type: 'select' }, { name: '@alt_firma', labelName: 'Alt Firma', type: 'select' }] },
-    { id: 3, name: 'Ziyaret Tipleri Dosya Gereklilik Tanımı', tip : 'Ziyaret Tipi', params: [{ name: '@ad', labelName: 'Ad', type: 'text' }, { name: '@soyad', labelName: 'Soyad', type: 'text' }, { name: '@sicil_no', labelName: 'Sicil No', type: 'text' }] },
+  definitions: any[] = [
+    { id: 1, name: 'İzin Tipleri Dosya Gereklilik Tanımı', tip : 'İzin Tipi', demandParam : 'cbo_izintipleri', fileParam : 'izin' },
+    { id: 2, name: 'FM Nedenleri Dosya Gereklilik Tanımı', tip : 'Fazla Mesai Nedeni', demandParam : 'cbo_fmnedenleri', fileParam : 'fm' },
+    { id: 3, name: 'Ziyaret Tipleri Dosya Gereklilik Tanımı', tip : 'Ziyaret Tipi', demandParam : 'cbo_ziyaretnedeni', fileParam : 'ziyaretci' },
   ];
   selectedItem: any;
   animation: string = 'out';
@@ -45,6 +46,7 @@ export class ProfilTanimlamalarComponent implements OnInit, OnDestroy {
 
   constructor(
     private helperService : HelperService,
+    public layoutService : LayoutService
   ) {}
   
 
@@ -57,7 +59,8 @@ export class ProfilTanimlamalarComponent implements OnInit, OnDestroy {
 
   onSelect(item: any): void {
     this.selectedItem = item;
-    this.helperService.configureComponentBehavior.next(item.id);
+    
+    this.helperService.configureComponentBehavior.next(item);
     console.log("Selected Item: ", this.selectedItem);
   }
 

@@ -620,149 +620,31 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     this.selectedDemand = undefined;
   }
 
-  // getUploadedFiles(formId : any, kaynak : any){
-  //   this.selectedFormId = null;
-  //   this.uploadedFiles = [];
-  //   this.profilService.getUploadedFiles(formId, kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
-  //     const data = response[0].x;
-
-  //     this.uploadedFiles = data;
-  //     console.log("Yüklenen Belgeler : ", data);
-      
-  //     this.selectedFormId = formId;
-  //     this.getFileTypeForDemandType(data[0].formtipi, 'izin');
-  //   });
+  // getTooltopScript(item: any){
+  //   console.log("bos belge sayisi : ", item);
+  //   return `Yüklenmesi Gereken ${item.bosBelgeSayisi} Adet Dosya Eksik.\r\n\. `;
   // }
 
-  // getFileTypeForDemandType(typeId : any, kaynak : any) {
-  //   this.fileTypes = [];
-  //   this.profilService
-  //   .getFileTypeForDemandType(typeId, kaynak)
-  //   .pipe(takeUntil(this.ngUnsubscribe))
-  //   .subscribe((response: any) => {
-  //     const data = response[0].x;
-  //     const message = response[0].z;
-
-  //     this.fileTypes = data;
-  //     console.log("Tipi geldi", data);
-
-  //     let file;
-  //     this.fileTypes.forEach((item : any) => {
-  //       file = this.uploadedFiles.filter((value : any) => {
-  //         if (item.ID == value.Tip) {
-  //           item.uploadedFile = value;
-  //         }
-  //       });
-  //     });
-
-  //     console.log("Dosya Eşitlendi", this.fileTypes);
-  //     console.log("Dosya Atandı", file);
-
-  //     this.displayUploadedFiles = true;
-  //     this.ref.detectChanges();
-  //   });
+  // getTooltopScript(item: any[]): string {
+  //   const bosBelgeler = this.getBosBelgeler(item);
+  //   const bosBelgeSayisi = bosBelgeler.length;
+  //   const belgeAdlari = bosBelgeler.join(", ");
+    
+  //   return `Yüklenmesi Gereken ${bosBelgeSayisi} Adet Dosya Eksik. (${belgeAdlari})`;
   // }
 
-  // getFileForDemand(id : any, uzanti : any, contentType : any){
-  //   this.base64Data = null;
-  //   this.profilService
-  //   .getFileForDemand(id, uzanti)
-  //   .pipe(takeUntil(this.ngUnsubscribe))
-  //   .subscribe((response: any) => {
-  //     const data = response[0].x;
-  //     console.log("Dosya geldi", data);
-      
-  //     this.base64Data = this.sanitizer.bypassSecurityTrustResourceUrl('data:'+ contentType +  ';base64,' + data.base64Data);
-
-
-  //     const base64Data = data.base64Data;
-  //     const blob = new Blob([atob(base64Data)], { type: contentType });
-
-  //     const fileName = `${contentType}.${uzanti}`;
-  //     let file : any = new File([blob], fileName, { type: contentType });
-
-  //     console.log("File : ", file);
-
-  //     console.log("İframe :", this.base64Iframe);
-      
-      
-  //     // this.downloadFile(contentType, uzanti, data.base64Data, fileName);
-      
-  //     this.ref.detectChanges();
-  //   });
-  // }
-
-  // showUploadedFile(item : any, isItUpload : boolean) {
-  //   this.displayUploadedFile = true;
-
-  //   if (isItUpload) {
-  //     this.currentUploadedFile = item;
-  //   } else {
-  //     this.getFileForDemand(item.uploadedFile.UniqueId, item.uploadedFile.DosyaTipi, item.uploadedFile.ContentType);
-  //   }
-     
-  // }
-
-
-  // getFile(event: any, item: any) {
-  //   let files: FileList = event.target.files[0];
-  //   console.log(files);
-  //   item.sendFile = files;
-
-  //   for (let file of event.target.files) {
-  //     this.readAndPushFile(file, item);
-  //   }
-  // }
-
-  // readAndPushFile(file: File, item: any) {
-  //   let fileSize: any = (file.size / 1024).toFixed(1);
-  //   let fileSizeType = 'KB';
-  //   if (fileSize >= 1024) {
-  //     fileSize = (fileSize / 1024).toFixed(1);
-  //     fileSizeType = 'MB';
-  //   }
-
-  //   let reader = new FileReader();
-  //   reader.readAsDataURL(file);
-  //   reader.onload = (event) => {
-  //     const url = this.sanitizer.bypassSecurityTrustResourceUrl(event.target?.result as string);
-  //     item.files = {
-  //       name : file.name,
-  //       type : file.type,
-  //       url : url,
-  //       fileSize : fileSize,
-  //       fileSizeType : fileSizeType  
-  //     };
-
-  //     console.log("Uploaded Fileee : ", item);
-  //     this.ref.detectChanges();
-  //   };    
-  // }
-
-  // onHideUploadedFile() {
-  //   this.displayUploadedFile = false;
-  //   this.currentUploadedFile = null;
-  //   this.base64Data = null
-  // }
+  getTooltopScript(item: any[]): string {
+    const bosBelgeler = this.getBosBelgeler(item);
+    const bosBelgeSayisi = bosBelgeler.length;
+    const belgeAdlari = bosBelgeler.map((belge, index) => `${index + 1}) ${belge}`).join("\r\n");
+    
+    return `Yüklenmesi Gereken ${bosBelgeSayisi} Adet Dosya Eksik.\r\n${belgeAdlari}`;
+  }
   
-  // postVacationFile(item : any, formId : any, kaynak : any) {
-  //   this.profilService.postFileForDemand(item.sendFile, formId, kaynak, item.ID)
-  //   .pipe(takeUntil(this.ngUnsubscribe))
-  //   .subscribe((response : any) => {
-      
-  //     console.log("İzin için dosya gönderildi : ", response);
-  //     this.getUploadedFiles(formId, 'izin');
-  //     this.ref.detectChanges();
-  //   });
-  // }
-
-  // downloadFile(contentType : any, uzanti : any, base64Data : any, fileName : any) {
-  //   const source = `data:${contentType};base64,${base64Data}`;
-  //   const link = document.createElement("a");
-  //   link.href = source;
-  //   link.download = `${fileName}.${uzanti}`
-  //   link.click();
-  // }
+  getBosBelgeler(item: any[]): string[] {
+    return item.filter(belge => belge.link === "boş").map(belge => belge.BelgeAdi);
+  }
+  
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

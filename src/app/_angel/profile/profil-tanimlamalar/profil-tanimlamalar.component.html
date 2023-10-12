@@ -1,6 +1,6 @@
 <div class="row m-9">
-    <div [@slideInOut]="animation" class="col-3">
-        <div class="card" style="min-height: 450px;">
+    <div *ngIf="!(this.layoutService.isMobile | async)" [@slideInOut]="animation" class="col-3">
+        <div class="card h-100">
             <div class="card-header" style="display: flow-root;">
                 <div class="row mt-4">
                     <div class="col-12 d-flex align-items-center">
@@ -11,9 +11,9 @@
             <div class="card-body  d-flex p-0 card-rounded">
                 <div style="padding: 20px 0px 15px 15px ;" class="flex-grow-1 card-rounded flex-grow-1">
                     <div class="container">
-                        <div class="row d-flex justify-content-center">
+                        <div class="row d-flex justify-content-center py-10">
                             <ng-container>
-                                <div class="card pt-3" *ngFor="let item of reports"
+                                <div class="card pt-3" *ngFor="let item of definitions"
                                     style="width:18rem;border:0 !important">
                                     <a class="btn btn-light-danger btn-xl mr-2 text-left fs-7"
                                         (click)="onSelect(item); toggleDiv();"
@@ -29,10 +29,42 @@
         </div>
     </div>
 
-    <ng-container *ngIf="selectedItem?.id == '1' || selectedItem?.id == '2' ">
-        <div class="col-9">
-            <app-dosya-tipi-tanimlama [selectedItem]="selectedItem" (closeAnimationEvent)="closeAnimation()"></app-dosya-tipi-tanimlama>
+    <div *ngIf="(this.layoutService.isMobile | async)" class="col-12">
+        <div class="card" style="min-height: 450px;">
+            <div class="card-header" style="display: flow-root;">
+                <div class="row mt-4">
+                    <div class="col-12 d-flex align-items-center">
+                        <h4 class="card-label text-danger mt-2 font-weight-bolder">Tanımlamalar</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body  d-flex p-0 card-rounded">
+                <div style="padding: 20px 0px 15px 15px ;" class="flex-grow-1 card-rounded flex-grow-1">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <ng-container>
+                                <div class="card pt-3" *ngFor="let item of definitions"
+                                    style="width:18rem;border:0 !important">
+                                    <a class="btn btn-light-danger btn-xl mr-2 text-left fs-7"
+                                        (click)="onSelect(item); toggleDiv();"
+                                        [ngClass]="{active: selectedItem == item}">
+                                        <i class="icon-l fas fa-angle-right"></i> {{item.name}}
+                                    </a>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </ng-container>
+    </div>
+
+    
+    <div class="col-9" [ngClass]="{ 'col-12 mt-5': this.layoutService.isMobile | async, 'col-9': !(this.layoutService.isMobile | async) }">
+        <ng-container *ngIf="selectedItem?.id == '1' || selectedItem?.id == '2' || selectedItem?.id == '3' ">
+            <app-dosya-tipi-tanimlama [selectedItem]="selectedItem"
+                (closeAnimationEvent)="closeAnimation()"></app-dosya-tipi-tanimlama>
+        </ng-container>
+    </div>
 
 </div>

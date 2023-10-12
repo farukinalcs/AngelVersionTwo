@@ -94,7 +94,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   }
   overtimeFormIsSend() {
     this.displayOvertimeForm = false;
-    this.closedOvertimeForm.next(false);
+    // this.closedOvertimeForm.next(false);
   }
   /* --------------------------------- */
 
@@ -116,7 +116,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   }
   visitRequestFormIsSend() {
     this.displayVisitRequestForm = false;
-    this.closedVisitorForm.next(false);
+    // this.closedVisitorForm.next(false);
   }
   /* --------------------------------- */
 

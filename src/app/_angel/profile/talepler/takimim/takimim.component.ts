@@ -13,7 +13,7 @@ import { ProfileService } from '../../profile.service';
   styleUrls: ['./takimim.component.scss']
 })
 export class TakimimComponent implements OnInit, OnDestroy {
-  private ngUnsubscribe = new Subject;
+  private ngUnsubscribe = new Subject();
   myTeam : any[] = [];
   filterText : string = "";
   filteredItems: any[] = [];

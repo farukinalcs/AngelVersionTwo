@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Subject, takeUntil } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { LayoutService } from 'src/app/_metronic/layout';
 import { ProfileService } from '../../../profile.service';
 
@@ -19,16 +20,26 @@ export class UploadedFilesComponent implements OnInit {
   base64Data: any;
   displayUploadedFile: boolean;
   currentUploadedFile: any;
+  contentType: any;
+
+  public isLoading : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  selectedFile: any;
+  selectedContentType: any;
 
   constructor(
     private profileService : ProfileService,
     private sanitizer: DomSanitizer,
     public layoutService : LayoutService,
+    private toastrService : ToastrService,
     private ref : ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    this.getUploadedFiles(this.selectedDemand, 'izin');
+    this.selectedDemand.atananlar[0].FMNeden ? this.getUploadedFiles(this.selectedDemand, 'fm') : this.getUploadedFiles(this.selectedDemand, 'izin'); 
+
+    // this.getUploadedFiles(this.selectedDemand, 'izin');
+    console.log("Selected Item : ", this.selectedDemand);
+    
   }
 
   getUploadedFiles(selectedDemand : any, kaynak : any){
@@ -42,8 +53,9 @@ export class UploadedFilesComponent implements OnInit {
         console.log("Yüklenen Belgeler : ", data);
         
       }
-      this.getFileTypeForDemandType(selectedDemand.atananlar.length > 0 ? selectedDemand.atananlar[0].Izintipi : '0', 'izin');  
-      
+      // this.getFileTypeForDemandType(selectedDemand.atananlar.length > 0 ? selectedDemand.atananlar[0].Izintipi : '0', 'izin');  
+      // this.getFileTypeForDemandType(selectedDemand.atananlar.length > 0 ? selectedDemand.atananlar[0].FMNeden : '0', 'fm');  
+      selectedDemand.atananlar[0].FMNeden ? this.getFileTypeForDemandType(selectedDemand.atananlar.length > 0 ? selectedDemand.atananlar[0].FMNeden : '0', 'fm') : this.getFileTypeForDemandType(selectedDemand.atananlar.length > 0 ? selectedDemand.atananlar[0].Izintipi : '0', 'izin'); 
     });
   }
 
@@ -62,11 +74,13 @@ export class UploadedFilesComponent implements OnInit {
       let file;
       this.fileTypes.forEach((item : any) => {
         file = this.uploadedFiles.filter((value : any) => {
-          if (item.ID == value.Tip) {
+          if (item.BelgeId == value.Tip) {
             item.uploadedFile = value;
           }
         });
       });
+
+      this.isLoading.next(false);
 
       console.log("Dosya Eşitlendi", this.fileTypes);
       console.log("Dosya Atandı", file);
@@ -77,6 +91,7 @@ export class UploadedFilesComponent implements OnInit {
 
   getFileForDemand(id : any, uzanti : any, contentType : any){
     this.base64Data = null;
+    this.contentType = null;
     this.profileService
     .getFileForDemand(id, uzanti)
     .pipe(takeUntil(this.ngUnsubscribe))
@@ -84,12 +99,18 @@ export class UploadedFilesComponent implements OnInit {
       const data = response[0].x;
       console.log("Dosya geldi", data);
       
+      this.selectedFile = data.base64Data;
+      this.selectedContentType = contentType;
+      
       this.base64Data = this.sanitizer.bypassSecurityTrustResourceUrl('data:'+ contentType +  ';base64,' + data.base64Data);
-
+      
+      console.log("Download Link : ", this.base64Data);
+      
       const base64Data = data.base64Data;
       const blob = new Blob([atob(base64Data)], { type: contentType });
 
       const fileName = `${contentType}.${uzanti}`;
+      this.contentType = fileName;
       let file : any = new File([blob], fileName, { type: contentType });
       console.log("File : ", file);
 
@@ -110,14 +131,32 @@ export class UploadedFilesComponent implements OnInit {
 
 
   getFile(event: any, item: any) {
-    let files: FileList = event.target.files[0];
+    let files: FileList = event.target.files;
+
+    if (files.length > 0) {
+      const file = files[0];
+      if (!this.checkFileSize(file, 1024 * 1024)) {
+        this.toastrService.error("Dosya Boyutu Yüksek", "HATA");
+        return;
+      }
+    }
+    
     console.log(files);
-    item.sendFile = files;
+    item.sendFile = files[0];
 
     for (let file of event.target.files) {
       this.readAndPushFile(file, item);
     }
   }
+  
+
+  // Dosya boyutunu kontrol eden yöntem
+  checkFileSize(file: File, maxSizeInBytes: number): boolean {
+    const fileSizeInBytes = file.size;
+    const maxSize = maxSizeInBytes;
+    return fileSizeInBytes <= maxSize;
+  }
+
 
   readAndPushFile(file: File, item: any) {
     let fileSize: any = (file.size / 1024).toFixed(1);
@@ -150,28 +189,51 @@ export class UploadedFilesComponent implements OnInit {
     this.base64Data = null
   }
   
-  postVacationFile(item : any, selectedDemand : any, kaynak : any) {
-    this.profileService.postFileForDemand(item.sendFile, selectedDemand.Id, kaynak, item.ID)
+  postVacationFile(item : any, selectedDemand : any) {
+    this.profileService.postFileForDemand(item.sendFile, selectedDemand.Id, selectedDemand.atananlar[0].FMNeden ? 'fm' : 'izin', item.BelgeId)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response : any) => {
+      const message = response[0].z;
+
+      if (message.islemsonuc == 1) {
+        this.isLoading.next(true);
+        console.log("İzin için dosya gönderildi : ", response);
+
+        selectedDemand.atananlar[0].FMNeden ? this.getUploadedFiles(selectedDemand, 'fm') : this.getUploadedFiles(selectedDemand, 'izin'); 
+        // this.getUploadedFiles(selectedDemand, 'izin');  
+        
+        this.selectedDemand.bosBelgeSayisi--;
+      } else {
+        this.toastrService.error("Bir Hata Oluştu : " + message.message, "HATA");
+      }
       
-      console.log("İzin için dosya gönderildi : ", response);
-      this.getUploadedFiles(selectedDemand, 'izin');
+      
+      
       this.ref.detectChanges();
     });
   }
 
   deleteFileForDemand(item : any, selectedDemand : any){
     this.base64Data = null;
+    
     this.profileService
     .deleteFileForDemand(item.uploadedFile.UniqueId, item.uploadedFile.DosyaTipi)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response: any) => {
-      
       const data = response[0].x;
-      console.log("Dosya Silindi : ", data);
+      const message = response[0].z;
+
+      if (message.islemsonuc == 1) {
+        this.isLoading.next(true);
+        console.log("Dosya Silindi : ", message.message);
+
+        selectedDemand.atananlar[0].FMNeden ? this.getUploadedFiles(selectedDemand, 'fm') : this.getUploadedFiles(selectedDemand, 'izin'); 
+        // this.getUploadedFiles(selectedDemand, 'izin');  
+        this.selectedDemand.bosBelgeSayisi++;
+      } else {
+        this.toastrService.error("Dosya Silinemedi : " + message.message, "HATA");
+      }
       
-      this.getUploadedFiles(selectedDemand, 'izin');
       this.ref.detectChanges();
     });
   }
@@ -181,6 +243,57 @@ export class UploadedFilesComponent implements OnInit {
     if (index !== -1) {
       item.files.splice(index, 1);
     }
+  }
+
+  public b64toBlob(b64Data : any, contentType : any) {
+    contentType = contentType || '';
+    let sliceSize = 512;
+  
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+  
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+  
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+  
+        var byteArray = new Uint8Array(byteNumbers);
+  
+        byteArrays.push(byteArray);
+    }
+  
+    var blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  }
+
+  downloadFile(item : any) {
+    this.profileService
+      .getFileForDemand(item.uploadedFile.UniqueId, item.uploadedFile.DosyaTipi)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const data = response[0].x;
+        console.log("Base64 geldi", data);
+
+        const blob = new Blob([atob(data.base64Data)], { type: item.uploadedFile.ContentType });
+        const fileName = `${item.uploadedFile.ContentType}.${item.uploadedFile.DosyaTipi}`;
+        let file: any = new File([blob], fileName, { type: item.uploadedFile.ContentType });
+        console.log("File : ", file);
+
+        var link = this.b64toBlob(data.base64Data, item.uploadedFile.ContentType);
+        let a = document.createElement("a");
+        document.body.appendChild(a);
+        var url = window.URL.createObjectURL(link);
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+
+        this.ref.detectChanges();
+      });
   }
 
   ngOnDestroy(): void {
