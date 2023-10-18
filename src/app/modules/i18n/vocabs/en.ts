@@ -210,6 +210,7 @@ export const locale = {
 
       RED_DIALOG : {
         HEADER : "Request Decline",
+        IPTAL : "Request Cancel",
         ACIKLAMA : "Description",
         ACIKLAMA_PLACEHOLDER : "Enter a description.."
       },

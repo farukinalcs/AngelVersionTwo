@@ -127,7 +127,7 @@
                     <a class="d-flex align-items-center text-gray-400 text-hover-danger mb-2 cursor-pointer">
                       <span [inlineSVG]="'./assets/media/icons/duotune/communication/com008.svg'"
                         class="svg-icon svg-icon-4 me-1"></span>
-                      {{ _user.LoginName }}
+                      {{ _user.bolumad }}
                     </a>
 
                   </div>
@@ -273,6 +273,14 @@
                     </li>
                   </ng-container>
 
+                  <!-- <ng-container *ngIf="menuConfig.pages.profil.tabMenu.ziyaretciTaleplerim"> -->
+                    <li class="nav-item">
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_talepleri" routerLinkActive="active">
+                        Ziyaretçi Talepleri
+                      </a>
+                    </li>
+                  <!-- </ng-container> -->
+                  
                   <ng-container *ngIf="menuConfig.pages.profil.tabMenu.ziyaretciTaleplerim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_taleplerim"
@@ -325,8 +333,10 @@
     [style]="{width: !(this.layoutService.isMobile | async) ? '65vw' : 'none'}" [maximizable]="true"
     [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
-    <app-dialog-fazla-mesai-talebi (overtimeFormIsSend)="overtimeFormIsSend()"
-      [closedForm]="closedOvertimeForm"></app-dialog-fazla-mesai-talebi>
+    <ng-container *ngIf="displayOvertimeForm">
+      <app-dialog-fazla-mesai-talebi (overtimeFormIsSend)="overtimeFormIsSend()"></app-dialog-fazla-mesai-talebi>
+    </ng-container>
+    
 
   </p-dialog>
 </ng-container>
@@ -339,8 +349,10 @@
     [style]="{width: !(this.layoutService.isMobile | async) ? '80vw' : 'none'}" [maximizable]="true"
     [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
-    <app-dialog-izin-talebi (vacationFormIsSend)="vacationFormIsSend()"
-      [closedForm]="closedVacationForm"></app-dialog-izin-talebi>
+    <ng-container *ngIf="displayVacationForm">
+      <app-dialog-izin-talebi (vacationFormIsSend)="vacationFormIsSend()"></app-dialog-izin-talebi>
+    </ng-container>
+    
 
   </p-dialog>
 </ng-container>
@@ -351,8 +363,9 @@
     (visibleChange)="visitRequestFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000"
     [draggable]="true" [resizable]="false">
 
-    <app-dialog-ziyaretci-talebi (visitRequestFormIsSend)="visitRequestFormIsSend()"
-      [closedForm]="closedVisitorForm"></app-dialog-ziyaretci-talebi>
+    <ng-container *ngIf="displayVisitRequestForm">
+      <app-dialog-ziyaretci-talebi (visitRequestFormIsSend)="visitRequestFormIsSend()"></app-dialog-ziyaretci-talebi>
+    </ng-container>
 
   </p-dialog>
 </ng-container>
@@ -361,7 +374,9 @@
 <p-dialog header="{{'PROFIL_DASHBOARD.AVANS' | translate}}" [(visible)]="displayAdvancePaymentForm" [modal]="true"
   [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
-  <app-dialog-avans-talebi (visitRequestFormIsSend)="advancePaymentIsSend()"></app-dialog-avans-talebi>
+  <ng-container *ngIf="displayAdvancePaymentForm">
+    <app-dialog-avans-talebi (visitRequestFormIsSend)="advancePaymentIsSend()"></app-dialog-avans-talebi>
+  </ng-container>
 
 </p-dialog>
 

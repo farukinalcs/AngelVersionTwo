@@ -47,7 +47,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
-import { CardsModule, EngagesModule, ExtrasModule, WidgetsModule } from 'src/app/_metronic/partials';
+import { CardsModule, ExtrasModule, WidgetsModule } from 'src/app/_metronic/partials';
 import { AccordionModule } from 'primeng/accordion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataViewModule } from 'primeng/dataview';
@@ -57,11 +57,6 @@ import { EksikSurelerimComponent } from './islemler/eksik-surelerim/eksik-surele
 import { TimeFormatPipe } from 'src/app/_helpers/pipes/time-format.pipe';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { CardsWidget20Component } from 'src/app/_metronic/partials/content/widgets/_new/cards/cards-widget20/cards-widget20.component';
-import { EngageWidget10Component } from 'src/app/_metronic/partials/content/widgets/_new/engage/engage-widget10/engage-widget10.component';
-import { ListsWidget26Component } from 'src/app/_metronic/partials/content/widgets/_new/lists/lists-widget26/lists-widget26.component';
-import { CardsWidget17Component } from 'src/app/_metronic/partials/content/widgets/_new/cards/cards-widget17/cards-widget17.component';
-import { CardsWidget7Component } from 'src/app/_metronic/partials/content/widgets/_new/cards/cards-widget7/cards-widget7.component';
 import { DogumGunuComponent } from './profile-data-widget/dogum-gunu/dogum-gunu.component';
 import { YemekMenuComponent } from './profile-data-widget/yemek-menu/yemek-menu.component';
 import { YeniKatilanlarComponent } from './profile-data-widget/yeni-katilanlar/yeni-katilanlar.component';
@@ -85,10 +80,17 @@ import { FirstSevenPipe } from 'src/app/_helpers/pipes/first-seven.pipe';
 import { YemekMenuTumuComponent } from './profile-data-widget/yemek-menu/yemek-menu-tumu/yemek-menu-tumu.component';
 import { RatingModule } from 'primeng/rating';
 import { UploadedFilesComponent } from './talepler/talepedilenler/uploaded-files/uploaded-files.component';
-import { ProfileService } from './profile.service';
 import { VisitorUploadedFilesComponent } from './talepler/ziyaretcitaleplerim/visitor-uploaded-files/visitor-uploaded-files.component';
 import { DataNotFoundComponent } from '../shared/data-not-found/data-not-found.component';
 import { FormStepperComponent } from '../shared/form-stepper/form-stepper.component';
+import { OngoingRequestsComponent } from './talepler/taleplerim/ongoing-requests/ongoing-requests.component';
+import { ApprovedRequestsComponent } from './talepler/taleplerim/approved-requests/approved-requests.component';
+import { DeniedRequestsComponent } from './talepler/taleplerim/denied-requests/denied-requests.component';
+import { DetailSearchComponent } from '../shared/detail-search/detail-search.component';
+import { RequestProcessComponent } from '../shared/request-process/request-process.component';
+import { RequestMenuComponent } from '../shared/request-menu/request-menu.component';
+import { FormatFileSizePipe } from 'src/app/_helpers/pipes/format-file-size.pipe';
+import { VisitorRequestsComponent } from './talepler/visitor-requests/visitor-requests.component';
 
 @NgModule({
   declarations: [
@@ -130,7 +132,15 @@ import { FormStepperComponent } from '../shared/form-stepper/form-stepper.compon
     UploadedFilesComponent,
     VisitorUploadedFilesComponent,
     DataNotFoundComponent,
-    FormStepperComponent
+    FormStepperComponent,
+    OngoingRequestsComponent,
+    ApprovedRequestsComponent,
+    DeniedRequestsComponent,
+    DetailSearchComponent,
+    RequestProcessComponent,
+    RequestMenuComponent,
+    FormatFileSizePipe,
+    VisitorRequestsComponent
   ],
   imports: [
     CommonModule,

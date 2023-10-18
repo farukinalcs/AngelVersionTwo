@@ -1,0 +1,45 @@
+<p-dialog header="{{'DEMANDED.SUREC_DIALOG.HEADER' | translate}}" [(visible)]="displayRequestProcess" [modal]="true"
+    [style]="{width: '50vw'}" [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false" (onHide)="hideRequestProcess()">
+
+    <div class="card">
+        <p-timeline [value]="requestProcess" align="alternate" styleClass="customized-timeline">
+            <ng-template pTemplate="marker" let-event>
+                <span class="custom-marker p-shadow-2 bg-danger">
+
+                    <ng-container *ngIf="event.islem == 'Eklendi'">
+                        <i class="fa-solid fa-plus text-white"></i>
+                    </ng-container>
+
+                    <ng-container *ngIf="event.islem == 'Reddedildi'">
+                        <i class="fa-solid fa-xmark text-white"></i>
+                    </ng-container>
+
+                    <ng-container *ngIf="event.islem == 'Onay Bekleniyor'">
+                        <i class="fa-solid fa-clock-rotate-left text-white"></i>
+                    </ng-container>
+
+                    <ng-container *ngIf="event.islem == 'Onaylandı'">
+                        <i class="fa-solid fa-check text-white"></i>
+                    </ng-container>
+
+
+                </span>
+            </ng-template>
+            <ng-template pTemplate="content" let-event>
+                <p-card [header]="event.islem" subheader="{{ event.zaman | date: 'yyyy-MM-dd / HH:mm:ss' }}">
+                    <div class="fw-bold fs-4 text-center text-gray-800 ng-star-inserted">{{event.adsoyad}}</div>
+                    <div class="text-dark text-hover-danger mb-1 font-size-lg">
+                        {{event.islemaciklama}}
+                    </div>
+                </p-card>
+            </ng-template>
+        </p-timeline>
+    </div>
+
+    <ng-template pTemplate="footer">
+            <a (click)="hideRequestProcess()" class="btn btn-danger">
+                <i class="fa-solid fa-xmark fs-1"></i>
+                {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+            </a>
+    </ng-template>
+</p-dialog>

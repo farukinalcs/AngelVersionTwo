@@ -404,8 +404,8 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
   }
 
   closedFormDialog() { // Dialog Penceresi Kapatıldığında İlgili Alanları Sıfırlamak İçin
-    this.closedForm.subscribe(_ => {
-      console.log("Closed Form : ", _);
+    // this.closedForm.subscribe(_ => {
+      // console.log("Closed Form : ", _);
       this.visitTypeForm.reset();
       this.visitors = [];
       this.uploadedFiles = [];
@@ -413,7 +413,7 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
       this.currentStep$.next(1);
       this.currentItem = this.stepperFields[0];
       this.visitRequestFormIsSend.emit();
-    });
+    // });
   }
   
   resetStepperFieldsClass() {
@@ -526,7 +526,9 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.visitTypeForm.reset();
+    this.closedFormDialog();
+
+    // this.visitTypeForm.reset();
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
   }

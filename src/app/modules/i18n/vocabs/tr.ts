@@ -212,6 +212,7 @@ export const locale = {
 
       RED_DIALOG : {
         HEADER : "Talep Reddet",
+        IPTAL : "Talep İptal",
         ACIKLAMA : "Açıklama",
         ACIKLAMA_PLACEHOLDER : "Açıklama giriniz.."
       },

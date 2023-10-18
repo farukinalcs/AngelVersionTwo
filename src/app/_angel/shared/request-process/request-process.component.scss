@@ -1,0 +1,112 @@
+// .mat-tab-group {
+//     margin-bottom: 48px;
+// }
+.example-section {
+    margin: 12px 0;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 24%), 0px 1px 5px 0px rgb(0 0 0 / 62%);
+}
+
+.custom-marker {
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+::ng-deep {
+
+    .p-timeline-event-content,
+    .p-timeline-event-opposite {
+        line-height: 1;
+    }
+
+    .p-card-body{
+        background-color: #7239ea0f;
+    }
+}
+
+@media screen and (max-width: 960px) {
+    ::ng-deep {
+        .customized-timeline {
+            .p-timeline-event:nth-child(even) {
+                flex-direction: row !important;
+
+                .p-timeline-event-content {
+                    text-align: left !important;
+                }
+            }
+
+            .p-timeline-event-opposite {
+                flex: 0;
+            }
+
+            .p-card {
+                margin-top: 1rem;
+            }
+        }
+    }
+}
+
+
+:host ::ng-deep {
+    .mat-tab-group[mat-stretch-tabs]>.mat-tab-header .mat-tab-label {
+        flex-basis: auto;
+        flex-grow: 1;
+    }
+
+    .p-accordion-tab:not(.p-accordion-tab-active) {
+        .p-toggleable-content {
+            height: 0;
+            overflow: hidden;
+        }
+    }
+
+    .p-accordion-tab.p-accordion-tab-active {
+        .p-toggleable-content {
+            height: auto !important;
+            overflow: auto !important;
+        }
+    }
+
+    .p-dialog-content {
+        padding: 20px;
+    }
+
+    .mat-expansion-indicator {
+        margin-right: 0.50rem;
+    }
+
+    .mat-expansion-panel-body {
+        padding: 0.50rem;
+    }
+
+    .mat-content {
+        display: block;
+        flex: 1;
+        flex-direction: row;
+        overflow: hidden;
+    }
+}
+
+
+.short-text{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.mat-tooltip {
+    white-space: pre-line;
+}
+
+::ng-deep .mat-tooltip {
+    white-space: pre-line;
+}

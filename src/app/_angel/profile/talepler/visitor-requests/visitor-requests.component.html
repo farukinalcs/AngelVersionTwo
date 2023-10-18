@@ -1,0 +1,255 @@
+<div class="container">
+    <div class="card p-5">
+
+        <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="resetArr($event)">
+
+            <mat-tab label="{{'DEMANDED.TAB_GROUP.BEKLEYEN_FORMLAR' | translate}}">
+                <ng-container *ngIf="ongoingVisitRequests.length == 0">
+                    <div class="row pt-10 m-0">
+                        <app-data-not-found [imgWidth]=" '30%' "></app-data-not-found>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="ongoingVisitRequests.length > 0">
+                    <div class="row mt-5 m-0 d-flex justify-content-center">
+                        <div class="card bg-light-danger p-4">
+                            <div class="row">
+                                <div class="d-flex justify-content-end"
+                                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-3' : !(layoutService.isMobile | async)}">
+                                    <div class="input-group h-100"
+                                        [ngClass]="{'w-100': layoutService.isMobile | async, 'w-75' : !(layoutService.isMobile | async)}">
+                                        <input
+                                            class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
+                                            [(ngModel)]="filterText" type="text"
+                                            placeholder="{{'PUBLIC.SEARCH' | translate}}">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-end"
+                                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-2' : !(layoutService.isMobile | async)}">
+                                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold" (click)="approvedVisit()"
+                                        [ngClass]="{'w-100': layoutService.isMobile | async}">
+                                        Seçilenleri Onayla
+                                    </a>
+                                </div>
+
+                                <div class="d-flex justify-content-end"
+                                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-2' : !(layoutService.isMobile | async)}">
+                                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold"
+                                        [ngClass]="{'w-100': layoutService.isMobile | async}">
+                                        {{"DEMANDED.BUTTON_TEXT.DETAYLI_ARAMA" | translate}}
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5 m-0 p-1">
+                        <div class="col-12 mb-9">
+                            <div class="table-responsive">
+                                <div class="text-center">
+                                    <table class="table table-row-dashed table-row-gray-200 align-middle gs-3 gy-4">
+                                        <thead>
+                                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                                <th class="text-center rounded-start"></th>
+                                                <th class="text-center"> Ziyaret Nedeni </th>
+                                                <th class="text-center"> Ad Soyad </th>
+                                                <th class="text-center"> Firma </th>
+                                                <th class="text-center"> Açıklama </th>
+                                                <th class="text-center"> Giriş </th>
+                                                <th class="text-center"> Çıkış </th>
+                                                <th class="text-center rounded-end">  </th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <ng-container *ngFor="let item of ongoingVisitRequests; let i = index">
+                                                <tr >
+                                                    <td class="text-center text-dark fw-bold text-hover-danger mb-1 fs-6">
+                                                        <mat-checkbox class="example-margin" [checked]="item.allComplete" color="accent" [indeterminate]="someComplete(item)"
+                                                            (change)="setAll($event.checked, item)">
+                                                            Tüm Ziyaretçileri Seç
+                                                        </mat-checkbox>
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <div [ngSwitch]="item.ziyaretNedeni">
+                                                            <div *ngSwitchCase="'Misafir'">
+                                                                <div matTooltip="Misafir" class="symbol symbol-50px me-2">
+                                                                    <span class="symbol-label bg-light-danger">
+                                                                        <i class="fa-solid fa-users text-danger fs-2x"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+    
+                                                            <div *ngSwitchCase="'Etkinlik'">
+                                                                <div matTooltip="Etkinlik" class="symbol symbol-50px me-2">
+                                                                    <span class="symbol-label bg-light-danger">
+                                                                        <i class="fa-solid fa-cake-candles text-danger fs-2x"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+    
+                                                            <div *ngSwitchCase="'İş Görüşmesi'">
+                                                                <div matTooltip="Etkinlik" class="symbol symbol-50px me-2">
+                                                                    <span class="symbol-label bg-light-danger">
+                                                                        <i class="fa-solid fa-handshake text-danger fs-2x"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+    
+                                                            <div *ngSwitchCase="'Yük Girişi'">
+                                                                <div matTooltip="Yük Girişi"
+                                                                    class="symbol symbol-50px me-2">
+                                                                    <span class="symbol-label bg-light-danger">
+                                                                        <i class="fa-solid fa-truck-ramp-box text-danger fs-2x"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+    
+    
+                                                            <div *ngSwitchDefault>
+                                                                <div matTooltip="Diğer" class="symbol symbol-50px me-2">
+                                                                    <span class="symbol-label bg-light-danger">
+                                                                        <i class="fa-solid fa-truck-ramp-box text-danger fs-2x"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+    
+                                                    <td class="text-center">
+                                                        <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{ item.talepSahibi }}</a>
+                                                    </td>
+    
+                                                    <td class="text-center text-muted fw-bold fs-4">
+                                                        <span class="border border-gray-500 border-2 rounded p-3">
+                                                            {{ item.firma }}
+                                                        </span>
+                                                    </td>
+    
+                                                    <td class="text-center text-muted fw-bold fs-4">
+                                                        <span class="text-dark fw-bold text-hover-danger mb-1 fs-6">
+                                                            {{ item.aciklama }}
+                                                        </span>
+                                                    </td>
+    
+                                                    <td class="text-center">
+                                                        <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{ item.giris | date : 'yyyy-MM-dd' }}</a>
+                                                        <span class="text-muted fw-semibold d-block">{{ item.giris | date : 'HH:mm' }}</span>
+                                                    </td>
+    
+                                                    <td class="text-center">
+                                                        <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{ item.cikis | date : 'yyyy-MM-dd' }}</a>
+                                                        <span class="text-muted fw-semibold d-block">{{ item.cikis | date : 'HH:mm' }}</span>
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <a (click)="toggleTable(i)" class="btn btn-icon btn-sm bg-danger mx-3" matTooltip="{{ isTableVisible[i] ? 'Ziyaretçileri Gizle' : 'Ziyaretçileri  Göster' }}">
+                                                            <ng-container *ngIf="isTableVisible[i]">
+                                                                <i class="fa-solid fa-eye-slash text-white"></i>
+                                                            </ng-container>
+
+                                                            <ng-container *ngIf="!isTableVisible[i]">
+                                                                <i class="fa-solid fa-eye text-white"></i>
+                                                            </ng-container>
+                                                        </a>
+
+                                                        <a (click)="removeVisit(item)" class="btn btn-icon btn-sm bg-danger mx-3" matTooltip="Talebi Kaldır">
+                                                            <i class="fa-solid fa-xmark text-white"></i>                                                                    
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <ng-container *ngIf="item.ziyaretciler">
+                                                    <tr *ngIf="isTableVisible[i]">
+                                                        <td colspan="4">
+                                                            <table class="table table-row-dashed table-row-gray-200 align-middle gs-5 gy-4">
+                                                                <tbody>
+                                                                    <ng-container *ngFor="let visitor of item.ziyaretciler; index as i">
+                                                                        <tr [ngClass]="{ 'bg-light-danger': visitor.numberOfEmptyFile > 0, 'bg-light-primary': visitor.numberOfEmptyFile == 0 }">
+                                                                            <ng-container *ngIf="visitor.numberOfEmptyFile > 0">
+                                                                                <td class="text-center">
+                                                                                    <span class="badge badge-circle badge-danger" [matTooltip]="getTooltopScript(visitor.Dosyalar)"
+                                                                                        [matTooltipClass]="'my-tooltip'">
+                                                                                        <i class="fa-solid fa-exclamation text-white"></i>
+                                                                                    </span>
+                                                                                </td>
+                                                                            </ng-container>
+
+                                                                            <ng-container *ngIf="visitor.numberOfEmptyFile == 0">
+                                                                                <td class="text-center">
+                                                                                    
+                                                                                </td>
+                                                                            </ng-container>
+                                                                            
+                                                                            
+                                                                            <td class="text-center">
+                                                                                <mat-checkbox [(ngModel)]="visitor.completed" color="accent" (ngModelChange)="updateAllComplete(item)">
+                                                                                    
+                                                                                </mat-checkbox>
+                                                                            </td>
+                                                                            <td class="text-end">
+                                                                                <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{ i + 1 }}.</a>
+                                                                            </td>
+
+                                                                            <td class="text-center">
+                                                                                <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{ visitor.Ad }}</a>
+                                                                            </td>
+                                        
+                                                                            <td class="text-center">
+                                                                                <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{ visitor.Soyad }}</a>
+                                                                            </td>
+
+                                                                            <td class="text-start">
+                                                                                <ng-container *ngIf="visitor.Dosyalar.length > 0">
+                                                                                    <a (click)="showVisitorFiles(visitor)" matTooltip='Ziyaretçinin Dosyaları'
+                                                                                        class="btn btn-danger btn-sm px-4 py-2">
+                                                                                        <i class="fa-solid fa-paperclip m-0 p-0"></i>
+                                                                                    </a>
+                                                                                </ng-container>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </ng-container>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </mat-tab>
+
+            <mat-tab label="{{'DEMANDED.TAB_GROUP.ONAYLANANLAR' | translate}}">
+                
+            </mat-tab>
+
+            <mat-tab label="{{'DEMANDED.TAB_GROUP.REDDEDILENLER' | translate}}">
+                
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
+<p-dialog header="{{ 'UPLOAD_FILE.YUKLENMIS_DOSYALAR' | translate }}" [(visible)]="displayVisitors"
+    position="center" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+    [draggable]="true" [resizable]="false">
+
+    <ng-container *ngIf="selectedVisit">
+        <app-visitor-uploaded-files [selectedVisit]="selectedVisit" (refreshVisit)="refreshVisit($event)"></app-visitor-uploaded-files>
+    </ng-container>
+
+    <ng-template pTemplate="footer">
+        <a (click)="displayVisitors=false" class="btn btn-danger">
+            <i class="fa-solid fa-xmark fs-1"></i>
+            {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>
