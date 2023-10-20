@@ -4,6 +4,11 @@ import { FullScreenDivComponent } from './full-screen-div/full-screen-div.compon
 import { SicilListeComponent } from './sicil-liste/sicil-liste.component';
 import { SicilComponent } from './sicil/sicil.component';
 import { DialogContainerComponent } from './dialog-container/dialog-container.component';
+import { DataNotFoundComponent } from './data-not-found/data-not-found.component';
+import { FormStepperComponent } from './form-stepper/form-stepper.component';
+import { DetailSearchComponent } from './detail-search/detail-search.component';
+import { RequestProcessComponent } from './request-process/request-process.component';
+import { RequestMenuComponent } from './request-menu/request-menu.component';
 
 
 
@@ -12,7 +17,12 @@ import { DialogContainerComponent } from './dialog-container/dialog-container.co
     FullScreenDivComponent,
     SicilListeComponent,
     SicilComponent,
-    DialogContainerComponent
+    DialogContainerComponent,
+    DataNotFoundComponent,
+    FormStepperComponent,
+    DetailSearchComponent,
+    RequestProcessComponent,
+    RequestMenuComponent
   ],
   imports: [
     CommonModule

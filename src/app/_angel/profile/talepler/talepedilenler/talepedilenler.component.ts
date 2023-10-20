@@ -59,22 +59,9 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
 
   tip: number; // İptal tekli mi çoklu mu kontrolü
 
-  detailSearchForm : FormGroup; // Detay formu
   displayDetailSearch : boolean; // Detaylı arama dialog aç-kapat ayarı
 
   uniqeFotoImage : any;
-
-  oKodFields : any[] = [];
-  fmNedenleri: OKodFieldsModel[] = [];
-  izinTipleri: OKodFieldsModel[] = [];
-
-  firma : any[] = [];
-  bolum : any[] = [];
-  pozisyon : any[] = [];
-  gorev : any[] = [];
-  yaka : any[] = [];
-  altFirma : any[] = [];
-  direktorluk : any[] = [];
 
   currentDate : any = new Date().toISOString().substring(0,10);
   checkedList: any[] = [];
@@ -101,11 +88,12 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
 
 
   selectedDemand: any;
+  demandTypeNameForProcess: any;
+  demandIdForProcess: any;
   
   constructor(
     private profilService : ProfileService,
     private toastrService : ToastrService,
-    private formBuilder : FormBuilder,
     private translateService : TranslateService,
     private dialog : MatDialog,
     public layoutService : LayoutService,
@@ -114,70 +102,43 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.createDetailSearchForm();
   }
 
-  createDetailSearchForm() {
-    this.detailSearchForm = this.formBuilder.group({
-      ad: [""],
-      soyad: [""],
-      sicilno: [""],
-      personelno: [""],
-      firma: ["0"],
-      bolum: ["0"],
-      pozisyon: ["0"],
-      gorev: ["0"],
-      altfirma: ["0"],
-      yaka: ["0"],
-      direktorluk: ["0"],
-      okod0: [""],
-      okod1: [""],
-      okod2: [""],
-      okod3: [""],
-      okod4: [""],
-      okod5: [""],
-      okod6: [""],
-      tarih: [""],
-      tarihbit: [""],
-      ftip: [""]
-    });
-  }
-
-  getFormValues(kaynak : any){
-    let detailSearchFormValues = Object.assign({}, this.detailSearchForm.value);
+  getFormValues(data: {selectedNavItem: any, formValues: any}){
+    // let detailSearchFormValues = Object.assign({}, this.detailSearchForm.value);
 
 
-    if (kaynak == 'izin') {
-      detailSearchFormValues.fsecimm = '1'
-    } else if(kaynak == 'fazlamesai'){
-      detailSearchFormValues.fsecimm = '2'
+    if (data.selectedNavItem == 'izin') {
+      data.formValues.fsecimm = '1'
+    } else if(data.selectedNavItem == 'fazlamesai'){
+      data.formValues.fsecimm = '2'
 
     } else {
-      detailSearchFormValues.ftip = '0'
+      data.formValues.ftip = '0'
       
     }
-    console.log("Detay Form Değerleri  :", detailSearchFormValues);
+    console.log("Detay Form Değerleri  :", data.formValues);
     this.displayDetailSearch = false;
 
-    for (let key in detailSearchFormValues) {
-      if (detailSearchFormValues.hasOwnProperty(key) && detailSearchFormValues[key] === null) {
+    for (let key in data.formValues) {
+      if (data.formValues.hasOwnProperty(key) && data.formValues[key] === null) {
         if (key === 'firma' || key === 'bolum' || key === 'pozisyon' || key === 'gorev' || key === 'yaka' || key === 'direktorluk' || key === 'fsecimm' || key === 'ftip') {
-          detailSearchFormValues[key] = '0';
+          data.formValues[key] = '0';
         } else if(key === 'tarih' || key === 'tarihbit') {
           
           let tarih = new Date();
           tarih.setMonth(tarih.getMonth());
           let formattedDate=tarih.toISOString().slice(0,10);
           
-          detailSearchFormValues[key] = formattedDate;
+          data.formValues[key] = formattedDate;
 
         } else {
-          detailSearchFormValues[key] = '';
+          data.formValues[key] = '';
         }
       }
     }
 
-    this.profilService.postDetailSearch(kaynak, detailSearchFormValues).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+    this.profilService.postDetailSearch(data.selectedNavItem, data.formValues).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
       const data = response[0].x;
       const message = response[0].z;
 
@@ -348,14 +309,6 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     this.onaylananFormlar = [];
     this.reddedilenFormlar = [];
   
-    this.firma = [];
-    this.bolum = [];
-    this.pozisyon = [];
-    this.gorev = [];
-    this.yaka = [];
-    this.altFirma = [];
-    this.direktorluk = [];
-  
     const classList = ['active'];
   
     for (const menuItem of this.menuItems) {
@@ -403,9 +356,17 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     })
   }
 
-  showDemandProcessDialog(formId : any, formTip : any) {
+  // showDemandProcessDialog(formId : any, formTip : any) {
+  //   this.displayDemandProcess = true;
+  //   // this.getDemandProcess(formId, formTip);
+  //   this.demandIdForProcess = formId;
+  //   this.demandTypeNameForProcess = formTip;
+  // }
+
+  showDemandProcessDialog(data: {demandId : any, demandTypeName : any}) {
     this.displayDemandProcess = true;
-    this.getDemandProcess(formId, formTip);
+    this.demandIdForProcess = data.demandId;
+    this.demandTypeNameForProcess = data.demandTypeName;
   }
 
   showCancelDemandDialog(item : any, tip : number) {
@@ -437,21 +398,8 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
   }
 
   showDetailSearchDialog(currentMenu : string) {
-    this.getAccessData();
-
-    this.detailSearchForm.reset();
-    this.getOKodField('Okod');
     this.displayDetailSearch = true;
     this.kaynak = currentMenu;
-    
-    if (currentMenu == 'izin') {
-      this.getOKodField('cbo_izintipleri');
-    } else if (currentMenu == 'fazlamesai') {
-      this.getOKodField('cbo_fmnedenleri');
-
-    } else if (currentMenu == 'tum') {
-      
-    }
   }
 
   isSingleOrMultiple(aktifMenu : string, description : any) {
@@ -460,75 +408,6 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     } else if (this.tip == 2) {
       this.cancelDemandMultiple(aktifMenu, description);
     }
-  }
-
-  getOKodField(kaynak : string) {
-    this.profilService.getOKodField(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
-      const data = response[0].x;
-      const message = response[0].z;
-
-      if (message.islemsonuc == 1) {
-
-        if (kaynak == 'Okod') {
-          this.oKodFields = data;  
-          
-        } else if(kaynak == 'cbo_fmnedenleri') {
-          this.fmNedenleri = data;
-          
-        } else {
-          this.izinTipleri = data;
-
-        }
-        console.log("Okod Alanları : ", data);
-      }
-
-      this.ref.detectChanges();
-    });
-  }
-
-  getAccessData() {
-    this.profilService.getAccessData().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<AccessDataModel, ResponseDetailZ>[]) => {
-      const data = response[0].x;
-      const message = response[0].z;
-      console.log("Access Data :", response);
-
-      this.firma = [];
-      this.bolum = [];
-      this.pozisyon = [];
-      this.gorev = [];
-      this.yaka = [];
-      this.altFirma = [];
-      this.direktorluk = [];
-
-      
-      if (message.islemsonuc == 1) {
-        data.forEach((item : AccessDataModel) => {
-          if (item.tip == 'cbo_Firma') {
-            this.firma.push(item);
-          } else if(item.tip == 'cbo_Bolum') {
-            this.bolum.push(item);
-
-          } else if(item.tip == 'cbo_Pozisyon') {
-            this.pozisyon.push(item);
-            
-          } else if(item.tip == 'cbo_Gorev') {
-            this.gorev.push(item);
-            
-          } else if(item.tip == 'cbo_AltFirma') {
-            this.altFirma.push(item);
-            
-          } else if(item.tip == 'cbo_Yaka') {
-            this.yaka.push(item);
-            
-          } else if(item.tip == 'cbo_Direktorluk') {
-            this.direktorluk.push(item);
-            
-          }
-        })
-      }
-      
-      this.ref.detectChanges();
-    });
   }
 
   confirmDemandSingle(formid : any, kaynak : any, aktifMenu : any){
@@ -615,154 +494,27 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     this.selectedDemand = selectedDemand;
   }
 
-  OnHideUploadedFiles() {
+  onHideUploadedFiles() {
     this.displayUploadedFiles = false;
     this.selectedDemand = undefined;
   }
 
-  // getUploadedFiles(formId : any, kaynak : any){
-  //   this.selectedFormId = null;
-  //   this.uploadedFiles = [];
-  //   this.profilService.getUploadedFiles(formId, kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
-  //     const data = response[0].x;
+  setSelectedDemandEmptyFile(selectedNavItem: any) {
+    this.getDemanded(selectedNavItem);
+  }
 
-  //     this.uploadedFiles = data;
-  //     console.log("Yüklenen Belgeler : ", data);
-      
-  //     this.selectedFormId = formId;
-  //     this.getFileTypeForDemandType(data[0].formtipi, 'izin');
-  //   });
-  // }
-
-  // getFileTypeForDemandType(typeId : any, kaynak : any) {
-  //   this.fileTypes = [];
-  //   this.profilService
-  //   .getFileTypeForDemandType(typeId, kaynak)
-  //   .pipe(takeUntil(this.ngUnsubscribe))
-  //   .subscribe((response: any) => {
-  //     const data = response[0].x;
-  //     const message = response[0].z;
-
-  //     this.fileTypes = data;
-  //     console.log("Tipi geldi", data);
-
-  //     let file;
-  //     this.fileTypes.forEach((item : any) => {
-  //       file = this.uploadedFiles.filter((value : any) => {
-  //         if (item.ID == value.Tip) {
-  //           item.uploadedFile = value;
-  //         }
-  //       });
-  //     });
-
-  //     console.log("Dosya Eşitlendi", this.fileTypes);
-  //     console.log("Dosya Atandı", file);
-
-  //     this.displayUploadedFiles = true;
-  //     this.ref.detectChanges();
-  //   });
-  // }
-
-  // getFileForDemand(id : any, uzanti : any, contentType : any){
-  //   this.base64Data = null;
-  //   this.profilService
-  //   .getFileForDemand(id, uzanti)
-  //   .pipe(takeUntil(this.ngUnsubscribe))
-  //   .subscribe((response: any) => {
-  //     const data = response[0].x;
-  //     console.log("Dosya geldi", data);
-      
-  //     this.base64Data = this.sanitizer.bypassSecurityTrustResourceUrl('data:'+ contentType +  ';base64,' + data.base64Data);
-
-
-  //     const base64Data = data.base64Data;
-  //     const blob = new Blob([atob(base64Data)], { type: contentType });
-
-  //     const fileName = `${contentType}.${uzanti}`;
-  //     let file : any = new File([blob], fileName, { type: contentType });
-
-  //     console.log("File : ", file);
-
-  //     console.log("İframe :", this.base64Iframe);
-      
-      
-  //     // this.downloadFile(contentType, uzanti, data.base64Data, fileName);
-      
-  //     this.ref.detectChanges();
-  //   });
-  // }
-
-  // showUploadedFile(item : any, isItUpload : boolean) {
-  //   this.displayUploadedFile = true;
-
-  //   if (isItUpload) {
-  //     this.currentUploadedFile = item;
-  //   } else {
-  //     this.getFileForDemand(item.uploadedFile.UniqueId, item.uploadedFile.DosyaTipi, item.uploadedFile.ContentType);
-  //   }
-     
-  // }
-
-
-  // getFile(event: any, item: any) {
-  //   let files: FileList = event.target.files[0];
-  //   console.log(files);
-  //   item.sendFile = files;
-
-  //   for (let file of event.target.files) {
-  //     this.readAndPushFile(file, item);
-  //   }
-  // }
-
-  // readAndPushFile(file: File, item: any) {
-  //   let fileSize: any = (file.size / 1024).toFixed(1);
-  //   let fileSizeType = 'KB';
-  //   if (fileSize >= 1024) {
-  //     fileSize = (fileSize / 1024).toFixed(1);
-  //     fileSizeType = 'MB';
-  //   }
-
-  //   let reader = new FileReader();
-  //   reader.readAsDataURL(file);
-  //   reader.onload = (event) => {
-  //     const url = this.sanitizer.bypassSecurityTrustResourceUrl(event.target?.result as string);
-  //     item.files = {
-  //       name : file.name,
-  //       type : file.type,
-  //       url : url,
-  //       fileSize : fileSize,
-  //       fileSizeType : fileSizeType  
-  //     };
-
-  //     console.log("Uploaded Fileee : ", item);
-  //     this.ref.detectChanges();
-  //   };    
-  // }
-
-  // onHideUploadedFile() {
-  //   this.displayUploadedFile = false;
-  //   this.currentUploadedFile = null;
-  //   this.base64Data = null
-  // }
+  getTooltopScript(item: any[]): string {
+    const bosBelgeler = this.getBosBelgeler(item);
+    const bosBelgeSayisi = bosBelgeler.length;
+    const belgeAdlari = bosBelgeler.map((belge, index) => `${index + 1}) ${belge}`).join("\r\n");
+    
+    return `Yüklenmesi Gereken ${bosBelgeSayisi} Adet Dosya Eksik.\r\n${belgeAdlari}`;
+  }
   
-  // postVacationFile(item : any, formId : any, kaynak : any) {
-  //   this.profilService.postFileForDemand(item.sendFile, formId, kaynak, item.ID)
-  //   .pipe(takeUntil(this.ngUnsubscribe))
-  //   .subscribe((response : any) => {
-      
-  //     console.log("İzin için dosya gönderildi : ", response);
-  //     this.getUploadedFiles(formId, 'izin');
-  //     this.ref.detectChanges();
-  //   });
-  // }
-
-  // downloadFile(contentType : any, uzanti : any, base64Data : any, fileName : any) {
-  //   const source = `data:${contentType};base64,${base64Data}`;
-  //   const link = document.createElement("a");
-  //   link.href = source;
-  //   link.download = `${fileName}.${uzanti}`
-  //   link.click();
-  // }
+  getBosBelgeler(item: any[]): string[] {
+    return item.filter(belge => belge.link === "boş").map(belge => belge.BelgeAdi);
+  }
+  
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

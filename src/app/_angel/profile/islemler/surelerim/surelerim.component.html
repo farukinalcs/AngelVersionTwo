@@ -38,21 +38,21 @@
                                 <div class="table-responsive">
                                     <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                         <thead>
-                                            <tr class="border-0">
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
+                                            <tr class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                                <th class="text-center rounded-start">  </th>
+                                                <th class="text-center"> {{ "MY_DURATION.TABLE_TITLE.TARIH" | translate }} </th>
+                                                <th class="text-center"> {{ "MY_DURATION.TABLE_TITLE.GIRIS" | translate }} </th>
+                                                <th class="text-center"> {{ "MY_DURATION.TABLE_TITLE.CIKIS" | translate }} </th>
+                                                <th class="text-center rounded-end"> {{ "MY_DURATION.TABLE_TITLE.ACIKLAMA" | translate }} </th>
                                             </tr>
                                         </thead>
     
                                         <tbody>
                                             <tr *ngFor="let item of durationsMobile"
                                                 [ngClass]="{'bg-light-info': item.simge == '4'}">
-                                                <td>
+                                                <td class="text-center">
                                                     <ng-container *ngIf="item.simge == '1'">
-                                                        <div matTooltip="Başarılı Giriş/Çıkış"
+                                                        <div matTooltip="{{ 'PUBLIC.TOOLTIP.BASARILI_GIRIS_CIKIS' | translate}}"
                                                             class="symbol symbol-50px me-2">
                                                             <span class="symbol-label bg-light-success">
                                                                 <i class="fa-solid fa-circle-check text-success fs-2x"></i>
@@ -61,7 +61,7 @@
                                                     </ng-container>
     
                                                     <ng-container *ngIf="item.simge == '2'">
-                                                        <div matTooltip="Giriş/Çıkış Bulunamadı"
+                                                        <div matTooltip="{{ 'PUBLIC.TOOLTIP.GIRIS_CIKIS_BULUNAMADI' | translate}}"
                                                             class="symbol symbol-50px me-2">
                                                             <span class="symbol-label bg-light-danger">
                                                                 <i class="fa-solid fa-circle-xmark text-danger fs-2x"></i>
@@ -70,7 +70,7 @@
                                                     </ng-container>
     
                                                     <ng-container *ngIf="item.simge == '3'">
-                                                        <div matTooltip="Hatalı Giriş/Çıkış"
+                                                        <div matTooltip="{{ 'PUBLIC.TOOLTIP.HATALI_GIRIS_CIKIS' | translate}}"
                                                             class="symbol symbol-50px me-2">
                                                             <span class="symbol-label bg-light-warning">
                                                                 <i class="fa-solid fa-triangle-exclamation text-warning fs-2x"></i>
@@ -79,51 +79,61 @@
                                                     </ng-container>
     
                                                     <ng-container *ngIf="item.simge == '4'">
-                                                        <div matTooltip="Tatil" class="symbol symbol-50px me-2">
+                                                        <div matTooltip="{{ 'PUBLIC.TOOLTIP.TATIL' | translate}}" class="symbol symbol-50px me-2">
                                                             <span class="symbol-label bg-light-info">
                                                                 <i class="fa-solid fa-umbrella-beach text-info fs-2x"></i>
                                                             </span>
                                                         </div>
                                                     </ng-container>
                                                 </td>
-                                                <td>
-                                                    <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.tarih}}</a>
+                                                <td class="text-center">
+                                                    <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.tarih}}</a>
                                                     <span class="text-muted fw-semibold d-block">{{item.gun}}</span>
                                                 </td>
     
-                                                <ng-container *ngIf="item.simge == '3'">
-                                                    <td class="text-end">
-                                                        <span class="badge badge-light-danger fs-5">
-                                                            {{item.girissaat}}
-                                                        </span>
-                                                    </td>
-    
-                                                    <td class="text-end">
-                                                        <span class="badge badge-light-danger fs-5">
-                                                            {{item.cikissaat}}
+                                                <ng-container *ngIf="item.izinaciklama == ' ' ">
+                                                    <ng-container *ngIf="item.simge == '3'">
+                                                        <td class="text-center">
+                                                            <span class="badge badge-light-danger fs-5">
+                                                                {{item.girissaat}}
+                                                            </span>
+                                                        </td>
+        
+                                                        <td class="text-center">
+                                                            <span class="badge badge-light-danger fs-5">
+                                                                {{item.cikissaat}}
+                                                            </span>
+                                                        </td>
+                                                    </ng-container>
+        
+                                                    <ng-container *ngIf="item.simge != '3'">
+                                                        <td class="text-center text-muted fw-bold fs-4">
+                                                            <span class="fs-5">
+                                                                {{item.girissaat}}
+                                                            </span>
+                                                        </td>
+        
+                                                        <td class="text-center text-muted fw-bold fs-4">
+                                                            <span class="fs-5">
+                                                                {{item.cikissaat}}
+                                                            </span>
+                                                        </td>
+                                                    </ng-container>
+        
+                                                    <td class="text-center text-muted fw-bold fs-4">
+                                                        <span class="border border-gray-500 border-2 border-dashed border-hover-danger text-hover-danger rounded p-3">
+                                                            {{item.mesaiaciklama}}
                                                         </span>
                                                     </td>
                                                 </ng-container>
-    
-                                                <ng-container *ngIf="item.simge != '3'">
-                                                    <td class="text-end text-muted fw-bold fs-4">
-                                                        <span class="fs-5">
-                                                            {{item.girissaat}}
-                                                        </span>
-                                                    </td>
-    
-                                                    <td class="text-end text-muted fw-bold fs-4">
-                                                        <span class="fs-5">
-                                                            {{item.cikissaat}}
-                                                        </span>
+                                                
+                                                <ng-container *ngIf="item.izinaciklama != ' ' ">
+                                                    <td class="text-center text-muted fw-bold fs-4" colspan="3">
+                                                        <div class="border border-gray-500 border-2 border-dashed border-hover-danger text-hover-danger rounded p-3">
+                                                            {{ item.izinaciklama }}
+                                                        </div>
                                                     </td>
                                                 </ng-container>
-    
-                                                <td class="text-end text-muted fw-bold fs-4">
-                                                    <span class="border border-gray-500 border-2 border-dashed rounded p-3">
-                                                        {{item.mesaiaciklama}}
-                                                    </span>
-                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -134,30 +144,10 @@
                 </ng-container>
     
                 <ng-container *ngIf="durationsMobile.length == 0">
-                    <!-- <div class="p-20">
-                        <div class="col-12 d-flex justify-content-center align-items-center">
-                            <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
-                                <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
-                                <div class="flex-grow-1 me-2">
-                                    <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" |
-                                        translate}}</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="row pt-10">
                         <div class="col-12 d-flex justify-content-center align-items-center">
                             <div class="row">
-                                <div class="col-12 d-flex justify-content-center">
-                                    <img src="../../../../../assets/media/illustrations/sigma-1/24.svg" width="70%" alt="">
-                                </div>
-                
-                                <div class="col-12">
-                                    <div class="flex-grow-1 my-5 text-center">
-                                        <a class="text-gray-800 text-hover-danger fs-2 fw-bolder me-1 cursor-pointer">{{"PUBLIC.DATA_NOT_FOUND"
-                                            | translate}}</a>
-                                    </div>
-                                </div>
+                                <app-data-not-found [imgWidth]=" '70%' "></app-data-not-found>
                             </div>
                         </div>
                     </div>

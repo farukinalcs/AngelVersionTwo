@@ -14,6 +14,7 @@ import { TakimimComponent } from './talepler/takimim/takimim.component';
 import { EksikSurelerimComponent } from './islemler/eksik-surelerim/eksik-surelerim.component';
 import { ProfileDataWidgetComponent } from './profile-data-widget/profile-data-widget.component';
 import { ProfilTanimlamalarComponent } from './profil-tanimlamalar/profil-tanimlamalar.component';
+import { VisitorRequestsComponent } from './talepler/visitor-requests/visitor-requests.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,10 @@ const routes: Routes = [
       {
         path: 'taleplerim',
         component: TaleplerimComponent,
+      },
+      {
+        path: 'ziyaretci_talepleri',
+        component: VisitorRequestsComponent,
       },
       {
         path: 'ziyaretci_taleplerim',

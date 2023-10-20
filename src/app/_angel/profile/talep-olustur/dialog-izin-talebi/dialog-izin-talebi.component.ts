@@ -37,6 +37,7 @@ import { LayoutService } from 'src/app/_metronic/layout';
 export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   @Input() closedForm: BehaviorSubject<boolean>;
+  @Output() vacationFormIsSend: EventEmitter<void> = new EventEmitter<void>();
 
   stepperFields: any[] = [
     { class: 'stepper-item current', number: 1, title: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.HEADER_1'), desc: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.MESSAGE_1') },
@@ -75,7 +76,6 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   vacationReasons : any[] = [];
   selectedType  : any;
   dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
-  @Output() vacationFormIsSend: EventEmitter<void> = new EventEmitter<void>();
   formId: any;
   files: any;
 
@@ -101,7 +101,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
 
     this.setResponsiveForm();
     this.createFormGroup();
-    this.closedFormDialog();
+    // this.closedFormDialog();
 
     this.getVacationReason();
     this.getUserInformation();
@@ -110,7 +110,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     this.typeChanges();
   }
 
-  canProceedToNextStep(): boolean {
+  canProceedToNextStep(): boolean { // Sonraki Adıma Geçmeden Durum Kontrolü Yapılan Kısım
     let vacationFormValues = Object.assign({}, this.vacationForm.value);
 
     this.vacationFormValues = vacationFormValues;
@@ -133,7 +133,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  canProceedToPrevStep(): boolean {
+  canProceedToPrevStep(): boolean { // Önceki Adıma Geçmeden Durum Kontrolü Yapılan Kısım
     if (this.currentStep$.value === 1) {
       return this.vacationForm.controls['gunluksaatlik'].valid;
     } 
@@ -143,10 +143,12 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  
-  nextStep() {
+  nextStep() { // Sıradaki Adımda Çalışan Fonksiyon
     if (!this.canProceedToNextStep()) {
-      this.toastrService.error("Formu Doldurmalısınız", "HATA");
+      this.toastrService.error(
+        this.translateService.instant('TOASTR_MESSAGE.ALANLARI_DOLDURMALISINIZ'),
+        this.translateService.instant('TOASTR_MESSAGE.HATA')
+      );
       return;
     }
   
@@ -161,7 +163,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     }
   }
   
-  prevStep() {
+  prevStep() { // Önceki Adımda Çalışan Fonksiyon
     if (this.currentStep$.value === 2) {
       this.vacationForm.reset();
     }
@@ -177,9 +179,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     prevItem.class = "stepper-item";
   }
   
-
-  // Formların oluşması
-  createFormGroup() {
+  createFormGroup() { // Reactive Form Oluşturaln Kısım
     this.vacationForm = this.formBuilder.group({
       tip : ['', [Validators.required]],
       bastarih : [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
@@ -193,26 +193,41 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     });
   }
 
-
-  // Stepper'ı yataydan dikeye çevir
-  setResponsiveForm() {
+  setResponsiveForm() { // Stepper'ı Yataydan Dikeye Çevir
     this.stepperOrientation = this.breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
   }
 
-  getFile(event: any, item: any) {
-    let files: FileList = event.target.files[0];
+  getFile(event: any, item: any) { // Dosya Yüklendiğinde İlk Çalışan Fonksiyon 
+    let files: FileList = event.target.files;
+
+    if (files.length > 0) {
+      const file = files[0];
+      if (!this.checkFileSize(file, 1024 * 1024)) {
+        this.toastrService.error(
+          this.translateService.instant('TOASTR_MESSAGE.DOSYA_BOYUTU_YUKSEK'),
+          this.translateService.instant('TOASTR_MESSAGE.HATA')
+        );
+        return;
+      }
+    }
+    
     console.log(files);
-    this.files = files;
-    item.sendFile = files;
+    item.sendFile = files[0];
 
     for (let file of event.target.files) {
       this.readAndPushFile(file, item);
     }
   }
+  
+  checkFileSize(file: File, maxSizeInBytes: number): boolean { // Dosya Boyutunu Kontrol Eden Fonksiyon
+    const fileSizeInBytes = file.size;
+    const maxSize = maxSizeInBytes;
+    return fileSizeInBytes <= maxSize;
+  }
 
-  readAndPushFile(file: File, item: any) {
+  readAndPushFile(file: File, item: any) { // Yüklenen Dosyalar İçin Detay Bilgiler
     let fileSize: any = (file.size / 1024).toFixed(1);
     let fileSizeType = 'KB';
     if (fileSize >= 1024) {
@@ -245,14 +260,14 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     };    
   }
 
-  removeUploadedFile(item: any, file: any) {
+  removeUploadedFile(item: any, file: any) { // Yüklenmiş Dosyanın Kaldırlması İçin 
     const index = item.files.indexOf(file);
     if (index !== -1) {
       item.files.splice(index, 1);
     }
   }
 
-  closedFormDialog() {
+  closedFormDialog() { // Dialog Penceresi Kapatıldığında İlgili Yerleri Sıfırlamak İçin
     this.closedForm.subscribe(_ => {
       console.log("Closed Form : ", _);
       this.vacationForm.reset();
@@ -265,22 +280,19 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     });
   }
   
-
-  resetStepperFieldsClass() {
+  resetStepperFieldsClass() { // "Stepper" Yapısını Sıfırlamak İçin
     this.stepperFields.forEach((item, index) => {
       item.class = index === 0 ? "stepper-item current" : "stepper-item";
     });
   }
 
-  getFormValues() {
+  getFormValues() { // Form Verilerinin Alınıp, Yüklenmiş Dosyaların API'ye Gönderilmesi
     let vacationFormValues = Object.assign({}, this.vacationForm.value);
     console.log("Form Values : ", vacationFormValues);
 
-    // this.postVacationForm(vacationFormValues);
-    // vacationFormValues.file = this.uploadedFile.url.changingThisBreaksApplicationSecurity;
     this.fileTypes.forEach((item : any) => {
       if (item.sendFile) {
-        this.postVacationFile(item.sendFile, this.formId, 'izin', item.ID);
+        this.postVacationFile(item.sendFile, this.formId, 'izin', item.BelgeId);
       }
     });
 
@@ -288,11 +300,10 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
       this.translateService.instant('TOASTR_MESSAGE.TALEP_GONDERILDI'),
       this.translateService.instant('TOASTR_MESSAGE.BASARILI')
     );
-    this.closedFormDialog();
-    // this.postVacationFile(this.files, this.formId, 'izin', );
+    // this.closedFormDialog();
   }
 
-  valueChanges() {
+  valueChanges() { // Form Alanlarından "gunluksaatlik" Değerinin Günlük Mü Saatlik Mi Olduğunu Öğrenmek İçin
     this.vacationForm.get("gunluksaatlik")?.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe(item => {
       console.log("item : ", item);
       if (item == 'saatlik') {
@@ -311,7 +322,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     });
   }
 
-  dateChanges() {
+  dateChanges() { // İzin Süresinin Ekranda Gösterilmesi İçin Uygunluk Kontrolü
     this.vacationForm.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe(item => {
       let formValue = Object.assign({}, this.vacationForm.value);
       formValue.siciller = this.currentSicilId;
@@ -326,7 +337,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     })
   }
 
-  calculateVacationTime(form: any) {
+  calculateVacationTime(form: any) { // İzin Süresinin Hesaplanması İçin API'ye İstek Atılan Fonrksiyon
     this.profileService.calculateVacationTime(form).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
       const data = response[0].x;
       const apiMessage = response[0].z;
@@ -344,7 +355,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     });
   }
 
-  getUserInformation() {
+  getUserInformation() { // API'ye Kullanıcı Bilgileri İçin Atılan İstek
     this.profileService.getUserInformation().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<UserInformation, ResponseDetailZ>[]) => {
       let data = response[0].x;
       let message = response[0].z;
@@ -363,8 +374,8 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     })
   }
 
-  getVacationReason() {
-    this.profileService.getOKodField('cbo_izintipleri').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
+  getVacationReason() { // İzin Tiplerini Almak İçin API'ye İstek 
+    this.profileService.getTypeValues('cbo_izintipleri').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
       const data = response[0].x;
       const message = response[0].z;
 
@@ -377,7 +388,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     });
   }
 
-  postVacationForm(vacationFormValues : any) {
+  postVacationForm(vacationFormValues : any) { // API'ye İzin Talebini Göndermek İçin Fonksiyon
     this.profileService.postOvertimeOrVacationDemand('izin', vacationFormValues).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
       const data = response[0].x;
       const apiMessage = response[0].z;
@@ -403,20 +414,20 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     })
   }
 
-
-  postVacationFile(file : any, formId : any, kaynak : any, fileType : any) {
+  postVacationFile(file : any, formId : any, kaynak : any, fileType : any) { // API'ye, Oluşturulan İzin Talebi İçin Yüklenen Dosyaları İleten Kısım 
     this.profileService.postFileForDemand(file, formId, kaynak, fileType)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response : any) => {
       
       console.log("İzin için dosya gönderildi : ", response);
 
+      this.closedFormDialog();
+
       this.ref.detectChanges();
     });
   }
   
-
-  getFileTypeForDemandType(typeId : any, kaynak : any) {
+  getFileTypeForDemandType(typeId : any, kaynak : any) { // API'ye, Seçilen İzin Tipine Ait Zorunlu Belgeleri Alması İçin İstek Atılıyor 
     this.fileTypes = [];
     this.profileService
     .getFileTypeForDemandType(typeId, kaynak)
@@ -432,20 +443,19 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     });
   }
 
-  typeChanges() {
+  typeChanges() { // Form Alanlarından "tip" Değiştikçe, API'ye, O Tipe Ait Zorunlu Belgeleri Çekmesi İçin "getFileTypeForDemandType" Fonksiyonuna İlgili Parametreler Gönderiliyor 
     this.vacationForm.controls['tip'].valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe(item => {
       item ? this.getFileTypeForDemandType(item.ID, 'izin') : '';
     });
   }
 
-  showUploadedFile(item : any) {
+  showUploadedFile(item : any) { // Yüklenmiş Dosyanın Önizlenmesi İçin Dialog Penceresinin Açılması İçin
     this.displayUploadedFile = true;
     this.currentUploadedFile = item;
   }
 
-
   ngOnDestroy(): void {
-    this.vacationForm.reset();
+    this.closedFormDialog();
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
   }

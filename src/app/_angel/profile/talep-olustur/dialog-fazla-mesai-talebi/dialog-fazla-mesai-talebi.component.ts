@@ -62,7 +62,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   currentSicilId: any;
   selectedType  : any;
   dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
-  @Output() vacationFormIsSend: EventEmitter<void> = new EventEmitter<void>();
+  @Output() overtimeFormIsSend: EventEmitter<void> = new EventEmitter<void>();
 
   fmNedenleri: any[] = [];
   yemek: any[] = [];
@@ -72,6 +72,9 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   selectedYemek: any;
   formId: any;
   files: any;
+  fileTypes: any[] = [];
+  displayUploadedFile: boolean;
+  currentUploadedFile: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -95,7 +98,9 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
 
     this.setResponsiveForm();
     this.createFormGroup();
-    this.closedFormDialog();
+    this.typeChanges();
+
+    // this.closedFormDialog();
 
   }
 
@@ -139,7 +144,10 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   
   nextStep() {
     if (!this.canProceedToNextStep()) {
-      this.toastrService.error("Formu Doldurmalısınız", "HATA");
+      this.toastrService.error(
+        this.translateService.instant('TOASTR_MESSAGE.ALANLARI_DOLDURMALISINIZ'),
+        this.translateService.instant('TOASTR_MESSAGE.HATA')
+      );
       return;
     }
   
@@ -179,10 +187,10 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
       ulasim: ['', Validators.required],
       yemek: ['', Validators.required],
       bastarih: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), Validators.required],
-      bassaat: ['', Validators.required],
+      bassaat: [formatDate(this.currentDate, 'HH:mm', 'en'), Validators.required],
       bittarih: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), Validators.required],
-      bitsaat: ['', Validators.required],
-      file: [null]
+      bitsaat: [formatDate(this.currentDate, 'HH:mm', 'en'), Validators.required],
+      file: [null] 
     });
   }
 
@@ -194,17 +202,48 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
   }
 
-  getFile(event: any) {
+  // getFile(event: any, item : any) {
+  //   let files: FileList = event.target.files[0];
+  //   console.log(files);
+  //   this.files = files;
+  //   item.sendFile = files;
+
+  //   for (let file of event.target.files) {
+  //     this.readAndPushFile(file, item);
+  //   }
+  // }
+
+  getFile(event: any, item: any) {
     let files: FileList = event.target.files;
+
+    if (files.length > 0) {
+      const file = files[0];
+      if (!this.checkFileSize(file, 1024 * 1024)) {
+        this.toastrService.error(
+          this.translateService.instant('TOASTR_MESSAGE.DOSYA_BOYUTU_YUKSEK'),
+          this.translateService.instant('TOASTR_MESSAGE.HATA')
+        );
+        return;
+      }
+    }
+    
     console.log(files);
-    this.files = files;
+    item.sendFile = files[0];
 
     for (let file of event.target.files) {
-      this.readAndPushFile(file);
+      this.readAndPushFile(file, item);
     }
   }
+  
 
-  readAndPushFile(file: File) {
+  // Dosya boyutunu kontrol eden yöntem
+  checkFileSize(file: File, maxSizeInBytes: number): boolean {
+    const fileSizeInBytes = file.size;
+    const maxSize = maxSizeInBytes;
+    return fileSizeInBytes <= maxSize;
+  }
+
+  readAndPushFile(file: File, item: any) {
     let fileSize: any = (file.size / 1024).toFixed(1);
     let fileSizeType = 'KB';
     if (fileSize >= 1024) {
@@ -216,15 +255,16 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     reader.readAsDataURL(file);
     reader.onload = (event) => {
       const url = this.sanitizer.bypassSecurityTrustResourceUrl(event.target?.result as string);
-      this.uploadedFile = {
+      item.files = {
         name : file.name,
         type : file.type,
         url : url,
         fileSize : fileSize,
-        fileSizeType : fileSizeType
+        fileSizeType : fileSizeType  
       };
 
       console.log("Uploaded File : ", this.uploadedFile);
+      console.log("Uploaded Fileee : ", item);
       this.ref.detectChanges();
     };    
   }
@@ -248,7 +288,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
       this.resetStepperFieldsClass();
       this.currentStep$.next(1);
       this.currentItem = this.stepperFields[0];
-      // this.vacationFormIsSend.emit();
+      this.overtimeFormIsSend.emit();
     });
   }
   
@@ -283,7 +323,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   }
 
   getOvertimeReason(kaynak: string) {
-    this.profileService.getOKodField(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
+    this.profileService.getTypeValues(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
       const data = response[0].x;
       const message = response[0].z;
 
@@ -327,20 +367,79 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     this.ref.detectChanges();
   }
   
-  // postOvertimeFile(file : any, formId : any) {
-  //   this.profileService.postFileForDemand(file, formId, 'fm')
-  //   .pipe(takeUntil(this.ngUnsubscribe))
-  //   .subscribe((response : any) => {
-      
-  //     console.log("Fm için dosya gönderildi : ", response);
 
-  //     this.ref.detectChanges();
-  //   });
-  // }
+  typeChanges() {
+    this.overtimeForm.controls['tip'].valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe(item => {
+      item ? this.getFileTypeForDemandType(item.ID, 'fm') : '';
+    });
+  }
+
+  getFileTypeForDemandType(typeId : any, kaynak : any) {
+    this.fileTypes = [];
+    this.profileService
+    .getFileTypeForDemandType(typeId, kaynak)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe((response: any) => {
+      const data = response[0].x;
+      const message = response[0].z;
+
+      console.log("Tipi geldi", data);
+      this.fileTypes = data;
+
+      this.ref.detectChanges();
+    });
+  }
+
+  showUploadedFile(item : any) {
+    this.displayUploadedFile = true;
+    this.currentUploadedFile = item;
+  }
+
+  getFormValues() {
+    this.overtimeFormValues = Object.assign({}, this.overtimeForm.value);
+
+    for (let key in this.overtimeFormValues) {
+      if (this.overtimeFormValues.hasOwnProperty(key) && this.overtimeFormValues[key] === '') {
+        if (key === 'tip' || key === 'ulasim' || key === 'yemek') {
+          this.overtimeFormValues[key] = '0';
+        } else if (key === 'aciklama' || key === 'bastarih' || key === 'bassaat' || key === 'bittarih' || key === 'bitsaat') {
+          this.overtimeFormValues[key] = '';
+        }
+      }
+    }
+
+    this.overtimeFormValues.izinadresi = '';
+
+    this.fileTypes.forEach((item : any) => {
+      if (item.sendFile) {
+        this.postOvertimeFile(item.sendFile, this.formId, 'fm', item.BelgeId);
+      }
+    });
+
+    this.toastrService.success(
+      this.translateService.instant('TOASTR_MESSAGE.TALEP_GONDERILDI'),
+      this.translateService.instant('TOASTR_MESSAGE.BASARILI')
+    );
+    // this.closedFormDialog();
+  }
+
+  postOvertimeFile(file : any, formId : any, kaynak : any, fileType : any) {
+    this.profileService.postFileForDemand(file, formId, kaynak, fileType)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe((response : any) => {
+      
+      console.log("FM için dosya gönderildi : ", response);
+      this.closedFormDialog();
+
+      this.ref.detectChanges();
+    });
+  }
 
 
   ngOnDestroy(): void {
-    this.overtimeForm.reset();
+    this.closedFormDialog();
+
+    // this.overtimeForm.reset();
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
   }

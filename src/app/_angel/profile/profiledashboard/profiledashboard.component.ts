@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService, UserType } from 'src/app/modules/auth';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
@@ -17,10 +17,6 @@ import { ProfileService } from '../profile.service';
   styleUrls: ['./profiledashboard.component.scss']
 })
 export class ProfiledashboardComponent implements OnInit, OnDestroy {
-  public closedVisitorForm : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  public closedOvertimeForm : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  public closedVacationForm : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-
   menuConfig : any;
   private ngUnsubscribe = new Subject();
   user$: Observable<UserType>;
@@ -35,12 +31,12 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
 
   displayVisitRequestForm: boolean;
   displayAdvancePaymentForm: boolean;
+  displayAuthorityRequestForm: boolean;
 
   fotoImage : any;
   constructor(
     private auth: AuthService,
     private authMenuService : AuthMenuService,
-    private fomrBuilder : FormBuilder,
     public dialog: MatDialog,
     private profileService : ProfileService,
     public loaderService : LoaderService,
@@ -94,7 +90,6 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   }
   overtimeFormIsSend() {
     this.displayOvertimeForm = false;
-    this.closedOvertimeForm.next(false);
   }
   /* --------------------------------- */
 
@@ -105,7 +100,6 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   }
   vacationFormIsSend() {
     this.displayVacationForm = false;
-    // this.closedVacationForm.next(false);
   }
   /* --------------------------------- */
 
@@ -116,10 +110,18 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   }
   visitRequestFormIsSend() {
     this.displayVisitRequestForm = false;
-    this.closedVisitorForm.next(false);
   }
   /* --------------------------------- */
 
+
+  /* Yetki Form Dialog Penceresi */
+  showAuthorityDialog() {
+    this.displayAuthorityRequestForm = true;
+  }
+  authorityRequestFormIsSend() {
+    this.displayAuthorityRequestForm = false;
+  }
+  /* --------------------------------- */
 
   /* Avans Form Dialog Penceresi */
   showAdvancePaymentDialog() {

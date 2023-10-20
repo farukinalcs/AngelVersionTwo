@@ -9,49 +9,7 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-                    <div class="stepper-nav d-flex justify-content-center ps-lg-10">
-
-                        <div class="{{item.class}}" *ngFor="let item of stepperFields">
-                            <div class="stepper-wrapper">
-
-                                <ng-container *ngIf="item.class == 'stepper-item current' ">
-                                    <div class="stepper-icon bg-danger w-40px h-40px">
-                                        <i class="stepper-check fas fa-check"></i>
-                                        <span class="stepper-number">{{item.number}}</span>
-                                    </div>
-                                </ng-container>
-
-                                <ng-container *ngIf="item.class == 'stepper-item completed' ">
-                                    <div class="stepper-icon bg-light-danger w-40px h-40px">
-                                        <i class="stepper-check fas fa-check text-danger"></i>
-                                        <span class="stepper-number">{{item.number}}</span>
-                                    </div>
-                                </ng-container>
-
-                                <ng-container *ngIf="item.class == 'stepper-item' ">
-                                    <div class="stepper-icon bg-light-danger w-40px h-40px">
-                                        <i class="stepper-check fas fa-check"></i>
-                                        <span class="stepper-number text-danger">{{item.number}}</span>
-                                    </div>
-                                </ng-container>
-                                
-
-                                <div class="stepper-label">
-                                    <h3 class="stepper-title">
-                                        {{item.title}}
-                                    </h3>
-
-                                    <div class="stepper-desc">
-                                        {{item.desc}}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="stepper-line h-40px"></div>
-                        </div>
-                    </div>
-                </div>
+                <app-form-stepper [stepperFields]="stepperFields"></app-form-stepper>
 
                 <div class="row w-xl-700px">
                     <div class="col-12">
@@ -201,7 +159,7 @@
     
                                         <div class="separator mb-10"></div>
     
-                                        <div style="background-image: url(../../../../../assets/media/logos/Mediamodifier-Design-Template\ \(11\).png); background-repeat: no-repeat; background-size: contain; background-position: center;">
+                                        <div>
                                             <div class="col-12 d-flex justify-content-center">
                                                 <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"IZIN_TALEP_DIALOG.HEADER" | translate}}</span>
                                             </div>
@@ -256,48 +214,113 @@
                             </ng-container>
 
                             <ng-container *ngIf="currentStep$.value == 5">
-                                <div class="current">
+                                <div class="current h-xl-500px scroll">
                                     <div class="w-100">
-                                        <div class="row">
-                                            <input type="file" id="upload" style="display: none;" (change)="getFile($event)" accept=".pdf, .txt ,image/*" max-file-size="1"
-                                                formControlName="file">
-                                            <label for="upload">
-                                                <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center" style="padding: 2.5rem 0;">
-                                                    <div class="dropzone-msg dz-message needsclick">
-                                                        <h3 class="dropzone-msg-title">{{"BULTEN_FORM_DIALOG.FORM.DOSYA_YUKLE" | translate}}</h3>
+                                        <div class="row pb-3" *ngFor="let item of fileTypes; index as i">
+                                            <div class="col-12 d-flex justify-content-center align-items-center">
+                                                <input type="file" [id]="'upload_' + i" style="display: none;" (change)="getFile($event, item)" formControlName="file">
+                                                <label [for]="'upload_' + i" class="w-100">
+                                                    <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center" style="padding: 1.5rem 0;">
+                                                        <div class="dropzone-msg dz-message needsclick">
+                                                            <h3 class="dropzone-msg-title text-center">{{"BULTEN_FORM_DIALOG.FORM.DOSYA_YUKLE" | translate: { fileType: item.ad } }}</h3>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </label>
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                                <ng-container *ngIf="item.files">
+                                                    <div [@fileUploaded]="'uploaded'" class="card bg-light-dark mx-8 my-5">
+                                                        <div class="card-body">
+                                                            <div class="row d-flex justify-content-center align-items-center">
+                            
+                                                                <!-- <ng-container *ngIf="!item.files.type.startsWith('image')"> -->
+                                                                    <div class="col-3 text-center">
+                                                                        <div [ngSwitch]="item.files.type">
+                                                                            <div *ngSwitchCase="['image/jpeg', 'image/png', 'image/svg'].includes(item.files.type) ? item.files.type : !item.files.type">
+                                                                                <i class="file-type cursor-pointer fa-solid fa-file-image text-dark fs-3x" (click)="showUploadedFile(item)"></i>
+                                                                            </div>
+
+                                                                            <div *ngSwitchCase="['text/plain'].includes(item.files.type) ? item.files.type : !item.files.type">
+                                                                                <i class="file-type cursor-pointer fa-solid fa-file-lines text-dark fs-3x" (click)="showUploadedFile(item)"></i>
+                                                                            </div>
+
+                                                                            <div *ngSwitchCase="['application/pdf'].includes(item.files.type) ? item.files.type : !item.files.type">
+                                                                                <i class="file-type cursor-pointer fa-solid fa-file-pdf text-dark fs-3x" (click)="showUploadedFile(item)"></i>
+                                                                            </div>
+
+                                                                            <div *ngSwitchDefault>
+                                                                                <i class="fa-solid cursor-pointer fa-file text-dark fs-3x" (click)="showUploadedFile(item)"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                <!-- </ng-container> -->
+                                                                
+                            
+                                                                <div class="col-7">
+                                                                    <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                                        {{ item.files.name }}
+                                                                    </div>
+                            
+                                                                    <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                                        {{ item.files.fileSize }} {{ item.files.fileSizeType }}
+                                                                    </div>
+                                                                </div>
+                                       
+                                                                <div class="col-2">
+                                                                    <a (click)="item.files = null" class="btn btn-icon btn-danger btn-sm me-3">
+                                                                        <i class="fa-solid fa-xmark fs-4"></i>
+                                                                    </a>
+                                                                </div>
+
+                                                                <!-- <ng-container *ngIf="item.files.type.startsWith('image')">
+                                                                    <div class="col-12 d-flex justify-content-center">
+                                                                        <div class="symbol symbol-75px">
+                                                                            <img alt="Uploaded File" src="{{item.files.url}}">
+                                                                            <iframe [src]="item.files.url" iframeborder="0"></iframe>
+                                                                        </div>
+                                                                    </div>    
+                                                                </ng-container> -->
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </ng-container>
+                                            </div>
                                         
-                                            <ng-container *ngIf="uploadedFile">
+                                            <!-- <ng-container *ngIf="uploadedFile">
                                                 <div [@fileUploaded]="'uploaded'" class="card bg-light-dark m-3">
                                                     <div class="card-body">
                                                         <div class="row d-flex justify-content-center align-items-center">
+                                        
                                                             <div class="col-12 d-flex justify-content-end mb-3">
                                                                 <a (click)="uploadedFile = null" class="btn btn-icon btn-danger btn-sm me-3">
                                                                     <i class="fa-solid fa-xmark fs-4"></i>
                                                                 </a>
                                                             </div>
-                                        
+                                                            
                                                             <div class="col-12">
-                                                                <iframe [src]="uploadedFile.url" width="100%" height="400px"></iframe>
+                                                                <iframe [src]="uploadedFile.url" width="100%" height="300px"></iframe>
                                                             </div>
-
+                                        
                                                             <div class="col-4">
                                                                 <div class="fs-6 fw-bold text-gray-800 text-center">
                                                                     {{uploadedFile.name}}
                                                                 </div>
                                                             </div>
-                                        
+
                                                             <div class="col-4">
                                                                 <div class="fs-6 fw-bold text-gray-800 text-center">
                                                                     {{uploadedFile.fileSize}} {{uploadedFile.fileSizeType}}
                                                                 </div>
                                                             </div>
+                                        
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </ng-container>
+                                            </ng-container> -->
+
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -343,7 +366,7 @@
                                         </button>
                                     </ng-container>
                                     <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="getOvertimeFormValues()">
+                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="getFormValues()">
                                             <span class="indicator-label">
                                                 {{"ZIYARETCI_TALEP_DIALOG.FORM.GONDER" | translate}}
                                             </span>
@@ -380,3 +403,29 @@
         </div>
     </ng-container>
 </ng-template>
+
+
+
+
+
+
+<p-dialog header="Önizleme" [(visible)]="displayUploadedFile" position="center"
+    [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '50vw' : 'none'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    
+    <ng-container *ngIf="currentUploadedFile">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="symbol symbol-75px">
+                <iframe [src]="currentUploadedFile?.files?.url" iframeborder="0" width="600px" height="600px"></iframe>
+            </div>
+        </div>    
+    </ng-container>
+    
+    
+
+    <ng-template pTemplate="footer">
+        <a (click)="displayUploadedFile=false" class="btn btn-danger">
+          <i class="fa-solid fa-xmark fs-1"></i>
+          {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+        </a>
+      </ng-template>
+</p-dialog>

@@ -1,0 +1,331 @@
+<div class="row mt-5 m-0">
+    <div class="col-12 d-flex justify-content-center">
+        <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3">
+            <li *ngFor="let menuItem of menuItems" class="nav-item mb-3 me-3 me-lg-6">
+                <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
+                    data-bs-toggle="pill" (click)="getMyDemands(menuItem.key)" [attr.id]="'reddedilen-' +menuItem.id">
+                    <div class="nav-icon mb-3">
+                        <i class="fa-solid {{ menuItem.icon }} fs-2"></i>
+                    </div>
+                    <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">{{ menuItem.label | translate }}</span>
+                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-danger"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<ng-container *ngIf="!selectedNavItem && deniedRequests.length == 0">
+    <div class="row mt-5 m-0">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center "
+                [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
+                <i class="fa-solid fa-arrow-pointer fs-2x text-danger ms-5"></i>
+                <div class="flex-grow-1 me-2">
+                    <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"DEMANDED.WARNING_LIST.TALEP_SECMELISINIZ"
+                        | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="selectedNavItem && deniedRequests.length == 0">
+    <div class="row pt-10 m-0">
+        <app-data-not-found [imgWidth]=" '30%' "></app-data-not-found>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="deniedRequests.length > 0">
+    <div class="row mt-5 m-0 d-flex justify-content-center">
+        <div class="card bg-light-danger p-4">
+            <div class="row">
+                <div class="d-flex justify-content-start"
+                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-6' : !(layoutService.isMobile | async)}">
+                    <div class="input-group h-100"
+                        [ngClass]="{'w-100': layoutService.isMobile | async, 'w-75' : !(layoutService.isMobile | async)}">
+                        <input
+                            class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
+                            [(ngModel)]="filterText" type="text" placeholder="{{'PUBLIC.SEARCH' | translate}}">
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end"
+                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-5' : !(layoutService.isMobile | async)}">
+                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold"
+                        [ngClass]="{'w-100': layoutService.isMobile | async}" (click)="showDetailSearchDialog()">
+                        {{"DEMANDED.BUTTON_TEXT.DETAYLI_ARAMA" | translate}}
+                        <i class="fa fa-search"></i>
+                    </a>
+                </div>
+
+                <div class=""
+                    [ngClass]="{'col-12 d-flex justify-content-center': layoutService.isMobile | async, 'col-1' : !(layoutService.isMobile | async)}">
+                    <a class="btn btn-icon btn-danger btn-sm me-3" (click)="checkGrid = !checkGrid">
+                        <i class="fa-solid fa-list fs-4" [ngClass]="{'fa-grip': checkGrid, 'fa-list' : !checkGrid}"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 m-0">
+        <ng-container *ngIf="checkGrid">
+            <div class="col-3 mb-9"
+                *ngFor="let item of deniedRequests | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']; trackBy: trackBy">
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="isCardOpen(item)"
+                        (closed)="item.panelOpenState = false">
+                        <!-- <mat-expansion-panel-header #panelC>
+                            <mat-panel-title>
+                                <span class="badge badge-danger ml-4">{{item.tipad}}</span>
+
+                            </mat-panel-title>
+                            <mat-panel-description class="fw-bolder text-dark">
+                                <div class="text-center">
+                                    <div class="fs-5">
+                                        {{item.Personel}}
+                                    </div>
+
+                                    <ng-container *ngIf="!item.panelOpenState">
+                                        <div class="text-gray-400 fs-8">
+                                            {{item.neden}}
+                                        </div>
+                                    </ng-container>
+
+                                </div>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header> -->
+
+                        <mat-expansion-panel-header #panelC class="p-0 h-60px">
+                            <div class="row w-100">
+                                <!-- <ng-container *ngIf="item.bosBelgeSayisi > 0">
+                                    <div class="col-2 d-flex justify-content-center align-items-center">
+                                        <span class="badge badge-circle badge-danger">
+                                            <i class="fa-solid fa-exclamation text-white"></i>
+                                        </span>
+                                    </div>
+                                </ng-container> -->
+                                <div class="col-6 d-flex justify-content-center align-items-center">
+                                    <div class="text-center">
+                                        <div class="fs-5 theme-dark-show text-white">
+                                            {{item.Personel}}
+                                        </div>
+                        
+                                        <div class="fs-5 theme-light-show text-dark">
+                                            {{item.Personel}}
+                                        </div>
+                        
+                                        <ng-container *ngIf="!item.panelOpenState">
+                                            <span class="badge badge-light-danger ml-4">{{item.sicilno}}</span>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                        
+                                <div class="col-6 d-flex justify-content-center align-items-center">
+                                    <div class="fw-bolder text-dark">
+                                        <div class="text-center">
+                                            <div class="fs-5 short-text" matTooltip="{{ item.neden }}">
+                                                <ng-container *ngIf="item.panelOpenState">
+                                                    {{ (item.neden.length>14)? (item.neden | slice:0:14)+'...':(item.neden) }}
+                                                </ng-container>
+                        
+                                                <ng-container *ngIf="!item.panelOpenState">
+                                                    {{ (item.neden.length>12)? (item.neden | slice:0:12)+'...':(item.neden) }}
+                                                </ng-container>
+                                            </div>
+                        
+                                            <ng-container *ngIf="!item.panelOpenState">
+                                                <div class="text-gray-400 fs-8">
+                                                    {{item.Baslangic | date : 'yyyy-MM-dd'}}
+                                                    <span>({{item.Baslangic | date : 'HH:mm'}})</span>
+                                                </div>
+                        
+                                                <div class="text-gray-400 fs-8">
+                                                    {{item.Bitis | date : 'yyyy-MM-dd'}}
+                                                    <span>({{item.Bitis | date : 'HH:mm'}})</span>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel-header>
+
+                        <div class="">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-12 d-flex justify-content-center">
+                                    <img width="25%" style="border-radius: 5px;"
+                                        src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}"
+                                        alt="Personel Foto" />
+                                </div>
+                                <div class="col-12 d-flex justify-content-center mt-4">
+                                </div>
+                            </div>
+                            <div class="row card-body p-1">
+                                <div class="col-12 mt-3 text-center">
+                                    <h5>{{"DEMANDED.DEMAND.NEDENI" | translate}}</h5>
+                                    <span class="text-gray-600">{{item.neden}}</span>
+                                </div>
+
+                                <div class="col-6 mt-3 text-center">
+                                    <h5>{{"DEMANDED.DEMAND.BASLANGIC" | translate}}</h5>
+                                    <span class="text-gray-600">{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}} </span>
+                                </div>
+
+                                <div class="col-6 mt-3 text-center">
+                                    <h5>{{"DEMANDED.DEMAND.BITIS_IS_BASI" | translate}}</h5>
+                                    <span class="text-gray-600">{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
+                                </div>
+
+                                <ng-container *ngIf="item.bolum">
+                                    <div class="col-6 mt-3 text-center scroll h-45px">
+                                        <h5>{{"DEMANDED.ARAMA_DIALOG.FORM.BOLUM" | translate}}</h5>
+                                        <span class="text-gray-600">{{item.bolum}}</span>
+                                    </div>    
+                                </ng-container>
+
+                                <ng-container *ngIf="item.pozisyon">
+                                    <div class="col-6 mt-3 text-center scroll h-45px">
+                                        <h5>{{"DEMANDED.ARAMA_DIALOG.FORM.POZISYON" | translate}}</h5>
+                                        <span class="text-gray-600">{{item.pozisyon}}</span>
+                                    </div>    
+                                </ng-container>
+
+                                <ng-container *ngIf="item.nedenx">
+                                    <div class="col-12 mt-3 text-center scroll h-45px">
+                                        <h5>{{"DEMANDED.DEMAND.ACIKLAMA" | translate}}</h5>
+                                        <span class="text-gray-600">{{item.nedenx}}</span>
+                                    </div>
+                                </ng-container>
+
+
+                                <ng-container *ngIf="item.Onaylayan">
+                                    <div class="col-12 mt-3 text-center">
+                                        <h5>{{"DEMANDED.DEMAND.SON" | translate}}</h5>
+                                        <span class="text-gray-600">{{item.Onaylayan}}</span>
+                                        <p>{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
+                                    </div>
+                                </ng-container>
+
+
+                                <div class="col-12 text-center">
+                                    <div class="row mt-8">
+
+                                        <div class="col-3">
+                                            <button class="btn btn-icon btn-danger btn-circle"
+                                                matTooltip="{{'DEMANDED.BUTTON_TEXT.REDDEDILDI' | translate}}" disabled>
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <button class="btn btn-icon btn-light-info btn-circle" matTooltip="{{'DEMANDED.BUTTON_TEXT.SUREC' | translate}}"
+                                            (click)="showDemandProcessDialog(item.Id, item.tipad)">
+                                              <i class="fa-solid fa-question"></i>
+                                            </button>
+                                          </div>
+
+                                        <div class="col-3">
+                                            <button class="btn btn-icon btn-light-primary btn-circle"
+                                                matTooltip="{{'DEMANDED.BUTTON_TEXT.FORM' | translate}}">
+                                                <i class="fa-solid fa-print"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <button class="btn btn-icon btn-light-info btn-circle"
+                                                matTooltip="{{'DEMANDED.BUTTON_TEXT.DOSYALAR' | translate}}">
+                                                <i class="fa-solid fa-paperclip"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!checkGrid">
+            <div class="col-12 mb-9">
+                <div class="table-responsive">
+                    <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                        <thead>
+                            <tr class="rounded fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                <th class="text-center rounded-start"></th>
+                                <th class="text-center">{{ "DEMANDED.ARAMA_DIALOG.FORM.PERSONEL" | translate }}</th>
+                                <th class="text-center">{{ "TASK_LISTEM.TABLE.TALEP_TIPI" | translate }}</th>
+                                <th class="text-center">{{ "TASK_LISTEM.TABLE.BASLANGIC_TARIHI" | translate }}</th>
+                                <th class="text-center">{{ "TASK_LISTEM.TABLE.BITIS_TARIHI" | translate }}</th>
+                                <th class="text-center w-150px">{{ "TASK_LISTEM.TABLE.ACIKLAMA" | translate }}</th>
+                                <th class="text-center rounded-end"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr
+                                *ngFor="let item of deniedRequests | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis']">
+                                <td class="text-center">
+                                    <div class="symbol symbol-50px me-2">
+                                        <img src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}"
+                                            alt="Personel Foto">
+                                    </div>
+                                </td>
+
+                                <td class="text-center text-muted fw-bold fs-4">
+                                    <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">
+                                        {{item.Personel}}
+                                    </span>
+                                </td>
+
+                                <td class="text-center">
+                                    <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.tipad}}</p>
+                                    <span class="text-muted fw-semibold d-block">{{item.neden}}</span>
+                                </td>
+
+                                <td class="text-center">
+                                    <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.Baslangic | date:
+                                        'yyyy-MM-dd'}}</p>
+                                    <span class="text-muted fw-semibold d-block">{{item.Baslangic | date:
+                                        'HH:mm'}}</span>
+                                </td>
+
+                                <td class="text-center">
+                                    <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.Bitis | date:
+                                        'yyyy-MM-dd'}}</p>
+                                    <span class="text-muted fw-semibold d-block">{{item.Bitis | date: 'HH:mm'}}</span>
+                                </td>
+
+                                <td class="text-center">
+                                    <p class="text-dark fw-bold text-hover-primary hover-scroll h-100px mb-1 fs-6">
+                                        {{item.nedenx}}</p>
+                                </td>
+
+                                <td class="text-center text-muted fw-bold fs-4">
+                                    <a matTooltip="{{'DEMANDED.BUTTON_TEXT.SUREC' | translate}}"
+                                        class="btn btn-icon btn-light-info btn-sm me-3"
+                                        (click)="showDemandProcessDialog(item.Id, item.tipad)">
+                                        <i class="fa-solid fa-question fs-4"></i>
+                                    </a>
+
+                                    <a matTooltip="{{'DEMANDED.BUTTON_TEXT.FORM' | translate}}"
+                                        class="btn btn-icon btn-light-primary btn-sm me-3">
+                                        <i class="fa-solid fa-print fs-4"></i>
+                                    </a>
+
+                                    <a matTooltip="{{'DEMANDED.BUTTON_TEXT.DOSYALAR' | translate}}"
+                                        class="btn btn-icon btn-light-info btn-sm me-3">
+                                        <i class="fa-solid fa-paperclip fs-4"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>

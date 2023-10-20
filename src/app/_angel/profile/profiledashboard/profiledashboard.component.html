@@ -83,6 +83,11 @@
                       {{"PROFIL_DASHBOARD.ZIYARETCI" | translate}}
                     </button>
 
+                    <button mat-menu-item (click)="showAuthorityDialog()">
+                      <i class="fa-solid fa-fingerprint pe-4 fs-3"></i>
+                      {{"PROFIL_DASHBOARD.YETKI" | translate}}
+                    </button>
+                    
                     <button mat-menu-item>
                       <i class="fa-solid fa-car-side pe-4 fs-3"></i>
                       {{"PROFIL_DASHBOARD.ARAC" | translate}}
@@ -127,7 +132,7 @@
                     <a class="d-flex align-items-center text-gray-400 text-hover-danger mb-2 cursor-pointer">
                       <span [inlineSVG]="'./assets/media/icons/duotune/communication/com008.svg'"
                         class="svg-icon svg-icon-4 me-1"></span>
-                      {{ _user.LoginName }}
+                      {{ _user.bolumad }}
                     </a>
 
                   </div>
@@ -273,6 +278,14 @@
                     </li>
                   </ng-container>
 
+                  <!-- <ng-container *ngIf="menuConfig.pages.profil.tabMenu.ziyaretciTaleplerim"> -->
+                    <li class="nav-item">
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_talepleri" routerLinkActive="active">
+                        Ziyaretçi Talepleri
+                      </a>
+                    </li>
+                  <!-- </ng-container> -->
+                  
                   <ng-container *ngIf="menuConfig.pages.profil.tabMenu.ziyaretciTaleplerim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_taleplerim"
@@ -319,41 +332,68 @@
   </div>
 </div>
 
+<ng-container *ngIf="displayOvertimeForm">
+  <p-dialog header="{{'FM_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayOvertimeForm"
+    (visibleChange)="overtimeFormIsSend()" [modal]="true"
+    [style]="{width: !(this.layoutService.isMobile | async) ? '65vw' : 'none'}" [maximizable]="true"
+    [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
-<p-dialog header="{{'FM_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayOvertimeForm"
-  (visibleChange)="overtimeFormIsSend()" [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '65vw' : 'none'}" [maximizable]="true"
-  [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+    <ng-container *ngIf="displayOvertimeForm">
+      <app-dialog-fazla-mesai-talebi (overtimeFormIsSend)="overtimeFormIsSend()"></app-dialog-fazla-mesai-talebi>
+    </ng-container>
+    
 
-  <app-dialog-fazla-mesai-talebi (overtimeFormIsSend)="overtimeFormIsSend()"
-    [closedForm]="closedOvertimeForm"></app-dialog-fazla-mesai-talebi>
-
-</p-dialog>
-
-
-
-<p-dialog header="{{'IZIN_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVacationForm"
-  (visibleChange)="vacationFormIsSend()" [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '80vw' : 'none'}" [maximizable]="true"
-  [baseZIndex]="10000" [draggable]="true" [resizable]="false">
-
-  <app-dialog-izin-talebi (vacationFormIsSend)="vacationFormIsSend()"
-    [closedForm]="closedVacationForm"></app-dialog-izin-talebi>
-
-</p-dialog>
+  </p-dialog>
+</ng-container>
 
 
-<p-dialog header="{{'ZIYARETCI_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVisitRequestForm"
-  (visibleChange)="visitRequestFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000" [draggable]="true"
-  [resizable]="false">
 
-  <app-dialog-ziyaretci-talebi (visitRequestFormIsSend)="visitRequestFormIsSend()"
-    [closedForm]="closedVisitorForm"></app-dialog-ziyaretci-talebi>
+<ng-container *ngIf="displayVacationForm">
+  <p-dialog header="{{'IZIN_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVacationForm"
+    (visibleChange)="vacationFormIsSend()" [modal]="true"
+    [style]="{width: !(this.layoutService.isMobile | async) ? '80vw' : 'none'}" [maximizable]="true"
+    [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
-</p-dialog>
+    <ng-container *ngIf="displayVacationForm">
+      <app-dialog-izin-talebi (vacationFormIsSend)="vacationFormIsSend()"></app-dialog-izin-talebi>
+    </ng-container>
+    
+
+  </p-dialog>
+</ng-container>
+
+
+<ng-container *ngIf="displayVisitRequestForm">
+  <p-dialog header="{{'ZIYARETCI_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVisitRequestForm"
+    (visibleChange)="visitRequestFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000"
+    [draggable]="true" [resizable]="false">
+
+    <ng-container *ngIf="displayVisitRequestForm">
+      <app-dialog-ziyaretci-talebi (visitRequestFormIsSend)="visitRequestFormIsSend()"></app-dialog-ziyaretci-talebi>
+    </ng-container>
+
+  </p-dialog>
+</ng-container>
+
+<ng-container *ngIf="displayAuthorityRequestForm">
+  <p-dialog header="Yetki Talep Formu" [(visible)]="displayAuthorityRequestForm"
+    (visibleChange)="visitRequestFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000"
+    [draggable]="true" [resizable]="false">
+
+    <ng-container *ngIf="displayAuthorityRequestForm">
+      <app-dialog-yetki-talebi (authorityRequestFormIsSend)="authorityRequestFormIsSend()"></app-dialog-yetki-talebi>
+    </ng-container>
+
+  </p-dialog>
+</ng-container>
+
 
 <p-dialog header="{{'PROFIL_DASHBOARD.AVANS' | translate}}" [(visible)]="displayAdvancePaymentForm" [modal]="true"
   [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
-  <app-dialog-avans-talebi (visitRequestFormIsSend)="advancePaymentIsSend()"></app-dialog-avans-talebi>
+  <ng-container *ngIf="displayAdvancePaymentForm">
+    <app-dialog-avans-talebi (visitRequestFormIsSend)="advancePaymentIsSend()"></app-dialog-avans-talebi>
+  </ng-container>
 
 </p-dialog>
 

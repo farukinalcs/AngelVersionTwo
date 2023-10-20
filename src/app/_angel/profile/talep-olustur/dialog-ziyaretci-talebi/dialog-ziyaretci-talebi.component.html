@@ -8,51 +8,9 @@
                         <img src="../../../../../assets/media/illustrations/storyset-1/4.svg" width="100%" alt="">
                     </div>
                 </div>
+
+                <app-form-stepper [stepperFields]="stepperFields"></app-form-stepper>
                 
-                <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-                    <div class="stepper-nav d-flex justify-content-center ps-lg-10">
-
-                        <div class="{{item.class}}" *ngFor="let item of stepperFields">
-                            <div class="stepper-wrapper">
-
-                                <ng-container *ngIf="item.class == 'stepper-item current' ">
-                                    <div class="stepper-icon bg-danger w-40px h-40px">
-                                        <i class="stepper-check fas fa-check"></i>
-                                        <span class="stepper-number">{{item.number}}</span>
-                                    </div>
-                                </ng-container>
-
-                                <ng-container *ngIf="item.class == 'stepper-item completed' ">
-                                    <div class="stepper-icon bg-light-danger w-40px h-40px">
-                                        <i class="stepper-check fas fa-check text-danger"></i>
-                                        <span class="stepper-number">{{item.number}}</span>
-                                    </div>
-                                </ng-container>
-
-                                <ng-container *ngIf="item.class == 'stepper-item' ">
-                                    <div class="stepper-icon bg-light-danger w-40px h-40px">
-                                        <i class="stepper-check fas fa-check"></i>
-                                        <span class="stepper-number text-danger">{{item.number}}</span>
-                                    </div>
-                                </ng-container>
-                                
-
-                                <div class="stepper-label">
-                                    <h3 class="stepper-title">
-                                        {{item.title}}
-                                    </h3>
-
-                                    <div class="stepper-desc">
-                                        {{item.desc}}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="stepper-line h-40px"></div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="row w-xl-700px">
                     <div class="col-12">
                         <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="visitTypeForm">
@@ -60,12 +18,14 @@
                             <ng-container *ngIf="currentStep$.value == 1">
                                 <div class="current">
                                     <div class="w-100">
-                                        <div class="row">
-                                            <div class="col-6 d-flex justify-content-end">
+                                        <div class="row"
+                                        [ngClass]="{ 'mb-2': (this.layoutService.isMobile | async) }">
+                                            <div class="d-flex"
+                                            [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-6 justify-content-end': !(this.layoutService.isMobile | async) }">
                                                 <input type="radio" class="btn-check" formControlName="visitType" value="1"
                                                     id="kt_radio_buttons_2_option_1" />
                                                 <label
-                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center mb-5 h-200px w-200px"
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center justify-content-center mb-5 h-200px w-200px"
                                                     for="kt_radio_buttons_2_option_1">
                                                     <i class="fa-solid fa-person-walking-luggage fs-3x text-danger"></i>
     
@@ -75,11 +35,12 @@
                                                 </label>
                                             </div>
     
-                                            <div class="col-6">
+                                            <div class="d-flex"
+                                            [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-6': !(this.layoutService.isMobile | async) }">
                                                 <input type="radio" class="btn-check" formControlName="visitType" value="0"
                                                     id="kt_radio_buttons_2_option_2" />
                                                 <label
-                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center h-200px w-200px"
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center justify-content-center h-200px w-200px"
                                                     for="kt_radio_buttons_2_option_2">
                                                     <i class="fa-solid fa-person fs-3x text-danger"></i>
                                                     <span class="d-block fw-semibold text-start ps-3">
@@ -98,12 +59,13 @@
                                         <div class="current">
                                             <div class="w-100">
                                                 <div class="row">
-                                                    <div class="col-6">
+                                                    <div class="d-flex"
+                                                    [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-6 justify-content-end': !(this.layoutService.isMobile | async) }">
                                                         <input type="radio" class="btn-check"
                                                             formControlName="personInformation" value="1"
                                                             id="kt_radio_buttons_2_option_1" />
                                                         <label
-                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center mb-5 h-200px"
+                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center justify-content-center mb-5 h-200px w-200px"
                                                             for="kt_radio_buttons_2_option_1">
                                                             <i class="fa-solid fa-people-line fs-3x text-danger"></i>
                                                             <span class="d-block fw-semibold text-start ps-3">
@@ -112,12 +74,13 @@
                                                         </label>
                                                     </div>
     
-                                                    <div class="col-6">
+                                                    <div class="d-flex"
+                                                    [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-6': !(this.layoutService.isMobile | async) }">
                                                         <input type="radio" class="btn-check"
                                                             formControlName="personInformation" value="2"
                                                             id="kt_radio_buttons_2_option_2" />
                                                         <label
-                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center h-200px"
+                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center justify-content-center mb-5 h-200px w-200px"
                                                             for="kt_radio_buttons_2_option_2">
                                                             <i class="fa-solid fa-user fs-3x text-danger"></i>
                                                             <span class="d-block fw-semibold text-start ps-3">
@@ -136,41 +99,44 @@
                                         <div class="current">
                                             <div class="w-100">
                                                 <div class="row">
-                                                    <div class="col-4">
+                                                    <div class="d-flex"
+                                                    [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-4': !(this.layoutService.isMobile | async) }">
                                                         <input type="radio" class="btn-check"
                                                             formControlName="personInformation" value="3"
                                                             id="kt_radio_buttons_2_option_1" />
                                                         <label
-                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center mb-5 h-200px w-200px"
+                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center justify-content-center mb-5 h-200px w-200px"
                                                             for="kt_radio_buttons_2_option_1">
     
-                                                            <span class="d-block fw-semibold text-start ps-3">
+                                                            <span class="d-block fw-semibold text-center ps-3">
                                                                 <span class="text-dark fw-bold d-block fs-3">{{"ZIYARETCI_TALEP_DIALOG.FORM.KENDIM_ICIN" | translate}}</span>
                                                             </span>
                                                         </label>
                                                     </div>
     
-                                                    <div class="col-4">
+                                                    <div class="d-flex"
+                                                    [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-4': !(this.layoutService.isMobile | async) }">
                                                         <input type="radio" class="btn-check"
                                                             formControlName="personInformation" value="4"
                                                             id="kt_radio_buttons_2_option_2" />
                                                         <label
-                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center h-200px w-200px"
+                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center justify-content-center mb-5 h-200px w-200px"
                                                             for="kt_radio_buttons_2_option_2">
-                                                            <span class="d-block fw-semibold text-start ps-3">
+                                                            <span class="d-block fw-semibold text-center ps-3">
                                                                 <span class="text-dark fw-bold d-block fs-3">{{"ZIYARETCI_TALEP_DIALOG.FORM.EKIP_ICIN" | translate}}</span>
                                                             </span>
                                                         </label>
                                                     </div>
     
-                                                    <div class="col-4">
+                                                    <div class="d-flex"
+                                                    [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-4': !(this.layoutService.isMobile | async) }">
                                                         <input type="radio" class="btn-check"
                                                             formControlName="personInformation" value="5"
                                                             id="kt_radio_buttons_3_option_3" />
                                                         <label
-                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center h-200px w-200px"
+                                                            class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center justify-content-center mb-5 h-200px w-200px"
                                                             for="kt_radio_buttons_3_option_3">
-                                                            <span class="d-block fw-semibold text-start ps-3">
+                                                            <span class="d-block fw-semibold text-center ps-3">
                                                                 <span class="text-dark fw-bold d-block fs-3">{{"ZIYARETCI_TALEP_DIALOG.FORM.EKIP_VE_KENDI" | translate}}</span>
                                                             </span>
                                                         </label>
@@ -243,11 +209,11 @@
                                                                         class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                                                         <thead>
                                                                             <tr
-                                                                                class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
-                                                                                <th class="text-center"></th>
+                                                                                class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger rounded">
+                                                                                <th class="text-center rounded-start"></th>
                                                                                 <th class="text-center">{{"ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate}}</th>
                                                                                 <th class="text-center">{{"ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate}}</th>
-                                                                                <th class="text-center"></th>
+                                                                                <th class="text-center rounded-end"></th>
                                                                             </tr>
                                                                         </thead>
     
@@ -259,16 +225,16 @@
                                                                                         <ng-container
                                                                                             *ngIf="isFirstVisitor(i)">
                                                                                             <div
-                                                                                                class="symbol-label fs-2 fw-semibold text-dark">
+                                                                                                class="symbol-label fs-2 fw-semibold bg-light-danger">
                                                                                                 <i
-                                                                                                    class="fa-solid fa-sitemap fs-2x text-dark"></i>
+                                                                                                    class="fa-solid fa-sitemap fs-2x text-danger"></i>
                                                                                             </div>
                                                                                         </ng-container>
     
                                                                                         <ng-container
                                                                                             *ngIf="!isFirstVisitor(i)">
                                                                                             <div
-                                                                                                class="symbol-label fs-2 fw-semibold text-dark">
+                                                                                                class="symbol-label fs-2 fw-semibold bg-light-danger text-danger">
                                                                                                 {{i + 1}}</div>
                                                                                         </ng-container>
                                                                                     </div>
@@ -372,6 +338,7 @@
     
     
                                             <input type="text" class="form-control form-control-lg form-control-solid"
+                                                placeholder="Email Giriniz"
                                                 formControlName="email">
     
                                             <div class="fv-plugins-message-container invalid-feedback"></div>
@@ -385,19 +352,36 @@
                                                     translate}}</span>
                                             </label>
     
-    
-                                            <p-dropdown [options]="company" [(ngModel)]="selectedCompany" optionLabel="ad"
-                                                [filter]="true" filterBy="ad" [showClear]="true"
+                                            
+                                            <!-- <p-dropdown [options]="company" [(ngModel)]="selectedCompany" optionLabel="Ad"
+                                                [filter]="true" filterBy="Ad" [showClear]="true" (onFilter)="filterCompanies($event)"
                                                 placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.FIRMA_SEC' | translate}}"
                                                 formControlName="company">
                                                 <ng-template pTemplate="selectedItem">
                                                     <div class="item-item item-item-value" *ngIf="selectedCompany">
-                                                        <div>{{selectedCompany.ad}}</div>
+                                                        <div>{{selectedCompany.Ad}}</div>
                                                     </div>
                                                 </ng-template>
                                                 <ng-template let-item pTemplate="item">
                                                     <div class="item-item">
-                                                        <div>{{item.ad}}</div>
+                                                        <div>{{item.Ad}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-dropdown> -->
+                                            
+                                            <p-dropdown [options]="company" [(ngModel)]="selectedCompany" optionLabel="Ad"
+                                                [filter]="true" filterBy="Ad" [showClear]="true"
+                                                [editable]="true"
+                                                placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.FIRMA_SEC' | translate}}"
+                                                formControlName="company">
+                                                <ng-template pTemplate="selectedItem">
+                                                    <div class="item-item item-item-value" *ngIf="selectedCompany">
+                                                        <div>{{selectedCompany.Ad}}</div>
+                                                    </div>
+                                                </ng-template>
+                                                <ng-template let-item pTemplate="item">
+                                                    <div class="item-item">
+                                                        <div>{{item.Ad}}</div>
                                                     </div>
                                                 </ng-template>
                                             </p-dropdown>
@@ -420,19 +404,24 @@
                                                     translate}}</span>
                                             </label>
     
-                                            <textarea class="form-control form-control-solid" rows="3"
+                                            <textarea class="form-control form-control-solid" rows="3" maxlength="500"
                                                 formControlName="description"
                                                 placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate}}"></textarea>
+                                                <ng-container *ngIf="visitTypeForm.controls['description']?.value">
+                                                    <div class="text-end">
+                                                        <span class="badge badge-light-danger">{{ visitTypeForm.controls['description'].value.length }} / 500</span>
+                                                    </div>
+                                                </ng-container>
                                             <div class="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
     
-                                        <div class="scroll h-200px fv-row mb-10 fv-plugins-icon-container">
+                                        <div class="fv-row mb-10 fv-plugins-icon-container">
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                 <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_TIPI" |
                                                     translate}}</span>
                                             </label>
     
-                                            <div class="row d-flex justify-content-center">
+                                            <div class="row d-flex justify-content-center scroll h-200px ">
                                                 <label class="col-12 d-flex flex-stack mb-5 cursor-pointer"
                                                     *ngFor="let item of visitTypes">
                                                     <span class="d-flex align-items-center me-2">
@@ -582,9 +571,130 @@
                             </ng-container>
     
                             <ng-container *ngIf="currentStep$.value == 6">
+                                <div class="border border-3">
+                                    <div class="row py-8 px-10">
+                                        
+                                        <div class="col-12 d-flex justify-content-center pb-3">
+                                            <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"ZIYARETCI_TALEP_DIALOG.FORM.TALEP_SAHIBI" | translate}}</span>
+                                        </div>
+                                        
+                                        <div class="col-12 d-flex justify-content-center  pb-10" *ngIf="this.authService.currentUserSubject | async as _user">
+                                            <span class="text-gray-800 fs-6 fw-bolder">{{_user.adsoyad}}</span>
+                                            <span class="text-muted fw-bold d-block fs-7"></span>
+                                        </div>
+    
+                                        <div class="separator mb-10"></div>
+    
+                                        <!-- style="background-image: url(../../../../../assets/media/logos/Mediamodifier-Design-Template\ \(11\).png); background-repeat: no-repeat; background-size: contain; background-position: center;" -->
+                                        <div >
+                                            <div class="col-12 d-flex justify-content-center">
+                                                <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARETCI_BILGILERI" | translate}}</span>
+                                            </div>
+        
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="row">
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.EMAIL" | translate}}:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.email}} </span>
+                                                            </div>
+                        
+                                                            <ng-container *ngIf="visitorFormValues.company.ID != '0' ">
+                                                                <div class="col-12 py-3">   
+                                                                    <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" | translate}}:</span>
+                                                                    <span class="text-muted fw-bold d-block fs-7"> {{ visitorFormValues.company.Ad ? visitorFormValues.company.Ad : visitorFormValues.company }} </span>
+                                                                </div>
+                                                            </ng-container>
+                        
+                                                            <ng-container *ngIf="visitorFormValues.company.ID == '0' ">
+                                                                <div class="col-12 py-3">
+                                                                    <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" | translate}}:</span>
+                                                                    <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.otherCompany}} </span>
+                                                                </div>
+                                                            </ng-container>
+                                                            
+                        
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA" | translate}}:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.description}} </span>
+                                                            </div>
+                        
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_TIPI" | translate}}:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.type}} </span>
+                                                            </div>
+                        
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_TARIHI" | translate}}:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.entryDate}} </span>
+                                                            </div>
+                        
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_SAATI" | translate}}:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.entryTime}} </span>
+                                                            </div>
+                        
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_TARIHI" | translate}}:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.exitDate}} </span>
+                                                            </div>
+                        
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_SAATI" | translate}}:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.exitTime}} </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-6">
+                                                        <div class="row">
+                                                            <div class="col-12 py-3">
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARETCILER" | translate}}:</span>
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <ul>
+                                                                            <ng-container *ngIf="personInformation != 3 && personInformation != 2">
+                                                                                <li class="my-4" *ngFor="let item of visitorFormValues.visitors">
+                                                                                    <span class="badge badge-light-dark text-muted fw-bold d-block fs-7"> {{item.name}} {{item.surname}}</span>
+                            
+                                                                                    <!-- <ng-container *ngIf="item.files.length != 0">
+                                                                                        <ul class="my-2">
+                                                                                            <li *ngFor="let value of item.files">
+                                                                                                <span class="text-muted fw-bold d-block fs-7"> {{value.fileName}}</span>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </ng-container> -->
+                                                                                </li>
+                                                                            </ng-container>
+
+                                                                            <ng-container *ngIf="personInformation == 3 || personInformation == 2">
+                                                                                <li class="my-4">
+                                                                                    <span class="badge badge-light-dark text-muted fw-bold d-block fs-7">
+                                                                                        {{ visitTypeForm.get('name')?.value }} {{ visitTypeForm.get('surname')?.value }}
+                                                                                    </span>
+                                                                                </li>
+                                                                            </ng-container>
+                                                                            
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+    
+                            </ng-container>
+    
+                            <ng-container *ngIf="currentStep$.value == 7">
                                 <div class="row">
                                     
-                                    <ng-container *ngIf="visitors.length > 0">
+                                    <!-- <ng-container *ngIf="visitors.length > 0">
                                         <div class="col-12 hover-scroll h-550px">
                                             <div class="tab-content">
                                                 <div class="tab-pane fade active show">
@@ -619,11 +729,11 @@
                                                                         </td>
                                     
                                                                         <td class="text-center text-muted fw-bold fs-4">
-                                                                            <span class="fs-5 text-dark">{{item.name}}</span>
+                                                                            <span class="fs-5 text-dark">{{item.Ad}}</span>
                                                                         </td>
                                     
                                                                         <td class="text-center text-muted fw-bold fs-4">
-                                                                            <span class="fs-5 text-dark">{{item.surname}}</span>
+                                                                            <span class="fs-5 text-dark">{{item.Soyad}}</span>
                                                                         </td>
                                     
                                                                         <td class="text-center">
@@ -638,7 +748,7 @@
                                     
                                                                     <tr>
                                                                         <td colspan="4">
-                                                                            <ng-container *ngIf="item.files.length != 0">
+                                                                            <ng-container *ngIf="item.files">
                                                                                 <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4 my-10 mx-0">
                                                                                     <thead>
                                                                                         <tr
@@ -691,9 +801,6 @@
                                                                                                 <span class="fs-5 text-dark">{{value.fileName}}</span>
                                                                                             </td>
                                     
-                                                                                            <!-- <td class="text-center text-muted fw-bold fs-4">
-                                                                                                <span class="fs-5 text-dark">{{value.type}}</span>
-                                                                                            </td> -->
                                     
                                                                                             <td class="text-center text-muted fw-bold fs-4">
                                                                                                 <span class="fs-5 text-dark">{{value.fileSize}}</span>
@@ -717,142 +824,101 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </ng-container>
-                                </div>
-    
-    
-                            </ng-container>
-    
-                            <ng-container *ngIf="currentStep$.value == 7">
-                                <div class="border border-3">
-                                    <div class="row py-8 px-10">
-                                        
-                                        <div class="col-12 d-flex justify-content-center pb-3">
-                                            <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"ZIYARETCI_TALEP_DIALOG.FORM.TALEP_SAHIBI" | translate}}</span>
-                                        </div>
-                                        
-                                        <div class="col-12 d-flex justify-content-center  pb-10" *ngIf="this.authService.currentUserSubject | async as _user">
-                                            <span class="text-gray-800 fs-6 fw-bolder">{{_user.adsoyad}}</span>
-                                            <span class="text-muted fw-bold d-block fs-7"></span>
-                                        </div>
-    
-                                        <div class="separator mb-10"></div>
-    
-                                        <div style="background-image: url(../../../../../assets/media/logos/Mediamodifier-Design-Template\ \(11\).png); background-repeat: no-repeat; background-size: contain; background-position: center;">
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARETCI_BILGILERI" | translate}}</span>
-                                            </div>
-        
-                                            <div class="col-12">
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="row">
-                                                            <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.EMAIL" | translate}}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.email}} </span>
-                                                            </div>
-                        
-                                                            <ng-container *ngIf="visitorFormValues.company.id != '0' ">
-                                                                <div class="col-12 py-3">
-                                                                    <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" | translate}}:</span>
-                                                                    <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.company}} </span>
-                                                                </div>
-                                                            </ng-container>
-                        
-                                                            <ng-container *ngIf="visitorFormValues.company.id == '0' ">
-                                                                <div class="col-12 py-3">
-                                                                    <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" | translate}}:</span>
-                                                                    <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.otherCompany}} </span>
-                                                                </div>
-                                                            </ng-container>
-                                                            
-                        
-                                                            <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA" | translate}}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.description}} </span>
-                                                            </div>
-                        
-                                                            <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_TIPI" | translate}}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.type}} </span>
-                                                            </div>
-                        
-                                                            <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_TARIHI" | translate}}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.entryDate}} </span>
-                                                            </div>
-                        
-                                                            <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_SAATI" | translate}}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.entryTime}} </span>
-                                                            </div>
-                        
-                                                            <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_TARIHI" | translate}}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.exitDate}} </span>
-                                                            </div>
-                        
-                                                            <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_SAATI" | translate}}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.exitTime}} </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="col-6">
-                                                        <div class="row">
-                                                            <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARETCILER" | translate}}:</span>
-                                                                <div class="row">
-                                                                    <div class="col-12">
-                                                                        <ul>
-                                                                            <li class="my-4" *ngFor="let item of visitorFormValues.visitors">
-                                                                                <span class="badge badge-light-dark text-muted fw-bold d-block fs-7"> {{item.name}} {{item.surname}}</span>
-                        
-                                                                                <ng-container *ngIf="item.files.length != 0">
-                                                                                    <ul class="my-2">
-                                                                                        <li *ngFor="let value of item.files">
-                                                                                            <span class="text-muted fw-bold d-block fs-7"> {{value.fileName}}</span>
-                                                                                        </li>
-                                                                                    </ul>
+                                    </ng-container> -->
+
+
+
+
+
+
+
+                                    <ng-container *ngIf="visitors.length > 0">
+                                        <div class="col-12 hover-scroll h-550px">
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade active show">
+                                                    <div class="table-responsive">
+
+                                                        
+                                                        <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                                                            <thead>
+                                                                <tr class="bg-danger fs-7 fw-bold text-white border-bottom-0 text-uppercase">
+                                                                    <th class="text-center rounded-start"></th>
+                                                                    <th class="text-center">{{"ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate}}</th>
+                                                                    <th class="text-center">{{"ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate}}</th>
+                                                                    <th class="text-center rounded-end"></th>
+                                                                </tr>
+                                                            </thead>
+                                    
+                                                            <tbody>
+                                                                <ng-container *ngFor="let item of visitors; index as i">
+                                                                    <tr>
+                                                                        <td class="text-center">
+                                                                            <div class="symbol symbol-50px">
+                                                                                <ng-container *ngIf="isFirstVisitor(i)">
+                                                                                    <div class="symbol-label fs-2 fw-semibold text-dark">
+                                                                                        <i class="fa-solid fa-sitemap fs-2x text-dark"></i>
+                                                                                    </div>
                                                                                 </ng-container>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                    
+                                                                                <ng-container *ngIf="!isFirstVisitor(i)">
+                                                                                    <div class="symbol-label fs-2 fw-semibold text-dark">
+                                                                                        {{i + 1}}
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                            </div>
+                                                                        </td>
+                                    
+                                                                        <td class="text-center text-muted fw-bold fs-4">
+                                                                            <span class="fs-5 text-dark">{{item.Ad}}</span>
+                                                                        </td>
+                                    
+                                                                        <td class="text-center text-muted fw-bold fs-4">
+                                                                            <span class="fs-5 text-dark">{{item.Soyad}}</span>
+                                                                        </td>
+
+                                                                        <td class="text-center">
+                                                                            <a (click)="selectVisitor(item)" class="btn btn-danger btn-sm px-4 py-2 ng-star-inserted">
+                                                                                <i class="fa-solid fa-arrow-up-from-bracket m-0 p-0"></i>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                    
+                                                                </ng-container>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </ng-container>
                                 </div>
+                                
+                                
                             </ng-container>
                         </form>
                     </div>
 
-                    <div class="col-12 d-flex align-items-start justify-content-end">
+                    <div class="col-12 d-flex align-items-end"
+                        [ngClass]="{'justify-content-center': (this.layoutService.isMobile | async), 'justify-content-end': !(this.layoutService.isMobile | async) }">
                         <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
                                 <ng-container *ngIf=" 7 > currentStep$.value && currentStep$.value > 1">
-                                    <button type="button" class="btn btn-lg btn-light-danger me-3"
-                                        (click)="prevStep()">
+                                    <button type="button" class="btn btn-lg btn-light-danger me-3" (click)="prevStep()">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                            {{"ZIYARETCI_TALEP_DIALOG.FORM.GERI" | translate}}
+                                        {{"ZIYARETCI_TALEP_DIALOG.FORM.GERI" | translate}}
                                     </button>
                                 </ng-container>
-
+                    
                                 <ng-container *ngIf="currentStep$.value == formsCount">
                                     <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                            {{"ZIYARETCI_TALEP_DIALOG.FORM.KAPAT" | translate}}
+                                        {{"ZIYARETCI_TALEP_DIALOG.FORM.KAPAT" | translate}}
                                     </button>
                                 </ng-container>
                             </div>
-
+                    
                             <ng-container *ngIf="currentStep$.value !== formsCount">
                                 <div>
                                     <ng-container *ngIf="currentStep$.value < formsCount - 1">
@@ -868,14 +934,14 @@
                                         </button>
                                     </ng-container>
                                     <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="getFormValues()">
+                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="postUploadedFilesForVisitors()">
                                             <span class="indicator-label">
                                                 {{"ZIYARETCI_TALEP_DIALOG.FORM.GONDER" | translate}}
                                             </span>
                                         </button>
-
+                    
                                     </ng-container>
-
+                    
                                 </div>
                             </ng-container>
                         </div>
@@ -905,3 +971,125 @@
         </div>
     </ng-container>
 </ng-template>
+
+
+
+
+
+
+<ng-container *ngIf="selectedVisitor">
+    <p-dialog header="{{ selectedVisitor.Ad }} {{ selectedVisitor.Soyad }} İçin Dosya Yükle"
+        [(visible)]="displayUploadFiles" position="center" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+        [draggable]="true" [resizable]="false">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table
+                                    class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4 my-10 mx-0">
+                                    <thead>
+                                        <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                            <th class="text-center rounded-start"> Belge Adı </th>
+                                            <th class="text-center rounded-end"> Yükle </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <ng-container *ngFor="let value of selectedVisitor.fileTypes; index as j">
+                                            <tr>
+                                                <td class="text-center text-muted fw-bold fs-4">
+                                                    <span class="fs-5 text-dark">{{ value.ad }}</span>
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <input type="file" [id]=" 'upload_' + j " style="display: none;"
+                                                        (change)="getFile($event, value)">
+                                                    <label [for]=" 'upload_' + j"
+                                                        class="btn btn-icon btn-danger btn-circle">
+                                                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                                    </label>
+                                                </td>
+                                            </tr>
+
+                                            <ng-container *ngIf="value.files">
+                                                <tr>
+                                                    <td colspan="5">
+                                                        <div class="card bg-light-dark mx-8 my-5">
+                                                            <div class="card-body">
+                                                                <div class="row d-flex justify-content-center align-items-center">
+                                                        
+                                                                    <div class="col-3 text-center">
+                                                                        <div [ngSwitch]="value.files.type">
+                                                                            <div
+                                                                                *ngSwitchCase="['image/jpeg', 'image/png', 'image/svg'].includes(value.files.type) ? value.files.type : !value.files.type">
+                                                                                <i class="file-type cursor-pointer fa-solid fa-file-image text-dark fs-3x"></i>
+                                                                            </div>
+                                                        
+                                                                            <div
+                                                                                *ngSwitchCase="['text/plain'].includes(value.files.type) ? value.files.type : !value.files.type">
+                                                                                <i class="file-type cursor-pointer fa-solid fa-file-lines text-dark fs-3x"></i>
+                                                                            </div>
+                                                        
+                                                                            <div
+                                                                                *ngSwitchCase="['application/pdf'].includes(value.files.type) ? value.files.type : !value.files.type">
+                                                                                <i class="file-type cursor-pointer fa-solid fa-file-pdf text-dark fs-3x"></i>
+                                                                            </div>
+                                                        
+                                                                            <div *ngSwitchDefault>
+                                                                                <i class="fa-solid cursor-pointer fa-file text-dark fs-3x"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                        
+                                                        
+                                                                    <div class="col-5">
+                                                                        <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                                            {{ value.files.fileName }}
+                                                                        </div>
+                                                        
+                                                                        <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                                            {{ value.files.fileSize }}
+                                                                        </div>
+                                                                    </div>
+                                                        
+                                                        
+                                                                    <div class="col-2">
+                                                                        <a (click)="value.files = null" class="btn btn-icon btn-danger btn-sm me-3">
+                                                                            <i class="fa-solid fa-xmark fs-4"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </ng-container>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+        <ng-template pTemplate="footer">
+            <a (click)="displayUploadFiles=false" class="btn btn-danger">
+                <i class="fa-solid fa-xmark fs-1"></i>
+                {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+            </a>
+        </ng-template>
+    </p-dialog>
+</ng-container>
