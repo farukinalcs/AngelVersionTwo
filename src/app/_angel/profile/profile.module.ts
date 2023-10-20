@@ -94,7 +94,6 @@ import { FormatFileSizePipe } from 'src/app/_helpers/pipes/format-file-size.pipe
 import { VisitorRequestsComponent } from './talepler/visitor-requests/visitor-requests.component';
 import { DialogYetkiTalebiComponent } from './talep-olustur/dialog-yetki-talebi/dialog-yetki-talebi.component';
 
-import { YemekmenuTipiTanimlamaComponent } from './profil-tanimlamalar/yemekmenu-tipi-tanimlama/yemekmenu-tipi-tanimlama.component';
 import { YemekTipiTanimlamaComponent } from './profil-tanimlamalar/yemek-tipi-tanimlama/yemek-tipi-tanimlama.component';
 import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-tanimlama/yemek-menu-tanimlama.component';
 
@@ -149,9 +148,7 @@ import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-ta
     RequestMenuComponent,
     FormatFileSizePipe,
     VisitorRequestsComponent,
-    DialogYetkiTalebiComponent
-
-    YemekmenuTipiTanimlamaComponent,
+    DialogYetkiTalebiComponent,
     YemekTipiTanimlamaComponent,
     YemekMenuTanimlamaComponent
 
