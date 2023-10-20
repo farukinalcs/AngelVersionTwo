@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { LayoutService } from 'src/app/_metronic/layout';
 import { ProfileService } from '../../profile.service';
@@ -13,33 +13,18 @@ import { ProfileService } from '../../profile.service';
 })
 export class YemekTipiTanimlamaComponent implements OnInit {
 
+  private ngUnsubscribe = new Subject()
+
   @Input() selectedItem: any; 
+
   @Output() closeAnimationEvent = new EventEmitter<void>();
 
-  private ngUnsubscribe = new Subject();
-
- foodType: any[] = [
-    { id: 1, name: 'Ana Yemek'},
-    { id: 2, name: 'Corba'},
-    { id: 3, name: 'Ara Sıcak'},
-    { id: 4, name: 'Salata'},
-    { id: 5, name: 'Tatlı'},
-    { id: 6, name: 'Diğer'},
-  ];
-
-  form : FormGroup;
-  selectedType  : any;
-  selectedMenu: any;
-  selectedValue : any[] = []
-  sourceItems: any[] = [];
-  targetItems: any[] = [];
-  vacationReasons: any[] = [];
-  dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
-  selected: any;
   demandParam: string = '';
+
   fileParam: string = '';
-  dragDrop : boolean = true; 
-  
+
+  mealType: any[] = [];
+
   constructor(
     private formBuilder: FormBuilder,
     private profileService : ProfileService,
@@ -50,8 +35,40 @@ export class YemekTipiTanimlamaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    this.getMealType();
   }
+
+  onSubmit(data:any){
+    this.profileService
+    .setMeal(data)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe((response : any) => {
+
+     let blabla = response[0].x;
+  
+     console.log("setMeal:", blabla);
+     console.log("YEMEK",response);
+     console.log("SUBMİT",data);
+      this.ref.detectChanges();
+    });
+   
+  }
+
+
+  getMealType(){
+    this.profileService
+    .getMealType()
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe((response : any) => {
+
+     this.mealType = response[0].x;
+  
+     console.log("getMealType:", this.mealType);
+      
+      this.ref.detectChanges();
+    });
+  }
+
 
   onCloseButtonClick() {
     this.fileParam = '';
@@ -60,6 +77,7 @@ export class YemekTipiTanimlamaComponent implements OnInit {
 
     this.ref.detectChanges();
   }
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
