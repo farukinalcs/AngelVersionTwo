@@ -80,6 +80,7 @@ import { FirstSevenPipe } from 'src/app/_helpers/pipes/first-seven.pipe';
 import { YemekMenuTumuComponent } from './profile-data-widget/yemek-menu/yemek-menu-tumu/yemek-menu-tumu.component';
 import { RatingModule } from 'primeng/rating';
 import { UploadedFilesComponent } from './talepler/talepedilenler/uploaded-files/uploaded-files.component';
+
 import { VisitorUploadedFilesComponent } from './talepler/ziyaretcitaleplerim/visitor-uploaded-files/visitor-uploaded-files.component';
 import { DataNotFoundComponent } from '../shared/data-not-found/data-not-found.component';
 import { FormStepperComponent } from '../shared/form-stepper/form-stepper.component';
@@ -92,6 +93,11 @@ import { RequestMenuComponent } from '../shared/request-menu/request-menu.compon
 import { FormatFileSizePipe } from 'src/app/_helpers/pipes/format-file-size.pipe';
 import { VisitorRequestsComponent } from './talepler/visitor-requests/visitor-requests.component';
 import { DialogYetkiTalebiComponent } from './talep-olustur/dialog-yetki-talebi/dialog-yetki-talebi.component';
+
+import { YemekmenuTipiTanimlamaComponent } from './profil-tanimlamalar/yemekmenu-tipi-tanimlama/yemekmenu-tipi-tanimlama.component';
+import { YemekTipiTanimlamaComponent } from './profil-tanimlamalar/yemek-tipi-tanimlama/yemek-tipi-tanimlama.component';
+import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-tanimlama/yemek-menu-tanimlama.component';
+
 
 @NgModule({
   declarations: [
@@ -131,6 +137,7 @@ import { DialogYetkiTalebiComponent } from './talep-olustur/dialog-yetki-talebi/
     FirstSevenPipe,
     YemekMenuTumuComponent,
     UploadedFilesComponent,
+
     VisitorUploadedFilesComponent,
     DataNotFoundComponent,
     FormStepperComponent,
@@ -143,6 +150,11 @@ import { DialogYetkiTalebiComponent } from './talep-olustur/dialog-yetki-talebi/
     FormatFileSizePipe,
     VisitorRequestsComponent,
     DialogYetkiTalebiComponent
+
+    YemekmenuTipiTanimlamaComponent,
+    YemekTipiTanimlamaComponent,
+    YemekMenuTanimlamaComponent
+
   ],
   imports: [
     CommonModule,

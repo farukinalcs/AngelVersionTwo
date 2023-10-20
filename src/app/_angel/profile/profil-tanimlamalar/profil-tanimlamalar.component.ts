@@ -35,11 +35,18 @@ import { LayoutService } from 'src/app/_metronic/layout';
 export class ProfilTanimlamalarComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
 
+
   definitions: any[] = [
     { id: 1, name: 'İzin Tipleri Dosya Gereklilik Tanımı', tip : 'İzin Tipi', demandParam : 'cbo_izintipleri', fileParam : 'izin' },
     { id: 2, name: 'FM Nedenleri Dosya Gereklilik Tanımı', tip : 'Fazla Mesai Nedeni', demandParam : 'cbo_fmnedenleri', fileParam : 'fm' },
     { id: 3, name: 'Ziyaret Tipleri Dosya Gereklilik Tanımı', tip : 'Ziyaret Tipi', demandParam : 'cbo_ziyaretnedeni', fileParam : 'ziyaretci' },
-  ];
+    { id: 4, name: 'Yemek Tipleri Tanımı', tip : 'Yemek Tipi'},
+    { id: 5, name: 'Yemek Menü Tanımı', tip : 'Menu Tipi'}
+    ];
+
+ 
+
+
   selectedItem: any;
   animation: string = 'out';
   animationReport: string = 'in';

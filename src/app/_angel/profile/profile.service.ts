@@ -1111,6 +1111,11 @@ export class ProfileService {
       mkodu : 'yek073',
       talepid : visitId.toString(),
       aciklama : description
+
+  getMealType(){
+    var sp : any[] = [{
+      mkodu : 'yek074',
+
     }];
 
     var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
@@ -1133,6 +1138,7 @@ export class ProfileService {
 
     return this.httpClient.get<any>(API_URL + '/process', options);
   }
+
 
 
   postAuthorityRequest(formValues: any, isRequest: any) {
@@ -1147,6 +1153,13 @@ export class ProfileService {
       bittarih: formValues.endDate,
       bitsaat: formValues.endTime,
       sicillerim: formValues.sicillerim.toString()
+
+  setMeal(meal:any){
+    var sp : any[] = [{
+      mkodu : 'yek075',
+      tip : meal.yemektipi.toString(),
+      aciklama :meal.yemekadi
+
     }];
 
     var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
@@ -1169,6 +1182,7 @@ export class ProfileService {
 
     return this.httpClient.get<any>(API_URL + '/process', options);
   }
+
 
   getVisitorRequests() {
     var sp : any[] = [{
@@ -1251,6 +1265,10 @@ export class ProfileService {
     };
 
     return this.httpClient.get<any>(API_URL + '/process', options);
+
+  setMealMenu(){
+
+
   }
 
 }
