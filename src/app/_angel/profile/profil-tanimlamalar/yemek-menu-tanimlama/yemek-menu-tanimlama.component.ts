@@ -25,9 +25,23 @@ export class YemekMenuTanimlamaComponent implements OnInit {
   currentWeekIndex: any = 0;  
   selectedMenu: any;
   selectedValue : any[] = []
-  sourceItems: any[] = [];
-  targetItems: any[] = [];
-  vacationReasons: any[] = [];
+  // sourceItems: any[] = [];
+  // targetItems: any[] = [];
+  // vacationReasons: any[] = [];
+
+  anayemekOptions: string []= [];
+  corbaOptions: string  []= [];
+  arasicakOptions: string [] = [];
+  salataOptions: string [] = [];
+  tatliOptions: string [] = [];
+  digerOptions: string [] = [];
+  
+  selectedAnaYemek: any;
+  selectedCorba: any;
+  selectedAraSicak: any;
+  selectedSalata: any;
+  selectedTatli: any;
+  selectedDiger:any;
 
   selectedType  : any;
   dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
@@ -44,6 +58,9 @@ export class YemekMenuTanimlamaComponent implements OnInit {
     { id: 5, name: 'Tatlı'},
     { id: 6, name: 'Diğer'},
   ];
+  // foodType: string[] = [
+  //   'Ana Yemek','Corba','Ara Sıcak','Salata','Tatlı','Diğer'
+  // ];
   constructor(
     private formBuilder: FormBuilder,
     private profileService : ProfileService,
@@ -83,19 +100,21 @@ export class YemekMenuTanimlamaComponent implements OnInit {
     
     return monthNames[monthIndex];
   }
+
   setCurrentIndex() {
     this.weeks.forEach((week : any, index : any) => {
       week.forEach((day : any) => {
         if (day.date.getDate() == this.currentDate.getDate() && day.date.getMonth() == this.currentDate.getMonth()) {
           this.currentWeekIndex = index;
           this.selectedMenu = day;
-          console.log("Selected Date : ", day);
+          console.log("Selected Date CURRENT?: ", day);
 
           this.ref.detectChanges();
         }
       });
     });
   }
+
   previousMonth(): void {
     if (this.currentMonth === 0) {
       this.currentMonth = 11;
@@ -201,6 +220,62 @@ export class YemekMenuTanimlamaComponent implements OnInit {
     console.log("Selected Date : ", day);
     
   }
+
+  onSelectionChange(selectOptions : any, category: string){
+    // if(selectOptions = this.selectedAnaYemek)
+    // { this.anayemekOptions.push(this.selectedAnaYemek)
+    //   console.log("anayemekOptions : ", this.anayemekOptions);
+    // }else if(selectOptions = this.selectedCorba){
+    //   this.corbaOptions.push(this.selectedCorba)
+    //   console.log("corbaOptions : ", this.corbaOptions);
+    // }else if(selectOptions = this.selectedAraSicak){
+    //   this.arasicakOptions.push(this.selectedAraSicak)
+    //   console.log("arasicakOptions : ", this.arasicakOptions);
+    // }else if (selectOptions = this.selectedTatli){
+    //   this.tatliOptions.push(this.selectedTatli)
+    //   console.log("tatliOptions : ", this.tatliOptions);
+    // }else if (selectOptions = this.selectedSalata){
+    //   this.salataOptions.push(this.selectedSalata)
+    //   console.log("salataOptions : ", this.salataOptions);
+    // }else if (selectOptions = this.selectedDiger){
+    //   this.digerOptions.push(this.selectedDiger)
+    //   console.log("digerOptions : ", this.digerOptions);
+    // }
+
+    switch (category) {
+      case 'AnaYemek':
+        this.anayemekOptions.push(selectOptions);
+        console.log("anayemekOptions : ", this.anayemekOptions);
+        break;
+      case 'Corba':
+        this.corbaOptions.push(selectOptions);
+        console.log("corbaOptions : ", this.corbaOptions);
+        break;
+      case 'AraSicak':
+        this.arasicakOptions.push(selectOptions);
+        console.log("arasicakOptions : ", this.arasicakOptions);
+        break;
+      case 'Salata':
+        this.salataOptions.push(selectOptions);
+        console.log("salataOptions : ", this.salataOptions);
+        
+        break;
+      case 'Tatli':
+        this.tatliOptions.push(selectOptions);
+        console.log("tatliOptions : ", this.tatliOptions);
+        break;
+      case 'Diğer':
+        this.digerOptions.push(selectOptions);
+        console.log("digerOptions : ", this.digerOptions);
+        break;
+      default:
+        break;
+    }
+  }
+
+  
+
+
   getMeals(){
     /* Menu oluşturmak için tanımlanan yemekleri getirir*/
   }

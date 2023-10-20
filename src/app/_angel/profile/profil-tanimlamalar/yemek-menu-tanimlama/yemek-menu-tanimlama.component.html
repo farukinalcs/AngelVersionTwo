@@ -36,6 +36,7 @@
                             <div class="col-1 d-flex justify-content-center align-items-center">
                                 <i class="fa-solid fa-chevron-left text-hover-danger fs-2" (click)="previousWeek()"></i>
                             </div>
+
                             <div class="col-10 list" [ngClass]="{'p-0 m-0': (this.layoutService.isMobile | async)}">
                                 <ul class="nav nav-stretch nav-pills nav-pills-custom nav-pills-active-custom d-flex"
                                     [ngClass]="{'px-5': !(this.layoutService.isMobile | async), 'px-0': (this.layoutService.isMobile | async), 'justify-content-between': !(this.layoutService.isMobile | async), 'justify-content-around': (this.layoutService.isMobile | async)}"
@@ -64,67 +65,59 @@
                                 <i class="fa-solid fa-chevron-right text-hover-danger fs-2" (click)="nextWeek()"></i>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-12 mb-4">
                                 <label class="required" for="inputMeal">Ana Yemek</label>
-                                <select name="anayemek" class="form-select" aria-label="Default select example" ngModel>
-                                    <option *ngFor="let item of foodType">{{item.name}}</option>      
+                                <select [(ngModel)]="selectedAnaYemek" name="anayemek" (change)="onSelectionChange(selectedAnaYemek, 'AnaYemek')" class="form-select" aria-label="Default select example">
+                                    <option *ngFor="let item of foodType" [ngValue]="item">{{item.name}}</option>      
                                 </select>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-12 mb-4">
                                 <label class="required" for="inputMeal">Çorba</label>
-                                <select name="corba"  class="form-select" aria-label="Default select example" ngModel>
-                                    <option *ngFor="let item of foodType">{{item.name}}</option>
-                                  
+                                <select [(ngModel)]="selectedCorba" name="corba" (change)="onSelectionChange(selectedCorba,'Corba')"  class="form-select" aria-label="Default select example" ngModel>
+                                    <option *ngFor="let item of foodType" [ngValue]="item | json">{{item.name}}</option>
                                 </select>
-                               
                             </div>
-                    
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-12 mb-4">
                                 <label class="required" for="inputMeal">Ara Sıcak</label>
-                                <select name="arasicak"  class="form-select" aria-label="Default select example" ngModel>
-                                    <option *ngFor="let item of foodType">{{item.name}}</option>
-                                  
+                                <select [(ngModel)]="selectedAraSicak" name="arasicak" (change)="onSelectionChange(selectedAraSicak, 'AraSicak')"  class="form-select" aria-label="Default select example" ngModel>
+                                    <option *ngFor="let item of foodType" [ngValue]="item  | json">{{item.name}}</option>
                                 </select>
-                               
                             </div>
-                    
                         </div>
 
                         <div class="row">
                             <div class="col-12 mb-4">
                                 <label class="required" for="inputMeal">Salata</label>
-                                <select name="salata"  class="form-select" aria-label="Default select example" ngModel>
-                                    <option *ngFor="let item of foodType">{{item.name}}</option>
-                                  
+                                <select [(ngModel)]="selectedSalata" name="salata" (change)="onSelectionChange(selectedSalata, 'Salata')"  class="form-select" aria-label="Default select example" ngModel>
+                                    <option *ngFor="let item of foodType" [ngValue]="item">{{item.name}}</option>
                                 </select>
-                               
                             </div>
-                    
+                       
                         </div>
 
                         <div class="row">
                             <div class="col-12 mb-4">
                                 <label class="required" for="inputMeal">Tatlı</label>
-                                <select name="tatli"  class="form-select" aria-label="Default select example" ngModel>
-                                    <option *ngFor="let item of foodType">{{item.name}}</option>
-                                  
+                                <select [(ngModel)]="selectedTatli" name="tatli" (change)="onSelectionChange(selectedTatli,'Tatli')" class="form-select" aria-label="Default select example" ngModel>
+                                    <option *ngFor="let item of foodType" [ngValue]="item">{{item.name}}</option>
                                 </select>
-                               
                             </div>
-                    
                         </div>
-                            
+                        
                         <div class="row">
-                            <div class="col-12 mb-5">
-                                <label class="required" for="inputMeal">Diğer</label>
-                                <input name="diger"  type="text" class="form-control" id="inputMeal" placeholder="Eklemek istediğiniz yemeğin adını giriniz" ngModel>
-                                
+                            <div class="col-12 mb-4">
+                                <label class="required" for="inputMeal">Diger</label>
+                                <select [(ngModel)]="selectedDiger" name="diger" (change)="onSelectionChange(selectedDiger,'Diğer')" class="form-select" aria-label="Default select example" ngModel>
+                                    <option *ngFor="let item of foodType" [ngValue]="item">{{item.name}}</option>
+                                </select>
                             </div>
                         </div>
                     
@@ -133,6 +126,7 @@
                                 <button type="submit" class="btn btn-danger">Oluştur</button>
                             </div>
                         </div>
+
                     </form>
                   
                 </div>
