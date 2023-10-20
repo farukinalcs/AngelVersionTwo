@@ -323,7 +323,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   }
 
   getOvertimeReason(kaynak: string) {
-    this.profileService.getOKodField(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
+    this.profileService.getTypeValues(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
       const data = response[0].x;
       const message = response[0].z;
 

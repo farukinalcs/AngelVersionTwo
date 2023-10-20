@@ -98,7 +98,7 @@ export class DosyaTipiTanimlamaComponent implements OnInit, OnDestroy {
 
   getDemandType() {
     this.profileService
-    .getOKodField(this.demandParam)
+    .getTypeValues(this.demandParam)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
 
@@ -117,7 +117,7 @@ export class DosyaTipiTanimlamaComponent implements OnInit, OnDestroy {
   getFileType() {
     this.sourceItems = [];
     this.profileService
-    .getOKodField('cbo_belgetipi')
+    .getTypeValues('cbo_belgetipi')
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response : ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
       const data = response[0].x;

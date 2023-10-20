@@ -177,7 +177,7 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
   }
 
   getVisitorCompany(kaynak: string) { // API'den Ziyaretçi Firmaları Alıyor
-    this.profileService.getOKodField(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
+    this.profileService.getTypeValues(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
       const data = response[0].x;
       const message = response[0].z;
       this.company = [];
@@ -193,7 +193,7 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
   }
 
   getVisitTypes(kaynak: string) { // API'den Ziyaret Nedenlerini Alıyor
-    this.profileService.getOKodField(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
+    this.profileService.getTypeValues(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
       const data = response[0].x;
       const message = response[0].z;
 

@@ -50,7 +50,7 @@ export class DialogAvansTalebiComponent implements OnInit {
   ngOnInit(): void {
     this.createFormGroup();
     this.getAccessData();
-    this.getOKodField('cbo_ziyaretnedeni');
+    this.getTypeValues('cbo_ziyaretnedeni');
     this.isThereCompany();
   }
 
@@ -120,8 +120,8 @@ export class DialogAvansTalebiComponent implements OnInit {
     });
   }
 
-  getOKodField(kaynak: string) {
-    this.profilService.getOKodField(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
+  getTypeValues(kaynak: string) {
+    this.profilService.getTypeValues(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
       const data = response[0].x;
       const message = response[0].z;
 

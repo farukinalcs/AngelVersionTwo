@@ -460,6 +460,7 @@ export const locale = {
       IZIN : 'İzin',
       FAZLA_MESAI : 'Fazla Mesai',
       ZIYARETCI : 'Ziyaretçi',
+      YETKI: 'Yetki',
       EGITIM : 'Eğitim',
       ARAC : 'Araç',
       AVANS : 'Avans',

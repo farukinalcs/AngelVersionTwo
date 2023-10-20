@@ -31,6 +31,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
 
   displayVisitRequestForm: boolean;
   displayAdvancePaymentForm: boolean;
+  displayAuthorityRequestForm: boolean;
 
   fotoImage : any;
   constructor(
@@ -112,6 +113,15 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   }
   /* --------------------------------- */
 
+
+  /* Yetki Form Dialog Penceresi */
+  showAuthorityDialog() {
+    this.displayAuthorityRequestForm = true;
+  }
+  authorityRequestFormIsSend() {
+    this.displayAuthorityRequestForm = false;
+  }
+  /* --------------------------------- */
 
   /* Avans Form Dialog Penceresi */
   showAdvancePaymentDialog() {

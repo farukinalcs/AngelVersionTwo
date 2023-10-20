@@ -72,20 +72,20 @@ export class DetailSearchComponent implements OnInit, OnDestroy {
 
   showDetailSearchDialog() {
     this.getAccessData();
-    this.getOKodField('Okod');
+    this.getTypeValues('Okod');
     
     if (this.selectedNavItem == 'izin') {
-      this.getOKodField('cbo_izintipleri');
+      this.getTypeValues('cbo_izintipleri');
     } else if (this.selectedNavItem == 'fazlamesai') {
-      this.getOKodField('cbo_fmnedenleri');
+      this.getTypeValues('cbo_fmnedenleri');
 
     } else if (this.selectedNavItem == 'tum') {
       
     }
   }
 
-  getOKodField(kaynak : string) {
-    this.profileService.getOKodField(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
+  getTypeValues(kaynak : string) {
+    this.profileService.getTypeValues(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
       const data = response[0].x;
       const message = response[0].z;
 

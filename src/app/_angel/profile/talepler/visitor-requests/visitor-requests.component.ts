@@ -222,14 +222,18 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
 
   approvedVisit() {
     this.ongoingVisitRequests.forEach((visit: any) => {
+      
       if (visit.allComplete) {
         console.log("Onaylanacak Ziyaret: ", visit);  
-
+        this.postApprovedVisit(visit.ziyaretid, visit.ziyaretciler);
+        
       } else {
         let t = visit.ziyaretciler.filter((visitor: any) => visitor.completed)
         visit.approved = t;
         console.log("Onaylanan Ziyaretçiler: ", visit);
+        this.postApprovedVisit(visit.ziyaretid, visit.approved);
       }
+
     });
   }
 
@@ -243,6 +247,24 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
 
   getBosBelgeler(item: any[]): string[] {
     return item.filter(belge => belge.link === "boş").map(belge => belge.BelgeAdi);
+  }
+
+  postApprovedVisit(visitId: any, visitors: any[]) {
+    visitors.forEach((visitor: any) => {
+      console.log("visitId : ", visitId, " + ", "visitorId : ", visitor.id);
+
+      this.profileService.approvedVisitor(visitId, visitor.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+        const data = response[0].x;
+        const message = response[0].z;
+
+        if (message.islemsonuc == -1) {
+          return;
+        }
+
+        console.log("visitId : ", visitId, " + ", "visitorId : ", visitor.id, " Onaylandı : ", response);
+        
+      });
+    });
   }
 
   ngOnDestroy(): void {

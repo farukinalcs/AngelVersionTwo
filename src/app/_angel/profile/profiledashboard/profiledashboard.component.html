@@ -83,6 +83,11 @@
                       {{"PROFIL_DASHBOARD.ZIYARETCI" | translate}}
                     </button>
 
+                    <button mat-menu-item (click)="showAuthorityDialog()">
+                      <i class="fa-solid fa-fingerprint pe-4 fs-3"></i>
+                      {{"PROFIL_DASHBOARD.YETKI" | translate}}
+                    </button>
+                    
                     <button mat-menu-item>
                       <i class="fa-solid fa-car-side pe-4 fs-3"></i>
                       {{"PROFIL_DASHBOARD.ARAC" | translate}}
@@ -365,6 +370,18 @@
 
     <ng-container *ngIf="displayVisitRequestForm">
       <app-dialog-ziyaretci-talebi (visitRequestFormIsSend)="visitRequestFormIsSend()"></app-dialog-ziyaretci-talebi>
+    </ng-container>
+
+  </p-dialog>
+</ng-container>
+
+<ng-container *ngIf="displayAuthorityRequestForm">
+  <p-dialog header="Yetki Talep Formu" [(visible)]="displayAuthorityRequestForm"
+    (visibleChange)="visitRequestFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000"
+    [draggable]="true" [resizable]="false">
+
+    <ng-container *ngIf="displayAuthorityRequestForm">
+      <app-dialog-yetki-talebi (authorityRequestFormIsSend)="authorityRequestFormIsSend()"></app-dialog-yetki-talebi>
     </ng-container>
 
   </p-dialog>

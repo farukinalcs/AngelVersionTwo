@@ -91,6 +91,7 @@ import { RequestProcessComponent } from '../shared/request-process/request-proce
 import { RequestMenuComponent } from '../shared/request-menu/request-menu.component';
 import { FormatFileSizePipe } from 'src/app/_helpers/pipes/format-file-size.pipe';
 import { VisitorRequestsComponent } from './talepler/visitor-requests/visitor-requests.component';
+import { DialogYetkiTalebiComponent } from './talep-olustur/dialog-yetki-talebi/dialog-yetki-talebi.component';
 
 @NgModule({
   declarations: [
@@ -140,7 +141,8 @@ import { VisitorRequestsComponent } from './talepler/visitor-requests/visitor-re
     RequestProcessComponent,
     RequestMenuComponent,
     FormatFileSizePipe,
-    VisitorRequestsComponent
+    VisitorRequestsComponent,
+    DialogYetkiTalebiComponent
   ],
   imports: [
     CommonModule,

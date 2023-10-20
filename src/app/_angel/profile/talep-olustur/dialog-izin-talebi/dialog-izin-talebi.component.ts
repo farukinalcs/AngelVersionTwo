@@ -375,7 +375,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   }
 
   getVacationReason() { // İzin Tiplerini Almak İçin API'ye İstek 
-    this.profileService.getOKodField('cbo_izintipleri').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
+    this.profileService.getTypeValues('cbo_izintipleri').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
       const data = response[0].x;
       const message = response[0].z;
 

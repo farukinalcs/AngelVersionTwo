@@ -365,7 +365,7 @@ export class ProfileService {
     return this.httpClient.get<any>(API_URL + '/process', options);
   }
 
-  getOKodField(kaynak : string) {
+  getTypeValues(kaynak : string) {
     var sp : any[] = [{
       mkodu : 'yek041',
       id : '0',
@@ -1111,6 +1111,125 @@ export class ProfileService {
       mkodu : 'yek073',
       talepid : visitId.toString(),
       aciklama : description
+    }];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+
+  postAuthorityRequest(formValues: any, isRequest: any) {
+    var sp : any[] = [{
+      mkodu : 'yek077',
+      yetkiid : formValues.transitionGroup.ID.toString(),
+      aciklama : formValues.description,
+      limit : formValues.durationType,
+      tip: isRequest,
+      bastarih : formValues.startDate, 
+      bassaat:  formValues.startTime,
+      bittarih: formValues.endDate,
+      bitsaat: formValues.endTime,
+      sicillerim: formValues.sicillerim.toString()
+    }];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  getVisitorRequests() {
+    var sp : any[] = [{
+      mkodu : 'yek078'
+    }]
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+
+  approvedVisitor(visitId: any, visitorId: any) {
+    var sp : any[] = [{
+      mkodu : 'yek079',
+      ziyaretid: visitId.toString(),
+      id: visitorId.toString()
+    }];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  cancelVisitor(visitId: any, visitorId: any) {
+    var sp : any[] = [{
+      mkodu : 'yek080',
+      ziyaretid: visitId.toString(),
+      id: visitorId.toString()
     }];
 
     var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);

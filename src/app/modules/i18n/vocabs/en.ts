@@ -456,6 +456,7 @@ export const locale = {
       IZIN : 'Vacation',
       FAZLA_MESAI : 'Overtime',
       ZIYARETCI : 'Visitors',
+      YETKI: 'Authority',
       EGITIM : 'Education',
       ARAC : 'Vehicle',
       AVANS : 'Advance Payment',
