@@ -1,5 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, EMPTY, forkJoin, from, mergeMap, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { LayoutService } from 'src/app/_metronic/layout';
 import { ProfileService } from '../../profile.service';
 
@@ -11,7 +13,7 @@ import { ProfileService } from '../../profile.service';
 export class VisitorRequestsComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
 
-  ongoingVisitRequests: any[] = [];
+  visitRequests: any[] = [];
   filterText: string = "";
   public isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   isTableVisible: boolean[] = [];
@@ -20,13 +22,18 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
   uploadedFiles: any[] = [];
 
   allComplete: boolean = false;
+  ongoingVisitRequests: any[] = [];
+  approvedVisitRequests: any[] = [];
+  rejectedVisitRequests: any[] = [];
 
   constructor(
     private profileService: ProfileService,
     public layoutService: LayoutService,
+    private toastrService: ToastrService,
+    private translateService: TranslateService,
     private ref: ChangeDetectorRef
   ) {
-    this.isTableVisible = new Array(this.ongoingVisitRequests.length).fill(false);
+    this.isTableVisible = new Array(this.visitRequests.length).fill(false);
 
   }
   
@@ -37,7 +44,7 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
   resetArr(value: any) {
     console.log("Reset: ", value);
     
-    // this.ongoingVisitRequests = [];
+    // this.visitRequests = [];
     
   }
 
@@ -46,8 +53,8 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
   }
 
   getVisitorRequest() {
-    this.ongoingVisitRequests = [];
-    this.profileService.getMyVisitorDemanded().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+    this.visitRequests = [];
+    this.profileService.getVisitorRequests().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
       const message = response[0].z;
       console.log("ziyaretçi taleplerim : ", response);
 
@@ -61,7 +68,7 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
       response[0].x.forEach((item: any) => {
         item.atananlar = JSON.parse(item.atananlar);
 
-        const existingVisitor = this.ongoingVisitRequests.find((visitor) => visitor.ziyaretid === item.ziyaretid);
+        const existingVisitor = this.visitRequests.find((visitor) => visitor.ziyaretid === item.ziyaretid);
 
         if (existingVisitor) {
           existingVisitor.ziyaretciler.push({
@@ -84,11 +91,12 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
               ziyaretid: item.ziyaretid,
               ziyaretNedeni: item.ZiyaretNedeni,
               ziyaretNedeniId: item.ZiyaretNedeniId,
+              sectim: item.sectim,
               ziyaretciler: [],
               completed: false,
               allComplete: false
             };
-            this.ongoingVisitRequests.push(newVisitor);
+            this.visitRequests.push(newVisitor);
           }
           const newZiyaretci = {
             Ad: item.Ad,
@@ -97,13 +105,13 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
             id: item.Id,
             completed: false
           };
-          this.ongoingVisitRequests.find((visitor) => visitor.ziyaretid === item.ziyaretid).ziyaretciler.push(newZiyaretci);
+          this.visitRequests.find((visitor) => visitor.ziyaretid === item.ziyaretid).ziyaretciler.push(newZiyaretci);
         }
       });
 
-      console.log("Ziyaretçiler : ", this.ongoingVisitRequests);
+      console.log("Ziyaretçiler : ", this.visitRequests);
 
-      this.ongoingVisitRequests.forEach((visit: any) => {
+      this.visitRequests.forEach((visit: any) => {
         visit.ziyaretciler.forEach((ziyaretci: any) => {
           
           let numberOfEmptyFile = 0;
@@ -119,6 +127,9 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
           ziyaretci.numberOfEmptyFile = numberOfEmptyFile;
 
         });
+
+        this.partitionArr(visit);
+
       });
 
       this.ref.detectChanges();
@@ -133,48 +144,117 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
   }
 
   getUploadedFiles(file: any, kaynak: any) {
-    this.uploadedFiles = [];
-    this.profileService.getUploadedFiles(file.ID, kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
-      const data = response[0].x;
-      const message = response[0].z;
+    // this.uploadedFiles = [];
+    // this.profileService.getUploadedFiles(file.ID, kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+    //   const data = response[0].x;
+    //   const message = response[0].z;
 
-      if (message.islemsonuc == -1) {
+    //   if (message.islemsonuc == -1) {
+    //     this.isLoading.next(false);
+    //     this.ref.detectChanges();
+    //     return;
+    //   }
+
+    //   this.uploadedFiles = data;
+    //   console.log("Yüklenen Belgeler : ", data);
+
+    //   this.visitRequests.forEach((visit: any) => {
+    //     visit.ziyaretciler.forEach((ziyaretci: any) => {
+    //       ziyaretci.Dosyalar.forEach((dosya: any) => {
+    //         this.uploadedFiles.forEach((uploadedFile: any) => {
+    //           if (dosya.ID == uploadedFile.FormId && dosya.Belgetip == uploadedFile.Tip) {
+    //             dosya.uploadedFile = uploadedFile;
+    //           }
+
+    //           if (this.selectedVisit) {
+    //             this.selectedVisit.Dosyalar.forEach((sDosya: any) => {
+    //               if (sDosya.ID == uploadedFile.FormId && sDosya.Belgetip == uploadedFile.Tip) {
+    //                 sDosya.uploadedFile = uploadedFile;
+    //                 sDosya.files = undefined;
+    //                 sDosya.sendFile = undefined;
+    //               }
+    //             });
+    //           }
+    //         });
+    //       });
+    //     });
+    //   });
+
+    //   console.log("Yüklenen Belgelerden Sonra visitRequests: ", this.visitRequests);
+
+    //   this.isLoading.next(false);
+    //   this.ref.detectChanges();
+    // });
+
+    this.profileService.getUploadedFiles(file.ID, kaynak)
+      .pipe(
+        takeUntil(this.ngUnsubscribe),
+        switchMap((response: any) => {
+          const data = response[0].x;
+          const message = response[0].z;
+
+          if (message.islemsonuc == -1) {
+            this.isLoading.next(false);
+            this.ref.detectChanges();
+            return EMPTY; // Boş bir Observable döndürerek işlemi sonlandır
+          }
+
+          this.uploadedFiles = data;
+          console.log("Yüklenen Belgeler : ", data);
+
+          return forkJoin(
+            this.updateUploadedFilesInVisitRequests(),
+            this.updateUploadedFilesInSelectedVisit()
+          );
+        })
+      )
+      .subscribe(() => {
+        console.log("Yüklenen Belgelerden Sonra visitRequests: ", this.visitRequests);
+
         this.isLoading.next(false);
         this.ref.detectChanges();
-        return;
-      }
-
-      this.uploadedFiles = data;
-      console.log("Yüklenen Belgeler : ", data);
-
-      this.ongoingVisitRequests.forEach((visit: any) => {
-        visit.ziyaretciler.forEach((ziyaretci: any) => {
-          ziyaretci.Dosyalar.forEach((dosya: any) => {
-            this.uploadedFiles.forEach((uploadedFile: any) => {
-              if (dosya.ID == uploadedFile.FormId && dosya.Belgetip == uploadedFile.Tip) {
-                dosya.uploadedFile = uploadedFile;
-              }
-
-              if (this.selectedVisit) {
-                this.selectedVisit.Dosyalar.forEach((sDosya: any) => {
-                  if (sDosya.ID == uploadedFile.FormId && sDosya.Belgetip == uploadedFile.Tip) {
-                    sDosya.uploadedFile = uploadedFile;
-                    sDosya.files = undefined;
-                    sDosya.sendFile = undefined;
-                  }
-                });
-              }
-            });
-          });
-        });
       });
 
-      console.log("Yüklenen Belgelerden Sonra ongoingVisitRequests: ", this.ongoingVisitRequests);
-
-      this.isLoading.next(false);
-      this.ref.detectChanges();
-    });
   }
+  updateUploadedFilesInVisitRequests() {
+    return from(this.visitRequests).pipe(
+      mergeMap((visit: any) => from(visit.ziyaretciler)),
+      mergeMap((ziyaretci: any) => from(ziyaretci.Dosyalar)),
+      mergeMap((dosya: any) => {
+        return from(this.uploadedFiles).pipe(
+          tap((uploadedFile: any) => {
+            if (dosya.ID == uploadedFile.FormId && dosya.Belgetip == uploadedFile.Tip) {
+              dosya.uploadedFile = uploadedFile;
+            }
+          })
+        );
+      })
+    );
+  }
+  
+  updateUploadedFilesInSelectedVisit() {
+    if (this.selectedVisit) {
+      return from(this.selectedVisit.Dosyalar).pipe(
+        mergeMap((sDosya: any) => {
+          return from(this.uploadedFiles).pipe(
+            tap((uploadedFile: any) => {
+              if (sDosya.ID == uploadedFile.FormId && sDosya.Belgetip == uploadedFile.Tip) {
+                sDosya.uploadedFile = uploadedFile;
+                sDosya.files = undefined;
+                sDosya.sendFile = undefined;
+              }
+            })
+          );
+        })
+      );
+    } else {
+      return EMPTY;
+    }
+  }
+  
+
+  
+
 
   refreshVisit(selectedVisit: any) {
     this.getVisitorRequest();
@@ -213,7 +293,7 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
 
   setAll(completed: boolean, item: any) {
     item.allComplete = completed;
-    if (this.ongoingVisitRequests == null) {
+    if (this.visitRequests == null) {
       return;
     }
     
@@ -221,17 +301,17 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
   }
 
   approvedVisit() {
-    this.ongoingVisitRequests.forEach((visit: any) => {
+    this.visitRequests.forEach((visit: any) => {
       
       if (visit.allComplete) {
         console.log("Onaylanacak Ziyaret: ", visit);  
-        this.postApprovedVisit(visit.ziyaretid, visit.ziyaretciler);
+        this.postApprovedVisit(visit, visit.ziyaretciler);
         
       } else {
         let t = visit.ziyaretciler.filter((visitor: any) => visitor.completed)
         visit.approved = t;
         console.log("Onaylanan Ziyaretçiler: ", visit);
-        this.postApprovedVisit(visit.ziyaretid, visit.approved);
+        this.postApprovedVisit(visit, visit.approved);
       }
 
     });
@@ -249,11 +329,20 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
     return item.filter(belge => belge.link === "boş").map(belge => belge.BelgeAdi);
   }
 
-  postApprovedVisit(visitId: any, visitors: any[]) {
-    visitors.forEach((visitor: any) => {
-      console.log("visitId : ", visitId, " + ", "visitorId : ", visitor.id);
+  postApprovedVisit(visit: any, visitors: any[]) {
+    // if (visit.approved.length == 0) {
+    //   this.toastrService.error(
+    //     this.translateService.instant("TOASTR_MESSAGE.ISARETLEME_YAPMALISINIZ"),
+    //     this.translateService.instant("TOASTR_MESSAGE.HATA")
+    //   );
 
-      this.profileService.approvedVisitor(visitId, visitor.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+    //   return;
+    // }
+    
+    visitors.forEach((visitor: any) => {
+      console.log("visitId : ", visit.ziyaretid, " + ", "visitorId : ", visitor.id);
+
+      this.profileService.approvedVisitor(visit.ziyaretid, visitor.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
         const data = response[0].x;
         const message = response[0].z;
 
@@ -261,10 +350,27 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
           return;
         }
 
-        console.log("visitId : ", visitId, " + ", "visitorId : ", visitor.id, " Onaylandı : ", response);
+        console.log("visitId : ", visit.ziyaretid, " + ", "visitorId : ", visitor.id, " Onaylandı : ", data);
         
+        this.getVisitorRequest();
+        this.ref.detectChanges();
       });
     });
+  }
+
+  partitionArr(visit: any) {
+    console.log("Partition: ", visit);
+    if (visit.sectim == 0) {
+      this.ongoingVisitRequests.push(visit);
+
+    } else if (visit.sectim == 9) {
+      this.rejectedVisitRequests.push(visit);
+
+    } else if (visit.sectim == 1) {
+      this.approvedVisitRequests.push(visit);
+
+    }
+    
   }
 
   ngOnDestroy(): void {

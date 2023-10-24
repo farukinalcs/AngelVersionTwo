@@ -1,1 +1,15 @@
-<p>sicil-liste works!</p>
+<p-dialog header="Sicil Liste" [(visible)]="displayPersonsList" [modal]="true"
+    [style]="{width: '100%', height: '140%', 'max-height':'175%'}" [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false"
+    (onHide)="hidePersonsList()" [dismissableMask]="true"	>
+
+    <ag-grid-angular #agGrid style="width: 100%; height: 100%;" class="ag-theme-alpine" [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection" [suppressRowClickSelection]="true"
+        (selectionChanged)="onSelectionChanged()"></ag-grid-angular>
+
+    <ng-template pTemplate="footer">
+        <a (click)="hidePersonsList()" class="btn btn-danger">
+            <i class="fa-solid fa-xmark fs-1"></i>
+            {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>

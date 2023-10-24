@@ -493,3 +493,122 @@
     box-shadow: 0 0 0 0.2rem var(--kt-danger) !important;
 }
 /*--------------------------------------------*/
+
+
+
+
+// AG-Grid
+.ag-theme-alpine .ag-filter-toolpanel-header,
+.ag-theme-alpine .ag-filter-toolpanel-search,
+.ag-theme-alpine .ag-status-bar,
+.ag-theme-alpine .ag-header-row,
+.ag-theme-alpine .ag-panel-title-bar-title,
+.ag-theme-alpine .ag-multi-filter-group-title-bar,
+.ag-theme-alpine-dark .ag-filter-toolpanel-header,
+.ag-theme-alpine-dark .ag-filter-toolpanel-search,
+.ag-theme-alpine-dark .ag-status-bar,
+.ag-theme-alpine-dark .ag-header-row,
+.ag-theme-alpine-dark .ag-panel-title-bar-title,
+.ag-theme-alpine-dark .ag-multi-filter-group-title-bar {
+    color: var(--kt-white) !important;
+    background-color: var(--kt-danger) !important;
+}
+
+
+.ag-header-icon {
+    color: var(--kt-white) !important;
+}
+
+.ag-theme-alpine .ag-header-cell-menu-button:hover,
+.ag-theme-alpine .ag-side-button-button:hover,
+.ag-theme-alpine .ag-tab:hover,
+.ag-theme-alpine .ag-panel-title-bar-button:hover,
+.ag-theme-alpine .ag-header-expand-icon:hover,
+.ag-theme-alpine .ag-column-group-icons:hover,
+.ag-theme-alpine .ag-set-filter-group-icons:hover,
+.ag-theme-alpine .ag-group-expanded .ag-icon:hover,
+.ag-theme-alpine .ag-group-contracted .ag-icon:hover,
+.ag-theme-alpine .ag-chart-settings-prev:hover,
+.ag-theme-alpine .ag-chart-settings-next:hover,
+.ag-theme-alpine .ag-group-title-bar-icon:hover,
+.ag-theme-alpine .ag-column-select-header-icon:hover,
+.ag-theme-alpine .ag-floating-filter-button-button:hover,
+.ag-theme-alpine .ag-filter-toolpanel-expand:hover,
+.ag-theme-alpine .ag-chart-menu-icon:hover,
+.ag-theme-alpine .ag-chart-menu-close:hover,
+.ag-theme-alpine-dark .ag-header-cell-menu-button:hover,
+.ag-theme-alpine-dark .ag-side-button-button:hover,
+.ag-theme-alpine-dark .ag-tab:hover,
+.ag-theme-alpine-dark .ag-panel-title-bar-button:hover,
+.ag-theme-alpine-dark .ag-header-expand-icon:hover,
+.ag-theme-alpine-dark .ag-column-group-icons:hover,
+.ag-theme-alpine-dark .ag-set-filter-group-icons:hover,
+.ag-theme-alpine-dark .ag-group-expanded .ag-icon:hover,
+.ag-theme-alpine-dark .ag-group-contracted .ag-icon:hover,
+.ag-theme-alpine-dark .ag-chart-settings-prev:hover,
+.ag-theme-alpine-dark .ag-chart-settings-next:hover,
+.ag-theme-alpine-dark .ag-group-title-bar-icon:hover,
+.ag-theme-alpine-dark .ag-column-select-header-icon:hover,
+.ag-theme-alpine-dark .ag-floating-filter-button-button:hover,
+.ag-theme-alpine-dark .ag-filter-toolpanel-expand:hover,
+.ag-theme-alpine-dark .ag-chart-menu-icon:hover,
+.ag-theme-alpine-dark .ag-chart-menu-close:hover {
+    color: var(--kt-dark) !important;
+}
+
+input[class^=ag-]:not([type]),
+input[class^=ag-][type=text],
+input[class^=ag-][type=number],
+input[class^=ag-][type=tel],
+input[class^=ag-][type=date],
+input[class^=ag-][type=datetime-local],
+textarea[class^=ag-] {
+    color: var(--kt-black) !important;
+    border: var(--kt-dark) var(--kt-dark) !important;
+}
+
+
+.ag-row-hover {
+    background-color: var(--kt-danger-light) !important;
+}
+
+[data-theme="dark"] .ag-row-hover {
+    background-color: var(--kt-danger-light) !important;
+    color: var(--kt-white) !important;
+}
+
+.ag-row-focus {
+    background-color: var(--kt-danger-light) !important;
+}
+
+.ag-checkbox-input-wrapper.ag-checked::after {
+    color: var(--kt-danger) !important;
+}
+
+.ag-header-cell.ag-header-cell-moving, .ag-header-group-cell.ag-header-cell-moving {
+    background-color: var(--kt-dark) !important;
+}
+
+.ag-row-selected::before {
+    background-color: var(--kt-dark-light) !important;
+    color: var(--kt-white) !important;
+}
+
+.ag-row-hover.ag-row-selected::before {
+    background-image: linear-gradient(var(--kt-danger-light), var(--kt-danger-light)) !important;
+    color: var(--kt-white) !important;
+}
+
+.ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-ltr .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+.ag-ltr .ag-cell-range-single-cell,
+.ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle,
+.ag-rtl .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-rtl .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-rtl .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+.ag-rtl .ag-cell-range-single-cell,
+.ag-rtl .ag-cell-range-single-cell.ag-cell-range-handle {
+    border-color: #ed1b24 !important;
+}
+/*--------------------------------------------*/

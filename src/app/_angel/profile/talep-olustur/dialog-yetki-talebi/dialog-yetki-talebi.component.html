@@ -19,7 +19,13 @@
                                 <div class="current">
                                     <div class="w-100">
                                         <div class="row">
-                                            <div class="col-12">
+                                            <div class="col-12 my-5">
+                                                <a class="btn btn-sm btn-danger w-100" (click)="displayPersonsList = true">
+                                                    Sicil Listesinden Personel Seç
+                                                </a>
+                                            </div>
+                                            
+                                            <div class="col-12 my-5">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                     <span class="required"> Geçiş Grubu </span>
                                                 </label>
@@ -38,6 +44,19 @@
                                                     </ng-template>
                                                 </p-dropdown>
                                             </div>
+
+                                            <ng-container *ngIf="authorityForm.controls['transitionGroup'].value?.Adsoyad">
+                                                <div class="col-12 my-5">
+                                                    <div class="alert alert-danger d-flex align-items-center justify-content-center p-5">
+                                                        <i class="fa-solid fa-circle-info fs-2hx text-danger me-4"></i>
+                                                        <div class="d-flex flex-column text-center">
+                                                            <h4 class="mb-1 text-dark">Geçiş Grubu Onaycısı</h4>
+                                                            <span> {{ authorityForm.controls['transitionGroup'].value?.Adsoyad }} </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -192,6 +211,11 @@
                                                                 <span class="text-gray-800  fs-6 fw-bolder">Geçiş Grubu:</span>
                                                                 <span class="text-muted fw-bold d-block fs-7"> {{ formValues.transitionGroup.Ad }} </span>
                                                             </div>
+
+                                                            <div class="col-12 py-3" >
+                                                                <span class="text-gray-800  fs-6 fw-bolder">Geçiş Grubu Onaycısı:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{ formValues.transitionGroup.Adsoyad }} </span>
+                                                            </div>
                                                             
                                                             <div class="col-12 py-3" >
                                                                 <span class="text-gray-800  fs-6 fw-bolder"> Süreli - Süresiz:</span>
@@ -313,3 +337,8 @@
         </div>
     </ng-container>
 </ng-template>
+
+
+<ng-container *ngIf="displayPersonsList">
+    <app-sicil-liste [displayPersonsList]="displayPersonsList" (displayPersonsListEvent)="displayPersonsList = false"></app-sicil-liste>
+</ng-container>

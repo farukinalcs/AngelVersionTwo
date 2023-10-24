@@ -96,6 +96,8 @@ import { DialogYetkiTalebiComponent } from './talep-olustur/dialog-yetki-talebi/
 
 import { YemekTipiTanimlamaComponent } from './profil-tanimlamalar/yemek-tipi-tanimlama/yemek-tipi-tanimlama.component';
 import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-tanimlama/yemek-menu-tanimlama.component';
+import { SicilListeComponent } from '../shared/sicil-liste/sicil-liste.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 @NgModule({
@@ -150,7 +152,8 @@ import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-ta
     VisitorRequestsComponent,
     DialogYetkiTalebiComponent,
     YemekTipiTanimlamaComponent,
-    YemekMenuTanimlamaComponent
+    YemekMenuTanimlamaComponent,
+    SicilListeComponent
 
   ],
   imports: [
@@ -206,7 +209,8 @@ import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-ta
     FullCalendarModule,
     ExtrasModule,
     PickListModule,
-    RatingModule
+    RatingModule,
+    AgGridModule
   ],
   // providers:[ProfileService]
 

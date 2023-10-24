@@ -37,6 +37,7 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
   selectedType  : any;
   dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
   user$: Observable<UserType>;
+  displayPersonsList: boolean = false;
 
   constructor(
     private profileService: ProfileService,
@@ -51,10 +52,10 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getCurrentUserInformations();
-    this.getTransitionGroup('Yetki');
+    this.getTransitionGroup('Yetkitalep');
     this.setResponsiveForm();
     this.createFormGroup();
-    this.changedDurationType();
+    this.changedDurationType()
   }
 
   setResponsiveForm() { // Stepper'ı Yataydan Dikeye Çevir
