@@ -1,10 +1,15 @@
+import { TanimlamalarService } from './../tanimlamalar.service';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
+import { map, Subject, takeUntil, Subscription, of } from 'rxjs';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { LayoutService } from 'src/app/_metronic/layout';
 import { ProfileService } from '../../profile.service';
+
+import { _ } from 'ag-grid-community';
+import { meal } from '../../models/meal';
+
 
 @Component({
   selector: 'app-yemek-menu-tanimlama',
@@ -25,45 +30,54 @@ export class YemekMenuTanimlamaComponent implements OnInit {
   currentWeekIndex: any = 0;  
   selectedMenu: any;
   selectedValue : any[] = []
-  // sourceItems: any[] = [];
-  // targetItems: any[] = [];
-  // vacationReasons: any[] = [];
 
-  anayemekOptions: string []= [];
-  corbaOptions: string  []= [];
-  arasicakOptions: string [] = [];
-  salataOptions: string [] = [];
-  tatliOptions: string [] = [];
-  digerOptions: string [] = [];
+  corbaOptions: meal  []= [];
+  anayemekOptions: meal []= [];
+  salataOptions: meal [] = [];
+  tatliOptions: meal [] = [];
+  mezeOptions:meal [] = [];
+  arasicakOptions: meal [] = [];
+  arasogukOptions: meal [] = [];
+  icecekOptions: meal [] = [];
+  meyveOptions: meal [] = [];
+  kahvaltilikOptions: meal [] = [];
+ 
+  corbaMenu: meal  []= [];
+  anayemekMenu: meal []= [];
+  salataMenu: meal [] = [];
+  tatliMenu: meal [] = [];
+  mezeMenu:meal [] = [];
+  arasicakMenu: meal [] = [];
+  arasogukMenu: meal [] = [];
+  icecekMenu: meal [] = [];
+  meyveMenu: meal [] = [];
+  kahvaltilikMenu: meal [] = [];
   
-  selectedAnaYemek: any;
-  selectedCorba: any;
-  selectedAraSicak: any;
-  selectedSalata: any;
-  selectedTatli: any;
-  selectedDiger:any;
-
+ 
+  
+  selectedCorba: meal;
+  selectedAnaYemek: meal;
+  selectedSalata: meal;
+  selectedTatli: meal;
+  selectedMeze: meal;
+  selectedAraSicak: meal;
+  selectedAraSoguk: meal;
+  selectedIcecek: meal;
+  selectedMeyve:meal;
+  selectedKahvaltilik:meal;
+  
+  selectedDiger  : any;
   selectedType  : any;
   dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
   selected: any;
   demandParam: string = '';
   fileParam: string = '';
   dragDrop : boolean = true; 
+  meals:any;
 
-  foodType: any[] = [
-    { id: 1, name: 'Ana Yemek'},
-    { id: 2, name: 'Corba'},
-    { id: 3, name: 'Ara Sıcak'},
-    { id: 4, name: 'Salata'},
-    { id: 5, name: 'Tatlı'},
-    { id: 6, name: 'Diğer'},
-  ];
-  // foodType: string[] = [
-  //   'Ana Yemek','Corba','Ara Sıcak','Salata','Tatlı','Diğer'
-  // ];
   constructor(
     private formBuilder: FormBuilder,
-    private profileService : ProfileService,
+    private tanimlamalar : TanimlamalarService,
     private translateService : TranslateService,
     private helperService : HelperService,
     public layoutService : LayoutService,
@@ -76,6 +90,7 @@ export class YemekMenuTanimlamaComponent implements OnInit {
     this.currentMonthName = this.getMonthName(this.currentMonth);
     this.generateWeeks();
     this.setCurrentIndex();
+    this.getMeals();
   }
 
   onSubmit(data :any){
@@ -222,62 +237,171 @@ export class YemekMenuTanimlamaComponent implements OnInit {
   }
 
   onSelectionChange(selectOptions : any, category: string){
-    // if(selectOptions = this.selectedAnaYemek)
-    // { this.anayemekOptions.push(this.selectedAnaYemek)
-    //   console.log("anayemekOptions : ", this.anayemekOptions);
-    // }else if(selectOptions = this.selectedCorba){
-    //   this.corbaOptions.push(this.selectedCorba)
-    //   console.log("corbaOptions : ", this.corbaOptions);
-    // }else if(selectOptions = this.selectedAraSicak){
-    //   this.arasicakOptions.push(this.selectedAraSicak)
-    //   console.log("arasicakOptions : ", this.arasicakOptions);
-    // }else if (selectOptions = this.selectedTatli){
-    //   this.tatliOptions.push(this.selectedTatli)
-    //   console.log("tatliOptions : ", this.tatliOptions);
-    // }else if (selectOptions = this.selectedSalata){
-    //   this.salataOptions.push(this.selectedSalata)
-    //   console.log("salataOptions : ", this.salataOptions);
-    // }else if (selectOptions = this.selectedDiger){
-    //   this.digerOptions.push(this.selectedDiger)
-    //   console.log("digerOptions : ", this.digerOptions);
-    // }
+    const categoryMenu = this.getMenuForCategory(category);
+    const isDuplicate = categoryMenu.some(menuItem => this.areObjectsEqual(menuItem, selectOptions));
+    if (!isDuplicate) {
+      categoryMenu.push(selectOptions);
+      console.log(`${category} Menu:`, categoryMenu);
+    } else {
+      console.log('Bu öğe zaten menüde var.');
+      const index = categoryMenu.indexOf(selectOptions)
+      if(index > -1){
+        categoryMenu.splice(index,1);
+        console.log(`${category} Menu:`, categoryMenu);
+      }
+    }
+  }
 
+  areObjectsEqual(obj1: any, obj2: any): boolean {
+    return JSON.stringify(obj1) === JSON.stringify(obj2);
+  }
+
+  getMenuForCategory(category: string): any[] {
     switch (category) {
-      case 'AnaYemek':
-        this.anayemekOptions.push(selectOptions);
-        console.log("anayemekOptions : ", this.anayemekOptions);
-        break;
       case 'Corba':
-        this.corbaOptions.push(selectOptions);
-        console.log("corbaOptions : ", this.corbaOptions);
-        break;
+        return this.corbaMenu;
+      case 'AnaYemek':
+        return this.anayemekMenu;
+      case 'Salata':
+        return this.salataMenu;
+      case 'Tatli':
+        return this.tatliMenu;
+      case 'Meze':
+        return this.mezeMenu;
       case 'AraSicak':
-        this.arasicakOptions.push(selectOptions);
-        console.log("arasicakOptions : ", this.arasicakOptions);
+        return this.arasicakMenu;
+      case 'AraSoguk':
+        return this.arasogukMenu;
+      case 'Icecekler':
+        return this.icecekMenu;
+      case 'Meyve':
+        return this.meyveMenu;
+      case 'Kahvaltilik':
+        return this.kahvaltilikMenu;
+      default:
+        return [];
+    }
+  }
+
+
+
+
+  onSelectionChange3(selectOptions : any, category: string){
+    switch (category) {
+    
+      case 'Corba':
+        this.corbaMenu.push(selectOptions);
+        console.log("corbaMenu : ", this.corbaMenu);
+        break;
+      case 'AnaYemek':
+        this.anayemekMenu.push(selectOptions);
+        console.log("anayemekMenu : ", this.anayemekMenu);
         break;
       case 'Salata':
-        this.salataOptions.push(selectOptions);
-        console.log("salataOptions : ", this.salataOptions);
-        
+        this.salataMenu.push(selectOptions);
+        console.log("salataMenu : ", this.salataMenu); 
         break;
       case 'Tatli':
-        this.tatliOptions.push(selectOptions);
-        console.log("tatliOptions : ", this.tatliOptions);
+        this.tatliMenu.push(selectOptions);
+        console.log("tatliMenu : ", this.tatliMenu);
         break;
-      case 'Diğer':
-        this.digerOptions.push(selectOptions);
-        console.log("digerOptions : ", this.digerOptions);
+      case 'Meze':
+        this.mezeMenu.push(selectOptions);
+        console.log("mezeMenu : ", this.mezeMenu);
+        break;
+      case 'AraSicak':
+        this.arasicakMenu.push(selectOptions);
+        console.log("arasicakMenu : ", this.arasicakMenu);
+        break;
+      case 'AraSoguk':
+        this.arasogukMenu.push(selectOptions);
+        console.log("arasogukMenu : ", this.arasogukMenu);
+        break;
+      case 'icecekler':
+        this.icecekMenu.push(selectOptions);
+        console.log("icecekMenu : ", this.icecekMenu);
+        break;
+      case 'Meyve':
+        this.meyveMenu.push(selectOptions);
+        console.log("meyveMenu : ", this.meyveMenu);
+        break;
+      case 'Kahvaltilik':
+        this.kahvaltilikMenu.push(selectOptions);
+        console.log("kahvaltilikMenu : ", this.kahvaltilikMenu);
         break;
       default:
         break;
     }
   }
 
+  onSelectionChange2(yemektip:number) {
+    const gruplar = new Map<number, typeof this.meals>();
+
+
+    
+
+ }
+
   
 
 
   getMeals(){
     /* Menu oluşturmak için tanımlanan yemekleri getirir*/
+    this.tanimlamalar
+    .getMeal()
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe((response : any) => {
+      this.meals = response[0].x;
+     this.sperateLists(this.meals)
+ 
+   console.log("getMeal'S:",this.meals);
+      
+      this.ref.detectChanges();
+    });
+
+    // this.meals.forEach((item:any) => {
+    //   if(item.YemektipiID == 1){
+    //     this.corbaOptions.push(item)
+    //     console.log("this.corbaOptions", this.corbaOptions);
+    //   }
+    // });
+   
+  }
+
+  sperateLists(_list:any){
+    for(let i=0; i <= _list.length; i++){
+      if(_list[i]?.YemektipiID == 1)
+      {
+        this.corbaOptions.push(_list[i])
+        
+      } else if (_list[i]?.YemektipiID == 2){
+        this.anayemekOptions.push(_list[i])
+        
+      }else if (_list[i]?.YemektipiID == 3){
+        this.salataOptions.push(_list[i])
+        
+      }else if (_list[i]?.YemektipiID == 4){
+        this.tatliOptions.push(_list[i])
+        
+      }else if (_list[i]?.YemektipiID == 5){
+        this.mezeOptions.push(_list[i])
+        
+      }else if (_list[i]?.YemektipiID == 6){
+        this.arasicakOptions.push(_list[i])
+        
+      }else if (_list[i]?.YemektipiID == 7){
+        this.arasogukOptions.push(_list[i])
+        
+      }else if (_list[i]?.YemektipiID == 8){
+        this.icecekOptions.push(_list[i])
+        
+      }else if (_list[i]?.YemektipiID == 9){
+        this.meyveOptions.push(_list[i])
+        
+      }else{
+        this.kahvaltilikOptions.push(_list[i])
+      }
+    }
   }
 
   onCloseButtonClick() {

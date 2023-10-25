@@ -1,10 +1,10 @@
+import { TanimlamalarService } from './../tanimlamalar.service';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { HelperService } from 'src/app/_helpers/helper.service';
-import { LayoutService } from 'src/app/_metronic/layout';
-import { ProfileService } from '../../profile.service';
+
 
 @Component({
   selector: 'app-yemek-tipi-tanimlama',
@@ -27,10 +27,9 @@ export class YemekTipiTanimlamaComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private profileService : ProfileService,
+    private tanimlamalar: TanimlamalarService,
     private translateService : TranslateService,
     private helperService : HelperService,
-    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
 
@@ -39,7 +38,7 @@ export class YemekTipiTanimlamaComponent implements OnInit {
   }
 
   onSubmit(data:any){
-    this.profileService
+    this.tanimlamalar
     .setMeal(data)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response : any) => {
@@ -56,7 +55,7 @@ export class YemekTipiTanimlamaComponent implements OnInit {
 
 
   getMealType(){
-    this.profileService
+    this.tanimlamalar
     .getMealType()
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response : any) => {

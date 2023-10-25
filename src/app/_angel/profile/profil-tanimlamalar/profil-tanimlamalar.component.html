@@ -66,23 +66,15 @@
             <app-dosya-tipi-tanimlama [selectedItem]="selectedItem"
                 (closeAnimationEvent)="closeAnimation()"></app-dosya-tipi-tanimlama>
         </ng-container>
-    </div>
 
-    <ng-container *ngIf="selectedItem?.id == '1' || selectedItem?.id == '2'">
-        <div class="col-9">
-            <app-dosya-tipi-tanimlama [selectedItem]="selectedItem" (closeAnimationEvent)="closeAnimation()"></app-dosya-tipi-tanimlama>
-        </div>
-    </ng-container>
-    <ng-container  *ngIf="selectedItem?.id == '4'">
-        <div class="col-9">
+        <ng-container  *ngIf="selectedItem?.id == '4'">
             <app-yemek-tipi-tanimlama [selectedItem]="selectedItem" (closeAnimationEvent)="closeAnimation()"></app-yemek-tipi-tanimlama>
-        </div>
-    </ng-container>
-    <ng-container  *ngIf="selectedItem?.id == '5'">
-        <div class="col-9">
+        </ng-container>
+        
+        <ng-container  *ngIf="selectedItem?.id == '5'">
             <app-yemek-menu-tanimlama [selectedItem]="selectedItem" (closeAnimationEvent)="closeAnimation()"></app-yemek-menu-tanimlama>
-        </div>
-    </ng-container>
-
+        </ng-container>
+    </div>
+    
 
 </div>
