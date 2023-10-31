@@ -98,6 +98,90 @@ export class TanimlamalarService {
     return this.httpClient.get<any>(API_URL + '/process', options);
   }
 
+  setDailyMenu(tarih:any,yemek:any,yemektipi:any){
+    var sp : any[] = [{
+      mkodu : 'yek082',
+      tarih : tarih,
+      yemek: yemek.toString(),
+      yemektipi : yemektipi.toString()
+    }];
+    
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  clearDailyMenu(tarih:any,yemek:any,yemektipi:any){
+    var sp : any[] = [{
+      mkodu : 'yek083',
+      tarih : tarih,
+      yemek: yemek.toString(),
+      yemektipi : yemektipi.toString()
+    }];
+    
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  getDailyMenu(tarih:any){
+    var sp : any[] = [{
+      mkodu : 'yek084',
+      tarih : tarih
+    }];
+    
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
 
   getVisitorRequests() {
     var sp : any[] = [{
