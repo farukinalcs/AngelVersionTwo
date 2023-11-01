@@ -2,12 +2,12 @@ import { TanimlamalarService } from './../tanimlamalar.service';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { map, Subject, takeUntil, Subscription, of } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil} from 'rxjs';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { LayoutService } from 'src/app/_metronic/layout';
-import { ProfileService } from '../../profile.service';
 
-import { _ } from 'ag-grid-community';
+
+
 import { meal } from '../../models/meal';
 
 
@@ -20,7 +20,8 @@ export class YemekMenuTanimlamaComponent implements OnInit {
   private ngUnsubscribe = new Subject()
   @Input() selectedItem: any; 
   @Output() closeAnimationEvent = new EventEmitter<void>();
-
+  // public isLoading : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  bayrak:boolean=true;
   form : FormGroup;
   currentDate: Date = new Date();
   currentMonth: number;
@@ -29,7 +30,7 @@ export class YemekMenuTanimlamaComponent implements OnInit {
   weeks: any[][] = [];
   currentWeekIndex: any = 0;  
   selectDateForMenu: any;
-  selectedValue : any[] = []
+
 
   corbaOptions: meal  []= [];
   anayemekOptions: meal []= [];
@@ -65,21 +66,22 @@ export class YemekMenuTanimlamaComponent implements OnInit {
   selectedIcecek: meal;
   selectedMeyve:meal;
   selectedKahvaltilik:meal;
+
+  _getDailyMenu:any;
+  _newDateFormat:any
+
   
-  selectedDiger  : any;
-  selectedType  : any;
+ 
   dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
-  selected: any;
+
   demandParam: string = '';
   fileParam: string = '';
   dragDrop : boolean = true; 
   meals:any;
 
   constructor(
-    private formBuilder: FormBuilder,
     private tanimlamalar : TanimlamalarService,
     private translateService : TranslateService,
-    private helperService : HelperService,
     public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
@@ -123,7 +125,7 @@ export class YemekMenuTanimlamaComponent implements OnInit {
           this.currentWeekIndex = index;
           this.selectDateForMenu = day.date;
           console.log("Selected Date CURRENT?: ", this.selectDateForMenu);
-          // this.dateConverter(this.selectDateForMenu);
+          this.dateConverter(this.selectDateForMenu);
           this.getDailyMenu(this.selectDateForMenu);
 
           this.ref.detectChanges();
@@ -237,6 +239,7 @@ export class YemekMenuTanimlamaComponent implements OnInit {
     console.log("Selected Date : ", this.selectDateForMenu); 
     this.clearSelectList();
     this.getDailyMenu(this.selectDateForMenu);
+    this.dateConverter(this.selectDateForMenu);
   }
 
   dateConverter(date:any):any
@@ -250,12 +253,17 @@ export class YemekMenuTanimlamaComponent implements OnInit {
     const gun = newDate.getDate().toString().padStart(2, '0');
     console.log("gun",gun);
     const yeniTarihFormati = `${yil}-${ay}-${gun}`;
+    this._newDateFormat = yil+"-"+ay+"-"+gun;
+    console.log("_newDateFormat",this._newDateFormat);
     return yeniTarihFormati;
   }
 
   onSelectionChange(selectOptions : any, category: string){
+    console.log('İTEEEM.',selectOptions);
     const categoryMenu = this.getMenuForCategory(category);
     const isDuplicate = categoryMenu.some(menuItem => this.areObjectsEqual(menuItem, selectOptions));
+    console.log("isDuplicate", isDuplicate);
+    console.log("categoryMenu", categoryMenu);
     if (!isDuplicate) {
       categoryMenu.push(selectOptions);
       this.setDailyMenu(selectOptions.Id,selectOptions.YemektipiID);
@@ -267,6 +275,7 @@ export class YemekMenuTanimlamaComponent implements OnInit {
       if(index > -1){
         categoryMenu.splice(index,1);
         this.clearDailyMenu(selectOptions.Id,selectOptions.YemektipiID);
+        
         console.log(`${category} Menu:`, categoryMenu);
       }
     }
@@ -293,30 +302,41 @@ export class YemekMenuTanimlamaComponent implements OnInit {
     .clearDailyMenu(this.dateConverter(this.selectDateForMenu),yemek,yemektipi)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response : any) => {
-        console.log("clearDailyMenu'S:",response);
+        console.log("clearDailyMenu'S:",response[0].x);
       this.ref.detectChanges();
     });
   }
 
   getDailyMenu(date:any){
     /* Tanımlanmış günlük menüleri getirir*/
+    console.log("getDailyMenu:",date);
+    this.bayrak = false;
+    console.log("this.isLoading111:",this.bayrak);
     this.tanimlamalar
     .getDailyMenu(this.dateConverter(date))
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response : any) => {
+ 
+      this._getDailyMenu = response[0].x
         console.log("getDailyMenu:",response[0].x);
+        this.bayrak = true;
+        console.log("this.isLoading:",this.bayrak);
+      this.menuAyrimi(this?._getDailyMenu);
       this.ref.detectChanges();
-      this.sperateLists2(response[0].x)
     });
+    
   }
 
   areObjectsEqual(obj1: any, obj2: any): boolean {
+    console.log("obj1:",obj1);
+    console.log("obj2:",obj2);
     return JSON.stringify(obj1) === JSON.stringify(obj2);
   }
 
   getMenuForCategory(category: string): any[] {
     switch (category) {
       case 'Corba':
+        console.log("switch corbaMENU:",this.corbaMenu)
         return this.corbaMenu;
       case 'AnaYemek':
         return this.anayemekMenu;
@@ -358,11 +378,20 @@ export class YemekMenuTanimlamaComponent implements OnInit {
 
   }
 
+  deneme(_list:any){
+    for(let i=0; i <= _list.length; i++)
+    {
+      const yemekTipi = _list[i]?.Yemektipi;
+      this.corbaMenu.indexOf(yemekTipi)
+    }
+  }
+
   sperateLists(_list:any){
     for(let i=0; i <= _list.length; i++){
       if(_list[i]?.YemektipiID == 1)
       {
-        this.corbaOptions.push(_list[i])      
+        this.corbaOptions.push(_list[i]) 
+        console.log("corbaMENU:",this.corbaMenu)     
       } else if (_list[i]?.YemektipiID == 2){
         this.anayemekOptions.push(_list[i])
         
@@ -387,50 +416,46 @@ export class YemekMenuTanimlamaComponent implements OnInit {
       }else if (_list[i]?.YemektipiID == 9){
         this.meyveOptions.push(_list[i])
         
-      }else{
+      }else if (_list[i]?.YemektipiID == 10){
         this.kahvaltilikOptions.push(_list[i])
       }
     }
   }
 
-  sperateLists2(_list:any){
-    for(let i=0; i <= _list.length; i++){
+  menuAyrimi(_list:any){
+    console.log("_list menuAyrimi:",_list)
+    for(let i=0; i <= _list?.length; i++){
       if(_list[i]?.YemektipiID == 1)
       {
         this.corbaMenu.push(_list[i])
-        console.log("this.corbaOptions'S:",this.corbaMenu)
+        console.log("getDailyMenu corbaMENU:",this.corbaMenu)
       } else if (_list[i]?.YemektipiID == 2){
         this.anayemekMenu.push(_list[i])
-        this.ref.detectChanges();
         
       }else if (_list[i]?.YemektipiID == 3){
         this.salataMenu.push(_list[i])
-        this.ref.detectChanges();
         
       }else if (_list[i]?.YemektipiID == 4){
         this.tatliMenu.push(_list[i])
-        this.ref.detectChanges();
-        
+       
       }else if (_list[i]?.YemektipiID == 5){
         this.mezeMenu.push(_list[i])
-        this.ref.detectChanges();
         
       }else if (_list[i]?.YemektipiID == 6){
         this.arasicakMenu.push(_list[i])
         
       }else if (_list[i]?.YemektipiID == 7){
         this.arasogukMenu.push(_list[i])
-        this.ref.detectChanges();
         
       }else if (_list[i]?.YemektipiID == 8){
         this.icecekMenu.push(_list[i])
-        this.ref.detectChanges();
+       
         
       }else if (_list[i]?.YemektipiID == 9){
-        this.meyveMenu.push(_list[i])
+        this.meyveMenu.push(_list[i]);
         
-      }else{
-        this.kahvaltilikMenu.push(_list[i])
+      }else if(_list[i]?.YemektipiID == 10){
+        this.kahvaltilikMenu.push(_list[i]);
       }
     }
   }
