@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ProfiledashboardComponent } from './profiledashboard/profiledashboard.component';
 import { RouterModule } from '@angular/router';
 import { InlineSVGModule } from 'ng-inline-svg-2';
@@ -96,6 +96,7 @@ import { DialogYetkiTalebiComponent } from './talep-olustur/dialog-yetki-talebi/
 
 import { YemekTipiTanimlamaComponent } from './profil-tanimlamalar/yemek-tipi-tanimlama/yemek-tipi-tanimlama.component';
 import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-tanimlama/yemek-menu-tanimlama.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -150,7 +151,9 @@ import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-ta
     VisitorRequestsComponent,
     DialogYetkiTalebiComponent,
     YemekTipiTanimlamaComponent,
-    YemekMenuTanimlamaComponent
+    YemekMenuTanimlamaComponent,
+    
+
 
   ],
   imports: [
@@ -206,9 +209,9 @@ import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-ta
     FullCalendarModule,
     ExtrasModule,
     PickListModule,
-    RatingModule
+    RatingModule,
   ],
-  // providers:[ProfileService]
+  providers:[DatePipe]
 
 })
 export class ProfileModule { }
