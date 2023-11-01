@@ -22,25 +22,7 @@ export class TanimlamalarService {
 
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return  this.requestMethod(sp);
   }
 
   setMeal(meal:any){
@@ -51,25 +33,7 @@ export class TanimlamalarService {
 
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getMeal(){
@@ -77,25 +41,7 @@ export class TanimlamalarService {
       mkodu : 'yek076',
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return  this.requestMethod(sp);
   }
 
   setDailyMenu(tarih:any,yemek:any,yemektipi:any){
@@ -106,25 +52,7 @@ export class TanimlamalarService {
       yemektipi : yemektipi.toString()
     }];
     
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   clearDailyMenu(tarih:any,yemek:any,yemektipi:any){
@@ -135,25 +63,8 @@ export class TanimlamalarService {
       yemektipi : yemektipi.toString()
     }];
     
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    return this.requestMethod(sp);
 
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
   }
 
   getDailyMenu(tarih:any){
@@ -161,7 +72,11 @@ export class TanimlamalarService {
       mkodu : 'yek084',
       tarih : tarih
     }];
-    
+
+    return this.requestMethod(sp);
+  }
+
+  requestMethod(sp:any){
     var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
     var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
 
