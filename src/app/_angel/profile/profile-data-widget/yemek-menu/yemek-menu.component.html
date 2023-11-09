@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-12 d-flex justify-content-center">
                     <div class="fs-2x fw-bold text-gray-800 text-center">
-                        <span class="me-2"> {{ currentItem.tarih }} </span>
+                        <span class="me-2"> {{ _currentDate | date:'dd-MMMM-yyyy'}} </span>
                     </div>
                 </div>
             </div>
@@ -42,8 +42,8 @@
                 </div>
 
                 <div class="col-12 fs-4 fw-bold text-gray-800 text-center">
-                    <div class="py-1" *ngFor="let item of currentItem.menu">
-                        {{item}}
+                    <div class="py-1" *ngFor="let item of _getDailyMenu">
+                        {{item.Aciklama}}
                     </div>
                 </div>
             </div>

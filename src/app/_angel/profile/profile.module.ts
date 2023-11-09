@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ProfiledashboardComponent } from './profiledashboard/profiledashboard.component';
 import { RouterModule } from '@angular/router';
 import { InlineSVGModule } from 'ng-inline-svg-2';
@@ -96,6 +96,7 @@ import { DialogYetkiTalebiComponent } from './talep-olustur/dialog-yetki-talebi/
 
 import { YemekTipiTanimlamaComponent } from './profil-tanimlamalar/yemek-tipi-tanimlama/yemek-tipi-tanimlama.component';
 import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-tanimlama/yemek-menu-tanimlama.component';
+
 import { SicilListeComponent } from '../shared/sicil-liste/sicil-liste.component';
 import { AgGridModule } from 'ag-grid-angular';
 import 'ag-grid-enterprise'
@@ -103,6 +104,9 @@ import { LicenseManager } from 'ag-grid-enterprise';
 import { DialogAracTalebiComponent } from './talep-olustur/dialog-arac-talebi/dialog-arac-talebi.component';
 import { IbanMaskPipe } from 'src/app/_helpers/pipes/iban-mask.pipe';
 import { PendingRequestsComponent } from './talepler/talepedilenler/pending-requests/pending-requests.component';
+
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 LicenseManager.setLicenseKey(
@@ -162,10 +166,16 @@ LicenseManager.setLicenseKey(
     DialogYetkiTalebiComponent,
     YemekTipiTanimlamaComponent,
     YemekMenuTanimlamaComponent,
+
     SicilListeComponent,
     DialogAracTalebiComponent,
     IbanMaskPipe,
     PendingRequestsComponent
+
+    
+
+
+
   ],
   imports: [
     CommonModule,
@@ -221,9 +231,12 @@ LicenseManager.setLicenseKey(
     ExtrasModule,
     PickListModule,
     RatingModule,
+
     AgGridModule
+
+
   ],
-  // providers:[ProfileService]
+  providers:[DatePipe]
 
 })
 export class ProfileModule { }

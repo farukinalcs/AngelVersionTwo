@@ -137,8 +137,8 @@ export class AuthService implements OnDestroy {
     // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
 
     const storageToken = JSON.parse(localStorage.getItem('token') || '{}');
-    console.log("....STORAGE TOKEN",storageToken);
-    console.log("....REfRESH TOKEN",token);
+    // console.log("....STORAGE TOKEN",storageToken);
+    // console.log("....REfRESH TOKEN",token);
     if (storageToken != token) {
       localStorage.setItem(this.authLocalStorageToken, JSON.stringify(token));
       return true;
