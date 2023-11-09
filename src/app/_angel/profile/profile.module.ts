@@ -98,7 +98,16 @@ import { YemekTipiTanimlamaComponent } from './profil-tanimlamalar/yemek-tipi-ta
 import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-tanimlama/yemek-menu-tanimlama.component';
 import { SicilListeComponent } from '../shared/sicil-liste/sicil-liste.component';
 import { AgGridModule } from 'ag-grid-angular';
+import 'ag-grid-enterprise'
+import { LicenseManager } from 'ag-grid-enterprise';
+import { DialogAracTalebiComponent } from './talep-olustur/dialog-arac-talebi/dialog-arac-talebi.component';
+import { IbanMaskPipe } from 'src/app/_helpers/pipes/iban-mask.pipe';
+import { PendingRequestsComponent } from './talepler/talepedilenler/pending-requests/pending-requests.component';
 
+
+LicenseManager.setLicenseKey(
+  "BOARD4ALL_NDEwMjM1MTIwMDAwMA==8f4481b5cc626ad79fe91bc5f4e52e3d"
+);
 
 @NgModule({
   declarations: [
@@ -153,8 +162,10 @@ import { AgGridModule } from 'ag-grid-angular';
     DialogYetkiTalebiComponent,
     YemekTipiTanimlamaComponent,
     YemekMenuTanimlamaComponent,
-    SicilListeComponent
-
+    SicilListeComponent,
+    DialogAracTalebiComponent,
+    IbanMaskPipe,
+    PendingRequestsComponent
   ],
   imports: [
     CommonModule,

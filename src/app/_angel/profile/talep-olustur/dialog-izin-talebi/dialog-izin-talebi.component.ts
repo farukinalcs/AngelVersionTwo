@@ -268,8 +268,8 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   }
 
   closedFormDialog() { // Dialog Penceresi Kapatıldığında İlgili Yerleri Sıfırlamak İçin
-    this.closedForm.subscribe(_ => {
-      console.log("Closed Form : ", _);
+    // this.closedForm.subscribe(_ => {
+      // console.log("Closed Form : ", _);
       this.vacationForm.reset();
       this.selectedType = '';
       this.uploadedFile = '';
@@ -277,7 +277,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
       this.currentStep$.next(1);
       this.currentItem = this.stepperFields[0];
       this.vacationFormIsSend.emit();
-    });
+    // });
   }
   
   resetStepperFieldsClass() { // "Stepper" Yapısını Sıfırlamak İçin

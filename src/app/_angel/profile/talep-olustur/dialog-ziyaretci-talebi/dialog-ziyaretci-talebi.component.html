@@ -14,29 +14,28 @@
                 <div class="row w-xl-700px">
                     <div class="col-12">
                         <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="visitTypeForm">
-
                             <ng-container *ngIf="currentStep$.value == 1">
                                 <div class="current">
                                     <div class="w-100">
                                         <div class="row"
                                         [ngClass]="{ 'mb-2': (this.layoutService.isMobile | async) }">
                                             <div class="d-flex"
-                                            [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-6 justify-content-end': !(this.layoutService.isMobile | async) }">
-                                                <input type="radio" class="btn-check" formControlName="visitType" value="1"
-                                                    id="kt_radio_buttons_2_option_1" />
+                                                [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-6 justify-content-end': !(this.layoutService.isMobile | async) }">
+                                                <input type="radio" class="btn-check" formControlName="visitType" value="1" id="kt_radio_buttons_2_option_1" />
                                                 <label
                                                     class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center justify-content-center mb-5 h-200px w-200px"
                                                     for="kt_radio_buttons_2_option_1">
                                                     <i class="fa-solid fa-person-walking-luggage fs-3x text-danger"></i>
-    
+                                            
                                                     <span class="d-block fw-semibold text-start ps-3">
-                                                        <span class="text-dark fw-bold d-block fs-3">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_EDECEGIM" | translate}}</span>
+                                                        <span class="text-dark fw-bold d-block fs-3">{{ "ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_EDECEGIM" |
+                                                            translate }}</span>
                                                     </span>
                                                 </label>
                                             </div>
     
-                                            <div class="d-flex"
-                                            [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-6': !(this.layoutService.isMobile | async) }">
+                                            <div class="d-flex justify-content-center"
+                                            [ngClass]="{'col-12': (this.layoutService.isMobile | async), 'col-6': !(this.layoutService.isMobile | async) }">
                                                 <input type="radio" class="btn-check" formControlName="visitType" value="0"
                                                     id="kt_radio_buttons_2_option_2" />
                                                 <label
@@ -44,7 +43,7 @@
                                                     for="kt_radio_buttons_2_option_2">
                                                     <i class="fa-solid fa-person fs-3x text-danger"></i>
                                                     <span class="d-block fw-semibold text-start ps-3">
-                                                        <span class="text-dark fw-bold d-block fs-3">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_EDILECEGIM" | translate}}</span>
+                                                        <span class="text-dark fw-bold d-block fs-3">{{ "ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_EDILECEGIM" | translate }}</span>
                                                     </span>
                                                 </label>
                                             </div>
@@ -60,36 +59,32 @@
                                             <div class="w-100">
                                                 <div class="row">
                                                     <div class="d-flex"
-                                                    [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-6 justify-content-end': !(this.layoutService.isMobile | async) }">
-                                                        <input type="radio" class="btn-check"
-                                                            formControlName="personInformation" value="1"
+                                                        [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-6 justify-content-end': !(this.layoutService.isMobile | async) }">
+                                                        <input type="radio" class="btn-check" formControlName="personInformation" value="1"
                                                             id="kt_radio_buttons_2_option_1" />
                                                         <label
                                                             class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center justify-content-center mb-5 h-200px w-200px"
                                                             for="kt_radio_buttons_2_option_1">
                                                             <i class="fa-solid fa-people-line fs-3x text-danger"></i>
                                                             <span class="d-block fw-semibold text-start ps-3">
-                                                                <span class="text-dark fw-bold d-block fs-3">{{"ZIYARETCI_TALEP_DIALOG.FORM.TOPLU" | translate}}</span>
+                                                                <span class="text-dark fw-bold d-block fs-3">{{ "ZIYARETCI_TALEP_DIALOG.FORM.TOPLU" | translate }}</span>
                                                             </span>
                                                         </label>
                                                     </div>
     
-                                                    <div class="d-flex"
-                                                    [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-6': !(this.layoutService.isMobile | async) }">
-                                                        <input type="radio" class="btn-check"
-                                                            formControlName="personInformation" value="2"
+                                                    <div class="d-flex justify-content-center"
+                                                        [ngClass]="{'col-12': (this.layoutService.isMobile | async), 'col-6': !(this.layoutService.isMobile | async) }">
+                                                        <input type="radio" class="btn-check" formControlName="personInformation" value="2"
                                                             id="kt_radio_buttons_2_option_2" />
                                                         <label
                                                             class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center justify-content-center mb-5 h-200px w-200px"
                                                             for="kt_radio_buttons_2_option_2">
                                                             <i class="fa-solid fa-user fs-3x text-danger"></i>
                                                             <span class="d-block fw-semibold text-start ps-3">
-                                                                <span class="text-dark fw-bold d-block fs-3">{{"ZIYARETCI_TALEP_DIALOG.FORM.TEK" | translate}}</span>
+                                                                <span class="text-dark fw-bold d-block fs-3">{{ "ZIYARETCI_TALEP_DIALOG.FORM.TEK" | translate }}</span>
                                                             </span>
                                                         </label>
                                                     </div>
-    
-    
                                                 </div>
                                             </div>
                                         </div>
@@ -100,44 +95,41 @@
                                             <div class="w-100">
                                                 <div class="row">
                                                     <div class="d-flex"
-                                                    [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-4': !(this.layoutService.isMobile | async) }">
-                                                        <input type="radio" class="btn-check"
-                                                            formControlName="personInformation" value="3"
+                                                        [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-4': !(this.layoutService.isMobile | async) }">
+                                                        <input type="radio" class="btn-check" formControlName="personInformation" value="3"
                                                             id="kt_radio_buttons_2_option_1" />
                                                         <label
                                                             class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center justify-content-center mb-5 h-200px w-200px"
                                                             for="kt_radio_buttons_2_option_1">
-    
+                                                    
                                                             <span class="d-block fw-semibold text-center ps-3">
-                                                                <span class="text-dark fw-bold d-block fs-3">{{"ZIYARETCI_TALEP_DIALOG.FORM.KENDIM_ICIN" | translate}}</span>
+                                                                <span class="text-dark fw-bold d-block fs-3">{{ "ZIYARETCI_TALEP_DIALOG.FORM.KENDIM_ICIN" | translate }}</span>
                                                             </span>
                                                         </label>
                                                     </div>
     
                                                     <div class="d-flex"
-                                                    [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-4': !(this.layoutService.isMobile | async) }">
-                                                        <input type="radio" class="btn-check"
-                                                            formControlName="personInformation" value="4"
+                                                        [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-4': !(this.layoutService.isMobile | async) }">
+                                                        <input type="radio" class="btn-check" formControlName="personInformation" value="4"
                                                             id="kt_radio_buttons_2_option_2" />
                                                         <label
                                                             class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center justify-content-center mb-5 h-200px w-200px"
                                                             for="kt_radio_buttons_2_option_2">
                                                             <span class="d-block fw-semibold text-center ps-3">
-                                                                <span class="text-dark fw-bold d-block fs-3">{{"ZIYARETCI_TALEP_DIALOG.FORM.EKIP_ICIN" | translate}}</span>
+                                                                <span class="text-dark fw-bold d-block fs-3">{{ "ZIYARETCI_TALEP_DIALOG.FORM.EKIP_ICIN" | translate }}</span>
                                                             </span>
                                                         </label>
                                                     </div>
     
                                                     <div class="d-flex"
-                                                    [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-4': !(this.layoutService.isMobile | async) }">
-                                                        <input type="radio" class="btn-check"
-                                                            formControlName="personInformation" value="5"
+                                                        [ngClass]="{'col-12 justify-content-center': (this.layoutService.isMobile | async), 'col-4': !(this.layoutService.isMobile | async) }">
+                                                        <input type="radio" class="btn-check" formControlName="personInformation" value="5"
                                                             id="kt_radio_buttons_3_option_3" />
                                                         <label
                                                             class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center justify-content-center mb-5 h-200px w-200px"
                                                             for="kt_radio_buttons_3_option_3">
                                                             <span class="d-block fw-semibold text-center ps-3">
-                                                                <span class="text-dark fw-bold d-block fs-3">{{"ZIYARETCI_TALEP_DIALOG.FORM.EKIP_VE_KENDI" | translate}}</span>
+                                                                <span class="text-dark fw-bold d-block fs-3">{{ "ZIYARETCI_TALEP_DIALOG.FORM.EKIP_VE_KENDI" | translate }}</span>
                                                             </span>
                                                         </label>
                                                     </div>
@@ -146,8 +138,6 @@
                                         </div>
                                     </div>
                                 </div>
-    
-    
                             </ng-container>
     
                             <ng-container *ngIf="currentStep$.value == 3">
@@ -156,39 +146,23 @@
                                         <div class="w-100">
                                             <div class="row">
                                                 <div class="col-12">
-    
                                                     <div class="fv-row mb-10 fv-plugins-icon-container">
-    
                                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                            <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate}}</span>
+                                                            <span class="required">{{ "ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate }}</span>
                                                         </label>
     
-    
-    
-                                                        <input type="text"
-                                                            class="form-control form-control-lg form-control-solid"
-                                                            formControlName="name">
-    
+                                                        <input type="text" class="form-control form-control-lg form-control-solid" formControlName="name">
                                                         <div class="fv-plugins-message-container invalid-feedback"></div>
                                                     </div>
     
-    
-    
                                                     <div class="fv-row mb-10 fv-plugins-icon-container">
-    
                                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                            <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate}}</span>
+                                                            <span class="required">{{ "ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate }}</span>
                                                         </label>
     
-    
-    
-                                                        <input type="text"
-                                                            class="form-control form-control-lg form-control-solid"
-                                                            formControlName="surname">
-    
+                                                        <input type="text" class="form-control form-control-lg form-control-solid" formControlName="surname">
                                                         <div class="fv-plugins-message-container invalid-feedback"></div>
                                                     </div>
-    
     
                                                     <div
                                                         class="fv-row mb-10 fv-plugins-icon-container d-flex justify-content-center align-items-center">
@@ -211,8 +185,8 @@
                                                                             <tr
                                                                                 class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger rounded">
                                                                                 <th class="text-center rounded-start"></th>
-                                                                                <th class="text-center">{{"ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate}}</th>
-                                                                                <th class="text-center">{{"ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate}}</th>
+                                                                                <th class="text-center">{{ "ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate }}</th>
+                                                                                <th class="text-center">{{ "ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate }}</th>
                                                                                 <th class="text-center rounded-end"></th>
                                                                             </tr>
                                                                         </thead>
@@ -222,12 +196,9 @@
                                                                                 <!-- [ngClass]="{'bg-warning': isFirstVisitor(i)}" -->
                                                                                 <td class="text-center">
                                                                                     <div class="symbol symbol-50px">
-                                                                                        <ng-container
-                                                                                            *ngIf="isFirstVisitor(i)">
-                                                                                            <div
-                                                                                                class="symbol-label fs-2 fw-semibold bg-light-danger">
-                                                                                                <i
-                                                                                                    class="fa-solid fa-sitemap fs-2x text-danger"></i>
+                                                                                        <ng-container *ngIf="isFirstVisitor(i)">
+                                                                                            <div class="symbol-label fs-2 fw-semibold bg-light-danger">
+                                                                                                <i class="fa-solid fa-sitemap fs-2x text-danger"></i>
                                                                                             </div>
                                                                                         </ng-container>
     
@@ -243,14 +214,13 @@
                                                                                 <td
                                                                                     class="text-center text-muted fw-bold fs-4">
                                                                                     <span class="fs-5 text-dark">
-                                                                                        {{item.name}}
+                                                                                        {{item.name }}
                                                                                     </span>
                                                                                 </td>
     
-                                                                                <td
-                                                                                    class="text-center text-muted fw-bold fs-4">
+                                                                                <td class="text-center text-muted fw-bold fs-4">
                                                                                     <span class="fs-5 text-dark">
-                                                                                        {{item.surname}}
+                                                                                        {{item.surname }}
                                                                                     </span>
                                                                                 </td>
     
@@ -261,7 +231,6 @@
                                                                                         <i class="fa-solid fa-trash"></i>
                                                                                     </button>
                                                                                 </td>
-    
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -270,12 +239,7 @@
                                                         </div>
                                                     </div>
                                                 </ng-container>
-    
                                             </div>
-    
-    
-    
-    
                                         </div>
                                     </div>
                                 </ng-container>
@@ -332,7 +296,7 @@
                                         <div class="fv-row mb-10 fv-plugins-icon-container">
     
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.EMAIL" | translate}}</span>
+                                                <span class="required">{{ "ZIYARETCI_TALEP_DIALOG.FORM.EMAIL" | translate }}</span>
                                             </label>
     
     
@@ -348,14 +312,14 @@
     
                                         <div class="fv-row mb-10 fv-plugins-icon-container">
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" |
-                                                    translate}}</span>
+                                                <span class="required">{{ "ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" |
+                                                    translate }}</span>
                                             </label>
     
                                             
                                             <!-- <p-dropdown [options]="company" [(ngModel)]="selectedCompany" optionLabel="Ad"
                                                 [filter]="true" filterBy="Ad" [showClear]="true" (onFilter)="filterCompanies($event)"
-                                                placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.FIRMA_SEC' | translate}}"
+                                                placeholder="{{ 'ZIYARETCI_TALEP_DIALOG.FORM.FIRMA_SEC' | translate }}"
                                                 formControlName="company">
                                                 <ng-template pTemplate="selectedItem">
                                                     <div class="item-item item-item-value" *ngIf="selectedCompany">
@@ -372,7 +336,7 @@
                                             <p-dropdown [options]="company" [(ngModel)]="selectedCompany" optionLabel="Ad"
                                                 [filter]="true" filterBy="Ad" [showClear]="true"
                                                 [editable]="true"
-                                                placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.FIRMA_SEC' | translate}}"
+                                                placeholder="{{ 'ZIYARETCI_TALEP_DIALOG.FORM.FIRMA_SEC' | translate }}"
                                                 formControlName="company">
                                                 <ng-template pTemplate="selectedItem">
                                                     <div class="item-item item-item-value" *ngIf="selectedCompany">
@@ -391,22 +355,22 @@
                                         <ng-container *ngIf="isOtherCompany">
                                             <div class="fv-row mb-10 fv-plugins-icon-container">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.OTHER_FIRMA" | translate}}</span>
+                                                    <span class="required">{{ "ZIYARETCI_TALEP_DIALOG.FORM.OTHER_FIRMA" | translate }}</span>
                                                 </label>
-                                                <input type="text" class="form-control form-control-lg form-control-solid" formControlName="otherCompany" placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.OTHER_FIRMA_PLACEHOLDER' | translate}}">
+                                                <input type="text" class="form-control form-control-lg form-control-solid" formControlName="otherCompany" placeholder="{{ 'ZIYARETCI_TALEP_DIALOG.FORM.OTHER_FIRMA_PLACEHOLDER' | translate }}">
                                             </div>
                                         </ng-container>
     
     
                                         <div class="fv-row mb-10 fv-plugins-icon-container">
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA" |
-                                                    translate}}</span>
+                                                <span class="required">{{ "ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA" |
+                                                    translate }}</span>
                                             </label>
     
                                             <textarea class="form-control form-control-solid" rows="3" maxlength="500"
                                                 formControlName="description"
-                                                placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate}}"></textarea>
+                                                placeholder="{{ 'ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate }}"></textarea>
                                                 <ng-container *ngIf="visitTypeForm.controls['description']?.value">
                                                     <div class="text-end">
                                                         <span class="badge badge-light-danger">{{ visitTypeForm.controls['description'].value.length }} / 500</span>
@@ -417,8 +381,8 @@
     
                                         <div class="fv-row mb-10 fv-plugins-icon-container">
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_TIPI" |
-                                                    translate}}</span>
+                                                <span class="required">{{ "ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_TIPI" |
+                                                    translate }}</span>
                                             </label>
     
                                             <div class="row d-flex justify-content-center scroll h-200px ">
@@ -490,7 +454,7 @@
                                 <div class="fv-row mb-10 fv-plugins-icon-container">
     
                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                        <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_TARIHI" | translate}}</span>
+                                        <span class="required">{{ "ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_TARIHI" | translate }}</span>
                                     </label>
     
     
@@ -512,7 +476,7 @@
                                 <div class="fv-row mb-10 fv-plugins-icon-container">
     
                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                        <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_SAATI" | translate}}</span>
+                                        <span class="required">{{ "ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_SAATI" | translate }}</span>
                                     </label>
     
     
@@ -532,7 +496,7 @@
                                 <div class="fv-row mb-10 fv-plugins-icon-container">
     
                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                        <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_TARIHI" | translate}}</span>
+                                        <span class="required">{{ "ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_TARIHI" | translate }}</span>
                                     </label>
     
     
@@ -553,7 +517,7 @@
                                 <div class="fv-row mb-10 fv-plugins-icon-container">
     
                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                        <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_SAATI" | translate}}</span>
+                                        <span class="required">{{ "ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_SAATI" | translate }}</span>
                                     </label>
     
     
@@ -571,11 +535,11 @@
                             </ng-container>
     
                             <ng-container *ngIf="currentStep$.value == 6">
-                                <div class="border border-3">
+                                <div class="border border-3 rounded-5">
                                     <div class="row py-8 px-10">
                                         
                                         <div class="col-12 d-flex justify-content-center pb-3">
-                                            <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"ZIYARETCI_TALEP_DIALOG.FORM.TALEP_SAHIBI" | translate}}</span>
+                                            <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{ "ZIYARETCI_TALEP_DIALOG.FORM.TALEP_SAHIBI" | translate }}</span>
                                         </div>
                                         
                                         <div class="col-12 d-flex justify-content-center  pb-10" *ngIf="this.authService.currentUserSubject | async as _user">
@@ -588,7 +552,7 @@
                                         <!-- style="background-image: url(../../../../../assets/media/logos/Mediamodifier-Design-Template\ \(11\).png); background-repeat: no-repeat; background-size: contain; background-position: center;" -->
                                         <div >
                                             <div class="col-12 d-flex justify-content-center">
-                                                <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARETCI_BILGILERI" | translate}}</span>
+                                                <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{ "ZIYARETCI_TALEP_DIALOG.FORM.ZIYARETCI_BILGILERI" | translate }}</span>
                                             </div>
         
                                             <div class="col-12">
@@ -596,53 +560,53 @@
                                                     <div class="col-6">
                                                         <div class="row">
                                                             <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.EMAIL" | translate}}:</span>
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{ "ZIYARETCI_TALEP_DIALOG.FORM.EMAIL" | translate }}:</span>
                                                                 <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.email}} </span>
                                                             </div>
                         
                                                             <ng-container *ngIf="visitorFormValues.company.ID != '0' ">
                                                                 <div class="col-12 py-3">   
-                                                                    <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" | translate}}:</span>
+                                                                    <span class="text-gray-800  fs-6 fw-bolder">{{ "ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" | translate }}:</span>
                                                                     <span class="text-muted fw-bold d-block fs-7"> {{ visitorFormValues.company.Ad ? visitorFormValues.company.Ad : visitorFormValues.company }} </span>
                                                                 </div>
                                                             </ng-container>
                         
                                                             <ng-container *ngIf="visitorFormValues.company.ID == '0' ">
                                                                 <div class="col-12 py-3">
-                                                                    <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" | translate}}:</span>
+                                                                    <span class="text-gray-800  fs-6 fw-bolder">{{ "ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" | translate }}:</span>
                                                                     <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.otherCompany}} </span>
                                                                 </div>
                                                             </ng-container>
                                                             
                         
                                                             <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA" | translate}}:</span>
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{ "ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA" | translate }}:</span>
                                                                 <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.description}} </span>
                                                             </div>
                         
                                                             <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_TIPI" | translate}}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.type}} </span>
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{ "ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_TIPI" | translate }}:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.type }} </span>
                                                             </div>
                         
                                                             <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_TARIHI" | translate}}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.entryDate}} </span>
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{ "ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_TARIHI" | translate }}:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.entryDate }} </span>
                                                             </div>
                         
                                                             <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_SAATI" | translate}}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.entryTime}} </span>
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{ "ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_SAATI" | translate }}:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.entryTime }} </span>
                                                             </div>
                         
                                                             <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_TARIHI" | translate}}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.exitDate}} </span>
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{ "ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_TARIHI" | translate }}:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.exitDate }} </span>
                                                             </div>
                         
                                                             <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_SAATI" | translate}}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.exitTime}} </span>
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{ "ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_SAATI" | translate }}:</span>
+                                                                <span class="text-muted fw-bold d-block fs-7"> {{visitorFormValues.exitTime }} </span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -650,18 +614,18 @@
                                                     <div class="col-6">
                                                         <div class="row">
                                                             <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARETCILER" | translate}}:</span>
+                                                                <span class="text-gray-800  fs-6 fw-bolder">{{ "ZIYARETCI_TALEP_DIALOG.FORM.ZIYARETCILER" | translate }}:</span>
                                                                 <div class="row">
                                                                     <div class="col-12">
                                                                         <ul>
                                                                             <ng-container *ngIf="personInformation != 3 && personInformation != 2">
                                                                                 <li class="my-4" *ngFor="let item of visitorFormValues.visitors">
-                                                                                    <span class="badge badge-light-dark text-muted fw-bold d-block fs-7"> {{item.name}} {{item.surname}}</span>
+                                                                                    <span class="badge badge-light-dark text-muted fw-bold d-block fs-7"> {{item.name }} {{item.surname }}</span>
                             
                                                                                     <!-- <ng-container *ngIf="item.files.length != 0">
                                                                                         <ul class="my-2">
                                                                                             <li *ngFor="let value of item.files">
-                                                                                                <span class="text-muted fw-bold d-block fs-7"> {{value.fileName}}</span>
+                                                                                                <span class="text-muted fw-bold d-block fs-7"> {{value.fileName }}</span>
                                                                                             </li>
                                                                                         </ul>
                                                                                     </ng-container> -->
@@ -703,8 +667,8 @@
                                                             <thead>
                                                                 <tr class="bg-danger fs-7 fw-bold text-white border-bottom-0 text-uppercase">
                                                                     <th class="text-center rounded-start"></th>
-                                                                    <th class="text-center">{{"ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate}}</th>
-                                                                    <th class="text-center">{{"ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate}}</th>
+                                                                    <th class="text-center">{{ "ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate }}</th>
+                                                                    <th class="text-center">{{ "ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate }}</th>
                                                                     <th class="text-center rounded-end"></th>
                                                                 </tr>
                                                             </thead>
@@ -754,8 +718,8 @@
                                                                                         <tr
                                                                                             class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
                                                                                             <th class="text-center rounded-start"></th>
-                                                                                            <th class="text-center w-50px">{{"ZIYARETCI_TALEP_DIALOG.FORM.DOSYA_ISMI" | translate}}</th>
-                                                                                            <th class="text-center w-100px">{{"ZIYARETCI_TALEP_DIALOG.FORM.DOSYA_BOYUTU" | translate}}</th>
+                                                                                            <th class="text-center w-50px">{{ "ZIYARETCI_TALEP_DIALOG.FORM.DOSYA_ISMI" | translate }}</th>
+                                                                                            <th class="text-center w-100px">{{ "ZIYARETCI_TALEP_DIALOG.FORM.DOSYA_BOYUTU" | translate }}</th>
                                                                                             <th class="text-center rounded-end"></th>
                                                                                         </tr>
                                                                                     </thead>
@@ -798,12 +762,12 @@
                                                                                             </td>
                                     
                                                                                             <td class="text-center text-muted fw-bold fs-4">
-                                                                                                <span class="fs-5 text-dark">{{value.fileName}}</span>
+                                                                                                <span class="fs-5 text-dark">{{value.fileName }}</span>
                                                                                             </td>
                                     
                                     
                                                                                             <td class="text-center text-muted fw-bold fs-4">
-                                                                                                <span class="fs-5 text-dark">{{value.fileSize}}</span>
+                                                                                                <span class="fs-5 text-dark">{{value.fileSize }}</span>
                                                                                             </td>
                                     
                                                                                             <td class="text-center">
@@ -843,8 +807,8 @@
                                                             <thead>
                                                                 <tr class="bg-danger fs-7 fw-bold text-white border-bottom-0 text-uppercase">
                                                                     <th class="text-center rounded-start"></th>
-                                                                    <th class="text-center">{{"ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate}}</th>
-                                                                    <th class="text-center">{{"ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate}}</th>
+                                                                    <th class="text-center">{{ "ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate }}</th>
+                                                                    <th class="text-center">{{ "ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate }}</th>
                                                                     <th class="text-center rounded-end"></th>
                                                                 </tr>
                                                             </thead>
@@ -859,7 +823,7 @@
                                                                                         <i class="fa-solid fa-sitemap fs-2x text-dark"></i>
                                                                                     </div>
                                                                                 </ng-container>
-                                    
+                                                                    
                                                                                 <ng-container *ngIf="!isFirstVisitor(i)">
                                                                                     <div class="symbol-label fs-2 fw-semibold text-dark">
                                                                                         {{i + 1}}
@@ -867,15 +831,15 @@
                                                                                 </ng-container>
                                                                             </div>
                                                                         </td>
-                                    
+                                                                    
                                                                         <td class="text-center text-muted fw-bold fs-4">
                                                                             <span class="fs-5 text-dark">{{item.Ad}}</span>
                                                                         </td>
-                                    
+                                                                    
                                                                         <td class="text-center text-muted fw-bold fs-4">
                                                                             <span class="fs-5 text-dark">{{item.Soyad}}</span>
                                                                         </td>
-
+                                                                    
                                                                         <td class="text-center">
                                                                             <a (click)="selectVisitor(item)" class="btn btn-danger btn-sm px-4 py-2 ng-star-inserted">
                                                                                 <i class="fa-solid fa-arrow-up-from-bracket m-0 p-0"></i>
@@ -906,7 +870,7 @@
                                     <button type="button" class="btn btn-lg btn-light-danger me-3" (click)="prevStep()">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                        {{"ZIYARETCI_TALEP_DIALOG.FORM.GERI" | translate}}
+                                        {{ "ZIYARETCI_TALEP_DIALOG.FORM.GERI" | translate }}
                                     </button>
                                 </ng-container>
                     
@@ -914,7 +878,7 @@
                                     <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                        {{"ZIYARETCI_TALEP_DIALOG.FORM.KAPAT" | translate}}
+                                        {{ "ZIYARETCI_TALEP_DIALOG.FORM.KAPAT" | translate }}
                                     </button>
                                 </ng-container>
                             </div>
@@ -924,11 +888,11 @@
                                     <ng-container *ngIf="currentStep$.value < formsCount - 1">
                                         <button type="button" class="btn btn-lg btn-danger me-3" (click)="nextStep()">
                                             <span class="indicator-label">
-                                                {{"ZIYARETCI_TALEP_DIALOG.FORM.ILERI" | translate}} {{ " " }}
+                                                {{ "ZIYARETCI_TALEP_DIALOG.FORM.ILERI" | translate }} {{ " " }}
                                                 <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
                                                     class="svg-icon svg-icon-3 ms-2 me-0"></span>
                                                 <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                                    {{"ZIYARETCI_TALEP_DIALOG.FORM.GONDER" | translate}}
+                                                    {{ "ZIYARETCI_TALEP_DIALOG.FORM.GONDER" | translate }}
                                                 </ng-container>
                                             </span>
                                         </button>
@@ -936,7 +900,7 @@
                                     <ng-container *ngIf="currentStep$.value === formsCount - 1">
                                         <button type="button" class="btn btn-lg btn-danger me-3" (click)="postUploadedFilesForVisitors()">
                                             <span class="indicator-label">
-                                                {{"ZIYARETCI_TALEP_DIALOG.FORM.GONDER" | translate}}
+                                                {{ "ZIYARETCI_TALEP_DIALOG.FORM.GONDER" | translate }}
                                             </span>
                                         </button>
                     
@@ -959,7 +923,7 @@
 <ng-template #formError let-control="control" let-message="message" let-validation="validation">
     <ng-container *ngIf="control.hasError(validation)">
         <div class="invalid-feedback">
-            {{message | translate}}
+            {{message | translate }}
         </div>
     </ng-container>
 </ng-template>
@@ -967,7 +931,7 @@
 <ng-template #formSuccess let-control="control" let-message="message" let-validation="validation">
     <ng-container *ngIf="control.valid">
         <div class="valid-feedback">
-            {{message | translate}}
+            {{message | translate }}
         </div>
     </ng-container>
 </ng-template>
@@ -1088,7 +1052,7 @@
         <ng-template pTemplate="footer">
             <a (click)="displayUploadFiles=false" class="btn btn-danger">
                 <i class="fa-solid fa-xmark fs-1"></i>
-                {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+                {{ 'DEMANDED.BUTTON_TEXT.KAPAT' | translate }}
             </a>
         </ng-template>
     </p-dialog>

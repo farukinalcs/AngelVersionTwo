@@ -177,6 +177,8 @@ export const locale = {
         FAZLA_MESAI : "Fazla Mesai",
         ZIYARETCI : "Ziyaretçi",
         MALZEME : "Malzeme",
+        YETKI : "Yetki",
+        AVANS: "Avans",
         TUMU : "Tümü"
       },
 
@@ -288,7 +290,7 @@ export const locale = {
         ACIKLAMA : "Açıklama",
         GONDER : "Gönder",
         IZIN_TIPI_SECINIZ : 'İzin Tipi Seçiniz',
-        ACIKLAMA_GIRINIZ : 'Açıklana Giriniz',
+        ACIKLAMA_GIRINIZ : 'Açıklama Giriniz',
         ADRES_GIRINIZ : 'Adres Giriniz'
       },
       FORM_ERROR : {
@@ -309,7 +311,7 @@ export const locale = {
         ACIKLAMA : "Açıklama",
         GONDER : "Gönder",
         FM_TIPI_SECINIZ : 'Fazla Mesai Tipi Seçiniz',
-        ACIKLAMA_GIRINIZ : 'Açıklana Giriniz',
+        ACIKLAMA_GIRINIZ : 'Açıklama Giriniz',
         YEMEK_SECINIZ : 'Yemek Seçiniz',
         ULASIM_SECINIZ : 'Ulaşım Seçiniz'
       }
@@ -353,7 +355,7 @@ export const locale = {
         ACIKLAMA : "Açıklama",
         GONDER : "Gönder",
         FIRMA_SEC : 'Firma Seçiniz',
-        ACIKLAMA_GIRINIZ : 'Açıklana Giriniz',
+        ACIKLAMA_GIRINIZ : 'Açıklama Giriniz',
         EMAIL : 'Email',
         ZIYARET_TIPI : 'Ziyaret Tipi',
         DOSYA_ISMI : 'Dosya İsmi',
@@ -397,6 +399,66 @@ export const locale = {
         ILERI : 'İleri',
         GERI : 'Geri',
         KAPAT : 'Kapat',
+      }
+    },
+
+    ARAC_TALEP_DIALOG : {
+      HEADER : "Araç Talep Formu",
+      STEPPER : {
+        HEADER_1 : 'Lokasyon',
+        MESSAGE_1 : 'Gidelecek Yer',
+        HEADER_2 : 'Zaman',
+        MESSAGE_2 : 'Kalkış-Varış Zamanı',
+        HEADER_3 : 'Diğer',
+        MESSAGE_3 : '',
+        HEADER_4 : 'Tamamlandı',
+        MESSAGE_4 : 'Özet Bilgiler',
+        HEADER_5 : 'Dosya Yükleme',
+        MESSAGE_5 : 'Gerekli Belgeler'
+      },
+      FORM : {
+        LOKASYON : "LOKASYON",
+        KALKIS_TARIHI : "Kalkış Tarihi",
+        KALKIS_SAATI : "Kalkış Saati",
+        VARIS_TARIHI  :"Varış Tarihi",
+        VARIS_SAATI : "Varış Saati",
+        ACIKLAMA : "Açıklama",
+        ACIKLAMA_GIRINIZ : 'Açıklama Giriniz',
+        GONDER : "Gönder",
+      },
+      FORM_ERROR : {
+        REQUIRED : "Boş Geçilemez!"
+      }
+    },
+
+    AVANS_TALEP_DIALOG : {
+      HEADER : "Avans Talep Formu",
+      STEPPER : {
+        HEADER_1 : 'IBAN',
+        MESSAGE_1 : 'IBAN Bilgileri',
+        HEADER_2 : 'Diğer',
+        MESSAGE_2 : 'Tarih ve Açıklama',
+        HEADER_3 : 'Tutar',
+        MESSAGE_3 : '',
+        HEADER_4 : 'Tamamlandı',
+        MESSAGE_4 : 'Özet Bilgiler',
+        HEADER_5 : 'Dosya Yükleme',
+        MESSAGE_5 : 'Gerekli Belgeler'
+      },
+      FORM : {
+        IBAN : "IBAN",
+        IBAN_KAYDET : "IBAN Kaydet",
+        KAYITLI_IBAN : "Kayıtılı IBAN",
+        TARIH : "Tarih",
+        TUTAR : "Tutar",
+        PARA_BIRIMI  :"Para Birimi",
+        TAKSIT: "Taksit",
+        ACIKLAMA : "Açıklama",
+        ACIKLAMA_GIRINIZ : 'Açıklama Giriniz',
+        GONDER : "Gönder",
+      },
+      FORM_ERROR : {
+        REQUIRED : "Boş Geçilemez!"
       }
     },
 

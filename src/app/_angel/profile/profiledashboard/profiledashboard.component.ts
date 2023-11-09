@@ -32,8 +32,8 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   displayVisitRequestForm: boolean;
   displayAdvancePaymentForm: boolean;
   displayAuthorityRequestForm: boolean;
+  displayVehicleRequestForm: boolean;
 
-  fotoImage : any;
   constructor(
     private auth: AuthService,
     private authMenuService : AuthMenuService,
@@ -129,6 +129,15 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   }
   advancePaymentIsSend() {
     this.displayAdvancePaymentForm = false;
+  }
+  /* --------------------------------- */
+
+  /* Araç Talep Form Dialog Penceresi */
+  showVehicleRequestDialog() {
+    this.displayVehicleRequestForm = true;
+  }
+  vehicleRequestIsSend() {
+    this.displayVehicleRequestForm = false;
   }
   /* --------------------------------- */
 

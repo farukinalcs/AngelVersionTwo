@@ -8,6 +8,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService, UserType } from 'src/app/modules/auth';
+import { AuthMenuService } from 'src/app/_metronic/core/services/auth-menu.service';
+import { AuthMenuModel } from 'src/app/_metronic/core/auth-menu-model';
 
 @Component({
   selector: 'app-dialog-yetki-talebi',
@@ -16,7 +18,7 @@ import { AuthService, UserType } from 'src/app/modules/auth';
 })
 export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
   @Output() authorityRequestFormIsSend: EventEmitter<void> = new EventEmitter<void>();
-
+  menuConfig : AuthMenuModel;
   private ngUnsubscribe = new Subject();
 
   stepperFields: any[] = [
@@ -38,6 +40,7 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
   dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
   user$: Observable<UserType>;
   displayPersonsList: boolean = false;
+  persons: any[] = [];
 
   constructor(
     private profileService: ProfileService,
@@ -45,17 +48,28 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
     private ref: ChangeDetectorRef,
     private breakpointObserver: BreakpointObserver,
     private translateService : TranslateService,
+    private authMenuService : AuthMenuService,
     private toastrService : ToastrService,
     private formBuilder: FormBuilder,
     public authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    this.createFormGroup();
+    this.getMenuConfig();
     this.getCurrentUserInformations();
     this.getTransitionGroup('Yetkitalep');
     this.setResponsiveForm();
-    this.createFormGroup();
     this.changedDurationType()
+  }
+
+  getMenuConfig() {
+    this.authMenuService.menuConfig$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(res => {
+      this.menuConfig = res;
+      this.ref.detectChanges();
+    });
+
+    console.log("ben ekranı menü config :", this.menuConfig);
   }
 
   setResponsiveForm() { // Stepper'ı Yataydan Dikeye Çevir
@@ -157,12 +171,23 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
   getFormValues(): any {
     let authorityFormValues: any = Object.assign({}, this.authorityForm.value);
 
-    this.user$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((user: any) => {
-      authorityFormValues.sicillerim = user.xSicilID;
-    });
+    authorityFormValues.sicillerim = "";
+
+    if (this.persons.length == 0) {
+      this.user$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((user: any) => {
+        authorityFormValues.sicillerim = user.xSicilID;
+      });  
+    } else {
+      this.persons.forEach((person, index) => {
+        if (index !== 0) {
+          authorityFormValues.sicillerim += ',';
+        }
+        authorityFormValues.sicillerim += person.Id;
+      });
+      
+    }
     
     console.log("Form Values : ", authorityFormValues);
-    
     return authorityFormValues;
   }
 
@@ -203,6 +228,19 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
 
   getCurrentUserInformations() {
     this.user$ = this.authService.currentUserSubject.asObservable();
+  }
+
+  getPersons(value: any) {
+    console.log("Siciller Geldi :", value);
+    this.persons = value;
+    
+  }
+
+  getTooltipScript(): string {
+    const personsLength = this.persons.length;
+    const personsName = this.persons.map((person, index) => `${index + 1}) ${person.ad} ${person.soyad}`).join("\r\n");
+    
+    return `${personsLength} Tane Personel Seçildi.\r\n${personsName}`;
   }
 
   ngOnDestroy(): void {

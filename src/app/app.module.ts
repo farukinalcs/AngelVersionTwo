@@ -14,7 +14,6 @@ import { environment } from 'src/environments/environment';
 import { StoreModule } from '@ngrx/store';
 import { PdksReducer } from './_angel/NGRX/pdks.reducer';
 import { TokenInterceptor } from './modules/auth/services/auth-http/token.interceptor';
-import { SearchFilterPipe } from './_helpers/pipes/search-filter.pipe';
 import { ToastrModule } from 'ngx-toastr';
 // #fake-start#
 // import { FakeAPIService } from './_fake/fake-api.service';

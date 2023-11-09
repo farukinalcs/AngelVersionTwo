@@ -1,314 +1,443 @@
-<div class="container py-10 px-15">
-    <form [formGroup]="visitorForm">
+<div class="container py-0 px-5">
+    <div class="container">
         <div class="row">
+            <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
 
-            <div class="col-5 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate}}</span>
-                </label>
-
-                <input type="text" class="form-control form-control-lg form-control-solid" formControlName="ad"
-                    [ngClass]="{
-                        'is-invalid': visitorForm.controls['ad'].invalid,
-                        'is-valid': visitorForm.controls['ad'].valid
-                    }">
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                        validation: 'required',
-                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                        control: visitorForm.controls['ad']}">
-                </ng-container>
-            </div>
-
-
-
-            <div class="col-5 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate}}</span>
-                </label>
-
-                <input type="text" class="form-control form-control-lg form-control-solid" formControlName="soyad"
-                    [ngClass]="{
-                        'is-invalid': visitorForm.controls['soyad'].invalid,
-                        'is-valid': visitorForm.controls['soyad'].valid
-                    }">
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                        validation: 'required',
-                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                        control: visitorForm.controls['soyad']}">
-                </ng-container>
-            </div>
-
-            <div class="col-2 p-5 d-flex justify-content-center align-items-center">
-                <button class="btn btn-primary btn-sm px-4 py-2 w-50" (click)="addNewFields()">
-                    <i class="fa-solid fa-plus m-0 p-0"></i>
-                </button>
-            </div>
-
-            <div class="row bg-gray-300 border-bottom border-3 border-white "
-                *ngFor="let index of getFieldCountArray()">
-                <div class="col-5 p-5">
-                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                        <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.AD" | translate}}</span>
-                    </label>
-
-                    <input type="text" class="form-control form-control-lg form-control-solid"
-                        formControlName="ad{{index}}">
-
+                <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                    <div class="stepper-nav d-flex justify-content-center">
+                        <img src="../../../../../assets/media/illustrations/storyset-1/11.svg" width="100%" alt="">
+                    </div>
                 </div>
 
-                <div class="col-5 p-5">
-                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                        <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.SOYAD" | translate}}</span>
-                    </label>
+                <app-form-stepper [stepperFields]="stepperFields"></app-form-stepper>
 
-                    <input type="text" class="form-control form-control-lg form-control-solid"
-                        formControlName="soyad{{index}}">
-                </div>
+                <div class="row w-xl-700px">
+                    <div class="col-12">
+                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10" [formGroup]="advanceForm">
 
-                <div class="col-2 p-5 d-flex justify-content-center align-items-center">
-                    <button class="btn btn-danger btn-sm px-4 py-2 w-50" (click)="removeNewFields(index)">
-                        <i class="fa-solid fa-xmark m-0 p-0"></i>
-                    </button>
-                </div>
-            </div>
+                            <ng-container *ngIf="currentStep$.value == 1">
+                                <div class="current">
+                                    <div class="w-100">
+                                        <div class="row">
+                                            <div class="col-12 my-5">
+                                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                    <span class="required">{{'AVANS_TALEP_DIALOG.FORM.IBAN' | translate}}</span>
+                                                </label>
+                                            
+                                                <input type="text" maxlength="32" class="form-control form-control-lg form-control-solid" max="31" formControlName="iban" [ngClass]="{
+                                                                                                'is-invalid': advanceForm.controls['iban'].invalid,
+                                                                                                'is-valid': advanceForm.controls['iban'].valid
+                                                                                            }">
+                                            
+                                                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                                                                validation: 'required',
+                                                                                                message: 'IBAN gerekli',
+                                                                                                control: advanceForm.controls['iban']
+                                                                                              }"></ng-container>
+                                                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                                                                validation: 'pattern',
+                                                                                                message: 'Geçersiz IBAN formatı',
+                                                                                                control: advanceForm.controls['iban']
+                                                                                              }"></ng-container>
+                                            
+                                                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                                                                validation: 'invalidIBAN',
+                                                                                                message: 'Geçersiz IBAN',
+                                                                                                control: advanceForm.controls['iban']
+                                                                                              }"></ng-container>
+                                            </div>
 
+                                            <div class="col-12 my-5">
+                                                <div class="form-check form-check-custom form-check-danger form-check-solid">
+                                                    <input id="saveIban" class="form-check-input" type="checkbox" value="true" formControlName="ibanKaydet"/>
+                                                    <label class="form-check-label" for="saveIban">
+                                                        {{'AVANS_TALEP_DIALOG.FORM.IBAN_KAYDET' | translate}}
+                                                    </label>
+                                                </div>
+                                            </div>
 
-
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.EMAIL" | translate}}</span>
-                </label>
-
-                <input type="text" class="form-control form-control-lg form-control-solid" formControlName="email"
-                    [ngClass]="{
-                        'is-invalid': visitorForm.controls['email'].invalid,
-                        'is-valid': visitorForm.controls['email'].valid
-                    }">
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                        validation: 'required',
-                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                        control: visitorForm.controls['email']}">
-                </ng-container>
-            </div>
-
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.FIRMA" | translate}}</span>
-                </label>
-
-
-                <p-dropdown [options]="company" [(ngModel)]="selectedCompany" optionLabel="ad" [filter]="true"
-                    filterBy="ad" [showClear]="true"
-                    placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.FIRMA_SEC' | translate}}" formControlName="firma"
-                    [ngClass]="{
-                            'is-invalid': visitorForm.controls['firma'].invalid,
-                            'is-valid': visitorForm.controls['firma'].valid
-                        }">
-                    <ng-template pTemplate="selectedItem">
-                        <div class="item-item item-item-value" *ngIf="selectedCompany">
-                            <div>{{selectedCompany.ad}}</div>
-                        </div>
-                    </ng-template>
-                    <ng-template let-item pTemplate="item">
-                        <div class="item-item">
-                            <div>{{item.ad}}</div>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                        validation: 'required',
-                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                        control: visitorForm.controls['firma']}">
-                </ng-container>
-            </div>
-
-            <ng-container *ngIf="isOtherCompany">
-                <div class="col-12 p-5">
-                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                        <span class="required">Diğer Firma</span>
-                    </label>
-            
-                    <input type="text" class="form-control form-control-lg form-control-solid" formControlName="otherCompany" placeholder="Diğer Firmayı Girmelisiniz"
-                        [ngClass]="{
-                                        'is-invalid': visitorForm.controls['otherCompany'].invalid,
-                                        'is-valid': visitorForm.controls['otherCompany'].valid
-                                    }">
-            
-                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                        validation: 'required',
-                                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                                        control: visitorForm.controls['otherCompany']}">
-                    </ng-container>
-                </div>
-            </ng-container>
+                                            <ng-container *ngIf="ibanList.length != 0">
+                                                <div class="col-12 my-5">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{'AVANS_TALEP_DIALOG.FORM.KAYITLI_IBAN' | translate}}</span>
+                                                    </label>
+                                            
+                                                    <div class="row">
+                                                        <div class="col-lg-12" *ngFor="let item of ibanList; let i = index">
+                                                            <input type="radio" class="btn-check" formControlName="kayitliIbanlar" value="{{item.iban}}"
+                                                                id="{{'kt_radio_buttons_2_option_' + i}}" />
+                                                            <label
+                                                                class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center mb-5"
+                                                                for="{{'kt_radio_buttons_2_option_' + i}}">
+                                                                <i class="fa-solid fa-building-columns fs-2x text-danger"></i>
+                                            
+                                                                <span class="d-block fw-semibold text-start ps-3">
+                                                                    <span class="text-dark fw-bold d-block fs-3">{{ item.maskIban }}</span>
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            
 
 
-            <div class="col-12 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.ZIYARET_TIPI" | translate}}</span>
-                </label>
-
-                <div class="row d-flex justify-content-center">
-                    <label class="col-6 d-flex flex-stack mb-5 cursor-pointer" *ngFor="let item of visitTypes">
-                        <span class="d-flex align-items-center me-2">
-                            <span class="symbol symbol-50px me-6">
-                                <div [ngSwitch]="item.Ad">
-
-                                    <div *ngSwitchCase="'Misafir'">
-                                        <span class="symbol-label bg-light-info">
-                                            <i class="fa-solid fa-users text-info" style="font-size: x-large;"></i>
-                                        </span>
-                                    </div>
-
-                                    <div *ngSwitchCase="'Etkinlik'">
-                                        <span class="symbol-label bg-light-info  ">
-                                            <i class="fa-solid fa-cake-candles text-info"
-                                                style="font-size: x-large;"></i>
-                                        </span>
-                                    </div>
-
-                                    <div *ngSwitchCase="'İnsan Kaynakları Görüşmesi'">
-                                        <span class="symbol-label bg-light-info">
-                                            <i class="fa-solid fa-handshake text-info" style="font-size: x-large;"></i>
-                                        </span>
-                                    </div>
-
-                                    <div *ngSwitchCase="'Ürün Girişi'">
-                                        <span class="symbol-label bg-light-info">
-                                            <i class="fa-solid fa-truck-ramp-box text-info"
-                                                style="font-size: x-large;"></i>
-                                        </span>
-                                    </div>
-
-
-                                    <div *ngSwitchDefault>
-                                        <span class="symbol-label bg-light-info">
-                                            <i class="fa-solid fa-thumbtack text-info" style="font-size: x-large;"></i>
-                                        </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </span>
+                            </ng-container>
 
-                            <span class="d-flex flex-column">
-                                <span class="fw-bold fs-6">{{item.Ad}}</span>
-                            </span>
-                        </span>
+                            <ng-container *ngIf="currentStep$.value == 2">
+                                <div class="current">
+                                    <div class="w-100">
+                                        <div class="row">
+                                            <div class="col-6 p-5">
+                                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                    <span class="required">{{"AVANS_TALEP_DIALOG.FORM.TARIH" | translate}}</span>
+                                                </label>
 
-                        <span class="form-check form-check-custom form-check-solid">
-                            <input class="form-check-input bg-danger" type="radio" formControlName="ziyaretTipi"
-                                value="{{item.ID}}" [ngClass]="{
-                                    'is-invalid': visitorForm.controls['ziyaretTipi'].invalid,
-                                    'is-valid': visitorForm.controls['ziyaretTipi'].valid
-                                }">
-                        </span>
-                    </label>
-                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="tarih">
+                                            </div>
+
+                                            <div class="col-6 p-5">
+                                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                    <span class="required">{{"AVANS_TALEP_DIALOG.FORM.ACIKLAMA" | translate}}</span>
+                                                </label>
+
+                                                <textarea class="form-control form-control-solid" rows="3"
+                                                    formControlName="aciklama"
+                                                    placeholder="{{'AVANS_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate}}"
+                                                    style="height: 12px;">
+                                                </textarea>
+                                            </div>
+
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </ng-container>
+
+                            <ng-container *ngIf="currentStep$.value == 3">
+                                <div class="current">
+                                    <div class="w-100">
+                                        <div class="row">
+                                            <div class="col-12 my-5">
+                                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                    <span class="required">{{'AVANS_TALEP_DIALOG.FORM.PARA_BIRIMI' | translate}}</span>
+                                                </label>
+
+                                                <div class="form-check form-check-custom form-check-danger form-check-solid">
+                                                    <div class="mx-3">
+                                                        <input class="form-check-input" type="radio" value="tl" id="flexCheckboxTl" formControlName="paraBirimi" />
+                                                        <label class="form-check-label" for="flexCheckboxTl">
+                                                            TL
+                                                        </label>
+                                                    </div>
+                                                    
+                                                    <div class="mx-3">
+                                                        <input class="form-check-input" type="radio" value="usd" id="flexCheckboxUsd" formControlName="paraBirimi" />
+                                                        <label class="form-check-label" for="flexCheckboxUsd">
+                                                            USD
+                                                        </label>
+                                                    </div>
+                                                    
+                                                    <div class="mx-3">
+                                                        <input class="form-check-input" type="radio" value="eur" id="flexCheckboxEur" formControlName="paraBirimi" />
+                                                        <label class="form-check-label" for="flexCheckboxEur">
+                                                            EUR
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-6 my-5">
+                                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                    <span class="required">{{"AVANS_TALEP_DIALOG.FORM.TUTAR" | translate}}</span>
+                                                </label>
+
+                                                <div class="input-group mb-5">
+                                                    <span class="input-group-text">
+                                                        <div [ngSwitch]="advanceForm.get('paraBirimi')?.value">
+                                                            <div *ngSwitchCase="['tl']">₺</div>
+                                                            <div *ngSwitchCase="['usd']">$</div>
+                                                            <div *ngSwitchCase="['eur']">€</div>
+                                                            <div *ngSwitchDefault>₺</div>
+                                                        </div>
+                                                    </span>
+                                                    <input type="number" min="1" class="form-control" formControlName="tutar" aria-label="Tutar"/>
+                                                    <!-- <span class="input-group-text">.00</span> -->
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 my-5">
+                                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                    <span class="required">{{"AVANS_TALEP_DIALOG.FORM.TAKSIT" | translate}}</span>
+                                                </label>
+
+                                                <input type="number" min="1" max="12" class="form-control form-control-lg form-control-solid" formControlName="taksit">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="currentStep$.value == 4">
+                                <div class="border border-3 rounded-5">
+                                    <div class="row py-8 px-10">
+
+                                        <div class="col-12 d-flex justify-content-center pb-3">
+                                            <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">
+                                                {{"ZIYARETCI_TALEP_DIALOG.FORM.TALEP_SAHIBI" | translate}}
+                                            </span>
+                                        </div>
+
+                                        <div class="col-12 d-flex justify-content-center  pb-10"
+                                            *ngIf="this.authService.currentUserSubject | async as _user">
+                                            <span class="text-gray-800 fs-6 fw-bolder">{{_user.adsoyad}}</span>
+                                            <span class="text-muted fw-bold d-block fs-7"></span>
+                                        </div>
+
+                                        <div class="separator mb-10"></div>
+
+                                        <div>
+                                            <div class="col-12 d-flex justify-content-center">
+                                                <span
+                                                    class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"AVANS_TALEP_DIALOG.HEADER" | translate}}</span>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="row text-center">
+                                                    <div class="col-6 py-3">
+                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"AVANS_TALEP_DIALOG.FORM.IBAN" | translate}}:</span>
+                                                        <span class="text-muted fw-bold d-block fs-7">
+                                                            {{ advanceFormValues?.iban }}
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="col-6 py-3">
+                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"AVANS_TALEP_DIALOG.FORM.TUTAR" | translate}}:</span>
+                                                        <span class="text-muted fw-bold d-block fs-7">
+                                                            {{ advanceFormValues?.tutar }}
+                                                            <ng-container *ngIf="advanceFormValues?.paraBirimi === 'tl'">₺</ng-container>
+                                                            <ng-container *ngIf="advanceFormValues?.paraBirimi === 'eur'">€</ng-container>
+                                                            <ng-container *ngIf="advanceFormValues?.paraBirimi === 'usd'">$</ng-container>
+                                                            / {{ advanceFormValues?.taksit }} {{"AVANS_TALEP_DIALOG.FORM.TAKSIT" | translate}}
+                                                        </span>
+                                                    </div>
+                                                    
+                                                    <div class="col-6 py-3">
+                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"AVANS_TALEP_DIALOG.FORM.ACIKLAMA" | translate}}:</span>
+                                                        <span class="text-muted fw-bold d-block fs-7">
+                                                            {{ advanceFormValues?.aciklama }}
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="col-6 py-3">
+                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"AVANS_TALEP_DIALOG.FORM.TARIH" | translate}}:</span>
+                                                        <span class="text-muted fw-bold d-block fs-7">
+                                                            {{ advanceFormValues?.tarih }}
+                                                        </span>
+                                                    </div>
+
+                                                    
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="currentStep$.value == 5">
+                                <div class="current h-xl-500px scroll">
+                                    <div class="w-100">
+                                        <div class="row pb-3" *ngFor="let item of fileTypes; index as i">
+                                            <div class="col-12 d-flex justify-content-center align-items-center">
+                                                <input type="file" [id]="'upload_' + i" style="display: none;"
+                                                    (change)="getFile($event, item)" formControlName="file">
+                                                <label [for]="'upload_' + i" class="w-100">
+                                                    <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center"
+                                                        style="padding: 1.5rem 0;">
+                                                        <div class="dropzone-msg dz-message needsclick">
+                                                            <h3 class="dropzone-msg-title text-center">
+                                                                {{"BULTEN_FORM_DIALOG.FORM.DOSYA_YUKLE" | translate: {
+                                                                fileType: item.ad } }}</h3>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <ng-container *ngIf="item.files">
+                                                    <div [@fileUploaded]="'uploaded'"
+                                                        class="card bg-light-dark mx-8 my-5">
+                                                        <div class="card-body">
+                                                            <div
+                                                                class="row d-flex justify-content-center align-items-center">
+
+                                                                <!-- <ng-container *ngIf="!item.files.type.startsWith('image')"> -->
+                                                                <div class="col-3 text-center">
+                                                                    <div [ngSwitch]="item.files.type">
+                                                                        <div
+                                                                            *ngSwitchCase="['image/jpeg', 'image/png', 'image/svg'].includes(item.files.type) ? item.files.type : !item.files.type">
+                                                                            <i class="file-type cursor-pointer fa-solid fa-file-image text-dark fs-3x"
+                                                                                (click)="showUploadedFile(item)"></i>
+                                                                        </div>
+
+                                                                        <div
+                                                                            *ngSwitchCase="['text/plain'].includes(item.files.type) ? item.files.type : !item.files.type">
+                                                                            <i class="file-type cursor-pointer fa-solid fa-file-lines text-dark fs-3x"
+                                                                                (click)="showUploadedFile(item)"></i>
+                                                                        </div>
+
+                                                                        <div
+                                                                            *ngSwitchCase="['application/pdf'].includes(item.files.type) ? item.files.type : !item.files.type">
+                                                                            <i class="file-type cursor-pointer fa-solid fa-file-pdf text-dark fs-3x"
+                                                                                (click)="showUploadedFile(item)"></i>
+                                                                        </div>
+
+                                                                        <div *ngSwitchDefault>
+                                                                            <i class="fa-solid cursor-pointer fa-file text-dark fs-3x"
+                                                                                (click)="showUploadedFile(item)"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- </ng-container> -->
+
+
+                                                                <div class="col-7">
+                                                                    <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                                        {{ item.files.name }}
+                                                                    </div>
+
+                                                                    <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                                        {{ item.files.fileSize }} {{
+                                                                        item.files.fileSizeType }}
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-2">
+                                                                    <a (click)="item.files = null"
+                                                                        class="btn btn-icon btn-danger btn-sm me-3">
+                                                                        <i class="fa-solid fa-xmark fs-4"></i>
+                                                                    </a>
+                                                                </div>
+
+                                                                <!-- <ng-container *ngIf="item.files.type.startsWith('image')">
+                                                                    <div class="col-12 d-flex justify-content-center">
+                                                                        <div class="symbol symbol-75px">
+                                                                            <img alt="Uploaded File" src="{{item.files.url}}">
+                                                                            <iframe [src]="item.files.url" iframeborder="0"></iframe>
+                                                                        </div>
+                                                                    </div>    
+                                                                </ng-container> -->
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+
+                                            <!-- <ng-container *ngIf="uploadedFile">
+                                                <div [@fileUploaded]="'uploaded'" class="card bg-light-dark m-3">
+                                                    <div class="card-body">
+                                                        <div class="row d-flex justify-content-center align-items-center">
+                                        
+                                                            <div class="col-12 d-flex justify-content-end mb-3">
+                                                                <a (click)="uploadedFile = null" class="btn btn-icon btn-danger btn-sm me-3">
+                                                                    <i class="fa-solid fa-xmark fs-4"></i>
+                                                                </a>
+                                                            </div>
+                                                            
+                                                            <div class="col-12">
+                                                                <iframe [src]="uploadedFile.url" width="100%" height="300px"></iframe>
+                                                            </div>
+                                        
+                                                            <div class="col-4">
+                                                                <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                                    {{uploadedFile.name}}
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-4">
+                                                                <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                                    {{uploadedFile.fileSize}} {{uploadedFile.fileSizeType}}
+                                                                </div>
+                                                            </div>
+                                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container> -->
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+
+                        </form>
+                    </div>
+
+                    <div class="col-12 d-flex align-items-end"
+                        [ngClass]="{'justify-content-center': (this.layoutService.isMobile | async), 'justify-content-end': !(this.layoutService.isMobile | async) }">
+                        <div class="d-flex flex-stack pt-0">
+                            <div class="mr-2">
+                                <ng-container *ngIf=" 5 > currentStep$.value && currentStep$.value > 1">
+                                    <button type="button" class="btn btn-lg btn-light-danger me-3" (click)="prevStep()">
+                                        <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                                            class="svg-icon svg-icon-4 me-1"></span>
+                                        {{"ZIYARETCI_TALEP_DIALOG.FORM.GERI" | translate}}
+                                    </button>
+                                </ng-container>
+
+                                <ng-container *ngIf="currentStep$.value == formsCount">
+                                    <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
+                                        <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                                            class="svg-icon svg-icon-4 me-1"></span>
+                                        {{"ZIYARETCI_TALEP_DIALOG.FORM.KAPAT" | translate}}
+                                    </button>
+                                </ng-container>
+                            </div>
+
+                            <ng-container *ngIf="currentStep$.value !== formsCount">
+                                <div>
+                                    <ng-container *ngIf="currentStep$.value < formsCount - 1">
+                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="nextStep()">
+                                            <span class="indicator-label">
+                                                {{"ZIYARETCI_TALEP_DIALOG.FORM.ILERI" | translate}} {{ " " }}
+                                                <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
+                                                    class="svg-icon svg-icon-3 ms-2 me-0"></span>
+                                                <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                    {{"ZIYARETCI_TALEP_DIALOG.FORM.GONDER" | translate}}
+                                                </ng-container>
+                                            </span>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                        <button type="button" class="btn btn-lg btn-danger me-3"
+                                            (click)="getFormValues()">
+                                            <span class="indicator-label">
+                                                {{"ZIYARETCI_TALEP_DIALOG.FORM.GONDER" | translate}}
+                                            </span>
+                                        </button>
+
+                                    </ng-container>
+
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="col-12 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA" | translate}}</span>
-                </label>
-
-                <textarea class="form-control form-control-solid" rows="3" formControlName="aciklama"
-                    placeholder="{{'ZIYARETCI_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate}}" [ngClass]="{
-                        'is-invalid': visitorForm.controls['aciklama'].invalid,
-                        'is-valid': visitorForm.controls['aciklama'].valid
-                    }"></textarea>
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                        validation: 'required',
-                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                        control: visitorForm.controls['aciklama']}">
-                </ng-container>
-            </div>
-
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_TARIHI" | translate}}</span>
-                </label>
-
-                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="girisTarihi"
-                    [ngClass]="{
-                        'is-invalid': visitorForm.controls['girisTarihi'].invalid,
-                        'is-valid': visitorForm.controls['girisTarihi'].valid
-                    }">
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                        validation: 'required',
-                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                        control: visitorForm.controls['girisTarihi']}">
-                </ng-container>
-            </div>
-
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.GIRIS_SAATI" | translate}}</span>
-                </label>
-
-                <input type="time" class="form-control form-control-lg form-control-solid" formControlName="girisSaati"
-                    [ngClass]="{
-                                                        'is-invalid': visitorForm.controls['girisSaati'].invalid,
-                                                        'is-valid': visitorForm.controls['girisSaati'].valid
-                                                    }">
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'required',
-                                                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                                                        control: visitorForm.controls['girisSaati']}">
-                </ng-container>
-            </div>
-
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_TARIHI" | translate}}</span>
-                </label>
-
-                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="cikisTarihi"
-                    [ngClass]="{
-                        'is-invalid': visitorForm.controls['cikisTarihi'].invalid,
-                        'is-valid': visitorForm.controls['cikisTarihi'].valid
-                    }">
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                        validation: 'required',
-                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                        control: visitorForm.controls['cikisTarihi']}">
-                </ng-container>
-            </div>
-
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                    <span class="required">{{"ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_SAATI" | translate}}</span>
-                </label>
-
-                <input type="time" class="form-control form-control-lg form-control-solid" formControlName="cikisSaati"
-                    [ngClass]="{
-                                                        'is-invalid': visitorForm.controls['cikisSaati'].invalid,
-                                                        'is-valid': visitorForm.controls['cikisSaati'].valid
-                                                    }">
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'required',
-                                                        message: 'IZIN_TALEP_DIALOG.FORM_ERROR.REQUIRED',
-                                                        control: visitorForm.controls['cikisSaati']}">
-                </ng-container>
-            </div>
-
-
-        </div>
-    </form>
-
-    <div class="row mt-10">
-        <div class="col-12 d-flex align-items-end justify-content-end">
-            <button class="mat-stepper-next w-25 btn btn-primary" [disabled]="visitorForm.invalid" type="submit"
-                (click)="getFormsValues()">
-                {{"ZIYARETCI_TALEP_DIALOG.FORM.GONDER" | translate}}
-            </button>
         </div>
     </div>
 </div>
+
+
 
 
 
@@ -327,3 +456,30 @@
         </div>
     </ng-container>
 </ng-template>
+
+
+
+
+
+
+<p-dialog header="Önizleme" [(visible)]="displayUploadedFile" position="center" [modal]="true"
+    [style]="{width: !(this.layoutService.isMobile | async) ? '50vw' : 'none'}" [baseZIndex]="10000" [draggable]="false"
+    [resizable]="false">
+
+    <ng-container *ngIf="currentUploadedFile">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="symbol symbol-75px">
+                <iframe [src]="currentUploadedFile?.files?.url" iframeborder="0" width="600px" height="600px"></iframe>
+            </div>
+        </div>
+    </ng-container>
+
+
+
+    <ng-template pTemplate="footer">
+        <a (click)="displayUploadedFile=false" class="btn btn-danger">
+            <i class="fa-solid fa-xmark fs-1"></i>
+            {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>

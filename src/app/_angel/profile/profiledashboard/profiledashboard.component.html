@@ -88,7 +88,7 @@
                       {{"PROFIL_DASHBOARD.YETKI" | translate}}
                     </button>
                     
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="showVehicleRequestDialog()">
                       <i class="fa-solid fa-car-side pe-4 fs-3"></i>
                       {{"PROFIL_DASHBOARD.ARAC" | translate}}
                     </button>
@@ -241,28 +241,28 @@
                     </li>
                   </ng-container>
 
-                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.gecislerim">
+                  <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.gecislerim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="gecislerim"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.GECISLERIM"></a>
                     </li>
                   </ng-container>
 
-                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.surelerim">
+                  <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.surelerim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="surelerim"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.SURELERIM"></a>
                     </li>
                   </ng-container>
 
-                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.izinlerim">
+                  <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.izinlerim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="izinlerim"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.IZINLERIM"></a>
                     </li>
                   </ng-container>
 
-                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.talepEdilenler">
+                  <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.talepEdilenler">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="talep_edilenler"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEP_EDILENLER">
@@ -271,14 +271,14 @@
                     </li>
                   </ng-container>
 
-                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.taleplerim">
+                  <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.taleplerim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="taleplerim"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEPLERIM"></a>
                     </li>
                   </ng-container>
 
-                  <!-- <ng-container *ngIf="menuConfig.pages.profil.tabMenu.ziyaretciTaleplerim"> -->
+                  <!-- <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.ziyaretciTaleplerim"> -->
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_talepleri" routerLinkActive="active">
                         Ziyaretçi Talepleri
@@ -286,28 +286,28 @@
                     </li>
                   <!-- </ng-container> -->
                   
-                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.ziyaretciTaleplerim">
+                  <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.ziyaretciTaleplerim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_taleplerim"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.ZIYARETCI_TALEPLERIM"></a>
                     </li>
                   </ng-container>
 
-                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.mobilLokasyon">
+                  <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.mobilLokasyon">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="mobil_lokasyon"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.MOBIL_LOKASYON"></a>
                     </li>
                   </ng-container>
 
-                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.taskListem">
+                  <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.taskListem">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="task_listem"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.TASK_LISTEM"></a>
                     </li>
                   </ng-container>
 
-                  <ng-container *ngIf="menuConfig.pages.profil.tabMenu.takimim">
+                  <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.takimim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="takimim"
                         routerLinkActive="active" translate="MENU.PROFIL_SUB.TAKIMIM"></a>
@@ -382,6 +382,18 @@
 
     <ng-container *ngIf="displayAuthorityRequestForm">
       <app-dialog-yetki-talebi (authorityRequestFormIsSend)="authorityRequestFormIsSend()"></app-dialog-yetki-talebi>
+    </ng-container>
+
+  </p-dialog>
+</ng-container>
+
+<ng-container *ngIf="displayVehicleRequestForm">
+  <p-dialog header="Araç Talep Formu" [(visible)]="displayVehicleRequestForm"
+    (visibleChange)="vehicleRequestIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000"
+    [draggable]="true" [resizable]="false">
+
+    <ng-container *ngIf="displayVehicleRequestForm">
+      <app-dialog-arac-talebi (vehicleRequestFormIsSend)="vehicleRequestIsSend()"></app-dialog-arac-talebi>
     </ng-container>
 
   </p-dialog>

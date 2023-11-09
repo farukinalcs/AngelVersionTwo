@@ -19,11 +19,24 @@
                                 <div class="current">
                                     <div class="w-100">
                                         <div class="row">
-                                            <div class="col-12 my-5">
-                                                <a class="btn btn-sm btn-danger w-100" (click)="displayPersonsList = true">
-                                                    Sicil Listesinden Personel Seç
-                                                </a>
-                                            </div>
+                                            <ng-container *ngIf="menuConfig.auth.pages.profil.talepOlustur.yetkiTalebi">
+                                                <div class="my-5" [ngClass]="{ 'col-12': persons.length == 0, 'col-10 px-5': persons.length > 0 }">
+                                                    <a class="btn btn-sm btn-danger w-100" (click)="displayPersonsList = true">
+                                                        Sicil Listesinden Personel Seç
+                                                    </a>
+                                                </div>
+
+                                                <ng-container *ngIf="persons.length > 0">
+                                                    <div class="col-2 d-flex justify-content-center align-items-center my-5 px-5">
+                                                        <span class="badge badge-circle badge-danger" data-bs-toggle="tooltip" data-bs-placement="top" [title]="getTooltipScript()">
+                                                            <i class="fa-solid fa-exclamation text-white"></i>
+                                                        </span>
+                                                    </div>
+                                                </ng-container>
+                                            </ng-container>
+                                            
+
+                                            
                                             
                                             <div class="col-12 my-5">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
@@ -183,7 +196,7 @@
                             </ng-container>
     
                             <ng-container *ngIf="currentStep$.value == 4">
-                                <div class="border border-3">
+                                <div class="border border-3 rounded-5">
                                     <div class="row py-8 px-10">
                                         
                                         <div class="col-12 d-flex justify-content-center pb-3">
@@ -253,6 +266,20 @@
                                                                 <span class="text-gray-800  fs-6 fw-bolder">{{"ZIYARETCI_TALEP_DIALOG.FORM.CIKIS_SAATI" |
                                                                     translate}}:</span>
                                                                 <span class="text-muted fw-bold d-block fs-7"> {{ formValues.endTime }} </span>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+
+                                                    <ng-container *ngIf="persons.length != 0 ">
+                                                        <div class="col-12 d-flex justify-content-center">
+                                                            <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">Seçilen Personeller</span>
+                                                        </div>
+
+                                                        <div class="col-12">
+                                                            <div class="row scroll h-80px">
+                                                                <div class="col-6 my-4" *ngFor="let person of persons">
+                                                                    <span class="badge badge-light-dark text-muted fw-bold d-block fs-7"> {{person.ad}} {{person.soyad}}</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -340,5 +367,5 @@
 
 
 <ng-container *ngIf="displayPersonsList">
-    <app-sicil-liste [displayPersonsList]="displayPersonsList" (displayPersonsListEvent)="displayPersonsList = false"></app-sicil-liste>
+    <app-sicil-liste [displayPersonsList]="displayPersonsList" [selectedPersons]="persons" (displayPersonsListEvent)="displayPersonsList = false" (selectedPersonsList)="getPersons($event)"></app-sicil-liste>
 </ng-container>

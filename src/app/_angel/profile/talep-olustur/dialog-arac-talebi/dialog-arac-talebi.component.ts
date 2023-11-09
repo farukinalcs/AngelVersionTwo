@@ -1,75 +1,50 @@
+import { formatDate } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
-import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ProfileService } from '../../profile.service';
-import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/modules/auth';
 import { TranslateService } from '@ngx-translate/core';
-import { formatDate } from '@angular/common';
-import { DomSanitizer } from '@angular/platform-browser';
-import { ResponseModel } from 'src/app/modules/auth/models/response-model';
-import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
-import { OKodFieldsModel } from '../../models/oKodFields';
-import { HelperService } from 'src/app/_helpers/helper.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { PostFormModel } from '../../models/postForm';
+import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
+import { ProfileService } from '../../profile.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { LayoutService } from 'src/app/_metronic/layout';
+import { DomSanitizer } from '@angular/platform-browser';
+import { AuthService } from 'src/app/modules/auth';
 
 @Component({
-  selector: 'app-dialog-fazla-mesai-talebi',
-  templateUrl: './dialog-fazla-mesai-talebi.component.html',
-  styleUrls: ['./dialog-fazla-mesai-talebi.component.scss'],
-  animations: [
-    trigger("fileUploaded", [
-      state("uploaded", style({ transform: "translateY(0)" })),
-      transition(":enter", [
-        style({ transform: 'translateY(-50%)' }),
-        animate("500ms")
-      ]),
-      transition(':leave', [
-        animate(200, style({ transform: 'translateY(-100%)' }))
-      ])
-    ])
-  ]
+  selector: 'app-dialog-arac-talebi',
+  templateUrl: './dialog-arac-talebi.component.html',
+  styleUrls: ['./dialog-arac-talebi.component.scss']
 })
-export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
+export class DialogAracTalebiComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   @Input() closedForm: BehaviorSubject<boolean>;
-  @Output() overtimeFormIsSend: EventEmitter<void> = new EventEmitter<void>();
-
+  @Output() vehicleFormIsSend: EventEmitter<void> = new EventEmitter<void>();
+  
   stepperFields: any[] = [
-    { class: 'stepper-item current', number: 1, title: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.HEADER_1'), desc: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.MESSAGE_1') },
-    { class: 'stepper-item', number: 2, title: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.HEADER_3'), desc: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.MESSAGE_3') },
-    { class: 'stepper-item', number: 3, title: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.HEADER_4'), desc: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.MESSAGE_4') },
-    { class: 'stepper-item', number: 4, title: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.HEADER_6'), desc: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.MESSAGE_6') },
-    { class: 'stepper-item', number: 5, title: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.HEADER_5'), desc: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.MESSAGE_5') },
+    { class: 'stepper-item current', number: 1, title: this.translateService.instant('ARAC_TALEP_DIALOG.STEPPER.HEADER_1'), desc: this.translateService.instant('ARAC_TALEP_DIALOG.STEPPER.MESSAGE_1') },
+    { class: 'stepper-item', number: 2, title: this.translateService.instant('ARAC_TALEP_DIALOG.STEPPER.HEADER_2'), desc: this.translateService.instant('ARAC_TALEP_DIALOG.STEPPER.MESSAGE_2') },
+    { class: 'stepper-item', number: 3, title: this.translateService.instant('ARAC_TALEP_DIALOG.STEPPER.HEADER_3'), desc: this.translateService.instant('ARAC_TALEP_DIALOG.STEPPER.MESSAGE_3') },
+    { class: 'stepper-item', number: 4, title: this.translateService.instant('ARAC_TALEP_DIALOG.STEPPER.HEADER_4'), desc: this.translateService.instant('ARAC_TALEP_DIALOG.STEPPER.MESSAGE_4') },
+    { class: 'stepper-item', number: 5, title: this.translateService.instant('ARAC_TALEP_DIALOG.STEPPER.HEADER_5'), desc: this.translateService.instant('ARAC_TALEP_DIALOG.STEPPER.MESSAGE_5') },
   ];
 
   formsCount: any = 6;
   currentStep$: BehaviorSubject<number> = new BehaviorSubject(1);
   currentItem: any = this.stepperFields[0];
-  overtimeFormValues: any;
+  vehicleFormValues: any;
 
   // Stepper responsive 
   stepperOrientation: Observable<StepperOrientation>;
 
-  overtimeForm: FormGroup;
+  vehicleForm: FormGroup;
   uploadedFiles: any[] = [];
   uploadedFile: any;
 
   currentDate = new Date(Date.now());
-  currentSicilId: any;
-  selectedType  : any;
   dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
 
-  fmNedenleri: any[] = [];
-  yemek: any[] = [];
-  ulasim: any[] = [];
-  selectedOvertime: any;
-  selectedUlasim: any;
-  selectedYemek: any;
+  selectedVehicle: any;
   formId: any;
   files: any;
   fileTypes: any[] = [];
@@ -77,54 +52,31 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   currentUploadedFile: any;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private breakpointObserver: BreakpointObserver,
     private profileService: ProfileService,
-    private toastrService : ToastrService,
-    public authService : AuthService,
-    private translateService : TranslateService,
+    private formBuilder: FormBuilder,
+    private toastrService: ToastrService,
+    private ref: ChangeDetectorRef,
+    public authService: AuthService,
+    private breakpointObserver: BreakpointObserver,
     private sanitizer: DomSanitizer,
-    private helperService : HelperService,
-    public layoutService : LayoutService,
-    private ref: ChangeDetectorRef
+    public layoutService: LayoutService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
-    this.getOvertimeReason('cbo_fmnedenleri');
-    this.getOvertimeReason('cbo_ulasim');
-    this.getOvertimeReason('cbo_yemek');
-
-    this.currentSicilId = this.helperService.userLoginModel.xSicilID
-
     this.setResponsiveForm();
     this.createFormGroup();
-    this.typeChanges();
-
-    // this.closedFormDialog();
-
   }
 
   canProceedToNextStep(): boolean {
-    this.overtimeFormValues = Object.assign({}, this.overtimeForm.value);
-
-    for (let key in this.overtimeFormValues) {
-      if (this.overtimeFormValues.hasOwnProperty(key) && this.overtimeFormValues[key] === '') {
-        if (key === 'tip' || key === 'ulasim' || key === 'yemek') {
-          this.overtimeFormValues[key] = '0';
-        } else if (key === 'aciklama' || key === 'bastarih' || key === 'bassaat' || key === 'bittarih' || key === 'bitsaat') {
-          this.overtimeFormValues[key] = '';
-        }
-      }
-    }
-
-    this.overtimeFormValues.izinadresi = '';
-    console.log("Fazla Mesai Form :", this.overtimeFormValues);
+    this.vehicleFormValues = Object.assign({}, this.vehicleForm.value);
+    console.log("Araç Talep Form :", this.vehicleFormValues);
 
     if(this.currentStep$.value === 3) {
-      return this.overtimeForm.valid;
+      return this.vehicleForm.valid;
 
     } else if(this.currentStep$.value === 4) {
-      this.postOvertimeForm(this.overtimeFormValues);
+      this.postForm(this.vehicleFormValues);
       return true;
     }
 
@@ -133,10 +85,10 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
 
   canProceedToPrevStep(): boolean {
     // if (this.currentStep$.value === 1) {
-    //   return this.overtimeForm.controls['gunluksaatlik'].valid;
+    //   return this.vehicleForm.controls['gunluksaatlik'].valid;
     // } 
     // else if(this.currentStep$.value === 2) {
-    //   return this.overtimeForm.controls['tip'].valid;
+    //   return this.vehicleForm.controls['tip'].valid;
     // }
     return true;
   }
@@ -164,7 +116,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   
   prevStep() {
     // if (this.currentStep$.value === 2) {
-    //   this.overtimeForm.reset();
+    //   this.vehicleForm.reset();
     // }
     
     const prevStep = this.currentStep$.value - 1;
@@ -181,11 +133,9 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
 
   // Formların oluşması
   createFormGroup() {
-    this.overtimeForm = this.formBuilder.group({
+    this.vehicleForm = this.formBuilder.group({
       aciklama: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
-      tip: ['', Validators.required],
-      ulasim: ['', Validators.required],
-      yemek: ['', Validators.required],
+      lokasyon: ['', Validators.required],
       bastarih: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), Validators.required],
       bassaat: [formatDate(this.currentDate, 'HH:mm', 'en'), Validators.required],
       bittarih: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), Validators.required],
@@ -201,17 +151,6 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
       .observe('(min-width: 800px)')
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
   }
-
-  // getFile(event: any, item : any) {
-  //   let files: FileList = event.target.files[0];
-  //   console.log(files);
-  //   this.files = files;
-  //   item.sendFile = files;
-
-  //   for (let file of event.target.files) {
-  //     this.readAndPushFile(file, item);
-  //   }
-  // }
 
   getFile(event: any, item: any) {
     let files: FileList = event.target.files;
@@ -236,7 +175,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   }
   
 
-  // Dosya boyutunu kontrol eden yöntem
+  // Dosya boyutunu kontrol eden fonk.
   checkFileSize(file: File, maxSizeInBytes: number): boolean {
     const fileSizeInBytes = file.size;
     const maxSize = maxSizeInBytes;
@@ -277,19 +216,16 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   }
 
   closedFormDialog() {
-    // this.closedForm.subscribe(_ => {
-    //   console.log("Closed Form : ", _);
-      this.overtimeForm.reset();
-      this.selectedType = '';
-      this.selectedOvertime = '';
-      this.selectedUlasim = '';
-      this.selectedYemek = '';
+    this.closedForm.subscribe(_ => {
+      console.log("Closed Form : ", _);
+      this.vehicleForm.reset();
+      this.selectedVehicle = '';
       this.uploadedFile = '';
       this.resetStepperFieldsClass();
       this.currentStep$.next(1);
       this.currentItem = this.stepperFields[0];
-      this.overtimeFormIsSend.emit();
-    // });
+      this.vehicleFormIsSend.emit();
+    });
   }
   
 
@@ -299,56 +235,18 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     });
   }
 
-  getOvertimeFormValues() {
-    this.overtimeFormValues = Object.assign({}, this.overtimeForm.value);
-
-    for (let key in this.overtimeFormValues) {
-      if (this.overtimeFormValues.hasOwnProperty(key) && this.overtimeFormValues[key] === '') {
-        if (key === 'tip' || key === 'ulasim' || key === 'yemek') {
-          this.overtimeFormValues[key] = '0';
-        } else if (key === 'aciklama' || key === 'bastarih' || key === 'bassaat' || key === 'bittarih' || key === 'bitsaat') {
-          this.overtimeFormValues[key] = '';
-        }
-      }
-    }
-
-    this.overtimeFormValues.izinadresi = '';
-    console.log("Fazla Mesai Form :", this.overtimeFormValues);
-
-    // this.postOvertimeForm(this.overtimeFormValues);
-
-
-    // this.postOvertimeFile(this.files, this.formId);
-
+  getVehicleFormValues() {
+    this.vehicleFormValues = Object.assign({}, this.vehicleForm.value);
+    console.log("Araç Talep Form :", this.vehicleFormValues);
   }
 
-  getOvertimeReason(kaynak: string) {
-    this.profileService.getTypeValues(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
-      const data = response[0].x;
-      const message = response[0].z;
-
-      if (message.islemsonuc == 1) {
-        if (kaynak == 'cbo_fmnedenleri') {
-          this.fmNedenleri = data;
-        } else if (kaynak == 'cbo_ulasim') {
-          this.ulasim = data;
-        } else {
-          this.yemek = data;
-        }
-        console.log("FM Nedenleri : ", data);
-      }
-
-      this.ref.detectChanges();
-    });
-  }
-
-  postOvertimeForm(formValues : any) {
-    this.profileService.postOvertimeOrVacationDemand('fm', formValues).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<PostFormModel, ResponseDetailZ>[]) => {
+  postForm(formValues : any) {
+    this.profileService.postOvertimeOrVacationDemand('fm', formValues).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
       const data = response[0].x;
       const apiMessage = response[0].z;
       const spMessage = response[0].m[0];
 
-      console.log("Fm Form gönderildi :", response);
+      console.log("Araç Form gönderildi :", response);
       if (data[0].sonuc == 1) {
         this.formId = data[0].formid;
 
@@ -365,13 +263,6 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
       }
     });
     this.ref.detectChanges();
-  }
-  
-
-  typeChanges() {
-    this.overtimeForm.controls['tip'].valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe(item => {
-      item ? this.getFileTypeForDemandType(item.ID, 'fm') : '';
-    });
   }
 
   getFileTypeForDemandType(typeId : any, kaynak : any) {
@@ -396,19 +287,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   }
 
   getFormValues() {
-    this.overtimeFormValues = Object.assign({}, this.overtimeForm.value);
-
-    for (let key in this.overtimeFormValues) {
-      if (this.overtimeFormValues.hasOwnProperty(key) && this.overtimeFormValues[key] === '') {
-        if (key === 'tip' || key === 'ulasim' || key === 'yemek') {
-          this.overtimeFormValues[key] = '0';
-        } else if (key === 'aciklama' || key === 'bastarih' || key === 'bassaat' || key === 'bittarih' || key === 'bitsaat') {
-          this.overtimeFormValues[key] = '';
-        }
-      }
-    }
-
-    this.overtimeFormValues.izinadresi = '';
+    this.vehicleFormValues = Object.assign({}, this.vehicleForm.value);
 
     this.fileTypes.forEach((item : any) => {
       if (item.sendFile) {
@@ -428,18 +307,14 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response : any) => {
       
-      console.log("FM için dosya gönderildi : ", response);
+      console.log("Araç talep için dosya gönderildi : ", response);
       this.closedFormDialog();
 
       this.ref.detectChanges();
     });
   }
 
-
   ngOnDestroy(): void {
-    this.closedFormDialog();
-
-    // this.overtimeForm.reset();
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
   }
