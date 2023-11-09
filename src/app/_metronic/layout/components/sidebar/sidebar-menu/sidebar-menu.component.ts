@@ -6,6 +6,7 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { MenuAuthorization } from 'src/app/_angel/profile/models/menu-authorization';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { HelperService } from 'src/app/_helpers/helper.service';
+import { AuthMenuModel } from 'src/app/_metronic/core/auth-menu-model';
 import { AuthMenuService } from 'src/app/_metronic/core/services/auth-menu.service';
 
 @Component({
@@ -15,7 +16,7 @@ import { AuthMenuService } from 'src/app/_metronic/core/services/auth-menu.servi
 })
 export class SidebarMenuComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
-  menuConfig : any;
+  menuConfig : AuthMenuModel;
   
   constructor(
     private authMenuService : AuthMenuService,
@@ -54,43 +55,44 @@ export class SidebarMenuComponent implements OnInit, OnDestroy {
 
         data.forEach((item:MenuAuthorization) => {
           if (item.menu == 'a001') {
-            this.menuConfig.asideMenu.profil.main = item.goruntulenme;
+            this.menuConfig.auth.asideMenu.profil.main = item.goruntulenme;
           } else if (item.menu == 'm926') {
-            this.menuConfig.asideMenu.profil.subMenu.gecislerim = item.goruntulenme;
-            this.menuConfig.pages.profil.tabMenu.gecislerim = item.goruntulenme;
+            this.menuConfig.auth.asideMenu.profil.subMenu.gecislerim = item.goruntulenme;
+            this.menuConfig.auth.pages.profil.tabMenu.gecislerim = item.goruntulenme;
 
           } else if (item.menu == 'm927') {
-            this.menuConfig.asideMenu.profil.subMenu.surelerim = item.goruntulenme;
-            this.menuConfig.pages.profil.tabMenu.surelerim = item.goruntulenme;
+            this.menuConfig.auth.asideMenu.profil.subMenu.surelerim = item.goruntulenme;
+            this.menuConfig.auth.pages.profil.tabMenu.surelerim = item.goruntulenme;
             
           } else if (item.menu == 'm928') {
-            this.menuConfig.asideMenu.profil.subMenu.izinlerim = item.goruntulenme;
-            this.menuConfig.pages.profil.tabMenu.izinlerim = item.goruntulenme;
+            this.menuConfig.auth.asideMenu.profil.subMenu.izinlerim = item.goruntulenme;
+            this.menuConfig.auth.pages.profil.tabMenu.izinlerim = item.goruntulenme;
 
           } else if (item.menu == 'm917') {
-            this.menuConfig.asideMenu.profil.subMenu.talepEdilenler = item.goruntulenme;
-            this.menuConfig.pages.profil.tabMenu.talepEdilenler = item.goruntulenme;
+            this.menuConfig.auth.asideMenu.profil.subMenu.talepEdilenler = item.goruntulenme;
+            this.menuConfig.auth.pages.profil.tabMenu.talepEdilenler = item.goruntulenme;
 
           } else if (item.menu == 'm961') {
-            this.menuConfig.asideMenu.profil.subMenu.taleplerim = item.goruntulenme;
-            this.menuConfig.pages.profil.tabMenu.taleplerim = item.goruntulenme;
+            this.menuConfig.auth.asideMenu.profil.subMenu.taleplerim = item.goruntulenme;
+            this.menuConfig.auth.pages.profil.tabMenu.taleplerim = item.goruntulenme;
 
           } else if (item.menu == 'm962') {
-            this.menuConfig.asideMenu.profil.subMenu.ziyaretciTaleplerim = item.goruntulenme;
-            this.menuConfig.pages.profil.tabMenu.ziyaretciTaleplerim = item.goruntulenme;
+            this.menuConfig.auth.asideMenu.profil.subMenu.ziyaretciTaleplerim = item.goruntulenme;
+            this.menuConfig.auth.pages.profil.tabMenu.ziyaretciTaleplerim = item.goruntulenme;
 
           } else if (item.menu == 'm918') {
-            this.menuConfig.asideMenu.profil.subMenu.mobilLokasyon = item.goruntulenme;
-            this.menuConfig.pages.profil.tabMenu.mobilLokasyon = item.goruntulenme;
+            this.menuConfig.auth.asideMenu.profil.subMenu.mobilLokasyon = item.goruntulenme;
+            this.menuConfig.auth.pages.profil.tabMenu.mobilLokasyon = item.goruntulenme;
 
           } else if (item.menu == 'm34') {
-            this.menuConfig.asideMenu.profil.subMenu.taskListem = item.goruntulenme;
-            this.menuConfig.pages.profil.tabMenu.taskListem = item.goruntulenme;
+            this.menuConfig.auth.asideMenu.profil.subMenu.taskListem = item.goruntulenme;
+            this.menuConfig.auth.pages.profil.tabMenu.taskListem = item.goruntulenme;
 
           } else if (item.menu == 'm944') {
-            this.menuConfig.asideMenu.profil.subMenu.takimim = item.goruntulenme;
-            this.menuConfig.pages.profil.tabMenu.takimim = item.goruntulenme;
-
+            this.menuConfig.auth.asideMenu.profil.subMenu.takimim = item.goruntulenme;
+            this.menuConfig.auth.pages.profil.tabMenu.takimim = item.goruntulenme;
+          } else if(item.menu == 'm963') {
+            this.menuConfig.auth.pages.profil.talepOlustur.yetkiTalebi = item.goruntulenme;
           }
         })
         console.log(" Yek030-Response :", data);

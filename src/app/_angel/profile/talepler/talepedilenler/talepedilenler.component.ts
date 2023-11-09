@@ -1,6 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,10 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { LayoutService } from 'src/app/_metronic/layout';
-import { AccessDataModel } from '../../models/accessData';
-import { DemandedModel } from '../../models/demanded';
 import { DemandProcessModel } from '../../models/demandProcess';
-import { OKodFieldsModel } from '../../models/oKodFields';
 import { ProfileService } from '../../profile.service';
 
 @Component({
@@ -34,35 +30,19 @@ import { ProfileService } from '../../profile.service';
 })
 export class TalepedilenlerComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
-  @ViewChild('confirmAlert') confirmAlert: TemplateRef<any>; // Toplu onayda özet ekran dialog penceresinin açılması için
-  @ViewChild('cancelAlert') cancelAlert: TemplateRef<any>; // Toplu reddetmek için özet ekran dialog pencersinin açılması için
   @ViewChild('base64Iframe') base64Iframe: ElementRef | undefined;
-
 
   filterText : string = ''; // Arama yapmak için
   kaynak : string; // Nav Linklerden seçilen
-
   panelOpenState = false; // Cardlardan checkbox ayarı için
-
   onayBeklenenFormlar : any[] = []; // *ngFor ile döndürülen arr
   onaylananFormlar : any[] = []; // *ngFor ile döndürülen arr
   reddedilenFormlar : any[] = [];  // *ngFor ile döndürülen arr
   demandProcess : any[] = []; // *ngFor ile döndürülen arr (Süreç İçin)
-
   displayDemandProcess : boolean; // Süreç dialog aç-kapat ayarı
-
-  displayCancelDemand: boolean; // İptal dislog aç-kapat ayarı
-  descriptionText  : string; // İptal açıklama değeri
-  selectedItem : any; // İptal işleminde seçilen item
-
   allComplete: boolean = false; // Checkbox tümünü seç veya kaldır
-
-  tip: number; // İptal tekli mi çoklu mu kontrolü
-
   displayDetailSearch : boolean; // Detaylı arama dialog aç-kapat ayarı
-
   uniqeFotoImage : any;
-
   currentDate : any = new Date().toISOString().substring(0,10);
   checkedList: any[] = [];
   cancelAlertRef: any; // Dialog pencersini kapatmak için
@@ -72,9 +52,8 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
   menuItems = [
     { id: 'izinNavItem', key: 'izin', icon: 'fa-umbrella-beach', label: 'DEMANDED.SUB_MENU.IZIN' },
     { id: 'fazlamesaiNavItem', key: 'fazlamesai', icon: 'fa-business-time', label: 'DEMANDED.SUB_MENU.FAZLA_MESAI' },
-    { id: 'ziyaretciNavItem', key: 'ziyaretci', icon: 'fa-people-group', label: 'DEMANDED.SUB_MENU.ZIYARETCI' },
-    { id: 'envanterNavItem', key: 'envanter', icon: 'fa-screwdriver-wrench', label: 'DEMANDED.SUB_MENU.MALZEME' },
-    { id: 'tumuNavItem', key: 'tum', icon: 'fa-circle-question', label: 'DEMANDED.SUB_MENU.TUMU' }
+    { id: 'yetkiNavItem', key: 'sureliyetki', icon: 'fa-door-open', label: 'DEMANDED.SUB_MENU.YETKI' },
+    { id: 'avansNavItem', key: 'avans', icon: 'fa-sack-dollar', label: 'DEMANDED.SUB_MENU.AVANS' },
   ];
   fileTypes: any[];
   uploadedFiles: any[];
@@ -84,20 +63,22 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
   path: any;
   base64Data: any;
   selectedFormId: any;
-
-
-
   selectedDemand: any;
   demandTypeNameForProcess: any;
   demandIdForProcess: any;
+
+
+
+  displayCancelDemand: boolean;
+  selectedItem: any;
+  tip: any;
+  descriptionText: string;
   
   constructor(
     private profilService : ProfileService,
     private toastrService : ToastrService,
     private translateService : TranslateService,
-    private dialog : MatDialog,
     public layoutService : LayoutService,
-    private sanitizer: DomSanitizer,
     private ref : ChangeDetectorRef
   ) { }
 
@@ -168,41 +149,49 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     });
   }
 
-  getDemanded(kaynak : string) {
-    this.profilService.getDemanded(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<DemandedModel, ResponseDetailZ>[]) => {
+  getDemanded(kaynak : any) {
+    this.profilService.getDemanded(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<any, ResponseDetailZ>[]) => {
       this.kaynak = kaynak;
-
-      let data = response[0].x;
-      let message = response[0].z;
-
-      console.log("Talep Edilenler :", data);
 
       this.onayBeklenenFormlar = [];
       this.reddedilenFormlar = [];
       this.onaylananFormlar = [];
+      
+      let data = response[0].x;
+      let message = response[0].z;
+
+      if (message.islemsonuc != 1) {
+        return;
+      }
+
+      console.log("Talep Edilenler :", data);
 
       let bosBelgeSayisi : any = 0;
       data.forEach((item : any) => {
         item.completed = false;
-        item.atananlar = JSON.parse(item.atananlar);
-        if (item.sectim == 0) {
+
+        if (item?.sectim == 0) {
           this.onayBeklenenFormlar.push(item);
 
-        } else if (item.sectim == 9){
+        } else if (item?.sectim == 9){
           this.reddedilenFormlar.push(item);
           
-        } else if (item.sectim == 1){
+        } else if (item?.sectim == 1){
           this.onaylananFormlar.push(item);
         }
 
-        item.atananlar.forEach((belge : any) => {
-          if (belge.link == 'boş') {
-            bosBelgeSayisi++
-          }
-        })
+        if (item.atananlar) {
+          item.atananlar = JSON.parse(item?.atananlar);          
 
-        item.bosBelgeSayisi = bosBelgeSayisi;
-        bosBelgeSayisi = 0;
+          item?.atananlar.forEach((belge : any) => {
+            if (belge.link == 'boş') {
+              bosBelgeSayisi++
+            }
+          });
+  
+          item.bosBelgeSayisi = bosBelgeSayisi;
+          bosBelgeSayisi = 0;
+        }
       });
       
 
@@ -217,89 +206,6 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     const uniqueOptions = new Set();
     data.forEach(item => uniqueOptions.add(item));
     return Array.from(uniqueOptions);
-  }
-
-  updateAllComplete() {
-    this.allComplete = this.onayBeklenenFormlar != null && this.onayBeklenenFormlar.every((t: any) => t.completed);
-  
-    console.log("AllComplete :", this.allComplete);    
-    console.log("updateAllComplete :", this.onayBeklenenFormlar);    
-  }
-
-  someComplete(): boolean {
-    if (this.onayBeklenenFormlar == null) {
-      console.log("someComplete if :", this.onayBeklenenFormlar);    
-      
-      return false;
-    }
-    return this.onayBeklenenFormlar.filter((t: any) => t.completed).length > 0 && !this.allComplete;
-  }
-
-  setAll(completed: boolean) {
-    this.allComplete = completed;
-    if (this.onayBeklenenFormlar == null) {
-      console.log("setAll if :", this.onayBeklenenFormlar);    
-
-      return;
-    }
-    this.onayBeklenenFormlar.forEach((t: any) => (t.completed = completed));
-    console.log("setAll else :", this.onayBeklenenFormlar);    
-  }
-
-  cancelDemandMultiple(aktifMenu : any, description : string){
-    this.checkedList = this.onayBeklenenFormlar.filter((c : any) => {
-      return c.completed == true;
-    });
-    console.log("SELECTED :", this.checkedList);
-
-
-    if (this.checkedList.length > 0) {
-      this.profilService.cancelMyDemandsMultiple(this.checkedList, description).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
-        console.log("Çoklu İptal :", response);
-        this.getDemanded(aktifMenu);
-        this.toastrService.success(
-          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
-          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
-        );
-
-
-        this.allComplete = false;
-
-        this.ref.detectChanges();
-      });  
-
-      this.descriptionText = '';    
-      this.displayCancelDemand = false;
-    }   
-    
-  }
-
-  cancelDemandSingle(formid : any, kaynak : any, aciklama : any, aktifMenu : any) {
-    if (kaynak == 'İzin') {
-      kaynak = 'izin';
-    }else if (kaynak == 'Fazla Mesai'){
-      kaynak = 'fm'
-    }
-
-    this.profilService.cancelMyDemands(formid, kaynak, aciklama).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
-      if (response[0].x[0].islemsonuc) {
-        this.getDemanded(aktifMenu);
-        this.toastrService.success(
-          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
-          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
-        );
-
-      }
-      console.log("Talep İptal :", response);
-
-
-      this.ref.detectChanges();
-    });
-
-
-    this.descriptionText = '';    
-    this.displayCancelDemand = false;
-
   }
 
   resetArr() {
@@ -327,8 +233,6 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
       }
     }
   }
-  
-
 
   getDemandProcess(formId : any, formTip : any) {
     if (formTip == 'İzin') {
@@ -356,12 +260,12 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     })
   }
 
-  // showDemandProcessDialog(formId : any, formTip : any) {
-  //   this.displayDemandProcess = true;
-  //   // this.getDemandProcess(formId, formTip);
-  //   this.demandIdForProcess = formId;
-  //   this.demandTypeNameForProcess = formTip;
-  // }
+  showDemandProcessDialog2(formId : any, formTip : any) { // Talepedilenler Onay Bekleyen Formlar İçin Ayrı Bir fonskiyon
+    this.displayDemandProcess = true;
+    // this.getDemandProcess(formId, formTip);
+    this.demandIdForProcess = formId;
+    this.demandTypeNameForProcess = formTip;
+  }
 
   showDemandProcessDialog(data: {demandId : any, demandTypeName : any}) {
     this.displayDemandProcess = true;
@@ -369,118 +273,11 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     this.demandTypeNameForProcess = data.demandTypeName;
   }
 
-  showCancelDemandDialog(item : any, tip : number) {
-    // this.cancelAlertRef.close();
-    if (tip == 2) {
-      let checkedList = this.onayBeklenenFormlar.filter((c : any) => {
-        return c.completed == true;
-      });
-      if (checkedList.length > 0) {
-        this.cancelAlertRef.close();
-        this.displayCancelDemand = true;
-        this.selectedItem = item;
-        this.tip = tip;    
-
-      } else {
-        this.toastrService.error(
-          this.translateService.instant("TOASTR_MESSAGE.ISARETLEME_YAPMALISINIZ"),
-          this.translateService.instant("TOASTR_MESSAGE.HATA")
-        );
-      }
-    } else {
-      this.displayCancelDemand = true;
-      this.selectedItem = item;
-      this.tip = tip;
-    }
-
-    this.ref.detectChanges();
-    
-  }
-
-  showDetailSearchDialog(currentMenu : string) {
+  showDetailSearchDialog(currentMenu : any) {
     this.displayDetailSearch = true;
     this.kaynak = currentMenu;
   }
 
-  isSingleOrMultiple(aktifMenu : string, description : any) {
-    if (this.tip == 1) {
-      this.cancelDemandSingle(this.selectedItem.Id, this.selectedItem.tipad, description, aktifMenu);
-    } else if (this.tip == 2) {
-      this.cancelDemandMultiple(aktifMenu, description);
-    }
-  }
-
-  confirmDemandSingle(formid : any, kaynak : any, aktifMenu : any){
-    if (kaynak == 'İzin') {
-      kaynak = 'izin';
-    }else if (kaynak == 'Fazla Mesai'){
-      kaynak = 'fm'
-    }
-
-    this.profilService.confirmDemandSingle(formid, kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
-      const data = response[0].x;
-      console.log("Talep Onaylama :", response);
-
-      if (data[0].sonuc == 1) {
-        this.toastrService.success(
-          this.translateService.instant("TOASTR_MESSAGE.TALEP_ONAYLANDI"),
-          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
-        );
-        this.getDemanded(aktifMenu);
-      }
-    });
-  }
-
-  confirmDemandMultiple(aktifMenu: any) {
-    if (this.checkedList.length > 0) {
-      this.profilService.confirmDemandMultiple(this.checkedList).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
-        console.log("Çoklu Onay :", response);
-        this.getDemanded(aktifMenu);
-        this.toastrService.success(
-          this.translateService.instant("TOASTR_MESSAGE.TALEP_ONAYLANDI"),
-          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
-        );
-        this.confirmAlertRef.close();
-
-        this.allComplete = false;
-        this.ref.detectChanges();
-      });
-    }
-  }
-
-  removeItemInCheckedList(removeItem : any, dialog : any) {
-    this.checkedList = this.checkedList.filter(item => item.Id !== removeItem.Id);
-    removeItem.completed = false;
-    this.updateAllComplete();
-
-    if (this.checkedList.length == 0) {
-      dialog.close();
-    }
-    
-    this.ref.detectChanges();
-  }
-
-  openDialog(tip : any) {
-    this.checkedList = this.onayBeklenenFormlar.filter((c : any) => {
-      return c.completed == true;
-    });
-    console.log("SELECTED :", this.checkedList);
-
-    if (this.checkedList.length > 0) {
-      if (tip == '+') {
-        this.confirmAlertRef = this.dialog.open(this.confirmAlert);
-
-      } else if (tip == '-') {
-        this.cancelAlertRef = this.dialog.open(this.cancelAlert);
-        
-      }
-    } else {
-      this.toastrService.error(
-        this.translateService.instant("TOASTR_MESSAGE.ISARETLEME_YAPMALISINIZ"),
-        this.translateService.instant("TOASTR_MESSAGE.HATA")
-      );
-    }
-  }
 
   isCardOpen(item : any) {
     item.panelOpenState = true;
@@ -503,16 +300,105 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     this.getDemanded(selectedNavItem);
   }
 
-  getTooltopScript(item: any[]): string {
-    const bosBelgeler = this.getBosBelgeler(item);
-    const bosBelgeSayisi = bosBelgeler.length;
-    const belgeAdlari = bosBelgeler.map((belge, index) => `${index + 1}) ${belge}`).join("\r\n");
+
+
+
+
+
+  showCancelDemandDialog(data : {item: any, tip : any}) {
+    // this.cancelAlertRef.close();
+    if (data.tip == 2) {
+      let checkedList = this.onayBeklenenFormlar.filter((c : any) => {
+        return c.completed == true;
+      });
+      if (checkedList.length > 0) {
+        this.cancelAlertRef.close();
+        this.displayCancelDemand = true;
+        this.selectedItem = data.item;
+        this.tip = data.tip;    
+
+      } else {
+        this.toastrService.error(
+          this.translateService.instant("TOASTR_MESSAGE.ISARETLEME_YAPMALISINIZ"),
+          this.translateService.instant("TOASTR_MESSAGE.HATA")
+        );
+      }
+    } else {
+      this.displayCancelDemand = true;
+      this.selectedItem = data.item;
+      this.tip = data.tip;
+    }
+
+    this.ref.detectChanges();
     
-    return `Yüklenmesi Gereken ${bosBelgeSayisi} Adet Dosya Eksik.\r\n${belgeAdlari}`;
   }
-  
-  getBosBelgeler(item: any[]): string[] {
-    return item.filter(belge => belge.link === "boş").map(belge => belge.BelgeAdi);
+
+  isSingleOrMultiple(aktifMenu: string, description: any) {
+    if (this.tip == 1) {
+      this.cancelDemandSingle(this.selectedItem.Id, this.selectedItem.tipad, description, aktifMenu);
+    } else if (this.tip == 2) {
+      this.cancelDemandMultiple(aktifMenu, description);
+    }
+  }
+
+  cancelDemandMultiple(aktifMenu: any, description: string) {
+    this.checkedList = this.onayBeklenenFormlar.filter((c: any) => {
+      return c.completed == true;
+    });
+    console.log("SELECTED :", this.checkedList);
+
+
+    if (this.checkedList.length > 0) {
+      this.profilService.cancelMyDemandsMultiple(this.checkedList, description).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+        console.log("Çoklu İptal :", response);
+        this.getDemanded(aktifMenu);
+        this.toastrService.success(
+          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
+          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+        );
+
+
+        this.allComplete = false;
+
+        this.ref.detectChanges();
+      });
+
+      this.descriptionText = '';
+      this.displayCancelDemand = false;
+    }
+
+  }
+
+  cancelDemandSingle(formid: any, kaynak: any, aciklama: any, aktifMenu: any) {
+    if (kaynak == 'İzin') {
+      kaynak = 'izin';
+    } else if (kaynak == 'Fazla Mesai') {
+      kaynak = 'fm'
+    } else if (kaynak == 'Yetki') {
+      kaynak = 'sureliyetki'
+    } else if (kaynak == 'Avans') {
+      kaynak = 'avans'
+    }
+
+    this.profilService.cancelMyDemands(formid, kaynak, aciklama).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+      if (response[0].x[0].islemsonuc) {
+        this.getDemanded(kaynak);
+        this.toastrService.success(
+          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
+          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+        );
+
+      }
+      console.log("Talep İptal :", response);
+
+
+      this.ref.detectChanges();
+    });
+
+
+    this.descriptionText = '';
+    this.displayCancelDemand = false;
+
   }
   
 

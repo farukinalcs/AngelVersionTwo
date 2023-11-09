@@ -18,7 +18,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
   </div> -->
 
 
-  <ng-container *ngIf="menuConfig.asideMenu.profil.main">
+  <ng-container *ngIf="menuConfig.auth.asideMenu.profil.main">
     <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
@@ -32,7 +32,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
 
-        <ng-container *ngIf="menuConfig.asideMenu.profil.subMenu.gecislerim">
+        <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.gecislerim">
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/genel_bakis"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title" translate="MENU.DASHBOARD"></span>
@@ -40,7 +40,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
           </div>
         </ng-container>
 
-        <ng-container *ngIf="menuConfig.asideMenu.profil.subMenu.gecislerim">
+        <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.gecislerim">
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/gecislerim"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
@@ -49,7 +49,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
         </ng-container>
 
 
-        <ng-container *ngIf="menuConfig.asideMenu.profil.subMenu.surelerim">
+        <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.surelerim">
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/surelerim"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
@@ -58,7 +58,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
         </ng-container>
 
 
-        <ng-container *ngIf="menuConfig.asideMenu.profil.subMenu.izinlerim">
+        <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.izinlerim">
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/izinlerim"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
@@ -67,7 +67,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
         </ng-container>
 
 
-        <ng-container *ngIf="menuConfig.asideMenu.profil.subMenu.talepEdilenler">
+        <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.talepEdilenler">
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/talep_edilenler"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
@@ -76,7 +76,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
         </ng-container>
 
 
-        <ng-container *ngIf="menuConfig.asideMenu.profil.subMenu.taleplerim">
+        <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.taleplerim">
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/taleplerim"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
@@ -85,7 +85,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
         </ng-container>
 
 
-        <ng-container *ngIf="menuConfig.asideMenu.profil.subMenu.ziyaretciTaleplerim">
+        <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.ziyaretciTaleplerim">
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active"
               routerLink="profile/ziyaretci_taleplerim"><span class="menu-bullet"><span
@@ -95,7 +95,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
         </ng-container>
 
 
-        <ng-container *ngIf="menuConfig.asideMenu.profil.subMenu.mobilLokasyon">
+        <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.mobilLokasyon">
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/mobil_lokasyon"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
@@ -104,7 +104,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
         </ng-container>
 
 
-        <ng-container *ngIf="menuConfig.asideMenu.profil.subMenu.taskListem">
+        <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.taskListem">
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/task_listem"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
@@ -113,7 +113,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
         </ng-container>
 
 
-        <ng-container *ngIf="menuConfig.asideMenu.profil.subMenu.takimim">
+        <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.takimim">
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/takimim"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"

@@ -230,7 +230,12 @@ export class ProfileService {
         item.tipad = 'izin';
       } else if (item.tipad == 'Fazla Mesai'){
         item.tipad = 'fm';
+      } else if (item.tipad == 'Yetki'){
+        item.tipad = 'sureliyetki';
+      } else if (item.tipad == 'Avans'){
+        item.tipad = 'avans';
       }
+
       sp.push({
         mkodu : 'yek038',
         formid : item.Id.toString(),
@@ -1248,6 +1253,138 @@ export class ProfileService {
 
     let options = {
       params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  getPersonsList() {
+    var sp: any[] = [{
+      mkodu: 'yek081',
+      id: '0',
+      xsicilid: '233',
+      ad: '',
+      soyad: '',
+      sicilno: '',
+      personelno: '',
+      firma: '0',
+      bolum: '0',
+      pozisyon: '0',
+      gorev: '0',
+      altfirma: '0',
+      yaka: '0',
+      direktorluk: '0',
+      sicilgroup: '0',
+      userdef: '1',
+      yetki: '-1',
+      cardid: '',
+      aktif: '1',
+      okod1: '',
+      okod2: '',
+      okod3: '',
+      okod4: '',
+      okod5: '',
+      okod6: '',
+      okod7: ''
+    }];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize: 128 / 8,
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata: encryptedParam.toString()
+    };
+
+    let options = {
+      params: data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  postAdvancedRequest(formValues: any) {
+    var sp : any[] = [{
+      mkodu : 'yek085',
+      bastarih : formValues.tarih,
+      taksit : formValues.taksit.toString(),
+      parabirimi : formValues.paraBirimi,
+      aciklama : formValues.aciklama,
+      tutar : formValues.tutar.toString(), 
+      iban:  formValues.iban,
+      ibansave: formValues.ibanKaydet.toString(),
+    }];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  getIbanList() {
+    var sp : any[] = [{
+      mkodu : 'yek086'
+    }];
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  sendRequestForProcess(sp: any[]) {
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize: 128 / 8,
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata: encryptedParam.toString()
+    };
+
+    let options = {
+      params: data
     };
 
     return this.httpClient.get<any>(API_URL + '/process', options);

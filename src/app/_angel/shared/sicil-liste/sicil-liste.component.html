@@ -1,1 +1,159 @@
-<p>sicil-liste works!</p>
+<p-dialog header="Sicil Liste" [(visible)]="displayPersonsList" [modal]="true"
+    [style]="{width: '100%', height: '140%', 'max-height':'175%'}" [maximizable]="true" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false" (onHide)="hidePersonsList()" [dismissableMask]="true">
+
+    <ag-grid-angular #agGrid style="width: 100%; height: 100%;" class="ag-theme-alpine theme-light-show"
+        [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+        [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChanged()" [sideBar]="sideBar"
+        [rowGroupPanelShow]="rowGroupPanelShow" [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+        [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true" [pagination]="false"
+        [paginationAutoPageSize]="false" [paginateChildRows]="false" [enableRangeSelection]="true"
+        [enableRangeHandle]="true" (firstDataRendered)="onFirstDataRendered($event)">
+    </ag-grid-angular>
+    
+    <ag-grid-angular #agGrid style="width: 100%; height: 100%;" class="ag-theme-alpine-dark theme-dark-show"
+        [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+        [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChanged()" [sideBar]="sideBar"
+        [rowGroupPanelShow]="rowGroupPanelShow" [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+        [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true" [pagination]="false"
+        [paginationAutoPageSize]="false" [paginateChildRows]="false" [enableRangeSelection]="true"
+        [enableRangeHandle]="true" (firstDataRendered)="onFirstDataRendered($event)">
+    </ag-grid-angular>
+
+    <!-- <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <mat-tab-group mat-stretch-tabs="false">
+                    <mat-tab label="Aktifler">
+                        <div class="row">
+                            <div class="col-12 p-5">
+                                <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine theme-light-show"
+                                    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+                                    [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChanged()" [sideBar]="sideBar"
+                                    [rowGroupPanelShow]="rowGroupPanelShow" [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+                                    [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true" [pagination]="false"
+                                    [paginationAutoPageSize]="false" [paginateChildRows]="false" [enableRangeSelection]="true"
+                                    [enableRangeHandle]="true" (firstDataRendered)="onFirstDataRendered($event)">
+                                </ag-grid-angular>
+                        
+                                <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine-dark theme-dark-show"
+                                    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+                                    [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChanged()" [sideBar]="sideBar"
+                                    [rowGroupPanelShow]="rowGroupPanelShow" [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+                                    [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true" [pagination]="false"
+                                    [paginationAutoPageSize]="false" [paginateChildRows]="false" [enableRangeSelection]="true"
+                                    [enableRangeHandle]="true" (firstDataRendered)="onFirstDataRendered($event)">
+                                </ag-grid-angular>
+                            </div>
+                        </div>
+                        
+                    </mat-tab>
+            
+                    <mat-tab label="İşten Çıkanlar">
+                        <div class="row">
+                            <div class="col-12 p-5">
+                                <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine theme-light-show"
+                                    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+                                    [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChanged()" [sideBar]="sideBar"
+                                    [rowGroupPanelShow]="rowGroupPanelShow" [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+                                    [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true" [pagination]="false"
+                                    [paginationAutoPageSize]="false" [paginateChildRows]="false" [enableRangeSelection]="true"
+                                    [enableRangeHandle]="true" (firstDataRendered)="onFirstDataRendered($event)">
+                                </ag-grid-angular>
+                        
+                                <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine-dark theme-dark-show"
+                                    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+                                    [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChanged()" [sideBar]="sideBar"
+                                    [rowGroupPanelShow]="rowGroupPanelShow" [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+                                    [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true" [pagination]="false"
+                                    [paginationAutoPageSize]="false" [paginateChildRows]="false" [enableRangeSelection]="true"
+                                    [enableRangeHandle]="true" (firstDataRendered)="onFirstDataRendered($event)">
+                                </ag-grid-angular>
+                            </div>
+                        </div>
+                    </mat-tab>
+            
+                    <mat-tab label="Yasaklılar">
+                        <div class="row">
+                            <div class="col-12 p-5">
+                                <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine theme-light-show"
+                                    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+                                    [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChanged()" [sideBar]="sideBar"
+                                    [rowGroupPanelShow]="rowGroupPanelShow" [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+                                    [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true" [pagination]="false"
+                                    [paginationAutoPageSize]="false" [paginateChildRows]="false" [enableRangeSelection]="true"
+                                    [enableRangeHandle]="true" (firstDataRendered)="onFirstDataRendered($event)">
+                                </ag-grid-angular>
+                        
+                                <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine-dark theme-dark-show"
+                                    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+                                    [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChanged()" [sideBar]="sideBar"
+                                    [rowGroupPanelShow]="rowGroupPanelShow" [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+                                    [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true" [pagination]="false"
+                                    [paginationAutoPageSize]="false" [paginateChildRows]="false" [enableRangeSelection]="true"
+                                    [enableRangeHandle]="true" (firstDataRendered)="onFirstDataRendered($event)">
+                                </ag-grid-angular>
+                            </div>
+                        </div>
+                    </mat-tab>
+            
+                    <mat-tab label="Program Kullanıcıları">
+                        <div class="row">
+                            <div class="col-12 p-5">
+                                <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine theme-light-show"
+                                    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+                                    [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChanged()" [sideBar]="sideBar"
+                                    [rowGroupPanelShow]="rowGroupPanelShow" [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+                                    [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true" [pagination]="false"
+                                    [paginationAutoPageSize]="false" [paginateChildRows]="false" [enableRangeSelection]="true"
+                                    [enableRangeHandle]="true" (firstDataRendered)="onFirstDataRendered($event)">
+                                </ag-grid-angular>
+                        
+                                <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine-dark theme-dark-show"
+                                    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+                                    [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChanged()" [sideBar]="sideBar"
+                                    [rowGroupPanelShow]="rowGroupPanelShow" [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+                                    [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true" [pagination]="false"
+                                    [paginationAutoPageSize]="false" [paginateChildRows]="false" [enableRangeSelection]="true"
+                                    [enableRangeHandle]="true" (firstDataRendered)="onFirstDataRendered($event)">
+                                </ag-grid-angular>
+                            </div>
+                        </div>
+                    </mat-tab>
+            
+                    <mat-tab label="Hepsi">
+                        <div class="row">
+                            <div class="col-12 p-5">
+                                <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine theme-light-show"
+                                    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+                                    [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChanged()" [sideBar]="sideBar"
+                                    [rowGroupPanelShow]="rowGroupPanelShow" [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+                                    [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true" [pagination]="false"
+                                    [paginationAutoPageSize]="false" [paginateChildRows]="false" [enableRangeSelection]="true"
+                                    [enableRangeHandle]="true" (firstDataRendered)="onFirstDataRendered($event)">
+                                </ag-grid-angular>
+                        
+                                <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine-dark theme-dark-show"
+                                    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+                                    [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChanged()" [sideBar]="sideBar"
+                                    [rowGroupPanelShow]="rowGroupPanelShow" [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+                                    [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true" [pagination]="false"
+                                    [paginationAutoPageSize]="false" [paginateChildRows]="false" [enableRangeSelection]="true"
+                                    [enableRangeHandle]="true" (firstDataRendered)="onFirstDataRendered($event)">
+                                </ag-grid-angular>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div> -->
+    
+
+    <ng-template pTemplate="footer">
+        <a (click)="hidePersonsList()" class="btn btn-danger">
+            <i class="fa-solid fa-xmark fs-1"></i>
+            {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>

@@ -1,148 +1,376 @@
-import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { AccessDataModel } from '../../models/accessData';
-import { ResponseModel } from 'src/app/modules/auth/models/response-model';
-import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ProfileService } from '../../profile.service';
-import { OKodFieldsModel } from '../../models/oKodFields';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/modules/auth';
+import { DomSanitizer } from '@angular/platform-browser';
+import { LayoutService } from 'src/app/_metronic/layout';
+import { TranslateService } from '@ngx-translate/core';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-dialog-avans-talebi',
   templateUrl: './dialog-avans-talebi.component.html',
-  styleUrls: ['./dialog-avans-talebi.component.scss'],
-  animations: [
-    trigger("elemanEkle", [
-      state("ekle", style({ transform: "translateX(0)" })),
-      transition(":enter", [
-        style({ transform: 'translateX(-100%)' }),
-        animate("500ms")
-      ]),
-      transition(':leave', [
-        animate(1000, style({ transform: 'translateX(100%)' }))
-      ])
-    ])
-  ]
+  styleUrls: ['./dialog-avans-talebi.component.scss']
 })
 export class DialogAvansTalebiComponent implements OnInit {
-
   private ngUnsubscribe = new Subject();
+  @Input() closedForm: BehaviorSubject<boolean>;
+  @Output() advanceFormIsSend: EventEmitter<void> = new EventEmitter<void>();
 
-  @Output() visitRequestFormIsSend: EventEmitter<void> = new EventEmitter<void>();
+  stepperFields: any[] = [
+    { class: 'stepper-item current', number: 1, title: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.HEADER_1'), desc: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.MESSAGE_1') },
+    { class: 'stepper-item', number: 2, title: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.HEADER_2'), desc: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.MESSAGE_2') },
+    { class: 'stepper-item', number: 3, title: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.HEADER_3'), desc: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.MESSAGE_3') },
+    { class: 'stepper-item', number: 4, title: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.HEADER_4'), desc: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.MESSAGE_4') },
+    { class: 'stepper-item', number: 5, title: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.HEADER_5'), desc: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.MESSAGE_5') },
+  ];
 
-  visitorForm: FormGroup;
-  visitorFormValues: any;
-  company: any[] = [];
-  selectedCompany: any;
-  visitTypes: OKodFieldsModel[] = [];
-  fieldCount = 0;
-  isOtherCompany: boolean = false;
+  formsCount: any = 6;
+  currentStep$: BehaviorSubject<number> = new BehaviorSubject(1);
+  currentItem: any = this.stepperFields[0];
+  advanceFormValues: any;
+
+  // Stepper responsive 
+  stepperOrientation: Observable<StepperOrientation>;
+
+  advanceForm: FormGroup;
+  uploadedFiles: any[] = [];
+  uploadedFile: any;
+
+  currentDate = new Date(Date.now());
+  dropdownEmptyMessage: any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
+
+  selectedAdvance: any;
+  formId: any;
+  files: any;
+  fileTypes: any[] = [];
+  displayUploadedFile: boolean;
+  currentUploadedFile: any;
+  ibanList: any[] = [] ;
 
   constructor(
+    private profileService: ProfileService,
     private formBuilder: FormBuilder,
-    private profilService: ProfileService,
-    private ref: ChangeDetectorRef
+    private toastrService: ToastrService,
+    private ref: ChangeDetectorRef,
+    public authService: AuthService,
+    private breakpointObserver: BreakpointObserver,
+    private sanitizer: DomSanitizer,
+    public layoutService: LayoutService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
+    this.setResponsiveForm();
     this.createFormGroup();
-    this.getAccessData();
-    this.getTypeValues('cbo_ziyaretnedeni');
-    this.isThereCompany();
+    this.getIbanList();
+    this.listenIbanValue();
+    this.listenSelectedIban();
   }
+
+  getIbanList() {
+    this.profileService.getIbanList().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+      let data = response[0].x;
+      const message = response[0].z;
+
+      data.forEach((value: any) => {
+        value.iban = value.iban.replace(/\s/g, '').match(/.{1,4}/g).join(' ');
+        value.maskIban = this.maskIban(value.iban);
+      });
+      this.ibanList = data;
+      console.log("İban Listesi Geldi : ", data);      
+
+    });
+  }
+
+  maskIban(iban: string) {
+    const ibanParts = iban.split(' ');
+  
+    const firstFour = ibanParts[0];
+    const lastTwo = ibanParts[ibanParts.length - 1];
+  
+    const maskedMiddle = ibanParts.slice(1, ibanParts.length - 1).map(part => {
+      return part.replace(/[0-9]/g, '*');
+    });
+  
+    const maskedIban = [firstFour, ...maskedMiddle, lastTwo].join(' ');
+    
+    return maskedIban;
+  }
+
+  canProceedToNextStep(): boolean {
+    this.advanceFormValues = Object.assign({}, this.advanceForm.value);
+    this.advanceFormValues.tutar != '' ? this.advanceFormValues.tutar = this.advanceFormValues.tutar.toFixed(2) : ''; 
+    this.advanceFormValues.ibanKaydet ? this.advanceFormValues.ibanKaydet = 1 : this.advanceFormValues.ibanKaydet = 0;
+    console.log("Avans Talep Form :", this.advanceFormValues);
+
+    if (this.currentStep$.value === 3) {
+      return this.advanceForm.valid;
+
+    } else if (this.currentStep$.value === 4) {
+      this.postForm(this.advanceFormValues);
+      return true;
+    }
+
+    return true;
+  }
+
+  canProceedToPrevStep(): boolean {
+    // if (this.currentStep$.value === 1) {
+    //   return this.advanceForm.controls['gunluksaatlik'].valid;
+    // } 
+    // else if(this.currentStep$.value === 2) {
+    //   return this.advanceForm.controls['tip'].valid;
+    // }
+    return true;
+  }
+
+
+  nextStep() {
+    if (!this.canProceedToNextStep()) {
+      this.toastrService.error(
+        this.translateService.instant('TOASTR_MESSAGE.ALANLARI_DOLDURMALISINIZ'),
+        this.translateService.instant('TOASTR_MESSAGE.HATA')
+      );
+      return;
+    }
+
+    const nextStep = this.currentStep$.value + 1;
+    if (nextStep <= this.formsCount) {
+      this.currentStep$.next(nextStep);
+      this.currentItem = this.stepperFields[nextStep - 1];
+      this.currentItem.class = "stepper-item current";
+      if (nextStep > 1) {
+        this.stepperFields[nextStep - 2].class = "stepper-item completed";
+      }
+    }
+  }
+
+  prevStep() {
+    // if (this.currentStep$.value === 2) {
+    //   this.advanceForm.reset();
+    // }
+
+    const prevStep = this.currentStep$.value - 1;
+    if (prevStep === 0) {
+      return;
+    }
+    this.currentStep$.next(prevStep);
+    this.currentItem = this.stepperFields[prevStep - 1];
+    let prevItem = this.stepperFields[prevStep];
+    this.currentItem.class = "stepper-item current";
+    prevItem.class = "stepper-item";
+  }
+
 
   // Formların oluşması
   createFormGroup() {
-    this.visitorForm = this.formBuilder.group({
-      ad: ['', Validators.required],
-      soyad: ['', Validators.required],
-      email: ['', Validators.required],
-      firma: ['', Validators.required],
-      ziyaretTipi: ['', Validators.required],
-      aciklama: ['', Validators.required],
-      girisTarihi: ['', Validators.required],
-      girisSaati: ['', Validators.required],
-      cikisTarihi: ['', Validators.required],
-      cikisSaati: ['', Validators.required]
+    this.advanceForm = this.formBuilder.group({
+      aciklama: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
+      iban: ['TR', [Validators.required, Validators.pattern(/^TR\d{2}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{2}$/)]],
+      ibanKaydet: [true],
+      kayitliIbanlar: [''],
+      tarih: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), Validators.required],
+      tutar: ['', Validators.required],
+      paraBirimi: ['tl', Validators.required],
+      taksit: [1, Validators.required],
+      file: [null]
     });
   }
 
-  // Form değerlerinin alınması
-  getFormsValues() {
-    this.visitorFormValues = Object.assign({}, this.visitorForm.value)
-    console.log("form : ", this.visitorFormValues);
-  }
-
-  getFieldCountArray() {
-    return Array.from({ length: this.fieldCount }, (_, i) => i + 1);
-  }
-
-  addNewFields() {
-    this.fieldCount++;
-    this.visitorForm.addControl('ad' + this.fieldCount, this.formBuilder.control('', Validators.required));
-    this.visitorForm.addControl('soyad' + this.fieldCount, this.formBuilder.control('', Validators.required));
-
-    this.ref.detectChanges();
-
-  }
-
-  removeNewFields(index: number) {
-    this.fieldCount--;
-    const adControlName = 'ad' + index;
-    const soyadControlName = 'soyad' + index;
-
-    this.visitorForm.removeControl(adControlName);
-    this.visitorForm.removeControl(soyadControlName);
-
-    this.ref.detectChanges();
-  }
-
-  getAccessData() {
-    this.profilService.getAccessData().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<AccessDataModel, ResponseDetailZ>[]) => {
-      const data = response[0].x;
-      const message = response[0].z;
-      this.company = [];
-
-      if (message.islemsonuc == 1) {
-        data.forEach((item: AccessDataModel) => {
-          if (item.tip == 'cbo_Firma') {
-            this.company.push(item);
-          }
-        })
+  listenIbanValue() {
+    this.advanceForm.get('iban')?.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value: any) => {
+      if (!value.startsWith("TR")) {
+        this.advanceForm.get('iban')?.setValue("TR"+ value);
       }
-      console.log("cbo_firma :", this.company);
+      
+      const formattedIBAN = value && value.startsWith('TR') ? value
+        .replace(/\s/g, '') // Boşlukları kaldır
+        .match(/.{1,4}/g) // Her 4 karakterde bir grupla
+        .join(' ') // Her grubun arasına boşluk ekleyerek birleştir
+        : 'TR' + value
+      this.advanceForm.get('iban')?.setValue(formattedIBAN, { emitEvent: false });
+      this.advanceForm.get('kayitliIbanlar')?.setValue(null);
+    });  
+  }
 
-
-      this.ref.detectChanges();
+  listenSelectedIban() {
+    this.advanceForm.get('kayitliIbanlar')?.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value: string) => {
+      value ? this.advanceForm.get('iban')?.setValue(value) : '';
     });
   }
 
-  getTypeValues(kaynak: string) {
-    this.profilService.getTypeValues(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
-      const data = response[0].x;
-      const message = response[0].z;
+  // Stepper'ı yataydan dikeye çevir
+  setResponsiveForm() {
+    this.stepperOrientation = this.breakpointObserver
+      .observe('(min-width: 800px)')
+      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
+  }
 
-      if (message.islemsonuc == 1) {
-        console.log("Okod Alanları : ", data);
-        this.visitTypes = data;
+  getFile(event: any, item: any) {
+    let files: FileList = event.target.files;
+
+    if (files.length > 0) {
+      const file = files[0];
+      if (!this.checkFileSize(file, 1024 * 1024)) {
+        this.toastrService.error(
+          this.translateService.instant('TOASTR_MESSAGE.DOSYA_BOYUTU_YUKSEK'),
+          this.translateService.instant('TOASTR_MESSAGE.HATA')
+        );
+        return;
       }
+    }
 
+    console.log(files);
+    item.sendFile = files[0];
+
+    for (let file of event.target.files) {
+      this.readAndPushFile(file, item);
+    }
+  }
+
+
+  // Dosya boyutunu kontrol eden fonk.
+  checkFileSize(file: File, maxSizeInBytes: number): boolean {
+    const fileSizeInBytes = file.size;
+    const maxSize = maxSizeInBytes;
+    return fileSizeInBytes <= maxSize;
+  }
+
+  readAndPushFile(file: File, item: any) {
+    let fileSize: any = (file.size / 1024).toFixed(1);
+    let fileSizeType = 'KB';
+    if (fileSize >= 1024) {
+      fileSize = (fileSize / 1024).toFixed(1);
+      fileSizeType = 'MB';
+    }
+
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const url = this.sanitizer.bypassSecurityTrustResourceUrl(event.target?.result as string);
+      item.files = {
+        name: file.name,
+        type: file.type,
+        url: url,
+        fileSize: fileSize,
+        fileSizeType: fileSizeType
+      };
+
+      console.log("Uploaded File : ", this.uploadedFile);
+      console.log("Uploaded Fileee : ", item);
       this.ref.detectChanges();
+    };
+  }
+
+  removeUploadedFile(item: any, file: any) {
+    const index = item.files.indexOf(file);
+    if (index !== -1) {
+      item.files.splice(index, 1);
+    }
+  }
+
+  closedFormDialog() {
+    this.closedForm.subscribe(_ => {
+      console.log("Closed Form : ", _);
+      this.advanceForm.reset();
+      this.selectedAdvance = '';
+      this.uploadedFile = '';
+      this.resetStepperFieldsClass();
+      this.currentStep$.next(1);
+      this.currentItem = this.stepperFields[0];
+      this.advanceFormIsSend.emit();
     });
   }
 
-  isThereCompany() {
-    this.visitorForm.get('firma')?.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value : any) => {
-      if (value?.id == '0') {
-        this.visitorForm.addControl('otherCompany', this.formBuilder.control('', Validators.required));
-        this.isOtherCompany = true; // ng-container da durum kontrolü için eklendi
+
+  resetStepperFieldsClass() {
+    this.stepperFields.forEach((item, index) => {
+      item.class = index === 0 ? "stepper-item current" : "stepper-item";
+    });
+  }
+
+  getAdvanceFormValues() {
+    this.advanceFormValues = Object.assign({}, this.advanceForm.value);
+    console.log("Avans Talep Form :", this.advanceFormValues);
+  }
+
+  postForm(formValues: any) {
+    this.profileService.postAdvancedRequest(formValues).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+      const data = response[0].x;
+      const apiMessage = response[0].z;
+      const spMessage = response[0].m[0];
+
+      console.log("Avans Form gönderildi :", response);
+      if (data[0].sonuc == 1) {
+        this.formId = data[0].formid;
+
+
+        this.toastrService.success(
+          this.translateService.instant('TOASTR_MESSAGE.TALEP_GONDERILDI'),
+          this.translateService.instant('TOASTR_MESSAGE.BASARILI')
+        );
       } else {
-        this.isOtherCompany = false; // ng-container da durum kontrolü için eklendi
+        this.toastrService.error(
+          data[0].sunucucevap,
+          this.translateService.instant('TOASTR_MESSAGE.HATA')
+        );
       }
     });
+    this.ref.detectChanges();
+  }
+
+  getFileTypeForDemandType(typeId: any, kaynak: any) {
+    this.fileTypes = [];
+    this.profileService
+      .getFileTypeForDemandType(typeId, kaynak)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const data = response[0].x;
+        const message = response[0].z;
+
+        console.log("Tipi geldi", data);
+        this.fileTypes = data;
+
+        this.ref.detectChanges();
+      });
+  }
+
+  showUploadedFile(item: any) {
+    this.displayUploadedFile = true;
+    this.currentUploadedFile = item;
+  }
+
+  getFormValues() {
+    this.advanceFormValues = Object.assign({}, this.advanceForm.value);
+
+    this.fileTypes.forEach((item: any) => {
+      if (item.sendFile) {
+        this.postOvertimeFile(item.sendFile, this.formId, 'fm', item.BelgeId);
+      }
+    });
+
+    this.toastrService.success(
+      this.translateService.instant('TOASTR_MESSAGE.TALEP_GONDERILDI'),
+      this.translateService.instant('TOASTR_MESSAGE.BASARILI')
+    );
+    // this.closedFormDialog();
+  }
+
+  postOvertimeFile(file: any, formId: any, kaynak: any, fileType: any) {
+    this.profileService.postFileForDemand(file, formId, kaynak, fileType)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+
+        console.log("Avans talep için dosya gönderildi : ", response);
+        this.closedFormDialog();
+
+        this.ref.detectChanges();
+      });
   }
 
   ngOnDestroy(): void {

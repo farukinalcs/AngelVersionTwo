@@ -175,6 +175,8 @@ export const locale = {
         FAZLA_MESAI : "Overtime",
         ZIYARETCI : "Visitor",
         MALZEME : "Material",
+        YETKI : "Authority",
+        AVANS: "Advance",
         TUMU : "All"
       },
 
@@ -394,6 +396,66 @@ export const locale = {
         ILERI : 'Next',
         GERI : 'Back',
         KAPAT : 'Close',
+      }
+    },
+
+    ARAC_TALEP_DIALOG : {
+      HEADER : "Vehicle Request Form",
+      STEPPER : {
+        HEADER_1 : 'Location',
+        MESSAGE_1 : 'Destination',
+        HEADER_2 : 'Date',
+        MESSAGE_2 : 'Departure-Arrival Time',
+        HEADER_3 : 'Other',
+        MESSAGE_3 : '',
+        HEADER_4 : 'Completed',
+        MESSAGE_4 : 'Summary',
+        HEADER_5 : 'Upload File',
+        MESSAGE_5 : 'Required Documents'
+      },
+      FORM : {
+        LOKASYON : "Location",
+        KALKIS_TARIHI : "Departure Date",
+        KALKIS_SAATI : "Departure Time",
+        VARIS_TARIHI  :"Destination Date",
+        VARIS_SAATI : "Destination Time",
+        ACIKLAMA : "Description",
+        ACIKLAMA_GIRINIZ : 'Enter Description',
+        GONDER : "Send",
+      },
+      FORM_ERROR : {
+        REQUIRED : "Required!"
+      }
+    },
+
+    AVANS_TALEP_DIALOG : {
+      HEADER : "Advance Request Form",
+      STEPPER : {
+        HEADER_1 : 'IBAN',
+        MESSAGE_1 : 'IBAN Information',
+        HEADER_2 : 'Other',
+        MESSAGE_2 : 'Date and Description',
+        HEADER_3 : 'Advance Amount',
+        MESSAGE_3 : '',
+        HEADER_4 : 'Complete',
+        MESSAGE_4 : 'Summary',
+        HEADER_5 : 'Upload File',
+        MESSAGE_5 : 'Required Documents'
+      },
+      FORM : {
+        IBAN : "IBAN",
+        IBAN_KAYDET : "Save IBAN",
+        KAYITLI_IBAN : "Registered IBAN",
+        TARIH : "Date",
+        TUTAR : "Advance Amount",
+        PARA_BIRIMI  :"Currency Unit",
+        TAKSIT: "Installment",
+        ACIKLAMA : "Description",
+        ACIKLAMA_GIRINIZ : 'Enter Description',
+        GONDER : "Send",
+      },
+      FORM_ERROR : {
+        REQUIRED : "Required!"
       }
     },
 

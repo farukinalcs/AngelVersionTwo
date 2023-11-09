@@ -96,8 +96,22 @@ import { DialogYetkiTalebiComponent } from './talep-olustur/dialog-yetki-talebi/
 
 import { YemekTipiTanimlamaComponent } from './profil-tanimlamalar/yemek-tipi-tanimlama/yemek-tipi-tanimlama.component';
 import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-tanimlama/yemek-menu-tanimlama.component';
+
+import { SicilListeComponent } from '../shared/sicil-liste/sicil-liste.component';
+import { AgGridModule } from 'ag-grid-angular';
+import 'ag-grid-enterprise'
+import { LicenseManager } from 'ag-grid-enterprise';
+import { DialogAracTalebiComponent } from './talep-olustur/dialog-arac-talebi/dialog-arac-talebi.component';
+import { IbanMaskPipe } from 'src/app/_helpers/pipes/iban-mask.pipe';
+import { PendingRequestsComponent } from './talepler/talepedilenler/pending-requests/pending-requests.component';
+
 import { HttpClientModule } from '@angular/common/http';
 
+
+
+LicenseManager.setLicenseKey(
+  "BOARD4ALL_NDEwMjM1MTIwMDAwMA==8f4481b5cc626ad79fe91bc5f4e52e3d"
+);
 
 @NgModule({
   declarations: [
@@ -152,7 +166,14 @@ import { HttpClientModule } from '@angular/common/http';
     DialogYetkiTalebiComponent,
     YemekTipiTanimlamaComponent,
     YemekMenuTanimlamaComponent,
+
+    SicilListeComponent,
+    DialogAracTalebiComponent,
+    IbanMaskPipe,
+    PendingRequestsComponent
+
     
+
 
 
   ],
@@ -210,6 +231,10 @@ import { HttpClientModule } from '@angular/common/http';
     ExtrasModule,
     PickListModule,
     RatingModule,
+
+    AgGridModule
+
+
   ],
   providers:[DatePipe]
 
