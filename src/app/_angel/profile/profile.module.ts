@@ -151,7 +151,6 @@ LicenseManager.setLicenseKey(
     FirstSevenPipe,
     YemekMenuTumuComponent,
     UploadedFilesComponent,
-
     VisitorUploadedFilesComponent,
     DataNotFoundComponent,
     FormStepperComponent,
@@ -166,16 +165,10 @@ LicenseManager.setLicenseKey(
     DialogYetkiTalebiComponent,
     YemekTipiTanimlamaComponent,
     YemekMenuTanimlamaComponent,
-
     SicilListeComponent,
     DialogAracTalebiComponent,
     IbanMaskPipe,
     PendingRequestsComponent
-
-    
-
-
-
   ],
   imports: [
     CommonModule,
