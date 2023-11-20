@@ -104,7 +104,7 @@ export class DialogAvansTalebiComponent implements OnInit {
 
   canProceedToNextStep(): boolean {
     this.advanceFormValues = Object.assign({}, this.advanceForm.value);
-    this.advanceFormValues.tutar != '' ? this.advanceFormValues.tutar = this.advanceFormValues.tutar.toFixed(2) : ''; 
+    // this.advanceFormValues.tutar != '' ? this.advanceFormValues.tutar = this.advanceFormValues.tutar.toFixed(2) : ''; 
     this.advanceFormValues.ibanKaydet ? this.advanceFormValues.ibanKaydet = 1 : this.advanceFormValues.ibanKaydet = 0;
     console.log("Avans Talep Form :", this.advanceFormValues);
 
@@ -176,7 +176,7 @@ export class DialogAvansTalebiComponent implements OnInit {
       kayitliIbanlar: [''],
       tarih: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), Validators.required],
       tutar: ['', Validators.required],
-      paraBirimi: ['tl', Validators.required],
+      paraBirimi: ['TRY', Validators.required],
       taksit: [1, Validators.required],
       file: [null]
     });

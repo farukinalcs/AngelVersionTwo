@@ -12,33 +12,35 @@ import { ProfileService } from '../../profile.service';
   selector: 'app-dosya-tipi-tanimlama',
   templateUrl: './dosya-tipi-tanimlama.component.html',
   styleUrls: ['./dosya-tipi-tanimlama.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class DosyaTipiTanimlamaComponent implements OnInit, OnDestroy {
-  @Input() selectedItem: any; 
+  @Input() selectedItem: any;
   @Output() closeAnimationEvent = new EventEmitter<void>();
   private ngUnsubscribe = new Subject();
 
-  form : FormGroup;
-  selectedValue : any[] = []
+  form: FormGroup;
+  selectedValue: any[] = [];
 
   sourceItems: any[] = [];
   targetItems: any[] = [];
   vacationReasons: any[] = [];
 
-  selectedType  : any;
-  dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
+  selectedType: any;
+  dropdownEmptyMessage: any = this.translateService.instant(
+    'PUBLIC.DATA_NOT_FOUND'
+  );
   selected: any;
   demandParam: string = '';
   fileParam: string = '';
-  dragDrop : boolean = true;
+  dragDrop: boolean = true;
   constructor(
     private formBuilder: FormBuilder,
-    private profileService : ProfileService,
-    private translateService : TranslateService,
-    private helperService : HelperService,
-    private ref : ChangeDetectorRef
-  ) { }
+    private profileService: ProfileService,
+    private translateService: TranslateService,
+    private helperService: HelperService,
+    private ref: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -48,156 +50,148 @@ export class DosyaTipiTanimlamaComponent implements OnInit, OnDestroy {
 
   configureComponentBehavior() {
     this.helperService.configureComponentBehavior
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe((value : any) => {
-      // if (value == 1) {
-      //   this.demandParam = 'cbo_izintipleri';
-      //   this.fileParam = 'izin';
-  
-      // } else if (value == 2) {
-      //   this.demandParam = 'cbo_fmnedenleri';
-      //   this.fileParam = 'fm';
-        
-      // } else if (value == 3) {
-      //   this.demandParam = 'cbo_ziyaretnedeni';
-      //   this.fileParam = 'ziyaret';
-      // }
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((value: any) => {
+        this.demandParam = value.demandParam;
+        this.fileParam = value.fileParam;
 
-      
-      this.demandParam = value.demandParam;
-      this.fileParam = value.fileParam;
+        this.targetItems = [];
+        this.sourceItems = [];
+        this.getDemandType();
 
-      this.targetItems = [];
-      this.sourceItems = [];
-      this.getDemandType();
-
-      this.ref.detectChanges();
-    });
-    
+        this.ref.detectChanges();
+      });
   }
 
   createForm() {
     this.form = this.formBuilder.group({
-      type : ['']
+      type: [''],
     });
   }
 
   getFormValue() {
-    this.form.get('type')?.valueChanges.subscribe((v : any) => {
+    this.form.get('type')?.valueChanges.subscribe((v: any) => {
       this.selected = v;
       this.selectedValue = v;
 
       if (v) {
-        this.getFileTypeForDemandType();  
+        this.getFileTypeForDemandType();
         // this.getFileType();
       }
     });
-    
-    console.log("Get Value : ", this.selectedValue);
+
+    console.log('Get Value : ', this.selectedValue);
   }
 
   getDemandType() {
     this.profileService
-    .getTypeValues(this.demandParam)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
+      .getTypeValues(this.demandParam)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
+          const data = response[0].x;
+          const message = response[0].z;
 
-      const data = response[0].x;
-      const message = response[0].z;
-      
-      if (message.islemsonuc == 1) {
-        this.vacationReasons = data;
-        console.log("İzin Tipleri : ", data);
-      }
+          if (message.islemsonuc == 1) {
+            this.vacationReasons = data;
+            console.log('İzin Tipleri : ', data);
+          }
 
-      this.ref.detectChanges();
-    });
+          this.ref.detectChanges();
+        }
+      );
   }
 
   getFileType() {
     this.sourceItems = [];
     this.profileService
-    .getTypeValues('cbo_belgetipi')
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe((response : ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
-      const data = response[0].x;
-      const message = response[0].z;
+      .getTypeValues('cbo_belgetipi')
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
+          const data = response[0].x;
+          const message = response[0].z;
 
-      this.sourceItems = this.removeItemsWithMatchingIds(data, this.targetItems);
-      // this.sourceItems = data.filter((item : any) => {
-      //   const matchingItem  = this.targetItems.find(targetItem => targetItem.ID === item.ID);
-      //   return !matchingItem;
-      // });
-      // this.sourceItems = data;
+          this.sourceItems = this.removeItemsWithMatchingIds(
+            data,
+            this.targetItems
+          );
+          // this.sourceItems = data.filter((item : any) => {
+          //   const matchingItem  = this.targetItems.find(targetItem => targetItem.ID === item.ID);
+          //   return !matchingItem;
+          // });
+          // this.sourceItems = data;
 
-      this.ref.detectChanges();
-
-    });
+          this.ref.detectChanges();
+        }
+      );
   }
 
   removeItemsWithMatchingIds(mainArray: any[], nestedArray: any[]): any[] {
-    return mainArray.filter(mainItem => {
-      const matchingItem = nestedArray.find(nestedItem => nestedItem.BelgeId === mainItem.ID);
+    return mainArray.filter((mainItem) => {
+      const matchingItem = nestedArray.find(
+        (nestedItem) => nestedItem.BelgeId === mainItem.ID
+      );
       return !matchingItem;
     });
-  }  
+  }
 
   getFileTypeForDemandType() {
     this.targetItems = [];
     this.profileService
-    .getFileTypeForDemandType(this.selected.ID, this.fileParam)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe((response: any) => {
-      const data = response[0].x;
-      const message = response[0].z;
+      .getFileTypeForDemandType(this.selected.ID, this.fileParam)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const data = response[0].x;
+        const message = response[0].z;
 
-      console.log("Tipi geldi", data);
-      this.targetItems = data;
+        console.log('Tipi geldi', data);
+        this.targetItems = data;
 
-      this.getFileType();
+        this.getFileType();
 
-      this.ref.detectChanges();
-    });
+        this.ref.detectChanges();
+      });
   }
 
-  onMoveToTarget(event : any) {
-    console.log("onMoveToTarget :", event.items);
+  onMoveToTarget(event: any) {
+    console.log('onMoveToTarget :', event.items);
     this.dragDrop = false;
     this.postFileTypeForDemandType(event.items);
   }
 
-  onMoveToSource(event : any) {
-    console.log("onMoveToSource :", event.items);
+  onMoveToSource(event: any) {
+    console.log('onMoveToSource :', event.items);
     this.dragDrop = false;
     this.deleteFileTypeForDemandType(event.items);
   }
 
-  deleteFileTypeForDemandType(arr : any[]) {
+  deleteFileTypeForDemandType(arr: any[]) {
     this.profileService
-    .deleteFileTypeForDemandType(arr, this.fileParam)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe((response : any) => {
-      const data = response[0].x;
-      const message = response[0].z;
+      .deleteFileTypeForDemandType(arr, this.fileParam)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const data = response[0].x;
+        const message = response[0].z;
 
-      console.log("Tipi silindi", data);
-      this.dragDrop = true;
+        console.log('Tipi silindi', data);
+        this.dragDrop = true;
 
-      this.ref.detectChanges();
-    });
+        this.ref.detectChanges();
+      });
   }
 
-  postFileTypeForDemandType(arr : any[]) {
+  postFileTypeForDemandType(arr: any[]) {
     this.profileService
-    .postFileTypeForDemandType(this.selected.ID, this.fileParam, arr)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe((response : any) => {
-      console.log("Tipi Atandı", response);
-      
-      this.dragDrop = true;
+      .postFileTypeForDemandType(this.selected.ID, this.fileParam, arr)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        console.log('Tipi Atandı', response);
 
-      this.ref.detectChanges();
-    });
+        this.dragDrop = true;
+
+        this.ref.detectChanges();
+      });
   }
 
   onCloseButtonClick() {
@@ -209,8 +203,8 @@ export class DosyaTipiTanimlamaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log("Bitti");
-    
+    console.log('Bitti');
+
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
   }

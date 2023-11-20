@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end"
-                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-5' : !(layoutService.isMobile | async)}">
+                    [ngClass]="{'col-10 pb-2': layoutService.isMobile | async, 'col-5' : !(layoutService.isMobile | async)}">
                     <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold"
                         [ngClass]="{'w-100': layoutService.isMobile | async}" (click)="showDetailSearchDialog()">
                         {{"DEMANDED.BUTTON_TEXT.DETAYLI_ARAMA" | translate}}
@@ -59,7 +59,7 @@
                 </div>
 
                 <div class=""
-                    [ngClass]="{'col-12 d-flex justify-content-center': layoutService.isMobile | async, 'col-1' : !(layoutService.isMobile | async)}">
+                    [ngClass]="{'col-2 d-flex justify-content-center': layoutService.isMobile | async, 'col-1' : !(layoutService.isMobile | async)}">
                     <a class="btn btn-icon btn-danger btn-sm me-3" (click)="checkGrid = !checkGrid">
                         <i class="fa-solid fa-list fs-4" [ngClass]="{'fa-grip': checkGrid, 'fa-list' : !checkGrid}"></i>
                     </a>

@@ -77,6 +77,7 @@
               <label class="form-label fw-bolder text-dark fs-6 mb-0">{{"AUTH.LOGIN.PASSWORD" |translate}}</label>
               <input class="form-control form-control-solid border border-4 ng-touched bg-light-dark" type="password"
                 name="password" autocomplete="off" formControlName="password" />
+                <!-- (keydown.enter)="submit()" -->
             </div>
           </div>
 
@@ -87,13 +88,13 @@
                 <img class="h-25px w-25px rounded" src="{{ language?.flag }}" alt="language" />
               </button>
               <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button *ngFor="let language of languages" ngbDropdownItem
+                <a *ngFor="let language of languages" ngbDropdownItem
                   (click)="setLanguageWithRefresh(language.lang)" [ngClass]="{ active: language.active }">
                   <span class="symbol symbol-20 mr-3">
                     <img src="{{ language.flag }}" style="width: 20%;" />
                     <span class="navi-text" style="margin-left: 20px;">{{ language.name }}</span>
                   </span>
-                </button>
+                </a>
               </div>
             </div>
             <a routerLink="/auth/forgot-password" class="link-danger">
@@ -103,7 +104,7 @@
           </div>
 
           <div class="d-grid d-flex justify-content-center mb-10">
-            <button type="submit" (click)="submit()" id="kt_sign_in_submit" class="btn btn-dark width" [ngStyle]="{'width': (isMobile | async) ? '100%' : '50%' }"
+            <button type="submit" (click)="submit()" id="kt_sign_in_submit" class="btn btn-danger width" [ngStyle]="{'width': (isMobile | async) ? '100%' : '50%' }"
               [disabled]="loginForm.invalid">
               <ng-container *ngIf="isLoading$ | async">
                 <span class="indicator-progress" [style.display]="'block'">

@@ -507,6 +507,13 @@
 /*--------------------------------------------*/
 
 
+// ngbDropdown Menu 
+.dropdown-item.active, .dropdown-item:active {
+    color: var(--kt-danger) !important;
+    background-color: var(--kt-danger-light) !important;
+}
+/*--------------------------------------------*/
+
 
 
 // // AG-Grid

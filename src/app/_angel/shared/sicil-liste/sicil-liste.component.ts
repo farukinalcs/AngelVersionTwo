@@ -23,8 +23,8 @@ export class SicilListeComponent implements OnInit {
   @Output() displayPersonsListEvent: EventEmitter<void> = new EventEmitter<void>();
   @Output() selectedPersonsList: EventEmitter<any> = new EventEmitter<any>();
   
-  @ViewChild("agGrid",{static:false}) agGrid:AgGridAngular;
-
+  @ViewChild("agGridLight",{static:false}) agGridLight:AgGridAngular;
+  @ViewChild("agGridDark",{static:false}) agGridDark:AgGridAngular;
 
   public columnDefs: ColDef[] = [
     {
@@ -128,8 +128,14 @@ export class SicilListeComponent implements OnInit {
   }
   
 
-  onSelectionChanged() {
-    const selectedRows = this.agGrid.api.getSelectedRows();
+  onSelectionChangedLight() {
+    const selectedRows = this.agGridLight.api.getSelectedRows();
+    console.log("Seçilenler : ", selectedRows);
+    this.selectedPersonsList.emit(selectedRows);
+  }
+
+  onSelectionChangedDark() {
+    const selectedRows = this.agGridDark.api.getSelectedRows();
     console.log("Seçilenler : ", selectedRows);
     this.selectedPersonsList.emit(selectedRows);
   }

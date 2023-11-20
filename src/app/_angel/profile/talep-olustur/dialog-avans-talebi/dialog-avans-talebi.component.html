@@ -130,23 +130,37 @@
 
                                                 <div class="form-check form-check-custom form-check-danger form-check-solid">
                                                     <div class="mx-3">
-                                                        <input class="form-check-input" type="radio" value="tl" id="flexCheckboxTl" formControlName="paraBirimi" />
+                                                        <input class="form-check-input" type="radio" value="TRY" id="flexCheckboxTl" formControlName="paraBirimi" />
                                                         <label class="form-check-label" for="flexCheckboxTl">
-                                                            TL
+                                                            TRY
                                                         </label>
                                                     </div>
                                                     
                                                     <div class="mx-3">
-                                                        <input class="form-check-input" type="radio" value="usd" id="flexCheckboxUsd" formControlName="paraBirimi" />
+                                                        <input class="form-check-input" type="radio" value="USD" id="flexCheckboxUsd" formControlName="paraBirimi" />
                                                         <label class="form-check-label" for="flexCheckboxUsd">
                                                             USD
                                                         </label>
                                                     </div>
                                                     
                                                     <div class="mx-3">
-                                                        <input class="form-check-input" type="radio" value="eur" id="flexCheckboxEur" formControlName="paraBirimi" />
+                                                        <input class="form-check-input" type="radio" value="EUR" id="flexCheckboxEur" formControlName="paraBirimi" />
                                                         <label class="form-check-label" for="flexCheckboxEur">
                                                             EUR
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="mx-3">
+                                                        <input class="form-check-input" type="radio" value="GBP" id="flexCheckboxEur" formControlName="paraBirimi" />
+                                                        <label class="form-check-label" for="flexCheckboxEur">
+                                                            GBP
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="mx-3">
+                                                        <input class="form-check-input" type="radio" value="RUB" id="flexCheckboxEur" formControlName="paraBirimi" />
+                                                        <label class="form-check-label" for="flexCheckboxEur">
+                                                            RUB
                                                         </label>
                                                     </div>
                                                 </div>
@@ -160,9 +174,11 @@
                                                 <div class="input-group mb-5">
                                                     <span class="input-group-text">
                                                         <div [ngSwitch]="advanceForm.get('paraBirimi')?.value">
-                                                            <div *ngSwitchCase="['tl']">₺</div>
-                                                            <div *ngSwitchCase="['usd']">$</div>
-                                                            <div *ngSwitchCase="['eur']">€</div>
+                                                            <div *ngSwitchCase="['TRY']">₺</div>
+                                                            <div *ngSwitchCase="['USD']">$</div>
+                                                            <div *ngSwitchCase="['EUR']">€</div>
+                                                            <div *ngSwitchCase="['GBP']">£</div>
+                                                            <div *ngSwitchCase="['RUB']">₽</div>
                                                             <div *ngSwitchDefault>₺</div>
                                                         </div>
                                                     </span>
@@ -219,10 +235,7 @@
                                                     <div class="col-6 py-3">
                                                         <span class="text-gray-800  fs-6 fw-bolder">{{"AVANS_TALEP_DIALOG.FORM.TUTAR" | translate}}:</span>
                                                         <span class="text-muted fw-bold d-block fs-7">
-                                                            {{ advanceFormValues?.tutar }}
-                                                            <ng-container *ngIf="advanceFormValues?.paraBirimi === 'tl'">₺</ng-container>
-                                                            <ng-container *ngIf="advanceFormValues?.paraBirimi === 'eur'">€</ng-container>
-                                                            <ng-container *ngIf="advanceFormValues?.paraBirimi === 'usd'">$</ng-container>
+                                                            {{advanceFormValues?.tutar | currency: advanceFormValues?.paraBirimi:"symbol-narrow":"1.2-2"}}
                                                             / {{ advanceFormValues?.taksit }} {{"AVANS_TALEP_DIALOG.FORM.TAKSIT" | translate}}
                                                         </span>
                                                     </div>

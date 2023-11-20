@@ -239,8 +239,18 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
   getTooltipScript(): string {
     const personsLength = this.persons.length;
     const personsName = this.persons.map((person, index) => `${index + 1}) ${person.ad} ${person.soyad}`).join("\r\n");
+    let firstPerson: string = '';
     
-    return `${personsLength} Tane Personel Seçildi.\r\n${personsName}`;
+    if (personsLength == 1) {
+      firstPerson = `${this.persons[0].ad} ${this.persons[0].soyad} Seçildi`;      
+    } else if (personsLength == 2) {
+      firstPerson = `${this.persons[0].ad} ${this.persons[0].soyad}, ${this.persons[1].ad} ${this.persons[1].soyad} Seçildi`;      
+    } else if (personsLength > 2) {
+      firstPerson = `${this.persons[0].ad} ${this.persons[0].soyad}, ${this.persons[1].ad} ${this.persons[1].soyad} ve ${personsLength - 2} Kişi Daha Seçildi`;      
+    }
+    
+    // return `${personsLength} Tane Personel Seçildi.\r\n${personsName}`;
+    return firstPerson;
   }
 
   ngOnDestroy(): void {

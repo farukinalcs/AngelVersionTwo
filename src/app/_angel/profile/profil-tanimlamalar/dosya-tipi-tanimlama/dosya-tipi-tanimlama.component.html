@@ -20,33 +20,35 @@
                 <div class="w-100">
                     
                     <div class="row">
-                        <div class="col-12 mb-5">
-                            <div class="row">
-                                <div class="col-12">
-                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                        <span class="required">{{selectedItem.tip}}</span>
-                                    </label>        
-                                </div>
-
-                                <div class="col-12" [formGroup]="form">
-                                    <p-dropdown [options]="vacationReasons" [(ngModel)]="selectedType" optionLabel="ad"
-                                        [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad" [showClear]="true"
-                                        placeholder="{{'PUBLIC.SELECT' | translate}}" formControlName="type">
-                                        <ng-template pTemplate="selectedItem">
-                                            <div class="item-item item-item-value" *ngIf="selectedType">
-                                                <div>{{selectedType.ad}}</div>
-                                            </div>
-                                        </ng-template>
-                                        <ng-template let-item pTemplate="item">
-                                            <div class="item-item">
-                                                <div>{{item.ad}}</div>
-                                            </div>
-                                        </ng-template>
-                                    </p-dropdown>
+                        <ng-container *ngIf="selectedItem.tip">
+                            <div class="col-12 mb-5">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span class="required">{{selectedItem.tip}}</span>
+                                        </label>
+                                    </div>
+                                
+                                    <div class="col-12" [formGroup]="form">
+                                        <p-dropdown [options]="vacationReasons" [(ngModel)]="selectedType" optionLabel="ad"
+                                            [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad" [showClear]="true"
+                                            placeholder="{{'PUBLIC.SELECT' | translate}}" formControlName="type">
+                                            <ng-template pTemplate="selectedItem">
+                                                <div class="item-item item-item-value" *ngIf="selectedType">
+                                                    <div>{{selectedType.ad}}</div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template let-item pTemplate="item">
+                                                <div class="item-item">
+                                                    <div>{{item.ad}}</div>
+                                                </div>
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </div>
                                 </div>
                             </div>
-                            
-                        </div>
+                        </ng-container>
+                        
                         
                         <div class="col-12">
                             <p-pickList [source]="sourceItems" [target]="targetItems" sourceHeader="Tüm Dosya Tipleri" targetHeader="Atanmış Dosya Tipler"
