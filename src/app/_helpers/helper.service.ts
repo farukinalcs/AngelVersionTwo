@@ -22,7 +22,7 @@ export class HelperService {
 
   lang = new Subject;
 
-  dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
+  dropdownEmptyMessage : any = this.translateService.instant('Kayıt_Bulunamadı');
 
   configureComponentBehavior: BehaviorSubject<any> = new BehaviorSubject<any>(1);
   

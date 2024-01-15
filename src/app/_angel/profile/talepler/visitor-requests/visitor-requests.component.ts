@@ -216,6 +216,7 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
       });
 
   }
+  
   updateUploadedFilesInVisitRequests() {
     return from(this.visitRequests).pipe(
       mergeMap((visit: any) => from(visit.ziyaretciler)),
@@ -332,8 +333,8 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
   postApprovedVisit(visit: any, visitors: any[]) {
     // if (visit.approved.length == 0) {
     //   this.toastrService.error(
-    //     this.translateService.instant("TOASTR_MESSAGE.ISARETLEME_YAPMALISINIZ"),
-    //     this.translateService.instant("TOASTR_MESSAGE.HATA")
+    //     this.translateService.instant("İşaretleme_Yapmalısınız"),
+    //     this.translateService.instant("Hata")
     //   );
 
     //   return;

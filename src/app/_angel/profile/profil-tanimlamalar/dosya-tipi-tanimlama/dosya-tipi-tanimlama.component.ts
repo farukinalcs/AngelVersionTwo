@@ -28,7 +28,7 @@ export class DosyaTipiTanimlamaComponent implements OnInit, OnDestroy {
 
   selectedType: any;
   dropdownEmptyMessage: any = this.translateService.instant(
-    'PUBLIC.DATA_NOT_FOUND'
+    'Kayıt_Bulunamadı'
   );
   selected: any;
   demandParam: string = '';

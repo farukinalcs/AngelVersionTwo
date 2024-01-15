@@ -20,14 +20,14 @@ export class EksikSurelerimComponent implements OnInit, OnDestroy {
 
 
   timeRange : any[] = [
-    {text : this.translateService.instant('EKSIK_SURE.ZAMAN_ARALIK.BIR_GUN'), value : '1'},
-    {text : this.translateService.instant('EKSIK_SURE.ZAMAN_ARALIK.UC_GUN'), value : '3'},
-    {text : this.translateService.instant('EKSIK_SURE.ZAMAN_ARALIK.BIR_HAFTA'), value : '7'},
-    {text : this.translateService.instant('EKSIK_SURE.ZAMAN_ARALIK.IKI_HAFTA'), value : '14'},
-    {text : this.translateService.instant('EKSIK_SURE.ZAMAN_ARALIK.BIR_AY'), value : '30'},
-    {text : this.translateService.instant('EKSIK_SURE.ZAMAN_ARALIK.IKI_AY'), value : '60'},
-    {text : this.translateService.instant('EKSIK_SURE.ZAMAN_ARALIK.ALTI_AY'), value : '180'},
-    {text : this.translateService.instant('EKSIK_SURE.ZAMAN_ARALIK.BIR_YIL'), value : '365'}
+    {text : this.translateService.instant('Bir_Gün'), value : '1'},
+    {text : this.translateService.instant('Üç_Gün'), value : '3'},
+    {text : this.translateService.instant('Bir_Hafta'), value : '7'},
+    {text : this.translateService.instant('İki_Hafta'), value : '14'},
+    {text : this.translateService.instant('Bir_Ay'), value : '30'},
+    {text : this.translateService.instant('İki_Ay'), value : '60'},
+    {text : this.translateService.instant('Altı_Ay'), value : '180'},
+    {text : this.translateService.instant('Bir_Yıl'), value : '365'}
   ]
 
   incompleteTimes : any[] = [];

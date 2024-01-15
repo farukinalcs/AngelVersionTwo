@@ -106,6 +106,7 @@ import { IbanMaskPipe } from 'src/app/_helpers/pipes/iban-mask.pipe';
 import { PendingRequestsComponent } from './talepler/talepedilenler/pending-requests/pending-requests.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { DialogMasrafTalebiComponent } from './talep-olustur/dialog-masraf-talebi/dialog-masraf-talebi.component';
 
 
 
@@ -170,7 +171,8 @@ LicenseManager.setLicenseKey(
     SicilListeComponent,
     DialogAracTalebiComponent,
     IbanMaskPipe,
-    PendingRequestsComponent
+    PendingRequestsComponent,
+    DialogMasrafTalebiComponent
 
     
 

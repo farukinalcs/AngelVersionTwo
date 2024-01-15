@@ -22,18 +22,18 @@ export class IzinlerimComponent implements OnInit, OnDestroy {
   @ViewChild('datepickerDialog') datepickerDialog: TemplateRef<any>;
 
   months: string[] = [
-    this.translateService.instant("PUBLIC.AYLAR.OCAK"),
-    this.translateService.instant("PUBLIC.AYLAR.SUBAT"),
-    this.translateService.instant("PUBLIC.AYLAR.MART"),
-    this.translateService.instant("PUBLIC.AYLAR.NISAN"),
-    this.translateService.instant("PUBLIC.AYLAR.MAYIS"),
-    this.translateService.instant("PUBLIC.AYLAR.HAZIRAN"),
-    this.translateService.instant("PUBLIC.AYLAR.TEMMUZ"),
-    this.translateService.instant("PUBLIC.AYLAR.AGUSTOS"),
-    this.translateService.instant("PUBLIC.AYLAR.EYLUL"),
-    this.translateService.instant("PUBLIC.AYLAR.EKIM"),
-    this.translateService.instant("PUBLIC.AYLAR.KASIM"),
-    this.translateService.instant("PUBLIC.AYLAR.ARALIK")
+    this.translateService.instant("Ocak"),
+    this.translateService.instant("Şubat"),
+    this.translateService.instant("Mart"),
+    this.translateService.instant("Nisan"),
+    this.translateService.instant("Mayıs"),
+    this.translateService.instant("Haziran"),
+    this.translateService.instant("Temmuz"),
+    this.translateService.instant("Ağustos"),
+    this.translateService.instant("Eylül"),
+    this.translateService.instant("Ekim"),
+    this.translateService.instant("Kasım"),
+    this.translateService.instant("Aralık")
   ];
   
   years: number[] = []; // Gerektiğinde yılları güncelleyin
@@ -122,7 +122,7 @@ export class IzinlerimComponent implements OnInit, OnDestroy {
   //     let message = response[0].z;
   //     let responseToken = response[0].y;
 
-  //     console.log("İZİNLERİM : ", data);
+  //     console.log("İzinlerim : ", data);
   //     this.myPermissions = data;  
 
   //     this.dataSource = new MatTableDataSource(this.myPermissions);
@@ -144,7 +144,7 @@ export class IzinlerimComponent implements OnInit, OnDestroy {
       let message = response[0].z;
       let responseToken = response[0].y;
 
-      console.log("İZİNLERİM : ", data);
+      console.log("İzinlerim : ", data);
       this.myPermissions = data;  
       
       this.dataSource = new MatTableDataSource(this.myPermissions);

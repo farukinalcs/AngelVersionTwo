@@ -68,7 +68,7 @@ export class DialogDuyuruFormuComponent implements OnInit {
 
   nextStep() {
     if (!this.canProceedToNextStep()) {
-      this.toastrService.error("Form Alanlarını Doldurmalısınız", "HATA");
+      this.toastrService.error("Form Alanlarını Doldurmalısınız", "Hata");
       return;
     }
 

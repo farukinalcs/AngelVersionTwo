@@ -19,7 +19,7 @@
 
             <div class="col-6 d-flex justify-content-end">
                 <input class="form-control form-control-solid w-50" type="text" [(ngModel)]="filterText"
-                    placeholder="{{'PUBLIC.SEARCH' | translate}}" (keyup)="applyFilter($event)">
+                    placeholder="{{'Arama' | translate}}" (keyup)="applyFilter($event)">
             </div>
 
             <div class="col-12 pt-5">
@@ -40,11 +40,11 @@
                                 <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                     <thead>
                                         <tr class="rounded fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
-                                            <th class="text-center rounded-start">{{"EKSIK_SURE.TABLE.VARDIYA" | translate}}</th>
-                                            <th class="text-center">{{"EKSIK_SURE.TABLE.EKSIK_SURE" | translate}}</th>
-                                            <th class="text-center">{{"EKSIK_SURE.TABLE.MESAI_TARIHI" | translate}}</th>
-                                            <th class="text-center">{{"EKSIK_SURE.TABLE.GIRIS" | translate}}</th>
-                                            <th class="text-center">{{"EKSIK_SURE.TABLE.CIKIS" | translate}}</th>
+                                            <th class="text-center rounded-start">{{"Vardiya" | translate}}</th>
+                                            <th class="text-center">{{"Eksik_Süre" | translate}}</th>
+                                            <th class="text-center">{{"Mesai_Tarihi" | translate}}</th>
+                                            <th class="text-center">{{"Giriş" | translate}}</th>
+                                            <th class="text-center">{{"Çıkış" | translate}}</th>
                                             <th class="text-center rounded-end"></th>
                                         </tr>
                                     </thead>
@@ -92,7 +92,7 @@
                                             </td>
 
                                             <td class="text-center text-muted fw-bold fs-4">
-                                                <a class="btn btn-icon btn-light-danger btn-sm me-3"  matTooltip="Eksik Süre Formu">
+                                                <a class="btn btn-icon btn-light-danger btn-sm me-3"  matTooltip="{{'Eksik_Süre_Formu' | translate}}">
                                                     <i class="fa-solid fa-file-lines fs-4"></i>
                                                 </a>
                                             </td>

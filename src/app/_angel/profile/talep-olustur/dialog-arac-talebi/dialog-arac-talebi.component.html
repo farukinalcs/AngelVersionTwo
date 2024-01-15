@@ -9,7 +9,7 @@
                     </div>
                 </div>
 
-                <app-form-stepper [stepperFields]="stepperFields"></app-form-stepper>
+                <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields"></app-form-stepper>
 
                 <div class="row w-xl-700px">
                     <div class="col-12">
@@ -21,11 +21,11 @@
                                         <div class="row">
                                             <div class="col-12 my-5">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                    <span class="required">Lokasyon</span>
+                                                    <span class="required">{{"Lokasyon" | translate}}</span>
                                                 </label>
                                 
                                                 <!-- <p-dropdown [options]="fmNedenleri" [(ngModel)]="selectedOvertime" optionLabel="ad" [filter]="true" filterBy="ad"
-                                                    [showClear]="true" placeholder="{{'FM_TALEP_DIALOG.FORM.FM_TIPI_SECINIZ' | translate}}" formControlName="tip">
+                                                    [showClear]="true" placeholder="{{'Fazla_Mesai_Tipi_Seçiniz' | translate}}" formControlName="tip">
                                                     <ng-template pTemplate="selectedItem">
                                                         <div class="item-item item-item-value" *ngIf="selectedOvertime">
                                                             <div>{{selectedOvertime.ad}}</div>
@@ -51,7 +51,7 @@
                                         <div class="row">
                                             <div class="col-6 p-5">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                    <span class="required">{{"FM_TALEP_DIALOG.FORM.BASLANGIC_TARIHI" | translate}}</span>
+                                                    <span class="required">{{"Başlangıç_Tarihi" | translate}}</span>
                                                 </label>
                                     
                                                 <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bastarih">
@@ -60,7 +60,7 @@
                             
                                             <div class="col-6 p-5">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                    <span class="required">{{"FM_TALEP_DIALOG.FORM.BASLANGIC_SAATI" | translate}}</span>
+                                                    <span class="required">{{"Başlangıç_Saati" | translate}}</span>
                                                 </label>
                                     
                                                 <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bassaat">
@@ -68,7 +68,7 @@
                             
                                             <div class="col-6 p-5">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                    <span class="required">{{"FM_TALEP_DIALOG.FORM.BITIS_TARIHI" | translate}}</span>
+                                                    <span class="required">{{"Bitiş_Tarihi" | translate}}</span>
                                                 </label>
                                     
                                                 <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bittarih">                         
@@ -76,7 +76,7 @@
                             
                                             <div class="col-6 p-5">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                    <span class="required">{{"FM_TALEP_DIALOG.FORM.BITIS_SAATI" | translate}}</span>
+                                                    <span class="required">{{"Bitiş_Saati" | translate}}</span>
                                                 </label>
                                     
                                                 <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bitsaat">
@@ -94,11 +94,11 @@
                                         <div class="row">
                                             <div class="col-12 my-5">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                    <span class="required">{{"FM_TALEP_DIALOG.FORM.ACIKLAMA" | translate}}</span>
+                                                    <span class="required">{{"Açıklama" | translate}}</span>
                                                 </label>
                                 
                                                 <textarea class="form-control form-control-solid" rows="3" formControlName="aciklama" 
-                                                    placeholder="{{'FM_TALEP_DIALOG.FORM.ACIKLAMA_GIRINIZ' | translate}}" style="height: 12px;">
+                                                    placeholder="{{'Açıklama_Giriniz' | translate}}" style="height: 12px;">
                                                 </textarea>
                                             </div>
                                         </div>
@@ -111,7 +111,7 @@
                                     <div class="row py-8 px-10">
                                         
                                         <div class="col-12 d-flex justify-content-center pb-3">
-                                            <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"ZIYARETCI_TALEP_DIALOG.FORM.TALEP_SAHIBI" | translate}}</span>
+                                            <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Talep_Sahibi" | translate}}</span>
                                         </div>
                                         
                                         <div class="col-12 d-flex justify-content-center  pb-10" *ngIf="this.authService.currentUserSubject | async as _user">
@@ -123,23 +123,23 @@
     
                                         <div>
                                             <div class="col-12 d-flex justify-content-center">
-                                                <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"IZIN_TALEP_DIALOG.HEADER" | translate}}</span>
+                                                <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Araç_Talep_Formu" | translate}}</span>
                                             </div>
         
                                             <div class="col-12">
                                                 <div class="row text-center">
                                                     <div class="col-12 py-3">
-                                                        <span class="text-gray-800  fs-6 fw-bolder">Lokasyon:</span>
+                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"Lokasyon" |translate}}:</span>
                                                         <span class="text-muted fw-bold d-block fs-7"> {{vehicleFormValues?.lokasyon?.ad}} </span>
                                                     </div>
                                             
                                                     <div class="col-12 py-3">
-                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"FM_TALEP_DIALOG.FORM.ACIKLAMA" | translate}}:</span>
+                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"Açıklama" | translate}}:</span>
                                                         <span class="text-muted fw-bold d-block fs-7"> {{vehicleFormValues.aciklama}} </span>
                                                     </div>
                                             
                                                     <div class="col-12 py-3">
-                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"IZIN_TALEP_DIALOG.FORM.BASLANGIC_TARIHI" | translate}}:</span>
+                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"Başlangıç_Tarihi" | translate}}:</span>
                                                         <span class="text-muted fw-bold d-block fs-7">
                                                             {{vehicleFormValues.bastarih}}
                                                             <ng-container *ngIf="vehicleFormValues.bassaat">
@@ -149,7 +149,7 @@
                                                     </div>
                                             
                                                     <div class="col-12 py-3">
-                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"IZIN_TALEP_DIALOG.FORM.BITIS_TARIHI" | translate}}:</span>
+                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"Bitiş_Tarihi" | translate}}:</span>
                                                         <span class="text-muted fw-bold d-block fs-7">
                                                             {{vehicleFormValues.bittarih}}
                                                             <ng-container *ngIf="vehicleFormValues.bitsaat">
@@ -174,7 +174,7 @@
                                                 <label [for]="'upload_' + i" class="w-100">
                                                     <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center" style="padding: 1.5rem 0;">
                                                         <div class="dropzone-msg dz-message needsclick">
-                                                            <h3 class="dropzone-msg-title text-center">{{"BULTEN_FORM_DIALOG.FORM.DOSYA_YUKLE" | translate: { fileType: item.ad } }}</h3>
+                                                            <h3 class="dropzone-msg-title text-center">{{"DOSYA_YUKLE" | translate: { fileType: item.ad } }}</h3>
                                                         </div>
                                                     </div>
                                                 </label>
@@ -290,7 +290,7 @@
                                         (click)="prevStep()">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                            {{"ZIYARETCI_TALEP_DIALOG.FORM.GERI" | translate}}
+                                            {{"Geri" | translate}}
                                     </button>
                                 </ng-container>
 
@@ -298,7 +298,7 @@
                                     <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                            {{"ZIYARETCI_TALEP_DIALOG.FORM.KAPAT" | translate}}
+                                            {{"Kapat" | translate}}
                                     </button>
                                 </ng-container>
                             </div>
@@ -308,19 +308,25 @@
                                     <ng-container *ngIf="currentStep$.value < formsCount - 1">
                                         <button type="button" class="btn btn-lg btn-danger me-3" (click)="nextStep()">
                                             <span class="indicator-label">
-                                                {{"ZIYARETCI_TALEP_DIALOG.FORM.ILERI" | translate}} {{ " " }}
+                                                {{"İleri" | translate}} {{ " " }}
                                                 <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
                                                     class="svg-icon svg-icon-3 ms-2 me-0"></span>
                                                 <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                                    {{"ZIYARETCI_TALEP_DIALOG.FORM.GONDER" | translate}}
+                                                    {{"Gönder" | translate}}
                                                 </ng-container>
                                             </span>
                                         </button>
                                     </ng-container>
                                     <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="closedFormDialog()">
+                                            <span class="indicator-label">
+                                                {{"Kapat" | translate}}
+                                            </span>
+                                        </button>
+                                        
                                         <button type="button" class="btn btn-lg btn-danger me-3" (click)="getFormValues()">
                                             <span class="indicator-label">
-                                                {{"ZIYARETCI_TALEP_DIALOG.FORM.GONDER" | translate}}
+                                                {{"Gönder" | translate}}
                                             </span>
                                         </button>
 
@@ -361,7 +367,7 @@
 
 
 
-<p-dialog header="Önizleme" [(visible)]="displayUploadedFile" position="center"
+<p-dialog header="{{'Önizleme' | translate}}" [(visible)]="displayUploadedFile" position="center"
     [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '50vw' : 'none'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
     
     <ng-container *ngIf="currentUploadedFile">
@@ -377,7 +383,7 @@
     <ng-template pTemplate="footer">
         <a (click)="displayUploadedFile=false" class="btn btn-danger">
           <i class="fa-solid fa-xmark fs-1"></i>
-          {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+          {{'Kapat' | translate}}
         </a>
       </ng-template>
 </p-dialog>

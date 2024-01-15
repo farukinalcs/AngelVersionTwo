@@ -12,11 +12,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-dialog-avans-talebi',
-  templateUrl: './dialog-avans-talebi.component.html',
-  styleUrls: ['./dialog-avans-talebi.component.scss']
+  selector: 'app-dialog-masraf-talebi',
+  templateUrl: './dialog-masraf-talebi.component.html',
+  styleUrls: ['./dialog-masraf-talebi.component.scss']
 })
-export class DialogAvansTalebiComponent implements OnInit {
+export class DialogMasrafTalebiComponent implements OnInit {
+
   private ngUnsubscribe = new Subject();
   @Input() closedForm: BehaviorSubject<boolean>;
   @Output() advanceFormIsSend: EventEmitter<void> = new EventEmitter<void>();

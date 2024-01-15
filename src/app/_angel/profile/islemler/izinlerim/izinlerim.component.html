@@ -40,16 +40,10 @@
                                 <thead>
                                     <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger rounded">
                                         <th class="rounded-start"></th>
-                                        <th class="fs-6 text-center fw-bolder me-1 cursor-pointer">
-                                            {{"MY_VACATION.TABLE_TITLE.BASLANGIC" | translate}}</th>
-                                        <th class="fs-6 text-center fw-bolder me-1 cursor-pointer">
-                                            {{"MY_VACATION.TABLE_TITLE.BITIS" | translate}}</th>
-                                        <th
-                                            class="fs-6 text-center fw-bolder me-1 cursor-pointer">
-                                            {{"MY_VACATION.TABLE_TITLE.IZINLI_SURE" | translate}}</th>
-                                        <th
-                                            class="fs-6 text-center fw-bolder me-1 cursor-pointer rounded-end">
-                                            {{"MY_VACATION.TABLE_TITLE.IZIN_TIPI" | translate}}</th>
+                                        <th class="fs-6 text-center fw-bolder me-1 cursor-pointer rounded-end">{{"İzin_Tipi" | translate}}</th>
+                                        <th class="fs-6 text-center fw-bolder me-1 cursor-pointer">{{"Başlangıç" | translate}}</th>
+                                        <th class="fs-6 text-center fw-bolder me-1 cursor-pointer">{{"Bitiş" | translate}}</th>
+                                        <th class="fs-6 text-center fw-bolder me-1 cursor-pointer">{{"İzinli_Süre" | translate}}</th>
                                     </tr>
                                 </thead>
 
@@ -57,7 +51,8 @@
                                     <tr *ngFor="let item of myPermissions">
                                         <td class="text-center">
                                             <ng-container *ngIf="item.saatlik_gunluk == 'saatlik'">
-                                                <div matTooltip="{{ 'PUBLIC.TOOLTIP.SAATLIK_IZIN' | translate }}" class="symbol symbol-50px me-2">
+                                                <div matTooltip="{{ 'Saatlik_İzin' | translate }}"
+                                                    class="symbol symbol-50px me-2">
                                                     <span class="symbol-label bg-light-danger">
                                                         <i class="fa-solid fa-clock text-danger fs-2x"></i>
                                                     </span>
@@ -65,12 +60,19 @@
                                             </ng-container>
 
                                             <ng-container *ngIf="item.saatlik_gunluk == 'gunluk'">
-                                                <div matTooltip="{{ 'PUBLIC.TOOLTIP.GUNLUK_IZIN' | translate }}" class="symbol symbol-50px me-2">
+                                                <div matTooltip="{{ 'Günlük_İzin' | translate }}"
+                                                    class="symbol symbol-50px me-2">
                                                     <span class="symbol-label bg-light-danger">
                                                         <i class="fa-solid fa-calendar-days text-danger fs-2x"></i>
                                                     </span>
                                                 </div>
                                             </ng-container>
+                                        </td>
+
+                                        <td class="text-center text-muted fw-bold fs-4">
+                                            <span class="border border-gray-500 border-2 border-dashed rounded p-3">
+                                                {{item.Aciklama}}
+                                            </span>
                                         </td>
 
                                         <td class="text-center">
@@ -110,11 +112,7 @@
                                         </td>
 
 
-                                        <td class="text-center text-muted fw-bold fs-4">
-                                            <span class="border border-gray-500 border-2 border-dashed rounded p-3">
-                                                {{item.Aciklama}}
-                                            </span>
-                                        </td>
+
                                     </tr>
                                 </tbody>
                             </table>

@@ -33,6 +33,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   displayAdvancePaymentForm: boolean;
   displayAuthorityRequestForm: boolean;
   displayVehicleRequestForm: boolean;
+  displayExpenseRequestForm: boolean;
 
   constructor(
     private auth: AuthService,
@@ -141,6 +142,14 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   }
   /* --------------------------------- */
 
+
+  showExpenseDialog() {
+    this.displayExpenseRequestForm = true;
+  }
+
+  expenseRequestIsSend() {
+    this.displayExpenseRequestForm = false;
+  }
 
 
   ngOnDestroy(): void {

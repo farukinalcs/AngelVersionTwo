@@ -28,26 +28,26 @@ export class SicilListeComponent implements OnInit {
 
   public columnDefs: ColDef[] = [
     {
-      headerName: "Fotoğraf", field: "imagePath", editable: false, pinned: 'left',
-      minWidth: 80, maxWidth: 80, filter: false, sortable: false, headerTooltip: 'Fotoğraf',
+      headerName: this.translateService.instant('Fotoğraf'), field: "imagePath", editable: false, pinned: 'left',
+      minWidth: 80, maxWidth: 80, filter: false, sortable: false, headerTooltip: this.translateService.instant('Fotoğraf'),
       cellStyle: { 'padding-top': '1px !important', 'padding-right': '0px !important', 'padding-bottom': '0px !important', 'padding-left': '10px !important' },
       cellRenderer:(params: any)=> this.getImageGrid(params),
       cellRendererParams: { exampleParameter: 'red' }
     },
     { headerName: 'Id', field: 'Id', headerTooltip: 'Id', headerCheckboxSelection: true, checkboxSelection: true, showDisabledCheckboxes: true },
-    { headerName:'Ad', field: 'ad', headerTooltip: 'Ad'},
-    { headerName:'Soyad', field: 'soyad', headerTooltip: 'Soyad'},
-    { headerName:'Sicil No', field: 'sicilno', headerTooltip: 'Sicil Numarası', type: 'numericColumn'},
-    { headerName:'Personel No', field: 'personelno', headerTooltip: 'Personel Numarası', type: 'numericColumn' },
+    { headerName: this.translateService.instant('Ad'), field: 'ad', headerTooltip: this.translateService.instant('Ad')},
+    { headerName: this.translateService.instant('Soyad'), field: 'soyad', headerTooltip: this.translateService.instant('Soyad')},
+    { headerName: this.translateService.instant('Sicil_No'), field: 'sicilno', headerTooltip: this.translateService.instant('Sicil_No'), type: 'numericColumn'},
+    { headerName: this.translateService.instant('Personel_No'), field: 'personelno', headerTooltip: this.translateService.instant('Personel_No'), type: 'numericColumn' },
     // { headerName:'Giriş Tarihi', field: 'giristarih', type: ['dateColumn', 'nonEditableColumn']},
-    { headerName:'Firma', field: 'firmaad', headerTooltip: 'Firma Adı', rowGroup: false, enableRowGroup: true, hide: false },
-    { headerName:'Alt Firma', field: 'altfirmaad', headerTooltip: 'Alt Firma Adı', rowGroup: false, enableRowGroup: true, hide: false  },
-    { headerName:'Yaka', field: 'yakaad', headerTooltip: 'Yaka Adı', rowGroup: false, enableRowGroup: true, hide: false  },
-    { headerName:'Bölüm', field: 'bolumad', headerTooltip: 'Bölüm Adı', rowGroup: false, enableRowGroup: true, hide: false  },
-    { headerName:'Pozisyon', field: 'pozisyonad', headerTooltip: 'Pozisyon Adı', rowGroup: false, enableRowGroup: true, hide: false  },
-    { headerName:'Kimlik Tanımı', field: 'yetkistrad', headerTooltip: 'Kimlik Tanımı', rowGroup: false, enableRowGroup: true, hide: false  },
-    { headerName:'Geçiş Yetkileri', field: 'userdefad', headerTooltip: 'Geçiş Yetkileri', rowGroup: false, enableRowGroup: true, hide: false  },
-    { headerName:'Kart No', field: 'cardID', headerTooltip: 'Kart Numarası' },
+    { headerName: this.translateService.instant('Firma'), field: 'firmaad', headerTooltip: this.translateService.instant('Firma_Adı'), rowGroup: false, enableRowGroup: true, hide: false },
+    { headerName: this.translateService.instant('Alt_Firma'), field: 'altfirmaad', headerTooltip: this.translateService.instant('Alt_Firma_Adı'), rowGroup: false, enableRowGroup: true, hide: false  },
+    { headerName: this.translateService.instant('Yaka'), field: 'yakaad', headerTooltip: this.translateService.instant('Yaka_Adı'), rowGroup: false, enableRowGroup: true, hide: false  },
+    { headerName: this.translateService.instant('Bölüm'), field: 'bolumad', headerTooltip: this.translateService.instant('Bölüm_Adı'), rowGroup: false, enableRowGroup: true, hide: false  },
+    { headerName: this.translateService.instant('Pozisyon'), field: 'pozisyonad', headerTooltip: this.translateService.instant('Pozisyon_Adı'), rowGroup: false, enableRowGroup: true, hide: false  },
+    { headerName: this.translateService.instant('Kimlik_Tanımı'), field: 'yetkistrad', headerTooltip: this.translateService.instant('Kimlik_Tanımı'), rowGroup: false, enableRowGroup: true, hide: false  },
+    { headerName: this.translateService.instant('Geçiş_Yetkileri'), field: 'userdefad', headerTooltip: this.translateService.instant('Geçiş_Yetkileri'), rowGroup: false, enableRowGroup: true, hide: false  },
+    { headerName: this.translateService.instant('Kart_Numarası'), field: 'cardID', headerTooltip: this.translateService.instant('Kart_Numarası') },
   ];
   
   public defaultColDef: ColDef = {
@@ -98,6 +98,7 @@ export class SicilListeComponent implements OnInit {
     ],
   };
   gridApi: any;
+
   constructor(
     private profileService: ProfileService,
     private toastrService: ToastrService,
@@ -186,7 +187,7 @@ export class SicilListeComponent implements OnInit {
       okod6: '',
       okod7: ''
     }];
-    this.profileService.sendRequestForProcess(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response:any) => {
+    this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response:any) => {
       const data = response[0].x;
       const message = response[0].z;
 

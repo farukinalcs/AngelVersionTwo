@@ -8,65 +8,68 @@ import { ProfileService } from '../../../profile.service';
 @Component({
   selector: 'app-visitor-uploaded-files',
   templateUrl: './visitor-uploaded-files.component.html',
-  styleUrls: ['./visitor-uploaded-files.component.scss']
+  styleUrls: ['./visitor-uploaded-files.component.scss'],
 })
 export class VisitorUploadedFilesComponent implements OnInit, OnDestroy {
-  @Input() selectedVisit : any
+  @Input() selectedVisit: any;
   @Output() refreshVisit = new EventEmitter<string>();
-  
+
   private ngUnsubscribe = new Subject();
 
   base64Data: any;
   contentType: any;
-  public isLoading : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
   displayUploadedFile: boolean = false;
   selectedFile: any;
   selectedContentType: any;
 
   constructor(
-    private profileService : ProfileService,
-    private ref : ChangeDetectorRef,
-    private sanitizer : DomSanitizer,
-    private toastrService : ToastrService,
-    public layoutService : LayoutService,
-  ) { }
+    private profileService: ProfileService,
+    private ref: ChangeDetectorRef,
+    private sanitizer: DomSanitizer,
+    private toastrService: ToastrService,
+    public layoutService: LayoutService
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  getFileForDemand(id : any, uzanti : any, contentType : any){
+  getFileForDemand(id: any, uzanti: any, contentType: any) {
     this.base64Data = null;
     this.contentType = null;
     this.profileService
-    .getFileForDemand(id, uzanti)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe((response: any) => {
-      const data = response[0].x;
-      console.log("Dosya geldi", data);
-      
-      this.selectedFile = data.base64Data;
-      this.selectedContentType = contentType;
-      
-      this.base64Data = this.sanitizer.bypassSecurityTrustResourceUrl('data:'+ contentType +  ';base64,' + data.base64Data);
-      
-      console.log("Download Link : ", this.base64Data);
-      
-      const base64Data = data.base64Data;
-      const blob = new Blob([atob(base64Data)], { type: contentType });
+      .getFileForDemand(id, uzanti)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const data = response[0].x;
+        console.log('Dosya geldi', data);
 
-      const fileName = `${contentType}.${uzanti}`;
-      this.contentType = fileName;
-      let file : any = new File([blob], fileName, { type: contentType });
-      console.log("File : ", file);
+        this.selectedFile = data.base64Data;
+        this.selectedContentType = contentType;
 
-      this.ref.detectChanges();
-    });
+        this.base64Data = this.sanitizer.bypassSecurityTrustResourceUrl(
+          'data:' + contentType + ';base64,' + data.base64Data
+        );
+
+        console.log('Download Link : ', this.base64Data);
+
+        const base64Data = data.base64Data;
+        const blob = new Blob([atob(base64Data)], { type: contentType });
+
+        const fileName = `${contentType}.${uzanti}`;
+        this.contentType = fileName;
+        let file: any = new File([blob], fileName, { type: contentType });
+        console.log('File : ', file);
+
+        this.ref.detectChanges();
+      });
   }
 
   onHideUploadedFile() {
     this.displayUploadedFile = false;
     // this.currentUploadedFile = null;
-    this.base64Data = null
+    this.base64Data = null;
   }
 
   downloadFile(item: any) {
@@ -75,15 +78,22 @@ export class VisitorUploadedFilesComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((response: any) => {
         const data = response[0].x;
-        console.log("Base64 geldi", data);
+        console.log('Base64 geldi', data);
 
-        const blob = new Blob([atob(data.base64Data)], { type: item.uploadedFile.ContentType });
+        const blob = new Blob([atob(data.base64Data)], {
+          type: item.uploadedFile.ContentType,
+        });
         const fileName = `${item.uploadedFile.ContentType}.${item.uploadedFile.DosyaTipi}`;
-        let file: any = new File([blob], fileName, { type: item.uploadedFile.ContentType });
-        console.log("File : ", file);
+        let file: any = new File([blob], fileName, {
+          type: item.uploadedFile.ContentType,
+        });
+        console.log('File : ', file);
 
-        var link = this.b64toBlob(data.base64Data, item.uploadedFile.ContentType);
-        let a = document.createElement("a");
+        var link = this.b64toBlob(
+          data.base64Data,
+          item.uploadedFile.ContentType
+        );
+        let a = document.createElement('a');
         document.body.appendChild(a);
         var url = window.URL.createObjectURL(link);
         a.href = url;
@@ -96,58 +106,63 @@ export class VisitorUploadedFilesComponent implements OnInit, OnDestroy {
       });
   }
 
-  public b64toBlob(b64Data : any, contentType : any) {
+  public b64toBlob(b64Data: any, contentType: any) {
     contentType = contentType || '';
     let sliceSize = 512;
-  
+
     var byteCharacters = atob(b64Data);
     var byteArrays = [];
-  
+
     for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-        var slice = byteCharacters.slice(offset, offset + sliceSize);
-  
-        var byteNumbers = new Array(slice.length);
-        for (var i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-        }
-  
-        var byteArray = new Uint8Array(byteNumbers);
-  
-        byteArrays.push(byteArray);
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      var byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
     }
-  
+
     var blob = new Blob(byteArrays, { type: contentType });
     return blob;
   }
 
-  deleteFileForDemand(item : any){
+  deleteFileForDemand(item: any) {
     this.isLoading.next(true);
 
     this.base64Data = null;
-    
+
     this.profileService
-    .deleteFileForDemand(item.uploadedFile.UniqueId, item.uploadedFile.DosyaTipi)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe((response: any) => {
-      const data = response[0].x;
-      const message = response[0].z;
+      .deleteFileForDemand(
+        item.uploadedFile.UniqueId,
+        item.uploadedFile.DosyaTipi
+      )
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const data = response[0].x;
+        const message = response[0].z;
 
-      if (message.islemsonuc == 1) {
-        this.isLoading.next(false);
-        console.log("Dosya Silindi : ", message.message);
+        if (message.islemsonuc == 1) {
+          this.isLoading.next(false);
+          console.log('Dosya Silindi : ', message.message);
 
-        this.refreshVisitFunc(item);
-        // this.getMyVisitorDemanded();
-        item.uploadedFile = null;
-        // this.getUploadedFiles(item, 'ziyaretci');  
-      } else {
-        this.toastrService.error("Dosya Silinemedi : " + message.message, "HATA");
-      }
-      
-      this.ref.detectChanges();
-    });
+          this.refreshVisitFunc(item);
+          // this.getMyVisitorDemanded();
+          item.uploadedFile = null;
+          // this.getUploadedFiles(item, 'ziyaretci');
+        } else {
+          this.toastrService.error(
+            'Dosya Silinemedi : ' + message.message,
+            'Hata'
+          );
+        }
+
+        this.ref.detectChanges();
+      });
   }
-
 
   getFile(event: any, item: any) {
     let files: FileList = event.target.files;
@@ -155,11 +170,11 @@ export class VisitorUploadedFilesComponent implements OnInit, OnDestroy {
     if (files.length > 0) {
       const file = files[0];
       if (!this.checkFileSize(file, 1024 * 1024)) {
-        this.toastrService.error("Dosya Boyutu Yüksek", "HATA");
+        this.toastrService.error('Dosya Boyutu Yüksek', 'Hata');
         return;
       }
     }
-    
+
     console.log(files);
     item.sendFile = files[0];
 
@@ -167,7 +182,6 @@ export class VisitorUploadedFilesComponent implements OnInit, OnDestroy {
       this.readAndPushFile(file, item);
     }
   }
-  
 
   // Dosya boyutunu kontrol eden yöntem
   checkFileSize(file: File, maxSizeInBytes: number): boolean {
@@ -175,7 +189,6 @@ export class VisitorUploadedFilesComponent implements OnInit, OnDestroy {
     const maxSize = maxSizeInBytes;
     return fileSizeInBytes <= maxSize;
   }
-
 
   readAndPushFile(file: File, item: any) {
     let fileSize: any = (file.size / 1024).toFixed(1);
@@ -188,49 +201,53 @@ export class VisitorUploadedFilesComponent implements OnInit, OnDestroy {
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (event) => {
-      const url = this.sanitizer.bypassSecurityTrustResourceUrl(event.target?.result as string);
+      const url = this.sanitizer.bypassSecurityTrustResourceUrl(
+        event.target?.result as string
+      );
       item.files = {
-        name : file.name,
-        type : file.type,
-        url : url,
-        fileSize : fileSize,
-        fileSizeType : fileSizeType  
+        name: file.name,
+        type: file.type,
+        url: url,
+        fileSize: fileSize,
+        fileSizeType: fileSizeType,
       };
 
-      console.log("Uploaded Fileee : ", item);
+      console.log('Uploaded Fileee : ', item);
       this.ref.detectChanges();
-    };    
+    };
   }
-  
-  postVacationFile(item : any) {
+
+  postVacationFile(item: any) {
     this.isLoading.next(true);
 
-    this.profileService.postFileForDemand(item.sendFile, item.ID, 'ziyaretci', item.Belgetip)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe((response : any) => {
-      const message = response[0].z;
+    this.profileService
+      .postFileForDemand(item.sendFile, item.ID, 'ziyaretci', item.Belgetip)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const message = response[0].z;
 
-      if (message.islemsonuc == 1) {
-        this.isLoading.next(false);
-        console.log("Ziyaretçi için dosya gönderildi : ", response);
+        if (message.islemsonuc == 1) {
+          this.isLoading.next(false);
+          console.log('Ziyaretçi için dosya gönderildi : ', response);
 
-        this.refreshVisitFunc(item);
+          this.refreshVisitFunc(item);
+        } else {
+          this.toastrService.error(
+            'Bir Hata Oluştu : ' + message.message,
+            'Hata'
+          );
+        }
 
-        
-      } else {
-        this.toastrService.error("Bir Hata Oluştu : " + message.message, "HATA");
-      }
-      
-      this.ref.detectChanges();
-    });
+        this.ref.detectChanges();
+      });
   }
 
-  showUploadedFile(item : any) {
+  showUploadedFile(item: any) {
     this.displayUploadedFile = true;
     this.getFileForDemand(item.UniqueId, item.DosyaTipi, item.ContentType);
   }
 
-  refreshVisitFunc(selectedVisit : any) {
+  refreshVisitFunc(selectedVisit: any) {
     this.refreshVisit.emit(selectedVisit);
   }
 

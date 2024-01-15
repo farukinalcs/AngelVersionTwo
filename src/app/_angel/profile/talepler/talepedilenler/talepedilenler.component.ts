@@ -50,10 +50,10 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
   checkGrid : boolean = true; // Liste görünümüne geçiş yapmak için 
 
   menuItems = [
-    { id: 'izinNavItem', key: 'izin', icon: 'fa-umbrella-beach', label: 'DEMANDED.SUB_MENU.IZIN' },
-    { id: 'fazlamesaiNavItem', key: 'fazlamesai', icon: 'fa-business-time', label: 'DEMANDED.SUB_MENU.FAZLA_MESAI' },
-    { id: 'yetkiNavItem', key: 'sureliyetki', icon: 'fa-door-open', label: 'DEMANDED.SUB_MENU.YETKI' },
-    { id: 'avansNavItem', key: 'avans', icon: 'fa-sack-dollar', label: 'DEMANDED.SUB_MENU.AVANS' },
+    { id: 'izinNavItem', key: 'izin', icon: 'fa-umbrella-beach', label: 'İzin' },
+    { id: 'fazlamesaiNavItem', key: 'fazlamesai', icon: 'fa-business-time', label: 'Fazla_Mesai' },
+    { id: 'yetkiNavItem', key: 'sureliyetki', icon: 'fa-door-open', label: 'Yetki' },
+    { id: 'avansNavItem', key: 'avans', icon: 'fa-sack-dollar', label: 'Avans' },
   ];
   fileTypes: any[];
   uploadedFiles: any[];
@@ -251,8 +251,8 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
 
       }else {
         this.toastrService.warning(
-          this.translateService.instant("TOASTR_MESSAGE.SUREC_BULUNAMADI"),
-          this.translateService.instant("TOASTR_MESSAGE.UYARI")
+          this.translateService.instant("Gösterilecek_Süreç_Bulunamadı"),
+          this.translateService.instant("Uyarı")
         );
       }
 
@@ -319,8 +319,8 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
 
       } else {
         this.toastrService.error(
-          this.translateService.instant("TOASTR_MESSAGE.ISARETLEME_YAPMALISINIZ"),
-          this.translateService.instant("TOASTR_MESSAGE.HATA")
+          this.translateService.instant("İşaretleme_Yapmalısınız"),
+          this.translateService.instant("Hata")
         );
       }
     } else {
@@ -353,8 +353,8 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
         console.log("Çoklu İptal :", response);
         this.getDemanded(aktifMenu);
         this.toastrService.success(
-          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
-          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+          this.translateService.instant("Talep_İptal_Edildi"),
+          this.translateService.instant("Başarılı")
         );
 
 
@@ -384,8 +384,8 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
       if (response[0].x[0].islemsonuc) {
         this.getDemanded(kaynak);
         this.toastrService.success(
-          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
-          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+          this.translateService.instant("Talep_İptal_Edildi"),
+          this.translateService.instant("Başarılı")
         );
 
       }

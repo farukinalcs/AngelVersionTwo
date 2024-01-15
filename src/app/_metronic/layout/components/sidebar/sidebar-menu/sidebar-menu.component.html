@@ -13,7 +13,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
       <span class="menu-icon">
         <span class="svg-icon svg-icon-2"><i class="fa-solid fa-house text-danger"></i></span>
       </span>
-      <span class="menu-title" translate="MENU.DASHBOARD"></span>
+      <span class="menu-title" translate="Genel_Bakış"></span>
     </a>
   </div> -->
 
@@ -25,7 +25,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
           <span class="svg-icon svg-icon-2"><i class="fa-solid fa-user-tie text-danger"></i>
           </span>
         </span>
-        <span class="menu-title" translate="MENU.PROFIL"></span>
+        <span class="menu-title" translate="Profil"></span>
         <span class="menu-arrow">
 
         </span>
@@ -35,7 +35,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
         <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.gecislerim">
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/genel_bakis"><span
-                class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title" translate="MENU.DASHBOARD"></span>
+                class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title" translate="Genel_Bakış"></span>
             </a>
           </div>
         </ng-container>
@@ -44,7 +44,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/gecislerim"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                translate="MENU.PROFIL_SUB.GECISLERIM"></span></a>
+                translate="Geçişlerim"></span></a>
           </div>
         </ng-container>
 
@@ -53,7 +53,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/surelerim"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                translate="MENU.PROFIL_SUB.SURELERIM"></span></a>
+                translate="Sürelerim"></span></a>
           </div>
         </ng-container>
 
@@ -62,7 +62,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/izinlerim"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                translate="MENU.PROFIL_SUB.IZINLERIM"></span></a>
+                translate="İzinlerim"></span></a>
           </div>
         </ng-container>
 
@@ -71,7 +71,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/talep_edilenler"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                translate="MENU.PROFIL_SUB.TALEP_EDILENLER"></span></a>
+                translate="Talep_Edilenler"></span></a>
           </div>
         </ng-container>
 
@@ -80,17 +80,25 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/taleplerim"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                translate="MENU.PROFIL_SUB.TALEPLERIM"></span></a>
+                translate="Taleplerim"></span></a>
           </div>
         </ng-container>
 
-
+        <!-- <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.ziyaretciTaleplerim"> -->
+          <div class="menu-item">
+            <a class="menu-link without-sub" routerLinkActive="active"
+              routerLink="profile/ziyaretci_talepleri"><span class="menu-bullet"><span
+                  class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
+                translate="Ziyaretçi_Talepleri"></span></a>
+          </div>
+        <!-- </ng-container> -->
+        
         <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.ziyaretciTaleplerim">
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active"
               routerLink="profile/ziyaretci_taleplerim"><span class="menu-bullet"><span
                   class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                translate="MENU.PROFIL_SUB.ZIYARETCI_TALEPLERIM"></span></a>
+                translate="Ziyaretçi_Taleplerim"></span></a>
           </div>
         </ng-container>
 
@@ -99,7 +107,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/mobil_lokasyon"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                translate="MENU.PROFIL_SUB.MOBIL_LOKASYON"></span></a>
+                translate="Mobil_Lokasyon"></span></a>
           </div>
         </ng-container>
 
@@ -108,7 +116,7 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/task_listem"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                translate="MENU.PROFIL_SUB.TASK_LISTEM"></span></a>
+                translate="Task_Listem"></span></a>
           </div>
         </ng-container>
 
@@ -117,21 +125,21 @@ data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/takimim"><span
                 class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                translate="MENU.PROFIL_SUB.TAKIMIM"></span></a>
+                translate="Takımım"></span></a>
           </div>
         </ng-container>
 
         <ng-container>
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/eksik_surelerim"><span
-                class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title" translate="MENU.PROFIL_SUB.EKSIK_SURELERIM"></span></a>
+                class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title" translate="Eksik_Sürelerim"></span></a>
           </div>
         </ng-container>
 
         <ng-container>
           <div class="menu-item">
             <a class="menu-link without-sub" routerLinkActive="active" routerLink="profile/profil_tanimlamalar"><span
-                class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title" translate="MENU.PROFIL_SUB.PROFIL_TANIMLAMALAR"></span></a>
+                class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span class="menu-title" translate="Profil_Tanımlamalar"></span></a>
           </div>
         </ng-container>
 

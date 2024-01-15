@@ -40,12 +40,12 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   @Output() vacationFormIsSend: EventEmitter<void> = new EventEmitter<void>();
 
   stepperFields: any[] = [
-    { class: 'stepper-item current', number: 1, title: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.HEADER_1'), desc: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.MESSAGE_1') },
-    { class: 'stepper-item', number: 2, title: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.HEADER_2'), desc: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.MESSAGE_2') },
-    { class: 'stepper-item', number: 3, title: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.HEADER_3'), desc: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.MESSAGE_3') },
-    { class: 'stepper-item', number: 4, title: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.HEADER_4'), desc: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.MESSAGE_4') },
-    { class: 'stepper-item', number: 5, title: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.HEADER_6'), desc: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.MESSAGE_6') },
-    { class: 'stepper-item', number: 6, title: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.HEADER_5'), desc: this.translateService.instant('IZIN_TALEP_DIALOG.STEPPER.MESSAGE_5') },
+    { class: 'stepper-item current', number: 1, title: this.translateService.instant('Tür'), desc: this.translateService.instant('Günlük_Saatlik') },
+    { class: 'stepper-item', number: 2, title: this.translateService.instant('Tip'), desc: '' },
+    { class: 'stepper-item', number: 3, title: this.translateService.instant('Zaman'), desc: this.translateService.instant('İzinli_Süreler') },
+    { class: 'stepper-item', number: 4, title: this.translateService.instant('Kişisel_Bilgiler'), desc: '' },
+    { class: 'stepper-item', number: 5, title: this.translateService.instant('Tamamlandı'), desc: this.translateService.instant('Özet_Bilgiler') },
+    { class: 'stepper-item', number: 6, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Gerekli_Belgeler') },
   ];
 
   formsCount: any = 7;
@@ -75,7 +75,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   userInformation: UserInformation;
   vacationReasons : any[] = [];
   selectedType  : any;
-  dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
+  dropdownEmptyMessage : any = this.translateService.instant('Kayıt_Bulunamadı');
   formId: any;
   files: any;
 
@@ -146,8 +146,8 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   nextStep() { // Sıradaki Adımda Çalışan Fonksiyon
     if (!this.canProceedToNextStep()) {
       this.toastrService.error(
-        this.translateService.instant('TOASTR_MESSAGE.ALANLARI_DOLDURMALISINIZ'),
-        this.translateService.instant('TOASTR_MESSAGE.HATA')
+        this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
+        this.translateService.instant('Hata')
       );
       return;
     }
@@ -206,8 +206,8 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
       const file = files[0];
       if (!this.checkFileSize(file, 1024 * 1024)) {
         this.toastrService.error(
-          this.translateService.instant('TOASTR_MESSAGE.DOSYA_BOYUTU_YUKSEK'),
-          this.translateService.instant('TOASTR_MESSAGE.HATA')
+          this.translateService.instant('Dosya_Boyutu_Yuksek'),
+          this.translateService.instant('Hata')
         );
         return;
       }
@@ -297,8 +297,8 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     });
 
     this.toastrService.success(
-      this.translateService.instant('TOASTR_MESSAGE.TALEP_GONDERILDI'),
-      this.translateService.instant('TOASTR_MESSAGE.BASARILI')
+      this.translateService.instant('Talep_Gönderildi'),
+      this.translateService.instant('Başarılı')
     );
     // this.closedFormDialog();
   }
@@ -401,11 +401,11 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
         this.formId = data[0].formid;
         
         this.toastrService.success(
-          this.translateService.instant('TOASTR_MESSAGE.TALEP_GONDERILDI'),
-          this.translateService.instant('TOASTR_MESSAGE.BASARILI')
+          this.translateService.instant('Talep_Gönderildi'),
+          this.translateService.instant('Başarılı')
         );
       } else {
-        this.toastrService.error(data[0]?.izinhesapsure, this.translateService.instant('TOASTR_MESSAGE.HATA'));
+        this.toastrService.error(data[0]?.izinhesapsure, this.translateService.instant('Hata'));
         this.prevStep();
         
       }

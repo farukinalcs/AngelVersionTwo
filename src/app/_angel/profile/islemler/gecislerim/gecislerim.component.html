@@ -1,7 +1,7 @@
 <div class="container">
     <div class="card p-5">
         <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="getTransitions($event)">
-            <mat-tab label="{{'PUBLIC.GUNLUK' | translate}}">
+            <mat-tab label="{{'Günlük' | translate}}">
                 <div class="m-10 card card-custom gutter-b">
                     <div class="card-body">
                         <div class="row d-flex justify-content-center">
@@ -60,7 +60,7 @@
                                     <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
                                         <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
                                         <div class="flex-grow-1 me-2">
-                                          <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
+                                          <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"Kayıt_Bulunamadı" | translate}}</a>
                                         </div>
                                     </div>
                                 </div> -->
@@ -81,7 +81,7 @@
 
 
 
-            <mat-tab label="{{'PUBLIC.HAFTALIK' | translate}}" (click)="getTransitions('7')">
+            <mat-tab label="{{'Haftalık' | translate}}" (click)="getTransitions('7')">
                 <div class="m-10 card card-custom gutter-b">
 
                     <div class="card-body">
@@ -141,7 +141,7 @@
                                     <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
                                         <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
                                         <div class="flex-grow-1 me-2">
-                                          <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
+                                          <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"Kayıt_Bulunamadı" | translate}}</a>
                                         </div>
                                     </div>
                                 </div> -->
@@ -161,7 +161,7 @@
 
 
 
-            <mat-tab label="{{'PUBLIC.AYLIK' | translate}}" (click)="getTransitions('30')">
+            <mat-tab label="{{'Aylık' | translate}}" (click)="getTransitions('30')">
                 <div class="m-10 card card-custom gutter-b">
 
                     <div class="card-body">
@@ -223,7 +223,7 @@
                                     <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
                                         <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
                                         <div class="flex-grow-1 me-2">
-                                          <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"PUBLIC.DATA_NOT_FOUND" | translate}}</a>
+                                          <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"Kayıt_Bulunamadı" | translate}}</a>
                                         </div>
                                     </div>
                                 </div> -->

@@ -22,10 +22,10 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
 
   stepperFields: any[] = [
-    { class: 'stepper-item current', number: 1, title: 'Geçiş Grubu', desc: '' },
-    { class: 'stepper-item', number: 2, title: 'Süreli-Süresiz', desc: '' },
-    { class: 'stepper-item', number: 3, title: 'Açıklama', desc: '' },
-    { class: 'stepper-item', number: 4, title: 'Özet', desc: '' },
+    { class: 'stepper-item current', number: 1, title: this.translateService.instant('Geçiş_Grubu'), desc: '' },
+    { class: 'stepper-item', number: 2, title: this.translateService.instant('Süreli_Süresiz'), desc: '' },
+    { class: 'stepper-item', number: 3, title: this.translateService.instant('Açıklama'), desc: '' },
+    { class: 'stepper-item', number: 4, title: this.translateService.instant('Tamamlandı'), desc: '' },
   ];
 
   authorityForm: FormGroup;
@@ -37,7 +37,7 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
   formValues: any;
   transitionGroup: any[] = [];
   selectedType  : any;
-  dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
+  dropdownEmptyMessage : any = this.translateService.instant('Kayıt_Bulunamadı');
   user$: Observable<UserType>;
   displayPersonsList: boolean = false;
   persons: any[] = [];
@@ -60,7 +60,7 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
     this.getCurrentUserInformations();
     this.getTransitionGroup('Yetkitalep');
     this.setResponsiveForm();
-    this.changedDurationType()
+    this.changedDurationType();
   }
 
   getMenuConfig() {
@@ -101,8 +101,8 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
   nextStep() { // Sonraki Adıma Geçtiğinde Çalışan Fonksiyon
     if (!this.canProceedToNextStep()) {
       this.toastrService.error(
-        this.translateService.instant('TOASTR_MESSAGE.ALANLARI_DOLDURMALISINIZ'),
-        this.translateService.instant('TOASTR_MESSAGE.HATA')
+        this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
+        this.translateService.instant('Hata')
       );
       return;
     }
@@ -244,7 +244,7 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
     if (personsLength == 1) {
       firstPerson = `${this.persons[0].ad} ${this.persons[0].soyad} Seçildi`;      
     } else if (personsLength == 2) {
-      firstPerson = `${this.persons[0].ad} ${this.persons[0].soyad}, ${this.persons[1].ad} ${this.persons[1].soyad} Seçildi`;      
+      firstPerson = `${this.persons[0].ad} ${this.persons[0].soyad} ve ${this.persons[1].ad} ${this.persons[1].soyad} Seçildi`;      
     } else if (personsLength > 2) {
       firstPerson = `${this.persons[0].ad} ${this.persons[0].soyad}, ${this.persons[1].ad} ${this.persons[1].soyad} ve ${personsLength - 2} Kişi Daha Seçildi`;      
     }

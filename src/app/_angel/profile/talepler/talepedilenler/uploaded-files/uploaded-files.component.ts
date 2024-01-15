@@ -141,7 +141,7 @@ export class UploadedFilesComponent implements OnInit {
     if (files.length > 0) {
       const file = files[0];
       if (!this.checkFileSize(file, 1024 * 1024)) {
-        this.toastrService.error("Dosya Boyutu Yüksek", "HATA");
+        this.toastrService.error("Dosya Boyutu Yüksek", "Hata");
         return;
       }
     }
@@ -210,7 +210,7 @@ export class UploadedFilesComponent implements OnInit {
         this.selectedDemand.bosBelgeSayisi--;
         this.selectedDemandEvent.emit(this.selectedNavItem);
       } else {
-        this.toastrService.error("Bir Hata Oluştu : " + message.message, "HATA");
+        this.toastrService.error("Bir Hata Oluştu : " + message.message, "Hata");
       }
       
       
@@ -237,7 +237,7 @@ export class UploadedFilesComponent implements OnInit {
         this.getUploadedFiles(selectedDemand);  
         this.selectedDemand.bosBelgeSayisi++;
       } else {
-        this.toastrService.error("Dosya Silinemedi : " + message.message, "HATA");
+        this.toastrService.error("Dosya Silinemedi : " + message.message, "Hata");
       }
       
       this.ref.detectChanges();

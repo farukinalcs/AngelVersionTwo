@@ -32,11 +32,11 @@ export class DialogBultenFormuComponent implements OnInit, OnDestroy {
   @Input() closedForm: BehaviorSubject<boolean>;
 
   stepperFields: any[] = [
-    { class: 'stepper-item current', number: 1, title: this.translateService.instant('BULTEN_FORM_DIALOG.STEPPER.HEADER_1'), desc: this.translateService.instant('BULTEN_FORM_DIALOG.STEPPER.MESSAGE_1') },
-    { class: 'stepper-item', number: 2, title: this.translateService.instant('BULTEN_FORM_DIALOG.STEPPER.HEADER_2'), desc: this.translateService.instant('BULTEN_FORM_DIALOG.STEPPER.MESSAGE_2') },
-    { class: 'stepper-item', number: 3, title: this.translateService.instant('BULTEN_FORM_DIALOG.STEPPER.HEADER_3'), desc: this.translateService.instant('BULTEN_FORM_DIALOG.STEPPER.MESSAGE_3') },
-    { class: 'stepper-item', number: 4, title: this.translateService.instant('BULTEN_FORM_DIALOG.STEPPER.HEADER_4'), desc: this.translateService.instant('BULTEN_FORM_DIALOG.STEPPER.MESSAGE_4') },
-    { class: 'stepper-item', number: 5, title: this.translateService.instant('BULTEN_FORM_DIALOG.STEPPER.HEADER_5'), desc: this.translateService.instant('BULTEN_FORM_DIALOG.STEPPER.MESSAGE_5') },
+    { class: 'stepper-item current', number: 1, title: this.translateService.instant('Bülten'), desc: this.translateService.instant('Bülten_İçeriği') },
+    { class: 'stepper-item', number: 2, title: this.translateService.instant('Zaman'), desc: this.translateService.instant('Tarih_Ve_Yayıncı') },
+    { class: 'stepper-item', number: 3, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Bülten_PDF') },
+    { class: 'stepper-item', number: 4, title: this.translateService.instant('Resim_Seçin'), desc: this.translateService.instant('Avatar') },
+    { class: 'stepper-item', number: 5, title: this.translateService.instant('Tamamlandı'), desc: this.translateService.instant('Özet_Bilgiler') },
   ];
 
   formsCount: any = 6;
@@ -133,8 +133,8 @@ export class DialogBultenFormuComponent implements OnInit, OnDestroy {
   nextStep() {
     if (!this.canProceedToNextStep()) {
       this.toastrService.error(
-        this.translateService.instant("TOASTR_MESSAGE.ALANLARI_DOLDURMALISINIZ"),
-        this.translateService.instant("TOASTR_MESSAGE.HATA")
+        this.translateService.instant("Form_Alanlarını_Doldurmalısınız"),
+        this.translateService.instant("Hata")
       );
       
       return;
