@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -7,7 +7,6 @@ import { ProfileService } from '../../profile.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth';
 import { DomSanitizer } from '@angular/platform-browser';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { TranslateService } from '@ngx-translate/core';
 import { formatDate } from '@angular/common';
 
@@ -61,7 +60,6 @@ export class DialogMasrafTalebiComponent implements OnInit {
     public authService: AuthService,
     private breakpointObserver: BreakpointObserver,
     private sanitizer: DomSanitizer,
-    public layoutService: LayoutService,
     private translateService: TranslateService
   ) { }
 

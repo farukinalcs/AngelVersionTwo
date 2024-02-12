@@ -2,11 +2,11 @@
     <div class="card p-5">
         <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="getTransitions($event)">
             <mat-tab label="{{'Günlük' | translate}}">
-                <div class="m-10 card card-custom gutter-b">
+                <div class="m-2 card card-custom gutter-b">
                     <div class="card-body">
                         <div class="row d-flex justify-content-center">
                             <ng-container *ngIf="transitions.length > 0">
-                                <div class="col-8 frame pb-20">
+                                <div class="col-12 frame pb-20">
                                     <div class="timeline timeline-4">
                                         <div class="timeline-items" *ngFor="let item of transitions">
                                             <ng-container *ngIf="item.yon == '3' ">
@@ -15,7 +15,7 @@
                                                         <div class="bg-danger"></div>
                                                     </div>
                             
-                                                    <div class="timeline-label" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}">
+                                                    <div class="timeline-label p-0 m-0 px-md-2 mb-md-2">
                                                         <span class="fw-bold fs-6 text-gray-600">
                                                             {{item.zaman | date:'yyyy-MM-dd'}}
                                                         </span>
@@ -25,7 +25,7 @@
                                                         </span>
                                                     </div>
                             
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center" [ngClass]="{'p-2': this.layoutService.isMobile | async}">
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center">
                                                         {{item.cihaz}}
                                                     </div>
                                                 </div>
@@ -36,7 +36,7 @@
                                                     <div class="timeline-badge">
                                                         <div class="bg-success"></div>
                                                     </div>
-                                                    <div class="timeline-label" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}">
+                                                    <div class="timeline-label p-0 m-0 px-md-2 mb-md-2">
                                                         <span class="fw-bold fs-6 text-gray-600">
                                                             {{item.zaman | date:'yyyy-MM-dd'}}
                                                         </span>
@@ -45,7 +45,7 @@
                                                             {{item.zaman | date : 'HH:mm:ss'}}
                                                         </span>
                                                     </div>
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center" [ngClass]="{'p-2': this.layoutService.isMobile | async}">
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center">
                                                         {{item.cihaz}}
                                                     </div>
                                                 </div>
@@ -56,14 +56,6 @@
                             </ng-container>
 
                             <ng-container *ngIf="transitions.length == 0">
-                                <!-- <div class="col-12 d-flex justify-content-center align-items-center">
-                                    <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
-                                        <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
-                                        <div class="flex-grow-1 me-2">
-                                          <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"Kayıt_Bulunamadı" | translate}}</a>
-                                        </div>
-                                    </div>
-                                </div> -->
                                 <div class="row pt-10">
                                     <div class="col-12 d-flex justify-content-center align-items-center">
                                         <div class="row">
@@ -82,12 +74,12 @@
 
 
             <mat-tab label="{{'Haftalık' | translate}}" (click)="getTransitions('7')">
-                <div class="m-10 card card-custom gutter-b">
+                <div class="m-2 card card-custom gutter-b">
 
                     <div class="card-body">
                         <div class="row d-flex justify-content-center">
                             <ng-container *ngIf="transitions.length > 0">
-                                <div class="col-8 frame pb-20">
+                                <div class="col-12 frame pb-20">
                                     <div class="timeline timeline-4">
                                         <div class="timeline-items" *ngFor="let item of transitions">
                                             <ng-container *ngIf="item.yon == '3' ">
@@ -96,7 +88,7 @@
                                                         <div class="bg-danger"></div>
                                                     </div>
                             
-                                                    <div class="timeline-label" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}">
+                                                    <div class="timeline-label p-0 m-0 px-md-2 mb-md-2">
                                                         <span class="fw-bold fs-6 text-gray-600">
                                                             {{item.zaman | date:'yyyy-MM-dd'}}
                                                         </span>
@@ -106,7 +98,7 @@
                                                         </span>
                                                     </div>
                             
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center" [ngClass]="{'p-2': this.layoutService.isMobile | async}">
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center">
                                                         {{item.cihaz}}
                                                     </div>
                                                 </div>
@@ -117,7 +109,7 @@
                                                     <div class="timeline-badge">
                                                         <div class="bg-success"></div>
                                                     </div>
-                                                    <div class="timeline-label" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}">
+                                                    <div class="timeline-label p-0 m-0 px-md-2 mb-md-2">
                                                         <span class="fw-bold fs-6 text-gray-600">
                                                             {{item.zaman | date:'yyyy-MM-dd'}}
                                                         </span>
@@ -126,7 +118,7 @@
                                                             {{item.zaman | date : 'HH:mm:ss'}}
                                                         </span>
                                                     </div>
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center" [ngClass]="{'p-2': this.layoutService.isMobile | async}">
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center">
                                                         {{item.cihaz}}
                                                     </div>
                                                 </div>
@@ -137,14 +129,6 @@
                             </ng-container>
 
                             <ng-container *ngIf="transitions.length == 0">
-                                <!-- <div class="col-12 d-flex justify-content-center align-items-center">
-                                    <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
-                                        <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
-                                        <div class="flex-grow-1 me-2">
-                                          <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"Kayıt_Bulunamadı" | translate}}</a>
-                                        </div>
-                                    </div>
-                                </div> -->
                                 <div class="row pt-10">
                                     <div class="col-12 d-flex justify-content-center align-items-center">
                                         <div class="row">
@@ -162,12 +146,12 @@
 
 
             <mat-tab label="{{'Aylık' | translate}}" (click)="getTransitions('30')">
-                <div class="m-10 card card-custom gutter-b">
+                <div class="m-2 card card-custom gutter-b">
 
                     <div class="card-body">
                         <div class="row d-flex justify-content-center">
                             <ng-container *ngIf="transitions.length > 0">
-                                <div class="col-8 frame pb-20">
+                                <div class="col-12 frame pb-20">
                                     <div class="timeline timeline-4">
                                         <div class="timeline-items" *ngFor="let item of transitions">
                             
@@ -177,7 +161,7 @@
                                                         <div class="bg-danger"></div>
                                                     </div>
                             
-                                                    <div class="timeline-label" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}">
+                                                    <div class="timeline-label p-0 m-0 px-md-2 mb-md-2">
                                                         <span class="fw-bold fs-6 text-gray-600">
                                                             {{item.zaman | date:'yyyy-MM-dd'}}
                                                         </span>
@@ -188,7 +172,7 @@
                                                         
                                                     </div>
                             
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center" [ngClass]="{'p-2': this.layoutService.isMobile | async}">
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center">
                                                         {{item.cihaz}}
                                                     </div>
                                                 </div>
@@ -199,7 +183,7 @@
                                                     <div class="timeline-badge">
                                                         <div class="bg-success"></div>
                                                     </div>
-                                                    <div class="timeline-label" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}" [ngClass]="{'m-0 p-0': this.layoutService.isMobile | async}">
+                                                    <div class="timeline-label  p-0 m-0 px-md-2 mb-md-2">
                                                         <span class="fw-bold fs-6 text-gray-600">
                                                             {{item.zaman | date:'yyyy-MM-dd'}}
                                                         </span>
@@ -208,7 +192,7 @@
                                                             {{item.zaman | date : 'HH:mm:ss'}}
                                                         </span>
                                                     </div>
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center" [ngClass]="{'p-2': this.layoutService.isMobile | async}">
+                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center">
                                                         {{item.cihaz}}
                                                     </div>
                                                 </div>
@@ -219,15 +203,6 @@
                             </ng-container>
 
                             <ng-container *ngIf="transitions.length == 0">
-                                <!-- <div class="col-12 d-flex justify-content-center align-items-center">
-                                    <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center" [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
-                                        <i class="fa-solid fa-triangle-exclamation fs-2x text-danger ms-5"></i>
-                                        <div class="flex-grow-1 me-2">
-                                          <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"Kayıt_Bulunamadı" | translate}}</a>
-                                        </div>
-                                    </div>
-                                </div> -->
-
                                 <div class="row pt-10">
                                     <div class="col-12 d-flex justify-content-center align-items-center">
                                         <div class="row">

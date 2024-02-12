@@ -73,8 +73,8 @@ const routes: Routes = [
         path: 'profil_tanimlamalar',
         component: ProfilTanimlamalarComponent,
       },
-      { path: '', redirectTo: 'genel_bakis', pathMatch: 'full' },
-      { path: '**', redirectTo: 'genel_bakis', pathMatch: 'full' },
+      // { path: '', redirectTo: 'genel_bakis', pathMatch: 'full' },
+      // { path: '**', redirectTo: 'genel_bakis', pathMatch: 'full' },
     ],
   },
 ];

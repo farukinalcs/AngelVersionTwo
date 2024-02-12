@@ -18,8 +18,7 @@
 <ng-container *ngIf="!selectedNavItem && approvedRequests.length == 0">
     <div class="row mt-5 m-0">
         <div class="col-12 d-flex justify-content-center">
-            <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center "
-                [ngClass]="{'w-100': layoutService.isMobile | async, 'w-50' : !(layoutService.isMobile | async)}">
+            <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-100 w-md-50">
                 <i class="fa-solid fa-arrow-pointer fs-2x text-danger ms-5"></i>
                 <div class="flex-grow-1 me-2">
                     <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"Talep_Türü_Seçmelisiniz" | translate}}</a>
@@ -38,63 +37,50 @@
 <ng-container *ngIf="approvedRequests.length > 0">
     <div class="row mt-5 m-0 d-flex justify-content-center">
         <div class="card bg-light-danger p-4">
-            <div class="row">
-                <div class="d-flex justify-content-start"
-                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-6' : !(layoutService.isMobile | async)}">
-                    <div class="input-group h-100"
-                        [ngClass]="{'w-100': layoutService.isMobile | async, 'w-75' : !(layoutService.isMobile | async)}">
-                        <input
-                            class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
+
+            <div class="row d-flex justify-content-center justify-content-sm-start gy-4 gy-sm-0">
+                <div class="col-12 col-sm-4 d-flex justify-content-start">
+                    <div class="input-group h-100 ">
+                        <input class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
                             [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}">
+                        <button class="search-icon">
+                            <div class="svg">
+                                <!-- <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M8.6 16.2C12.7974 16.2 16.2 12.7974 16.2 8.6C16.2 4.40263 12.7974 1 8.6 1C4.40263 1 1 4.40263 1 8.6C1 12.7974 4.40263 16.2 8.6 16.2Z"
+                                                                stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                                                            <path d="M16.6 17L15 15.4" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg> -->
+                                <i class="fa-solid fa-magnifying-glass text-white fs-4"></i>
+                            </div>
+                        </button>
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-end"
-                    [ngClass]="{'col-10 pb-2': layoutService.isMobile | async, 'col-5' : !(layoutService.isMobile | async)}">
-                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold"
-                        [ngClass]="{'w-100': layoutService.isMobile | async}" (click)="showDetailSearchDialog()">
+                <div class="col-10 col-sm-7 d-flex justify-content-end">
+                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold w-100 w-sm-auto"  (click)="showDetailSearchDialog()">
                         {{"Detaylı_Arama" | translate}}
                         <i class="fa fa-search"></i>
                     </a>
                 </div>
 
-                <div class=""
-                    [ngClass]="{'col-2 d-flex justify-content-center': layoutService.isMobile | async, 'col-1' : !(layoutService.isMobile | async)}">
+                <div class="col-1 col-sm-1">
                     <a class="btn btn-icon btn-danger btn-sm me-3" (click)="checkGrid = !checkGrid">
                         <i class="fa-solid fa-list fs-4" [ngClass]="{'fa-grip': checkGrid, 'fa-list' : !checkGrid}"></i>
                     </a>
                 </div>
             </div>
+            
         </div>
     </div>
 
     <div class="row mt-5 m-0">
         <ng-container *ngIf="checkGrid">
-            <div class="mb-9"
-                [ngClass]="{'col-12': layoutService.isMobile | async, 'col-3' : !(layoutService.isMobile | async)}"
-                *ngFor="let item of approvedRequests | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis', 'firma', 'bolum', 'pozisyon']; trackBy: trackBy">
+                <div class="mb-9 col-xxl-3 col-xl-4 col-md-6"
+                    *ngFor="let item of approvedRequests | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis', 'firma', 'bolum', 'pozisyon']; trackBy: trackBy">
                 <mat-accordion>
-                    <mat-expansion-panel (opened)="isCardOpen(item)"
-                        (closed)="item.panelOpenState = false">
-                        <!-- <mat-expansion-panel-header #panelB>
-                            <mat-panel-title>
-                                <span class="badge badge-danger ml-4">{{item.tipad}}</span>
-                            </mat-panel-title>
-
-                            <mat-panel-description class="fw-bolder text-dark">
-                                <div class="text-center">
-                                    <div class="fs-5">
-                                        {{item.Personel}}
-                                    </div>
-
-                                    <ng-container *ngIf="!item.panelOpenState">
-                                        <div class="text-gray-400 fs-8">
-                                            {{item.neden}}
-                                        </div>
-                                    </ng-container>
-                                </div>
-                            </mat-panel-description>
-                        </mat-expansion-panel-header> -->
+                    <mat-expansion-panel (opened)="isCardOpen(item)" (closed)="item.panelOpenState = false">
+                        
                         <mat-expansion-panel-header #panelB class="p-0 h-60px">
                             <div class="row w-100">
                                 <ng-container *ngIf="item.bosBelgeSayisi > 0">
@@ -153,7 +139,7 @@
                         <div class="">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-12 d-flex justify-content-center">
-                                    <img width="25%" style="border-radius: 5px;"
+                                    <img class="w-25" style="border-radius: 5px;"
                                         src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}"
                                         alt="Personel Foto" />
                                 </div>

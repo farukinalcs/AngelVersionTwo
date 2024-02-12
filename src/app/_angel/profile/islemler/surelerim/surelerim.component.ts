@@ -5,7 +5,6 @@ import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { LoaderService } from 'src/app/_helpers/loader.service';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { DurationsMobileModel } from '../../models/durationsMobile';
 import { ProfileService } from '../../profile.service';
 
@@ -50,7 +49,6 @@ export class SurelerimComponent implements OnInit, OnDestroy {
     private translateService : TranslateService,
     public loaderService : LoaderService,
     private dialog : MatDialog,
-    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
 

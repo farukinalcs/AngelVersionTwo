@@ -17,7 +17,6 @@
         <ng-container *ngIf="!(isLoading | async)">
           <div class="row" *ngIf="user$ | async as _user">
             <div class="col-xl-2 d-flex justify-content-center">
-            <!-- <div [ngClass]="{'col-2': !(this.layoutService.isMobile | async), 'col-12 d-flex justify-content-center' : (this.layoutService.isMobile | async)}"> -->
               <div class="me-7 mb-4">
                 <div class="symbol symbol-100px symbol-xl-160px symbol-fixed position-relative">
                   <!-- <img alt="Logo" src="{{'data:image/jpg;base64,' + _user.FotoImage}}" /> -->
@@ -31,10 +30,8 @@
             </div>
 
             <div class="col-xl-10">
-            <!-- <div [ngClass]="{'col-10': !(this.layoutService.isMobile | async), 'col-12' : this.layoutService.isMobile | async}"> -->
               <div class="row">
                 <div class="col-xl-8 pt-xl-4 d-flex justify-content-center d-xl-flex justify-content-xl-start">
-                <!-- <div [ngClass]="{'col-8': !(this.layoutService.isMobile | async), 'col-12 pt-4 d-flex justify-content-center' : this.layoutService.isMobile | async}"> -->
                   <div class="d-flex align-items-center mb-2">
 
                     <a class="text-gray-800 text-hover-danger fs-2 fw-bolder me-1 cursor-pointer">
@@ -62,7 +59,6 @@
                 </div>
 
                 <div class="col-xl-4 d-flex justify-content-center d-xl-flex justify-content-xl-end pt-xl-4">
-                <!-- <div [ngClass]="{'col-4 justify-content-end': !(this.layoutService.isMobile | async), 'col-12 pt-4 d-flex justify-content-center' : this.layoutService.isMobile | async}"> -->
                   <button class="btn btn-danger w-75 w-md-50 h-100"
                     [matMenuTriggerFor]="talepler">{{"Talep_Oluştur" | translate}}</button>
                   <mat-menu #talepler="matMenu">
@@ -335,7 +331,7 @@
 <ng-container *ngIf="displayOvertimeForm">
   <p-dialog header="{{'Fazla_Mesai_Talep_Formu' | translate}}" [(visible)]="displayOvertimeForm"
     (visibleChange)="overtimeFormIsSend()" [modal]="true"
-    [style]="{width: !(this.layoutService.isMobile | async) ? '65vw' : 'none'}" [maximizable]="true"
+    [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true"
     [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
     <ng-container *ngIf="displayOvertimeForm">
@@ -351,7 +347,7 @@
 <ng-container *ngIf="displayVacationForm">
   <p-dialog header="{{'İzin_Talep_Formu' | translate}}" [(visible)]="displayVacationForm"
     (visibleChange)="vacationFormIsSend()" [modal]="true"
-    [style]="{width: !(this.layoutService.isMobile | async) ? '80vw' : 'none'}" [maximizable]="true"
+    [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true"
     [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
     <ng-container *ngIf="displayVacationForm">

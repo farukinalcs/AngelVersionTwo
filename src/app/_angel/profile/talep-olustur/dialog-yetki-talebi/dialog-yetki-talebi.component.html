@@ -300,8 +300,7 @@
                         </form>
                     </div>
 
-                    <div class="col-12 d-flex align-items-end"
-                        [ngClass]="{'justify-content-center': (this.layoutService.isMobile | async), 'justify-content-end': !(this.layoutService.isMobile | async) }">
+                    <div class="col-12 d-flex align-items-end justify-content-center justify-content-md-end">
                         <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
                                 <ng-container *ngIf=" 7 > currentStep$.value && currentStep$.value > 1">

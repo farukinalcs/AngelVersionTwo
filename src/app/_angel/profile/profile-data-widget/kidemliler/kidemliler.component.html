@@ -119,11 +119,11 @@
 
 
 
-<p-dialog header="{{'Kıdemliler' | translate}}" [(visible)]="displayAllSeniors" [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '50vw' : 'none'}"
+<p-dialog header="{{'Kıdemliler' | translate}}" [(visible)]="displayAllSeniors" [modal]="true" [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }"
     [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
-    <div class="container" [ngClass]="{'p-0 pt-3': (this.layoutService.isMobile | async)}" [ngStyle]="{'height': !(this.layoutService.isMobile | async) ? '500px' : '100%'}">
-        <div class="row card" [ngClass]="{'p-5': !(this.layoutService.isMobile | async), 'p-0': (this.layoutService.isMobile | async)}">
+    <div class="container">
+        <div class="row card p-0 p-md-5">
             <div class="col-12">
                 <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="getSeniorPersons($event)">
                     <mat-tab label="{{'Günlük' | translate}}">
@@ -166,8 +166,7 @@
                                                                 
                                                             </td>
     
-                                                            <td class="text-center text-muted fw-bold" 
-                                                                [ngClass]="{'fs-4': !(this.layoutService.isMobile | async), 'fs-8': (this.layoutService.isMobile | async)}">
+                                                            <td class="text-center text-muted fw-bold fs-8 fs-md-4">
                                                                 <span
                                                                     class="border border-gray-500 border-2  rounded p-3">
                                                                     {{item.bolum}}
@@ -235,8 +234,7 @@
                                                                 
                                                             </td>
     
-                                                            <td class="text-center text-muted fw-bold"
-                                                                [ngClass]="{'fs-4': !(this.layoutService.isMobile | async), 'fs-8': (this.layoutService.isMobile | async)}">
+                                                            <td class="text-center text-muted fw-bold fs-8 fs-md-4">
                                                                 <span
                                                                     class="border border-gray-500 border-2  rounded p-3">
                                                                     {{item.bolum}}
@@ -304,8 +302,7 @@
                                                                 
                                                             </td>
     
-                                                            <td class="text-center text-muted fw-bold"
-                                                                [ngClass]="{'fs-4': !(this.layoutService.isMobile | async), 'fs-8': (this.layoutService.isMobile | async)}">
+                                                            <td class="text-center text-muted fw-bold fs-8 fs-md-4">
                                                                 <span
                                                                     class="border border-gray-500 border-2  rounded p-3">
                                                                     {{item.bolum}}

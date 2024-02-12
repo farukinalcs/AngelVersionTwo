@@ -53,7 +53,7 @@
 
 
 <ng-container *ngIf="displayAllFoodMenu">
-    <p-dialog header="{{'Haftalık_Yemek_Menüsü' | translate}}" [(visible)]="displayAllFoodMenu" [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '60vw' : 'none'}"
+    <p-dialog header="{{'Haftalık_Yemek_Menüsü' | translate}}" [(visible)]="displayAllFoodMenu" [modal]="true" [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }"
         [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
         <app-yemek-menu-tumu></app-yemek-menu-tumu>

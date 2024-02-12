@@ -71,8 +71,8 @@
 
 
 
-<p-dialog header="{{currentItem.baslik}}" [(visible)]="displayAllNews" [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '50vw' : 'none'}"
-    [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+<p-dialog header="{{currentItem.baslik}}" [(visible)]="displayAllNews" [modal]="true"
+    [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false" [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }">
 
     <div class="container">
         <div class="row card p-5">

@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
-import { LayoutService } from 'src/app/_metronic/layout';
 import Swal from 'sweetalert2';
 import { ProfileService } from '../../../profile.service';
 
@@ -44,7 +43,6 @@ export class PendingRequestsComponent implements OnInit, OnDestroy {
   confirmAlertRef: any; // Dialog pencersini kapatmak için
 
   constructor(
-    public layoutService: LayoutService,
     private profilService: ProfileService,
     private toastrService: ToastrService,
     private translateService: TranslateService,

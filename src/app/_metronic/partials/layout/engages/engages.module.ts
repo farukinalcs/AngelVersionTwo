@@ -5,6 +5,8 @@ import {InlineSVGModule} from 'ng-inline-svg-2';
 import {PurchaseToolbarComponent} from "./purchase-toolbar/purchase-toolbar.component";
 import {ExploreMainDrawerComponent} from './explore-main-drawer/explore-main-drawer.component';
 import {HelpDrawerComponent} from "./help-drawer/help-drawer.component";
+import { TranslationModule } from 'src/app/modules/i18n';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,7 @@ import {HelpDrawerComponent} from "./help-drawer/help-drawer.component";
     HelpDrawerComponent,
     PurchaseToolbarComponent,
   ],
-  imports: [CommonModule, InlineSVGModule, RouterModule],
+  imports: [CommonModule, InlineSVGModule, RouterModule, TranslationModule, NgbAccordionModule],
   exports: [
     ExploreMainDrawerComponent,
     HelpDrawerComponent,

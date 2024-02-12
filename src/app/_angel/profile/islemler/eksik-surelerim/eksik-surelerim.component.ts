@@ -5,7 +5,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { TranslationService } from 'src/app/modules/i18n';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { MyIncompleteTimeModel } from '../../models/myIncompleteTime';
 import { ProfileService } from '../../profile.service';
 
@@ -42,7 +41,6 @@ export class EksikSurelerimComponent implements OnInit, OnDestroy {
     private profileService : ProfileService,
     private translationService : TranslationService,
     private translateService : TranslateService,
-    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) {}
 

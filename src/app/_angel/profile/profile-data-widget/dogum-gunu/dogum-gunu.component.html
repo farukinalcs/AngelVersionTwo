@@ -111,7 +111,7 @@
 
 
 
-<p-dialog header="{{'Tüm_Doğum_Günleri' | translate}}" [(visible)]="displayAllBirthdays" [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '50vw' : 'none'}"
+<p-dialog header="{{'Tüm_Doğum_Günleri' | translate}}" [(visible)]="displayAllBirthdays" [modal]="true" [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }"
     [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
     <div class="container" style="height: 500px;">

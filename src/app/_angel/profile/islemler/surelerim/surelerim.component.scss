@@ -1,27 +1,27 @@
 #container {
-    width: 30%;
+    // width: 30%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     gap: 35px;
     padding: 8px;
     background-color: #ffffff7a;
-    border: 2px solid #311d3f;
+    border: 1px solid var(--kt-dark-light);
     border-radius: 45px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 ::ng-deep[data-theme="dark"] #container {
-    width: 30%;
+    // width: 30%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     gap: 35px;
     padding: 8px;
     background-color: rgb(58 36 52);
-    border: 2px solid #311d3f;
+    border: 1px solid var(--kt-dark-light);
     border-radius: 45px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .date-container {

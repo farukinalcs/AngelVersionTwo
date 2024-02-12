@@ -7,7 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from '../../profile.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from 'src/app/modules/auth';
 
@@ -59,7 +58,6 @@ export class DialogAracTalebiComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     private breakpointObserver: BreakpointObserver,
     private sanitizer: DomSanitizer,
-    public layoutService: LayoutService,
     private translateService: TranslateService
   ) { }
 

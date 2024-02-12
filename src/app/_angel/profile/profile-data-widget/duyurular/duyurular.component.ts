@@ -1,6 +1,5 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-duyurular',
@@ -21,8 +20,6 @@ export class DuyurularComponent implements OnInit, OnDestroy {
   displayAnnouncementForm: boolean = false;
 
   constructor(
-    public layoutService : LayoutService,
-    private ref : ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {

@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, O
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { ProfileService } from '../../../profile.service';
 
 @Component({
@@ -30,7 +29,6 @@ export class VisitorUploadedFilesComponent implements OnInit, OnDestroy {
     private ref: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
     private toastrService: ToastrService,
-    public layoutService: LayoutService
   ) {}
 
   ngOnInit(): void {}

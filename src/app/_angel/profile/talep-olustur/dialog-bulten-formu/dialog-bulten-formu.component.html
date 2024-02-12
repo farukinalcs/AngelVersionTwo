@@ -160,7 +160,7 @@
                                             </label>
 
                                             <ng-container *ngFor="let item of pagedAvatars; let i = index">
-                                                <div class="d-flex justify-content-center align-items-center pb-6" [ngClass]="{ 'col-4': !(this.layoutService.isMobile | async), 'col-12': (this.layoutService.isMobile | async) }">
+                                                <div class="col-12 col-md-4 d-flex justify-content-center align-items-center pb-6">
                                                     <input type="radio" class="btn-check" formControlName="image" [value]="item.path" [id]="'image-' + item.path" />
                                                     <label
                                                         class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center" style="width: 165px; height: 165px;"
@@ -222,7 +222,7 @@
                             <ng-container *ngIf="currentStep$.value == 5">
                                 <div class="current">
                                     <div class="w-100">
-                                        <div class="row bg-light-danger rounded" [ngClass]="{'p-2': (this.layoutService.isMobile | async), 'p-10': !(this.layoutService.isMobile | async)}">
+                                        <div class="row bg-light-danger rounded p-2 p-md-10">
                                             <div class="col-6 d-flex justify-content-center align-items-center">
                                                 <img src=" {{'./assets/media/illustrations/' + bulletinFormValues.image}}" alt="" style="width: 100%"
                                                 [ngStyle]="{'height': (this.layoutService.isMobile | async) ? '60%' : '100%'}">
@@ -265,7 +265,7 @@
                         </form>
                     </div>
 
-                    <div class="col-12 d-flex align-items-start" [ngClass]="{'justify-content-center': (this.layoutService.isMobile | async), 'justify-content-end': !(this.layoutService.isMobile | async) }">
+                    <div class="col-12 d-flex align-items-start justify-content-center justify-content-md-end">
                         <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
                                 <ng-container *ngIf=" 7 > currentStep$.value && currentStep$.value > 1">

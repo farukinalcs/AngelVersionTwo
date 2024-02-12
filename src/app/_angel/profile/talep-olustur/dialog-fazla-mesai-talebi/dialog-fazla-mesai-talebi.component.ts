@@ -15,7 +15,6 @@ import { OKodFieldsModel } from '../../models/oKodFields';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { PostFormModel } from '../../models/postForm';
-import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-dialog-fazla-mesai-talebi',
@@ -85,7 +84,6 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     private translateService : TranslateService,
     private sanitizer: DomSanitizer,
     private helperService : HelperService,
-    public layoutService : LayoutService,
     private ref: ChangeDetectorRef
   ) { }
 

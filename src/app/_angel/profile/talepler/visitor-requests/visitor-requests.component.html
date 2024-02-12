@@ -28,18 +28,15 @@
                                             </a>
                                         </div>
                             
-                                        <div class="d-flex justify-content-end"
-                                            [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-6' : !(layoutService.isMobile | async)}">
-                                            <div class="input-group h-100"
-                                                [ngClass]="{'w-100': layoutService.isMobile | async, 'w-75' : !(layoutService.isMobile | async)}">
+                                        <div class="col-12 col-md-6 pb-2 p-md-auto d-flex justify-content-end">
+                                            <div class="input-group h-100 w-100 w-md-75">
                                                 <input
                                                     class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
                                                     [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}">
                                             </div>
                                         </div>
                             
-                                        <div class="d-flex justify-content-end"
-                                            [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-2' : !(layoutService.isMobile | async)}">
+                                        <div class="col-12 col-md-2 pb-2 p-md-auto d-flex justify-content-end">
                                             <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold"
                                                 [ngClass]="{'w-100': layoutService.isMobile | async}">
                                                 {{"Detaylı_Arama" | translate}}
@@ -51,35 +48,7 @@
                             </div>
                             
                             
-                            <!-- <div class="row">
-                                <div class="d-flex justify-content-end"
-                                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-3' : !(layoutService.isMobile | async)}">
-                                    <div class="input-group h-100"
-                                        [ngClass]="{'w-100': layoutService.isMobile | async, 'w-75' : !(layoutService.isMobile | async)}">
-                                        <input
-                                            class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
-                                            [(ngModel)]="filterText" type="text"
-                                            placeholder="{{'Arama' | translate}}">
-                                    </div>
-                                </div>
-
-                                <div class="d-flex justify-content-end"
-                                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-2' : !(layoutService.isMobile | async)}">
-                                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold" (click)="approvedVisit()"
-                                        [ngClass]="{'w-100': layoutService.isMobile | async}">
-                                        Seçilenleri Onayla
-                                    </a>
-                                </div>
-
-                                <div class="d-flex justify-content-end"
-                                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-2' : !(layoutService.isMobile | async)}">
-                                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold"
-                                        [ngClass]="{'w-100': layoutService.isMobile | async}">
-                                        {{"Detaylı_Arama" | translate}}
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                </div>
-                            </div> -->
+                            
                         </div>
                     </div>
 
@@ -291,18 +260,15 @@
                                             </a>
                                         </div>
                             
-                                        <div class="d-flex justify-content-end"
-                                            [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-6' : !(layoutService.isMobile | async)}">
-                                            <div class="input-group h-100"
-                                                [ngClass]="{'w-100': layoutService.isMobile | async, 'w-75' : !(layoutService.isMobile | async)}">
+                                        <div class="col-12 col-md-6 pb-2 p-md-auto d-flex justify-content-end">
+                                            <div class="input-group h-100 w-100 w-md-75">
                                                 <input
                                                     class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
                                                     [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}">
                                             </div>
                                         </div>
                             
-                                        <div class="d-flex justify-content-end"
-                                            [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-2' : !(layoutService.isMobile | async)}">
+                                        <div class="col-12 col-md-2 pb-2 p-auto d-flex justify-content-end">
                                             <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold"
                                                 [ngClass]="{'w-100': layoutService.isMobile | async}">
                                                 {{"Detaylı_Arama" | translate}}
@@ -312,37 +278,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            
-                            <!-- <div class="row">
-                                <div class="d-flex justify-content-end"
-                                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-3' : !(layoutService.isMobile | async)}">
-                                    <div class="input-group h-100"
-                                        [ngClass]="{'w-100': layoutService.isMobile | async, 'w-75' : !(layoutService.isMobile | async)}">
-                                        <input
-                                            class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
-                                            [(ngModel)]="filterText" type="text"
-                                            placeholder="{{'Arama' | translate}}">
-                                    </div>
-                                </div>
-
-                                <div class="d-flex justify-content-end"
-                                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-2' : !(layoutService.isMobile | async)}">
-                                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold" (click)="approvedVisit()"
-                                        [ngClass]="{'w-100': layoutService.isMobile | async}">
-                                        Seçilenleri Onayla
-                                    </a>
-                                </div>
-
-                                <div class="d-flex justify-content-end"
-                                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-2' : !(layoutService.isMobile | async)}">
-                                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold"
-                                        [ngClass]="{'w-100': layoutService.isMobile | async}">
-                                        {{"Detaylı_Arama" | translate}}
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
 
@@ -554,18 +489,14 @@
                                             </a>
                                         </div>
                             
-                                        <div class="d-flex justify-content-end"
-                                            [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-6' : !(layoutService.isMobile | async)}">
-                                            <div class="input-group h-100"
-                                                [ngClass]="{'w-100': layoutService.isMobile | async, 'w-75' : !(layoutService.isMobile | async)}">
-                                                <input
-                                                    class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
+                                        <div class="col-12 col-md-6 pb-2 p-auto d-flex justify-content-end">
+                                            <div class="input-group h-100 w-100 w-md-75">
+                                                <input class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
                                                     [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}">
                                             </div>
                                         </div>
                             
-                                        <div class="d-flex justify-content-end"
-                                            [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-2' : !(layoutService.isMobile | async)}">
+                                        <div class="col-12 col-md-2 pb-2 p-md-auto d-flex justify-content-end">
                                             <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold"
                                                 [ngClass]="{'w-100': layoutService.isMobile | async}">
                                                 {{"Detaylı_Arama" | translate}}
@@ -575,37 +506,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            
-                            <!-- <div class="row">
-                                <div class="d-flex justify-content-end"
-                                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-3' : !(layoutService.isMobile | async)}">
-                                    <div class="input-group h-100"
-                                        [ngClass]="{'w-100': layoutService.isMobile | async, 'w-75' : !(layoutService.isMobile | async)}">
-                                        <input
-                                            class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
-                                            [(ngModel)]="filterText" type="text"
-                                            placeholder="{{'Arama' | translate}}">
-                                    </div>
-                                </div>
-
-                                <div class="d-flex justify-content-end"
-                                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-2' : !(layoutService.isMobile | async)}">
-                                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold" (click)="approvedVisit()"
-                                        [ngClass]="{'w-100': layoutService.isMobile | async}">
-                                        Seçilenleri Onayla
-                                    </a>
-                                </div>
-
-                                <div class="d-flex justify-content-end"
-                                    [ngClass]="{'col-12 pb-2': layoutService.isMobile | async, 'col-2' : !(layoutService.isMobile | async)}">
-                                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold"
-                                        [ngClass]="{'w-100': layoutService.isMobile | async}">
-                                        {{"Detaylı_Arama" | translate}}
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
 

@@ -1,10 +1,8 @@
 import { TanimlamalarService } from './../tanimlamalar.service';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject, Subject, takeUntil} from 'rxjs';
-import { HelperService } from 'src/app/_helpers/helper.service';
-import { LayoutService } from 'src/app/_metronic/layout';
+import { Subject, takeUntil} from 'rxjs';
 
 
 
@@ -82,7 +80,6 @@ export class YemekMenuTanimlamaComponent implements OnInit {
   constructor(
     private tanimlamalar : TanimlamalarService,
     private translateService : TranslateService,
-    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
 

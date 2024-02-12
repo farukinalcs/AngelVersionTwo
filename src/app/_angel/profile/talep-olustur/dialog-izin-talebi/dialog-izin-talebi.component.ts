@@ -15,7 +15,7 @@ import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { OKodFieldsModel } from '../../models/oKodFields';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { LayoutService } from 'src/app/_metronic/layout';
+import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 
 @Component({
   selector: 'app-dialog-izin-talebi',
@@ -92,11 +92,19 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     private translateService : TranslateService,
     private sanitizer: DomSanitizer,
     private helperService : HelperService,
-    public layoutService : LayoutService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private modeService: ThemeModeService
   ) { }
 
   ngOnInit(): void {
+
+    const subscr = this.modeService.mode.asObservable().subscribe((mode) => {
+      document.body.style.backgroundImage =
+        mode === 'dark'
+          ? 'url(./assets/media/auth/bg10-dark.jpeg)'
+          : 'url(./assets/media/auth/bg10.jpeg)';
+    });
+
     this.currentSicilId = this.helperService.userLoginModel.xSicilID
 
     this.setResponsiveForm();
@@ -458,5 +466,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     this.closedFormDialog();
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
+
+    document.body.style.backgroundImage = 'none';
   }
 }

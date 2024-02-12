@@ -1,13 +1,11 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
-import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { ProfileService } from '../../profile.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-dialog-duyuru-formu',
@@ -40,7 +38,6 @@ export class DialogDuyuruFormuComponent implements OnInit {
     private toastrService: ToastrService,
     private translateService: TranslateService,
     private breakpointObserver: BreakpointObserver,
-    public layoutService : LayoutService,
     private ref: ChangeDetectorRef
   ) { }
 

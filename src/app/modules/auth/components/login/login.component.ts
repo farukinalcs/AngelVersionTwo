@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
-import { filter, first } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthHTTPService } from '../../services/auth-http';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { TranslationService } from 'src/app/modules/i18n';
-import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-login',
@@ -61,7 +60,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private helperService : HelperService,
     private translationService : TranslationService,
-    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) {
     this.isLoading$ = this.authService.isLoading$;

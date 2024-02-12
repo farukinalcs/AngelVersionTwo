@@ -15,7 +15,7 @@
                             <ng-container>
                                 <div class="card pt-3" *ngFor="let item of definitions"
                                     style="width:18rem;border:0 !important">
-                                    <a class="btn btn-light-danger btn-xl mr-2 text-left fs-7"
+                                    <a class="btn btn-light-danger btn-xl mr-2 text-left fs-7 min-h-100"
                                         (click)="onSelect(item); toggleDiv();"
                                         [ngClass]="{active: selectedItem == item}">
                                         <i class="icon-l fas fa-angle-right"></i> {{item.name}}
@@ -45,7 +45,7 @@
                             <ng-container>
                                 <div class="card pt-3" *ngFor="let item of definitions"
                                     style="width:18rem;border:0 !important">
-                                    <a class="btn btn-light-danger btn-xl mr-2 text-left fs-7"
+                                    <a class="btn btn-light-danger btn-xl mr-2 text-left fs-7 min-h-100"
                                         (click)="onSelect(item); toggleDiv();"
                                         [ngClass]="{active: selectedItem == item}">
                                         <i class="icon-l fas fa-angle-right"></i> {{item.name}}
@@ -62,7 +62,7 @@
 
     
     <ng-container *ngIf="selectedItem">
-        <div class="col-9" [ngClass]="{ 'col-12 mt-5': this.layoutService.isMobile | async, 'col-9': !(this.layoutService.isMobile | async) }">
+        <div class="col-12 col-sm-9 mt-5 mt-sm-0">
             <ng-container *ngIf="selectedItem?.id == '1' || selectedItem?.id == '2' || selectedItem?.id == '3'  || selectedItem?.id == '6'  || selectedItem?.id == '7' ">
                 <app-dosya-tipi-tanimlama [selectedItem]="selectedItem" (closeAnimationEvent)="closeAnimation()"></app-dosya-tipi-tanimlama>
             </ng-container>

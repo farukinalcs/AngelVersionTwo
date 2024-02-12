@@ -10,7 +10,6 @@ import { OKodFieldsModel } from '../../models/oKodFields';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth';
 import { TranslateService } from '@ngx-translate/core';
-import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-dialog-ziyaretci-talebi',
@@ -66,7 +65,6 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
     private translateService : TranslateService,
     private ref: ChangeDetectorRef,
     public auth : AuthService,
-    public layoutService : LayoutService,
   ) { }
 
   ngOnInit(): void {

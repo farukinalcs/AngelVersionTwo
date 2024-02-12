@@ -4,7 +4,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { MyDemands } from '../../models/myDemands';
 import { ProfileService } from '../../profile.service';
 
@@ -51,7 +50,6 @@ export class TaleplerimComponent implements OnInit, OnDestroy {
     private profilService : ProfileService,
     private toastrService : ToastrService,
     private translateService : TranslateService,
-    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
   

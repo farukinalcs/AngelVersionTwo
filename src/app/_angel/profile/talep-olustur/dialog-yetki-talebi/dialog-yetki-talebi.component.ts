@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output }
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { ProfileService } from '../../profile.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { TranslateService } from '@ngx-translate/core';
@@ -44,7 +43,6 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
 
   constructor(
     private profileService: ProfileService,
-    public layoutService: LayoutService,
     private ref: ChangeDetectorRef,
     private breakpointObserver: BreakpointObserver,
     private translateService : TranslateService,

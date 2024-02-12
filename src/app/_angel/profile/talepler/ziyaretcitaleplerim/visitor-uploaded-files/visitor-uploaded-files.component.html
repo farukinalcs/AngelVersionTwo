@@ -198,7 +198,7 @@
 
     <p-dialog header="{{ 'Önizleme' | translate }}" [(visible)]="displayUploadedFile" position="center"
         (onHide)="onHideUploadedFile()" [modal]="true"
-        [style]="{width: !(this.layoutService.isMobile | async) ? '60vw' : 'none'}" [baseZIndex]="10000"
+        [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [baseZIndex]="10000"
         [draggable]="false" [resizable]="false">
 
         <div class="col-12 d-flex justify-content-center">

@@ -1,8 +1,8 @@
 <!-- <p-dialog header="{{'Detaylı_Arama' | translate}}" [(visible)]="displayDetailSearch" position="top"
   [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false" (onHide)="hideDetailSearch()"> -->
-  <p-dialog header="{{'Detaylı_Arama' | translate}}" [(visible)]="displayDetailSearch" position="top" [breakpoints]="{ '2560px': '70vw', '992px': '80vw', '576px': '90vw' }"
+  <p-dialog header="{{'Detaylı_Arama' | translate}}" [(visible)]="displayDetailSearch" position="top" [breakpoints]="{ '2560px': '83vw', '992px': '90vw', '576px': '99vw' }"
   [modal]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false" (onHide)="hideDetailSearch()">
-  <!-- [style]="{width: !(this.layoutService.isMobile | async) ? '50vw' : 'none'}" -->
+
     <form [formGroup]="detailSearchForm">
         <p-accordion>
             <p-accordionTab header="{{'Kişisel_Bilgiler' | translate}}">

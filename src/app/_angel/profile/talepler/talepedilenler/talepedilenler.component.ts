@@ -1,13 +1,10 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { DemandProcessModel } from '../../models/demandProcess';
 import { ProfileService } from '../../profile.service';
 
@@ -78,7 +75,6 @@ export class TalepedilenlerComponent implements OnInit, OnDestroy {
     private profilService : ProfileService,
     private toastrService : ToastrService,
     private translateService : TranslateService,
-    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
 

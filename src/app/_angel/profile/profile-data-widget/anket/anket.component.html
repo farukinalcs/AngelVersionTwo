@@ -97,14 +97,15 @@
 
 
 
-<!-- 
-<p-dialog header="{{'Tüm_Anketler' | translate}}" [(visible)]="displayAllSurveys" [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '50vw' : 'none'}"
-    [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false"> -->
+
+<p-dialog header="{{'Tüm_Anketler' | translate}}" [(visible)]="displayAllSurveys" [modal]="true" 
+    [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false" [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }">
 
     
-<p-dialog header="{{'Tüm_Anketler' | translate}}" [(visible)]="displayAllSurveys" [modal]="true" [style]="{ width: '70vw' }" 
+<!-- <p-dialog header="{{'Tüm_Anketler' | translate}}" [(visible)]="displayAllSurveys" [modal]="true"
+        [style]="{ width: '50vw' }" 
         [breakpoints]="{ '2560px': '70vw', '992px': '80vw', '576px': '90vw' }"
-        [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="true">
+        [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="true"> -->
     <div class="container" style="height: 500px;">
         <div class="row card p-5">
             <div class="col-12">

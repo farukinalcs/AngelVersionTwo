@@ -390,8 +390,7 @@
                         </form>
                     </div>
 
-                    <div class="col-12 d-flex align-items-end"
-                        [ngClass]="{'justify-content-center': (this.layoutService.isMobile | async), 'justify-content-end': !(this.layoutService.isMobile | async) }">
+                    <div class="col-12 d-flex align-items-end justify-content-center justify-content-md-end">
                         <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
                                 <ng-container *ngIf=" 5 > currentStep$.value && currentStep$.value > 1">
@@ -477,7 +476,7 @@
 
 
 <p-dialog header="{{'Önizleme' | translate}}" [(visible)]="displayUploadedFile" position="center" [modal]="true"
-    [style]="{width: !(this.layoutService.isMobile | async) ? '50vw' : 'none'}" [baseZIndex]="10000" [draggable]="false"
+    [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [baseZIndex]="10000" [draggable]="false"
     [resizable]="false">
 
     <ng-container *ngIf="currentUploadedFile">
