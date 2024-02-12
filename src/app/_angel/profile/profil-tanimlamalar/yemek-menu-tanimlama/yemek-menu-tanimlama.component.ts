@@ -375,14 +375,6 @@ export class YemekMenuTanimlamaComponent implements OnInit {
 
   }
 
-  deneme(_list:any){
-    for(let i=0; i <= _list.length; i++)
-    {
-      const yemekTipi = _list[i]?.Yemektipi;
-      this.corbaMenu.indexOf(yemekTipi)
-    }
-  }
-
   sperateLists(_list:any){
     for(let i=0; i <= _list.length; i++){
       if(_list[i]?.YemektipiID == 1)
