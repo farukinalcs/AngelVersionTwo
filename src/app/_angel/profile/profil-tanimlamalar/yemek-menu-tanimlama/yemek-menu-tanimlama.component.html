@@ -51,18 +51,15 @@
                                 <i class="fa-solid fa-chevron-left text-hover-danger fs-2" (click)="previousWeek()"></i>
                             </div>
 
-                            <div class="col-10 list" [ngClass]="{'p-0 m-0': (this.layoutService.isMobile | async)}">
-                                <ul class="nav nav-stretch nav-pills nav-pills-custom nav-pills-active-custom d-flex"
-                                    [ngClass]="{'px-5': !(this.layoutService.isMobile | async), 'px-0': (this.layoutService.isMobile | async), 'justify-content-between': !(this.layoutService.isMobile | async), 'justify-content-around': (this.layoutService.isMobile | async)}"
-                                    role="tablist">
+                            <div class="col-10 list p-0 m-0 p-md-auto m-md-auto">
+                                <ul class="nav nav-stretch nav-pills nav-pills-custom nav-pills-active-custom d-flex justify-content-around justify-content-md-between px-0 px-md-5" role="tablist">
                                     <li class="nav-item p-0 ms-0" role="presentation"
                                         *ngFor="let item of weeks[currentWeekIndex]">
-                                        <a class="nav-link border border-2 btn d-flex flex-column flex-center rounded-pill min-w-45px py-4 btn-active-danger"
+                                        <a class="nav-link border border-2 btn d-flex flex-column flex-center rounded-pill min-w-45px py-4 px-3 px-md-1 btn-active-danger"
                                             [ngClass]="
                                                 {
                                                     'active': item.date.getDate() == currentDate.getDate() && item.date.getMonth() == currentDate.getMonth(),
-                                                    'bg-light-dark text-dark text-hover-white' : !item.isCurrentMonth,
-                                                    'px-3': !(this.layoutService.isMobile | async), 'px-1': (this.layoutService.isMobile | async)
+                                                    'bg-light-dark text-dark text-hover-white' : !item.isCurrentMonth
                                                 }" data-bs-toggle="tab" aria-selected="false" tabindex="-1" role="tab"
                                             (click)="showMenu(item)"
                                             [attr.id]="'date-' + item.monthName + item.day + item.dayName">

@@ -451,6 +451,41 @@
 .p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
     box-shadow: 0 0 0 0.2rem #ed1b246b !important;
 }
+
+[data-theme="dark"] .p-accordion .p-accordion-header .p-accordion-header-link {
+    padding: 1.25rem;
+    border: 1px solid #ed1b24;
+    color: #ffffff;
+    // background: #2b2b39;
+    background: var(--kt-danger-light);
+    font-weight: 700;
+    border-radius: 6px;
+    transition: box-shadow 0.2s;
+}
+
+[data-theme="dark"] .p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link {
+    background: #ed1b24;
+    border-color: #2b2b39;
+    color: #343a40;
+}
+
+[data-theme="light"] .p-accordion .p-accordion-header .p-accordion-header-link {
+    padding: 1.25rem;
+    border: 1px solid var(--kt-danger);
+    color: var(--kt-danger);
+    // background: #2b2b39;
+    background: var(--kt-danger-light);
+    font-weight: 700;
+    border-radius: 6px;
+    transition: box-shadow 0.2s;
+}
+
+[data-theme="light"] .p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link {
+    background: #ed1b24;
+    border-color: #2b2b39;
+    color: #343a40;
+}
+
 /*--------------------------------------------*/
 
 
@@ -472,18 +507,18 @@
 
 
 // Timeline İçin Dark Mod Ayarı
-[data-theme="dark"] .timeline.timeline-4 .timeline-items .timeline-item .timeline-content {
-    background-color: var(--kt-danger-light) !important;
-}
+// [data-theme="dark"] .timeline.timeline-4 .timeline-items .timeline-item .timeline-content {
+//     background-color: var(--kt-danger-light) !important;
+// }
 
-[data-theme="dark"] .timeline.timeline-4 .timeline-items .timeline-item.timeline-item-right:after {
-    border-right: solid 10px var(--kt-danger-light) !important;
-    border-left: solid 17px transparent !important;
-}
+// [data-theme="dark"] .timeline.timeline-4 .timeline-items .timeline-item.timeline-item-right:after {
+//     border-right: solid 10px var(--kt-danger-light) !important;
+//     border-left: solid 17px transparent !important;
+// }
 
-[data-theme="dark"] .timeline.timeline-4 .timeline-items .timeline-item:after {
-    border-left: solid 10px var(--kt-danger-light) !important;
-}
+// [data-theme="dark"] .timeline.timeline-4 .timeline-items .timeline-item:after {
+//     border-left: solid 10px var(--kt-danger-light) !important;
+// }
 /*--------------------------------------------*/
 
 
@@ -506,6 +541,13 @@
 }
 /*--------------------------------------------*/
 
+
+// ngbDropdown Menu 
+.dropdown-item.active, .dropdown-item:active {
+    color: var(--kt-danger) !important;
+    background-color: var(--kt-danger-light) !important;
+}
+/*--------------------------------------------*/
 
 
 
@@ -754,3 +796,6 @@
     color: var(--kt-danger-active);
 }
 // /*--------------------------------------------*/
+
+
+

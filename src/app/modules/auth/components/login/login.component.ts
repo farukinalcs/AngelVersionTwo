@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
-import { filter, first } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthHTTPService } from '../../services/auth-http';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { TranslationService } from 'src/app/modules/i18n';
-import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-login',
@@ -53,8 +52,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
 
-  public isMobile : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -63,7 +60,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private helperService : HelperService,
     private translationService : TranslationService,
-    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) {
     this.isLoading$ = this.authService.isLoading$;
@@ -74,18 +70,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.onWindowResize();
     this.setSelectedLanguage();
     this.gate();
     this.initForm();
+
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
-
-    // const mobileSubscr = this.isMobile.subscribe((value : any) => {
-      
-    // });
-
-    // this.unsubscribe.push(mobileSubscr);
   }
 
   // convenience getter for easy access to form fields
@@ -171,16 +161,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.translationService.langObs.next(this.translationService.getSelectedLanguage());
   }
 
-  @HostListener("window:resize", ["$event"])
-  onWindowResize() {
-    let innerWidth = window.innerWidth;
-
-    if (innerWidth > 990) {
-      this.isMobile.next(false);
-    } else if (innerWidth <= 990) {
-      this.isMobile.next(true);
-    }
-  }
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());

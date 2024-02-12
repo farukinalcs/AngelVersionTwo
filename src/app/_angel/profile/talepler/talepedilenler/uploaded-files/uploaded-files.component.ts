@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } fro
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { ProfileService } from '../../../profile.service';
 
 @Component({
@@ -33,7 +32,6 @@ export class UploadedFilesComponent implements OnInit {
   constructor(
     private profileService : ProfileService,
     private sanitizer: DomSanitizer,
-    public layoutService : LayoutService,
     private toastrService : ToastrService,
     private ref : ChangeDetectorRef
   ) { }
@@ -141,7 +139,7 @@ export class UploadedFilesComponent implements OnInit {
     if (files.length > 0) {
       const file = files[0];
       if (!this.checkFileSize(file, 1024 * 1024)) {
-        this.toastrService.error("Dosya Boyutu Yüksek", "HATA");
+        this.toastrService.error("Dosya Boyutu Yüksek", "Hata");
         return;
       }
     }
@@ -210,7 +208,7 @@ export class UploadedFilesComponent implements OnInit {
         this.selectedDemand.bosBelgeSayisi--;
         this.selectedDemandEvent.emit(this.selectedNavItem);
       } else {
-        this.toastrService.error("Bir Hata Oluştu : " + message.message, "HATA");
+        this.toastrService.error("Bir Hata Oluştu : " + message.message, "Hata");
       }
       
       
@@ -237,7 +235,7 @@ export class UploadedFilesComponent implements OnInit {
         this.getUploadedFiles(selectedDemand);  
         this.selectedDemand.bosBelgeSayisi++;
       } else {
-        this.toastrService.error("Dosya Silinemedi : " + message.message, "HATA");
+        this.toastrService.error("Dosya Silinemedi : " + message.message, "Hata");
       }
       
       this.ref.detectChanges();

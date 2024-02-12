@@ -7,7 +7,6 @@ import { ProfileService } from '../../profile.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth';
 import { DomSanitizer } from '@angular/platform-browser';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { TranslateService } from '@ngx-translate/core';
 import { formatDate } from '@angular/common';
 
@@ -22,11 +21,11 @@ export class DialogAvansTalebiComponent implements OnInit {
   @Output() advanceFormIsSend: EventEmitter<void> = new EventEmitter<void>();
 
   stepperFields: any[] = [
-    { class: 'stepper-item current', number: 1, title: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.HEADER_1'), desc: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.MESSAGE_1') },
-    { class: 'stepper-item', number: 2, title: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.HEADER_2'), desc: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.MESSAGE_2') },
-    { class: 'stepper-item', number: 3, title: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.HEADER_3'), desc: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.MESSAGE_3') },
-    { class: 'stepper-item', number: 4, title: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.HEADER_4'), desc: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.MESSAGE_4') },
-    { class: 'stepper-item', number: 5, title: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.HEADER_5'), desc: this.translateService.instant('AVANS_TALEP_DIALOG.STEPPER.MESSAGE_5') },
+    { class: 'stepper-item current', number: 1, title: this.translateService.instant('IBAN'), desc: this.translateService.instant('IBAN_Bilgileri') },
+    { class: 'stepper-item', number: 2, title: this.translateService.instant('Diğer'), desc: this.translateService.instant('Tarih_Ve_Açıklama') },
+    { class: 'stepper-item', number: 3, title: this.translateService.instant('Tutar'), desc: '' },
+    { class: 'stepper-item', number: 4, title: this.translateService.instant('Tamamlandı'), desc: this.translateService.instant('Özet_Bilgiler') },
+    { class: 'stepper-item', number: 5, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Gerekli_Belgeler') },
   ];
 
   formsCount: any = 6;
@@ -42,7 +41,7 @@ export class DialogAvansTalebiComponent implements OnInit {
   uploadedFile: any;
 
   currentDate = new Date(Date.now());
-  dropdownEmptyMessage: any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
+  dropdownEmptyMessage: any = this.translateService.instant('Kayıt_Bulunamadı');
 
   selectedAdvance: any;
   formId: any;
@@ -60,7 +59,6 @@ export class DialogAvansTalebiComponent implements OnInit {
     public authService: AuthService,
     private breakpointObserver: BreakpointObserver,
     private sanitizer: DomSanitizer,
-    public layoutService: LayoutService,
     private translateService: TranslateService
   ) { }
 
@@ -104,7 +102,7 @@ export class DialogAvansTalebiComponent implements OnInit {
 
   canProceedToNextStep(): boolean {
     this.advanceFormValues = Object.assign({}, this.advanceForm.value);
-    this.advanceFormValues.tutar != '' ? this.advanceFormValues.tutar = this.advanceFormValues.tutar.toFixed(2) : ''; 
+    // this.advanceFormValues.tutar != '' ? this.advanceFormValues.tutar = this.advanceFormValues.tutar.toFixed(2) : ''; 
     this.advanceFormValues.ibanKaydet ? this.advanceFormValues.ibanKaydet = 1 : this.advanceFormValues.ibanKaydet = 0;
     console.log("Avans Talep Form :", this.advanceFormValues);
 
@@ -133,8 +131,8 @@ export class DialogAvansTalebiComponent implements OnInit {
   nextStep() {
     if (!this.canProceedToNextStep()) {
       this.toastrService.error(
-        this.translateService.instant('TOASTR_MESSAGE.ALANLARI_DOLDURMALISINIZ'),
-        this.translateService.instant('TOASTR_MESSAGE.HATA')
+        this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
+        this.translateService.instant('Hata')
       );
       return;
     }
@@ -176,7 +174,7 @@ export class DialogAvansTalebiComponent implements OnInit {
       kayitliIbanlar: [''],
       tarih: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), Validators.required],
       tutar: ['', Validators.required],
-      paraBirimi: ['tl', Validators.required],
+      paraBirimi: ['TRY', Validators.required],
       taksit: [1, Validators.required],
       file: [null]
     });
@@ -218,8 +216,8 @@ export class DialogAvansTalebiComponent implements OnInit {
       const file = files[0];
       if (!this.checkFileSize(file, 1024 * 1024)) {
         this.toastrService.error(
-          this.translateService.instant('TOASTR_MESSAGE.DOSYA_BOYUTU_YUKSEK'),
-          this.translateService.instant('TOASTR_MESSAGE.HATA')
+          this.translateService.instant('Dosya_Boyutu_Yuksek'),
+          this.translateService.instant('Hata')
         );
         return;
       }
@@ -311,13 +309,13 @@ export class DialogAvansTalebiComponent implements OnInit {
 
 
         this.toastrService.success(
-          this.translateService.instant('TOASTR_MESSAGE.TALEP_GONDERILDI'),
-          this.translateService.instant('TOASTR_MESSAGE.BASARILI')
+          this.translateService.instant('Talep_Gönderildi'),
+          this.translateService.instant('Başarılı')
         );
       } else {
         this.toastrService.error(
           data[0].sunucucevap,
-          this.translateService.instant('TOASTR_MESSAGE.HATA')
+          this.translateService.instant('Hata')
         );
       }
     });
@@ -355,8 +353,8 @@ export class DialogAvansTalebiComponent implements OnInit {
     });
 
     this.toastrService.success(
-      this.translateService.instant('TOASTR_MESSAGE.TALEP_GONDERILDI'),
-      this.translateService.instant('TOASTR_MESSAGE.BASARILI')
+      this.translateService.instant('Talep_Gönderildi'),
+      this.translateService.instant('Başarılı')
     );
     // this.closedFormDialog();
   }

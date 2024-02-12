@@ -4,7 +4,7 @@
             <div class="card-header" style="display: flow-root;">
                 <div class="row mt-4">
                     <div class="col-12 d-flex align-items-center">
-                        <h4 class="card-label text-danger mt-2 font-weight-bolder">Tanımlamalar</h4>
+                        <h4 class="card-label text-danger mt-2 font-weight-bolder">{{"Tanımlamalar" | translate}}</h4>
                     </div>
                 </div>
             </div>
@@ -15,7 +15,7 @@
                             <ng-container>
                                 <div class="card pt-3" *ngFor="let item of definitions"
                                     style="width:18rem;border:0 !important">
-                                    <a class="btn btn-light-danger btn-xl mr-2 text-left fs-7"
+                                    <a class="btn btn-light-danger btn-xl mr-2 text-left fs-7 min-h-100"
                                         (click)="onSelect(item); toggleDiv();"
                                         [ngClass]="{active: selectedItem == item}">
                                         <i class="icon-l fas fa-angle-right"></i> {{item.name}}
@@ -34,7 +34,7 @@
             <div class="card-header" style="display: flow-root;">
                 <div class="row mt-4">
                     <div class="col-12 d-flex align-items-center">
-                        <h4 class="card-label text-danger mt-2 font-weight-bolder">Tanımlamalar</h4>
+                        <h4 class="card-label text-danger mt-2 font-weight-bolder">{{"Tanımlamalar" | translate}}</h4>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                             <ng-container>
                                 <div class="card pt-3" *ngFor="let item of definitions"
                                     style="width:18rem;border:0 !important">
-                                    <a class="btn btn-light-danger btn-xl mr-2 text-left fs-7"
+                                    <a class="btn btn-light-danger btn-xl mr-2 text-left fs-7 min-h-100"
                                         (click)="onSelect(item); toggleDiv();"
                                         [ngClass]="{active: selectedItem == item}">
                                         <i class="icon-l fas fa-angle-right"></i> {{item.name}}
@@ -61,20 +61,22 @@
 
 
     
-    <div class="col-9" [ngClass]="{ 'col-12 mt-5': this.layoutService.isMobile | async, 'col-9': !(this.layoutService.isMobile | async) }">
-        <ng-container *ngIf="selectedItem?.id == '1' || selectedItem?.id == '2' || selectedItem?.id == '3' ">
-            <app-dosya-tipi-tanimlama [selectedItem]="selectedItem"
-                (closeAnimationEvent)="closeAnimation()"></app-dosya-tipi-tanimlama>
-        </ng-container>
-
-        <ng-container  *ngIf="selectedItem?.id == '4'">
-            <app-yemek-tipi-tanimlama [selectedItem]="selectedItem" (closeAnimationEvent)="closeAnimation()"></app-yemek-tipi-tanimlama>
-        </ng-container>
-        
-        <ng-container  *ngIf="selectedItem?.id == '5'">
-            <app-yemek-menu-tanimlama [selectedItem]="selectedItem" (closeAnimationEvent)="closeAnimation()"></app-yemek-menu-tanimlama>
-        </ng-container>
-    </div>
+    <ng-container *ngIf="selectedItem">
+        <div class="col-12 col-sm-9 mt-5 mt-sm-0">
+            <ng-container *ngIf="selectedItem?.id == '1' || selectedItem?.id == '2' || selectedItem?.id == '3'  || selectedItem?.id == '6'  || selectedItem?.id == '7' ">
+                <app-dosya-tipi-tanimlama [selectedItem]="selectedItem" (closeAnimationEvent)="closeAnimation()"></app-dosya-tipi-tanimlama>
+            </ng-container>
+    
+            <ng-container  *ngIf="selectedItem?.id == '4'">
+                <app-yemek-tipi-tanimlama [selectedItem]="selectedItem" (closeAnimationEvent)="closeAnimation()"></app-yemek-tipi-tanimlama>
+            </ng-container>
+            
+            <ng-container  *ngIf="selectedItem?.id == '5'">
+                <app-yemek-menu-tanimlama [selectedItem]="selectedItem" (closeAnimationEvent)="closeAnimation()"></app-yemek-menu-tanimlama>
+            </ng-container>
+        </div>
+    </ng-container>
+    
     
 
 </div>

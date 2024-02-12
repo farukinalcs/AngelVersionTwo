@@ -1,4 +1,4 @@
-<p-dialog header="{{'DEMANDED.SUREC_DIALOG.HEADER' | translate}}" [(visible)]="displayRequestProcess" [modal]="true"
+<p-dialog header="{{'Talep_Süreci' | translate}}" [(visible)]="displayRequestProcess" [modal]="true"
     [style]="{width: '50vw'}" [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false" (onHide)="hideRequestProcess()">
 
     <div class="card">
@@ -40,7 +40,7 @@
     <ng-template pTemplate="footer">
             <a (click)="hideRequestProcess()" class="btn btn-danger">
                 <i class="fa-solid fa-xmark fs-1"></i>
-                {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+                {{'Kapat' | translate}}
             </a>
     </ng-template>
 </p-dialog>

@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService, UserType } from 'src/app/modules/auth';
@@ -7,7 +6,6 @@ import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { LoaderService } from 'src/app/_helpers/loader.service';
 import { AuthMenuService } from 'src/app/_metronic/core/services/auth-menu.service';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { UserInformation } from '../models/user-information';
 import { ProfileService } from '../profile.service';
 
@@ -33,6 +31,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   displayAdvancePaymentForm: boolean;
   displayAuthorityRequestForm: boolean;
   displayVehicleRequestForm: boolean;
+  displayExpenseRequestForm: boolean;
 
   constructor(
     private auth: AuthService,
@@ -40,7 +39,6 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private profileService : ProfileService,
     public loaderService : LoaderService,
-    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
 
@@ -141,6 +139,14 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   }
   /* --------------------------------- */
 
+
+  showExpenseDialog() {
+    this.displayExpenseRequestForm = true;
+  }
+
+  expenseRequestIsSend() {
+    this.displayExpenseRequestForm = false;
+  }
 
 
   ngOnDestroy(): void {

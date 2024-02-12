@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
-import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-denied-requests',
@@ -21,7 +20,6 @@ export class DeniedRequestsComponent implements OnInit, OnDestroy {
   filterText : string  = "";
   
   constructor(
-    public layoutService : LayoutService
   ) { }
 
   ngOnInit(): void {

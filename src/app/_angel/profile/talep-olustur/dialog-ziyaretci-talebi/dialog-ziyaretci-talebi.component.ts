@@ -10,7 +10,6 @@ import { OKodFieldsModel } from '../../models/oKodFields';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth';
 import { TranslateService } from '@ngx-translate/core';
-import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-dialog-ziyaretci-talebi',
@@ -23,13 +22,13 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
   @Output() visitRequestFormIsSend: EventEmitter<void> = new EventEmitter<void>();
 
   stepperFields: any[] = [
-    { class: 'stepper-item current', number: 1, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_1'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_1') },
-    { class: 'stepper-item', number: 2, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_2'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_2') },
-    { class: 'stepper-item', number: 3, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_3'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_3') },
-    { class: 'stepper-item', number: 4, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_4'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_4') },
-    { class: 'stepper-item', number: 5, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_5'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_5') },
-    { class: 'stepper-item', number: 6, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_7'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_7') },
-    { class: 'stepper-item', number: 7, title: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.HEADER_6'), desc: this.translateService.instant('ZIYARETCI_TALEP_DIALOG.STEPPER.MESSAGE_6') },
+    { class: 'stepper-item current', number: 1, title: this.translateService.instant('Tip'), desc: this.translateService.instant('Ziyaret_Tipi') },
+    { class: 'stepper-item', number: 2, title: this.translateService.instant('Kişi'), desc: this.translateService.instant('Ziyaretçi_Bilgileri') },
+    { class: 'stepper-item', number: 3, title: this.translateService.instant('Ziyaretçiler'), desc: '' },
+    { class: 'stepper-item', number: 4, title: this.translateService.instant('İletişim'), desc: this.translateService.instant('Diğer_Bilgiler') },
+    { class: 'stepper-item', number: 5, title: this.translateService.instant('Giriş_Çıkış'), desc: this.translateService.instant('Zaman_Bilgileri') },
+    { class: 'stepper-item', number: 6, title: this.translateService.instant('Tamamlandı'), desc: this.translateService.instant('Özet_Bilgiler') },
+    { class: 'stepper-item', number: 7, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Gerekli_Belgeler') },
   ];
 
   formsCount: any = 8;
@@ -66,7 +65,6 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
     private translateService : TranslateService,
     private ref: ChangeDetectorRef,
     public auth : AuthService,
-    public layoutService : LayoutService,
   ) { }
 
   ngOnInit(): void {
@@ -113,8 +111,8 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
   nextStep() { // Sonraki Adıma Geçtiğinde Çalışan Fonksiyon
     if (!this.canProceedToNextStep()) {
       this.toastrService.error(
-        this.translateService.instant('TOASTR_MESSAGE.ALANLARI_DOLDURMALISINIZ'),
-        this.translateService.instant('TOASTR_MESSAGE.HATA')
+        this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
+        this.translateService.instant('Hata')
       );
       return;
     }
@@ -262,7 +260,7 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
         // files : []
       });  
     } else {
-      this.toastrService.error("İsim-Soyisim Alanı Boş Bırakılamaz", "HATA");
+      this.toastrService.error("İsim-Soyisim Alanı Boş Bırakılamaz", "Hata");
     }
     
 
@@ -462,10 +460,20 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
         visitor.fileTypes = this.fileTypes;
       });
       
-
+      
       console.log("Visitors Son Hali :", this.visitors);
 
+      this.toastrService.success('Ziyaretçi Formu Gönderildi. Ziyaretçilere Ait Dosyaları Bir Sonraki Adımda Veya Daha Sonra Yükleyebilirsiniz', 'Başarılı', {
+        timeOut: 5000
+      });
+
       this.ref.detectChanges()
+    }, (error: any) => {
+      
+      this.toastrService.error('Ziyaretçi Formu Gönderilemedi', 'HATA', {
+        timeOut: 5000
+      });
+
     });
   }
   
@@ -492,24 +500,44 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
     });
   }
 
-  postUploadedFilesForVisitors() {
-    let count: number = 0;
+  // postUploadedFilesForVisitors() {
+  //   let count: number = 0;
 
-    this.visitors.forEach((visitor : any) => {
-      visitor.fileTypes.forEach((fileType : any) => {
+  //   this.visitors.forEach((visitor : any) => {
+  //     visitor.fileTypes.forEach((fileType : any) => {
+  //       if (fileType.sendFile) {
+  //         this.postVisitorFile(fileType.sendFile, visitor.Id, 'ziyaretci', fileType.BelgeId);
+  //       } else {
+  //         count++;   
+  //       }
+  //     });
+
+  //     if (count == visitor.fileTypes.length) {
+  //       this.toastrService.warning("Yüklenecek Dosya Yok!", "Uyarı");      
+  //     }
+  //   });
+    
+  // }
+
+  postUploadedFilesForVisitors() {
+    let hasSendFile = false;
+  
+    this.visitors.forEach((visitor: any) => {
+      visitor.fileTypes.forEach((fileType: any) => {
         if (fileType.sendFile) {
+          hasSendFile = true;
           this.postVisitorFile(fileType.sendFile, visitor.Id, 'ziyaretci', fileType.BelgeId);
-        } else {
-          count++;   
         }
       });
-
-      if (count == visitor.fileTypes.length) {
-        this.toastrService.warning("Yüklenecek Dosya Yok!", "UYARI");      
+  
+      if (!hasSendFile) {
+        this.toastrService.warning("Yüklenecek Dosya Yok!", "Uyarı");
       }
+  
+      hasSendFile = false;
     });
-    
   }
+  
 
   postVisitorFile(file : any, formId : any, kaynak : any, fileType : any) { // API'ye, Oluşturulan Ziayaretçi Talebi İçin Yüklenen Dosyaları İleten Kısım 
     this.profileService.postFileForDemand(file, formId, kaynak, fileType)
@@ -518,11 +546,31 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
       
       this.toastrService.success("Dosyalar Gönderildi", "BAŞARALI");
 
-      console.log("İzin için dosya gönderildi : ", response);
+      console.log("Ziyaretçi için dosya gönderildi : ", response);
       this.closedFormDialog();
 
       this.ref.detectChanges();
     });
+  }
+
+  getTooltopScript(item: any[]): string {
+    if(!item) {
+      return '';
+    }
+    
+    const bosBelgeler = this.getBosBelgeler(item);
+    const bosBelgeSayisi = bosBelgeler.length;
+    const belgeAdlari = bosBelgeler.map((belge, index) => `${index + 1}) ${belge}`).join("\r\n");
+    
+    if (bosBelgeSayisi == 0) {
+      return `Eksik Belge Yok`;
+    } else {
+      return `Yüklenmesi Gereken ${bosBelgeSayisi} Adet Dosya Eksik.\r\n${belgeAdlari}`;
+    }
+  }
+
+  getBosBelgeler(item: any[]): string[] {
+    return item.filter(belge => !belge.files).map(belge => belge.ad);
   }
 
   ngOnDestroy(): void {

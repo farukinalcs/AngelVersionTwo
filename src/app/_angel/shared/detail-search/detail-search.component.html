@@ -1,57 +1,59 @@
-<p-dialog header="{{'DEMANDED.ARAMA_DIALOG.HEADER' | translate}}" [(visible)]="displayDetailSearch" position="top"
-  [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false" (onHide)="hideDetailSearch()">
+<!-- <p-dialog header="{{'Detaylı_Arama' | translate}}" [(visible)]="displayDetailSearch" position="top"
+  [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false" (onHide)="hideDetailSearch()"> -->
+  <p-dialog header="{{'Detaylı_Arama' | translate}}" [(visible)]="displayDetailSearch" position="top" [breakpoints]="{ '2560px': '83vw', '992px': '90vw', '576px': '99vw' }"
+  [modal]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false" (onHide)="hideDetailSearch()">
 
     <form [formGroup]="detailSearchForm">
         <p-accordion>
-            <p-accordionTab header="{{'DEMANDED.ARAMA_DIALOG.FORM_TITLE.KISISEL_BILGILER' | translate}}">
+            <p-accordionTab header="{{'Kişisel_Bilgiler' | translate}}">
 
                 <div class="row">
-                    <div class="col-6 mt-5">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span>{{"DEMANDED.ARAMA_DIALOG.FORM.AD" | translate}}</span>
+                            <span>{{"Ad" | translate}}</span>
                         </label>
 
                         <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6"
-                            type="text" placeholder="{{'DEMANDED.ARAMA_DIALOG.FORM.PLACEHOLDER' | translate}}"
+                            type="text" placeholder="{{'Bir_Değer_Giriniz' | translate}}"
                             formControlName="ad">
                     </div>
 
-                    <div class="col-6 mt-5">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span>{{"DEMANDED.ARAMA_DIALOG.FORM.SOYAD" | translate}}</span>
+                            <span>{{"Soyad" | translate}}</span>
                         </label>
 
                         <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6"
-                            type="text" placeholder="{{'DEMANDED.ARAMA_DIALOG.FORM.PLACEHOLDER' | translate}}"
+                            type="text" placeholder="{{'Bir_Değer_Giriniz' | translate}}"
                             formControlName="soyad">
                     </div>
 
-                    <div class="col-6 mt-5">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span>{{"DEMANDED.ARAMA_DIALOG.FORM.SICIL_NO" | translate}}</span>
+                            <span>{{"Sicil_No" | translate}}</span>
                         </label>
 
                         <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6"
-                            type="text" placeholder="{{'DEMANDED.ARAMA_DIALOG.FORM.PLACEHOLDER' | translate}}"
+                            type="text" placeholder="{{'Bir_Değer_Giriniz' | translate}}"
                             formControlName="sicilno">
                     </div>
 
-                    <div class="col-6 mt-5">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span>{{"DEMANDED.ARAMA_DIALOG.FORM.PERSONEL_NO" | translate}}</span>
+                            <span>{{"Personel_No" | translate}}</span>
                         </label>
 
                         <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6"
-                            type="text" placeholder="{{'DEMANDED.ARAMA_DIALOG.FORM.PLACEHOLDER' | translate}}"
+                            type="text" placeholder="{{'Bir_Değer_Giriniz' | translate}}"
                             formControlName="personelno">
                     </div>
                 </div>
             </p-accordionTab>
-            <p-accordionTab header="{{'DEMANDED.ARAMA_DIALOG.FORM_TITLE.FIRMA_BILGILER' | translate}}">
+            <p-accordionTab header="{{'Firma_Bilgileri' | translate}}">
                 <div class="row">
-                    <div class="col-6 mt-5">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span>{{"DEMANDED.ARAMA_DIALOG.FORM.FIRMA" | translate}}</span>
+                            <span>{{"Firma" | translate}}</span>
                         </label>
 
                         <select class="form-select form-select-lg form-select-solid" formControlName="firma">
@@ -59,9 +61,9 @@
                         </select>
                     </div>
 
-                    <div class="col-6 mt-5">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span>{{"DEMANDED.ARAMA_DIALOG.FORM.BOLUM" | translate}}</span>
+                            <span>{{"Bölüm" | translate}}</span>
                         </label>
 
                         <select class="form-select form-select-lg form-select-solid" formControlName="bolum">
@@ -69,9 +71,9 @@
                         </select>
                     </div>
 
-                    <div class="col-6 mt-5">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span>{{"DEMANDED.ARAMA_DIALOG.FORM.POZISYON" | translate}}</span>
+                            <span>{{"Pozisyon" | translate}}</span>
                         </label>
 
                         <select class="form-select form-select-lg form-select-solid" formControlName="pozisyon">
@@ -80,9 +82,9 @@
                         </select>
                     </div>
 
-                    <div class="col-6 mt-5">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span>{{"DEMANDED.ARAMA_DIALOG.FORM.GOREV" | translate}}</span>
+                            <span>{{"Görev" | translate}}</span>
                         </label>
 
                         <select class="form-select form-select-lg form-select-solid" formControlName="gorev">
@@ -91,9 +93,9 @@
                         </select>
                     </div>
 
-                    <div class="col-6 mt-5">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span>{{"DEMANDED.ARAMA_DIALOG.FORM.ALT_FIRMA" | translate}}</span>
+                            <span>{{"Alt_Firma" | translate}}</span>
                         </label>
 
                         <select class="form-select form-select-lg form-select-solid" formControlName="altfirma">
@@ -102,9 +104,9 @@
                         </select>
                     </div>
 
-                    <div class="col-6 mt-5">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span>{{"DEMANDED.ARAMA_DIALOG.FORM.YAKA" | translate}}</span>
+                            <span>{{"Yaka" | translate}}</span>
                         </label>
 
                         <select class="form-select form-select-lg form-select-solid" formControlName="yaka">
@@ -113,9 +115,9 @@
                         </select>
                     </div>
 
-                    <div class="col-6 mt-5">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span>{{"DEMANDED.ARAMA_DIALOG.FORM.DIREKTORLUK" | translate}}</span>
+                            <span>{{"Direktörlük" | translate}}</span>
                         </label>
 
                         <select class="form-select form-select-lg form-select-solid" formControlName="direktorluk">
@@ -125,33 +127,33 @@
                     </div>
                 </div>
             </p-accordionTab>
-            <p-accordionTab header="{{'DEMANDED.ARAMA_DIALOG.FORM_TITLE.OKOD_BILGILER' | translate}}">
+            <p-accordionTab header="{{'Özel_Kod_Bilgileri' | translate}}">
                 <div class="row">
-                    <div class="col-6 mt-5" *ngFor="let item of oKodFields | slice :0:6">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5" *ngFor="let item of oKodFields | slice :0:6">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                             <span>{{item.Ad}}</span>
                         </label>
 
                         <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6"
-                            type="text" placeholder="{{'DEMANDED.ARAMA_DIALOG.FORM.PLACEHOLDER' | translate}}"
+                            type="text" placeholder="{{'Bir_Değer_Giriniz' | translate}}"
                             formControlName="okod{{item.ID}}">
                     </div>
                 </div>
             </p-accordionTab>
-            <p-accordionTab header="{{'DEMANDED.ARAMA_DIALOG.FORM_TITLE.TALEP_BILGILER' | translate}}">
+            <p-accordionTab header="{{'Talep_Bilgileri' | translate}}">
                 <div class="row">
-                    <div class="col-6 mt-5">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span>{{"DEMANDED.ARAMA_DIALOG.FORM.ARALIK_BASLANGIC" | translate}}</span>
+                            <span>{{"Başlangıç_Tarihi" | translate}}</span>
                         </label>
 
                         <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6"
                             type="date" formControlName="tarih">
                     </div>
 
-                    <div class="col-6 mt-5">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span>{{"DEMANDED.ARAMA_DIALOG.FORM.ARALIK_BITIS" | translate}}</span>
+                            <span>{{"Bitiş_Tarihi" | translate}}</span>
                         </label>
 
                         <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6"
@@ -159,9 +161,9 @@
                     </div>
 
                     <ng-container *ngIf="selectedNavItem == 'izin'">
-                        <div class="col-6 mt-5">
+                        <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                <span>{{"DEMANDED.ARAMA_DIALOG.FORM.IZIN_TIPI" | translate}}</span>
+                                <span>{{"İzin_Tipi" | translate}}</span>
                             </label>
 
                             <select class="form-select form-select-lg form-select-solid" formControlName="ftip">
@@ -171,9 +173,9 @@
                     </ng-container>
 
                     <ng-container *ngIf="selectedNavItem == 'fazlamesai'">
-                        <div class="col-6 mt-5">
+                        <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                <span>{{"DEMANDED.ARAMA_DIALOG.FORM.FAZLA_MESAI_TURU" | translate}}</span>
+                                <span>{{"Fazla_Mesai_Nedeni" | translate}}</span>
                             </label>
 
                             <select class="form-select form-select-lg form-select-solid" formControlName="ftip">
@@ -192,12 +194,12 @@
         <div class="col-12 d-flex justify-content-end align-items-center mt-5">
             <a (click)="getFormValues(selectedNavItem)" class="btn btn-danger mx-2">
                 <i class="fa-solid fa-check fs-1"></i>
-                {{'DEMANDED.BUTTON_TEXT.GONDER' | translate}}
+                {{'Gönder' | translate}}
             </a>
 
             <a (click)="hideDetailSearch()" class="btn btn-danger">
                 <i class="fa-solid fa-xmark fs-1"></i>
-                {{'DEMANDED.BUTTON_TEXT.VAZGEC' | translate}}
+                {{'Vazgeç' | translate}}
             </a>
         </div>
     </div>

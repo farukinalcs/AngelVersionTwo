@@ -38,18 +38,18 @@ export class YemekMenuTumuComponent implements OnInit, OnDestroy {
 
   getMonthName(monthIndex: number): string {
     const monthNames = [
-      this.translateService.instant("PUBLIC.AYLAR.OCAK"),
-      this.translateService.instant("PUBLIC.AYLAR.SUBAT"),
-      this.translateService.instant("PUBLIC.AYLAR.MART"),
-      this.translateService.instant("PUBLIC.AYLAR.NISAN"),
-      this.translateService.instant("PUBLIC.AYLAR.MAYIS"),
-      this.translateService.instant("PUBLIC.AYLAR.HAZIRAN"),
-      this.translateService.instant("PUBLIC.AYLAR.TEMMUZ"),
-      this.translateService.instant("PUBLIC.AYLAR.AGUSTOS"),
-      this.translateService.instant("PUBLIC.AYLAR.EYLUL"),
-      this.translateService.instant("PUBLIC.AYLAR.EKIM"),
-      this.translateService.instant("PUBLIC.AYLAR.KASIM"),
-      this.translateService.instant("PUBLIC.AYLAR.ARALIK")
+      this.translateService.instant("Ocak"),
+      this.translateService.instant("Şubat"),
+      this.translateService.instant("Mart"),
+      this.translateService.instant("Nisan"),
+      this.translateService.instant("Mayıs"),
+      this.translateService.instant("Haziran"),
+      this.translateService.instant("Temmuz"),
+      this.translateService.instant("Ağustos"),
+      this.translateService.instant("Eylül"),
+      this.translateService.instant("Ekim"),
+      this.translateService.instant("Kasım"),
+      this.translateService.instant("Aralık")
     ];
     
     return monthNames[monthIndex];
@@ -114,13 +114,13 @@ export class YemekMenuTumuComponent implements OnInit, OnDestroy {
 
   getDayName(dayIndex: number): string {
     const dayNames = [
-      this.translateService.instant("PUBLIC.GUNLER.PAZAR"),
-      this.translateService.instant("PUBLIC.GUNLER.PAZARTESI"),
-      this.translateService.instant("PUBLIC.GUNLER.SALI"),
-      this.translateService.instant("PUBLIC.GUNLER.CARSAMBA"),
-      this.translateService.instant("PUBLIC.GUNLER.PERSEMBE"),
-      this.translateService.instant("PUBLIC.GUNLER.CUMA"),
-      this.translateService.instant("PUBLIC.GUNLER.CUMARTESI"),
+      this.translateService.instant("Pzr"),
+      this.translateService.instant("Pzt"),
+      this.translateService.instant("Sal"),
+      this.translateService.instant("Çar"),
+      this.translateService.instant("Per"),
+      this.translateService.instant("Cum"),
+      this.translateService.instant("Cmt"),
     ];
     return dayNames[dayIndex];
   }

@@ -1,13 +1,11 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { LoaderService } from 'src/app/_helpers/loader.service';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { MyPermissions } from '../../models/myPermissions';
 import { ProfileService } from '../../profile.service';
 
@@ -22,18 +20,18 @@ export class IzinlerimComponent implements OnInit, OnDestroy {
   @ViewChild('datepickerDialog') datepickerDialog: TemplateRef<any>;
 
   months: string[] = [
-    this.translateService.instant("PUBLIC.AYLAR.OCAK"),
-    this.translateService.instant("PUBLIC.AYLAR.SUBAT"),
-    this.translateService.instant("PUBLIC.AYLAR.MART"),
-    this.translateService.instant("PUBLIC.AYLAR.NISAN"),
-    this.translateService.instant("PUBLIC.AYLAR.MAYIS"),
-    this.translateService.instant("PUBLIC.AYLAR.HAZIRAN"),
-    this.translateService.instant("PUBLIC.AYLAR.TEMMUZ"),
-    this.translateService.instant("PUBLIC.AYLAR.AGUSTOS"),
-    this.translateService.instant("PUBLIC.AYLAR.EYLUL"),
-    this.translateService.instant("PUBLIC.AYLAR.EKIM"),
-    this.translateService.instant("PUBLIC.AYLAR.KASIM"),
-    this.translateService.instant("PUBLIC.AYLAR.ARALIK")
+    this.translateService.instant("Ocak"),
+    this.translateService.instant("Şubat"),
+    this.translateService.instant("Mart"),
+    this.translateService.instant("Nisan"),
+    this.translateService.instant("Mayıs"),
+    this.translateService.instant("Haziran"),
+    this.translateService.instant("Temmuz"),
+    this.translateService.instant("Ağustos"),
+    this.translateService.instant("Eylül"),
+    this.translateService.instant("Ekim"),
+    this.translateService.instant("Kasım"),
+    this.translateService.instant("Aralık")
   ];
   
   years: number[] = []; // Gerektiğinde yılları güncelleyin
@@ -56,7 +54,6 @@ export class IzinlerimComponent implements OnInit, OnDestroy {
     private translateService : TranslateService,
     public loaderService : LoaderService,
     private dialog : MatDialog,
-    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
   
@@ -122,7 +119,7 @@ export class IzinlerimComponent implements OnInit, OnDestroy {
   //     let message = response[0].z;
   //     let responseToken = response[0].y;
 
-  //     console.log("İZİNLERİM : ", data);
+  //     console.log("İzinlerim : ", data);
   //     this.myPermissions = data;  
 
   //     this.dataSource = new MatTableDataSource(this.myPermissions);
@@ -144,7 +141,7 @@ export class IzinlerimComponent implements OnInit, OnDestroy {
       let message = response[0].z;
       let responseToken = response[0].y;
 
-      console.log("İZİNLERİM : ", data);
+      console.log("İzinlerim : ", data);
       this.myPermissions = data;  
       
       this.dataSource = new MatTableDataSource(this.myPermissions);

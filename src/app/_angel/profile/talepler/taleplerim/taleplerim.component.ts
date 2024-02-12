@@ -4,7 +4,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { MyDemands } from '../../models/myDemands';
 import { ProfileService } from '../../profile.service';
 
@@ -36,12 +35,12 @@ export class TaleplerimComponent implements OnInit, OnDestroy {
   displayDetailSearch : boolean; // Detaylı arama dialog aç-kapat ayarı
   checkGrid : boolean = true;
   menuItems = [
-    { id: 'izinNavItem1', key: 'izin', icon: 'fa-umbrella-beach', label: 'DEMANDED.SUB_MENU.IZIN' },
-    { id: 'fazlamesaiNavItem1', key: 'fazlamesai', icon: 'fa-business-time', label: 'DEMANDED.SUB_MENU.FAZLA_MESAI' },
-    { id: 'yetkiNavItem', key: 'sureliyetki', icon: 'fa-door-open', label: 'DEMANDED.SUB_MENU.YETKI' },
-    { id: 'avansNavItem', key: 'avans', icon: 'fa-sack-dollar', label: 'DEMANDED.SUB_MENU.AVANS' },
-    // { id: 'envanterNavItem1', key: 'envanter', icon: 'fa-screwdriver-wrench', label: 'DEMANDED.SUB_MENU.MALZEME' },
-    // { id: 'digerNavItem1', key: 'tum', icon: 'fa-circle-question', label: 'DEMANDED.SUB_MENU.TUMU' }
+    { id: 'izinNavItem1', key: 'izin', icon: 'fa-umbrella-beach', label: 'İzin' },
+    { id: 'fazlamesaiNavItem1', key: 'fazlamesai', icon: 'fa-business-time', label: 'Fazla_Mesai' },
+    { id: 'yetkiNavItem', key: 'sureliyetki', icon: 'fa-door-open', label: 'Yetki' },
+    { id: 'avansNavItem', key: 'avans', icon: 'fa-sack-dollar', label: 'Avans' },
+    // { id: 'envanterNavItem1', key: 'envanter', icon: 'fa-screwdriver-wrench', label: 'Malzeme' },
+    // { id: 'digerNavItem1', key: 'tum', icon: 'fa-circle-question', label: 'Tümü' }
   ];
 
   demandTypeNameForProcess: any;
@@ -51,7 +50,6 @@ export class TaleplerimComponent implements OnInit, OnDestroy {
     private profilService : ProfileService,
     private toastrService : ToastrService,
     private translateService : TranslateService,
-    public layoutService : LayoutService,
     private ref : ChangeDetectorRef
   ) { }
   
@@ -179,8 +177,8 @@ export class TaleplerimComponent implements OnInit, OnDestroy {
     this.profilService.cancelMyDemands(formid, kaynak, aciklama).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
       if (response[0].x[0].islemsonuc) {
         this.toastrService.success(
-          this.translateService.instant("TOASTR_MESSAGE.TALEP_IPTAL_EDILDI"),
-          this.translateService.instant("TOASTR_MESSAGE.BASARILI")
+          this.translateService.instant("Talep_İptal_Edildi"),
+          this.translateService.instant("Başarılı")
         );
 
         this.getMyDemands(aktifMenu);

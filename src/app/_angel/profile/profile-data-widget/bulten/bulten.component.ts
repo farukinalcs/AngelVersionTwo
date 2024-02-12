@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-bulten',
@@ -21,7 +20,6 @@ export class BultenComponent implements OnInit {
   currentItem: any = this.items[0];
   displayBulletinForm: boolean = false;
   constructor(
-    public layoutService : LayoutService,
   ) { }
 
   ngOnInit(): void {

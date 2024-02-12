@@ -80,11 +80,11 @@
     width: 100%;
 }
 
-@media screen and (max-width: 576px) {
-    .product-item {
-        flex-wrap: wrap;
-    }
-}
+// @media screen and (max-width: 576px) {
+//     .product-item {
+//         flex-wrap: wrap;
+//     }
+// }
 
 
 
@@ -93,3 +93,34 @@
     background: #151521;
     border: 1px solid #ed1b24;
 }
+
+
+
+
+// Bootstrap Function, Variables, Mixin
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins';
+
+// Bootstrap Breakpoints
+
+// Mobile Modes
+@include media-breakpoint-down(md) {
+  .product-item {
+    flex-wrap: wrap;
+  }
+}
+
+
+@include media-breakpoint-up(lg) {
+  .product-item {
+    flex-wrap: nowrap;
+  }
+}
+
+
+// @include media-breakpoint-up(lg) {
+//     .p-picklist {
+//         flex-direction: column;
+//     }
+// }

@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container-fluid">
     <div class="card card-xl-stretch mb-xl-8 m-10">
         <div class="col-12 d-flex justify-content-center py-5">
-            <div id="container" [ngStyle]="{'width':!(layoutService.isMobile | async) ? '30%' : '55%' }">
+            <div id="container" class="col-10 col-md-8 col-lg-6">
                 <button mat-icon-button (click)="goToBack()">
                     <i class="fa-solid fa-circle-left fs-2x text-dark text-hover-danger"></i>
                 </button>
@@ -40,10 +40,10 @@
                                         <thead>
                                             <tr class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                                                 <th class="text-center rounded-start">  </th>
-                                                <th class="text-center"> {{ "MY_DURATION.TABLE_TITLE.TARIH" | translate }} </th>
-                                                <th class="text-center"> {{ "MY_DURATION.TABLE_TITLE.GIRIS" | translate }} </th>
-                                                <th class="text-center"> {{ "MY_DURATION.TABLE_TITLE.CIKIS" | translate }} </th>
-                                                <th class="text-center rounded-end"> {{ "MY_DURATION.TABLE_TITLE.ACIKLAMA" | translate }} </th>
+                                                <th class="text-center"> {{ "Tarih" | translate }} </th>
+                                                <th class="text-center"> {{ "Giriş" | translate }} </th>
+                                                <th class="text-center"> {{ "Çıkış" | translate }} </th>
+                                                <th class="text-center rounded-end"> {{ "Açıklama" | translate }} </th>
                                             </tr>
                                         </thead>
     
@@ -52,7 +52,7 @@
                                                 [ngClass]="{'bg-light-info': item.simge == '4'}">
                                                 <td class="text-center">
                                                     <ng-container *ngIf="item.simge == '1'">
-                                                        <div matTooltip="{{ 'PUBLIC.TOOLTIP.BASARILI_GIRIS_CIKIS' | translate}}"
+                                                        <div matTooltip="{{ 'Başarılı_Giriş_Çıkış' | translate}}"
                                                             class="symbol symbol-50px me-2">
                                                             <span class="symbol-label bg-light-success">
                                                                 <i class="fa-solid fa-circle-check text-success fs-2x"></i>
@@ -61,7 +61,7 @@
                                                     </ng-container>
     
                                                     <ng-container *ngIf="item.simge == '2'">
-                                                        <div matTooltip="{{ 'PUBLIC.TOOLTIP.GIRIS_CIKIS_BULUNAMADI' | translate}}"
+                                                        <div matTooltip="{{ 'Giriş_Çıkış_Bulunamadı' | translate}}"
                                                             class="symbol symbol-50px me-2">
                                                             <span class="symbol-label bg-light-danger">
                                                                 <i class="fa-solid fa-circle-xmark text-danger fs-2x"></i>
@@ -70,7 +70,7 @@
                                                     </ng-container>
     
                                                     <ng-container *ngIf="item.simge == '3'">
-                                                        <div matTooltip="{{ 'PUBLIC.TOOLTIP.HATALI_GIRIS_CIKIS' | translate}}"
+                                                        <div matTooltip="{{ 'Hatalı_Giriş_Çıkış' | translate}}"
                                                             class="symbol symbol-50px me-2">
                                                             <span class="symbol-label bg-light-warning">
                                                                 <i class="fa-solid fa-triangle-exclamation text-warning fs-2x"></i>
@@ -79,7 +79,7 @@
                                                     </ng-container>
     
                                                     <ng-container *ngIf="item.simge == '4'">
-                                                        <div matTooltip="{{ 'PUBLIC.TOOLTIP.TATIL' | translate}}" class="symbol symbol-50px me-2">
+                                                        <div matTooltip="{{ 'Tatil' | translate}}" class="symbol symbol-50px me-2">
                                                             <span class="symbol-label bg-light-info">
                                                                 <i class="fa-solid fa-umbrella-beach text-info fs-2x"></i>
                                                             </span>

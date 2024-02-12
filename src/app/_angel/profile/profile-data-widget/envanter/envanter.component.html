@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-8">
                     <i class="fa-solid fa-screwdriver-wrench fs-2 text-danger pe-2"></i>
-                    <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">Envanterlerim</span>
+                    <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Envanterlerim" | translate}}</span>
                 </div>
 
                 <div class="col-4 d-flex justify-content-end align-items-center" (click)="showMyInventory()">
@@ -66,11 +66,11 @@
 
                         <ng-container *ngIf="item.aldim == 0">
                             <div class="col-2">
-                                <a class="btn btn-sm btn-primary">Aldım</a>
+                                <a class="btn btn-sm btn-primary">{{"Aldım" | translate}}</a>
                             </div>
 
                             <div class="col-2">
-                                <a class="btn btn-sm btn-primary">Almadım</a>
+                                <a class="btn btn-sm btn-primary">{{"Almadım" | translate}}</a>
                             </div>
                         </ng-container>
 
@@ -80,7 +80,7 @@
                 <div class="col-12 d-flex justify-content-center align-items-center">
                     <a class="btn text-gray-400 text-hover-danger">
                         <i class="fa-solid fa-circle-plus fs-1 pe-2"></i>
-                        <span class="fs-4">Envanter Talebi Oluştur</span>
+                        <span class="fs-4">{{"Envanter_Talebi_Oluştur" | translate}}</span>
                     </a>
                 </div>
             </div>
@@ -91,14 +91,14 @@
 
 
 
-<p-dialog header="Envanterlerim" [(visible)]="displayMyInventory" [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '50vw' : 'none'}"
+<p-dialog header="{{'Envanterlerim' | translate}}" [(visible)]="displayMyInventory" [modal]="true" [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }"
     [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
     <div class="container" style="height: 500px;">
         <div class="row card p-5">
             <div class="col-12">
                 <mat-tab-group mat-stretch-tabs="false" >
-                    <mat-tab label="Zimmet">
+                    <mat-tab label="{{'Zimmet' | translate}}">
                         <div class="card">
                             <div class="card-body py-3">
                                 <div class="hover-scroll-overlay-y pe-6 me-n6" style="height: 415px">
@@ -257,7 +257,7 @@
                         </div> 
                     </mat-tab>
 
-                    <mat-tab label="Sarf Malzeme">
+                    <mat-tab label="{{'Sarf_Malzeme' | translate}}">
                         <div class="card">
                             <div class="card-body py-3">
                                 <div class="hover-scroll-overlay-y pe-6 me-n6" style="height: 415px">
@@ -423,13 +423,13 @@
 
     <!-- <ng-template pTemplate="footer">
         <p-button icon="pi pi-times" (click)="displayMyInventory=false"
-            label="{{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}" class="p-button-text"></p-button>
+            label="{{'Kapat' | translate}}" class="p-button-text"></p-button>
     </ng-template> -->
 
     <ng-template pTemplate="footer">
         <a (click)="displayMyInventory=false" class="btn btn-danger">
             <i class="fa-solid fa-xmark fs-1"></i>
-            {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+            {{'Kapat' | translate}}
         </a>
     </ng-template>
 </p-dialog>
