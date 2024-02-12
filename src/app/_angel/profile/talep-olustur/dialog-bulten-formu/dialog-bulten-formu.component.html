@@ -9,7 +9,7 @@
                     </div>
                 </div>
 
-                <app-form-stepper [stepperFields]="stepperFields"></app-form-stepper>
+                <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields"></app-form-stepper>
 
                 <div class="row w-xl-700px">
                     <div class="col-12">
@@ -22,10 +22,10 @@
                                             <div class="col-12">
                                                 <div class="fv-row mb-10 fv-plugins-icon-container">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"BULTEN_FORM_DIALOG.FORM.BASLIK" | translate}}</span>
+                                                        <span class="required">{{"Başlık" | translate}}</span>
                                                     </label>
 
-                                                    <input type="text" class="form-control form-control-lg form-control-solid" maxlength="50" placeholder="{{'BULTEN_FORM_DIALOG.FORM.BASLIK_PLACEHOLDER' | translate}}" formControlName="title">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" maxlength="50" placeholder="{{'Başlık_Giriniz' | translate}}" formControlName="title">
                                                     <ng-container *ngIf="bulletinForm.controls['title']?.value">
                                                         <div class="text-end">
                                                             <span class="badge badge-light-danger">{{ bulletinForm.controls['title'].value.length }} / 50</span>
@@ -38,10 +38,10 @@
                                             <div class="col-12">
                                                 <div class="fv-row fv-plugins-icon-container">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"BULTEN_FORM_DIALOG.FORM.ACIKLAMA" | translate}}</span>
+                                                        <span class="required">{{"Açıklama" | translate}}</span>
                                                     </label>
 
-                                                    <textarea class="form-control form-control-solid" rows="3" maxlength="220" formControlName="description" placeholder="{{'BULTEN_FORM_DIALOG.FORM.ACIKLAMA_PLACEHOLDER' | translate}}"></textarea>
+                                                    <textarea class="form-control form-control-solid" rows="3" maxlength="220" formControlName="description" placeholder="{{'Açıklama_Giriniz' | translate}}"></textarea>
                                                     <ng-container *ngIf="bulletinForm.controls['description']?.value">
                                                         <div class="text-end">
                                                             <span class="badge badge-light-danger">{{ bulletinForm.controls['description'].value.length }} / 220</span>
@@ -63,7 +63,7 @@
                                             <div class="col-6">
                                                 <div class="fv-row mb-10 fv-plugins-icon-container">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"BULTEN_FORM_DIALOG.FORM.BASLANGIC_TARIHI" | translate}}</span>
+                                                        <span class="required">{{"Başlangıç_Tarihi" | translate}}</span>
                                                     </label>
 
                                                     <input type="date" class="form-control form-control-lg form-control-solid" formControlName="startDate">
@@ -75,7 +75,7 @@
                                             <div class="col-6">
                                                 <div class="fv-row mb-10 fv-plugins-icon-container">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"BULTEN_FORM_DIALOG.FORM.BITIS_TARIHI" | translate}}</span>
+                                                        <span class="required">{{"Bitiş_Tarihi" | translate}}</span>
                                                     </label>
 
                                                     <input type="date" class="form-control form-control-lg form-control-solid" formControlName="endDate">
@@ -87,7 +87,7 @@
                                             <div class="col-12">
                                                 <div class="fv-row fv-plugins-icon-container">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"BULTEN_FORM_DIALOG.FORM.YAYINLAYAN" | translate}}</span>
+                                                        <span class="required">{{"Yayınlayan" | translate}}</span>
                                                     </label>
 
                                                     <input type="text" class="form-control form-control-lg form-control-solid" formControlName="owner">
@@ -110,7 +110,7 @@
                                                 <label for="upload">
                                                     <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center px-20">
                                                         <div class="dropzone-msg dz-message needsclick">
-                                                            <h3 class="dropzone-msg-title text-center">{{"BULTEN_FORM_DIALOG.FORM.DOSYA_YUKLE" | translate}}</h3>
+                                                            <h3 class="dropzone-msg-title text-center">{{"DOSYA_YUKLE" | translate}}</h3>
                                                         </div>
                                                     </div>
                                                 </label>
@@ -135,11 +135,11 @@
                                                                 </div>
                                     
                                                                 <div class="col-2">
-                                                                    <a class="btn btn-sm btn btn-primary">{{"PROFILE_WIDGETS.DOSYALARIM.KAYDET" | translate}}</a>
+                                                                    <a class="btn btn-sm btn btn-primary">{{"Kaydet" | translate}}</a>
                                                                 </div>
                                     
                                                                 <div class="col-2">
-                                                                    <a (click)="uploadedFile = null" class="btn btn-sm btn btn-light-primary">{{"PROFILE_WIDGETS.DOSYALARIM.IPTAL" | translate}}</a>
+                                                                    <a (click)="uploadedFile = null" class="btn btn-sm btn btn-light-primary">{{"İptal" | translate}}</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -156,11 +156,11 @@
                                     <div class="w-100">
                                         <div class="row">
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                <span class="required">{{"BULTEN_FORM_DIALOG.FORM.AVATAR" | translate}}</span>
+                                                <span class="required">{{"Avatar_Seçiniz" | translate}}</span>
                                             </label>
 
                                             <ng-container *ngFor="let item of pagedAvatars; let i = index">
-                                                <div class="d-flex justify-content-center align-items-center pb-6" [ngClass]="{ 'col-4': !(this.layoutService.isMobile | async), 'col-12': (this.layoutService.isMobile | async) }">
+                                                <div class="col-12 col-md-4 d-flex justify-content-center align-items-center pb-6">
                                                     <input type="radio" class="btn-check" formControlName="image" [value]="item.path" [id]="'image-' + item.path" />
                                                     <label
                                                         class="btn btn-outline btn-outline-dashed btn-active-light-danger p-5 d-flex align-items-center" style="width: 165px; height: 165px;"
@@ -222,7 +222,7 @@
                             <ng-container *ngIf="currentStep$.value == 5">
                                 <div class="current">
                                     <div class="w-100">
-                                        <div class="row bg-light-danger rounded" [ngClass]="{'p-2': (this.layoutService.isMobile | async), 'p-10': !(this.layoutService.isMobile | async)}">
+                                        <div class="row bg-light-danger rounded p-2 p-md-10">
                                             <div class="col-6 d-flex justify-content-center align-items-center">
                                                 <img src=" {{'./assets/media/illustrations/' + bulletinFormValues.image}}" alt="" style="width: 100%"
                                                 [ngStyle]="{'height': (this.layoutService.isMobile | async) ? '60%' : '100%'}">
@@ -265,7 +265,7 @@
                         </form>
                     </div>
 
-                    <div class="col-12 d-flex align-items-start" [ngClass]="{'justify-content-center': (this.layoutService.isMobile | async), 'justify-content-end': !(this.layoutService.isMobile | async) }">
+                    <div class="col-12 d-flex align-items-start justify-content-center justify-content-md-end">
                         <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
                                 <ng-container *ngIf=" 7 > currentStep$.value && currentStep$.value > 1">
@@ -273,7 +273,7 @@
                                         (click)="prevStep()">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                            {{"BULTEN_FORM_DIALOG.FORM.GERI" | translate}}
+                                            {{"Geri" | translate}}
                                     </button>
                                 </ng-container>
 
@@ -281,7 +281,7 @@
                                     <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                            {{"BULTEN_FORM_DIALOG.FORM.KAPAT" | translate}}
+                                            {{"Kapat" | translate}}
                                     </button>
                                 </ng-container>
                             </div>
@@ -291,19 +291,25 @@
                                     <ng-container *ngIf="currentStep$.value < formsCount - 1">
                                         <button type="button" class="btn btn-lg btn-danger me-3" (click)="nextStep()">
                                             <span class="indicator-label">
-                                                {{"BULTEN_FORM_DIALOG.FORM.ILERI" | translate}} {{ " " }}
+                                                {{"İleri" | translate}} {{ " " }}
                                                 <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
                                                     class="svg-icon svg-icon-3 ms-2 me-0"></span>
                                                 <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                                    {{"BULTEN_FORM_DIALOG.FORM.GONDER" | translate}}
+                                                    {{"Gönder" | translate}}
                                                 </ng-container>
                                             </span>
                                         </button>
                                     </ng-container>
                                     <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="closedFormDialog()">
+                                            <span class="indicator-label">
+                                                {{"Kapat" | translate}}
+                                            </span>
+                                        </button>
+                                        
                                         <button type="button" class="btn btn-lg btn-danger me-3" (click)="getFormValues()">
                                             <span class="indicator-label">
-                                                {{"BULTEN_FORM_DIALOG.FORM.GONDER" | translate}}
+                                                {{"Gönder" | translate}}
                                             </span>
                                         </button>
 

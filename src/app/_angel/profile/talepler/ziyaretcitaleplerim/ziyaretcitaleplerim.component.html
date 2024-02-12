@@ -14,18 +14,18 @@
                                                     <thead>
                                                         <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                                                             <th class="text-center rounded-start"></th>
-                                                            <th class="text-center"> Ad Soyad </th>
-                                                            <th class="text-center"> Firma </th>
-                                                            <th class="text-center"> Açıklama </th>
-                                                            <th class="text-center"> Giriş </th>
-                                                            <th class="text-center"> Çıkış </th>
+                                                            <th class="text-center"> {{"Ad_Soyad" | translate}} </th>
+                                                            <th class="text-center"> {{"Firma" | translate}} </th>
+                                                            <th class="text-center"> {{"Açıklama" | translate}} </th>
+                                                            <th class="text-center"> {{"Giriş" | translate}} </th>
+                                                            <th class="text-center"> {{"Çıkış" | translate}} </th>
                                                             <th class="text-center rounded-end">  </th>
                                                         </tr>
                                                     </thead>
             
                                                     <tbody>
                                                         <ng-container *ngFor="let item of visits; let i = index">
-                                                            <tr >
+                                                            <tr class="cursor-pointer bg-hover-light-dark">
                                                                 <td class="text-center">
                                                                     <div [ngSwitch]="item.ziyaretNedeni">
                                                                         <div *ngSwitchCase="'Misafir'">
@@ -109,7 +109,7 @@
                                                                         </ng-container>
                                                                     </a>
     
-                                                                    <a (click)="removeVisit(item)" class="btn btn-icon btn-sm bg-danger mx-3" matTooltip="Talebi Kaldır">
+                                                                    <a (click)="removeVisit(item)" class="btn btn-icon btn-sm bg-danger mx-3" matTooltip="{{'Talebi_Kaldır' | translate}}">
                                                                         <i class="fa-solid fa-xmark text-white"></i>                                                                    
                                                                     </a>
                                                                 </td>
@@ -172,7 +172,7 @@
 
 
 
-<p-dialog header="{{ 'UPLOAD_FILE.YUKLENMIS_DOSYALAR' | translate }}" [(visible)]="displayVisitors"
+<p-dialog header="{{ 'Yüklenmiş_Dosyalar' | translate }}" [(visible)]="displayVisitors"
     position="center" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
     [draggable]="true" [resizable]="false">
 
@@ -183,7 +183,7 @@
     <ng-template pTemplate="footer">
         <a (click)="displayVisitors=false" class="btn btn-danger">
             <i class="fa-solid fa-xmark fs-1"></i>
-            {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+            {{'Kapat' | translate}}
         </a>
     </ng-template>
 </p-dialog>

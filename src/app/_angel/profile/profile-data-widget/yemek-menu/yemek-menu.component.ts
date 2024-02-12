@@ -1,8 +1,6 @@
 import { TanimlamalarService } from './../../profil-tanimlamalar/tanimlamalar.service';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { LayoutService } from 'src/app/_metronic/layout';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-yemek-menu',
@@ -28,7 +26,6 @@ export class YemekMenuComponent implements OnInit, OnDestroy {
   _currentDate:any;
   
   constructor(
-    public layoutService : LayoutService,
     private ref: ChangeDetectorRef,
     public tanimlamalar : TanimlamalarService,) {  
   }

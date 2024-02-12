@@ -15,26 +15,23 @@
         </ng-container>
 
         <ng-container *ngIf="!(isLoading | async)">
-          <div [ngClass]="{'row': !(this.layoutService.isMobile | async)}" *ngIf="user$ | async as _user">
-            <div
-              [ngClass]="{'col-2': !(this.layoutService.isMobile | async), 'col-12 d-flex justify-content-center' : (this.layoutService.isMobile | async)}">
+          <div class="row" *ngIf="user$ | async as _user">
+            <div class="col-xl-2 d-flex justify-content-center">
               <div class="me-7 mb-4">
-                <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+                <div class="symbol symbol-100px symbol-xl-160px symbol-fixed position-relative">
                   <!-- <img alt="Logo" src="{{'data:image/jpg;base64,' + _user.FotoImage}}" /> -->
 
                   <img alt="Logo" src="http://localhost:5075/api/Image?sicilid={{_user.xSicilID}}" />
-                  <div
-                    class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
-                  </div>
+                  
+                  <div class="theme-light-show position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"></div>
+                  <div class="theme-dark-show position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-dark h-20px w-20px"></div>
                 </div>
               </div>
             </div>
 
-            <div
-              [ngClass]="{'col-10': !(this.layoutService.isMobile | async), 'col-12' : this.layoutService.isMobile | async}">
+            <div class="col-xl-10">
               <div class="row">
-                <div
-                  [ngClass]="{'col-8': !(this.layoutService.isMobile | async), 'col-12 pt-4 d-flex justify-content-center' : this.layoutService.isMobile | async}">
+                <div class="col-xl-8 pt-xl-4 d-flex justify-content-center d-xl-flex justify-content-xl-start">
                   <div class="d-flex align-items-center mb-2">
 
                     <a class="text-gray-800 text-hover-danger fs-2 fw-bolder me-1 cursor-pointer">
@@ -48,8 +45,7 @@
 
                     <ng-container *ngIf="userInformation">
                       <a class="btn btn-sm btn-light-danger fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
-                        {{"PROFIL_DASHBOARD.GIRIS_TARIHI" | translate}} : {{ userInformation.GirisTarih | date
-                        :'yyyy-MM-dd'}}
+                        {{"Giriş_Tarihi" | translate}} : {{ userInformation.GirisTarih | date :'yyyy-MM-dd'}}
                       </a>
                     </ng-container>
 
@@ -62,50 +58,54 @@
                   </div>
                 </div>
 
-                <div
-                  [ngClass]="{'col-4': !(this.layoutService.isMobile | async), 'col-12 pt-4 d-flex justify-content-center' : this.layoutService.isMobile | async}">
-                  <button class="btn btn-danger w-50 h-100"
-                    [matMenuTriggerFor]="talepler">{{"PROFIL_DASHBOARD.TALEP_OLUSTUR" | translate}}</button>
+                <div class="col-xl-4 d-flex justify-content-center d-xl-flex justify-content-xl-end pt-xl-4">
+                  <button class="btn btn-danger w-75 w-md-50 h-100"
+                    [matMenuTriggerFor]="talepler">{{"Talep_Oluştur" | translate}}</button>
                   <mat-menu #talepler="matMenu">
 
                     <button mat-menu-item (click)="showVacationDialog()">
                       <i class="icon-l fas fa-skiing pe-4 fs-3"> </i>
-                      {{"PROFIL_DASHBOARD.IZIN" | translate}}
+                      {{"İzin" | translate}}
                     </button>
 
                     <button (click)="showOvertimeDialog()" mat-menu-item>
                       <i class="icon-l fas fa-calendar-alt pe-4 fs-3"> </i>
-                      {{"PROFIL_DASHBOARD.FAZLA_MESAI" | translate}}
+                      {{"Fazla_Mesai" | translate}}
                     </button>
 
                     <button mat-menu-item (click)="showVisitRequestDialog()">
                       <i class="fa-solid fa-person-walking pe-4 fs-3"> </i>
-                      {{"PROFIL_DASHBOARD.ZIYARETCI" | translate}}
+                      {{"Ziyaretçi" | translate}}
                     </button>
 
                     <button mat-menu-item (click)="showAuthorityDialog()">
                       <i class="fa-solid fa-fingerprint pe-4 fs-3"></i>
-                      {{"PROFIL_DASHBOARD.YETKI" | translate}}
+                      {{"Yetki" | translate}}
                     </button>
                     
                     <button mat-menu-item (click)="showVehicleRequestDialog()">
                       <i class="fa-solid fa-car-side pe-4 fs-3"></i>
-                      {{"PROFIL_DASHBOARD.ARAC" | translate}}
+                      {{"Araç" | translate}}
                     </button>
 
                     <button mat-menu-item (click)="showAdvancePaymentDialog()">
                       <i class="fa-solid fa-sack-dollar pe-4 fs-3"></i>
-                      {{"PROFIL_DASHBOARD.AVANS" | translate}}
+                      {{"Avans" | translate}}
                     </button>
 
                     <button mat-menu-item>
                       <i class="fa-solid fa-van-shuttle pe-4 fs-3"></i>
-                      {{"PROFIL_DASHBOARD.SERVIS" | translate}}
+                      {{"Servis" | translate}}
                     </button>
 
                     <button mat-menu-item>
                       <i class="fa-solid fa-screwdriver-wrench pe-4 fs-3"></i>
-                      {{"PROFIL_DASHBOARD.MALZEME_ENVANTER" | translate}}
+                      {{"Malzeme_Envanter" | translate}}
+                    </button>
+
+                    <button mat-menu-item (click)="showExpenseDialog()">
+                      <i class="fa-solid fa-file-invoice-dollar pe-4 fs-3"></i>
+                      {{"Masraf" | translate}}
                     </button>
                   </mat-menu>
                 </div>
@@ -113,7 +113,7 @@
               </div>
 
               <div class="row pt-4">
-                <div class="col-12" [ngClass]="{'d-flex justify-content-center': this.layoutService.isMobile | async}">
+                <div class="col-12 d-flex justify-content-center d-xl-flex justify-content-xl-start" >
                   <!-- flex-wrap -->
                   <div class="d-flex  fw-bold fs-6 mb-4 pe-2">
 
@@ -143,8 +143,7 @@
                 <div class="col-12">
                   <div class="d-flex flex-wrap flex-stack">
                     <div class="d-flex flex-column flex-grow-1">
-                      <div class="d-flex flex-wrap"
-                        [ngClass]="{'justify-content-center': this.layoutService.isMobile | async}">
+                      <div class="d-flex justify-content-center d-xl-flex justify-content-xl-start flex-wrap">
 
                         <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                           <div class="d-flex align-items-center">
@@ -157,7 +156,7 @@
                             </ng-container>
                           </div>
 
-                          <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.KIDEM" | translate}}</div>
+                          <div class="fw-bold fs-6 text-gray-400">{{"Kıdem" | translate}}</div>
                         </div>
 
                         <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
@@ -172,7 +171,7 @@
                             </ng-container>
                           </div>
 
-                          <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.IZIN_HAKKI" | translate}}</div>
+                          <div class="fw-bold fs-6 text-gray-400">{{"İzin_Hakkı" | translate}}</div>
                         </div>
 
 
@@ -189,7 +188,7 @@
 
                           </div>
 
-                          <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.KULLANILAN_IZIN" | translate}}
+                          <div class="fw-bold fs-6 text-gray-400">{{"Kullanılan_İzin" | translate}}
                           </div>
                         </div>
 
@@ -204,7 +203,7 @@
                             </ng-container>
                           </div>
 
-                          <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.DEVIR" | translate}}</div>
+                          <div class="fw-bold fs-6 text-gray-400">{{"Devir" | translate}}</div>
                         </div>
 
 
@@ -218,7 +217,7 @@
                               <div class="fs-2 fw-bolder">-</div>
                             </ng-container>
                           </div>
-                          <div class="fw-bold fs-6 text-gray-400">{{"PROFIL_DASHBOARD.KALAN" | translate}}</div>
+                          <div class="fw-bold fs-6 text-gray-400">{{"Kalan" | translate}}</div>
                         </div>
 
                       </div>
@@ -230,42 +229,41 @@
             </div>
 
             <div class="col-12">
-              <div class="d-flex overflow-auto h-55px"
-                [ngClass]="{'justify-content-center': !(this.layoutService.isMobile | async)}">
+              <div class="d-flex overflow-auto h-55px">
                 <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fw-bolder flex-nowrap">
 
                   <ng-container>
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="genel_bakis"
-                        routerLinkActive="active" translate="MENU.DASHBOARD"></a>
+                        routerLinkActive="active" translate="Genel_Bakış"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.gecislerim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="gecislerim"
-                        routerLinkActive="active" translate="MENU.PROFIL_SUB.GECISLERIM"></a>
+                        routerLinkActive="active" translate="Geçişlerim"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.surelerim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="surelerim"
-                        routerLinkActive="active" translate="MENU.PROFIL_SUB.SURELERIM"></a>
+                        routerLinkActive="active" translate="Sürelerim"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.izinlerim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="izinlerim"
-                        routerLinkActive="active" translate="MENU.PROFIL_SUB.IZINLERIM"></a>
+                        routerLinkActive="active" translate="İzinlerim"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.talepEdilenler">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="talep_edilenler"
-                        routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEP_EDILENLER">
+                        routerLinkActive="active" translate="Talep_Edilenler">
                         <span class="badge badge-circle badge-danger ms-2">5</span>
                       </a>
                     </li>
@@ -274,50 +272,48 @@
                   <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.taleplerim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="taleplerim"
-                        routerLinkActive="active" translate="MENU.PROFIL_SUB.TALEPLERIM"></a>
+                        routerLinkActive="active" translate="Taleplerim"></a>
                     </li>
                   </ng-container>
 
                   <!-- <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.ziyaretciTaleplerim"> -->
                     <li class="nav-item">
-                      <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_talepleri" routerLinkActive="active">
-                        Ziyaretçi Talepleri
-                      </a>
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_talepleri" routerLinkActive="active" translate="Ziyaretçi_Talepleri"></a>
                     </li>
                   <!-- </ng-container> -->
                   
                   <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.ziyaretciTaleplerim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_taleplerim"
-                        routerLinkActive="active" translate="MENU.PROFIL_SUB.ZIYARETCI_TALEPLERIM"></a>
+                        routerLinkActive="active" translate="Ziyaretçi_Taleplerim"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.mobilLokasyon">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="mobil_lokasyon"
-                        routerLinkActive="active" translate="MENU.PROFIL_SUB.MOBIL_LOKASYON"></a>
+                        routerLinkActive="active" translate="Mobil_Lokasyon"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.taskListem">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="task_listem"
-                        routerLinkActive="active" translate="MENU.PROFIL_SUB.TASK_LISTEM"></a>
+                        routerLinkActive="active" translate="Task_Listem"></a>
                     </li>
                   </ng-container>
 
                   <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.takimim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="takimim"
-                        routerLinkActive="active" translate="MENU.PROFIL_SUB.TAKIMIM"></a>
+                        routerLinkActive="active" translate="Takımım"></a>
                     </li>
                   </ng-container>
 
                   <ng-container>
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="eksik_surelerim"
-                        routerLinkActive="active" translate="MENU.PROFIL_SUB.EKSIK_SURELERIM"></a>
+                        routerLinkActive="active" translate="Eksik_Sürelerim"></a>
                     </li>
                   </ng-container>
 
@@ -333,9 +329,9 @@
 </div>
 
 <ng-container *ngIf="displayOvertimeForm">
-  <p-dialog header="{{'FM_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayOvertimeForm"
+  <p-dialog header="{{'Fazla_Mesai_Talep_Formu' | translate}}" [(visible)]="displayOvertimeForm"
     (visibleChange)="overtimeFormIsSend()" [modal]="true"
-    [style]="{width: !(this.layoutService.isMobile | async) ? '65vw' : 'none'}" [maximizable]="true"
+    [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true"
     [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
     <ng-container *ngIf="displayOvertimeForm">
@@ -349,9 +345,9 @@
 
 
 <ng-container *ngIf="displayVacationForm">
-  <p-dialog header="{{'IZIN_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVacationForm"
+  <p-dialog header="{{'İzin_Talep_Formu' | translate}}" [(visible)]="displayVacationForm"
     (visibleChange)="vacationFormIsSend()" [modal]="true"
-    [style]="{width: !(this.layoutService.isMobile | async) ? '80vw' : 'none'}" [maximizable]="true"
+    [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true"
     [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
     <ng-container *ngIf="displayVacationForm">
@@ -364,7 +360,7 @@
 
 
 <ng-container *ngIf="displayVisitRequestForm">
-  <p-dialog header="{{'ZIYARETCI_TALEP_DIALOG.HEADER' | translate}}" [(visible)]="displayVisitRequestForm"
+  <p-dialog header="{{'Ziyaretçi_Talep_Formu' | translate}}" [(visible)]="displayVisitRequestForm"
     (visibleChange)="visitRequestFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000"
     [draggable]="true" [resizable]="false">
 
@@ -376,7 +372,7 @@
 </ng-container>
 
 <ng-container *ngIf="displayAuthorityRequestForm">
-  <p-dialog header="Yetki Talep Formu" [(visible)]="displayAuthorityRequestForm"
+  <p-dialog header="{{'Yetki_Talep_Formu' | translate}}" [(visible)]="displayAuthorityRequestForm"
     (visibleChange)="visitRequestFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000"
     [draggable]="true" [resizable]="false">
 
@@ -388,7 +384,7 @@
 </ng-container>
 
 <ng-container *ngIf="displayVehicleRequestForm">
-  <p-dialog header="Araç Talep Formu" [(visible)]="displayVehicleRequestForm"
+  <p-dialog header="{{'Araç_Talep_Formu' | translate}}" [(visible)]="displayVehicleRequestForm"
     (visibleChange)="vehicleRequestIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000"
     [draggable]="true" [resizable]="false">
 
@@ -400,7 +396,7 @@
 </ng-container>
 
 
-<p-dialog header="{{'PROFIL_DASHBOARD.AVANS' | translate}}" [(visible)]="displayAdvancePaymentForm" [modal]="true"
+<p-dialog header="{{'Avans_Talep_Formu' | translate}}" [(visible)]="displayAdvancePaymentForm" [modal]="true"
   [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
   <ng-container *ngIf="displayAdvancePaymentForm">
@@ -409,5 +405,14 @@
 
 </p-dialog>
 
+
+<p-dialog header="{{'Masraf_Talep_Formu' | translate}}" [(visible)]="displayExpenseRequestForm" [modal]="true"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+
+  <ng-container *ngIf="displayExpenseRequestForm">
+    <app-dialog-masraf-talebi (visitRequestFormIsSend)="expenseRequestIsSend()"></app-dialog-masraf-talebi>
+  </ng-container>
+
+</p-dialog>
 
 <router-outlet></router-outlet>

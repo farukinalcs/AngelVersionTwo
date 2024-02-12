@@ -25,8 +25,8 @@ export class Error500Component implements OnInit, OnDestroy {
     const subscr = this.modeService.mode.asObservable().subscribe((mode) => {
       document.body.style.backgroundImage =
         mode === 'dark'
-          ? 'url(./assets/media/auth/bg7-dark.jpg)'
-          : 'url(./assets/media/auth/bg7.jpg)';
+          ? 'url(./assets/media/auth/bg10-dark.jpeg)'
+          : 'url(./assets/media/auth/bg10.jpeg)';
     });
     this.unsubscribe.push(subscr);
   }

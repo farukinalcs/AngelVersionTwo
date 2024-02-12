@@ -33,11 +33,11 @@
 
 
 :host ::ng-deep {
-    .mat-tab-group[mat-stretch-tabs]>.mat-tab-header .mat-tab-label {	
-        flex-basis: auto;	
-        flex-grow: 1;	
+    .mat-tab-group[mat-stretch-tabs]>.mat-tab-header .mat-tab-label {
+        flex-basis: auto;
+        flex-grow: 1;
     }
-    
+
     .p-accordion-tab:not(.p-accordion-tab-active) {
         .p-toggleable-content {
             height: 0;
@@ -72,4 +72,23 @@
     .p-card-body {
         background-color: #7239ea0f !important;
     }
+}
+
+.search-icon {
+    background-color: var(--kt-danger);
+    cursor: pointer;
+    width: 45px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    border: none;
+    outline: none;
+    border-radius: 0 39px 39px 0;
+
+}
+
+.search-icon .svg {
+    display: flex;
+    align-items: center;
+    height: 100%;
 }

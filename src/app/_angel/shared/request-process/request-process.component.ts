@@ -49,8 +49,8 @@ export class RequestProcessComponent implements OnInit, OnDestroy {
 
       }else {
         this.toastrService.warning(
-          this.translateService.instant("TOASTR_MESSAGE.SUREC_BULUNAMADI"),
-          this.translateService.instant("TOASTR_MESSAGE.UYARI")
+          this.translateService.instant("Gösterilecek_Süreç_Bulunamadı"),
+          this.translateService.instant("Uyarı")
         );
       }
       this.ref.detectChanges();

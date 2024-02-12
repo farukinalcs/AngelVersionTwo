@@ -9,12 +9,12 @@
             <div class="row">
                 <div class="col-8">
                     <i class="fa-solid fa-medal fs-2 text-danger pe-2"></i>
-                    <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"PROFILE_WIDGETS.KIDEM.KIDEMLILER" | translate}}</span>
+                    <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Kıdemliler" | translate}}</span>
                 </div>
 
                 <div class="col-4 d-flex justify-content-end align-items-center" (click)="showAllNewPerson()">
                     <span class="text-gray-400 text-hover-danger cursor-pointer pt-1 fw-semibold fs-7">
-                        {{"PROFILE_WIDGETS.SHARRED.TUMU" | translate}}
+                        {{"Tümü" | translate}}
                     <i class="fa-solid fa-chevron-right ps-2 fs-7"></i>
                     </span>
                 </div>
@@ -76,14 +76,14 @@
                                 <div class="row mt-10">
                                     <div class="col-12">
                                         <div class="fs-1 fw-bold text-gray-800 text-center mb-13">
-                                            <div>{{"PROFILE_WIDGETS.KIDEM.TEBRIKLER" | translate}}</div>
+                                            <div>{{"Tebrikler" | translate}}</div>
                                             <div>{{item.ad}} {{item.soyad}}</div>
                                         </div>
                                     </div>
         
                                     <div class="col-12">
                                         <div class="fs-6 fw-bold text-gray-800 text-center">
-                                            <div> {{"PROFILE_WIDGETS.KIDEM.MESAJ" | translate : {value1 : item.kidemyil} }} </div>
+                                            <div> {{"KIDEM_KUTLAMASI" | translate : {value1 : item.kidemyil} }} </div>
                                             <!-- <div>{{item.kidemyil}}. Yılın Kutlu Olsun</div> -->
                                             <div>{{item.ad}}</div>
                                         </div>
@@ -119,14 +119,14 @@
 
 
 
-<p-dialog header="{{'PROFILE_WIDGETS.KIDEM.KIDEMLILER' | translate}}" [(visible)]="displayAllSeniors" [modal]="true" [style]="{width: !(this.layoutService.isMobile | async) ? '50vw' : 'none'}"
+<p-dialog header="{{'Kıdemliler' | translate}}" [(visible)]="displayAllSeniors" [modal]="true" [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }"
     [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
-    <div class="container" [ngClass]="{'p-0 pt-3': (this.layoutService.isMobile | async)}" [ngStyle]="{'height': !(this.layoutService.isMobile | async) ? '500px' : '100%'}">
-        <div class="row card" [ngClass]="{'p-5': !(this.layoutService.isMobile | async), 'p-0': (this.layoutService.isMobile | async)}">
+    <div class="container">
+        <div class="row card p-0 p-md-5">
             <div class="col-12">
                 <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="getSeniorPersons($event)">
-                    <mat-tab label="{{'PUBLIC.GUNLUK' | translate}}">
+                    <mat-tab label="{{'Günlük' | translate}}">
                         <!-- <div class="card"> -->
                             <!-- <div class="card-body py-3"> -->
                                 <ng-container *ngIf="todaySeniorPersons.length > 0">
@@ -139,9 +139,9 @@
                                                         <tr
                                                             class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                                                             <th class="text-center rounded-start"></th>
-                                                            <th class="text-center">{{"PROFILE_WIDGETS.SHARRED.ISIM_SOYISIM" | translate}}</th>
-                                                            <th class="text-center">{{"PROFILE_WIDGETS.SHARRED.KIDEM" | translate}}</th>
-                                                            <th class="text-center rounded-end">{{"PROFILE_WIDGETS.SHARRED.BOLUM" | translate}}</th>
+                                                            <th class="text-center">{{"İsim_Soyisim" | translate}}</th>
+                                                            <th class="text-center">{{"Kıdem" | translate}}</th>
+                                                            <th class="text-center rounded-end">{{"Bölüm" | translate}}</th>
                                                         </tr>
                                                     </thead>
     
@@ -166,8 +166,7 @@
                                                                 
                                                             </td>
     
-                                                            <td class="text-center text-muted fw-bold" 
-                                                                [ngClass]="{'fs-4': !(this.layoutService.isMobile | async), 'fs-8': (this.layoutService.isMobile | async)}">
+                                                            <td class="text-center text-muted fw-bold fs-8 fs-md-4">
                                                                 <span
                                                                     class="border border-gray-500 border-2  rounded p-3">
                                                                     {{item.bolum}}
@@ -195,7 +194,7 @@
                         <!-- </div> -->
                     </mat-tab>
 
-                    <mat-tab label="{{'PUBLIC.HAFTALIK' | translate}}">
+                    <mat-tab label="{{'Haftalık' | translate}}">
                         <!-- <div class="card"> -->
                             <!-- <div class="card-body py-3"> -->
                                 <ng-container *ngIf="seniorPersons.length > 0">
@@ -208,9 +207,9 @@
                                                         <tr
                                                             class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                                                             <th class="text-center rounded-start"></th>
-                                                            <th class="text-center">{{"PROFILE_WIDGETS.SHARRED.ISIM_SOYISIM" | translate}}</th>
-                                                            <th class="text-center">{{"PROFILE_WIDGETS.SHARRED.KIDEM" | translate}}</th>
-                                                            <th class="text-center rounded-end">{{"PROFILE_WIDGETS.SHARRED.BOLUM" | translate}}</th>
+                                                            <th class="text-center">{{"İsim_Soyisim" | translate}}</th>
+                                                            <th class="text-center">{{"Kıdem" | translate}}</th>
+                                                            <th class="text-center rounded-end">{{"Bölüm" | translate}}</th>
                                                         </tr>
                                                     </thead>
     
@@ -235,8 +234,7 @@
                                                                 
                                                             </td>
     
-                                                            <td class="text-center text-muted fw-bold"
-                                                                [ngClass]="{'fs-4': !(this.layoutService.isMobile | async), 'fs-8': (this.layoutService.isMobile | async)}">
+                                                            <td class="text-center text-muted fw-bold fs-8 fs-md-4">
                                                                 <span
                                                                     class="border border-gray-500 border-2  rounded p-3">
                                                                     {{item.bolum}}
@@ -264,7 +262,7 @@
                         <!-- </div> -->
                     </mat-tab>
 
-                    <mat-tab label="{{'PUBLIC.AYLIK' | translate}}">
+                    <mat-tab label="{{'Aylık' | translate}}">
                         <!-- <div class="card"> -->
                             <!-- <div class="card-body py-3"> -->
                                 <ng-container *ngIf="seniorPersons.length > 0">
@@ -277,9 +275,9 @@
                                                         <tr
                                                             class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                                                             <th class="text-center rounded-start"></th>
-                                                            <th class="text-center">{{"PROFILE_WIDGETS.SHARRED.ISIM_SOYISIM" | translate}}</th>
-                                                            <th class="text-center">{{"PROFILE_WIDGETS.SHARRED.KIDEM" | translate}}</th>
-                                                            <th class="text-center rounded-end">{{"PROFILE_WIDGETS.SHARRED.BOLUM" | translate}}</th>
+                                                            <th class="text-center">{{"İsim_Soyisim" | translate}}</th>
+                                                            <th class="text-center">{{"Kıdem" | translate}}</th>
+                                                            <th class="text-center rounded-end">{{"Bölüm" | translate}}</th>
                                                         </tr>
                                                     </thead>
     
@@ -304,8 +302,7 @@
                                                                 
                                                             </td>
     
-                                                            <td class="text-center text-muted fw-bold"
-                                                                [ngClass]="{'fs-4': !(this.layoutService.isMobile | async), 'fs-8': (this.layoutService.isMobile | async)}">
+                                                            <td class="text-center text-muted fw-bold fs-8 fs-md-4">
                                                                 <span
                                                                     class="border border-gray-500 border-2  rounded p-3">
                                                                     {{item.bolum}}
@@ -340,13 +337,13 @@
 
     <!-- <ng-template pTemplate="footer">
         <p-button icon="pi pi-times" (click)="displayAllSeniors=false"
-            label="{{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}" class="p-button-text"></p-button>
+            label="{{'Kapat' | translate}}" class="p-button-text"></p-button>
     </ng-template> -->
 
     <ng-template pTemplate="footer">
         <a (click)="displayAllSeniors=false" class="btn btn-danger">
             <i class="fa-solid fa-xmark fs-1"></i>
-            {{'DEMANDED.BUTTON_TEXT.KAPAT' | translate}}
+            {{'Kapat' | translate}}
         </a>
     </ng-template>
 </p-dialog>

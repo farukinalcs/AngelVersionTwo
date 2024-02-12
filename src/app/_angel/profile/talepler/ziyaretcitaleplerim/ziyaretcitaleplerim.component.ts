@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { MyVisitorDemandedModel } from '../../models/myVisitorDemanded';
 import { ProfileService } from '../../profile.service';
 
@@ -29,7 +28,6 @@ export class ZiyaretcitaleplerimComponent implements OnInit, OnDestroy {
 
   constructor(
     private profileService: ProfileService,
-    public layoutService: LayoutService,
     private ref: ChangeDetectorRef,
   ) {
     this.isTableVisible = new Array(this.visits.length).fill(false);

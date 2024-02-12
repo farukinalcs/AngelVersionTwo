@@ -10,6 +10,7 @@ import { finalize, Observable, tap } from 'rxjs';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { AuthService } from '../auth.service';
 import { LoaderService } from 'src/app/_helpers/loader.service';
+import { Router } from '@angular/router';
 
 
 
@@ -21,7 +22,8 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(
     private helperService: HelperService,
     private authService : AuthService,
-    private loaderService : LoaderService
+    private loaderService : LoaderService,
+    private router: Router
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -78,6 +80,10 @@ export class TokenInterceptor implements HttpInterceptor {
             })
 
             this.authService.setAuthFromLocalStorage(responseBody[0].y);
+          }
+
+          if (event.status && event.status == 500 ) {
+            this.router.navigate(['error/500']);
           }
           
         }

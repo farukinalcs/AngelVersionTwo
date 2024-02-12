@@ -46,7 +46,7 @@ export class YemekTipiTanimlamaComponent implements OnInit {
      let blabla = response[0].x;
   
      console.log("setMeal:", blabla);
-     console.log("YEMEK",response);
+     console.log("Yemek",response);
      console.log("SUBMİT",data);
       this.ref.detectChanges();
     });

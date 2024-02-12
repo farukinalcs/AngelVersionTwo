@@ -34,26 +34,28 @@ export class ProfileService {
     ];
 
     
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    // var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    // var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
 
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
+    // var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+    //   keySize : 128 / 8,
+    //   iv : iv,
+    //   mode : CryptoJS.mode.CBC,
+    //   padding : CryptoJS.pad.Pkcs7
+    // });
 
-    var data = {
-      securedata : encryptedParam.toString()
-    };
+    // var data = {
+    //   securedata : encryptedParam.toString()
+    // };
 
-    let options = {
-      // headers : headers,
-      params : data
-    };
+    // let options = {
+    //   // headers : headers,
+    //   params : data
+    // };
 
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    // return this.httpClient.get<any>(API_URL + '/process', options);
+
+    return this.requestMethod(sp);
   }
 
   
@@ -63,25 +65,7 @@ export class ProfileService {
       mkodu : 'yek032',
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
 
@@ -91,25 +75,7 @@ export class ProfileService {
       zamanaralik : zaman,
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getDurations(zaman : string) {
@@ -118,25 +84,7 @@ export class ProfileService {
       zamanaralik : zaman,
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getMyPermissions(yilay : string) {
@@ -145,25 +93,7 @@ export class ProfileService {
       yilay : yilay,
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getMyDemands(kaynak : string) {
@@ -172,25 +102,7 @@ export class ProfileService {
       kaynak : kaynak
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   cancelMyDemands(formid : any, kaynak : any, aciklama : any) {
@@ -201,25 +113,7 @@ export class ProfileService {
       aciklama : aciklama
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   cancelMyDemandsMultiple(arr : any[], aciklama : any) {
@@ -244,25 +138,7 @@ export class ProfileService {
       })
     })
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getDemandProcess(formId : any, formTip : any) {
@@ -272,25 +148,7 @@ export class ProfileService {
       formtipi : formTip
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getDemanded(kaynak : string) {
@@ -299,25 +157,7 @@ export class ProfileService {
       kaynak  : kaynak
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   postDetailSearch(kaynak : string, detailFormValues : any) {
@@ -349,25 +189,7 @@ export class ProfileService {
     }]
 
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getTypeValues(kaynak : string) {
@@ -377,25 +199,7 @@ export class ProfileService {
       kaynak : kaynak
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
   
   getAccessData() {
@@ -405,25 +209,7 @@ export class ProfileService {
       kaynak : 'access'
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   confirmDemandSingle(formId : any, kaynak : any) {
@@ -433,25 +219,7 @@ export class ProfileService {
       kaynak : kaynak
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   confirmDemandMultiple(arr : any[]) {
@@ -470,25 +238,7 @@ export class ProfileService {
       })
     })
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   postMyDemandedDetailSearch(kaynak : any, detailFormValues : any) {
@@ -520,26 +270,7 @@ export class ProfileService {
     }]
     console.log("Yek045 : ", sp);
     
-
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getMyVisitorDemanded() {
@@ -548,25 +279,7 @@ export class ProfileService {
       id : '0'
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getLocations() {
@@ -574,25 +287,7 @@ export class ProfileService {
       mkodu : 'yek047'
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getMyTeam() {
@@ -600,25 +295,7 @@ export class ProfileService {
       {mkodu : 'yek048'}
     ];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   postOvertimeOrVacationDemand(kaynak : string, form : any) {
@@ -639,25 +316,7 @@ export class ProfileService {
       aciklama : form.aciklama
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   calculateVacationTime(form : any) {
@@ -675,25 +334,7 @@ export class ProfileService {
       kaynak : 'izin'
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getMyTaskList() {
@@ -701,25 +342,7 @@ export class ProfileService {
       {mkodu : 'yek051'}
     ];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getIncompleteTimes(zamanAralik : string) {
@@ -729,25 +352,7 @@ export class ProfileService {
     }
     ];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
   
 
@@ -758,25 +363,7 @@ export class ProfileService {
     }
     ];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getNewPersons(zamanAralik : string) {
@@ -786,25 +373,7 @@ export class ProfileService {
     }
     ];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getPersonsBirthday(zamanAralik : string) {
@@ -813,25 +382,7 @@ export class ProfileService {
       zamanaralik : zamanAralik
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getSeniorPersons(zamanAralik : string) {
@@ -841,25 +392,7 @@ export class ProfileService {
     }
     ];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
 
@@ -876,25 +409,7 @@ export class ProfileService {
     }
     ];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
 
@@ -927,25 +442,7 @@ export class ProfileService {
     //   kaynak : kaynak
     // }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   deleteFileTypeForDemandType(belge : any[], kaynak : any) {
@@ -965,25 +462,7 @@ export class ProfileService {
     //   kaynak : kaynak
     // }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getFileTypeForDemandType(tip : any, kaynak : any) {
@@ -993,25 +472,7 @@ export class ProfileService {
       kaynak : kaynak
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getSelectedDayMenus() {
@@ -1019,25 +480,7 @@ export class ProfileService {
       mkodu : 'yek063',
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
 
@@ -1048,25 +491,7 @@ export class ProfileService {
       kaynak : kaynak
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getFileForDemand(id : any, uzanti : any) {
@@ -1090,25 +515,7 @@ export class ProfileService {
     }
     ];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   removeVisit(visitId : any, description : any) {
@@ -1118,25 +525,7 @@ export class ProfileService {
       aciklama : description
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   postAuthorityRequest(formValues: any, isRequest: any) {
@@ -1153,25 +542,7 @@ export class ProfileService {
       sicillerim: formValues.sicillerim.toString()
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
 
@@ -1180,25 +551,7 @@ export class ProfileService {
       mkodu : 'yek078'
     }]
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
 
@@ -1209,25 +562,7 @@ export class ProfileService {
       id: visitorId.toString()
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   cancelVisitor(visitId: any, visitorId: any) {
@@ -1237,25 +572,7 @@ export class ProfileService {
       id: visitorId.toString()
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getPersonsList() {
@@ -1288,25 +605,7 @@ export class ProfileService {
       okod7: ''
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize: 128 / 8,
-      iv: iv,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata: encryptedParam.toString()
-    };
-
-    let options = {
-      params: data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   postAdvancedRequest(formValues: any) {
@@ -1321,25 +620,7 @@ export class ProfileService {
       ibansave: formValues.ibanKaydet.toString(),
     }];
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
-      iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata : encryptedParam.toString()
-    };
-
-    let options = {
-      params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.requestMethod(sp);
   }
 
   getIbanList() {
@@ -1347,6 +628,10 @@ export class ProfileService {
       mkodu : 'yek086'
     }];
 
+    return this.requestMethod(sp);
+  }
+
+  requestMethod(sp : any[]){
     var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
     var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
 
@@ -1363,28 +648,6 @@ export class ProfileService {
 
     let options = {
       params : data
-    };
-
-    return this.httpClient.get<any>(API_URL + '/process', options);
-  }
-
-  sendRequestForProcess(sp: any[]) {
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize: 128 / 8,
-      iv: iv,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7
-    });
-
-    var data = {
-      securedata: encryptedParam.toString()
-    };
-
-    let options = {
-      params: data
     };
 
     return this.httpClient.get<any>(API_URL + '/process', options);

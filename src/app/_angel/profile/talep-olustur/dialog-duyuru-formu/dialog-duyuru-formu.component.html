@@ -9,7 +9,7 @@
                     </div>
                 </div>
 
-                <app-form-stepper [stepperFields]="stepperFields"></app-form-stepper>
+                <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields"></app-form-stepper>
 
                 <div class="row w-xl-700px">
                     <div class="col-12">
@@ -22,10 +22,10 @@
                                             <div class="col-12">
                                                 <div class="fv-row mb-10 fv-plugins-icon-container">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"BULTEN_FORM_DIALOG.FORM.BASLIK" | translate}}</span>
+                                                        <span class="required">{{"Başlık" | translate}}</span>
                                                     </label>
 
-                                                    <input type="text" class="form-control form-control-lg form-control-solid" maxlength="50" placeholder="{{'BULTEN_FORM_DIALOG.FORM.BASLIK_PLACEHOLDER' | translate}}" formControlName="title">
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" maxlength="50" placeholder="{{'Başlık_Giriniz' | translate}}" formControlName="title">
                                                     <ng-container *ngIf="announcementForm.controls['title']?.value">
                                                         <div class="text-end">
                                                             <span class="badge badge-light-danger">{{ announcementForm.controls['title'].value.length }} / 50</span>
@@ -38,10 +38,10 @@
                                             <div class="col-12">
                                                 <div class="fv-row mb-10 fv-plugins-icon-container">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"BULTEN_FORM_DIALOG.FORM.ACIKLAMA" | translate}}</span>
+                                                        <span class="required">{{"Açıklama" | translate}}</span>
                                                     </label>
 
-                                                    <textarea class="form-control form-control-solid" rows="3" maxlength="220" formControlName="description" placeholder="{{'BULTEN_FORM_DIALOG.FORM.ACIKLAMA_PLACEHOLDER' | translate}}"></textarea>
+                                                    <textarea class="form-control form-control-solid" rows="3" maxlength="220" formControlName="description" placeholder="{{'Açıklama_Giriniz' | translate}}"></textarea>
                                                     <ng-container *ngIf="announcementForm.controls['description']?.value">
                                                         <div class="text-end">
                                                             <span class="badge badge-light-danger">{{ announcementForm.controls['description'].value.length }} / 220</span>
@@ -63,7 +63,7 @@
                                             <div class="col-6">
                                                 <div class="fv-row mb-10 fv-plugins-icon-container">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"BULTEN_FORM_DIALOG.FORM.BASLANGIC_TARIHI" | translate}}</span>
+                                                        <span class="required">{{"Başlangıç_Tarihi" | translate}}</span>
                                                     </label>
 
                                                     <input type="date" class="form-control form-control-lg form-control-solid" formControlName="startDate">
@@ -75,7 +75,7 @@
                                             <div class="col-6">
                                                 <div class="fv-row mb-10 fv-plugins-icon-container">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"BULTEN_FORM_DIALOG.FORM.BITIS_TARIHI" | translate}}</span>
+                                                        <span class="required">{{"Bitiş_Tarihi" | translate}}</span>
                                                     </label>
 
                                                     <input type="date" class="form-control form-control-lg form-control-solid" formControlName="endDate">
@@ -87,7 +87,7 @@
                                             <div class="col-12">
                                                 <div class="fv-row mb-10 fv-plugins-icon-container">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"BULTEN_FORM_DIALOG.FORM.YAYINLAYAN" | translate}}</span>
+                                                        <span class="required">{{"Yayınlayan" | translate}}</span>
                                                     </label>
 
                                                     <input type="text" class="form-control form-control-lg form-control-solid" formControlName="owner">
@@ -131,7 +131,7 @@
                         </form>
                     </div>
 
-                    <div class="col-12 d-flex align-items-start" [ngClass]="{'justify-content-center': (this.layoutService.isMobile | async), 'justify-content-end': !(this.layoutService.isMobile | async) }">
+                    <div class="col-12 d-flex align-items-start justify-content-center justify-content-md-end">
                         <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
                                 <ng-container *ngIf=" 7 > currentStep$.value && currentStep$.value > 1">
@@ -139,7 +139,7 @@
                                         (click)="prevStep()">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                            {{"BULTEN_FORM_DIALOG.FORM.GERI" | translate}}
+                                            {{"Geri" | translate}}
                                     </button>
                                 </ng-container>
 
@@ -147,7 +147,7 @@
                                     <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                            {{"BULTEN_FORM_DIALOG.FORM.KAPAT" | translate}}
+                                            {{"Kapat" | translate}}
                                     </button>
                                 </ng-container>
                             </div>
@@ -157,19 +157,25 @@
                                     <ng-container *ngIf="currentStep$.value < formsCount - 1">
                                         <button type="button" class="btn btn-lg btn-danger me-3" (click)="nextStep()">
                                             <span class="indicator-label">
-                                                {{"BULTEN_FORM_DIALOG.FORM.ILERI" | translate}} {{ " " }}
+                                                {{"İleri" | translate}} {{ " " }}
                                                 <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
                                                     class="svg-icon svg-icon-3 ms-2 me-0"></span>
                                                 <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                                    {{"BULTEN_FORM_DIALOG.FORM.GONDER" | translate}}
+                                                    {{"Gönder" | translate}}
                                                 </ng-container>
                                             </span>
                                         </button>
                                     </ng-container>
                                     <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="closedFormDialog()">
+                                            <span class="indicator-label">
+                                                {{"Kapat" | translate}}
+                                            </span>
+                                        </button>
+                                        
                                         <button type="button" class="btn btn-lg btn-danger me-3" (click)="getFormValues()">
                                             <span class="indicator-label">
-                                                {{"BULTEN_FORM_DIALOG.FORM.GONDER" | translate}}
+                                                {{"Gönder" | translate}}
                                             </span>
                                         </button>
 

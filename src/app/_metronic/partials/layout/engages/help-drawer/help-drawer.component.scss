@@ -1,0 +1,67 @@
+.search-icon {
+    background-color: var(--kt-danger);
+    cursor: pointer;
+    width: 45px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    border: none;
+    outline: none;
+    border-radius: 0 39px 39px 0;
+
+}
+
+.search-icon .svg {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+
+.giris {
+    position: relative;
+    animation-name: giris;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+}
+
+@keyframes giris {
+    0% {
+        left: -600px;
+        top: 0px;
+        display: none;
+    }
+
+    100% {
+        left: 1px;
+        top: 0px;
+    }   
+}
+
+.cikis {
+    position: relative;
+    animation-name: cikis;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+}
+
+@keyframes cikis {
+    0% {
+        left: 1px;
+        top: 0px;
+    }
+
+    25%{
+        display: none;
+    }
+
+    100% {
+        left: 600px;
+        top: 0px;
+        display: none;
+    }   
+}

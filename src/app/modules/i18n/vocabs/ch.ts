@@ -3,7 +3,7 @@ export const locale = {
   lang: 'zh',
   data: {
     TRANSLATOR: {
-      SELECT: '选择你的语言',
+      Seçim_Yapınız: '选择你的语言',
     },
     MENU: {
       NEW: '新',
@@ -12,7 +12,7 @@ export const locale = {
       PAGES: 'Pages',
       FEATURES: '特征',
       APPS: '应用',
-      DASHBOARD: '仪表板',
+      Genel_Bakış: '仪表板',
     },
     AUTH: {
       GENERAL: {
@@ -22,13 +22,13 @@ export const locale = {
         SIGNUP_BUTTON: '注册',
         FORGOT_BUTTON: '忘记密码',
         BACK_BUTTON: '背部',
-        PRIVACY: '隐私',
-        LEGAL: '法律',
-        CONTACT: '联系',
+        Gizlilik: '隐私',
+        Legal: '法律',
+        İletişim: '联系',
       },
       LOGIN: {
         TITLE: '创建帐号',
-        BUTTON: '签到',
+        Giriş_Yap: '签到',
       },
       FORGOT: {
         TITLE: 'Forgotten Password?',
@@ -41,11 +41,11 @@ export const locale = {
         SUCCESS: 'Your account has been successfuly registered.',
       },
       INPUT: {
-        EMAIL: 'Email',
+        Email: 'Email',
         FULLNAME: 'Fullname',
-        PASSWORD: 'Password',
-        CONFIRM_PASSWORD: 'Confirm Password',
-        USERNAME: '用戶名',
+        Şifre: 'Password',
+        Şifreyi_Onayla: 'Confirm Password',
+        Kullanıcı_Adı: '用戶名',
       },
       VALIDATION: {
         INVALID: '{{name}} is not valid',
@@ -71,7 +71,7 @@ export const locale = {
         BY_TYPE: 'by Type',
         BUSINESS: 'Business',
         INDIVIDUAL: 'Individual',
-        SEARCH: 'Search',
+        Arama: 'Search',
         IN_ALL_FIELDS: 'in all fields',
       },
       ECOMMERCE: 'eCommerce',

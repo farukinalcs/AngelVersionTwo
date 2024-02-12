@@ -384,11 +384,18 @@
 }
 
 .menu-state-title-primary {
+    // .menu-item {
+    //     @include menu-link-hover-state( var(--kt-primary), null, null, null, null );
+    //     @include menu-link-here-state( var(--kt-primary), null, null, null, null );
+    //     @include menu-link-show-state( var(--kt-primary), null, null, null, null );
+    //     @include menu-link-active-state( var(--kt-primary), null, null, null, null );
+    // }
+
     .menu-item {
-        @include menu-link-hover-state( var(--kt-primary), null, null, null, null );
-        @include menu-link-here-state( var(--kt-primary), null, null, null, null );
-        @include menu-link-show-state( var(--kt-primary), null, null, null, null );
-        @include menu-link-active-state( var(--kt-primary), null, null, null, null );
+        @include menu-link-hover-state( var(--kt-danger), null, null, null, null );
+        @include menu-link-here-state( var(--kt-danger), null, null, null, null );
+        @include menu-link-show-state( var(--kt-danger), null, null, null, null );
+        @include menu-link-active-state( var(--kt-danger), null, null, null, null );
     }
 }
 
@@ -422,12 +429,20 @@
 }
 
 .menu-state-icon-primary {
+    // .menu-item {
+    //     //$title-color, $icon-color, $bullet-color, $arrow-color, $bg-color
+    //     @include menu-link-hover-state( null, var(--kt-primary), null, null, null );
+    //     @include menu-link-here-state( null, var(--kt-primary), null, null, null );
+    //     @include menu-link-show-state( null, var(--kt-primary), null, null, null );
+    //     @include menu-link-active-state( null, var(--kt-primary), null, null, null );
+    // }
+
     .menu-item {
         //$title-color, $icon-color, $bullet-color, $arrow-color, $bg-color
-        @include menu-link-hover-state( null, var(--kt-primary), null, null, null );
-        @include menu-link-here-state( null, var(--kt-primary), null, null, null );
-        @include menu-link-show-state( null, var(--kt-primary), null, null, null );
-        @include menu-link-active-state( null, var(--kt-primary), null, null, null );
+        @include menu-link-hover-state( null, var(--kt-danger), null, null, null );
+        @include menu-link-here-state( null, var(--kt-danger), null, null, null );
+        @include menu-link-show-state( null, var(--kt-danger), null, null, null );
+        @include menu-link-active-state( null, var(--kt-danger), null, null, null );
     }
 }
 
@@ -461,12 +476,20 @@
 }
 
 .menu-state-bullet-primary {
+    // .menu-item {
+    //     //$title-color, $icon-color, $bullet-color, $arrow-color, $bg-color
+    //     @include menu-link-hover-state( null, null, var(--kt-primary), null, null );
+    //     @include menu-link-here-state( null, null, var(--kt-primary), null, null );
+    //     @include menu-link-show-state( null, null, var(--kt-primary), null, null );
+    //     @include menu-link-active-state( null, null, var(--kt-primary), null, null );
+    // }
+
     .menu-item {
         //$title-color, $icon-color, $bullet-color, $arrow-color, $bg-color
-        @include menu-link-hover-state( null, null, var(--kt-primary), null, null );
-        @include menu-link-here-state( null, null, var(--kt-primary), null, null );
-        @include menu-link-show-state( null, null, var(--kt-primary), null, null );
-        @include menu-link-active-state( null, null, var(--kt-primary), null, null );
+        @include menu-link-hover-state( null, null, var(--kt-danger), null, null );
+        @include menu-link-here-state( null, null, var(--kt-danger), null, null );
+        @include menu-link-show-state( null, null, var(--kt-danger), null, null );
+        @include menu-link-active-state( null, null, var(--kt-danger), null, null );
     }
 }
 

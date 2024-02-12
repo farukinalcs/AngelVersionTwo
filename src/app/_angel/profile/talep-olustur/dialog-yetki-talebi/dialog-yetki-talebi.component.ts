@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output }
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
-import { LayoutService } from 'src/app/_metronic/layout';
 import { ProfileService } from '../../profile.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,10 +21,10 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
 
   stepperFields: any[] = [
-    { class: 'stepper-item current', number: 1, title: 'Geçiş Grubu', desc: '' },
-    { class: 'stepper-item', number: 2, title: 'Süreli-Süresiz', desc: '' },
-    { class: 'stepper-item', number: 3, title: 'Açıklama', desc: '' },
-    { class: 'stepper-item', number: 4, title: 'Özet', desc: '' },
+    { class: 'stepper-item current', number: 1, title: this.translateService.instant('Geçiş_Grubu'), desc: '' },
+    { class: 'stepper-item', number: 2, title: this.translateService.instant('Süreli_Süresiz'), desc: '' },
+    { class: 'stepper-item', number: 3, title: this.translateService.instant('Açıklama'), desc: '' },
+    { class: 'stepper-item', number: 4, title: this.translateService.instant('Tamamlandı'), desc: '' },
   ];
 
   authorityForm: FormGroup;
@@ -37,14 +36,13 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
   formValues: any;
   transitionGroup: any[] = [];
   selectedType  : any;
-  dropdownEmptyMessage : any = this.translateService.instant('PUBLIC.DATA_NOT_FOUND');
+  dropdownEmptyMessage : any = this.translateService.instant('Kayıt_Bulunamadı');
   user$: Observable<UserType>;
   displayPersonsList: boolean = false;
   persons: any[] = [];
 
   constructor(
     private profileService: ProfileService,
-    public layoutService: LayoutService,
     private ref: ChangeDetectorRef,
     private breakpointObserver: BreakpointObserver,
     private translateService : TranslateService,
@@ -60,7 +58,7 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
     this.getCurrentUserInformations();
     this.getTransitionGroup('Yetkitalep');
     this.setResponsiveForm();
-    this.changedDurationType()
+    this.changedDurationType();
   }
 
   getMenuConfig() {
@@ -101,8 +99,8 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
   nextStep() { // Sonraki Adıma Geçtiğinde Çalışan Fonksiyon
     if (!this.canProceedToNextStep()) {
       this.toastrService.error(
-        this.translateService.instant('TOASTR_MESSAGE.ALANLARI_DOLDURMALISINIZ'),
-        this.translateService.instant('TOASTR_MESSAGE.HATA')
+        this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
+        this.translateService.instant('Hata')
       );
       return;
     }
@@ -239,8 +237,18 @@ export class DialogYetkiTalebiComponent implements OnInit, OnDestroy {
   getTooltipScript(): string {
     const personsLength = this.persons.length;
     const personsName = this.persons.map((person, index) => `${index + 1}) ${person.ad} ${person.soyad}`).join("\r\n");
+    let firstPerson: string = '';
     
-    return `${personsLength} Tane Personel Seçildi.\r\n${personsName}`;
+    if (personsLength == 1) {
+      firstPerson = `${this.persons[0].ad} ${this.persons[0].soyad} Seçildi`;      
+    } else if (personsLength == 2) {
+      firstPerson = `${this.persons[0].ad} ${this.persons[0].soyad} ve ${this.persons[1].ad} ${this.persons[1].soyad} Seçildi`;      
+    } else if (personsLength > 2) {
+      firstPerson = `${this.persons[0].ad} ${this.persons[0].soyad}, ${this.persons[1].ad} ${this.persons[1].soyad} ve ${personsLength - 2} Kişi Daha Seçildi`;      
+    }
+    
+    // return `${personsLength} Tane Personel Seçildi.\r\n${personsName}`;
+    return firstPerson;
   }
 
   ngOnDestroy(): void {
