@@ -99,7 +99,6 @@ export class PendingRequestsComponent implements OnInit, OnDestroy {
           allowEscapeKey: false,
         });
       } else if (
-        /* Read more about handling dismissals below */
         result.dismiss === Swal.DismissReason.cancel
       ) {
         Swal.fire({
@@ -117,26 +116,25 @@ export class PendingRequestsComponent implements OnInit, OnDestroy {
   }
 
   confirmDemandSingle(formid: any, kaynak: any, aktifMenu: any) {
-    if (kaynak == 'İzin') {
-      kaynak = 'izin';
-    } else if (kaynak == 'Fazla Mesai') {
+    if (kaynak == 'Fazla Mesai') {
       kaynak = 'fm';
     } else if (kaynak == 'Yetki') {
       kaynak = 'sureliyetki';
     }
 
-    // this.profilService.confirmDemandSingle(formid, kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
-    //   const data = response[0].x;
-    //   console.log("Talep Onaylama :", response);
 
-    //   if (data[0].sonuc == 1) {
-    //     this.toastrService.success(
-    //       this.translateService.instant("Talep_Onaylandı"),
-    //       this.translateService.instant("Başarılı")
-    //     );
-    //     this.getDemandsEvent.emit(aktifMenu);
-    //   }
-    // });
+    this.profilService.confirmDemandSingle(formid, kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+      const data = response[0].x;
+      console.log("Talep Onaylama :", response);
+
+      if (data[0].sonuc == 1) {
+        this.toastrService.success(
+          this.translateService.instant("Talep_Onaylandı"),
+          this.translateService.instant("Başarılı")
+        );
+        this.getDemandsEvent.emit(aktifMenu);
+      }
+    });
   }
 
   confirmDemandMultiple(aktifMenu: any) {
@@ -247,7 +245,7 @@ export class PendingRequestsComponent implements OnInit, OnDestroy {
   }
 
   showCancelDemandDialog(item: any, tip: any) {
-    // this.cancelMultipleDialogEvent.emit({ item, tip });
+    this.cancelMultipleDialogEvent.emit({ item, tip });
   }
 
   showUploadedFiles(selectedDemand: any) {
