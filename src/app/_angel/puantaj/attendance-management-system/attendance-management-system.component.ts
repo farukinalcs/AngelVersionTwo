@@ -1,12 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
+import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
+import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { AttendanceService } from 'src/app/_angel/puantaj/attendance.service';
+import { OKodFieldsModel } from '../../profile/models/oKodFields';
+import { ProfileService } from '../../profile/profile.service';
 
 @Component({
-  selector: 'app-explore-main-drawer',
-  templateUrl: './explore-main-drawer.component.html',
+  selector: 'app-attendance-management-system',
+  templateUrl: './attendance-management-system.component.html',
+  styleUrls: ['./attendance-management-system.component.scss']
 })
-export class ExploreMainDrawerComponent implements OnInit, OnDestroy {
+export class AttendanceManagementSystemComponent implements OnInit, OnDestroy {
+
   private ngUnsubscribe = new Subject();
 	
   tabList: any[] = [
@@ -18,11 +24,17 @@ export class ExploreMainDrawerComponent implements OnInit, OnDestroy {
   selectedTab = '0';
   selectedItems: any[];
 	filterText: string = '';
+  workShifts: OKodFieldsModel[];
 	
-  constructor(private puantajService: AttendanceService) {}
+  constructor(
+    private puantajService: AttendanceService,
+    private profileService: ProfileService,
+    private ref: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.getSelectedRows();
+    this.getWorkShifts();
   }
 
   getSelectedRows() {
@@ -49,12 +61,27 @@ export class ExploreMainDrawerComponent implements OnInit, OnDestroy {
       firstPerson = `${this.selectedItems[0].ad} ${this.selectedItems[0].soyad}, ${this.selectedItems[1].ad} ${this.selectedItems[1].soyad} ve ${personsLength - 2} Kişi Daha Seçildi`;      
     }
     
-    // return `${personsLength} Tane Personel Seçildi.\r\n${personsName}`;
     return firstPerson;
   }
+
+  getWorkShifts() {
+    this.profileService.getTypeValues('mesailer').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
+      const data = response[0].x;
+      const message = response[0].z;
+  
+      if (message.islemsonuc == 1) {
+        this.workShifts = data;
+        console.log("Mesailer : ", data);
+      }
+  
+      this.ref.detectChanges();
+    });
+  }
+  
 
 	ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
   }
+
 }

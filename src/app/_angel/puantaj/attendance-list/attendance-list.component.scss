@@ -1,0 +1,102 @@
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+::ng-deep {
+    .p-progressbar .p-progressbar-value {
+        background: var(--kt-danger) !important;
+    }
+
+    .p-button:enabled:hover {
+        background: var(--kt-danger-active);
+        color: #ffffff;
+        border-color: var(--kt-danger);
+    }
+
+    .p-button {
+        color: #ffffff;
+        background: var(--kt-danger);
+        border: 1px solid var(--kt-danger);
+        padding: 0.75rem 1.25rem;
+        font-size: 1rem;
+        transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+        border-radius: 6px;
+    }
+
+    .p-button:focus {
+        box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--kt-danger-active), 0 1px 2px 0 black;
+    }
+
+    .p-button:enabled:active {
+        background: var(--kt-danger);
+        color: #ffffff;
+        border-color: var(--kt-danger);
+    }
+
+    .p-speeddial-action {
+        width: 3rem;
+        height: 3rem;
+        background: var(--kt-gray-500);
+        color: #fff;
+    }
+
+    .p-speeddial-action:hover {
+        background: var(--kt-gray-900);
+        color: #ffffff;
+    }
+
+
+
+
+    .cell-time-passive {
+        background-color: #ff9494 !important;
+        // color: var(--kt-light) !important;
+    }
+
+    .cell-weekend {
+        background-color: #5e738b !important;
+        color: var(--kt-light) !important;
+    }
+
+    .cell-time-zero {
+        color: gainsboro !important;
+    }
+
+    
+
+    .cell-warning {
+        background-color: #ffa500 !important;
+    }
+
+    .cell-green {
+        background-color: #adff2f !important;
+    }
+
+    .cell-blue {
+        background-color: #5e738b !important;
+        color: var(--kt-white) !important;
+    }
+
+    .cell-lateness {
+        font-weight: 900 !important;
+        color: red;
+    }
+
+    .cell-lateness-manuel-entry {
+        text-decoration: underline !important;
+        font-weight: 900 !important;
+        color: red;
+        text-decoration-color: red;
+    }
+
+    .cell-time-active {
+        font-weight: 900 !important;
+    }
+
+    .cell-time-active-manuel-entry {
+        text-decoration: underline !important;
+        font-weight: 900 !important;
+    }
+}

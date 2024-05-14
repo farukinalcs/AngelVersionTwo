@@ -1,0 +1,5 @@
+:host ::ng-deep {
+          input[type="radio"]:checked {
+                    background-color: var(--kt--danger) !important;
+          }
+}

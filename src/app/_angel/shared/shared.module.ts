@@ -9,6 +9,7 @@ import { FormStepperComponent } from './form-stepper/form-stepper.component';
 import { DetailSearchComponent } from './detail-search/detail-search.component';
 import { RequestProcessComponent } from './request-process/request-process.component';
 import { RequestMenuComponent } from './request-menu/request-menu.component';
+import { SearchFilterPipe } from 'src/app/_helpers/pipes/search-filter.pipe';
 
 
 
@@ -22,10 +23,14 @@ import { RequestMenuComponent } from './request-menu/request-menu.component';
     FormStepperComponent,
     DetailSearchComponent,
     RequestProcessComponent,
-    RequestMenuComponent
+    RequestMenuComponent,
+    SearchFilterPipe 
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    SearchFilterPipe
   ]
 })
 export class SharedModule { }

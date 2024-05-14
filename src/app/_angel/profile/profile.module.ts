@@ -107,6 +107,7 @@ import { PendingRequestsComponent } from './talepler/talepedilenler/pending-requ
 
 import { HttpClientModule } from '@angular/common/http';
 import { DialogMasrafTalebiComponent } from './talep-olustur/dialog-masraf-talebi/dialog-masraf-talebi.component';
+import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 
 
 
@@ -130,10 +131,10 @@ LicenseManager.setLicenseKey(
     DialogLokasyonDetayComponent,
     DialogFazlaMesaiTalebiComponent,
     DialogZiyaretciTalebiComponent,
-    SearchFilterPipe,
+    // SearchFilterPipe,
     DialogIzinTalebiComponent,
     EksikSurelerimComponent,
-    TimeFormatPipe,
+    // TimeFormatPipe,
     DogumGunuComponent,
     YemekMenuComponent,
     YeniKatilanlarComponent,
@@ -149,7 +150,7 @@ LicenseManager.setLicenseKey(
     DialogDuyuruFormuComponent,
     ProfilTanimlamalarComponent,
     DosyaTipiTanimlamaComponent,
-    FirstSevenPipe,
+    // FirstSevenPipe,
     YemekMenuTumuComponent,
     UploadedFilesComponent,
     VisitorUploadedFilesComponent,
@@ -161,14 +162,14 @@ LicenseManager.setLicenseKey(
     DetailSearchComponent,
     RequestProcessComponent,
     RequestMenuComponent,
-    FormatFileSizePipe,
+    // FormatFileSizePipe,
     VisitorRequestsComponent,
     DialogYetkiTalebiComponent,
     YemekTipiTanimlamaComponent,
     YemekMenuTanimlamaComponent,
     SicilListeComponent,
     DialogAracTalebiComponent,
-    IbanMaskPipe,
+    // IbanMaskPipe,
     PendingRequestsComponent,
     DialogMasrafTalebiComponent
   ],
@@ -226,7 +227,8 @@ LicenseManager.setLicenseKey(
     ExtrasModule,
     PickListModule,
     RatingModule,
-    AgGridModule
+    AgGridModule,
+    CustomPipeModule
   ],
   providers:[DatePipe]
 
