@@ -1,0 +1,25 @@
+.table-responsive {
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch !important;
+          /* Mobil cihazlarda daha iyi kaydırma */
+}
+
+.table {
+          font-size: 12px !important;
+}
+
+.table th,
+.table td {
+          padding: 0.1px !important;
+          white-space: nowrap !important;
+}
+
+.table th.text-center,
+.table td.text-center {
+          text-align: center !important;
+}
+
+.table th,
+.table td {
+          min-width: 30px !important;
+}

@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { delay, Subject, takeUntil } from 'rxjs';
+import { combineLatest, delay, filter, map, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
 import {
   ColDef,
@@ -75,7 +75,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
   public columnDefs: (ColDef | ColGroupDef)[] = [
     {
       headerName: '#',
-      colId: '#',
+      colId: 'checkbox',
       pinned: 'left',
       minWidth: 50,
       maxWidth: 50,
@@ -83,6 +83,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
       headerCheckboxSelectionFilteredOnly: true,
       filter: false,
       checkboxSelection: true,
+      hide: false,
     },
     {
       headerName: this.translateService.instant('Fotoğraf'),
@@ -97,6 +98,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
       cellStyle: {},
       cellRenderer: (params: any) => this.getImageGrid(params),
       cellRendererParams: { exampleParameter: 'red' },
+      hide: false,
     },
 
     //Kişi Bilgileri
@@ -106,6 +108,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
       headerClass: 'person-group',
       groupId: 'PersonInfoGroup',
       // headerGroupComponent: CustomHeaderGroup,
+      hide: false,
       children: [
         {
           headerName: this.translateService.instant('SID'),
@@ -118,6 +121,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           //   buttons: ['reset', 'apply']
           // },
           cellClass: (params) => this.applyWeekendClass(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('Sicil_No'),
@@ -126,12 +130,21 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: 'agTextColumnFilter',
           filterParams: {
             // buttons: ['reset', 'apply'],
-            textMatcher: ({ filterOption, value, filterText }: { filterOption: string, value: string, filterText: string }) => {
+            textMatcher: ({
+              filterOption,
+              value,
+              filterText,
+            }: {
+              filterOption: string;
+              value: string;
+              filterText: string;
+            }) => {
               return true;
             },
-            debounceMs: 3000
+            debounceMs: 3000,
           },
           cellClass: (params) => this.applyWeekendClass(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('Ad'),
@@ -140,11 +153,20 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: 'agTextColumnFilter',
           filterParams: {
             buttons: ['reset', 'apply'],
-            textMatcher: ({ filterOption, value, filterText }: { filterOption: string, value: string, filterText: string }) => {
+            textMatcher: ({
+              filterOption,
+              value,
+              filterText,
+            }: {
+              filterOption: string;
+              value: string;
+              filterText: string;
+            }) => {
               return true;
             },
           },
           cellClass: (params) => this.applyWeekendClass(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('Soyad'),
@@ -153,37 +175,46 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: 'agTextColumnFilter',
           filterParams: {
             buttons: ['reset', 'apply'],
-            textMatcher: ({ filterOption, value, filterText }: { filterOption: string, value: string, filterText: string }) => {
+            textMatcher: ({
+              filterOption,
+              value,
+              filterText,
+            }: {
+              filterOption: string;
+              value: string;
+              filterText: string;
+            }) => {
               return true;
             },
             // textMatcher: ({ filterOption, value, filterText }: { filterOption: string, value: string, filterText: string }) => {
-              // if (filterText == null) {
-              //   return false;
-              // }
-              // switch (filterOption) {
-              //   case 'contains':
-              //     return value.indexOf(filterText) >= 0;
-              //   case 'notContains':
-              //     return value.indexOf(filterText) < 0;
-              //   case 'equals':
-              //     return value === filterText;
-              //   case 'notEqual':
-              //     return value != filterText;
-              //   case 'startsWith':
-              //     return value.indexOf(filterText) === 0;
-              //   case 'endsWith':
-              //     const index = value.lastIndexOf(filterText);
-              //     return (
-              //       index >= 0 && index === value.length - filterText.length
-              //     );
-              //   default:
-              //     // should never happen
-              //     console.warn('invalid filter type ' + filterOption);
-              //     return false;
-              // }
+            // if (filterText == null) {
+            //   return false;
+            // }
+            // switch (filterOption) {
+            //   case 'contains':
+            //     return value.indexOf(filterText) >= 0;
+            //   case 'notContains':
+            //     return value.indexOf(filterText) < 0;
+            //   case 'equals':
+            //     return value === filterText;
+            //   case 'notEqual':
+            //     return value != filterText;
+            //   case 'startsWith':
+            //     return value.indexOf(filterText) === 0;
+            //   case 'endsWith':
+            //     const index = value.lastIndexOf(filterText);
+            //     return (
+            //       index >= 0 && index === value.length - filterText.length
+            //     );
+            //   default:
+            //     // should never happen
+            //     console.warn('invalid filter type ' + filterOption);
+            //     return false;
+            // }
             // },
           },
           cellClass: (params) => this.applyWeekendClass(params),
+          hide: false,
         },
 
         // {
@@ -228,187 +259,67 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           enableRowGroup: true,
           hide: true,
           filter: OrganizationColumnFilterComponent,
-          // filterParams: {
-          //   values: async (params) => {
-          //     try {
-          //       // async update simulated using setTimeout()
-          //       setTimeout(async () => {
-          //           // fetch values from server
-          //           const values = await this.getOrganizationInfo('cbo_firma');
-          //           // supply values to the set filter
-          //           params.success(values);
-          //       }, 3000);
-          //     } catch (error) {
-          //       console.error("An error occurred while fetching organization info:", error);
-          //       // Alternatively, you can handle the error in a different way here
-          //       // For example, you can display an error message to the user
-          //       // or perform any other action as needed
-          //     }
-          //   }
-          // } as ISetFilterParams,
         },
 
         {
+          colId: 'cbo_altfirma',
           headerName: this.translateService.instant('Alt_Firma'),
           field: 'altfirmaad',
           headerTooltip: this.translateService.instant('Alt_Firma_Adı'),
           rowGroup: false,
           enableRowGroup: true,
           hide: true,
-          filter: 'agSetColumnFilter',
-          filterParams: {
-            values: async (params) => {
-              try {
-                // async update simulated using setTimeout()
-                setTimeout(async () => {
-                    // fetch values from server
-                    const values = await this.getOrganizationInfo('cbo_altfirma');
-                    // supply values to the set filter
-                    params.success(values);
-                }, 3000);
-              } catch (error) {
-                console.error("An error occurred while fetching organization info:", error);
-                // Alternatively, you can handle the error in a different way here
-                // For example, you can display an error message to the user
-                // or perform any other action as needed
-              }
-            }
-          } as ISetFilterParams,
+          filter: OrganizationColumnFilterComponent,
         },
         {
+          colId: 'cbo_yaka',
           headerName: this.translateService.instant('Yaka'),
           field: 'yakaad',
           headerTooltip: this.translateService.instant('Yaka_Adı'),
           rowGroup: false,
           enableRowGroup: true,
           hide: true,
-          filter: 'agSetColumnFilter',
-          filterParams: {
-            values: async (params) => {
-              try {
-                // async update simulated using setTimeout()
-                setTimeout(async () => {
-                    // fetch values from server
-                    const values = await this.getOrganizationInfo('cbo_yaka');
-                    // supply values to the set filter
-                    params.success(values);
-                }, 3000);
-              } catch (error) {
-                console.error("An error occurred while fetching organization info:", error);
-                // Alternatively, you can handle the error in a different way here
-                // For example, you can display an error message to the user
-                // or perform any other action as needed
-              }
-            }
-          } as ISetFilterParams,
+          filter: OrganizationColumnFilterComponent,
         },
         {
+          colId: 'cbo_bolum',
           headerName: this.translateService.instant('Bölüm'),
           field: 'bolumad',
           headerTooltip: this.translateService.instant('Bölüm_Adı'),
           rowGroup: false,
           enableRowGroup: true,
           hide: true,
-          filter: 'agSetColumnFilter',
-          filterParams: {
-            values: async (params) => {
-              try {
-                // async update simulated using setTimeout()
-                setTimeout(async () => {
-                    // fetch values from server
-                    const values = await this.getOrganizationInfo('cbo_bolum');
-                    // supply values to the set filter
-                    params.success(values);
-                }, 3000);
-              } catch (error) {
-                console.error("An error occurred while fetching organization info:", error);
-                // Alternatively, you can handle the error in a different way here
-                // For example, you can display an error message to the user
-                // or perform any other action as needed
-              }
-            }
-          } as ISetFilterParams,
+          filter: OrganizationColumnFilterComponent,
         },
         {
+          colId: 'cbo_gorev',
           headerName: this.translateService.instant('Görev'),
           field: 'gorevad',
           headerTooltip: this.translateService.instant('Görev_Adı'),
           rowGroup: false,
           enableRowGroup: true,
           hide: true,
-          filter: 'agSetColumnFilter',
-          filterParams: {
-            values: async (params) => {
-              try {
-                // async update simulated using setTimeout()
-                setTimeout(async () => {
-                    // fetch values from server
-                    const values = await this.getOrganizationInfo('cbo_gorev');
-                    // supply values to the set filter
-                    params.success(values);
-                }, 3000);
-              } catch (error) {
-                console.error("An error occurred while fetching organization info:", error);
-                // Alternatively, you can handle the error in a different way here
-                // For example, you can display an error message to the user
-                // or perform any other action as needed
-              }
-            }
-          } as ISetFilterParams,
+          filter: OrganizationColumnFilterComponent,
         },
         {
+          colId: 'cbo_pozisyon',
           headerName: this.translateService.instant('Pozisyon'),
           field: 'pozisyonad',
           headerTooltip: this.translateService.instant('Pozisyon_Adı'),
           rowGroup: false,
           enableRowGroup: true,
           hide: true,
-          filter: 'agSetColumnFilter',
-          filterParams: {
-            values: async (params) => {
-              try {
-                // async update simulated using setTimeout()
-                setTimeout(async () => {
-                    // fetch values from server
-                    const values = await this.getOrganizationInfo('cbo_pozisyon');
-                    // supply values to the set filter
-                    params.success(values);
-                }, 3000);
-              } catch (error) {
-                console.error("An error occurred while fetching organization info:", error);
-                // Alternatively, you can handle the error in a different way here
-                // For example, you can display an error message to the user
-                // or perform any other action as needed
-              }
-            }
-          } as ISetFilterParams,
+          filter: OrganizationColumnFilterComponent,
         },
         {
+          colId: 'cbo_direktorluk',
           headerName: this.translateService.instant('Direktörlük'),
           field: 'direktorlukad',
           headerTooltip: this.translateService.instant('Direktörlük_Adı'),
           rowGroup: false,
           enableRowGroup: true,
           hide: true,
-          filter: 'agSetColumnFilter',
-          filterParams: {
-            values: async (params) => {
-              try {
-                // async update simulated using setTimeout()
-                setTimeout(async () => {
-                    // fetch values from server
-                    const values = await this.getOrganizationInfo('cbo_direktorluk');
-                    // supply values to the set filter
-                    params.success(values);
-                }, 3000);
-              } catch (error) {
-                console.error("An error occurred while fetching organization info:", error);
-                // Alternatively, you can handle the error in a different way here
-                // For example, you can display an error message to the user
-                // or perform any other action as needed
-              }
-            }
-          } as ISetFilterParams,
+          filter: OrganizationColumnFilterComponent,
         },
       ],
     },
@@ -420,6 +331,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
       headerClass: 'timeAttendance-group',
       groupId: 'timeAttendanceGroup',
       // headerGroupComponent: CustomHeaderGroup,
+      hide: false,
       children: [
         {
           headerName: this.translateService.instant('Mesai_Tarihi'),
@@ -429,6 +341,8 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filterParams: filterParams,
           cellClass: (params) => this.applyWeekendClass(params),
           sort: 'asc',
+          hide: false,
+          onCellClicked: (params) => this.showAnnualCalendar(params),
         },
         {
           headerName: this.translateService.instant('Giriş'),
@@ -437,6 +351,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.parseEntryExit(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('Çıkış'),
@@ -445,6 +360,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.parseEntryExit(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('Mesai_Açıklama'),
@@ -454,7 +370,15 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: 'agTextColumnFilter',
           filterParams: {
             buttons: ['reset', 'apply'],
-            textMatcher: ({ filterOption, value, filterText }: { filterOption: string, value: string, filterText: string }) => {
+            textMatcher: ({
+              filterOption,
+              value,
+              filterText,
+            }: {
+              filterOption: string;
+              value: string;
+              filterText: string;
+            }) => {
               return true;
             },
             // filters: [
@@ -470,6 +394,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
             // ],
           } as IMultiFilterParams,
           cellClass: (params) => this.applyWeekendClass(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('MS'),
@@ -478,6 +403,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.applyWeekendClass(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('NM'),
@@ -486,6 +412,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('AS'),
@@ -494,6 +421,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('FM'),
@@ -502,6 +430,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('OFM'),
@@ -510,6 +439,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('FAS'),
@@ -520,6 +450,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('RTFM'),
@@ -530,6 +461,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('RTOFM'),
@@ -540,6 +472,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('EM'),
@@ -548,6 +481,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('RM'),
@@ -556,6 +490,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('GV'),
@@ -564,6 +499,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('GZ'),
@@ -572,6 +508,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('IZS'),
@@ -580,6 +517,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('YIZS'),
@@ -588,6 +526,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('SGKIZS'),
@@ -596,6 +535,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('UCZIZS'),
@@ -604,24 +544,27 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           filter: false,
           valueFormatter: (params) => this.convertFromMinuteToHour(params),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('RM_Açıklama'),
           field: 'resmitatilaciklama',
           headerTooltip: this.translateService.instant('Resmi_Tatil_Açıklama'),
           cellClass: (params) => this.timeClassChange(params),
+          hide: false,
         },
         {
           headerName: this.translateService.instant('İzin_Açıklama'),
           field: 'izinaciklama',
           headerTooltip: this.translateService.instant('İzin_Açıklama'),
+          hide: false,
         },
       ],
     },
   ];
 
   public defaultColDef: ColDef = {
-    flex: 1,
+    // flex: 1,
     minWidth: 90,
     filter: true,
     floatingFilter: true,
@@ -705,13 +648,6 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   currentDate = new Date(Date.now());
   isCancel: boolean = false;
-  companyList: OKodFieldsModel[] = [];
-  positionList: OKodFieldsModel[] = [];
-  collarList: OKodFieldsModel[] = [];
-  subsidiaryList: OKodFieldsModel[] = [];
-  directorshipList: OKodFieldsModel[] = [];
-  jobList: OKodFieldsModel[] = [];
-  departmentList: OKodFieldsModel[] = [];
   companyFilterList: any;
   jobFilterList: any;
   directorshipFilterList: any;
@@ -720,6 +656,16 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
   departmentFilterList: any;
   positionFilterList: any;
 
+  displayFilterModal: boolean = false;
+  filterFromModal: boolean = false;
+  filterValueFromModal: { formValues: any };
+
+  cancelRequest: Subject<void> = new Subject<void>();
+  isOpen: boolean = false;
+  savedFilterModel: any;
+  displayVacationForm: boolean = false;
+  displayAnnualCalendar: boolean = false;
+  personInfoForAnnualCalendar: any;
   constructor(
     private formBuilder: FormBuilder,
     private profileService: ProfileService,
@@ -729,12 +675,22 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     private ref: ChangeDetectorRef
   ) {}
 
+  // ngOnInit(): void {
+  //   this.createForm();
+  //   this.changeStartDate();
+  //   this.changeEndDate();
+  //   this.changeDateRange();
+  //   this.getAttendanceInfo();
+  // }
+
   ngOnInit(): void {
     this.createForm();
-    this.changeStartDate();
-    this.changeEndDate();
-    this.changeDateRange();
+    this.setInitialDates();
+    this.subscribeToDateRangeChanges();
+    this.subscribeToDateChanges();
     this.getAttendanceInfo();
+
+    this.setGridSetting();
   }
 
   onFilterOpened(e: FilterOpenedEvent) {
@@ -770,225 +726,287 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
 
     console.log('SavedFilterModel: ', savedFilterModel);
 
-    this.replaceValuesWithIds(savedFilterModel, this.companyList, "firmaad").then((replacedObj:any) => {
-      this.companyFilterList = replacedObj;
-      console.log("this.companyFilterList: ", this.companyFilterList);
-    });
-
-    this.replaceValuesWithIds(savedFilterModel, this.positionList, "pozisyonad").then((replacedObj:any) => {
-      this.positionFilterList = replacedObj;
-      console.log("this.companyFilterList: ", this.companyFilterList);
-    });
-
-    this.replaceValuesWithIds(savedFilterModel, this.departmentList, "bolumad").then((replacedObj:any) => {
-      this.departmentFilterList = replacedObj;
-      console.log("this.companyFilterList: ", this.companyFilterList);
-    });
-
-    this.replaceValuesWithIds(savedFilterModel, this.collarList, "yakaad").then((replacedObj:any) => {
-      this.collarFilterList = replacedObj;
-      console.log("this.companyFilterList: ", this.companyFilterList);
-    });
-
-    this.replaceValuesWithIds(savedFilterModel, this.subsidiaryList, "altfirmaad").then((replacedObj:any) => {
-      this.subsidiaryFilterList = replacedObj;
-      console.log("this.companyFilterList: ", this.companyFilterList);
-    });
-
-    this.replaceValuesWithIds(savedFilterModel, this.directorshipList, "direktorlukad").then((replacedObj:any) => {
-      this.directorshipFilterList = replacedObj;
-      console.log("this.companyFilterList: ", this.companyFilterList);
-    });
-
-    this.replaceValuesWithIds(savedFilterModel, this.jobList, "gorevad").then((replacedObj:any) => {
-      this.jobFilterList = replacedObj;
-      console.log("this.companyFilterList: ", this.companyFilterList);
-    });
-    
-    
+    this.savedFilterModel = savedFilterModel;
     this.getAttendanceInfo();
   }
 
-  async replaceValuesWithIds(filterModel: any, listToUpdate: any[], filterKey: any): Promise<any> {
-    const copiedFilterModel = JSON.parse(JSON.stringify(filterModel));
-  
-    for (const key in copiedFilterModel) {
-      // if (copiedFilterModel.hasOwnProperty(key)) {
-      if (copiedFilterModel.hasOwnProperty(key) && key == filterKey) {
-        const filter = copiedFilterModel[key];
-  
-        if (filter.hasOwnProperty('values')) {
-          const values = filter.values;
-  
-          for (let i = 0; i < values.length; i++) {
-            const value = values[i];
-            // value, listToUpdate içinde bir eleman olarak varsa, onun karşılığı olan "ID" ile değiştiriyoruz
-            const foundItem = listToUpdate.find(item => item.Ad === value);
-            if (foundItem) {
-              values[i] = foundItem.ID;
-            }
-          }
-        }
-      }
-    }
-  
-    return copiedFilterModel;
-  }
-  
+  // createForm() {
+  //   this.formGroup = this.formBuilder.group({
+  //     dateRange: ['1'],
+  //     startDate: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en')],
+  //     endDate: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en')],
+  //   });
+  // }
 
   createForm() {
     this.formGroup = this.formBuilder.group({
-      dateRange: ['1'],
-      startDate: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en')],
-      endDate: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en')],
+      dateRange: ['1'], // Günlük seçili olarak başlıyor
+      startDate: [moment().format('YYYY-MM-DD')],
+      endDate: [moment().format('YYYY-MM-DD')],
     });
   }
 
-  changeStartDate() {
-    this.formGroup
-      .get('startDate')
-      ?.valueChanges.pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((item) => {
-        const endDateValue = new Date(this.formGroup.get('endDate')?.value);
-
-        if (new Date(item) > endDateValue) {
-          console.log('Başlangıç Değeri, Bitiş Tarihinden Büyük Olamaz!!');
-          this.formGroup
-            .get('startDate')
-            ?.setValue(formatDate(endDateValue, 'yyyy-MM-dd', 'en'));
-        }
-
-        if (this.formGroup.get('dateRange')?.value == '-1') {
-          this.getAttendanceInfo();
-        }
-      });
+  setInitialDates() {
+    const today = moment();
+    this.formGroup.get('startDate')?.setValue(today.format('YYYY-MM-DD'));
+    this.formGroup.get('endDate')?.setValue(today.format('YYYY-MM-DD'));
   }
 
-  changeEndDate() {
-    this.formGroup
-      .get('endDate')
-      ?.valueChanges.pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((item) => {
-        const startDateValue = new Date(this.formGroup.get('startDate')?.value);
+  // changeStartDate() {
+  //   this.formGroup
+  //     .get('startDate')
+  //     ?.valueChanges.pipe(takeUntil(this.ngUnsubscribe))
+  //     .subscribe((item) => {
+  //       const endDateValue = new Date(this.formGroup.get('endDate')?.value);
 
-        if (new Date(item) < startDateValue) {
-          console.log('Bitiş Tarihi, Başlangıç Değerinden Küçük Olamaz!!');
-          this.formGroup
-            .get('endDate')
-            ?.setValue(formatDate(startDateValue, 'yyyy-MM-dd', 'en'));
-        }
+  //       if (new Date(item) > endDateValue) {
+  //         console.log('Başlangıç Değeri, Bitiş Tarihinden Büyük Olamaz!!');
+  //         this.formGroup
+  //           .get('startDate')
+  //           ?.setValue(formatDate(endDateValue, 'yyyy-MM-dd', 'en'));
 
-        if (this.formGroup.get('dateRange')?.value == '-1') {
-          this.getAttendanceInfo();
-        }
-      });
+  //         return;
+  //       }
+
+  //       if (this.formGroup.get('dateRange')?.value == '-1') {
+  //         this.getAttendanceInfo();
+  //       }
+  //     });
+  // }
+
+  // changeEndDate() {
+  //   this.formGroup
+  //     .get('endDate')
+  //     ?.valueChanges.pipe(takeUntil(this.ngUnsubscribe))
+  //     .subscribe((item) => {
+  //       const startDateValue = new Date(this.formGroup.get('startDate')?.value);
+
+  //       if (new Date(item) < startDateValue) {
+  //         console.log('Bitiş Tarihi, Başlangıç Değerinden Küçük Olamaz!!');
+  //         this.formGroup
+  //           .get('endDate')
+  //           ?.setValue(formatDate(startDateValue, 'yyyy-MM-dd', 'en'));
+
+  //         return;
+  //       }
+
+  //       if (this.formGroup.get('dateRange')?.value == '-1') {
+  //         this.getAttendanceInfo();
+  //       }
+  //     });
+  // }
+
+  subscribeToDateChanges() {
+    const startDate$ = this.formGroup.get('startDate')?.valueChanges;
+    const endDate$ = this.formGroup.get('endDate')?.valueChanges;
+
+    if (startDate$ && endDate$) {
+      combineLatest([startDate$, endDate$])
+        .pipe(
+          filter(([startDate, endDate]) => startDate && endDate) // Ensure both dates are defined
+        )
+        .subscribe(([startDate, endDate]) => {
+          const start = moment(startDate);
+          const end = moment(endDate);
+
+          if (start.isAfter(end)) {
+            this.formGroup
+              .get('endDate')
+              ?.setValue(start.format('YYYY-MM-DD'), { emitEvent: false });
+          } else if (end.isBefore(start)) {
+            this.formGroup
+              .get('startDate')
+              ?.setValue(end.format('YYYY-MM-DD'), { emitEvent: false });
+          }
+
+          if (this.formGroup.get('dateRange')?.value == '-1') {
+            this.getAttendanceInfo();
+          }
+        });
+    }
   }
 
-  changeDateRange() {
-    this.formGroup
-      .get('dateRange')
-      ?.valueChanges.pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((item) => {
-        console.log('item : ', item);
+  // changeDateRange() {
+  //   this.formGroup
+  //     .get('dateRange')
+  //     ?.valueChanges.pipe(takeUntil(this.ngUnsubscribe))
+  //     .subscribe((item) => {
+  //       console.log('item : ', item);
 
-        const startDateValue = new Date(this.formGroup.get('startDate')?.value);
-        const endDateValue = new Date(this.formGroup.get('endDate')?.value);
+  //       const startDateValue = new Date(this.formGroup.get('startDate')?.value);
+  //       const endDateValue = new Date(this.formGroup.get('endDate')?.value);
 
-        if (item == '1') {
-          this.formGroup
-            .get('startDate')
-            ?.setValue(formatDate(startDateValue, 'yyyy-MM-dd', 'en'));
-          this.formGroup
-            .get('endDate')
-            ?.setValue(formatDate(startDateValue, 'yyyy-MM-dd', 'en'));
-        } else if (item == '7') {
-          const today = new Date();
-          const startOfWeek = new Date(
-            startDateValue.getFullYear(),
-            startDateValue.getMonth(),
-            startDateValue.getDate() - startDateValue.getDay() + 1
-          );
-          const endOfWeek = new Date(
-            startDateValue.getFullYear(),
-            startDateValue.getMonth(),
-            startDateValue.getDate() - startDateValue.getDay() + 7
-          );
-          this.formGroup
-            .get('startDate')
-            ?.setValue(formatDate(startOfWeek, 'yyyy-MM-dd', 'en'));
-          this.formGroup
-            .get('endDate')
-            ?.setValue(formatDate(endOfWeek, 'yyyy-MM-dd', 'en'));
-        } else if (item == '30') {
-          const today = new Date();
-          const startOfMonth = new Date(
-            startDateValue.getFullYear(),
-            startDateValue.getMonth(),
-            1
-          );
-          const endOfMonth = new Date(
-            startDateValue.getFullYear(),
-            startDateValue.getMonth() + 1,
-            0
-          );
-          this.formGroup
-            .get('startDate')
-            ?.setValue(formatDate(startOfMonth, 'yyyy-MM-dd', 'en'));
-          this.formGroup
-            .get('endDate')
-            ?.setValue(formatDate(endOfMonth, 'yyyy-MM-dd', 'en'));
-        }
+  //       if (item == '1') {
+  //         this.formGroup
+  //           .get('startDate')
+  //           ?.setValue(formatDate(startDateValue, 'yyyy-MM-dd', 'en'));
+  //         this.formGroup
+  //           .get('endDate')
+  //           ?.setValue(formatDate(startDateValue, 'yyyy-MM-dd', 'en'));
+  //       } else if (item == '7') {
+  //         const today = new Date();
+  //         const startOfWeek = new Date(
+  //           startDateValue.getFullYear(),
+  //           startDateValue.getMonth(),
+  //           startDateValue.getDate() - startDateValue.getDay() + 1
+  //         );
+  //         const endOfWeek = new Date(
+  //           startDateValue.getFullYear(),
+  //           startDateValue.getMonth(),
+  //           startDateValue.getDate() - startDateValue.getDay() + 7
+  //         );
+  //         this.formGroup
+  //           .get('startDate')
+  //           ?.setValue(formatDate(startOfWeek, 'yyyy-MM-dd', 'en'));
+  //         this.formGroup
+  //           .get('endDate')
+  //           ?.setValue(formatDate(endOfWeek, 'yyyy-MM-dd', 'en'));
+  //       } else if (item == '30') {
+  //         const today = new Date();
+  //         const startOfMonth = new Date(
+  //           startDateValue.getFullYear(),
+  //           startDateValue.getMonth(),
+  //           1
+  //         );
+  //         const endOfMonth = new Date(
+  //           startDateValue.getFullYear(),
+  //           startDateValue.getMonth() + 1,
+  //           0
+  //         );
+  //         this.formGroup
+  //           .get('startDate')
+  //           ?.setValue(formatDate(startOfMonth, 'yyyy-MM-dd', 'en'));
+  //         this.formGroup
+  //           .get('endDate')
+  //           ?.setValue(formatDate(endOfMonth, 'yyyy-MM-dd', 'en'));
+  //       }
 
-        if (item != '-1') {
-          this.getAttendanceInfo();
-        }
-      });
+  //       if (item != '-1') {
+  //         this.getAttendanceInfo();
+  //       }
+  //     });
+  // }
+  subscribeToDateRangeChanges() {
+    this.formGroup.get('dateRange')?.valueChanges.subscribe((range) => {
+      const start = moment(this.formGroup.get('startDate')?.value);
+
+      if (range == '1') {
+        // Günlük
+        this.formGroup.get('endDate')?.setValue(start.format('YYYY-MM-DD'));
+      } else if (range == '7') {
+        // Haftalık
+        const startOfWeek = start.clone().startOf('isoWeek');
+        const endOfWeek = start.clone().endOf('isoWeek');
+        this.formGroup
+          .get('startDate')
+          ?.setValue(startOfWeek.format('YYYY-MM-DD'));
+        this.formGroup.get('endDate')?.setValue(endOfWeek.format('YYYY-MM-DD'));
+      } else if (range == '30') {
+        // Aylık
+        const startOfMonth = start.clone().startOf('month');
+        const endOfMonth = start.clone().endOf('month');
+        this.formGroup
+          .get('startDate')
+          ?.setValue(startOfMonth.format('YYYY-MM-DD'));
+        this.formGroup
+          .get('endDate')
+          ?.setValue(endOfMonth.format('YYYY-MM-DD'));
+      }
+
+      if (range != '-1') {
+        this.getAttendanceInfo();
+      }
+    });
   }
+
+  // previousDate() {
+  //   const range = this.formGroup.get('dateRange')?.value;
+  //   const startDateValue = moment(this.formGroup.get('startDate')?.value);
+  //   const endDateValue = moment(this.formGroup.get('endDate')?.value);
+
+  //   if (range === '1') {
+  //     startDateValue.subtract(1, 'days');
+  //     endDateValue.subtract(1, 'days');
+  //   } else if (range === '7') {
+  //     startDateValue.subtract(1, 'weeks').startOf('isoWeek');
+  //     endDateValue.subtract(1, 'weeks').endOf('isoWeek');
+  //   } else if (range === '30') {
+  //     startDateValue.subtract(1, 'months').startOf('month');
+  //     endDateValue.subtract(1, 'months').endOf('month');
+  //   }
+
+  //   this.formGroup
+  //     .get('startDate')
+  //     ?.setValue(startDateValue.format('YYYY-MM-DD'));
+  //   this.formGroup.get('endDate')?.setValue(endDateValue.format('YYYY-MM-DD'));
+
+  //   this.getAttendanceInfo();
+  // }
+
+  // nextDate() {
+  //   const range = this.formGroup.get('dateRange')?.value;
+  //   const startDateValue = moment(this.formGroup.get('startDate')?.value);
+  //   const endDateValue = moment(this.formGroup.get('endDate')?.value);
+
+  //   if (range === '1') {
+  //     startDateValue.add(1, 'days');
+  //     endDateValue.add(1, 'days');
+  //   } else if (range === '7') {
+  //     startDateValue.add(1, 'weeks').startOf('isoWeek');
+  //     endDateValue.add(1, 'weeks').endOf('isoWeek');
+  //   } else if (range === '30') {
+  //     startDateValue.add(1, 'months').startOf('month');
+  //     endDateValue.add(1, 'months').endOf('month');
+  //   }
+
+  //   this.formGroup.get('endDate')?.setValue(endDateValue.format('YYYY-MM-DD'));
+  //   this.formGroup
+  //     .get('startDate')
+  //     ?.setValue(startDateValue.format('YYYY-MM-DD'));
+
+  //   this.getAttendanceInfo();
+  // }
 
   previousDate() {
     const range = this.formGroup.get('dateRange')?.value;
-    const startDateValue = moment(this.formGroup.get('startDate')?.value);
-    const endDateValue = moment(this.formGroup.get('endDate')?.value);
+    const startDate = moment(this.formGroup.get('startDate')?.value);
+    const endDate = moment(this.formGroup.get('endDate')?.value);
 
     if (range === '1') {
-      startDateValue.subtract(1, 'days');
-      endDateValue.subtract(1, 'days');
+      startDate.subtract(1, 'days');
+      endDate.subtract(1, 'days');
     } else if (range === '7') {
-      startDateValue.subtract(1, 'weeks').startOf('isoWeek');
-      endDateValue.subtract(1, 'weeks').endOf('isoWeek');
+      startDate.subtract(1, 'weeks').startOf('isoWeek');
+      endDate.subtract(1, 'weeks').endOf('isoWeek');
     } else if (range === '30') {
-      startDateValue.subtract(1, 'months').startOf('month');
-      endDateValue.subtract(1, 'months').endOf('month');
+      startDate.subtract(1, 'months').startOf('month');
+      endDate.subtract(1, 'months').endOf('month');
     }
 
-    this.formGroup
-      .get('startDate')
-      ?.setValue(startDateValue.format('YYYY-MM-DD'));
-    this.formGroup.get('endDate')?.setValue(endDateValue.format('YYYY-MM-DD'));
+    this.formGroup.get('startDate')?.setValue(startDate.format('YYYY-MM-DD'));
+    this.formGroup.get('endDate')?.setValue(endDate.format('YYYY-MM-DD'));
 
     this.getAttendanceInfo();
   }
 
   nextDate() {
     const range = this.formGroup.get('dateRange')?.value;
-    const startDateValue = moment(this.formGroup.get('startDate')?.value);
-    const endDateValue = moment(this.formGroup.get('endDate')?.value);
+    const startDate = moment(this.formGroup.get('startDate')?.value);
+    const endDate = moment(this.formGroup.get('endDate')?.value);
 
     if (range === '1') {
-      startDateValue.add(1, 'days');
-      endDateValue.add(1, 'days');
+      startDate.add(1, 'days');
+      endDate.add(1, 'days');
     } else if (range === '7') {
-      startDateValue.add(1, 'weeks').startOf('isoWeek');
-      endDateValue.add(1, 'weeks').endOf('isoWeek');
+      startDate.add(1, 'weeks').startOf('isoWeek');
+      endDate.add(1, 'weeks').endOf('isoWeek');
     } else if (range === '30') {
-      startDateValue.add(1, 'months').startOf('month');
-      endDateValue.add(1, 'months').endOf('month');
+      startDate.add(1, 'months').startOf('month');
+      endDate.add(1, 'months').endOf('month');
     }
 
-    this.formGroup.get('endDate')?.setValue(endDateValue.format('YYYY-MM-DD'));
-    this.formGroup
-      .get('startDate')
-      ?.setValue(startDateValue.format('YYYY-MM-DD'));
+    this.formGroup.get('startDate')?.setValue(startDate.format('YYYY-MM-DD'));
+    this.formGroup.get('endDate')?.setValue(endDate.format('YYYY-MM-DD'));
 
     this.getAttendanceInfo();
   }
@@ -1075,32 +1093,64 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     this.value = 1;
     this.loading = true;
 
-    var sp: any[] = [
-      {
-        mkodu: 'yek102',
-        tip: this.selectedTab,
-        tarih: this.formGroup.get('startDate')?.value,
-        tarihbit: this.formGroup.get('endDate')?.value,
-        ad: savedFilterModel?.ad ? savedFilterModel?.ad.filter : '',
-        soyad: savedFilterModel?.soyad ? savedFilterModel?.soyad.filter : '',
-        sicilno: savedFilterModel?.sicilno ? savedFilterModel?.sicilno.filter : '',
-        firma: savedFilterModel?.cbo_firma ? savedFilterModel?.cbo_firma.toString() : '0',
-        bolum: '0',
-        pozisyon: '0',
-        gorev: '0',
-        altfirma: '0',
-        yaka: '0',
-        direktorluk: '0',
-        okod1: '',
-        okod2: '',
-        okod3: '',
-        okod4: '',
-        okod5: '',
-        okod6: '',
-        okod7: '',
-        aciklama: savedFilterModel?.mesaiaciklama ? savedFilterModel?.mesaiaciklama.filter : '',
-      },
-    ];
+    // İptal edilen önceki istekler için mevcut cancelRequest subject'ini tamamla ve yenisini oluştur.
+    this.cancelRequest.next();
+    this.cancelRequest.complete();
+    this.cancelRequest = new Subject<void>();
+
+    var sp: any[] = !this.filterFromModal
+      ? [
+          {
+            mkodu: 'yek102',
+            tip: this.selectedTab,
+            tarih: this.formGroup.get('startDate')?.value,
+            tarihbit: this.formGroup.get('endDate')?.value,
+            ad: savedFilterModel?.ad?.filter || '',
+            soyad: savedFilterModel?.soyad?.filter || '',
+            sicilno: savedFilterModel?.sicilno?.filter || '',
+            firma: savedFilterModel?.cbo_firma?.toString() || '0',
+            bolum: savedFilterModel?.cbo_bolum?.toString() || '0',
+            pozisyon: savedFilterModel?.cbo_pozisyon?.toString() || '0',
+            gorev: savedFilterModel?.cbo_gorev?.toString() || '0',
+            altfirma: savedFilterModel?.cbo_altfirma?.toString() || '0',
+            yaka: savedFilterModel?.cbo_yaka?.toString() || '0',
+            direktorluk: savedFilterModel?.cbo_direktorluk?.toString() || '0',
+            okod1: '',
+            okod2: '',
+            okod3: '',
+            okod4: '',
+            okod5: '',
+            okod6: '',
+            okod7: '',
+            aciklama: savedFilterModel?.mesaiaciklama?.filter || '',
+          },
+        ]
+      : [
+          {
+            mkodu: 'yek102',
+            tip: this.selectedTab,
+            tarih: this.formGroup.get('startDate')?.value, //Burası düzenlenecek
+            tarihbit: this.formGroup.get('endDate')?.value, //Burası düzenlenecek
+            ad: this.filterValueFromModal.formValues.name,
+            soyad: this.filterValueFromModal.formValues.surname,
+            sicilno: this.filterValueFromModal.formValues.registrationNumber,
+            firma: this.filterValueFromModal.formValues.company,
+            bolum: this.filterValueFromModal.formValues.department,
+            pozisyon: this.filterValueFromModal.formValues.position,
+            gorev: this.filterValueFromModal.formValues.job,
+            altfirma: this.filterValueFromModal.formValues.subcompany,
+            yaka: this.filterValueFromModal.formValues.collar,
+            direktorluk: this.filterValueFromModal.formValues.directorship,
+            okod1: this.filterValueFromModal.formValues.code1,
+            okod2: this.filterValueFromModal.formValues.code2,
+            okod3: this.filterValueFromModal.formValues.code3,
+            okod4: this.filterValueFromModal.formValues.code4,
+            okod5: this.filterValueFromModal.formValues.code5,
+            okod6: this.filterValueFromModal.formValues.code6,
+            okod7: this.filterValueFromModal.formValues.code7,
+            aciklama: savedFilterModel?.mesaiaciklama.filter || '',
+          },
+        ];
 
     console.log('PDKS Guid Parametreler:', sp);
 
@@ -1118,19 +1168,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
         this.attendanceInfo = data;
 
         if (this.attendanceInfo[0]?.maxpartnumber > 0) {
-          for (
-            let index = 1;
-            index <= this.attendanceInfo[0]?.maxpartnumber;
-            index++
-          ) {
-            if (!this.isCancel) {
-              this.getAttendanceData(index);
-              console.log('part_number', index);
-            } else {
-              this.value = 100;
-              return;
-            }
-          }
+          this.fetchAttendanceData(1, this.attendanceInfo[0]?.maxpartnumber);
         } else {
           this.value = 100;
           this.loading = false;
@@ -1140,63 +1178,89 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
       });
   }
 
-  getAttendanceData(partNumber: any) {
-    var sp: any[] = [
-      {
-        mkodu: 'yek103',
-        tip: this.selectedTab,
-        requestguid: this.attendanceInfo[0].requestguid,
-        part_number: partNumber.toString(),
-      },
-    ];
+  fetchAttendanceData(currentPartNumber: number, maxPartNumber: number) {
+    if (currentPartNumber > maxPartNumber) {
+      this.value = 100;
+      this.loading = false;
+      this.ref.detectChanges();
+      return;
+    }
 
-    console.log('PDKS :', sp);
+    this.getAttendanceData(currentPartNumber).then(() => {
+      this.value += Math.round((1 / maxPartNumber) * 100);
+      this.fetchAttendanceData(currentPartNumber + 1, maxPartNumber);
+    });
+  }
 
-    this.profileService
-      .requestMethod(sp)
-      .pipe(takeUntil(this.ngUnsubscribe), delay(500))
-      .subscribe((response: any) => {
-        const data = response[0].x;
-        const message = response[0].z;
+  getAttendanceData(partNumber: any): Promise<void> {
+    return new Promise((resolve, reject) => {
+      var sp: any[] = [
+        {
+          mkodu: 'yek103',
+          tip: this.selectedTab,
+          requestguid: this.attendanceInfo[0].requestguid,
+          part_number: partNumber.toString(),
+        },
+      ];
 
-        if (message.islemsonuc == -1) {
-          return;
-        }
-        console.log('PDKS Listesi: ', data);
+      console.log('PDKS :', sp);
 
-        this.rowData = [...this.rowData, ...data];
-        this.rowData.forEach((row: any) => {
-          row.rowHeight = 30;
-        });
+      this.profileService
+        .requestMethod(sp)
+        .pipe(
+          takeUntil(this.cancelRequest), // İptal sinyalini dinler
+          takeUntil(this.ngUnsubscribe),
+          delay(500)
+        )
+        .subscribe(
+          (response: any) => {
+            const data = response[0].x;
+            const message = response[0].z;
 
-        this.gridOptionsLight = {
-          localeTextFunc: (key: string, defaultValue: string) => {
-            const data = this.translateService.instant(key);
-            return data === key ? defaultValue : data;
+            if (message.islemsonuc == -1) {
+              reject();
+              return;
+            }
+            console.log('PDKS Listesi: ', data);
+
+            this.rowData = [...this.rowData, ...data];
+            this.rowData.forEach((row: any) => {
+              row.rowHeight = 30;
+            });
+
+            this.gridOptionsLight = {
+              localeTextFunc: (key: string, defaultValue: string) => {
+                const data = this.translateService.instant(key);
+                return data === key ? defaultValue : data;
+              },
+            };
+
+            this.gridOptionsDark = {
+              localeTextFunc: (key: string, defaultValue: string) => {
+                const data = this.translateService.instant(key);
+                return data === key ? defaultValue : data;
+              },
+            };
+
+            if (
+              this.value >= 100 ||
+              this.attendanceInfo[0].maxpartnumber == partNumber
+            ) {
+              this.value = 100;
+              this.loading = false;
+            }
+
+            this.ref.detectChanges();
+            resolve();
           },
-        };
-
-        this.gridOptionsDark = {
-          localeTextFunc: (key: string, defaultValue: string) => {
-            const data = this.translateService.instant(key);
-            return data === key ? defaultValue : data;
-          },
-        };
-
-        this.value += Math.round(
-          (1 / this.attendanceInfo[0].maxpartnumber) * 100
+          (error) => {
+            if (this.isCancel) {
+              console.log('Request canceled');
+            }
+            reject(error);
+          }
         );
-        if (this.value >= 100) {
-          this.value = 100;
-          this.loading = false;
-        }
-
-        if (this.attendanceInfo[0].maxpartnumber == partNumber) {
-          this.value = 100;
-        }
-
-        this.ref.detectChanges();
-      });
+    });
   }
 
   changeTabMenu(menu: any) {
@@ -1481,6 +1545,111 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     }
   }
 
+  // timeClassChange(params: any): string {
+  //   const { colId } = params.column;
+  //   const {
+  //     ellegiris,
+  //     geckalma,
+  //     erkencikma,
+  //     mesaibas,
+  //     mesaibit,
+  //     izinaciklama,
+  //     eksikmesai,
+  //     resmitatilsuresi,
+  //     onaylananfazlamesai,
+  //     resmitatilmesai,
+  //     rtonaylananfazlamesai,
+  //     gecevardiya,
+  //     gecezammi,
+  //     izinsuresi,
+  //     yillikizinsuresi,
+  //     sgkizinsuresi,
+  //     ucretsizizinsuresi,
+  //     farasure,
+  //     arasure
+  //   } = params.data;
+  //   const value = params.value;
+
+  //   const isZeroOrNull = (val: any): boolean => val == 0 || val == null;
+  //   const isNonZeroTime = (val: any): boolean => val !== '00:00' && val !== '0' && val !== '' && val !== undefined;
+
+  //   const handleTimeActive = (isGiris: boolean, isLateness: boolean): string => {
+  //     const classPrefix = 'cell-time-active';
+  //     const manuelSuffix = '-manuel-entry';
+
+  //     if (ellegiris > 1) {
+  //       return isLateness ? `cell-lateness${manuelSuffix}` : `${classPrefix}${manuelSuffix}`;
+  //     } else {
+  //       return isLateness ? 'cell-lateness' : classPrefix;
+  //     }
+  //   };
+
+  //   switch (colId) {
+  //     case 'ggiris':
+  //       return handleTimeActive(true, geckalma > 0);
+
+  //     case 'gcikis':
+  //       return handleTimeActive(false, erkencikma > 0);
+
+  //     case 'normalmesai':
+  //       if (mesaibas === mesaibit) return 'cell-weekend';
+  //       if (izinaciklama && izinaciklama !== '#__#') return 'cell-green';
+  //       if (isNonZeroTime(eksikmesai) && eksikmesai > 0) return 'cell-time-passive';
+  //       if (resmitatilsuresi) return '';
+  //       if (isZeroOrNull(value)) return 'cell-time-passive';
+  //       break;
+
+  //     case 'fazlamesai':
+  //       if (mesaibas === mesaibit) return 'cell-weekend';
+  //       if (isNonZeroTime(onaylananfazlamesai)) return 'cell-green';
+  //       return isNonZeroTime(value) ? 'cell-time-passive' : '';
+
+  //     case 'resmitatilsuresi':
+  //       return isZeroOrNull(value) ? 'cell-time-zero' : 'cell-warning';
+
+  //     case 'resmitatilaciklama':
+  //       return value ? 'cell-warning' : '';
+
+  //     case 'onaylananfazlamesai':
+  //       if (isZeroOrNull(value)) return 'cell-time-zero';
+  //       if (isNonZeroTime(value)) return 'cell-blue';
+  //       break;
+
+  //     case 'resmitatilmesai':
+  //       if (isZeroOrNull(value)) return 'cell-time-zero';
+  //       return isNonZeroTime(value) ? 'cell-warning' : 'cell-time-passive';
+
+  //     case 'rtonaylananfazlamesai':
+  //       if (isZeroOrNull(value)) return 'cell-time-zero';
+  //       if (isNonZeroTime(value)) return 'cell-blue';
+  //       break;
+
+  //     case 'eksikmesai':
+  //       return isZeroOrNull(value) ? 'cell-time-zero' : 'cell-time-passive';
+
+  //     case 'gecevardiya':
+  //     case 'gecezammi':
+  //       return isZeroOrNull(value) ? 'cell-time-zero' : '';
+
+  //     case 'izinsuresi':
+  //     case 'yillikizinsuresi':
+  //     case 'sgkizinsuresi':
+  //     case 'ucretsizizinsuresi':
+  //       if (isZeroOrNull(value)) return 'cell-time-zero';
+  //       if (isNonZeroTime(value)) return 'cell-green';
+  //       break;
+
+  //     case 'farasure':
+  //       return isZeroOrNull(value) ? 'cell-time-zero' : 'text-danger';
+
+  //     case 'arasure':
+  //       return isZeroOrNull(value) ? 'cell-time-zero' : '';
+
+  //     default:
+  //       return '';
+  //   }
+  // }
+
   applyWeekendClass(params: any) {
     if (params.data.mesaibas == params.data.mesaibit) {
       return 'cell-weekend';
@@ -1489,99 +1658,179 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
 
   cancelAttendanceRequest() {
     this.isCancel = true;
+    this.cancelRequest.next(); // İptal sinyalini gönder
+    this.cancelRequest.complete();
+    this.value = 100; // Loading bar'ını %100 yap
+    this.loading = false;
+    this.ref.detectChanges(); // UI'ı güncelle
   }
 
-  async getOrganizationInfo(source: string): Promise<string[]> {
-    return new Promise<string[]>((resolve, reject) => {
-      this.profileService.getTypeValues(source)
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
-          const data = response[0].x;
-          const message = response[0].z;
-    
-          if (message.islemsonuc == 1) {
-            const organizationList: string[] = [];
-            console.log("Organization List ", source, " ", data);
-            
-            if (source == 'cbo_firma') {
-              data.forEach(value => {
-                if (value.Ad !== undefined) {
-                  organizationList.push(value.Ad);
-                }
-              });
-              
-              this.companyList = data;
-            } else if (source == 'cbo_pozisyon') {
-              data.forEach(value => {
-                if (value.Ad !== undefined) {
-                  organizationList.push(value.Ad);
-                }
-              });
-              
-              this.positionList = data;
-            } else if (source == 'cbo_yaka') {
-              data.forEach(value => {
-                if (value.Ad !== undefined) {
-                  organizationList.push(value.Ad);
-                }
-              });
-              
-              this.collarList = data;
-            } else if (source == 'cbo_altfirma') {
-              data.forEach(value => {
-                if (value.Ad !== undefined) {
-                  organizationList.push(value.Ad);
-                }
-              });
-              
-              this.subsidiaryList = data;
-            } else if (source == 'cbo_direktorlük') {
-              data.forEach(value => {
-                if (value.Ad !== undefined) {
-                  organizationList.push(value.Ad);
-                }
-              });
-              
-              this.directorshipList = data;
-            } else if (source == 'cbo_gorev') {
-              data.forEach(value => {
-                if (value.Ad !== undefined) {
-                  organizationList.push(value.Ad);
-                }
-              });
-              
-              this.jobList = data;
-            } else if (source == 'cbo_bolum') {
-              data.forEach(value => {
-                if (value.Ad !== undefined) {
-                  organizationList.push(value.Ad);
-                }
-              });
-              
-              this.departmentList = data;
-            }
-            
-            resolve(organizationList);
-          } else {
-            reject(new Error('Bir hata oluştu'));
-          }
-        },
-        error => {
-          reject(error);
-        });
+  showFilterModal() {
+    this.displayFilterModal = true;
+  }
+
+  onHideFilterModal() {
+    this.displayFilterModal = false;
+  }
+
+  clearFilters() {
+    this.agGridLight.api.setFilterModel(null);
+    this.agGridDark.api.setFilterModel(null);
+  }
+
+  setFilterFormFromModal(value: { formValues: any }) {
+    console.log('Filtre Geldii. :', value);
+    this.filterValueFromModal = value;
+    this.filterFromModal = true;
+
+    this.getAttendanceInfo();
+  }
+
+  openDatePicker() {
+    let dateRangeValue = this.formGroup.get('dateRange')?.value;
+
+    if (dateRangeValue != '-1') {
+      this.formGroup.get('dateRange')?.setValue('-1');
+    }
+
+    console.log('Datepicker Açıldı!!');
+  }
+
+  toggleOpen() {
+    this.isOpen = !this.isOpen;
+  }
+
+  onColumnResized(event: any) {
+    if (event.finished && event.column) {
+      console.log(
+        'Column resized:',
+        event.column.getId(),
+        'New width:',
+        event.column.getActualWidth(),
+        '   asdasd: ',
+        this.agGridLight.columnApi.getAllGridColumns()
+      );
+      this.sendColumnStateToApi();
+    }
+  }
+
+  onColumnVisible(event: any) {
+    this.sendColumnStateToApi();
+  }
+
+  setGridSetting() {
+    var sp: any[] = [
+      {
+        mkodu: 'yek105',
+        ad: 'pdks_0_gridSettings',
+      },
+    ];
+
+    this.profileService
+      .requestMethod(sp)
+      .pipe(
+        takeUntil(this.ngUnsubscribe),
+        map((response) => this.parseValue(response[0].x[0].deger))
+      )
+      .subscribe((response: any) => {
+        console.log('Grid Settings: ', response);
+        this.setColumnWidths(response);
+      });
+  }
+
+  private parseValue(
+    value: string
+  ): { col: string; width: string; visible: string }[] {
+    return value.split('|').map((item) => {
+      const parts = item.split('#');
+      return {
+        col: parts[0],
+        width: parts[1],
+        visible: parts[2],
+      };
     });
   }
-  
-  
-  
-  
-  
 
+  setColumnWidths(widths: { col: string; width: string; visible: string }[]) {
+    const updateColumnWidths = (colDef: any) => {
+      const widthInfo = widths.find((w) => w.col === colDef.field);
+      if (widthInfo) {
+        colDef.width = parseInt(widthInfo.width, 10);
+        // colDef.hide = widthInfo.visible !== 'true';
+        colDef.hide = !JSON.parse(widthInfo.visible);
 
-  
-  
-  
-  
+        if (colDef.flex) {
+          delete colDef.flex;
+        }
+      }
+      if (colDef.children && colDef.children.length > 0) {
+        colDef.children.forEach(updateColumnWidths);
+      }
+    };
+
+    this.columnDefs.forEach(updateColumnWidths);
+    // this.gridApi.setColumnDefs(this.columnDefs);
+
+    if (this.agGridLight) {
+      this.agGridLight.api.setColumnDefs(this.columnDefs);
+      this.agGridLight.api.sizeColumnsToFit();
+      console.log('ColumnDef: ', this.columnDefs);
+    } else if (this.agGridDark) {
+      this.agGridDark.api.setColumnDefs(this.columnDefs);
+    } else {
+      console.error('Bir problem var!');
+    }
+  }
+
+  sendColumnStateToApi() {
+    const allColumns = this.agGridLight.columnApi.getAllColumns();
+    if (!allColumns) {
+      console.error('No columns found.');
+      return;
+    }
+
+    const columnStateString = allColumns
+      .map((col) => {
+        const colDef = col.getColDef();
+        const width = col.getActualWidth();
+        const visible = col.isVisible();
+        return `${colDef.field || colDef.colId}#${width}#${visible}`;
+      })
+      .join('|');
+
+    console.log(columnStateString);
+
+    var sp: any[] = [
+      {
+        mkodu: 'yek104',
+        ad: 'pdks_0_gridSettings',
+        deger: columnStateString,
+      },
+    ];
+
+    this.profileService
+      .requestMethod(sp)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        console.log('Grid Settings Are Send: ', response);
+      });
+  }
+
+  onHideVacationForm() {
+    this.displayVacationForm = false;
+  }
+
+  showAnnualCalendar(params: any) {
+    console.log('Annual Calendar : ', params);
+
+    this.displayAnnualCalendar = true;
+    this.personInfoForAnnualCalendar = params;
+    this.ref.detectChanges();
+  }
+
+  onHideAnnualCalendar() {
+    this.displayAnnualCalendar = false;
+  }
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

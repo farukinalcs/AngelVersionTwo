@@ -93,8 +93,7 @@ const routes: Routes = [
     TranslateModule,
     ThemeModeModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule,
-    AttendanceModule
+    MatProgressSpinnerModule
   ],
   exports: [RouterModule],
 })

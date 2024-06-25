@@ -270,7 +270,7 @@ export const locale = {
     Bu_Hafta_Doğanlar: 'Bu Hafta Doğanlar',
     Bu_Ay_Doğanlar: 'Bu Ay Doğanlar',
     İyiki_Doğdun: 'İyi ki Doğdun',
-    DOGUM_MESAJ: 'Merhaba {{value1} doğum gününüzü kutlar, sevdiklerinizle mutlu bir ömür dileriz.',
+    DOGUM_MESAJ: 'Merhaba {{value1}} doğum gününüzü kutlar, sevdiklerinizle mutlu bir ömür dileriz.',
     Tüm_Doğum_Günleri: 'Tüm Doğum Günleri',
     Kıdemliler: 'Kıdemliler',
     KIDEM_KUTLAMASI: '{{value1}}. Yılın Kutlu Olsun',

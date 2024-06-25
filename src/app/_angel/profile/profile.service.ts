@@ -299,20 +299,15 @@ export class ProfileService {
   }
 
   postOvertimeOrVacationDemand(kaynak : string, form : any) {
-    var ulasimID = form.ulasim?.ID ? form.ulasim.ID.toString() : "";
-    var yemekID = form.yemek?.ID ? form.yemek.ID.toString() : "";
-    var bassaat = form.bassaat ? form.bassaat : "";
-    var bitsaat = form.bitsaat ? form.bitsaat : "";
-
     var sp : any[] = [{
       mkodu : 'yek049',
       kaynak : kaynak,
       tip : form.tip.ID.toString(),
-      bastarih : form.bastarih + ' ' + bassaat,
-      bittarih : form.bittarih + ' ' + bitsaat,
+      bastarih : form.bastarih + ' ' + form?.bassaat || "",
+      bittarih : form.bittarih + ' ' + form?.bitsaat || "",
       izinadresi : form.izinadresi,
-      ulasim : ulasimID,
-      yemek : yemekID,
+      ulasim : form.ulasim?.ID ? form.ulasim.ID.toString() : "",
+      yemek : form.yemek?.ID ? form.yemek.ID.toString() : "",
       aciklama : form.aciklama
     }];
 

@@ -6,10 +6,10 @@ import { PuantajTanimlamalarComponent } from './puantaj-tanimlamalar/puantaj-tan
 import { PuantajdashboardComponent } from './puantajdashboard/puantajdashboard.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: PuantajdashboardComponent,
-  },
+  // {
+  //   path: '',
+  //   component: AttendanceListComponent,
+  // },
   {
     path: 'genel_bakis',
     component: PuantajdashboardComponent,

@@ -13,13 +13,22 @@ import { PuantajRaporlarComponent } from './puantaj-raporlar/puantaj-raporlar.co
 import { PuantajWidgetComponent } from './puantaj-widget/puantaj-widget.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {ProgressBarModule} from 'primeng/progressbar';
+import { ProgressBarModule } from 'primeng/progressbar';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { AttendanceManagementSystemComponent } from './attendance-management-system/attendance-management-system.component';
 import { InlineSVGModule } from 'ng-inline-svg-2';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 import { OrganizationColumnFilterComponent } from './organization-column-filter/organization-column-filter.component';
-
+import { AttendanceListFilterComponent } from './attendance-list-filter/attendance-list-filter.component';
+import { DialogModule } from 'primeng/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { DropdownModule } from 'primeng/dropdown';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProfileModule } from '../profile/profile.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +40,8 @@ import { OrganizationColumnFilterComponent } from './organization-column-filter/
     PuantajRaporlarComponent,
     PuantajWidgetComponent,
     AttendanceManagementSystemComponent,
-    OrganizationColumnFilterComponent
+    OrganizationColumnFilterComponent,
+    AttendanceListFilterComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +54,16 @@ import { OrganizationColumnFilterComponent } from './organization-column-filter/
     SpeedDialModule,
     ReactiveFormsModule,
     InlineSVGModule,
-    CustomPipeModule
+    CustomPipeModule,
+    DialogModule,
+    MatExpansionModule,
+    DropdownModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgbTooltipModule,
+    ProfileModule,
+    SharedModule
   ],
   exports: [
     AttendanceManagementSystemComponent

@@ -350,17 +350,7 @@
 
 
 <ng-container *ngIf="displayVacationForm">
-  <p-dialog header="{{'İzin_Talep_Formu' | translate}}" [(visible)]="displayVacationForm"
-    (visibleChange)="vacationFormIsSend()" [modal]="true"
-    [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true" [baseZIndex]="10000"
-    [draggable]="true" [resizable]="false">
-
-    <ng-container *ngIf="displayVacationForm">
-      <app-dialog-izin-talebi (vacationFormIsSend)="vacationFormIsSend()"></app-dialog-izin-talebi>
-    </ng-container>
-
-
-  </p-dialog>
+  <app-dialog-izin-talebi [displayVacationForm]="displayVacationForm" (onHideVacationForm)="onHideVacationForm()"></app-dialog-izin-talebi>
 </ng-container>
 
 

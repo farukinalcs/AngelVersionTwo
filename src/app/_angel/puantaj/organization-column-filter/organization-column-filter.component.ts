@@ -19,9 +19,8 @@ export class OrganizationColumnFilterComponent implements IFilterAngularComp {
 
   params!: IFilterParams;
   organizationFilterList: OKodFieldsModel[] = [];
-  selectedType: any;
-  dropdownEmptyMessage: any = 'Kayıt_Bulunamadı';
   filter: any;
+  searchText: string = '';
 
   constructor(
     private profileService: ProfileService,

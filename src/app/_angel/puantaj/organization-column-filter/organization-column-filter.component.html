@@ -9,7 +9,7 @@
                 <div ref="eLabel" class="ag-input-field-label ag-label ag-hidden ag-text-field-label" aria-hidden="true"
                     role="presentation"></div>
                 <div ref="eWrapper" class="ag-wrapper ag-input-wrapper ag-text-field-input-wrapper" role="presentation">
-                    <input ref="eInput" class="ag-input-field-input ag-text-field-input" type="text" id="ag-1249-input"
+                    <input ref="eInput" class="ag-input-field-input ag-text-field-input" type="text" [(ngModel)]="searchText" name="search-input" id="ag-1249-input"
                         tabindex="0" aria-label="Search filter values" placeholder="Search...">
                 </div>
             </div>
@@ -23,7 +23,7 @@
                         role="listbox" aria-label="Filter List" [style.height.px]="organizationFilterList.length * 17">
                         
                         <div class="ag-virtual-list-item ag-filter-virtual-list-item" role="option" aria-setsize="36"
-                            *ngFor="let item of organizationFilterList; let i = index" [style.height.px]="16" [style.top.px]="i * 16">
+                            *ngFor="let item of organizationFilterList | searchFilter: searchText: ['Ad']; let i = index" [style.height.px]="16" [style.top.px]="i * 16">
                             <div class="ag-set-filter-item">
                                 <input type="radio" name="filter" [(ngModel)]="filter" id="{{item.ID}}" (ngModelChange)="updateFilter()" [value]="item.ID" />
                                 <label class="mx-1 " for="{{item.ID}}">{{item.Ad}}</label>

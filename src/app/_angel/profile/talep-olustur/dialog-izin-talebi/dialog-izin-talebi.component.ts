@@ -36,8 +36,8 @@ import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-s
 })
 export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
-  @Input() closedForm: BehaviorSubject<boolean>;
-  @Output() vacationFormIsSend: EventEmitter<void> = new EventEmitter<void>();
+  @Input() displayVacationForm: boolean;
+  @Output() onHideVacationForm: EventEmitter<void> = new EventEmitter<void>();
 
   stepperFields: any[] = [
     { class: 'stepper-item current', number: 1, title: this.translateService.instant('Tür'), desc: this.translateService.instant('Günlük_Saatlik') },
@@ -284,7 +284,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
       this.resetStepperFieldsClass();
       this.currentStep$.next(1);
       this.currentItem = this.stepperFields[0];
-      this.vacationFormIsSend.emit();
+      this.onHideVacationForm.emit();
     // });
   }
   

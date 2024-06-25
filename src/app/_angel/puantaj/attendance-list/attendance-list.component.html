@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
 
-        <div class="row sticky-top pt-2" *ngIf="loading">
+        <div class="row pt-2" *ngIf="loading">
             <div class="col-11 m-auto">
                 <p-progressBar [value]="value"></p-progressBar>
             </div>
@@ -12,18 +12,18 @@
                 </div>
             </div>
         </div>
-        
-        
-        
+
+
+
         <div class="col-12">
 
             <!-- <mat-progress-spinner *ngIf="loading" mode="indeterminate"
                 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1;">
             </mat-progress-spinner> -->
-            
+
             <div class="card card-custom gutter-b" [ngClass]="{'disabled': loading}"
             [ngStyle]="{ 'opacity': loading ? 0.5 : 1, 'cursor': loading ? 'not-allowed' : 'auto' }">
-                
+
                 <div class="card-header border-0">
                     <div class="card-title">
                         <h3 class="card-label">{{"Puantaj Listesi" | translate}} </h3>
@@ -51,7 +51,19 @@
                             </div>
                         </div> -->
 
-                        <div class="col-8 d-flex align-items-end justify-content-start">
+                        <div class="col-4 d-flex align-items-end gap-2">
+                            <a class="btn btn-dark btn-sm" (click)="showFilterModal()">
+                                <i class="fa-solid fa-filter"></i>
+                                Filtrele
+                            </a>
+
+                            <a class="btn btn-dark btn-sm" (click)="clearFilters()">
+                                <i class="fa-solid fa-eraser"></i>
+                                Temizle
+                            </a>
+                        </div>
+
+                        <div class="col-8 d-flex align-items-end justify-content-end gap-5">
                             <div class="fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
                                 <!--begin::Radio group-->
                                 <div class="btn-group w-100">
@@ -62,71 +74,71 @@
                                         <!--end::Input-->
                                         {{item.name}}
                                     </label>
-                                    
+
                                     <!--end::Radio-->
                                 </div>
                                 <!--end::Radio group-->
                                 <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                             </div>
-                        </div>
-    
-                        <div class="col-4 d-flex justify-content-end">
+
                             <div class="row">
                                 <ng-container *ngIf="this.formGroup.value.dateRange != '-1' ">
                                     <div class="col d-flex align-items-end">
                                         <i class="fa-solid fa-caret-left fs-3x text-dark cursor-pointer text-hover-gray-600" (click)="previousDate()"></i>
                                     </div>
                                 </ng-container>
-                                
-                                
+
+
                                 <div class="col">
                                     <label class="d-flex align-items-center fs-9 fw-semibold mb-2">
                                         <span>{{"Başlangıç_Tarihi" | translate}}</span>
                                     </label>
-                            
-                                    <input type="date" class="form-control form-control-sm form-control-solid" formControlName="startDate">
+
+                                    <input type="date" class="form-control form-control-sm form-control-solid" formControlName="startDate" (click)="openDatePicker()">
                                 </div>
-                            
+
                                 <div class="col">
                                     <label class="d-flex align-items-center fs-9 fw-semibold mb-2">
                                         <span>{{"Bitiş_Tarihi" | translate}}</span>
                                     </label>
-                            
-                                    <input type="date" class="form-control form-control-sm form-control-solid" formControlName="endDate">
+
+                                    <input type="date" class="form-control form-control-sm form-control-solid" formControlName="endDate" (click)="openDatePicker()">
                                 </div>
 
                                 <ng-container *ngIf="this.formGroup.value.dateRange != '-1' ">
                                     <div class="col d-flex align-items-end">
                                         <i class="fa-solid fa-caret-right fs-3x text-dark cursor-pointer text-hover-gray-600" (click)="nextDate()"></i>
-                                    </div>    
+                                    </div>
                                 </ng-container>
-                                
-                                
+
+
                             </div>
                         </div>
+
+
                     </div>
 
 
                     <div class="">
                         <ul class="nav nav-pills nav-pills-custom item position-relative mx-1 mb-1" role="tablist">
-                            <!--begin::Item--> 
+                            <!--begin::Item-->
                             <li class="nav-item col mx-0 p-0" role="presentation" *ngFor="let item of tabList">
-                                <!--begin::Link--> 
-                                <a class="nav-link d-flex justify-content-center w-100 border-0 h-100" [ngClass]="{'active': selectedTab == item.type}" (click)="changeTabMenu(item.type)" data-bs-toggle="pill" href="#kt_list_widget_16_tab_1" aria-selected="true" role="tab">                   
+                                <!--begin::Link-->
+                                <a class="nav-link d-flex justify-content-center w-100 border-0 h-100" [ngClass]="{'active': selectedTab == item.type}" (click)="changeTabMenu(item.type)" data-bs-toggle="pill" href="#kt_list_widget_16_tab_1" aria-selected="true" role="tab">
                                     <!--begin::Subtitle-->
                                     <span class="nav-text text-gray-800 fw-bold fs-7 mb-3">
                                         {{item.name}}
-                                    </span> 
+                                    </span>
                                     <!--end::Subtitle-->
-                                    
+
                                     <!--begin::Bullet-->
                                     <span class="bullet-custom position-absolute z-index-2 bottom-0 w-100 h-4px bg-dark rounded"></span>
                                     <!--end::Bullet-->
                                 </a>
-                                <!--end::Link-->                
+                                <!--end::Link-->
                             </li>
-                            <!--end::Item--> 
-                            
+                            <!--end::Item-->
+
                             <!--begin::Bullet-->
                             <span class="position-absolute z-index-1 bottom-0 w-100 h-4px bg-light rounded"></span>
                             <!--end::Bullet-->
@@ -134,66 +146,147 @@
                     </div>
 
                     <div class="ag-theme-material" [ngStyle]="gridStyle" #gridContainer>
-                        <ag-grid-angular 
-                            #agGridLight 
-                            style="width: 100%; height: 100%;" 
+                        <ag-grid-angular
+                            #agGridLight
+                            style="width: 100%; height: 100%;"
                             class="ag-theme-alpine theme-light-show"
-                            [columnDefs]="columnDefs" 
-                            [defaultColDef]="defaultColDef" 
-                            [rowData]="rowData" 
+                            [columnDefs]="columnDefs"
+                            [defaultColDef]="defaultColDef"
+                            [rowData]="rowData"
                             [rowSelection]="rowSelection"
-                            [suppressRowClickSelection]="true" 
-                            (selectionChanged)="onSelectionChangedLight()" 
+                            [suppressRowClickSelection]="true"
+                            (selectionChanged)="onSelectionChangedLight()"
                             [sideBar]="sideBar"
-                            [rowGroupPanelShow]="rowGroupPanelShow" 
-                            [getContextMenuItems]="getContextMenuItems" 
+                            [rowGroupPanelShow]="rowGroupPanelShow"
+                            [getContextMenuItems]="getContextMenuItems"
                             [animateRows]="true"
-                            [statusBar]="statusBar" 
-                            [getRowHeight]="getRowHeight" 
-                            [groupSelectsChildren]="true" 
+                            [statusBar]="statusBar"
+                            [getRowHeight]="getRowHeight"
+                            [groupSelectsChildren]="true"
                             [pagination]="false"
-                            [paginationAutoPageSize]="false" 
-                            [paginateChildRows]="false" 
+                            [paginationAutoPageSize]="false"
+                            [paginateChildRows]="false"
                             [enableRangeSelection]="true"
                             [enableRangeHandle]="true"
                             [gridOptions]="gridOptionsLight"
                             (filterOpened)="onFilterOpened($event)"
                             (filterChanged)="onFilterChanged($event)"
-                            (filterModified)="onFilterModified($event)">
+                            (filterModified)="onFilterModified($event)"
+                            (columnResized)="onColumnResized($event)"
+                            (columnVisible)="onColumnVisible($event)">
                         </ag-grid-angular>
-                    
-                        <ag-grid-angular 
-                            #agGridDark 
-                            style="width: 100%; height: 100%;" 
+
+                        <ag-grid-angular
+                            #agGridDark
+                            style="width: 100%; height: 100%;"
                             class="ag-theme-alpine-dark theme-dark-show"
-                            [columnDefs]="columnDefs" 
-                            [defaultColDef]="defaultColDef" 
-                            [rowData]="rowData" 
+                            [columnDefs]="columnDefs"
+                            [defaultColDef]="defaultColDef"
+                            [rowData]="rowData"
                             [rowSelection]="rowSelection"
-                            [suppressRowClickSelection]="true" 
-                            (selectionChanged)="onSelectionChangedDark()" 
+                            [suppressRowClickSelection]="true"
+                            (selectionChanged)="onSelectionChangedDark()"
                             [sideBar]="sideBar"
-                            [rowGroupPanelShow]="rowGroupPanelShow" 
-                            [getContextMenuItems]="getContextMenuItems" 
+                            [rowGroupPanelShow]="rowGroupPanelShow"
+                            [getContextMenuItems]="getContextMenuItems"
                             [animateRows]="true"
-                            [statusBar]="statusBar" 
-                            [getRowHeight]="getRowHeight" 
-                            [groupSelectsChildren]="true" 
+                            [statusBar]="statusBar"
+                            [getRowHeight]="getRowHeight"
+                            [groupSelectsChildren]="true"
                             [pagination]="false"
-                            [paginationAutoPageSize]="false" 
-                            [paginateChildRows]="false" 
+                            [paginationAutoPageSize]="false"
+                            [paginateChildRows]="false"
                             [enableRangeSelection]="true"
                             [enableRangeHandle]="true"
                             [gridOptions]="gridOptionsDark"
                             (filterOpened)="onFilterOpened($event)"
                             (filterChanged)="onFilterChanged($event)"
-                            (filterModified)="onFilterModified($event)">
+                            (filterModified)="onFilterModified($event)"
+                            (columnResized)="onColumnResized($event)"
+                            (columnVisible)="onColumnVisible($event)">
                         </ag-grid-angular>
                     </div>
                 </div>
-                
-                
+
+
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+<ng-container *ngIf="displayFilterModal">
+    <app-attendance-list-filter [displayFilterModal]="displayFilterModal" [dateRangeByGrid]="formGroup.value" [filterByGrid]="savedFilterModel" (onHideFilterModalEvent)="onHideFilterModal()" (setFilterFormEvent)="setFilterFormFromModal($event)">
+    </app-attendance-list-filter>
+</ng-container>
+
+<div class="floating-container" [class.open]="isOpen">
+    <div class="floating-button bg-dark" (click)="toggleOpen()">
+        <i class="fa-solid fa-ellipsis text-white heart-beat"></i>
+    </div>
+    <div class="floating-card">
+        <ul>
+            <li>
+                <div class="symbol symbol-35px" placement="start" ngbTooltip="İzin Talebi" container="body" (click)="displayVacationForm = true">
+                    <div class="symbol-label fs-2 fw-semibold bg-hover-dark text-hover-white">
+                        <i class="fas fa-umbrella-beach text-dark"></i>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="symbol symbol-35px" placement="start" ngbTooltip="Fazla Mesai Talebi" container="body">
+                    <div class="symbol-label fs-2 fw-semibold bg-hover-dark text-hover-white">
+                        <i class="fas fa-business-time text-dark"></i>
+                    </div>
+                </div>
+
+            </li>
+
+            <li>
+                <div class="symbol symbol-35px" placement="start" ngbTooltip="Geçiş Talebi" container="body">
+                    <div class="symbol-label fs-2 fw-semibold bg-hover-dark text-hover-white">
+                        <i class="fas fa-door-open text-dark"></i>
+                    </div>
+                </div>
+
+            </li>
+
+            <li>
+                <div class="symbol symbol-35px" placement="start" ngbTooltip="Mesai Talebi" container="body">
+                    <div class="symbol-label fs-2 fw-semibold bg-hover-dark text-hover-white">
+                        <i class="fas fa-calendar-days text-dark"></i>
+                    </div>
+                </div>
+
+            </li>
+
+            <!-- <li>
+                <div class="symbol symbol-35px">
+                    <div class="symbol-label fs-2 fw-semibold bg-hover-dark text-hover-white">
+                        <i class="fas fa-clock text-dark"></i>
+                    </div>
+                </div>
+
+            </li> -->
+        </ul>
+    </div>
+</div>
+
+
+
+<ng-container *ngIf="displayVacationForm">
+    <app-dialog-izin-talebi [displayVacationForm]="displayVacationForm" (onHideVacationForm)="onHideVacationForm()"></app-dialog-izin-talebi>
+</ng-container>
+
+
+
+<ng-container *ngIf="displayAnnualCalendar">
+    <app-annual-calendar [displayAnnualCalendar]="displayAnnualCalendar" [personInfo]="personInfoForAnnualCalendar" (annualCalendarHideEvent)="onHideAnnualCalendar()"></app-annual-calendar>
+</ng-container>
+
+

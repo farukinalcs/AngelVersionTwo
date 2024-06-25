@@ -16,7 +16,7 @@ import { AttendanceModule } from 'src/app/_angel/puantaj/attendance.module';
     HelpDrawerComponent,
     PurchaseToolbarComponent,
   ],
-  imports: [CommonModule, InlineSVGModule, RouterModule, TranslationModule, NgbAccordionModule, FormsModule, AttendanceModule],
+  imports: [CommonModule, InlineSVGModule, RouterModule, TranslationModule, NgbAccordionModule, FormsModule],
   exports: [
     ExploreMainDrawerComponent,
     HelpDrawerComponent,
