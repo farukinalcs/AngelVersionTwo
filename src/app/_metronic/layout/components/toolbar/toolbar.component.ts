@@ -1,7 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { LoaderService } from 'src/app/_helpers/loader.service';
 import { ILayout, LayoutType } from '../../core/configs/config';
 import { LayoutService } from '../../core/layout.service';
 import { PageInfoService, PageLink } from '../../core/page-info.service';
@@ -42,7 +41,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   bc$: Observable<Array<PageLink>>;
   pageTitle: string = '';
 
-  constructor(private layout: LayoutService, public loaderService: LoaderService, private pageInfo : PageInfoService, private router : Router) {}
+  constructor(private layout: LayoutService, private pageInfo : PageInfoService, private router : Router) {}
 
   ngOnInit(): void {
     const subscr = this.layout.layoutConfigSubject

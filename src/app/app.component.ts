@@ -9,6 +9,7 @@ import { locale as deLang } from './modules/i18n/vocabs/de';
 import { locale as frLang } from './modules/i18n/vocabs/fr';
 import { locale as trLang } from './modules/i18n/vocabs/tr';
 import { ThemeModeService } from './_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
+import { LoadingService } from './_helpers/loading.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -23,7 +24,8 @@ import { ThemeModeService } from './_metronic/partials/layout/theme-mode-switche
 export class AppComponent implements OnInit {
   constructor(
     private translationService: TranslationService,
-    private modeService: ThemeModeService
+    private modeService: ThemeModeService,
+    public loadingService: LoadingService
   ) {
     // register translations
     this.translationService.loadTranslations(

@@ -15,6 +15,7 @@ import { StoreModule } from '@ngrx/store';
 import { PdksReducer } from './_angel/NGRX/pdks.reducer';
 import { TokenInterceptor } from './modules/auth/services/auth-http/token.interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { LoadingComponent } from './modules/loading/loading.component';
 // #fake-start#
 // import { FakeAPIService } from './_fake/fake-api.service';
 
@@ -30,7 +31,7 @@ function appInitializer(authService: AuthService) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoadingComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -57,5 +58,6 @@ function appInitializer(authService: AuthService) {
     }
   ],
   bootstrap: [AppComponent],
+  exports: [LoadingComponent]
 })
 export class AppModule {}

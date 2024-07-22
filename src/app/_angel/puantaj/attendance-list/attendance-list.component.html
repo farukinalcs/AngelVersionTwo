@@ -224,14 +224,15 @@
     </app-attendance-list-filter>
 </ng-container>
 
-<div class="floating-container" [class.open]="isOpen">
+<div class="floating-container" [class.open]="isOpen" [ngClass]="{'disabled': loading}"
+[ngStyle]="{ 'opacity': loading ? 0.5 : 1, 'cursor': loading ? 'not-allowed' : 'auto' }">
     <div class="floating-button bg-dark" (click)="toggleOpen()">
         <i class="fa-solid fa-ellipsis text-white heart-beat"></i>
     </div>
     <div class="floating-card">
         <ul>
             <li>
-                <div class="symbol symbol-35px" placement="start" ngbTooltip="İzin Talebi" container="body" (click)="displayVacationForm = true">
+                <div class="symbol symbol-35px" placement="start" ngbTooltip="İzin Talebi" container="body" (click)="showVacationForm()">
                     <div class="symbol-label fs-2 fw-semibold bg-hover-dark text-hover-white">
                         <i class="fas fa-umbrella-beach text-dark"></i>
                     </div>
@@ -239,7 +240,7 @@
             </li>
 
             <li>
-                <div class="symbol symbol-35px" placement="start" ngbTooltip="Fazla Mesai Talebi" container="body">
+                <div class="symbol symbol-35px" placement="start" ngbTooltip="Fazla Mesai Talebi" container="body" (click)="showOvertimeForm()">
                     <div class="symbol-label fs-2 fw-semibold bg-hover-dark text-hover-white">
                         <i class="fas fa-business-time text-dark"></i>
                     </div>
@@ -248,7 +249,7 @@
             </li>
 
             <li>
-                <div class="symbol symbol-35px" placement="start" ngbTooltip="Geçiş Talebi" container="body">
+                <div class="symbol symbol-35px" placement="start" ngbTooltip="Geçiş Talebi" container="body" (click)="showAttendanceForm()">
                     <div class="symbol-label fs-2 fw-semibold bg-hover-dark text-hover-white">
                         <i class="fas fa-door-open text-dark"></i>
                     </div>
@@ -257,7 +258,7 @@
             </li>
 
             <li>
-                <div class="symbol symbol-35px" placement="start" ngbTooltip="Mesai Talebi" container="body">
+                <div class="symbol symbol-35px" placement="start" ngbTooltip="Mesai Talebi" container="body"  (click)="showShiftForm()">
                     <div class="symbol-label fs-2 fw-semibold bg-hover-dark text-hover-white">
                         <i class="fas fa-calendar-days text-dark"></i>
                     </div>
@@ -280,7 +281,22 @@
 
 
 <ng-container *ngIf="displayVacationForm">
-    <app-dialog-izin-talebi [displayVacationForm]="displayVacationForm" (onHideVacationForm)="onHideVacationForm()"></app-dialog-izin-talebi>
+    <app-dialog-izin-talebi [isFromAttendance]="true" [displayVacationForm]="displayVacationForm" (onHideVacationForm)="onHideVacationForm()" (isCompletedFromAttendance)="getAttendanceInfo()"></app-dialog-izin-talebi>
+</ng-container>
+
+<ng-container *ngIf="displayOvertimeForm">
+    <app-dialog-fazla-mesai-talebi [isFromAttendance]="true" [displayOvertimeForm]="displayOvertimeForm" (onHideOvertimeForm)="onHideOvertimeForm()"></app-dialog-fazla-mesai-talebi>
+</ng-container>
+
+<ng-container *ngIf="displayShiftForm">
+    <app-shift-change-form [isFromAttendance]="true" [displayShiftForm]="displayShiftForm" (onHideShiftForm)="onHideShiftForm()" (isCompletedFromAttendance)="getAttendanceInfo()"></app-shift-change-form>
+</ng-container>
+
+<ng-container *ngIf="displayAttendanceForm">
+    <app-attendance-change-form [isFromAttendance]="true" [displayAttendanceForm]="displayAttendanceForm" 
+        (onHideAttendanceForm)="onHideAttendanceForm()" (isCompletedFromAttendance)="getAttendanceInfo()"
+        [gridStartDate]="formGroup.get('startDate')?.value" [gridEndDate]="formGroup.get('endDate')?.value">
+    </app-attendance-change-form>
 </ng-container>
 
 

@@ -298,20 +298,44 @@ export class ProfileService {
     return this.requestMethod(sp);
   }
 
-  postOvertimeOrVacationDemand(kaynak : string, form : any) {
-    var sp : any[] = [{
-      mkodu : 'yek049',
-      kaynak : kaynak,
-      tip : form.tip.ID.toString(),
-      bastarih : form.bastarih + ' ' + form?.bassaat || "",
-      bittarih : form.bittarih + ' ' + form?.bitsaat || "",
-      izinadresi : form.izinadresi,
-      ulasim : form.ulasim?.ID ? form.ulasim.ID.toString() : "",
-      yemek : form.yemek?.ID ? form.yemek.ID.toString() : "",
-      aciklama : form.aciklama
-    }];
+  postRequestForm(kaynak : string, form : any, employees:any[]) {
+    var sp: any[] = [];
+    
+    if (kaynak == 'vardiya') {
+      employees.forEach((item:any) => {
+        sp.push({
+          mkodu: 'yek049',
+          kaynak: kaynak,
+          tip: form.shift.ID.toString(),
+          bastarih: form.startDate,
+          bittarih: form.endDate ? form.endDate : form.startDate,
+          izinadresi: '',
+          ulasim: '',
+          yemek: '',
+          aciklama: form?.explanation,
+          siciller: item,
+        });
+      });
+    } else {
+      employees.forEach((item:any) => {
+        sp.push({
+          mkodu: 'yek049',
+          kaynak: kaynak,
+          tip: form.tip.ID.toString(),
+          bastarih: form?.bassaat ? `${form.bastarih} ${form.bassaat}` : form.bastarih,
+          bittarih: form?.bitsaat ? `${form.bittarih} ${form.bitsaat}` : form.bittarih,
+          izinadresi: form.izinadresi,
+          ulasim: form.ulasim?.ID ? form.ulasim.ID.toString() : '',
+          yemek: form.yemek?.ID ? form.yemek.ID.toString() : '',
+          aciklama: form.aciklama,
+          siciller: item,
+        });
+      });  
+    }
+    
+    
 
-    return this.requestMethod(sp);
+    return this.requestMethodPost(sp);
   }
 
   calculateVacationTime(form : any) {
@@ -646,6 +670,24 @@ export class ProfileService {
     };
 
     return this.httpClient.get<any>(API_URL + '/process', options);
+  }
+
+  requestMethodPost(sp : any[]){
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    return this.httpClient.post<any>(API_URL + '/process', data);
   }
 
 }

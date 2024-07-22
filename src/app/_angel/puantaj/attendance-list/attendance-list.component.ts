@@ -32,6 +32,8 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { OKodFieldsModel } from '../../profile/models/oKodFields';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { OrganizationColumnFilterComponent } from '../organization-column-filter/organization-column-filter.component';
+import { ToastrService } from 'ngx-toastr';
+import { LoadingService } from 'src/app/_helpers/loading.service';
 
 @Component({
   selector: 'app-attendance-list',
@@ -77,8 +79,8 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
       headerName: '#',
       colId: 'checkbox',
       pinned: 'left',
-      minWidth: 50,
-      maxWidth: 50,
+      minWidth: 30,
+      maxWidth: 30,
       headerCheckboxSelection: true,
       headerCheckboxSelectionFilteredOnly: true,
       filter: false,
@@ -565,7 +567,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
 
   public defaultColDef: ColDef = {
     // flex: 1,
-    minWidth: 90,
+    minWidth: 70,
     filter: true,
     floatingFilter: true,
     sortable: true,
@@ -666,13 +668,19 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
   displayVacationForm: boolean = false;
   displayAnnualCalendar: boolean = false;
   personInfoForAnnualCalendar: any;
+
+  displayOvertimeForm: boolean = false;
+  displayShiftForm: boolean = false;
+  displayAttendanceForm: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private profileService: ProfileService,
     private translateService: TranslateService,
-    private puantajService: AttendanceService,
+    private attendanceService: AttendanceService,
     private themeModeService: ThemeModeService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private toastrService: ToastrService,
+    private loadingService: LoadingService
   ) {}
 
   // ngOnInit(): void {
@@ -1060,13 +1068,13 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
   onSelectionChangedLight() {
     const selectedRows = this.agGridLight.api.getSelectedRows();
     console.log('Seçilenler : ', selectedRows);
-    this.puantajService.setSelectedItems(selectedRows);
+    this.attendanceService.setSelectedItems(selectedRows);
   }
 
   onSelectionChangedDark() {
     const selectedRows = this.agGridDark.api.getSelectedRows();
     console.log('Seçilenler : ', selectedRows);
-    this.puantajService.setSelectedItems(selectedRows);
+    this.attendanceService.setSelectedItems(selectedRows);
   }
 
   getImageGrid(params: any, imageSize = '10') {
@@ -1778,7 +1786,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     } else if (this.agGridDark) {
       this.agGridDark.api.setColumnDefs(this.columnDefs);
     } else {
-      console.error('Bir problem var!');
+      console.error('Sanırım bir problem var!');
     }
   }
 
@@ -1816,8 +1824,82 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
       });
   }
 
+  showVacationForm() {
+    let selectedEmployees: any[] = [];
+    this.attendanceService.selectedItems$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((items) => {
+      selectedEmployees = items;
+    });
+    if (selectedEmployees.length > 0) {
+      this.displayVacationForm = true;      
+    }else {
+      this.toastrService.warning(
+        this.translateService.instant('Listeden_Seçim_Yapmalısınız!'),
+        this.translateService.instant('Uyarı')
+      );
+      return;
+    }
+  }
   onHideVacationForm() {
     this.displayVacationForm = false;
+  }
+
+  showOvertimeForm() {
+    let selectedEmployees: any[] = [];
+    this.attendanceService.selectedItems$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((items) => {
+      selectedEmployees = items;
+    });
+    if (selectedEmployees.length > 0) {
+      this.displayOvertimeForm = true;      
+    }else {
+      this.toastrService.warning(
+        this.translateService.instant('Listeden_Seçim_Yapmalısınız!'),
+        this.translateService.instant('Uyarı')
+      );
+      return;
+    }
+  }
+  onHideOvertimeForm() {
+    this.displayOvertimeForm = false;
+  }
+
+  showShiftForm() {
+    let selectedEmployees: any[] = [];
+    this.attendanceService.selectedItems$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((items) => {
+      selectedEmployees = items;
+    });
+    if (selectedEmployees.length > 0) {
+      this.displayShiftForm = true;      
+    }else {
+      this.toastrService.warning(
+        this.translateService.instant('Listeden_Seçim_Yapmalısınız!'),
+        this.translateService.instant('Uyarı')
+      );
+      return;
+    }
+  }
+
+  onHideShiftForm() {
+    this.displayShiftForm = false;
+  }
+
+  showAttendanceForm() {
+    let selectedEmployees: any[] = [];
+    this.attendanceService.selectedItems$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((items) => {
+      selectedEmployees = items;
+    });
+    if (selectedEmployees.length > 0) {
+      this.displayAttendanceForm = true;      
+    }else {
+      this.toastrService.warning(
+        this.translateService.instant('Listeden_Seçim_Yapmalısınız!'),
+        this.translateService.instant('Uyarı')
+      );
+      return;
+    }
+  }
+
+  onHideAttendanceForm() {
+    this.displayAttendanceForm = false;
   }
 
   showAnnualCalendar(params: any) {

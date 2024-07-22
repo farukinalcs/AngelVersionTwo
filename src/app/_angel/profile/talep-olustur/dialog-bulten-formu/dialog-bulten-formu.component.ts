@@ -34,7 +34,7 @@ export class DialogBultenFormuComponent implements OnInit, OnDestroy {
   stepperFields: any[] = [
     { class: 'stepper-item current', number: 1, title: this.translateService.instant('Bülten'), desc: this.translateService.instant('Bülten_İçeriği') },
     { class: 'stepper-item', number: 2, title: this.translateService.instant('Zaman'), desc: this.translateService.instant('Tarih_Ve_Yayıncı') },
-    { class: 'stepper-item', number: 3, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Bülten_PDF') },
+    { id : '0', class: 'stepper-item', number: 3, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Bülten_PDF') },
     { class: 'stepper-item', number: 4, title: this.translateService.instant('Resim_Seçin'), desc: this.translateService.instant('Avatar') },
     { class: 'stepper-item', number: 5, title: this.translateService.instant('Tamamlandı'), desc: this.translateService.instant('Özet_Bilgiler') },
   ];

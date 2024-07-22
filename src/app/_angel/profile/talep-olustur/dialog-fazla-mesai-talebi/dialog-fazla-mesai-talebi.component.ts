@@ -15,6 +15,7 @@ import { OKodFieldsModel } from '../../models/oKodFields';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { PostFormModel } from '../../models/postForm';
+import { AttendanceService } from 'src/app/_angel/puantaj/attendance.service';
 
 @Component({
   selector: 'app-dialog-fazla-mesai-talebi',
@@ -37,13 +38,19 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   @Input() closedForm: BehaviorSubject<boolean>;
   @Output() overtimeFormIsSend: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onHideOvertimeForm: EventEmitter<void> = new EventEmitter<void>();
+
+  @Input() displayOvertimeForm:boolean;
+  @Input() isFromAttendance: boolean;
+  selectedEmployeesFromAttendance: any[] = [];
+  @Output() isCompletedFromAttendance: EventEmitter<void> = new EventEmitter<void>();
 
   stepperFields: any[] = [
     { class: 'stepper-item current', number: 1, title: this.translateService.instant('Neden_Açıklama'), desc: this.translateService.instant('Fazla_Mesai_Nedeni') },
     { class: 'stepper-item', number: 2, title: this.translateService.instant('Diğer_Bilgiler'), desc: this.translateService.instant('Ulaşım_Yemek') },
     { class: 'stepper-item', number: 3, title: this.translateService.instant('Zaman_Bilgileri'), desc: this.translateService.instant('Fazla_Mesai_Tarihi') },
     { class: 'stepper-item', number: 4, title: this.translateService.instant('Tamamlandı'), desc: this.translateService.instant('Özet_Bilgiler') },
-    { class: 'stepper-item', number: 5, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Gerekli_Belgeler') },
+    { id : '0', class: 'stepper-item', number: 5, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Gerekli_Belgeler') },
   ];
 
   formsCount: any = 6;
@@ -75,6 +82,8 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   displayUploadedFile: boolean;
   currentUploadedFile: any;
 
+  currentUserValue: import("c:/Users/Developer/Desktop/AngleV2_Developer/src/app/modules/auth/index").UserType;
+  isCompleted: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private breakpointObserver: BreakpointObserver,
@@ -84,10 +93,19 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     private translateService : TranslateService,
     private sanitizer: DomSanitizer,
     private helperService : HelperService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private attendanceService: AttendanceService
   ) { }
 
   ngOnInit(): void {
+    this.currentUserValue = this.authService.currentUserValue;
+    console.log("currentUserValue fm talep :", this.currentUserValue);
+
+    if (this.isFromAttendance) {
+      this.getSelectedRows();
+      this.formsCount = 5;
+    }
+
     this.getOvertimeReason('cbo_fmnedenleri');
     this.getOvertimeReason('cbo_ulasim');
     this.getOvertimeReason('cbo_yemek');
@@ -97,9 +115,38 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     this.setResponsiveForm();
     this.createFormGroup();
     this.typeChanges();
+  }
+  getTooltipScript(): string {
+    const personsLength = this.selectedEmployeesFromAttendance.length;
+    const personsName = this.selectedEmployeesFromAttendance.map((person, index) => `${index + 1}) ${person.ad} ${person.soyad}`).join("\r\n");
+    let firstPerson: string = '';
+  
+    const uniquePersons = this.selectedEmployeesFromAttendance.filter((person, index, self) =>
+      index === self.findIndex((p) => p.sicilid === person.sicilid)
+    );
+  
+    if (uniquePersons.length === 1) {
+      firstPerson = `${uniquePersons[0].ad} ${uniquePersons[0].soyad} Seçildi`;
+    } else if (uniquePersons.length === 2) {
+      firstPerson = `${uniquePersons[0].ad} ${uniquePersons[0].soyad} ve ${uniquePersons[1].ad} ${uniquePersons[1].soyad} Seçildi`;
+    } else {
+      if (personsLength == 1) {
+        firstPerson = `${this.selectedEmployeesFromAttendance[0].ad} ${this.selectedEmployeesFromAttendance[0].soyad} Seçildi`;
+      } else if (personsLength == 2) {
+        firstPerson = `${this.selectedEmployeesFromAttendance[0].ad} ${this.selectedEmployeesFromAttendance[0].soyad} ve ${this.selectedEmployeesFromAttendance[1].ad} ${this.selectedEmployeesFromAttendance[1].soyad} Seçildi`;
+      } else if (personsLength > 2) {
+        firstPerson = `${uniquePersons[0].ad} ${uniquePersons[0].soyad}, ${uniquePersons[1].ad} ${uniquePersons[1].soyad} ve ${personsLength - 2} Kişi Daha Seçildi`;
+      }
+    }
+  
+    return firstPerson;
+  }
 
-    // this.closedFormDialog();
-
+  getSelectedRows() {
+    this.attendanceService.selectedItems$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((items) => {
+      this.selectedEmployeesFromAttendance = items;
+      console.log('Puantaj Seçilen Personel :', this.selectedEmployeesFromAttendance);
+    });
   }
 
   canProceedToNextStep(): boolean {
@@ -275,8 +322,6 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   }
 
   closedFormDialog() {
-    // this.closedForm.subscribe(_ => {
-    //   console.log("Closed Form : ", _);
       this.overtimeForm.reset();
       this.selectedType = '';
       this.selectedOvertime = '';
@@ -286,8 +331,8 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
       this.resetStepperFieldsClass();
       this.currentStep$.next(1);
       this.currentItem = this.stepperFields[0];
-      this.overtimeFormIsSend.emit();
-    // });
+      this.selectedEmployeesFromAttendance = [];
+      this.onHideOvertimeForm.emit();
   }
   
 
@@ -341,28 +386,97 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   }
 
   postOvertimeForm(formValues : any) {
-    this.profileService.postOvertimeOrVacationDemand('fm', formValues).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<PostFormModel, ResponseDetailZ>[]) => {
-      const data = response[0].x;
-      const apiMessage = response[0].z;
-      const spMessage = response[0].m[0];
+    let employees: any[] = [];
+    if (this.isFromAttendance) {
+      employees = this.selectedEmployeesFromAttendance.map(employee => employee.sicilid.toString());
+      console.log("Toplu Talep fm :", employees);
+      
+    } else {
+      employees.push(this.currentUserValue?.xSicilID.toString());  
+    }
 
-      console.log("Fm Form gönderildi :", response);
-      if (data[0].sonuc == 1) {
-        this.formId = data[0].formid;
+    this.profileService
+      .postRequestForm('fm', formValues, employees)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (response: ResponseModel<PostFormModel, ResponseDetailZ>[]) => {
+          if (!this.isFromAttendance) {
+            const data = response[0].x;
+            const apiMessage = response[0].z;
+            const spMessage = response[0].m[0];
 
+            console.log('FM Form gönderildi :', response);
+            if (data[0].sonuc == 1) {
+              // this.vacationFormIsSend.emit();
+              // this.vacationForm.reset();
+              this.formId = data[0].formid;
 
-        this.toastrService.success(
-          this.translateService.instant('Talep_Gönderildi'),
-          this.translateService.instant('Başarılı')
-        );
-      } else {
-        this.toastrService.error(
-          this.translateService.instant(spMessage.usermessage),
-          this.translateService.instant('Hata')
-        );
-      }
-    });
-    this.ref.detectChanges();
+              this.toastrService.success(
+                this.translateService.instant('Talep_Gönderildi'),
+                this.translateService.instant('Başarılı')
+              );
+            } else {
+              this.toastrService.error(
+                'data[0]?.izinhesapsure',
+                this.translateService.instant('Hata')
+              );
+              this.prevStep();
+            }
+          } else {
+            let data: any[] = [];
+
+            response.forEach((res: any) => {
+              data.push(res.x[0]);
+            });
+
+            let successDemandCount: number = 0;
+            let errorDemandCount: number = 0;
+
+            data.forEach((item: any) => {
+              if (!item) {
+                return;
+              }
+
+              item.sonuc == 1 ? successDemandCount++ : errorDemandCount++;
+
+              this.selectedEmployeesFromAttendance.forEach((employe) => {
+                if (employe.sicilid == item.siciller) {
+                  Object.keys(item).forEach((key) => {
+                    employe[key] = item[key];
+                  });
+                  employe.error = false;
+                }
+                return;
+              });
+            });
+
+            if (successDemandCount > 0) {
+              this.toastrService.success(
+                this.translateService.instant(
+                  successDemandCount +
+                    'Adet_Talep_Başarılı_Bir_Şekilde_Oluşturuldu'
+                ),
+                this.translateService.instant('Başarılı')
+              );
+
+              this.isCompletedFromAttendance.emit();
+            }
+
+            if (errorDemandCount > 0) {
+              this.toastrService.error(
+                this.translateService.instant(
+                  errorDemandCount + 'Adet_Talep_Oluşturulurken_Hata_Oluştu'
+                ),
+                this.translateService.instant('Hatalı')
+              );
+            }
+
+            console.log('isCompleted : ', this.selectedEmployeesFromAttendance);
+            this.isCompleted = true;
+          }
+          this.ref.detectChanges();
+        }
+      );
   }
   
 
@@ -407,6 +521,12 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     }
 
     this.overtimeFormValues.izinadresi = '';
+
+    if (this.isFromAttendance) {
+      this.postOvertimeForm(this.overtimeFormValues);
+      return;
+    }
+
 
     this.fileTypes.forEach((item : any) => {
       if (item.sendFile) {

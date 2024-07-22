@@ -109,6 +109,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { DialogMasrafTalebiComponent } from './talep-olustur/dialog-masraf-talebi/dialog-masraf-talebi.component';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 import { SharedModule } from '../shared/shared.module';
+import { ShiftChangeFormComponent } from './talep-olustur/shift-change-form/shift-change-form.component';
+import { AttendanceChangeFormComponent } from './talep-olustur/attendance-change-form/attendance-change-form.component';
 
 
 
@@ -161,7 +163,9 @@ LicenseManager.setLicenseKey(
     YemekMenuTanimlamaComponent,
     DialogAracTalebiComponent,
     PendingRequestsComponent,
-    DialogMasrafTalebiComponent
+    DialogMasrafTalebiComponent,
+    ShiftChangeFormComponent,
+    AttendanceChangeFormComponent
   ],
   imports: [
     CommonModule,
@@ -222,7 +226,10 @@ LicenseManager.setLicenseKey(
     SharedModule
   ],
   exports: [
-    DialogIzinTalebiComponent
+    DialogIzinTalebiComponent,
+    DialogFazlaMesaiTalebiComponent,
+    ShiftChangeFormComponent,
+    AttendanceChangeFormComponent
   ],
   providers:[DatePipe]
 

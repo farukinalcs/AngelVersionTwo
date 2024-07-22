@@ -16,6 +16,7 @@ import { OKodFieldsModel } from '../../models/oKodFields';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
+import { AttendanceService } from 'src/app/_angel/puantaj/attendance.service';
 
 @Component({
   selector: 'app-dialog-izin-talebi',
@@ -39,13 +40,18 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   @Input() displayVacationForm: boolean;
   @Output() onHideVacationForm: EventEmitter<void> = new EventEmitter<void>();
 
+  @Input() isFromAttendance: boolean;
+  selectedEmployeesFromAttendance: any[] = [];
+  vacationRightsLoading: boolean = true;
+  @Output() isCompletedFromAttendance: EventEmitter<void> = new EventEmitter<void>();
+
   stepperFields: any[] = [
     { class: 'stepper-item current', number: 1, title: this.translateService.instant('Tür'), desc: this.translateService.instant('Günlük_Saatlik') },
     { class: 'stepper-item', number: 2, title: this.translateService.instant('Tip'), desc: '' },
     { class: 'stepper-item', number: 3, title: this.translateService.instant('Zaman'), desc: this.translateService.instant('İzinli_Süreler') },
     { class: 'stepper-item', number: 4, title: this.translateService.instant('Kişisel_Bilgiler'), desc: '' },
     { class: 'stepper-item', number: 5, title: this.translateService.instant('Tamamlandı'), desc: this.translateService.instant('Özet_Bilgiler') },
-    { class: 'stepper-item', number: 6, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Gerekli_Belgeler') },
+    { id : '0', class: 'stepper-item', number: 6, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Gerekli_Belgeler') },
   ];
 
   formsCount: any = 7;
@@ -82,6 +88,9 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   fileTypes : any[] = [];
   displayUploadedFile : boolean;
   currentUploadedFile: any;
+  currentUserValue: import("c:/Users/Developer/Desktop/AngleV2_Developer/src/app/modules/auth/index").UserType;
+  isCompleted: boolean = false;
+  vacationRightState: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -93,10 +102,18 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private helperService : HelperService,
     private ref: ChangeDetectorRef,
-    private modeService: ThemeModeService
+    private modeService: ThemeModeService,
+    private attendanceService: AttendanceService
   ) { }
 
   ngOnInit(): void {
+    this.currentUserValue = this.authService.currentUserValue;
+    console.log("currentUserValue izin talep :", this.currentUserValue);
+    
+    if (this.isFromAttendance) {
+      this.getSelectedRows();
+      this.formsCount = 6;
+    }
 
     const subscr = this.modeService.mode.asObservable().subscribe((mode) => {
       document.body.style.backgroundImage =
@@ -112,10 +129,20 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     // this.closedFormDialog();
 
     this.getVacationReason();
-    this.getUserInformation();
+    
+    // this.getVacationRight();
+    // this.getUserInformation();
+    
     this.valueChanges();
     this.dateChanges();
     this.typeChanges();
+  }
+
+  getSelectedRows() {
+    this.attendanceService.selectedItems$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((items) => {
+      this.selectedEmployeesFromAttendance = items;
+      console.log('Puantaj Seçilen Personel :', this.selectedEmployeesFromAttendance);
+    });
   }
 
   canProceedToNextStep(): boolean { // Sonraki Adıma Geçmeden Durum Kontrolü Yapılan Kısım
@@ -284,6 +311,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
       this.resetStepperFieldsClass();
       this.currentStep$.next(1);
       this.currentItem = this.stepperFields[0];
+      this.selectedEmployeesFromAttendance = [];
       this.onHideVacationForm.emit();
     // });
   }
@@ -297,6 +325,15 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   getFormValues() { // Form Verilerinin Alınıp, Yüklenmiş Dosyaların API'ye Gönderilmesi
     let vacationFormValues = Object.assign({}, this.vacationForm.value);
     console.log("Form Values : ", vacationFormValues);
+
+    if (this.isFromAttendance) {
+      this.postVacationForm(vacationFormValues);
+      this.toastrService.success(
+        this.translateService.instant('Talep_Gönderildi'),
+        this.translateService.instant('Başarılı')
+      );
+      return;
+    }
 
     this.fileTypes.forEach((item : any) => {
       if (item.sendFile) {
@@ -340,7 +377,9 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
         this.calcTimeDesc = 'Saat Bilgisi Girimelisiniz!'
       } else {
         this.calcTimeDesc = '';
-        this.calculateVacationTime(formValue);
+        if (!this.isFromAttendance) {
+          this.calculateVacationTime(formValue);          
+        }
       }
     })
   }
@@ -382,6 +421,71 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     })
   }
 
+  getVacationRight() {
+    var sp: any[] = [];
+    
+    if (this.isFromAttendance) {
+      if (this.selectedEmployeesFromAttendance.length > 0) {
+        this.selectedEmployeesFromAttendance.forEach(item => {
+          sp.push({
+            mkodu: 'yek107',
+            sicilid: item.sicilid.toString(),
+            izintip: '3'
+          });
+        });
+        
+      } else {
+        return;
+      }
+        
+    } else {
+      sp.push({
+        mkodu: 'yek107',
+        sicilid: this.currentUserValue?.xSicilID.toString(),
+        izintip: '3'
+      })
+    }
+
+    this.profileService.requestMethodPost(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+      let data: any[] = [];
+
+      response.forEach((res: any) => {
+        data.push(res.x[0]);
+      });
+      const message = response[0].z;
+
+      if (message.islemsonuc == -1) {
+        return;
+      }
+      console.log('Vacation Right: ', data);
+      if (this.isFromAttendance) {
+        data.forEach((item: any) => {
+          if (!item) {
+            return;
+          }
+          this.selectedEmployeesFromAttendance.forEach(employe => {
+            if (employe.sicilid == item.SicilID) {
+              Object.keys(item).forEach(key => {
+                employe[key] = item[key];
+              });
+              employe.error = false;
+            }
+            return;
+          });
+          
+        });
+
+        console.log("İzin Hakları : ", this.selectedEmployeesFromAttendance);
+        this.vacationRightsLoading = false;
+      } else {
+        this.izinKalan = data[0].Kalan;
+      }
+      // this.vacationRight = data[0];
+
+      this.ref.detectChanges();
+    });
+  }
+
   getVacationReason() { // İzin Tiplerini Almak İçin API'ye İstek 
     this.profileService.getTypeValues('cbo_izintipleri').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<OKodFieldsModel, ResponseDetailZ>[]) => {
       const data = response[0].x;
@@ -397,25 +501,86 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   }
 
   postVacationForm(vacationFormValues : any) { // API'ye İzin Talebini Göndermek İçin Fonksiyon
-    this.profileService.postOvertimeOrVacationDemand('izin', vacationFormValues).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
-      const data = response[0].x;
-      const apiMessage = response[0].z;
-      const spMessage = response[0].m[0];
+    let employees: any[] = [];
+    if (this.isFromAttendance) {
+      employees = this.selectedEmployeesFromAttendance.map(employee => employee.sicilid.toString());
+      console.log("Toplu Talep :", employees);
+      
+    } else {
+      employees.push(this.currentUserValue?.xSicilID.toString());  
+    }
+    this.profileService.postRequestForm('izin', vacationFormValues, employees).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+      if (!this.isFromAttendance) {
+        const data = response[0].x;
+        const apiMessage = response[0].z;
+        const spMessage = response[0].m[0];
 
-      console.log("İzin Form gönderildi :", response);
-      if (data[0].sonuc == 1) {
-        // this.vacationFormIsSend.emit();
-        // this.vacationForm.reset();
-        this.formId = data[0].formid;
-        
-        this.toastrService.success(
-          this.translateService.instant('Talep_Gönderildi'),
-          this.translateService.instant('Başarılı')
-        );
+        console.log('İzin Form gönderildi :', response);
+        if (data[0].sonuc == 1) {
+          // this.vacationFormIsSend.emit();
+          // this.vacationForm.reset();
+          this.formId = data[0].formid;
+
+          this.toastrService.success(
+            this.translateService.instant('Talep_Gönderildi'),
+            this.translateService.instant('Başarılı')
+          );
+        } else {
+          this.toastrService.error(
+            data[0]?.izinhesapsure,
+            this.translateService.instant('Hata')
+          );
+          this.prevStep();
+        }
       } else {
-        this.toastrService.error(data[0]?.izinhesapsure, this.translateService.instant('Hata'));
-        this.prevStep();
+        let data: any[] = [];
+
+        response.forEach((res: any) => {
+          data.push(res.x[0]);
+        });
+
+        let successDemandCount: number = 0;
+        let errorDemandCount: number = 0;
         
+        data.forEach((item: any) => {
+          if (!item) {
+            return;
+          }
+
+          item.sonuc == 1 ? successDemandCount++ : errorDemandCount++;
+          
+          this.selectedEmployeesFromAttendance.forEach(employe => {
+            if (employe.sicilid == item.siciller) {
+              Object.keys(item).forEach(key => {
+                employe[key] = item[key];
+              });
+              employe.error = false;
+            }
+            return;
+          });
+          
+        });
+
+        if (successDemandCount > 0) {
+          this.toastrService.success(
+            this.translateService.instant(successDemandCount + 'Adet_Talep_Başarılı_Bir_Şekilde_Oluşturuldu'),
+            this.translateService.instant('Başarılı')
+          );  
+
+          this.isCompletedFromAttendance.emit();
+
+        }
+        
+        if (errorDemandCount > 0) {
+          this.toastrService.error(
+            this.translateService.instant(errorDemandCount + 'Adet_Talep_Oluşturulurken_Hata_Oluştu'),
+            this.translateService.instant('Hatalı')
+          );  
+        }
+        
+
+        console.log("isCompleted : ", this.selectedEmployeesFromAttendance);
+        this.isCompleted = true;
       }
 
       this.ref.detectChanges();
@@ -452,8 +617,15 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   }
 
   typeChanges() { // Form Alanlarından "tip" Değiştikçe, API'ye, O Tipe Ait Zorunlu Belgeleri Çekmesi İçin "getFileTypeForDemandType" Fonksiyonuna İlgili Parametreler Gönderiliyor 
+    this.vacationRightState = false;
     this.vacationForm.controls['tip'].valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe(item => {
       item ? this.getFileTypeForDemandType(item.ID, 'izin') : '';
+
+      if (item?.ID == 3 && !this.vacationRightState) {
+        this.getVacationRight();
+
+        this.vacationRightState = true;
+      }
     });
   }
 

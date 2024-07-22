@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { LoaderService } from 'src/app/_helpers/loader.service';
 
 // const BODY_CLASSES = ['bgi-size-cover', 'bgi-position-center', 'bgi-no-repeat'];
 
@@ -12,7 +11,6 @@ import { LoaderService } from 'src/app/_helpers/loader.service';
 export class AuthComponent implements OnInit, OnDestroy {
   today: Date = new Date();
 
-  constructor(public loaderService : LoaderService) {}
 
   ngOnInit(): void {
     // BODY_CLASSES.forEach((c) => document.body.classList.add(c));

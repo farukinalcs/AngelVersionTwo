@@ -73,7 +73,7 @@
                     </button>
 
                     <button (click)="showOvertimeDialog()" mat-menu-item>
-                      <i class="icon-l fas fa-calendar-alt pe-4 fs-3"> </i>
+                      <i class="icon-l fas fa-business-time pe-4 fs-3"> </i>
                       {{"Fazla_Mesai" | translate}}
                     </button>
 
@@ -110,6 +110,16 @@
                     <button mat-menu-item (click)="showExpenseDialog()">
                       <i class="fa-solid fa-file-invoice-dollar pe-4 fs-3"></i>
                       {{"Masraf" | translate}}
+                    </button>
+
+                    <button mat-menu-item (click)="showShiftDialog()">
+                      <i class="fa-solid fa-calendar-days pe-4 fs-3"></i>
+                      {{"Mesai_Birimi_Değişikliği" | translate}}
+                    </button>
+                    
+                    <button mat-menu-item (click)="showAttendanceDialog()">
+                      <i class="fa-solid fa-door-open pe-4 fs-3"></i>
+                      {{"Hareket_Değişikliği" | translate}}
                     </button>
                   </mat-menu>
                 </div>
@@ -333,24 +343,15 @@
   </div>
 </div>
 
+
 <ng-container *ngIf="displayOvertimeForm">
-  <p-dialog header="{{'Fazla_Mesai_Talep_Formu' | translate}}" [(visible)]="displayOvertimeForm"
-    (visibleChange)="overtimeFormIsSend()" [modal]="true"
-    [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true" [baseZIndex]="10000"
-    [draggable]="true" [resizable]="false">
-
-    <ng-container *ngIf="displayOvertimeForm">
-      <app-dialog-fazla-mesai-talebi (overtimeFormIsSend)="overtimeFormIsSend()"></app-dialog-fazla-mesai-talebi>
-    </ng-container>
-
-
-  </p-dialog>
+  <app-dialog-fazla-mesai-talebi [isFromAttendance]="false" [displayOvertimeForm]="displayOvertimeForm" (onHideOvertimeForm)="onHideOvertimeForm()"></app-dialog-fazla-mesai-talebi>
 </ng-container>
 
 
 
 <ng-container *ngIf="displayVacationForm">
-  <app-dialog-izin-talebi [displayVacationForm]="displayVacationForm" (onHideVacationForm)="onHideVacationForm()"></app-dialog-izin-talebi>
+  <app-dialog-izin-talebi [isFromAttendance]="false" [displayVacationForm]="displayVacationForm" (onHideVacationForm)="onHideVacationForm()"></app-dialog-izin-talebi>
 </ng-container>
 
 
@@ -409,5 +410,15 @@
   </ng-container>
 
 </p-dialog>
+
+<ng-container *ngIf="displayShiftForm">
+  <app-shift-change-form [isFromAttendance]="false" [displayShiftForm]="displayShiftForm" (onHideShiftForm)="onHideShiftForm()"></app-shift-change-form>
+</ng-container>
+
+<ng-container *ngIf="displayAttendanceForm">
+  <app-attendance-change-form [isFromAttendance]="false" [displayAttendanceForm]="displayAttendanceForm" (onHideAttendanceForm)="onHideAttendanceForm()"></app-attendance-change-form>
+</ng-container>
+
+
 
 <router-outlet></router-outlet>

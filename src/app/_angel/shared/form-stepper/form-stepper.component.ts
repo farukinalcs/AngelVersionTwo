@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class FormStepperComponent implements OnInit {
   @Input() stepperFields : any;
-
+  @Input() isFromAttendance: boolean;
   constructor() { }
 
   ngOnInit(): void {
