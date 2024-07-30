@@ -302,7 +302,7 @@ export const locale = {
     Yüklenmiş_Dosyalar: 'Yüklenmiş Dosyalar',
     Süreli: 'Süreli',
     Süresiz: 'Süresiz',
-    Seçilen_Personeller: 'Seçilen Personeller',
+    Seçilen_Personeller: 'Seçilen Personel',
     Geçiş_Grubu_Onaycısı: 'Geçiş Grubu Onaycısı',
     Geçiş_Grubu: 'Geçiş Grubu',
     Yetki_Talebi_Özet_Bilgiler: 'Yetki Talebi Özet Bilgiler',

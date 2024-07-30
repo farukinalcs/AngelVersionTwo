@@ -11,7 +11,7 @@ const routes: Routes = [
   //   component: AttendanceListComponent,
   // },
   {
-    path: 'genel_bakis',
+    path: 'dashboard',
     component: PuantajdashboardComponent,
   },
   {

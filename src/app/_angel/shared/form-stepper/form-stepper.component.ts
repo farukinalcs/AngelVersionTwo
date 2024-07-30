@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-form-stepper',
@@ -12,5 +12,12 @@ export class FormStepperComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (changes['stepperFields']) {
+  //     // items değiştiğinde yapılacak işlemler
+  //     console.log('stepperFields değişti:', this.stepperFields);
+  //   }
+  // }
 
 }

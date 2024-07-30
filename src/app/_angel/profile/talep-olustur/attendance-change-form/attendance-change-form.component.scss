@@ -1,0 +1,61 @@
+.pagination .page-link {
+    color: var(--kt-danger);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--kt-danger);
+    border-color: var(--kt-danger);
+    color: white;
+}
+
+.pagination .page-link:hover {
+    background-color: var(--kt-danger-light);
+    border-color: var(--kt-danger-light);
+    color: white;
+}
+
+.page-item:hover:not(.active):not(.offset):not(.disabled) .page-link {
+    color: var(--kt-danger);
+}
+
+
+.form-check-input:checked {
+    border-color: var(--kt-danger);
+}
+
+.expandable {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+
+    &.expanded {
+        max-height: 500px; // İçeriğin tam yüksekliğini bilmediğimizden, tahmini bir yükseklik belirledik.
+        transition: max-height 0.5s ease-in;
+    }
+}
+  
+
+.rot-btn {
+    position: relative;
+    top: 0px;
+    width: 44px;
+    left: -7px;
+    height: 119px;
+    writing-mode: vertical-lr;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(180deg);
+    transition: height 0.3s ease-out;
+    transition: width 0.3s ease-out;
+    
+    &.rot-btn-expanded {
+        height: 119px + 20px;
+        transition: height 0.3s ease-in;
+    }
+
+    &:hover{
+        width: 54px;
+        transition: width 0.3s ease-in;
+    }
+}

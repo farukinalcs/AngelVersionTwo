@@ -10,7 +10,7 @@ const routes: Routes = [
     component:GuvenlikdashboardComponent,
     children:[
       {
-        path:'genel_bakis',
+        path:'dashboard',
         component:GuvenlikdashboardComponent
       },
       {

@@ -42,7 +42,6 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SplitterModule } from "primeng/splitter";
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
-import { SearchFilterPipe } from 'src/app/_helpers/pipes/search-filter.pipe';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TimelineModule } from 'primeng/timeline';
@@ -54,7 +53,6 @@ import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogIzinTalebiComponent } from './talep-olustur/dialog-izin-talebi/dialog-izin-talebi.component';
 import { EksikSurelerimComponent } from './islemler/eksik-surelerim/eksik-surelerim.component';
-import { TimeFormatPipe } from 'src/app/_helpers/pipes/time-format.pipe';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DogumGunuComponent } from './profile-data-widget/dogum-gunu/dogum-gunu.component';
@@ -76,42 +74,32 @@ import { DialogDuyuruFormuComponent } from './talep-olustur/dialog-duyuru-formu/
 import { ProfilTanimlamalarComponent } from './profil-tanimlamalar/profil-tanimlamalar.component';
 import { PickListModule } from 'primeng/picklist';
 import { DosyaTipiTanimlamaComponent } from './profil-tanimlamalar/dosya-tipi-tanimlama/dosya-tipi-tanimlama.component';
-import { FirstSevenPipe } from 'src/app/_helpers/pipes/first-seven.pipe';
 import { YemekMenuTumuComponent } from './profile-data-widget/yemek-menu/yemek-menu-tumu/yemek-menu-tumu.component';
 import { RatingModule } from 'primeng/rating';
 import { UploadedFilesComponent } from './talepler/talepedilenler/uploaded-files/uploaded-files.component';
 
 import { VisitorUploadedFilesComponent } from './talepler/ziyaretcitaleplerim/visitor-uploaded-files/visitor-uploaded-files.component';
-import { DataNotFoundComponent } from '../shared/data-not-found/data-not-found.component';
-import { FormStepperComponent } from '../shared/form-stepper/form-stepper.component';
 import { OngoingRequestsComponent } from './talepler/taleplerim/ongoing-requests/ongoing-requests.component';
 import { ApprovedRequestsComponent } from './talepler/taleplerim/approved-requests/approved-requests.component';
 import { DeniedRequestsComponent } from './talepler/taleplerim/denied-requests/denied-requests.component';
-import { DetailSearchComponent } from '../shared/detail-search/detail-search.component';
-import { RequestProcessComponent } from '../shared/request-process/request-process.component';
-import { RequestMenuComponent } from '../shared/request-menu/request-menu.component';
-import { FormatFileSizePipe } from 'src/app/_helpers/pipes/format-file-size.pipe';
 import { VisitorRequestsComponent } from './talepler/visitor-requests/visitor-requests.component';
 import { DialogYetkiTalebiComponent } from './talep-olustur/dialog-yetki-talebi/dialog-yetki-talebi.component';
 
 import { YemekTipiTanimlamaComponent } from './profil-tanimlamalar/yemek-tipi-tanimlama/yemek-tipi-tanimlama.component';
 import { YemekMenuTanimlamaComponent } from './profil-tanimlamalar/yemek-menu-tanimlama/yemek-menu-tanimlama.component';
 
-import { SicilListeComponent } from '../shared/sicil-liste/sicil-liste.component';
 import { AgGridModule } from 'ag-grid-angular';
 import 'ag-grid-enterprise'
 import { LicenseManager } from 'ag-grid-enterprise';
 import { DialogAracTalebiComponent } from './talep-olustur/dialog-arac-talebi/dialog-arac-talebi.component';
-import { IbanMaskPipe } from 'src/app/_helpers/pipes/iban-mask.pipe';
 import { PendingRequestsComponent } from './talepler/talepedilenler/pending-requests/pending-requests.component';
 
-import { HttpClientModule } from '@angular/common/http';
 import { DialogMasrafTalebiComponent } from './talep-olustur/dialog-masraf-talebi/dialog-masraf-talebi.component';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 import { SharedModule } from '../shared/shared.module';
 import { ShiftChangeFormComponent } from './talep-olustur/shift-change-form/shift-change-form.component';
 import { AttendanceChangeFormComponent } from './talep-olustur/attendance-change-form/attendance-change-form.component';
-
+import { TooltipModule } from 'primeng/tooltip';
 
 
 LicenseManager.setLicenseKey(
@@ -223,7 +211,8 @@ LicenseManager.setLicenseKey(
     RatingModule,
     AgGridModule,
     CustomPipeModule,
-    SharedModule
+    SharedModule,
+    TooltipModule
   ],
   exports: [
     DialogIzinTalebiComponent,
