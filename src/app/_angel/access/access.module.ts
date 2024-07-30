@@ -44,6 +44,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,6 @@ import { MatSelectModule } from '@angular/material/select';
     Widget2003Component,
     Widget2004Component,
     DialogWidget1001Component,
-    FullScreenDivComponent
   ],
   imports: [
     CommonModule,
@@ -99,8 +99,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatOptionModule,
     MatAutocompleteModule,
     MatIconModule,
-    MatSelectModule
-
+    MatSelectModule,
+    SharedModule
 
   ]
 })

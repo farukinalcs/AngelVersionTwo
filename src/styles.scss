@@ -505,27 +505,6 @@
 /*--------------------------------------------*/
 
 
-
-// Timeline İçin Dark Mod Ayarı
-// [data-theme="dark"] .timeline.timeline-4 .timeline-items .timeline-item .timeline-content {
-//     background-color: var(--kt-danger-light) !important;
-// }
-
-// [data-theme="dark"] .timeline.timeline-4 .timeline-items .timeline-item.timeline-item-right:after {
-//     border-right: solid 10px var(--kt-danger-light) !important;
-//     border-left: solid 17px transparent !important;
-// }
-
-// [data-theme="dark"] .timeline.timeline-4 .timeline-items .timeline-item:after {
-//     border-left: solid 10px var(--kt-danger-light) !important;
-// }
-/*--------------------------------------------*/
-
-
-
-
-
-
 // PrimeNG Carousel İçin Renk Ayarı
 .p-carousel .p-carousel-content .p-carousel-prev, .p-carousel .p-carousel-content .p-carousel-next {
     color: var(--kt-danger) !important;
@@ -739,10 +718,13 @@
     --ag-input-focus-box-shadow: var(--kt-danger-active);
     --ag-checkbox-unchecked-color: var(--kt-danger);
     --ag-font-family: Inter, Helvetica, "sans-serif";
-    font-weight: 600;
+    font-weight: 500;
     --ag-range-selection-background-color: rgb(243 33 33 / 54%);
     // --ag-header-background-color: var(--kt-danger);
     // --ag-header-foreground-color: var(--kt-white);
+    --ag-grid-size: 4px;
+    --ag-icon-size: 14px;
+    --ag-font-size: 9px;
 }
 
 .ag-theme-alpine-dark {
@@ -753,10 +735,13 @@
     --ag-input-focus-box-shadow: var(--kt-danger-active);
     --ag-checkbox-unchecked-color: var(--kt-danger);
     --ag-font-family: Inter, Helvetica, "sans-serif";
-    font-weight: 600;
+    font-weight: 500;
     --ag-range-selection-background-color: rgb(243 33 33 / 54%);
     // --ag-header-background-color: var(--kt-danger);
     // --ag-header-foreground-color: var(--kt-white);
+    --ag-grid-size: 4px;
+    --ag-icon-size: 14px;
+    --ag-font-size: 9px;
 }
 
 

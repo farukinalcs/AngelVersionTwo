@@ -131,14 +131,22 @@
 
 
                 <div class="p-5 mt-10" [ngClass]="{'cikis': !flag, 'giris': flag}">
-                    <h4 class="text-white fw-bolder text-center">Cihazda bağlantı var mı? (Ping & Telnet)</h4>
+                    <h4 class="text-white theme-dark-show fw-bolder text-center">Cihazda bağlantı var mı? (Ping & Telnet)</h4>
+                    <h4 class="text-danger theme-light-show fw-bolder text-center">Cihazda bağlantı var mı? (Ping & Telnet)</h4>
 
                     <div class="d-flex justify-content-center align-item-center gap-2 mt-10">
-                        <div (click)="flag = !flag" class="border border-dashed rounded bg-hover-light-danger text-hover-white text-danger cursor-pointer text-center p-4 w-50">
+                        <div (click)="flag = !flag" class="theme-dark-show border border-dashed rounded bg-hover-light-danger text-hover-white text-danger cursor-pointer text-center p-4 w-50">
                             <span class="fw-bold">Evet</span>
                         </div>
+                        <div (click)="flag = !flag" class="theme-light-show border border-dashed rounded bg-light-danger bg-hover-danger text-hover-white text-danger cursor-pointer text-center p-4 w-50">
+                            <span class="fw-bold">Evet</span>
+                        </div>
+
     
-                        <div (click)="flag = !flag" class="border border-dashed rounded bg-hover-light-danger text-hover-white text-danger cursor-pointer text-center p-4 w-50">
+                        <div (click)="flag = !flag" class="theme-dark-show border border-dashed rounded bg-hover-light-danger text-hover-white text-danger cursor-pointer text-center p-4 w-50">
+                            <span class="fw-bold">Hayır</span>
+                        </div>
+                        <div (click)="flag = !flag" class="theme-light-show border border-dashed rounded bg-light-danger bg-hover-danger text-hover-white text-danger cursor-pointer text-center p-4 w-50">
                             <span class="fw-bold">Hayır</span>
                         </div>
                     </div>

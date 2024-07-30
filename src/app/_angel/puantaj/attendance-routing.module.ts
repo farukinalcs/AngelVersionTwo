@@ -1,26 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PdksComponent } from './pdks/pdks.component';
+import { AttendanceListComponent } from './attendance-list/attendance-list.component';
 import { PuantajRaporlarComponent } from './puantaj-raporlar/puantaj-raporlar.component';
 import { PuantajTanimlamalarComponent } from './puantaj-tanimlamalar/puantaj-tanimlamalar.component';
 import { PuantajdashboardComponent } from './puantajdashboard/puantajdashboard.component';
 
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   component: AttendanceListComponent,
+  // },
   {
-    path: '',
-    component: PuantajdashboardComponent,
-  },
-  {
-    path: 'genel_bakis',
+    path: 'dashboard',
     component: PuantajdashboardComponent,
   },
   {
     path: 'pdks',
-    component: PdksComponent,
+    component: AttendanceListComponent,
   },
   {
     path: 'pdkspiv',
-    component: PdksComponent,
+    component: AttendanceListComponent,
   },
   {
     path: 'tanimlamalar',
@@ -36,4 +36,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PuantajRoutingModule { }
+export class AttendanceRoutingModule { }

@@ -1,0 +1,119 @@
+<p-dialog header="{{'Yıllık_Takvim' | translate}}" [(visible)]="displayAnnualCalendar" position="top"
+    [breakpoints]="{ '2560px': '99vw', '992px': '90vw', '576px': '99vw' }" [modal]="true" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false" [maximizable]="true" (onHide)="hideAnnualCalendar()">
+    
+    <div class="container-fluid p-0">
+        <div class="row">
+            <ng-container *ngIf="isLoading | async">
+                <div class="col-12 pt-10">
+                    <div class="loader-container">
+                        <div id="splash-screen" class="splash-screen"
+                            style="position: inherit; color:transparent; background-color: transparent;">
+                            <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                                style="margin-left: 0; height: 0;" />
+                            <mat-spinner></mat-spinner>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            
+            <ng-container *ngIf="!(isLoading | async)">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-4 d-flex justify-content-end align-items-center">
+                            <i class="fa-solid fa-angles-left fs-2x text-gray-900"></i>
+                        </div>
+
+                        <div class="col-4 text-center">
+                            <h3 class="fs-2x text-gray-800 mb-2">{{vacationRight.Ad}} {{vacationRight.Soyad}} ({{vacationRight.Yil}})</h3>
+
+                            <div class="fs-5 text-muted fw-semibold">
+                                Yıllık İzin Hakkı: {{vacationRight.Kalan}}     
+                            </div>
+                        </div>
+                        
+                        <div class="col-4 d-flex justify-content-start align-items-center">
+                            <i class="fa-solid fa-angles-right fs-2x text-gray-900"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table gy-5 gs-5">
+                            <thead>
+                                <tr class="fw-semibold fs-8 bg-danger text-white border-bottom-1 border-gray-900">
+                                    <th class="text-center"> </th>
+                                    <th class="text-center"> 1 </th>
+                                    <th class="text-center"> 2 </th>
+                                    <th class="text-center"> 3 </th>
+                                    <th class="text-center"> 4 </th>
+                                    <th class="text-center"> 5 </th>
+                                    <th class="text-center"> 6 </th>
+                                    <th class="text-center"> 7 </th>
+                                    <th class="text-center"> 8 </th>
+                                    <th class="text-center"> 9 </th>
+                                    <th class="text-center"> 10 </th>
+                                    <th class="text-center"> 11 </th>
+                                    <th class="text-center"> 12 </th>
+                                    <th class="text-center"> 13 </th>
+                                    <th class="text-center"> 14 </th>
+                                    <th class="text-center"> 15 </th>
+                                    <th class="text-center"> 16 </th>
+                                    <th class="text-center"> 17 </th>
+                                    <th class="text-center"> 18 </th>
+                                    <th class="text-center"> 19 </th>
+                                    <th class="text-center"> 20 </th>
+                                    <th class="text-center"> 21 </th>
+                                    <th class="text-center"> 22 </th>
+                                    <th class="text-center"> 23 </th>
+                                    <th class="text-center"> 24 </th>
+                                    <th class="text-center"> 25 </th>
+                                    <th class="text-center"> 26 </th>
+                                    <th class="text-center"> 27 </th>
+                                    <th class="text-center"> 28 </th>
+                                    <th class="text-center"> 29 </th>
+                                    <th class="text-center"> 30 </th>
+                                    <th class="text-center"> 31 </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let item of objectValues(calendar)">
+                                    <tr>
+                                        <td class="text-center bg-danger text-white fs-8 fw-semibold px-1 border border-bottom-1 border-gray-900">{{item.monthName}}</td>
+                                        <td *ngFor="let day of item.days" class="text-center  fs-9 border border-1 border-gray-900"
+										[ngClass]="{
+											'bg-success text-white': day.Renk === 'Y',
+											'bg-warning text-black': day.Renk === 'T',
+											'bg-secondary text-black': day.Renk === 'K' || day.Renk === 'G',
+											'bg-primary text-white': day.Renk === 'M'
+										}">
+                                            {{day.mAciklama}}
+                                            <br>
+                                            {{day.Gosterge}}
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </ng-container>
+            
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 d-flex justify-content-end align-items-center mt-5">
+            <a class="btn btn-sm btn-danger mx-2">
+                <i class="fa-solid fa-print fs-5"></i>
+                {{'Yazdır' | translate}}
+            </a>
+
+            <a (click)="hideAnnualCalendar()" class="btn btn-sm btn-danger">
+                <i class="fa-solid fa-xmark fs-5"></i>
+                {{'Vazgeç' | translate}}
+            </a>
+        </div>
+    </div>
+</p-dialog>

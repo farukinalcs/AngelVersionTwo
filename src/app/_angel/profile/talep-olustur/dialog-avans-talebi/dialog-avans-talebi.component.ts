@@ -25,7 +25,7 @@ export class DialogAvansTalebiComponent implements OnInit {
     { class: 'stepper-item', number: 2, title: this.translateService.instant('Diğer'), desc: this.translateService.instant('Tarih_Ve_Açıklama') },
     { class: 'stepper-item', number: 3, title: this.translateService.instant('Tutar'), desc: '' },
     { class: 'stepper-item', number: 4, title: this.translateService.instant('Tamamlandı'), desc: this.translateService.instant('Özet_Bilgiler') },
-    { class: 'stepper-item', number: 5, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Gerekli_Belgeler') },
+    { id : '0', class: 'stepper-item', number: 5, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Gerekli_Belgeler') },
   ];
 
   formsCount: any = 6;

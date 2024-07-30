@@ -271,7 +271,7 @@ export const locale = {
     Bu_Hafta_Doğanlar: 'Those Born This Week',
     Bu_Ay_Doğanlar: 'Those Born This Month',
     İyiki_Doğdun: 'Happy Birthday ',
-    DOGUM_MESAJ: 'Hello {{value1} we wish you a happy birthday and a joyful life with your loved ones.',
+    DOGUM_MESAJ: 'Hello {{value1}} we wish you a happy birthday and a joyful life with your loved ones.',
     Tüm_Doğum_Günleri: 'All Birthdays',
     Kıdemliler: 'Seniors',
     KIDEM_KUTLAMASI: 'Happy {{value1}}. Year',

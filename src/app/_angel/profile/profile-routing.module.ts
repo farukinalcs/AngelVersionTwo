@@ -22,7 +22,7 @@ const routes: Routes = [
     component: ProfiledashboardComponent,
     children: [
       {
-        path: 'genel_bakis',
+        path: 'dashboard',
         component : ProfileDataWidgetComponent
       },
       {
@@ -73,8 +73,8 @@ const routes: Routes = [
         path: 'profil_tanimlamalar',
         component: ProfilTanimlamalarComponent,
       },
-      // { path: '', redirectTo: 'genel_bakis', pathMatch: 'full' },
-      // { path: '**', redirectTo: 'genel_bakis', pathMatch: 'full' },
+      // { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
 ];

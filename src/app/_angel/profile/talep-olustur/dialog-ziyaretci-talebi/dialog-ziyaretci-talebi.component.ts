@@ -28,7 +28,7 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
     { class: 'stepper-item', number: 4, title: this.translateService.instant('İletişim'), desc: this.translateService.instant('Diğer_Bilgiler') },
     { class: 'stepper-item', number: 5, title: this.translateService.instant('Giriş_Çıkış'), desc: this.translateService.instant('Zaman_Bilgileri') },
     { class: 'stepper-item', number: 6, title: this.translateService.instant('Tamamlandı'), desc: this.translateService.instant('Özet_Bilgiler') },
-    { class: 'stepper-item', number: 7, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Gerekli_Belgeler') },
+    { id : '0', class: 'stepper-item', number: 7, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Gerekli_Belgeler') },
   ];
 
   formsCount: any = 8;

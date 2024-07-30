@@ -1,0 +1,170 @@
+<!-- (onHide)="onHideUploadedFiles()" -->
+<p-dialog header="{{ 'Filtrele' | translate }}" [(visible)]="displayFilterModal"
+    (onHide)="onHideFilterModal()" position="top" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+    [draggable]="true" [resizable]="false">
+
+    <div class="container" >
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="filterForm">
+                            <mat-accordion class="example-headers-align" multi>
+                                <mat-expansion-panel #accordionStaffInfo [expanded]="true">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title class="fw-bold">
+                                            Personel Bilgileri
+                                        </mat-panel-title>
+                                        <mat-panel-description class="justify-content-end">
+                                            <i class="fa-solid fa-circle-user text-gray-700 fs-2"></i>
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                            
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                <span class="">{{"Başlangıç_Tarihi" | translate}}</span>
+                                            </label>
+                                    
+                                            <input type="date" class="form-control form-control-sm form-control-solid" formControlName="startDate">
+                                        </div>
+                                    
+                                        <div class="col-6">
+                                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                <span class="">{{"Bitiş_Tarihi" | translate}}</span>
+                                            </label>
+                                    
+                                            <input type="date" class="form-control form-control-sm form-control-solid" formControlName="endDate">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                <span class="">{{"Ad" | translate}}</span>
+                                            </label>
+                                    
+                                            <input type="text" class="form-control form-control-sm form-control-solid" formControlName="name">
+                                        </div>
+                                    
+                                        <div class="col-6">
+                                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                <span class="">{{"Soyad" | translate}}</span>
+                                            </label>
+                                    
+                                            <input type="text" class="form-control form-control-sm form-control-solid" formControlName="surname">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                <span class="">{{"Sicil_No" | translate}}</span>
+                                            </label>
+                                    
+                                            <input type="text" class="form-control form-control-sm form-control-solid" formControlName="registrationNumber">
+                                        </div>
+                                    
+                                        <div class="col-6">
+                                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                <span class="">{{"Personel_No" | translate}}</span>
+                                            </label>
+                                    
+                                            <input type="text" class="form-control form-control-sm form-control-solid" formControlName="staffNumber">
+                                        </div>
+                                    </div>
+                                    
+                            
+                                </mat-expansion-panel>
+
+
+                                <mat-expansion-panel #accordionOrganizationInfo>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title class="fw-bold">
+                                            Organizasyon Bilgileri
+                                        </mat-panel-title>
+                                        <mat-panel-description class="justify-content-end">
+                                            <i class="fa-solid fa-sitemap text-gray-700 fs-2"></i>
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                    
+                                    <div class="row">
+                                        <div class="col-6" *ngFor="let organization of organizationGroup">
+                                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                <span class="">{{organization.viewName | translate}}</span>
+                                            </label>
+
+                                            <select class="form-select form-select-sm form-select-solid dropdown" formControlName="{{organization.name}}">
+                                                <option *ngFor="let item of organization.data" value="{{item.ID}}">{{item.Ad}}</option>
+                                            </select>
+                            
+                                            <!-- <mat-form-field class="example-full-width" style="width: 90%;" appearance="fill">
+                                                <input type="text" placeholder="{{organization.viewName}} Seçiniz" aria-label="Number" matInput [formControlName]="organization.name"
+                                                    [matAutocomplete]="auto">
+                                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                                    <mat-option *ngFor="let option of organization.data" [value]="option">
+                                                        {{option.Ad}}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field> -->
+                                            
+                                            
+                                            <!-- <p-dropdown [options]="organization.data" [(ngModel)]="organization.selectedType" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                                                [showClear]="true" placeholder="{{'Seçiniz' | translate}}" formControlName="{{organization.name}}">
+                                                <ng-template pTemplate="selectedItem">
+                                                    <div class="item-item item-item-value" *ngIf="organization.selectedType">
+                                                        <div>{{organization.selectedType.Ad}}</div>
+                                                    </div>
+                                                </ng-template>
+                                                <ng-template let-item pTemplate="item">
+                                                    <div class="item-item">
+                                                        <div>{{item.Ad}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-dropdown> -->
+                                        </div>
+                                    </div>
+                                    
+                                </mat-expansion-panel>
+                            
+                                <mat-expansion-panel #accordionPrivateInfo>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title class="fw-bold">
+                                            Özel Bilgiler
+                                        </mat-panel-title>
+                                        <mat-panel-description class="justify-content-end">
+                                            <i class="fa-solid fa-key text-gray-700 fs-2"></i>
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                            
+                                    <div class="row">
+                                        <div class="col-6" *ngFor="let item of privateCode">
+                                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                <span class="">{{item.Ad}}</span>
+                                            </label>
+
+                                            <input type="text" class="form-control form-control-sm form-control-solid" formControlName="code{{item.ID}}">
+                            
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <a (click)="setFormValues()" class="btn btn-danger btn-sm mx-1">
+            <i class="fa-solid fa-check fs-1"></i>
+            {{'Gönder' | translate}}
+        </a>
+        <a (click)="onHideFilterModal()" class="btn btn-danger btn-sm mx-1">
+            <i class="fa-solid fa-xmark fs-1"></i>
+            {{'Kapat' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>

@@ -1,14 +1,8 @@
 <!--begin::App-->
-<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+<div class="d-flex flex-column flex-root app-root scroll" id="kt_app_root">
+
   
-
-  <!-- <div *ngIf="loaderService.isLoading | async" class="loader-container">
-    <div id="splash-screen" class="splash-screen">
-      <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo" />
-      <mat-spinner></mat-spinner>
-    </div>
-  </div> -->
-
+  
   <!--begin::Page-->
   <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
     <ng-container *ngIf="appHeaderDisplay">
@@ -40,17 +34,17 @@
               [appToolbarLayout]="appToolbarLayout"></app-toolbar>
           </ng-container>
           <!-- <app-content id=" kt_app_content" class="app-content" [ngClass]="contentCSSClasses"
-            [contentContainerCSSClass]="contentContainerCSSClass" [appContentContiner]="appContentContiner"
-            [appContentContainerClass]="appContentContainerClass">
-          </app-content> -->
+          [contentContainerCSSClass]="contentContainerCSSClass" [appContentContiner]="appContentContiner"
+          [appContentContainerClass]="appContentContainerClass">
+        </app-content> -->
           <app-content id=" kt_app_content" class="app-content">
-        </app-content>
+          </app-content>
         </div>
         <!--end::Content wrapper-->
         <!-- <ng-container *ngIf="appFooterDisplay">
-          <app-footer class="app-footer" [ngClass]="appFooterCSSClass" id="kt_app_footer"
-            [appFooterContainerCSSClass]="appFooterContainerCSSClass"></app-footer>
-        </ng-container> -->
+        <app-footer class="app-footer" [ngClass]="appFooterCSSClass" id="kt_app_footer"
+          [appFooterContainerCSSClass]="appFooterContainerCSSClass"></app-footer>
+      </ng-container> -->
       </div>
       <!--end:::Main-->
     </div>
@@ -58,6 +52,7 @@
 
   </div>
   <!--end::Page-->
+
 </div>
 <!--end::App-->
 

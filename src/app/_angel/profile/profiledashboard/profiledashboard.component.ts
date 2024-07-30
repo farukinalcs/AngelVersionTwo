@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService, UserType } from 'src/app/modules/auth';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
-import { LoaderService } from 'src/app/_helpers/loader.service';
+import { LoadingService } from 'src/app/_helpers/loading.service';
 import { AuthMenuService } from 'src/app/_metronic/core/services/auth-menu.service';
 import { UserInformation } from '../models/user-information';
 import { ProfileService } from '../profile.service';
@@ -32,14 +32,16 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   displayAuthorityRequestForm: boolean;
   displayVehicleRequestForm: boolean;
   displayExpenseRequestForm: boolean;
+  displayShiftForm: boolean;
+  displayAttendanceForm: boolean;
 
   constructor(
     private auth: AuthService,
     private authMenuService : AuthMenuService,
     public dialog: MatDialog,
     private profileService : ProfileService,
-    public loaderService : LoaderService,
-    private ref : ChangeDetectorRef
+    private ref : ChangeDetectorRef,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
@@ -66,7 +68,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
       
       this.isLoading.next(false);
       this.ref.detectChanges();
-    })
+    });
   }
 
   getMenuConfig() {
@@ -86,7 +88,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   showOvertimeDialog(){
     this.displayOvertimeForm = true;
   }
-  overtimeFormIsSend() {
+  onHideOvertimeForm() {
     this.displayOvertimeForm = false;
   }
   /* --------------------------------- */
@@ -96,7 +98,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   showVacationDialog(){
     this.displayVacationForm = true;
   }
-  vacationFormIsSend() {
+  onHideVacationForm() {
     this.displayVacationForm = false;
   }
   /* --------------------------------- */
@@ -148,6 +150,21 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
     this.displayExpenseRequestForm = false;
   }
 
+  showShiftDialog() {
+    this.displayShiftForm = true;
+  }
+
+  onHideShiftForm() {
+    this.displayShiftForm = false;
+  }
+
+  showAttendanceDialog() {
+    this.displayAttendanceForm = true;
+  }
+
+  onHideAttendanceForm() {
+    this.displayAttendanceForm = false;
+  }
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

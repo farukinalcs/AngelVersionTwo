@@ -22,9 +22,13 @@
                   <!-- <img alt="Logo" src="{{'data:image/jpg;base64,' + _user.FotoImage}}" /> -->
 
                   <img alt="Logo" src="http://localhost:5075/api/Image?sicilid={{_user.xSicilID}}" />
-                  
-                  <div class="theme-light-show position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"></div>
-                  <div class="theme-dark-show position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-dark h-20px w-20px"></div>
+
+                  <div
+                    class="theme-light-show position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
+                  </div>
+                  <div
+                    class="theme-dark-show position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-dark h-20px w-20px">
+                  </div>
                 </div>
               </div>
             </div>
@@ -59,8 +63,8 @@
                 </div>
 
                 <div class="col-xl-4 d-flex justify-content-center d-xl-flex justify-content-xl-end pt-xl-4">
-                  <button class="btn btn-danger w-75 w-md-50 h-100"
-                    [matMenuTriggerFor]="talepler">{{"Talep_Oluştur" | translate}}</button>
+                  <button class="btn btn-danger w-75 w-md-50 h-100" [matMenuTriggerFor]="talepler">{{"Talep_Oluştur" |
+                    translate}}</button>
                   <mat-menu #talepler="matMenu">
 
                     <button mat-menu-item (click)="showVacationDialog()">
@@ -69,7 +73,7 @@
                     </button>
 
                     <button (click)="showOvertimeDialog()" mat-menu-item>
-                      <i class="icon-l fas fa-calendar-alt pe-4 fs-3"> </i>
+                      <i class="icon-l fas fa-business-time pe-4 fs-3"> </i>
                       {{"Fazla_Mesai" | translate}}
                     </button>
 
@@ -82,7 +86,7 @@
                       <i class="fa-solid fa-fingerprint pe-4 fs-3"></i>
                       {{"Yetki" | translate}}
                     </button>
-                    
+
                     <button mat-menu-item (click)="showVehicleRequestDialog()">
                       <i class="fa-solid fa-car-side pe-4 fs-3"></i>
                       {{"Araç" | translate}}
@@ -107,13 +111,23 @@
                       <i class="fa-solid fa-file-invoice-dollar pe-4 fs-3"></i>
                       {{"Masraf" | translate}}
                     </button>
+
+                    <button mat-menu-item (click)="showShiftDialog()">
+                      <i class="fa-solid fa-calendar-days pe-4 fs-3"></i>
+                      {{"Mesai_Birimi_Değişikliği" | translate}}
+                    </button>
+                    
+                    <button mat-menu-item (click)="showAttendanceDialog()">
+                      <i class="fa-solid fa-door-open pe-4 fs-3"></i>
+                      {{"Hareket_Değişikliği" | translate}}
+                    </button>
                   </mat-menu>
                 </div>
 
               </div>
 
               <div class="row pt-4">
-                <div class="col-12 d-flex justify-content-center d-xl-flex justify-content-xl-start" >
+                <div class="col-12 d-flex justify-content-center d-xl-flex justify-content-xl-start">
                   <!-- flex-wrap -->
                   <div class="d-flex  fw-bold fs-6 mb-4 pe-2">
 
@@ -234,7 +248,7 @@
 
                   <ng-container>
                     <li class="nav-item">
-                      <a class="nav-link text-active-danger text-center me-6" routerLink="genel_bakis"
+                      <a class="nav-link text-active-danger text-center me-6" routerLink="dashboard"
                         routerLinkActive="active" translate="Genel_Bakış"></a>
                     </li>
                   </ng-container>
@@ -277,11 +291,12 @@
                   </ng-container>
 
                   <!-- <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.ziyaretciTaleplerim"> -->
-                    <li class="nav-item">
-                      <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_talepleri" routerLinkActive="active" translate="Ziyaretçi_Talepleri"></a>
-                    </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_talepleri"
+                      routerLinkActive="active" translate="Ziyaretçi_Talepleri"></a>
+                  </li>
                   <!-- </ng-container> -->
-                  
+
                   <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.ziyaretciTaleplerim">
                     <li class="nav-item">
                       <a class="nav-link text-active-danger text-center me-6" routerLink="ziyaretci_taleplerim"
@@ -328,34 +343,15 @@
   </div>
 </div>
 
+
 <ng-container *ngIf="displayOvertimeForm">
-  <p-dialog header="{{'Fazla_Mesai_Talep_Formu' | translate}}" [(visible)]="displayOvertimeForm"
-    (visibleChange)="overtimeFormIsSend()" [modal]="true"
-    [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true"
-    [baseZIndex]="10000" [draggable]="true" [resizable]="false">
-
-    <ng-container *ngIf="displayOvertimeForm">
-      <app-dialog-fazla-mesai-talebi (overtimeFormIsSend)="overtimeFormIsSend()"></app-dialog-fazla-mesai-talebi>
-    </ng-container>
-    
-
-  </p-dialog>
+  <app-dialog-fazla-mesai-talebi [isFromAttendance]="false" [displayOvertimeForm]="displayOvertimeForm" (onHideOvertimeForm)="onHideOvertimeForm()"></app-dialog-fazla-mesai-talebi>
 </ng-container>
 
 
 
 <ng-container *ngIf="displayVacationForm">
-  <p-dialog header="{{'İzin_Talep_Formu' | translate}}" [(visible)]="displayVacationForm"
-    (visibleChange)="vacationFormIsSend()" [modal]="true"
-    [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true"
-    [baseZIndex]="10000" [draggable]="true" [resizable]="false">
-
-    <ng-container *ngIf="displayVacationForm">
-      <app-dialog-izin-talebi (vacationFormIsSend)="vacationFormIsSend()"></app-dialog-izin-talebi>
-    </ng-container>
-    
-
-  </p-dialog>
+  <app-dialog-izin-talebi [isFromAttendance]="false" [displayVacationForm]="displayVacationForm" (onHideVacationForm)="onHideVacationForm()"></app-dialog-izin-talebi>
 </ng-container>
 
 
@@ -385,8 +381,8 @@
 
 <ng-container *ngIf="displayVehicleRequestForm">
   <p-dialog header="{{'Araç_Talep_Formu' | translate}}" [(visible)]="displayVehicleRequestForm"
-    (visibleChange)="vehicleRequestIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000"
-    [draggable]="true" [resizable]="false">
+    (visibleChange)="vehicleRequestIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000" [draggable]="true"
+    [resizable]="false">
 
     <ng-container *ngIf="displayVehicleRequestForm">
       <app-dialog-arac-talebi (vehicleRequestFormIsSend)="vehicleRequestIsSend()"></app-dialog-arac-talebi>
@@ -414,5 +410,15 @@
   </ng-container>
 
 </p-dialog>
+
+<ng-container *ngIf="displayShiftForm">
+  <app-shift-change-form [isFromAttendance]="false" [displayShiftForm]="displayShiftForm" (onHideShiftForm)="onHideShiftForm()"></app-shift-change-form>
+</ng-container>
+
+<ng-container *ngIf="displayAttendanceForm">
+  <app-attendance-change-form [isFromAttendance]="false" [displayAttendanceForm]="displayAttendanceForm" (onHideAttendanceForm)="onHideAttendanceForm()"></app-attendance-change-form>
+</ng-container>
+
+
 
 <router-outlet></router-outlet>

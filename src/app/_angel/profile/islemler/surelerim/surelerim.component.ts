@@ -4,7 +4,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
-import { LoaderService } from 'src/app/_helpers/loader.service';
 import { DurationsMobileModel } from '../../models/durationsMobile';
 import { ProfileService } from '../../profile.service';
 
@@ -47,7 +46,6 @@ export class SurelerimComponent implements OnInit, OnDestroy {
   constructor(
     private profilService : ProfileService,
     private translateService : TranslateService,
-    public loaderService : LoaderService,
     private dialog : MatDialog,
     private ref : ChangeDetectorRef
   ) { }

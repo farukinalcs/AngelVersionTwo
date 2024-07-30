@@ -42,6 +42,7 @@ import { ReportsComponent } from './components/toolbar/reports/reports.component
 import { SaasComponent } from './components/toolbar/saas/saas.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AttendanceModule } from 'src/app/_angel/puantaj/attendance.module';
 
 const routes: Routes = [
   {

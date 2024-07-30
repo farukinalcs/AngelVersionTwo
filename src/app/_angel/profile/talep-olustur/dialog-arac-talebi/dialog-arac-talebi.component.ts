@@ -25,7 +25,7 @@ export class DialogAracTalebiComponent implements OnInit, OnDestroy {
     { class: 'stepper-item', number: 2, title: this.translateService.instant('Zaman'), desc: this.translateService.instant('Kalkış_Varış_Zamanı') },
     { class: 'stepper-item', number: 3, title: this.translateService.instant('Diğer'), desc: '' },
     { class: 'stepper-item', number: 4, title: this.translateService.instant('Tamamlandı'), desc: this.translateService.instant('Özet_Bilgiler') },
-    { class: 'stepper-item', number: 5, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Gerekli_Belgeler') },
+    { id : '0', class: 'stepper-item', number: 5, title: this.translateService.instant('Dosya_Yükleme'), desc: this.translateService.instant('Gerekli_Belgeler') },
   ];
 
   formsCount: any = 6;
@@ -239,7 +239,7 @@ export class DialogAracTalebiComponent implements OnInit, OnDestroy {
   }
 
   postForm(formValues : any) {
-    this.profileService.postOvertimeOrVacationDemand('fm', formValues).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+    this.profileService.postRequestForm('fm', formValues, []).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
       const data = response[0].x;
       const apiMessage = response[0].z;
       const spMessage = response[0].m[0];
