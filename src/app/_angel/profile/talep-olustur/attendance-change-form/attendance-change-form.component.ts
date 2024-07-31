@@ -11,7 +11,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { OKodFieldsModel } from '../../models/oKodFields';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
-import { AuthService } from 'src/app/modules/auth';
+import { AuthService, UserType } from 'src/app/modules/auth';
 import Swal from 'sweetalert2';
 import { DrawerComponent, MenuComponent, ScrollComponent, ScrollTopComponent, StickyComponent, ToggleComponent } from 'src/app/_metronic/kt/components';
 
@@ -79,7 +79,7 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
   displayUploadedFile: boolean;
   currentUploadedFile: any;
 
-  currentUserValue: import('c:/Users/Developer/Desktop/AngleV2_Developer/src/app/modules/auth/index').UserType;
+  currentUserValue: UserType;
   selectedType: any;
   selectedEmployeesFromAttendance: any[] = [];
   deviceList: any[] = [];
@@ -822,58 +822,6 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
       .get('formState')
       ?.valueChanges.pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((value: any) => {
-        // if (value == 0) {
-        //   this.insertActivity = true;
-        //   this.stepperFields = [
-        //     {
-        //       class: 'stepper-item current',
-        //       number: 1,
-        //       title: this.translateService.instant('Test'),
-        //       desc: '',
-        //     },
-        //     {
-        //       class: 'stepper-item',
-        //       number: 2,
-        //       title: this.translateService.instant('Mesai_Tarihi'),
-        //       desc: '',
-        //     },
-        //     {
-        //       class: 'stepper-item',
-        //       number: 3,
-        //       title: this.translateService.instant('Terminal_Seçimi'),
-        //       desc: '',
-        //     },
-        //     {
-        //       class: 'stepper-item',
-        //       number: 4,
-        //       title: this.translateService.instant('Tamamlandı'),
-        //       desc: this.translateService.instant('Özet_Bilgiler'),
-        //     }
-        //   ];
-        // } else {
-        //   this.stepperFields = [
-        //     {
-        //       class: 'stepper-item current',
-        //       number: 1,
-        //       title: this.translateService.instant('Test'),
-        //       desc: '',
-        //     },
-        //     {
-        //       class: 'stepper-item',
-        //       number: 2,
-        //       title: this.translateService.instant('Mesai_Tarihi'),
-        //       desc: '',
-        //     },
-        //     {
-        //       class: 'stepper-item',
-        //       number: 3,
-        //       title: this.translateService.instant('Tamamlandı'),
-        //       desc: this.translateService.instant('Özet_Bilgiler'),
-        //     }
-        //   ];
-        //   this.insertActivity = false;
-        // }
-
         const deviceControl = this.attendanceForm.get('device');
         const shiftTimeControl = this.attendanceForm.get('shiftTime');
         const shiftDateControl = this.attendanceForm.get('shiftDate');
@@ -914,6 +862,32 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
     this.removedActivties.push(item);
     console.log(this.removedActivties);
   }
+
+
+  getRotBtnHeight(item: any): number {
+    const baseHeight = 120;
+    const additionalHeight = (item.insert.length + item.update.length) * 26;
+    return item.isShow ? baseHeight + additionalHeight : baseHeight;
+  }
+
+  getLineHeight(item:any): number {
+    const baseHeight = 80;
+    const additionalHeight = (item.insert.length + item.update.length) * 22;
+
+    return item.isShow ? baseHeight + additionalHeight : baseHeight;
+  }
+
+  flipCard(item: any) {
+    // Eğer item zaten flip ediliyorsa işlemi atla
+    if (item.isFlipping) return;
+    
+    item.isFlipping = true;
+    setTimeout(() => {
+      item.isFlipping = false;
+    }, 500); // Animasyon süresine göre ayarlayın
+  }
+  
+  
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
