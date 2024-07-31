@@ -638,80 +638,68 @@
             <div class="col-1">
                 <div class="row">
                     <div class="col-12 d-flex justify-content-center mb-2">
-                        <div class="symbol symbol-circle symbol-40px" [ngClass]="{'bg-success': item.pdks == 1, 'bg-danger': item.pdks == 2}">
-                            <i class="fa-solid  fs-3 p-3 text-white" [ngClass]="{'fa-right-to-bracket': item.pdks == 1, 'fa-right-from-bracket': item.pdks == 2}"></i>
+                        <div class="symbol symbol-circle symbol-40px"
+                            [ngClass]="{'bg-success': item.pdks == 1, 'bg-danger': item.pdks == 2}">
+                            <i class="fa-solid fs-3 p-3 text-white"
+                               [ngClass]="{'fa-right-to-bracket': item.pdks == 1, 'fa-right-from-bracket': item.pdks == 2}"></i>
                         </div>
                     </div>
-
                     <div class="col-12 d-flex justify-content-center align-items-center" *ngIf="personActivity.length > 1">
-                        <div class="border border-1 border-gray-500 h-80px rounded"></div>
+                        <div class="border border-1 border-gray-500 rounded time-line-border" [style.height.px]="getLineHeight(item)" [ngClass]="{'line-border-expanded': item.isShow}"></div>
                     </div>
                 </div>
             </div>
     
-            <div class="col-8 d-flex align-items-center border border-2 rounded px-5" [ngClass]="getClassForValue(item)">
+            <div class="col-10 d-flex align-items-center border border-2 rounded px-5"  [ngClass]="[getClassForValue(item), item.isFlipping ? 'flip' : '']">
                 <div class="row w-100">
-
-                    <div class="col-1 bg-secondary bg-hover-light-danger text-dark text-hover-danger fw-semibold rounded cursor-pointer p-0 m-0 rot-btn" [ngClass]="{'rot-btn-expanded': item.isShow}">
+                    <div class="col-1 bg-secondary bg-hover-light-danger text-dark text-hover-danger fw-semibold rounded cursor-pointer p-0 m-0 rot-btn"
+                        *ngIf="attendanceForm.get('formState')?.value == 2"
+                        [ngClass]="{'rot-btn-expanded': item.isShow}"
+                        [style.height.px]="getRotBtnHeight(item)"
+                        (click)="flipCard(item)">
                         <i class="fa-solid fa-arrows-rotate text-dark my-2 fs-7"></i>
-                        Yön Değiştir
+                        {{'Yön Değiştir' | translate}}
                     </div>
-                    
+
+                    <div class="col-1 bg-secondary bg-hover-light-danger text-dark text-hover-danger fw-semibold rounded cursor-pointer p-0 m-0 rot-btn"
+                        *ngIf="attendanceForm.get('formState')?.value == 1"
+                        [ngClass]="{'rot-btn-expanded': item.isShow}"
+                        [style.height.px]="getRotBtnHeight(item)">
+                        <i class="fa-solid fa-trash fa-rotate-90 text-dark my-2 fs-7"></i>
+                        {{'Kaldır' | translate}}
+                    </div>
+    
                     <div class="col-10 d-flex align-items-center">
                         <div class="row">
-                            <!-- <div class="col-12 d-flex align-items-end justify-content-start m-0 p-0" style="
-                                        position: relative;
-                                        left: -25px;
-                                        ">
-                                <i (click)="changeRotateActivity(item)" class="fa-solid fa-arrows-rotate fs-7 text-danger bg-hover-light-danger rounded p-2" *ngIf="attendanceForm.get('formState')?.value == 2" pTooltip="{{ 'Yön_Değiştir' | translate }}"></i>
-                                <i (click)="removeActivity(item)" class="fa-solid fa-trash fs-7 text-danger bg-hover-light-danger rounded p-2" *ngIf="attendanceForm.get('formState')?.value == 1" pTooltip="{{ 'Kaldır' | translate }}"></i>
-                            </div> -->
-
                             <div class="col-6 d-flex align-items-center ">
                                 <span class="text-gray-700 fs-4">{{item.terminalAdi}}</span>
                             </div>
-                            <!-- <div class="col-6 d-flex align-items-center justify-content-end" style="
-                                    position: relative;
-                                    left: 110px;
-                                    background-color: var(--kt-danger);
-                                    border-radius: 6px 3px 3px 6px;
-                                    width: 39%;">
-                                <span class="text-white fs-4">{{item.zaman | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
-                                <span class="symbol-badge badge badge-circle start-100 mx-1 w-10px h-10px" [ngClass]="{
-                                    'bg-success': item.pdks === 1 || item.pdks === 6, 
-                                    'bg-danger': item.pdks === 2 || item.pdks === 7
-                                }"></span>
-                            </div> -->
                             <div class="col-6 d-flex align-items-end justify-content-end">
-                                <!-- <span class="fw-bold fs-4">{{getRecordStatusMessage(item)}}</span> -->
                                 <span class="badge badge-danger">{{getRecordStatusMessage(item)}}</span>
                             </div>
                             <div class="col-6 d-flex align-items-center my-1">
                                 <div class="text-gray-500">
-                                    <!-- <i class="fa-solid fa-clock-rotate-left mx-1"></i> -->
                                     <span>{{item.zaman | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
                                 </div>
                             </div>
                             <div class="col-6 d-flex align-items-center justify-content-end">
                                 <span class="badge badge-danger">{{isThereTampering(item)}}</span>
                             </div>
-
                             <div class="col-5 mt-3">
                                 <div class="cursor-pointer text-hover-danger" (click)="item.isShow = !item.isShow">
                                     <span class="symbol-badge badge badge-circle bg-secondary start-0 top-100">
                                         <i class="fa-solid fa-ellipsis text-dark"></i>
                                     </span>
-                                    <span class="fw-bold mx-2" *ngIf="!item.isShow">{{"Detaylari_Goster" | translate}}</span>
+                                    <span class="fw-bold mx-2" *ngIf="!item.isShow">{{"Detaylari_Goster" |
+                                        translate}}</span>
                                     <span class="fw-bold mx-2" *ngIf="item.isShow">{{"Detaylari_Gizle" | translate}}</span>
                                 </div>
                             </div>
-
                             <div class="col-7 mt-3 d-flex justify-content-end align-items-end">
                                 <div class="text-gray-500">
                                     <span>{{item.adsoyad}}</span>
                                 </div>
                             </div>
-
                             <div class="col-12 expandable" [ngClass]="{'expanded': item.isShow}">
                                 <div class="row mx-5 my-2">
                                     <div class="col-12" *ngIf="item.insert.length > 0">
@@ -721,7 +709,6 @@
                                         <span class="bullet bg-danger me-3"></span>
                                         <span class="text-gray-400">{{insert.insertEden}} ({{insert.insertTarihi}})</span>
                                     </div>
-
                                     <div class="col-12" *ngIf="item.update.length > 0">
                                         <span class="fw-bold fs-4">{{"Kayıt_Güncelleme" | translate}}</span>
                                     </div>
@@ -733,38 +720,11 @@
                             </div>
                         </div>
                     </div>
-    
-                    <!-- <div class="col-3 d-flex align-items-center gap-2">
-                        <a class="btn btn-sm fw-bold btn-danger">
-                            <i class="fa-solid fa-trash fs-5 text-white"></i>
-                        </a>
-
-                        <a class="btn btn-sm fw-bold btn-danger fw-bold">
-                            <i class="fa-solid fa-arrow-rotate-left fs-5 text-white"></i>
-                            <span class="fw-bolder fs-5">Yön Değiştir</span>
-                        </a>
-                    </div> -->
                 </div>
             </div>
-
-            <!-- <div class="col-3 d-flex align-items-center justify-content-center">
-                <div class="symbol symbol-30px cursor-pointer me-2" matTooltip="{{'Yön_Değiştir' | translate}}" (click)="changeRotateActivity(item)" *ngIf="attendanceForm.get('formState')?.value == 2">
-                    <span class="symbol-label symbol-label bg-danger">
-                        <i class="fa-solid fa-rotate fs-7 text-white"></i>
-                    </span>
-
-                    <span class="text-white">{{'Yön_Değiştir' | translate}}</span>
-                </div>
-            
-                <div class="symbol symbol-30px cursor-pointer me-2" matTooltip="{{'Kaldır' | translate}}" (click)="removeActivity(item)" *ngIf="attendanceForm.get('formState')?.value == 1">
-                    <span class="symbol-label symbol-label bg-danger">
-                        <i class="fa-solid fa-trash fs-7 text-white"></i>
-                        Kaldır
-                    </span>
-                </div>
-            </div> -->
         </div>
     </div>
+      
     
 
 

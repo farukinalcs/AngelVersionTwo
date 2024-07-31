@@ -11,7 +11,7 @@ import { AttendanceService } from 'src/app/_angel/puantaj/attendance.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { OKodFieldsModel } from '../../models/oKodFields';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
-import { AuthService } from 'src/app/modules/auth';
+import { AuthService, UserType } from 'src/app/modules/auth';
 
 @Component({
   selector: 'app-shift-change-form',
@@ -79,7 +79,7 @@ export class ShiftChangeFormComponent implements OnInit, OnDestroy {
   displayUploadedFile: boolean;
   currentUploadedFile: any;
 
-  currentUserValue: import("c:/Users/Developer/Desktop/AngleV2_Developer/src/app/modules/auth/index").UserType;
+  currentUserValue: UserType;
   selectedType: any;
   selectedEmployeesFromAttendance: any[] = [];
   shiftList: any[] = [];

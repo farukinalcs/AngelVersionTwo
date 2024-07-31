@@ -5,7 +5,7 @@ import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ProfileService } from '../../profile.service';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/modules/auth';
+import { AuthService, UserType } from 'src/app/modules/auth';
 import { TranslateService } from '@ngx-translate/core';
 import { formatDate } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -82,7 +82,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   displayUploadedFile: boolean;
   currentUploadedFile: any;
 
-  currentUserValue: import("c:/Users/Developer/Desktop/AngleV2_Developer/src/app/modules/auth/index").UserType;
+  currentUserValue: UserType;
   isCompleted: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
