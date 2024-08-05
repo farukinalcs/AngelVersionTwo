@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AttendanceRoutingModule } from './attendance-routing.module';
 import { PuantajdashboardComponent } from './puantajdashboard/puantajdashboard.component';
 import { AttendanceListComponent } from './attendance-list/attendance-list.component';
@@ -30,6 +29,7 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileModule } from '../profile/profile.module';
 import { SharedModule } from '../shared/shared.module';
 
+
 @NgModule({
   declarations: [
     PuantajdashboardComponent,
@@ -43,6 +43,7 @@ import { SharedModule } from '../shared/shared.module';
     OrganizationColumnFilterComponent,
     AttendanceListFilterComponent
   ],
+
   imports: [
     CommonModule,
     AttendanceRoutingModule,
@@ -65,6 +66,7 @@ import { SharedModule } from '../shared/shared.module';
     ProfileModule,
     SharedModule
   ],
+  
   exports: [
     AttendanceManagementSystemComponent
   ]

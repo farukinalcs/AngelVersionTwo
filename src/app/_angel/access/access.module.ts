@@ -45,6 +45,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '../shared/shared.module';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { SharedModule } from '../shared/shared.module';
     Widget2003Component,
     Widget2004Component,
     DialogWidget1001Component,
+    
   ],
   imports: [
     CommonModule,
@@ -100,7 +102,8 @@ import { SharedModule } from '../shared/shared.module';
     MatAutocompleteModule,
     MatIconModule,
     MatSelectModule,
-    SharedModule
+    SharedModule,
+    AgGridModule
 
   ]
 })
