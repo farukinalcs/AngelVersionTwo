@@ -1070,6 +1070,7 @@ export class TerminalComponent implements OnInit {
 
   // }
 }
+
 var filterParams: IDateFilterParams = {
   comparator: (filterLocalDateAtMidnight: Date, cellValue: string) => {
     var dateAsString = cellValue;

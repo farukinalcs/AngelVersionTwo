@@ -47,10 +47,17 @@ import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '../shared/shared.module';
 import { AgGridModule } from 'ag-grid-angular';
 
+
+import 'ag-grid-enterprise'
+import { LicenseManager } from 'ag-grid-enterprise';
+import { DevicesComponent } from './devices/devices.component';
+import { CustomizedCellComponentComponent } from './customized-cell-component/customized-cell-component.component';
+
 @NgModule({
   declarations: [
     AccessdashboardComponent,
     TerminalComponent,
+    DevicesComponent,
     GecisgruplariComponent,
     TanimlamalarComponent,
     RaporlarComponent,
@@ -68,6 +75,7 @@ import { AgGridModule } from 'ag-grid-angular';
     Widget2003Component,
     Widget2004Component,
     DialogWidget1001Component,
+    CustomizedCellComponentComponent
     
   ],
   imports: [
@@ -104,7 +112,6 @@ import { AgGridModule } from 'ag-grid-angular';
     MatSelectModule,
     SharedModule,
     AgGridModule
-
   ]
 })
 export class AccessModule { }
