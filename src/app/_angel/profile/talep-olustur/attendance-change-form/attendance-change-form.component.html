@@ -26,7 +26,7 @@
                                             <div class="col-12">
                                                 <div class="mb-10">
                                                     <label class="required fw-semibold fs-5 fw-semibold mb-10">Yapılacak İşlem Türü</label>
-                                                    <div class="d-flex fv-row">
+                                                    <div class="d-flex row">
                                                         <div class="col-11">
                                                             <div class="form-check form-check-custom form-check-danger">
                                                                 <input class="form-check-input me-3" formControlName="formState" type="radio" value="0"
@@ -50,7 +50,7 @@
                                                     </div>
                                                 
                                                     <div class="separator separator-dashed my-5"></div> 
-                                                    <div class="d-flex fv-row">
+                                                    <div class="d-flex row">
                                                         <div class="col-11">
                                                             <div class="form-check form-check-custom form-check-danger">
                                                                 <input class="form-check-input me-3" formControlName="formState" type="radio" value="2"
@@ -73,15 +73,15 @@
                                                     </div>
                                                 
                                                     <div class="separator separator-dashed my-5"></div> 
-                                                    <div class="d-flex fv-row">
+                                                    <div class="d-flex ">
                                                         <div class="col-11">
                                                             <div class="form-check form-check-custom form-check-danger">
                                                                 <input class="form-check-input me-3" formControlName="formState" type="radio" value="1"
                                                                     id="kt_modal_update_role_option_1">
                                                     
                                                                 <label class="form-check-label" for="kt_modal_update_role_option_1">
-                                                                    <div class="fw-bold text-gray-800">{{ "Mevcut_Hareketi_Kaldırmak" | translate }}</div>
-                                                                    <div class="text-gray-600">{{ "Personelin_Mesai_Tarihinde_Bulunan_Hareketini_Kaldırmak_İçin" | translate }}</div>
+                                                                    <div class="fw-bold text-gray-800">{{ "Mevcut_Hareketi_Kaldırmak_Veya_Aktif_Etmek" | translate }}</div>
+                                                                    <div class="text-gray-600">{{ "Personelin_Mesai_Tarihinde_Bulunan_Hareketini_Kaldırmak_Veya_Aktif_Etmek_İçin" | translate }}</div>
                                                                 </label>
     
                                                                 
@@ -93,51 +93,9 @@
                                                                 <i class="fa-regular fa-calendar-xmark fs-1 text-danger"></i>
                                                             </span>
                                                         </div>
-                                                        
                                                     </div>
-                                                    
                                                 </div>
                                             </div>
-
-
-
-
-                                            <!-- <div class="col-12 d-flex justify-content-center">
-                                                <input type="radio" class="btn-check" formControlName="formState" value="1"
-                                                    id="kt_radio_buttons_2_option_1" />
-                                                <label
-                                                    class="btn btn-outline btn-outline-dashed btn-active-light-secondary p-5 d-flex align-items-center justify-content-center mb-5 h-100px w-75 border-gray-500"
-                                                    for="kt_radio_buttons_2_option_1">
-                                            
-                                                    <span class="d-block fw-semibold text-center ps-3">
-                                                        <span class="text-danger fw-bold d-block fs-3">{{ "Yeni_Hareket_Eklemek" | translate }}</span>
-                                                    </span>
-                                                </label>
-                                            </div>
-
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <input type="radio" class="btn-check" formControlName="formState" value="2"
-                                                    id="kt_radio_buttons_2_option_2" />
-                                                <label
-                                                    class="btn btn-outline btn-outline-dashed btn-active-light-secondary p-5 d-flex align-items-center justify-content-center mb-5 h-100px w-75 border-gray-500"
-                                                    for="kt_radio_buttons_2_option_2">
-                                                    <span class="d-block fw-semibold text-center ps-3">
-                                                        <span class="text-danger fw-bold d-block fs-3">{{ "Mevcut_Hareketi_Kaldırmak" | translate }}</span>
-                                                    </span>
-                                                </label>
-                                            </div>
-
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <input type="radio" class="btn-check" formControlName="formState" value="3"
-                                                    id="kt_radio_buttons_3_option_3" />
-                                                <label
-                                                    class="btn btn-outline btn-outline-dashed btn-active-light-secondary p-5 d-flex align-items-center justify-content-center mb-5 h-100px w-75 border-gray-500"
-                                                    for="kt_radio_buttons_3_option_3">
-                                                    <span class="d-block fw-semibold text-center ps-3">
-                                                        <span class="text-danger fw-bold d-block fs-3">{{ "Mevcut_Hareketi_Duzenlemek" | translate }}</span>
-                                                    </span>
-                                                </label>
-                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -199,7 +157,7 @@
                                                             </div>
                                                             <!--end::Customer-->
 
-                                                            <div class="d-flex flex-stack mt-2">
+                                                            <div class="col-6 d-flex flex-stack mt-2">
                                                                 <ng-container *ngIf="!isThereActivity(item)">
                                                                     <!--begin::Label-->
                                                                     <span class="badge badge-light-warning">Kayıt Yok</span>
@@ -214,6 +172,9 @@
                                                                 
                                                             </div>
                                                             
+                                                            <!-- <div class="col-6 d-flex justify-content-end flex-stack mt-2" *ngIf="findDifferencesForPerson(item).length > 0">
+                                                                <span class="badge badge-light-info">Düzenlendi!</span>
+                                                            </div> -->
                                                         </div>
                                                     </ng-container>
                                                 </div>
@@ -242,56 +203,7 @@
 
                                             </div>
                                             
-                                            <!-- <div class="col-6 my-5" *ngIf="this.gridStartDate == this.gridEndDate && this.selectedEmployeesFromAttendance.length <= 1">
-                                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                    <span class="required">{{"Mesai_Tarihi" | translate}}</span>
-                                                </label>
-                            
-                                                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="shiftDate">
-                                            </div>
-
-                                            <div class="my-5" [ngClass]="{'col-12': this.gridStartDate != this.gridEndDate || this.selectedEmployeesFromAttendance.length > 1,
-                                                                                'col-6':this.gridStartDate == this.gridEndDate && this.selectedEmployeesFromAttendance.length <= 1}">
-                                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                    <span class="required">{{"Saat" | translate}}</span>
-                                                </label>
-                            
-                                                <input type="time" class="form-control form-control-lg form-control-solid" formControlName="shiftTime">
-                                            </div> -->
-
-
-                                            <!-- <div class="col-12" *ngIf="isThereData()">
-                                                <label class="d-flex align-items-center fs-5 fw-semibold">
-                                                    <span class="required">{{"Kayıt_Silinsin_Mi" | translate}}</span>
-                                                </label>
-                                                <span class="fs-7 text-muted">Seçilen kişilerden kaydı olanlar mevcut. Kayıtlar silinsin mi?</span>
                                             
-                                                <div class="row mt-3">
-                                                    <div class="col-lg-6">
-                                                        <input type="radio" class="btn-check" formControlName="isDelete"  value="1" id="kt_radio_buttons_2_option_1" />
-                                                        <label class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center mb-5"
-                                                            for="kt_radio_buttons_2_option_1">
-                                                            <i class="fa-solid fa-calendar-days fs-2x text-danger"></i>
-                                                            <span class="d-block fw-semibold text-start ps-3">
-                                                                <span class="text-dark fw-bold d-block fs-3">{{"Evet" | translate}}</span>
-                                                            </span>
-                                                        </label>
-                                                    </div>
-                                                    
-                                                    <div class="col-lg-6">
-                                                        <input type="radio" class="btn-check" formControlName="isDelete"  value="0" id="kt_radio_buttons_2_option_2" />
-                                                        <label class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center"
-                                                            for="kt_radio_buttons_2_option_2">
-                                                            <i class="fa-solid fa-clock fs-2x text-danger"></i>
-                                                            <span class="d-block fw-semibold text-start ps-3">
-                                                                <span class="text-dark fw-bold d-block fs-3">{{"Hayır" | translate}}</span>
-                                                            </span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div> -->
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -634,7 +546,7 @@
     
 
     <div class="container mt-5">
-        <div class="row d-flex justify-content-center mb-3" *ngFor="let item of personActivity; let i = index">
+        <div class="row d-flex justify-content-center mb-3" *ngFor="let item of personActivityTemp; let i = index">
             <div class="col-1">
                 <div class="row">
                     <div class="col-12 d-flex justify-content-center mb-2">
@@ -644,80 +556,188 @@
                                [ngClass]="{'fa-right-to-bracket': item.pdks == 1, 'fa-right-from-bracket': item.pdks == 2}"></i>
                         </div>
                     </div>
-                    <div class="col-12 d-flex justify-content-center align-items-center" *ngIf="personActivity.length > 1">
+                    <div class="col-12 d-flex justify-content-center align-items-center" *ngIf="personActivityTemp.length > 1">
                         <div class="border border-1 border-gray-500 rounded time-line-border" [style.height.px]="getLineHeight(item)" [ngClass]="{'line-border-expanded': item.isShow}"></div>
                     </div>
                 </div>
             </div>
     
-            <div class="col-10 d-flex align-items-center border border-2 rounded px-5"  [ngClass]="[getClassForValue(item), item.isFlipping ? 'flip' : '']">
+            <div class="col-10 d-flex align-items-center border border-2 rounded px-5" [ngClass]="getClassForValue(item)">
                 <div class="row w-100">
-                    <div class="col-1 bg-secondary bg-hover-light-danger text-dark text-hover-danger fw-semibold rounded cursor-pointer p-0 m-0 rot-btn"
-                        *ngIf="attendanceForm.get('formState')?.value == 2"
-                        [ngClass]="{'rot-btn-expanded': item.isShow}"
-                        [style.height.px]="getRotBtnHeight(item)"
-                        (click)="flipCard(item)">
-                        <i class="fa-solid fa-arrows-rotate text-dark my-2 fs-7"></i>
-                        {{'Yön Değiştir' | translate}}
-                    </div>
+                    <ng-container *ngIf="!item.isFlipping">
+                        <div class="col-1 bg-hover-light-danger text-dark text-hover-danger fw-semibold cursor-pointer p-0 m-0 rot-btn"
+                            style="border-radius: 0 20px 20px 0;"
+                            *ngIf="attendanceForm.get('formState')?.value == 2"
+                            [ngClass]="{
+                                'bg-white': item.deleted !== 0 && !item.undelete,
+                                'bg-secondary': item.deleted === 0 || item.undelete,
+                                'rot-btn-expanded': item.isShow
+                            }"
+                            [style.height.px]="getRotBtnHeight(item)" (click)="changeRotateActivity(item)">
+                            <i class="fa-solid fa-arrows-rotate text-dark mx-2 fs-7"></i>
+                            {{'Yön Değiştir' | translate}}
+                        </div>
+                    
+                        <div class="col-1 bg-hover-light-danger text-dark text-hover-danger fw-semibold cursor-pointer p-0 m-0 rot-btn"
+                        style="border-radius: 0 20px 20px 0;"
+                            *ngIf="attendanceForm.get('formState')?.value == 1 && (item.deleted === 0 || item.undelete)" 
+                            [ngClass]="{
+                                'bg-white': item.deleted !== 0 && !item.undelete,
+                                'bg-secondary': item.deleted === 0 || item.undelete,
+                                'rot-btn-expanded': item.isShow
+                            }"
+                            [style.height.px]="getRotBtnHeight(item)" (click)="removeActivity(item)">
+                            <i class="fa-solid fa-trash text-dark mx-2 fs-7"></i>
+                            {{'Kaldır' | translate}}
+                        </div>
 
-                    <div class="col-1 bg-secondary bg-hover-light-danger text-dark text-hover-danger fw-semibold rounded cursor-pointer p-0 m-0 rot-btn"
-                        *ngIf="attendanceForm.get('formState')?.value == 1"
-                        [ngClass]="{'rot-btn-expanded': item.isShow}"
-                        [style.height.px]="getRotBtnHeight(item)">
-                        <i class="fa-solid fa-trash fa-rotate-90 text-dark my-2 fs-7"></i>
-                        {{'Kaldır' | translate}}
-                    </div>
+                        <div class="col-1 bg-hover-light-danger text-dark text-hover-danger fw-semibold cursor-pointer p-0 m-0 rot-btn"
+                            style="border-radius: 0 20px 20px 0;"
+                            *ngIf="attendanceForm.get('formState')?.value == 1 && (item.deleted !== 0 && !item.undelete)"
+                            [ngClass]="{
+                                'bg-white': item.deleted !== 0 && !item.undelete,
+                                'bg-secondary': item.deleted === 0 || item.undelete,
+                                'rot-btn-expanded': item.isShow
+                            }"
+                            [style.height.px]="getRotBtnHeight(item)" (click)="repairActivity(item)">
+                            <i class="fa-solid fa-screwdriver-wrench text-dark mx-2 fs-7"></i>
+                            {{'Aktif_Et' | translate}}
+                        </div>
+
+                        
+                    </ng-container>
+
+
+                    <ng-container *ngIf="item.isFlipping">
+                        <div class="col-1 bg-hover-light-danger text-dark text-hover-danger fw-semibold rounded cursor-pointer p-0 m-0 rot-btn disabled placeholder"
+                            *ngIf="attendanceForm.get('formState')?.value == 2"
+                            [ngClass]="{
+                                'bg-white': item.deleted !== 0 && !item.undelete,
+                                'bg-secondary': item.deleted === 0 || item.undelete,
+                                'rot-btn-expanded': item.isShow
+                            }">
+                            <i class="fa-solid fa-arrows-rotate text-dark my-2 fs-7"></i>
+                            {{'Yön Değiştir' | translate}}
+                        </div>
+                        
+                        <div class="col-1 bg-hover-light-danger text-hover-danger fw-semibold rounded cursor-pointer p-0 m-0 rot-btn disabled placeholder"
+                            *ngIf="attendanceForm.get('formState')?.value == 1"
+                            [ngClass]="{
+                                'bg-white text-white': item.deleted !== 0 && !item.undelete,
+                                'bg-secondary text-dark': item.deleted === 0 || item.undelete,
+                                'rot-btn-expanded': item.isShow
+                            }">
+                            <i class="fa-solid fa-trash fa-rotate-90 text-dark my-2 fs-7"></i>
+                            {{'Kaldır' | translate}}
+                        </div>
+                    </ng-container>
+
+                    
     
                     <div class="col-10 d-flex align-items-center">
-                        <div class="row">
-                            <div class="col-6 d-flex align-items-center ">
-                                <span class="text-gray-700 fs-4">{{item.terminalAdi}}</span>
-                            </div>
-                            <div class="col-6 d-flex align-items-end justify-content-end">
-                                <span class="badge badge-danger">{{getRecordStatusMessage(item)}}</span>
-                            </div>
-                            <div class="col-6 d-flex align-items-center my-1">
-                                <div class="text-gray-500">
-                                    <span>{{item.zaman | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+                        <div class="row" [ngClass]="{'placeholder-glow d-flex justify-content-between w-100': item.isFlipping}">
+                            <ng-container *ngIf="!item.isFlipping">
+                                <div class="col-6 d-flex align-items-center ">
+                                    <span class="fs-4" [ngClass]="{
+                                        'text-white': item.deleted !== 0 && !item.undelete,
+                                        'text-gray-700': item.deleted === 0 || item.undelete
+                                    }">{{item.terminalAdi}}</span>
                                 </div>
-                            </div>
-                            <div class="col-6 d-flex align-items-center justify-content-end">
-                                <span class="badge badge-danger">{{isThereTampering(item)}}</span>
-                            </div>
-                            <div class="col-5 mt-3">
-                                <div class="cursor-pointer text-hover-danger" (click)="item.isShow = !item.isShow">
-                                    <span class="symbol-badge badge badge-circle bg-secondary start-0 top-100">
-                                        <i class="fa-solid fa-ellipsis text-dark"></i>
-                                    </span>
-                                    <span class="fw-bold mx-2" *ngIf="!item.isShow">{{"Detaylari_Goster" |
-                                        translate}}</span>
-                                    <span class="fw-bold mx-2" *ngIf="item.isShow">{{"Detaylari_Gizle" | translate}}</span>
+                                <div class="col-6 d-flex align-items-end justify-content-end">
+                                    <span class="badge" [ngClass]="{
+                                        'badge-white': item.deleted !== 0 && !item.undelete,
+                                        'badge-danger': item.deleted === 0 || item.undelete
+                                    }">{{getRecordStatusMessage(item)}}</span>
                                 </div>
-                            </div>
-                            <div class="col-7 mt-3 d-flex justify-content-end align-items-end">
-                                <div class="text-gray-500">
-                                    <span>{{item.adsoyad}}</span>
-                                </div>
-                            </div>
-                            <div class="col-12 expandable" [ngClass]="{'expanded': item.isShow}">
-                                <div class="row mx-5 my-2">
-                                    <div class="col-12" *ngIf="item.insert.length > 0">
-                                        <span class="fw-bold fs-4">{{"Kayıt_Ekleme" | translate}}</span>
-                                    </div>
-                                    <div class="col-12 mx-6 d-flex align-items-center " *ngFor="let insert of item.insert">
-                                        <span class="bullet bg-danger me-3"></span>
-                                        <span class="text-gray-400">{{insert.insertEden}} ({{insert.insertTarihi}})</span>
-                                    </div>
-                                    <div class="col-12" *ngIf="item.update.length > 0">
-                                        <span class="fw-bold fs-4">{{"Kayıt_Güncelleme" | translate}}</span>
-                                    </div>
-                                    <div class="col-12 mx-6 d-flex align-items-center " *ngFor="let update of item.update">
-                                        <span class="bullet bg-danger me-3"></span>
-                                        <span class="text-gray-400">{{update.insertEden}} ({{update.insertTarihi}})</span>
+                                <div class="col-6 d-flex align-items-center my-1">
+                                    <div class="" [ngClass]="{
+                                        'text-white': item.deleted !== 0 && !item.undelete,
+                                        'text-gray-500': item.deleted === 0 || item.undelete
+                                    }">
+                                        <span>{{item.zaman | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="col-6 d-flex align-items-center justify-content-end">
+                                    <span class="badge" [ngClass]="{
+                                        'badge-white': item.deleted !== 0 && !item.undelete,
+                                        'badge-danger': item.deleted === 0 || item.undelete
+                                    }">{{isThereTampering(item)}}</span>
+                                </div>
+                                <div class="col-5 mt-3">
+                                    <div class="cursor-pointer" (click)="item.isShow = !item.isShow" [ngClass]="{
+                                        'text-white text-hover-dark': item.deleted !== 0 && !item.undelete,
+                                        'text-hover-danger': item.deleted === 0 || item.undelete
+                                        }">
+                                        <span class="symbol-badge badge badge-circle bg-secondary start-0 top-100">
+                                            <i class="fa-solid fa-ellipsis text-dark"></i>
+                                        </span>
+                                        <span class="fw-bold mx-2" *ngIf="!item.isShow">
+                                            {{"Detaylari_Goster" | translate}}
+                                        </span>
+                                        <span class="fw-bold mx-2" *ngIf="item.isShow">
+                                            {{"Detaylari_Gizle" | translate}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-7 mt-3 d-flex justify-content-end align-items-end">
+                                    <div class="" [ngClass]="{
+                                        'text-white': item.deleted !== 0 && !item.undelete,
+                                        'text-gray-500': item.deleted === 0 || item.undelete
+                                    }">
+                                        <span>{{item.adsoyad}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 expandable" [ngClass]="{'expanded': item.isShow}">
+                                    <div class="row mx-5 my-2">
+                                        <div class="col-12" *ngIf="item.insert.length > 0">
+                                            <span class="fw-bold fs-4" [ngClass]="{'text-dark': item.deleted !== 0 && !item.undelete}">{{"Kayıt_Ekleme" | translate}}</span>
+                                        </div>
+                                        <div class="col-12 mx-6 d-flex align-items-center " *ngFor="let insert of item.insert">
+                                            <span class="bullet bg-danger me-3"></span>
+                                            <span class="text-gray-400">{{insert.insertEden}} ({{insert.insertTarihi}})</span>
+                                        </div>
+                                        <div class="col-12" *ngIf="item.update.length > 0">
+                                            <span class="fw-bold fs-4" [ngClass]="{'text-dark': item.deleted !== 0 && !item.undelete}">{{"Kayıt_Güncelleme" | translate}}</span>
+                                        </div>
+                                        <div class="col-12 mx-6 d-flex align-items-center " *ngFor="let update of item.update">
+                                            <span class="bullet bg-danger me-3"></span>
+                                            <span class="text-gray-400">{{update.insertEden}} ({{update.insertTarihi}})</span>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </ng-container>
+                            
+
+                            <ng-container *ngIf="item.isFlipping">
+                                <div class="col-6 d-flex align-items-center placeholder" style="width: 25%;"></div>
+
+                                <div class="col-6 d-flex align-items-end justify-content-end placeholder" style="width: 40%;"></div>
+
+                                <div class="col-6 d-flex align-items-center my-1 placeholder" style="width: 49%;"></div>
+
+                                <div class="col-6 d-flex align-items-center justify-content-end my-1 placeholder" style="width: 36%;"></div>
+
+                                <div class="col-5 mt-3 placeholder" style="width: 40%;"></div>
+
+                                <div class="col-7 mt-3 d-flex justify-content-end align-items-end placeholder" style="width: 44%;"></div>
+
+                                <div class="col-12 expandable" [ngClass]="{'expanded': item.isShow}">
+                                    <div class="row mx-5 my-2">
+                                        <div class="col-12 placeholder" style="width: 40%;" *ngIf="item.insert.length > 0" >
+                                            <span class="fw-bold fs-4">{{"Kayıt_Ekleme" | translate}}</span>
+                                        </div>
+
+                                        <div class="col-12 mx-6 d-flex align-items-center placeholder" style="width: 40%;" *ngFor="let insert of item.insert"></div>
+
+                                        <div class="col-12 placeholder" style="width: 40%;" *ngIf="item.update.length > 0" >
+                                            <span class="fw-bold fs-4">{{"Kayıt_Güncelleme" | translate}}</span>
+                                        </div>
+
+                                        <div class="col-12 mx-6 d-flex align-items-center placeholder" style="width: 40%;" *ngFor="let update of item.update"></div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            
                         </div>
                     </div>
                 </div>
@@ -730,8 +750,12 @@
 
 
     <ng-template pTemplate="footer">
-        <a (click)="closeUploadedFile()" class="btn btn-danger">
-            <i class="fa-solid fa-xmark fs-1"></i>
+        <a (click)="resetChanges()" class="btn btn-sm btn-danger ms-2" *ngIf="attendanceForm.get('formState')?.value != 0">
+            <i class="fa-solid fa-rotate-right fs-5"></i>
+            {{'Sıfırla' | translate}}
+        </a>
+        <a (click)="closeUploadedFile()" class="btn btn-sm btn-danger ms-2">
+            <i class="fa-solid fa-xmark fs-5"></i>
             {{'Kapat' | translate}}
         </a>
     </ng-template>

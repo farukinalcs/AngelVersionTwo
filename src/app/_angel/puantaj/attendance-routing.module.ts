@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AttendanceListComponent } from './attendance-list/attendance-list.component';
+import { AttendancePivotListComponent } from './attendance-pivot-list/attendance-pivot-list.component';
 import { PuantajRaporlarComponent } from './puantaj-raporlar/puantaj-raporlar.component';
 import { PuantajTanimlamalarComponent } from './puantaj-tanimlamalar/puantaj-tanimlamalar.component';
 import { PuantajdashboardComponent } from './puantajdashboard/puantajdashboard.component';
@@ -20,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'pdkspiv',
-    component: AttendanceListComponent,
+    component: AttendancePivotListComponent,
   },
   {
     path: 'tanimlamalar',

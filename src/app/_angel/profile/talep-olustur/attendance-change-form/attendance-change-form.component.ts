@@ -30,8 +30,6 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
   @Input() gridStartDate: any;
   @Input() gridEndDate: any;
 
-
-
   stepperFields: any[] = [
     {
       class: 'stepper-item current',
@@ -95,6 +93,9 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
   isShow: boolean = false;
   removedActivties: any[] = [];
   updatedActivities: any[] = [];
+  personActivityTemp: any;
+  personActivityOriginal: any[] = [];
+  isReset: boolean = false;
   constructor(
     private profileService: ProfileService,
     private formBuilder: FormBuilder,
@@ -108,15 +109,6 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-        ToggleComponent.bootstrap();
-        ScrollTopComponent.bootstrap();
-        DrawerComponent.bootstrap();
-        StickyComponent.bootstrap();
-        MenuComponent.bootstrap();
-        ScrollComponent.bootstrap();
-    }, 200);
-
     console.log('gridStartDate: ', this.gridStartDate);
     console.log('gridEndDate: ', this.gridEndDate);
 
@@ -410,7 +402,7 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
           aciklama: formValues?.explanation,
           sicilid: '0',
           sil: '0',
-          hareketid: item.Id.toString(),
+          hareketid: item.toString(),
           kaynak: source,
         });
 
@@ -615,9 +607,15 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
 
       return;
     } else if (this.attendanceForm.get('formState')?.value == 2) {
-      this.postForm(this.attendanceFormValues, 'u', this.updatedActivities);
+      const differences = this.findDifferences(
+        this.selectedEmployeesFromAttendance
+      );
+      this.postForm(this.attendanceFormValues, 'u', differences);
     } else if (this.attendanceForm.get('formState')?.value == 1) {
-      this.postForm(this.attendanceFormValues, 'd', this.removedActivties);
+      const differences = this.findDifferences(
+        this.selectedEmployeesFromAttendance
+      );
+      this.postForm(this.attendanceFormValues, 'd', differences);
     }
 
     this.fileTypes.forEach((item: any) => {
@@ -657,6 +655,15 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
   }
 
   getPersonActivity(sid: number) {
+    if (
+      this.selectedEmployeesFromAttendance.some(
+        (sperson) => sperson.sicilid == sid && sperson.personActivity
+      ) &&
+      sid == this.personActivityTemp[0].sid
+    ) {
+      this.showUploadedFile('');
+      return;
+    }
     let filteredArr = this.selectedEmployeesFromAttendance.filter(
       (e) => e.sicilid == sid
     );
@@ -694,11 +701,20 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
         const data = response[0].x;
         const apiMessage = response[0].z;
         const spMessage = response[0].m[0];
+        console.log('getPersonActivity: ', data);
 
-        this.personActivity = data;
-        this.personActivity = this.parseTerminalData(this.personActivity);
+        this.mergeActivities(this.parseTerminalData(data, sid));
+        console.log('Merge Array :', this.selectedEmployeesFromAttendance);
 
-        if (this.personActivity.length > 0) {
+        let isThereActivity = this.selectedEmployeesFromAttendance.some(
+          (sperson) => sperson.sicilid == sid && sperson.personActivity
+        );
+        if (isThereActivity) {
+          this.personActivityTemp = this.selectedEmployeesFromAttendance.filter(
+            (sperson) => sperson.sicilid == sid
+          )[0].personActivity;
+          console.log(':::::: ', this.personActivityTemp);
+
           this.showUploadedFile('');
         } else {
           this.toastrService.warning(
@@ -706,12 +722,58 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
             this.translateService.instant('Uyarı')
           );
         }
-
-        console.log('getPersonActivity: ', this.personActivity);
       });
   }
 
-  parseTerminalData(response: any[]): any[] {
+  // mergeActivities(apiResponse: any[]) {
+  //   this.selectedEmployeesFromAttendance = this.selectedEmployeesFromAttendance.map(item => {
+  //     const matchingActivities = apiResponse.filter(activity => activity.sid === item.sicilid);
+  //     if (matchingActivities.length) {
+  //       return { ...item, personActivity: matchingActivities, personActivityOriginal: matchingActivities };
+  //     }
+  //     return item;
+  //   });
+  // }
+
+  mergeActivities(apiResponse: any[]) {
+    this.selectedEmployeesFromAttendance =
+      this.selectedEmployeesFromAttendance.map((item) => {
+        const matchingActivities = apiResponse.filter(
+          (activity) => activity.sid === item.sicilid
+        );
+        if (matchingActivities.length) {
+          // Derin kopyalama için bunu yaptım. Çünkü referans tipten değişiklikleri algılıyor.
+          const personActivityCopy = item.personActivity
+            ? item.personActivity
+            : JSON.parse(JSON.stringify(matchingActivities));
+          let personActivityOriginalCopy = JSON.parse(
+            JSON.stringify(matchingActivities)
+          );
+
+          // Eğer personActivityOriginal varsa ve mevcut değer ile farklıysa, yeni değer ata
+          if (
+            item.personActivityOriginal &&
+            JSON.stringify(item.personActivityOriginal) !==
+              JSON.stringify(personActivityOriginalCopy)
+          ) {
+            personActivityOriginalCopy = JSON.parse(
+              JSON.stringify(matchingActivities)
+            );
+          } else if (item.personActivityOriginal) {
+            personActivityOriginalCopy = item.personActivityOriginal;
+          }
+
+          return {
+            ...item,
+            personActivity: personActivityCopy,
+            personActivityOriginal: personActivityOriginalCopy,
+          };
+        }
+        return item;
+      });
+  }
+
+  parseTerminalData(response: any[], sid: any): any[] {
     return response.map((item) => {
       const { terminal } = item;
       const terminalParts = terminal.split('(i):');
@@ -730,6 +792,8 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
         update: update.filter(Boolean),
         isShow: false,
         isDelete: false,
+        isFlipping: false,
+        sid: sid,
       };
     });
   }
@@ -790,7 +854,7 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
 
   getClassForValue(value: any): any {
     if (value.deleted !== 0 && value.undelete === false) {
-      return 'bg-light-danger';
+      return 'bg-danger';
     } else if (value.deleted !== 0 && value.undelete === true) {
       return 'bg-gray-100 ';
     } else {
@@ -810,7 +874,6 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
 
   closeUploadedFile() {
     this.displayUploadedFile = false;
-    this.personActivity = [];
   }
 
   showDetails() {
@@ -849,20 +912,30 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
       item.pdks = 1;
     }
     console.log('Hareketin yönü değişti :', item);
-    this.updatedActivities.push(item);
-    console.log(this.updatedActivities);
-    
+    console.log('TEMP : ', this.selectedEmployeesFromAttendance);
+
+    this.flipCard(item);
   }
 
   removeActivity(item: any) {
-    item.deleted = 1;    
+    item.deleted = 1;
     item.undelete = false;
     item.isDelete = true;
     console.log('Hareket Kaldırıldı :', item);
-    this.removedActivties.push(item);
-    console.log(this.removedActivties);
+    console.log('TEMP : ', this.selectedEmployeesFromAttendance);
+
+    this.flipCard(item);
   }
 
+  repairActivity(item: any) {
+    item.deleted = 0;
+    item.undelete = true;
+    item.isDelete = false;
+    console.log('Hareket Tekrar Eklendi :', item);
+    console.log('TEMP : ', this.selectedEmployeesFromAttendance);
+
+    this.flipCard(item);
+  }
 
   getRotBtnHeight(item: any): number {
     const baseHeight = 120;
@@ -870,7 +943,7 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
     return item.isShow ? baseHeight + additionalHeight : baseHeight;
   }
 
-  getLineHeight(item:any): number {
+  getLineHeight(item: any): number {
     const baseHeight = 80;
     const additionalHeight = (item.insert.length + item.update.length) * 22;
 
@@ -880,14 +953,51 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
   flipCard(item: any) {
     // Eğer item zaten flip ediliyorsa işlemi atla
     if (item.isFlipping) return;
-    
+
     item.isFlipping = true;
     setTimeout(() => {
       item.isFlipping = false;
-    }, 500); // Animasyon süresine göre ayarlayın
+      this.ref.detectChanges();
+    }, 2000); // Animasyon süresine göre ayarlayın
   }
-  
-  
+
+  resetChanges() {
+    this.isReset = true;
+  }
+
+  findDifferences(data: any) {
+    let differences: any[] = [];
+
+    data.forEach((person: any) => {
+      let originalActivities = person.personActivityOriginal;
+      let currentActivities = person.personActivity;
+
+      currentActivities?.forEach((currentActivity: any) => {
+        let originalActivity = originalActivities.find(
+          (activity: any) => activity.Id === currentActivity.Id
+        );
+        if (originalActivity) {
+          // Compare each field
+          let isDifferent = false;
+          for (let key in currentActivity) {
+            if (
+              key !== 'Id' &&
+              JSON.stringify(currentActivity[key]) !==
+                JSON.stringify(originalActivity[key])
+            ) {
+              isDifferent = true;
+              break;
+            }
+          }
+          if (isDifferent) {
+            differences.push(currentActivity.Id);
+          }
+        }
+      });
+    });
+
+    return differences;
+  }
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
