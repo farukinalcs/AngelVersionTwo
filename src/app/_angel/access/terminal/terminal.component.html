@@ -1,1 +1,27 @@
-<p>NGRX den öncesi</p>
+<ag-grid-angular
+#agGridDark
+style="width: 100%; height: 100%;"
+class="ag-theme-alpine-dark theme-dark-show"
+[columnDefs]="columnDefs"
+[defaultColDef]="defaultColDef"
+
+[suppressRowClickSelection]="true"
+
+
+
+[animateRows]="true"
+
+[getRowHeight]="getRowHeight"
+[groupSelectsChildren]="true"
+[pagination]="false"
+[paginationAutoPageSize]="false"
+[paginateChildRows]="false"
+[enableRangeSelection]="true"
+[enableRangeHandle]="true"
+
+
+
+
+(columnResized)="onColumnResized($event)"
+(columnVisible)="onColumnVisible($event)"
+></ag-grid-angular>

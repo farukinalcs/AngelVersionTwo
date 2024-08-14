@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AttendanceRoutingModule } from './attendance-routing.module';
 import { PuantajdashboardComponent } from './puantajdashboard/puantajdashboard.component';
 import { AttendanceListComponent } from './attendance-list/attendance-list.component';
@@ -32,6 +31,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AttendancePivotListComponent } from './attendance-pivot-list/attendance-pivot-list.component';
 import { DrawersModule } from 'src/app/_metronic/partials';
 
+
 @NgModule({
   declarations: [
     PuantajdashboardComponent,
@@ -46,6 +46,7 @@ import { DrawersModule } from 'src/app/_metronic/partials';
     AttendanceListFilterComponent,
     AttendancePivotListComponent
   ],
+
   imports: [
     CommonModule,
     AttendanceRoutingModule,
@@ -69,6 +70,7 @@ import { DrawersModule } from 'src/app/_metronic/partials';
     SharedModule,
     DrawersModule
   ],
+  
   exports: [
     AttendanceManagementSystemComponent
   ]
