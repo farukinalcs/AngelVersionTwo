@@ -11,8 +11,9 @@ import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-s
 import { Device } from 'src/app/_angel/access/models/device'
 import { ColDef, ColGroupDef,GridOptions,ModuleRegistry} from 'ag-grid-enterprise';
 import { AgGridAngular } from 'ag-grid-angular';
-import { IHeaderParams } from 'ag-grid-community';
-import { CustomizedCellComponentComponent } from '../customized-cell-component/customized-cell-component.component';
+import { IHeaderParams, ICellRendererParams } from 'ag-grid-community';
+import { CustomizedCellComponent } from '../customized-cell/customized-cell.component';
+
 
 
 
@@ -50,11 +51,13 @@ export class DevicesComponent implements OnInit {
   ngOnInit(): void {
     this.getDevices();
   }
+
   onGridReady(params:any){
     console.log("params",params);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   }
+
   getDevices(){
     this.Access.getDevices().subscribe((response : ResponseModel<Device, ResponseDetailZ>[])=>{
       this.rowData = response[0].x;
@@ -69,16 +72,39 @@ export class DevicesComponent implements OnInit {
   }
 
   public  columnDefs: (ColDef | ColGroupDef)[]  = [
+    
     { field: 'name', 
       headerName: 'Ad', 
       cellClass: 'header-class',
-      cellRenderer: "customizedNameCall"},
+      cellRenderer: (item:any)=>{
+          return "" +item.value
+    }},
+
     { field: 'modelad',  
-      headerName: 'Model'},
-    { field: 'port', headerName: 'Port'},
+      headerName: 'Model',
+      cellRenderer:CustomizedCellComponent,
+      cellRendererParams:{
+        buttontext:"MODEEEEEEL"
+    }},
+
+    { field: 'port', 
+      headerName: 'Port',
+      cellRenderer:CustomizedCellComponent,
+      cellRendererParams:{
+      buttontext:"POOOORT"
+    }},
+
     { field: 'ip', headerName: 'Ip'},
     { field: 'controllerno', headerName: 'Module ID'},
-    { field: 'IO', headerName: 'IO'},
+    { field: 'IO', 
+    cellRenderer: function(params: ICellRendererParams) {
+      if (params.value > 2) {
+          return '<span style="color: green;">' + params.value + '</span>';
+      } else {
+          return '<span style="color: red;">' + params.value + '</span>';
+      }
+    }
+    },
     { field: 'kind', headerName: 'Tanım'},
     { field: 'durum', headerName: 'Durum'},
     { field: 'networkdurum', headerName: 'Network Durum'},
@@ -105,11 +131,12 @@ export class DevicesComponent implements OnInit {
     //{ field: 'longtitude', headerName: 'longtitude' },
     //{ field: 'templatecapacity', headerName: 'Template Capacity' },
     //{ field: 'usercapacity', headerName: 'User Capacity' },
+
   ];
 
   public defaultColDef: ColDef = {
     editable: true,
-    filter: true,
+    filter: true
   };
   
   // saveFilterModel() {

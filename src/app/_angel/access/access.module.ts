@@ -51,7 +51,8 @@ import { AgGridModule } from 'ag-grid-angular';
 import 'ag-grid-enterprise'
 import { LicenseManager } from 'ag-grid-enterprise';
 import { DevicesComponent } from './devices/devices.component';
-import { CustomizedCellComponentComponent } from './customized-cell-component/customized-cell-component.component';
+import { CustomizedCellComponent } from './customized-cell/customized-cell.component';
+
 
 @NgModule({
   declarations: [
@@ -75,9 +76,9 @@ import { CustomizedCellComponentComponent } from './customized-cell-component/cu
     Widget2003Component,
     Widget2004Component,
     DialogWidget1001Component,
-    CustomizedCellComponentComponent
-    
+    CustomizedCellComponent
   ],
+
   imports: [
     CommonModule,
     AccessRoutingModule,
