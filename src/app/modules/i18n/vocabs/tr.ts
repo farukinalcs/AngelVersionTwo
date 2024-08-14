@@ -342,7 +342,15 @@ export const locale = {
     Pozisyon_Adı: 'Pozisyon Adı',
     Fotoğraf: 'Fotoğraf',
     Masraf: 'Masraf',
-    Masraf_Talep_Formu: 'Masraf Talep Formu'
+    Masraf_Talep_Formu: 'Masraf Talep Formu',
+    Monday: 'Pazartesi',
+    Tuesday: 'Salı',
+    Wednesday: 'Çarşamba',
+    Thursday: 'Perşembe',
+    Friday: 'Cuma',
+    Saturday: 'Cumartesi',
+    Sunday: 'Pazar'
+    
 
   },
 };

@@ -38,21 +38,21 @@
 .rot-btn {
   position: relative;
   top: 0px;
-  width: 44px;
+  width: 75px;
   left: -7px;
   height: 119px;
-  writing-mode: vertical-lr;
+//   writing-mode: vertical-lr;
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: rotate(180deg);
+//   transform: rotate(180deg);
   transition: height 0.5s ease-out, width 0.5s ease-out;
 
   &.rot-btn-expanded {
     transition: height 0.5s ease-in, width 0.5s ease-out;
 
     &:hover {
-        width: 54px;
+        width: 90px;
     }
   }
 

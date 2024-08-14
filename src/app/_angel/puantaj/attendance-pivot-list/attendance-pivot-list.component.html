@@ -1,0 +1,352 @@
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="row pt-2" *ngIf="loading">
+            <div class="col-11 m-auto">
+                <p-progressBar [value]="value"></p-progressBar>
+            </div>
+
+            <div class="col-1 m-auto">
+                <div class="text-gray-400 fw-semibold fs-7">
+                    <a class="btn btn-sm btn-danger px-5 py-1"> {{"İptal_Et" | translate}}</a>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-12">
+            <div class="card card-custom gutter-b" [ngClass]="{'disabled': loading}"
+                [ngStyle]="{ 'opacity': loading ? 0.5 : 1, 'cursor': loading ? 'not-allowed' : 'auto' }">
+
+                <div class="card-header border-0">
+                    <div class="card-title">
+                        <h3 class="card-label">{{"Puantaj_Pivot_Listesi" | translate}}</h3>
+                    </div>
+
+                    <div class="card-toolbar">
+                        <div class="card-toolbar">
+                            <div class="example-tools justify-content-center">
+                                <div class="row">
+
+                                    <div class="d-flex btn btn-icon btn-clean btn-icon-danger mr-3 my-2 my-lg-0">
+                                        <a (click)="getAttendancePivotData()">
+                                            <i style="color: #ff0000;" class="fas fa-undo-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body pt-3 pb-0">
+                    <div class="row mb-10 d-flex justify-content-end" [formGroup]="formGroup">
+                        <div class="col-4 d-flex align-items-end gap-2 p-0">
+                            <a class="btn btn-dark btn-sm" (click)="showFilterModal()">
+                                <i class="fa-solid fa-filter"></i>
+                                Filtrele
+                            </a>
+
+                            <a class="btn btn-dark btn-sm" (click)="clearFilters()">
+                                <i class="fa-solid fa-eraser"></i>
+                                Temizle
+                            </a>
+                        </div>
+
+                        <div class="col-8 d-flex align-items-end justify-content-end gap-5">
+                            <div class="fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
+                                <div class="btn-group w-100">
+                                    <label *ngFor="let item of rangeList"
+                                        class="btn btn-sm btn-outline btn-active-dark btn-color-muted fs-8"
+                                        [ngClass]="{'active': this.formGroup.get('dateRange')?.value == item.range}">
+                                        <input class="btn-check" type="radio" [value]="item.range"
+                                            formControlName="dateRange"
+                                            [checked]="formGroup.get('dateRange')?.value == item.range">
+                                        {{item.name}}
+                                    </label>
+
+                                </div>
+                                <div
+                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-container *ngIf="this.formGroup.value.dateRange != '-1' ">
+                                    <div class="col d-flex align-items-end">
+                                        <i class="fa-solid fa-caret-left fs-3x text-dark cursor-pointer text-hover-gray-600"
+                                            (click)="previousDate()"></i>
+                                    </div>
+                                </ng-container>
+
+                                <div class="col">
+                                    <label class="d-flex align-items-center fs-9 fw-semibold mb-2">
+                                        <span>{{"Başlangıç_Tarihi" | translate}}</span>
+                                    </label>
+
+                                    <input type="date" class="form-control form-control-sm form-control-solid"
+                                        formControlName="startDate" (click)="openDatePicker()">
+                                </div>
+
+                                <div class="col">
+                                    <label class="d-flex align-items-center fs-9 fw-semibold mb-2">
+                                        <span>{{"Bitiş_Tarihi" | translate}}</span>
+                                    </label>
+
+                                    <input type="date" class="form-control form-control-sm form-control-solid"
+                                        formControlName="endDate" (click)="openDatePicker()">
+                                </div>
+
+                                <ng-container *ngIf="this.formGroup.value.dateRange != '-1' ">
+                                    <div class="col d-flex align-items-end">
+                                        <i class="fa-solid fa-caret-right fs-3x text-dark cursor-pointer text-hover-gray-600"
+                                            (click)="nextDate()"></i>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex align-items-stretch">
+                        <div class="d-flex flex-column process" [ngClass]="{'expanded': processExpanded}">
+                            <div class="row">
+                                <div class="d-flex align-items-center bg-danger cursor-pointer"
+                                    [ngClass]="{'col-12 rounded justify-content-center text-hover-dark': !processExpanded, 'col-10 rounded-start justify-content-start': processExpanded}"
+                                    (click)="expandProcess()">
+                                    <span class="text-center fw-bold fs-7 py-2">
+                                        <i class="fa-solid fs-6 text-white"
+                                            [ngClass]="{'fa-angles-right': !processExpanded, 'fa-bars': processExpanded}"></i>
+                                        <span class="text-white mx-3" *ngIf="processExpanded">{{"İşlemler" | translate}}</span>
+                                    </span>
+                                </div>
+                                
+                                <div class="col-2 d-flex justify-content-end align-items-center bg-danger rounded-end cursor-pointer text-hover-dark"
+                                    *ngIf="processExpanded" (click)="collapseProcess()">
+                                    <span class="text-end fw-bold fs-7 py-2">
+                                        <i class="fa-solid fa-angles-left fs-6 text-white"></i>
+                                    </span>
+                                </div>
+
+                                <div class="col-12 pt-3">
+                                    <ul class="nav nav-pills nav-pills-custom item position-relative mx-1 mb-1"
+                                        [ngClass]="{'d-flex flex-column': !processExpanded}"
+                                        role="tablist">
+                                        <li class="nav-item col mx-0 p-0" role="presentation"
+                                            *ngFor="let item of tabListProcess">
+                                            <a class="nav-link d-flex justify-content-center w-100 border-0 h-100"
+                                                [ngClass]="{'active': selectedTab == item.type}"
+                                                (click)="changeProcess(item)" data-bs-toggle="pill"
+                                                href="#kt_list_widget_16_tab_1" aria-selected="true" role="tab">
+                                                <span class="d-flex flex-column nav-text text-center text-gray-800 fw-bold fs-7 mb-3">
+                                                    <i class="{{item.icon}} fs-6 text-dark"></i>
+                                                    <span *ngIf="processExpanded">{{item.name}}</span>
+                                                </span>
+                                                <span class="bullet-custom position-absolute z-index-2 bottom-0 w-100 h-4px bg-dark rounded"></span>
+                                            </a>
+                                        </li>
+                                        <span class="position-absolute z-index-1 bottom-0 w-100 h-4px bg-light rounded"></span>
+                                    </ul>
+                                </div>
+
+                                <div class="col-12" *ngIf="processExpanded">
+                                    <div class="row pt-5 flex-grow-1">
+                                        <div class="col-12">
+                                            <div class="input-group h-100" style="flex: 1;">
+                                                <input
+                                                    class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
+                                                    (input)="filterTextChange()" [(ngModel)]="filterText"
+                                                    type="text" placeholder="{{'Arama' | translate}}">
+
+                                                <button class="search-icon">
+                                                    <div class="svg">
+                                                        <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 scroll" style="max-height: 36vw;">
+                                            <div class="card-body px-3">
+                                                <ng-container *ngIf="processLoading">
+                                                    <ng-container *ngIf="shiftList.length > 0 && selectedProcess?.type == 0">
+                                                        <ng-container *ngFor="let shift of shiftList | searchFilter:filterText: ['ad']">
+                                                            <div class="d-flex align-items-center mb-2 process-item rounded cursor-pointer"
+                                                                [ngClass]="{'bg-danger': selectedShift?.ID == shift.ID}"
+                                                                (click)="selectShift(shift)">
+                                                                <span class="bullet bullet-vertical h-20px bg-danger me-5"></span>
+                                                                <div class="d-flex flex-column">
+                                                                    <a class="fs-9 fw-bolder"
+                                                                        [ngClass]="{'text-white': selectedShift?.ID == shift.ID, 'text-gray-900':selectedShift?.ID != shift.ID}">
+                                                                        {{shift.ad}}
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+                                                    </ng-container>
+    
+                                                    <ng-container *ngIf="vacationList.length > 0 && selectedProcess?.type == 1">
+                                                        <ng-container *ngFor="let vacation of vacationList | searchFilter:filterText: ['ad']">
+                                                            <div class="d-flex align-items-center mb-2 process-item rounded cursor-pointer"
+                                                                [ngClass]="{'bg-danger': selectedVacation?.ID == vacation.ID}"
+                                                                (click)="selectVacation(vacation)">
+                                                                <span class="bullet bullet-vertical h-20px bg-danger me-5"></span>
+                                                                <div class="d-flex flex-column">
+                                                                    <a class="fs-9 fw-bolder"
+                                                                        [ngClass]="{'text-white': selectedVacation?.ID == vacation.ID, 'text-gray-900':selectedVacation?.ID != vacation.ID}">
+                                                                        {{vacation.ad}}
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+                                                    </ng-container>
+
+                                                    <ng-container *ngIf="assignmentLogList.length > 0 && selectedProcess?.type == 2">
+                                                        <app-activity-drawer [assignmentLog]="assignmentLogList"></app-activity-drawer>
+                                                    </ng-container>
+    
+                                                    <ng-container *ngIf="overtimeSubtotal.length > 0 && selectedProcess?.type == 3">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-3">
+                                                                
+                                                                <thead>
+                                                                    <tr class="fs-9 fw-bold text-gray-800">
+                                                                        <th class=""></th>
+                                                                        <th class=""></th>
+                                                                        <th class="">{{"Yıl_Toplam" | translate}}</th>
+                                                                        <th class="">{{"Ay_Toplam" | translate}}</th>
+                                                                        <th class="">{{"Hafta_Toplam" | translate}}</th>
+                                                                    </tr>
+                                                                </thead>
+                                            
+                                                                <tbody>
+                                                                    <tr class="text-center" *ngFor="let item of overtimeSubtotal | searchFilter:filterText: ['ad', 'soyad', 'sicilno']">
+                                                                        <td>
+                                                                            <div class="symbol symbol-30px">
+                                                                                <img src="http://localhost:5075/api/Image?sicilid={{item.sicilid}}" alt="{{item.ad}} {{item.soyad}}" class=""> 
+                                                                            </div>
+                                                                        </td>
+    
+                                                                        <td>
+                                                                            <a class="text-gray-900 fw-bold text-hover-danger mb-1 fs-7">{{item.ad}} {{item.soyad}}</a>
+                                                                            <span class="text-muted fw-semibold d-block fs-8">{{item.sicilno}}</span>
+                                                                        </td>
+                                                                        
+                                                                        <td class="text-muted fw-bold fs-7">
+                                                                            {{item.yfm}}
+                                                                        </td>
+                                                                        
+                                                                        <td class="text-muted fw-bold fs-7">
+                                                                            {{item.afm}}
+                                                                        </td>
+                                                                        
+                                                                        <td class="text-muted fw-bold fs-7">
+                                                                            {{item.hfm}}
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </ng-container>
+    
+                                                    <ng-container *ngIf="filterText.trim().length > 0 && filteredItems.length == 0">
+                                                        <div class="row pt-10">
+                                                            <div class="col-12 d-flex justify-content-center align-items-center">
+                                                                <div class="row">
+                                                                    <app-data-not-found [imgWidth]=" '70%' "></app-data-not-found>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="!processLoading">
+                                                    <div class="col-12 pt-10">
+                                                        <div class="loader-container">
+                                                            <div id="splash-screen" class="splash-screen"
+                                                                style="position: inherit; color:transparent; background-color: transparent;">
+                                                                <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo" style="margin-left: 0; height: 0;" />
+                                                                <mat-spinner></mat-spinner>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex flex-column grid">
+                            <ul class="nav nav-pills nav-pills-custom item position-relative mx-1 mb-1" role="tablist">
+                                <li class="nav-item col mx-0 p-0" role="presentation" *ngFor="let item of tabList">
+                                    <a class="nav-link d-flex justify-content-center w-100 border-0 h-100"
+                                        [ngClass]="{'active': selectedTab == item.type}"
+                                        (click)="changeTabMenu(item.type)" data-bs-toggle="pill"
+                                        href="#kt_list_widget_16_tab_1" aria-selected="true" role="tab">
+                                        <span class="nav-text text-gray-800 fw-bold fs-7 mb-3">
+                                            {{item.name}}
+                                        </span>
+                                        <span
+                                            class="bullet-custom position-absolute z-index-2 bottom-0 w-100 h-4px bg-dark rounded"></span>
+                                    </a>
+                                </li>
+                                <span class="position-absolute z-index-1 bottom-0 w-100 h-4px bg-light rounded"></span>
+                            </ul>
+                            <div class="ag-theme-material flex-grow-1" [ngStyle]="gridStyle" #gridContainer>
+                                <ag-grid-angular #agGridLight style="width: 100%; height: 100%;"
+                                    class="ag-theme-alpine theme-light-show" [columnDefs]="columnDefs"
+                                    [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+                                    [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChangedLight()"
+                                    [sideBar]="sideBar" [rowGroupPanelShow]="rowGroupPanelShow"
+                                    [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+                                    [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true"
+                                    [pagination]="false" [paginationAutoPageSize]="false" [paginateChildRows]="false"
+                                    [enableRangeSelection]="true" [enableRangeHandle]="true"
+                                    [gridOptions]="gridOptionsLight" (filterOpened)="onFilterOpened($event)"
+                                    (filterChanged)="onFilterChanged($event)"
+                                    (filterModified)="onFilterModified($event)"
+                                    (columnResized)="onColumnResized($event)" (columnVisible)="onColumnVisible($event)">
+                                </ag-grid-angular>
+
+                                <ag-grid-angular #agGridDark style="width: 100%; height: 100%;"
+                                    class="ag-theme-alpine-dark theme-dark-show" [columnDefs]="columnDefs"
+                                    [defaultColDef]="defaultColDef" [rowData]="rowData" [rowSelection]="rowSelection"
+                                    [suppressRowClickSelection]="true" (selectionChanged)="onSelectionChangedDark()"
+                                    [sideBar]="sideBar" [rowGroupPanelShow]="rowGroupPanelShow"
+                                    [getContextMenuItems]="getContextMenuItems" [animateRows]="true"
+                                    [statusBar]="statusBar" [getRowHeight]="getRowHeight" [groupSelectsChildren]="true"
+                                    [pagination]="false" [paginationAutoPageSize]="false" [paginateChildRows]="false"
+                                    [enableRangeSelection]="true" [enableRangeHandle]="true"
+                                    [gridOptions]="gridOptionsDark" (filterOpened)="onFilterOpened($event)"
+                                    (filterChanged)="onFilterChanged($event)"
+                                    (filterModified)="onFilterModified($event)"
+                                    (columnResized)="onColumnResized($event)" (columnVisible)="onColumnVisible($event)">
+                                </ag-grid-angular>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<ng-container *ngIf="displayFilterModal">
+    <app-attendance-list-filter [displayFilterModal]="displayFilterModal" [dateRangeByGrid]="formGroup.value"
+        [filterByGrid]="savedFilterModel" (onHideFilterModalEvent)="onHideFilterModal()"
+        (setFilterFormEvent)="setFilterFormFromModal($event)">
+    </app-attendance-list-filter>
+</ng-container>

@@ -29,6 +29,8 @@ import { MatInputModule } from '@angular/material/input';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileModule } from '../profile/profile.module';
 import { SharedModule } from '../shared/shared.module';
+import { AttendancePivotListComponent } from './attendance-pivot-list/attendance-pivot-list.component';
+import { DrawersModule } from 'src/app/_metronic/partials';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { SharedModule } from '../shared/shared.module';
     PuantajWidgetComponent,
     AttendanceManagementSystemComponent,
     OrganizationColumnFilterComponent,
-    AttendanceListFilterComponent
+    AttendanceListFilterComponent,
+    AttendancePivotListComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +66,8 @@ import { SharedModule } from '../shared/shared.module';
     MatInputModule,
     NgbTooltipModule,
     ProfileModule,
-    SharedModule
+    SharedModule,
+    DrawersModule
   ],
   exports: [
     AttendanceManagementSystemComponent

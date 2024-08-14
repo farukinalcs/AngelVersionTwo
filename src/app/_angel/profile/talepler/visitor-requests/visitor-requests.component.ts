@@ -144,47 +144,7 @@ export class VisitorRequestsComponent implements OnInit, OnDestroy {
   }
 
   getUploadedFiles(file: any, kaynak: any) {
-    // this.uploadedFiles = [];
-    // this.profileService.getUploadedFiles(file.ID, kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
-    //   const data = response[0].x;
-    //   const message = response[0].z;
-
-    //   if (message.islemsonuc == -1) {
-    //     this.isLoading.next(false);
-    //     this.ref.detectChanges();
-    //     return;
-    //   }
-
-    //   this.uploadedFiles = data;
-    //   console.log("Yüklenen Belgeler : ", data);
-
-    //   this.visitRequests.forEach((visit: any) => {
-    //     visit.ziyaretciler.forEach((ziyaretci: any) => {
-    //       ziyaretci.Dosyalar.forEach((dosya: any) => {
-    //         this.uploadedFiles.forEach((uploadedFile: any) => {
-    //           if (dosya.ID == uploadedFile.FormId && dosya.Belgetip == uploadedFile.Tip) {
-    //             dosya.uploadedFile = uploadedFile;
-    //           }
-
-    //           if (this.selectedVisit) {
-    //             this.selectedVisit.Dosyalar.forEach((sDosya: any) => {
-    //               if (sDosya.ID == uploadedFile.FormId && sDosya.Belgetip == uploadedFile.Tip) {
-    //                 sDosya.uploadedFile = uploadedFile;
-    //                 sDosya.files = undefined;
-    //                 sDosya.sendFile = undefined;
-    //               }
-    //             });
-    //           }
-    //         });
-    //       });
-    //     });
-    //   });
-
-    //   console.log("Yüklenen Belgelerden Sonra visitRequests: ", this.visitRequests);
-
-    //   this.isLoading.next(false);
-    //   this.ref.detectChanges();
-    // });
+    
 
     this.profileService.getUploadedFiles(file.ID, kaynak)
       .pipe(

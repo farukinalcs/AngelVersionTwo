@@ -1,0 +1,387 @@
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+::ng-deep {
+    .p-progressbar .p-progressbar-value {
+        background: var(--kt-danger) !important;
+    }
+
+    .p-button:enabled:hover {
+        background: var(--kt-danger-active);
+        color: #ffffff;
+        border-color: var(--kt-danger);
+    }
+
+    .p-button {
+        color: #ffffff;
+        background: var(--kt-danger);
+        border: 1px solid var(--kt-danger);
+        padding: 0.75rem 1.25rem;
+        font-size: 1rem;
+        transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+        border-radius: 6px;
+    }
+
+    .p-button:focus {
+        box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--kt-danger-active), 0 1px 2px 0 black;
+    }
+
+    .p-button:enabled:active {
+        background: var(--kt-danger);
+        color: #ffffff;
+        border-color: var(--kt-danger);
+    }
+
+    .p-speeddial-action {
+        width: 3rem;
+        height: 3rem;
+        background: var(--kt-gray-500);
+        color: #fff;
+    }
+
+    .p-speeddial-action:hover {
+        background: var(--kt-gray-900);
+        color: #ffffff;
+    }
+
+
+
+
+    .cell-time-passive {
+        background-color: #ff9494 !important;
+        // color: var(--kt-light) !important;
+    }
+
+    .cell-weekend {
+        background-color: var(--kt-secondary) !important;
+        color: var(--kt-black) !important;
+    }
+
+    .cell-time-zero {
+        color: gainsboro !important;
+    }
+
+
+
+    .cell-warning {
+        background-color: #ffa500 !important;
+    }
+
+    .cell-green {
+        background-color: #adff2f !important;
+    }
+
+    .cell-blue {
+        background-color: #5e738b !important;
+        color: var(--kt-white) !important;
+    }
+
+    .cell-lateness {
+        font-weight: 900 !important;
+        color: red;
+    }
+
+    .cell-lateness-manuel-entry {
+        text-decoration: underline !important;
+        font-weight: 900 !important;
+        color: red;
+        text-decoration-color: red;
+    }
+
+    .cell-time-active {
+        font-weight: 900 !important;
+    }
+
+    .cell-time-active-manuel-entry {
+        text-decoration: underline !important;
+        font-weight: 900 !important;
+    }
+
+    .piv-cell-blue {
+        background-color: #5e738b !important;
+        color: white !important;
+        text-align: center !important;
+    }
+
+    .piv-cell-yellow-casablanca {
+        background-color: orange !important;
+        color: black !important;
+        text-align: center !important;
+    }
+
+    .piv-cell-green {
+        background-color: greenyellow !important;
+        text-align: center !important;
+    }
+
+    .piv-cell-red {
+        background-color: #ff9494 !important;
+        color: white !important;
+        text-align: center !important;
+    }
+
+    .piv-cell-white {
+        text-align: center !important;
+    }
+
+    .ag-center-cols-container .ag-cell {
+        border-right: 1px solid #dcdcdc !important;
+    }
+    
+    .ag-center-cols-container .ag-cell:last-child {
+        border-right: none !important;
+    }
+}
+
+
+@keyframes heart-beat {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-12px);
+    }
+
+    60% {
+        transform: translateY(-6px);
+    }
+}
+
+
+.floating-container {
+    position: fixed;
+    top: 60%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+
+    &.open {
+        transform: translateY(-50%) translateX(-50px);
+        /* Kart genişliği kadar sola kaydır */
+    }
+
+    .floating-button {
+        background-color: #d9534f;
+        color: white;
+        padding: 10px 12px;
+        border-radius: 5px 0 0 5px;
+        cursor: pointer;
+        z-index: 2;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #c9302c;
+
+            i {
+                animation: none;
+            }
+        }
+
+        .heart-beat {
+            animation: heart-beat 1.5s infinite;
+        }
+
+        &.no-animation .heart-beat {
+            animation: none;
+        }
+    }
+
+    .floating-card {
+        width: 50px;
+        /* Kart genişliği */
+        background-color: white;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 0 5px 5px 0;
+        padding: 3px;
+        transform: translateX(100%);
+        transition: transform 0.3s ease, width 0.3s ease;
+        opacity: 0;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                margin: 10px 0;
+                font-size: 20px;
+            }
+        }
+    }
+
+    &.open .floating-card {
+        transform: translateX(calc(100% + 1px));
+        /* Kartı biraz sağa kaydır */
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    &.open .floating-button .heart-beat {
+        animation: none;
+    }
+}
+
+.search-icon {
+    background-color: var(--kt-danger);
+    cursor: pointer;
+    width: 45px;
+    height: 37px;
+    display: flex;
+    justify-content: center;
+    border: none;
+    outline: none;
+    border-radius: 0 39px 39px 0;
+  
+}
+  
+.search-icon .svg {
+   display: flex;
+   align-items: center;
+   height: 100%;
+}
+
+
+.process-item {
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        background: var(--kt-danger);
+        transition: width 0.1s ease-in;
+        z-index: 0;
+    }
+
+    &:hover::before {
+        width: 100%;
+    }
+
+    &:hover a {
+        color: var(--kt-white) !important;
+    }
+
+    a {
+        transition: color 0.1s ease-in;
+    }
+
+    .d-flex {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+
+
+.grid {
+    max-height: 50vw;
+    width: 94%;
+    transition: width 0.5s ease;
+}
+
+.process {
+    max-height: 50vw;
+    width: 6%;
+    transition: width 0.5s ease;
+    display: flex;
+    align-items: center;
+
+    &.expanded {
+        width: 31%;
+
+        + .grid {
+            width: 69%;
+        }
+    }
+
+    .nav-text {
+        transition: opacity 0.5s ease;
+    }
+}
+
+
+
+
+
+
+// Bootstrap Function, Variables, Mixin
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins';
+
+// Bootstrap Breakpoints
+
+// Mobile Modes
+@include media-breakpoint-down(sm) {
+    
+}
+
+
+// Mobile & Tablet Modes
+@include media-breakpoint-between(sm, md) {
+    
+}
+
+
+// Tablet Modes
+@include media-breakpoint-between(md, lg) {
+    
+}
+
+// Tablet & Desktop Modes
+@include media-breakpoint-between(lg, xl) {
+    
+}
+
+@media (min-width: 1550px) {
+    .grid {
+        max-height: 50vw;
+        width: 94%;
+        transition: width 0.5s ease;
+    }
+    
+    .process {
+        max-height: 50vw;
+        width: 6%;
+        transition: width 0.5s ease;
+        display: flex;
+        align-items: center;
+    
+        &.expanded {
+            width: 25%;
+    
+            + .grid {
+                width: 75%;
+            }
+        }
+    
+        .nav-text {
+            transition: opacity 0.5s ease;
+        }
+    }
+}
