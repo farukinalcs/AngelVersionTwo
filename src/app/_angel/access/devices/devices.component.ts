@@ -2,14 +2,12 @@ import { ProfileService } from './../../profile/profile.service';
 import { AccessService } from './../access.service';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { map, Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { TranslateService } from '@ngx-translate/core';
-import { AttendanceService } from '../../puantaj/attendance.service';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { Device } from 'src/app/_angel/access/models/device'
-import { ColDef, ColGroupDef,GridOptions,ModuleRegistry} from 'ag-grid-enterprise';
+import { ColDef, ColGroupDef} from 'ag-grid-enterprise';
 import { AgGridAngular } from 'ag-grid-angular';
 import { IHeaderParams, ICellRendererParams } from 'ag-grid-community';
 import { CustomizedCellComponent } from '../customized-cell/customized-cell.component';
@@ -27,6 +25,7 @@ import { CustomizedCellComponent } from '../customized-cell/customized-cell.comp
 })
 export class DevicesComponent implements OnInit {
   public rowData!: Device[];
+  public type_Tk: any[];
   private gridApi:any;
   private gridColumnApi:any;
   public frameworkComponents:any;
@@ -34,13 +33,12 @@ export class DevicesComponent implements OnInit {
 
   gridOptionsLight = {};
   gridOptionsDark = {};
-
-  // _getDevices : Device[] = []
+ 
   @ViewChild('agGridLight', { static: false }) agGridLight: AgGridAngular;
   @ViewChild('agGridDark', { static: false }) agGridDark: AgGridAngular;
   
  constructor(
-  private Access : AccessService,
+  private access : AccessService,
   private toastr : ToastrService,
   private translateService: TranslateService,
   private themeModeService: ThemeModeService,
@@ -50,6 +48,7 @@ export class DevicesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDevices();
+    this.typeOfDevice('sys_terminalkind');
   }
 
   onGridReady(params:any){
@@ -59,15 +58,22 @@ export class DevicesComponent implements OnInit {
   }
 
   getDevices(){
-    this.Access.getDevices().subscribe((response : ResponseModel<Device, ResponseDetailZ>[])=>{
+    this.access.getDevices().subscribe((response : ResponseModel<Device, ResponseDetailZ>[])=>{
       this.rowData = response[0].x;
       const message = response[0];
       const responseToken = response[0].y;
-      // this.rowData = this._getDevices;
       this.ref.detectChanges();
       console.log("this.rowData ",this.rowData );
       console.log("zzzzzzzzzzzz",message);
       console.log("yyyyyyyyyyyy",responseToken);
+    })
+  }
+
+  typeOfDevice(source:string){
+    this.access.getType_S(source).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+      this.type_Tk = response[0].x;
+      this.ref.detectChanges();
+      console.log("type_Tk ",this.type_Tk );
     })
   }
 
@@ -82,40 +88,69 @@ export class DevicesComponent implements OnInit {
 
     { field: 'modelad',  
       headerName: 'Model',
-      cellRenderer:CustomizedCellComponent,
-      cellRendererParams:{
-        buttontext:"MODEEEEEEL"
-    }},
+    //   cellRenderer:CustomizedCellComponent,
+    //   cellRendererParams:{
+    //     buttontext:"MODEEEEEEL"
+    // }
+    },
 
     { field: 'port', 
       headerName: 'Port',
-      cellRenderer:CustomizedCellComponent,
-      cellRendererParams:{
-      buttontext:"POOOORT"
-    }},
+    //   cellRenderer:CustomizedCellComponent,
+    //   cellRendererParams:{
+    //   buttontext:"POOOORT"
+    // }
+    },
 
     { field: 'ip', headerName: 'Ip'},
     { field: 'controllerno', headerName: 'Module ID'},
-    { field: 'IO', 
-    cellRenderer: function(params: ICellRendererParams) {
-      if (params.value > 2) {
-          return '<span style="color: green;">' + params.value + '</span>';
-      } else {
-          return '<span style="color: red;">' + params.value + '</span>';
-      }
-    }
+    { field: 'IOad', headerName: 'IO',
+    // cellRenderer: function(params: ICellRendererParams) {
+    //   if (params.value > 2) {
+    //       return '<span style="color: green;">' + params.value + '</span>';
+    //   } else {
+    //       return '<span style="color: red;">' + params.value + '</span>';
+    //   }
+    // }
     },
-    { field: 'kind', headerName: 'Tanım'},
+    { field: 'kindad', headerName: 'Tanım',},
     { field: 'durum', headerName: 'Durum'},
     { field: 'networkdurum', headerName: 'Network Durum'},
     { field: 'CardFormat', headerName: 'Kart Format'},
     { field: 'SourceName', headerName: 'PC'},
     { field: 'Door', headerName: 'Door'},
-    { field: 'Ping', headerName: 'Ping'},
-    { field: 'Debug', headerName: 'Debug'},
-    { field: 'TimeSend', headerName: 'Time Send'},
-    { field: 'Id', headerName: 'Id'},
+    { field: 'PingCheck', headerName: 'Ping',
+    cellRenderer: function(params: ICellRendererParams) {
+      if (params.value === 1) {
+        return '<span style="color: green;">Evet</span>';
+      } else if (params.value === 0) {
+        return '<span style="color: red;">Hayır</span>';
+      } else {
+        return ''; // Değer 1 veya 0 değilse boş bırak
+      }
+    }},
+    { field: 'Debug', headerName: 'Debug',
+    cellRenderer: function(params: ICellRendererParams) {
+      if (params.value === 1) {
+        return '<span style="color: green;">Evet</span>';
+      } else if (params.value === 0) {
+        return '<span style="color: red;">Hayır</span>';
+      } else {
+        return ''; // Değer 1 veya 0 değilse boş bırak
+      }
+    }},
+    { field: 'TimeSend', headerName: 'Time Send',
+    cellRenderer: function(params: ICellRendererParams) {
+      if (params.value === 1) {
+        return '<span style="color: green;">Evet</span>';
+      } else if (params.value === 0) {
+        return '<span style="color: red;">Hayır</span>';
+      } else {
+        return ''; // Değer 1 veya 0 değilse boş bırak
+      }
+    }},
     { field: 'lokasyon', headerName: 'Lokasyon'},
+    //{ field: 'Id', headerName: 'Id'},
     //{ field: 'IOad', headerName: 'IO ad' },
     //{ field: 'model', headerName: 'Model'},
     //{ field: 'LastEventTime', headerName: 'Last Event Time' },

@@ -87,4 +87,13 @@ export class AccessService {
     }]
     return this.requestMethod(sp);
   }
+
+  getType_S(source:string){
+    var sp : any[] = [{
+      mkodu : 'yek041',
+      id : '0',
+      kaynak : source
+    }]
+    return this.requestMethod(sp);
+  }
 }
