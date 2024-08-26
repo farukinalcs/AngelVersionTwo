@@ -96,10 +96,7 @@ export class DevicesComponent implements OnInit {
 
     { field: 'port', 
       headerName: 'Port',
-    //   cellRenderer:CustomizedCellComponent,
-    //   cellRendererParams:{
-    //   buttontext:"POOOORT"
-    // }
+
     },
 
     { field: 'ip', headerName: 'Ip'},
@@ -115,7 +112,14 @@ export class DevicesComponent implements OnInit {
     },
     { field: 'kindad', headerName: 'Tanım',},
     { field: 'durum', headerName: 'Durum'},
-    { field: 'networkdurum', headerName: 'Network Durum'},
+    { field: 'networkdurum', headerName: 'Network Durum',
+      cellRenderer: function(params: ICellRendererParams) {
+      if (params.value === 'Cihaz Bağlı') {
+          return '<span style="color:#659be0 ">' + params.value + '</span>';
+      } else {
+          return '<span style="color: #e3c464;">' + params.value + '</span>';
+      }
+    }},
     { field: 'CardFormat', headerName: 'Kart Format'},
     { field: 'SourceName', headerName: 'PC'},
     { field: 'Door', headerName: 'Door'},
@@ -126,7 +130,7 @@ export class DevicesComponent implements OnInit {
       } else if (params.value === 0) {
         return '<span style="color: red;">Hayır</span>';
       } else {
-        return ''; // Değer 1 veya 0 değilse boş bırak
+        return ''; 
       }
     }},
     { field: 'Debug', headerName: 'Debug',
