@@ -8,7 +8,7 @@
 
             <div class="col-1 m-auto">
                 <div class="text-gray-400 fw-semibold fs-7">
-                    <a class="btn btn-sm btn-danger px-5 py-1" (click)="cancelAttendanceRequest()"> {{"İptal_Et" | translate}}</a>
+                    <a class="btn btn-sm btn-danger px-5 py-1 custom-btn" (click)="cancelAttendanceRequest()"> {{"İptal_Et" | translate}}</a>
                 </div>
             </div>
         </div>
@@ -33,7 +33,6 @@
                         <div class="card-toolbar">
                             <div class="example-tools justify-content-center">
                                 <div class="row">
-
                                     <div class="d-flex btn btn-icon btn-clean btn-icon-danger mr-3 my-2 my-lg-0">
                                         <a (click)="getAttendanceInfo()"><i style="color: #ff0000;" class="fas fa-undo-alt"></i></a>
                                     </div>
@@ -52,14 +51,14 @@
                         </div> -->
 
                         <div class="col-4 d-flex align-items-end gap-2">
-                            <a class="btn btn-dark btn-sm" (click)="showFilterModal()">
+                            <a class="btn btn-dark btn-sm custom-btn" (click)="showFilterModal()">
                                 <i class="fa-solid fa-filter"></i>
-                                Filtrele
+                                {{"Filtrele" | translate}}
                             </a>
 
-                            <a class="btn btn-dark btn-sm" (click)="clearFilters()">
+                            <a class="btn btn-dark btn-sm custom-btn" (click)="clearFilters()">
                                 <i class="fa-solid fa-eraser"></i>
-                                Temizle
+                                {{"Temizle" | translate}}
                             </a>
                         </div>
 
