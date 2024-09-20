@@ -30,6 +30,7 @@ import { ProfileModule } from '../profile/profile.module';
 import { SharedModule } from '../shared/shared.module';
 import { AttendancePivotListComponent } from './attendance-pivot-list/attendance-pivot-list.component';
 import { DrawersModule } from 'src/app/_metronic/partials';
+import { ProcessChangeComponent } from './attendance-pivot-list/process-change/process-change.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { DrawersModule } from 'src/app/_metronic/partials';
     AttendanceManagementSystemComponent,
     OrganizationColumnFilterComponent,
     AttendanceListFilterComponent,
-    AttendancePivotListComponent
+    AttendancePivotListComponent,
+    ProcessChangeComponent
   ],
 
   imports: [
