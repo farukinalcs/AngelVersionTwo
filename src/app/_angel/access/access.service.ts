@@ -96,4 +96,46 @@ export class AccessService {
     }]
     return this.requestMethod(sp);
   }
+
+  getDevice_I(name:string,kind:number,model:number,io:number,sourcename:string,cardformat:string,pingcheck:number,timesend:number,door:string,debug:number){
+    var sp : any[] = [{
+      mkodu : 'yek116',
+      id : '0',
+      name:name,
+      kind:kind,
+      model:model,
+      io:io ,
+      sourcename:sourcename,
+      cardformat:cardformat,
+      pingcheck:pingcheck,
+      timesend:timesend,
+      door:door,
+      debug:debug
+
+
+    }]
+    return this.requestMethod(sp);
+  }
+
+	// @islemno nvarchar(200),
+	// @langcode nvarchar(10),
+	// @loginid bigint,
+	// @xsicilid bigint,
+	// @id int,
+	// @name nvarchar(150),
+	// @kind int,
+	// @model int,
+	// @io int,
+	// @sourcename nvarchar(200),
+	// @cardformat nvarchar(50),
+	// @pingcheck int,
+	// @timesend int,
+	// @door nvarchar(100),
+	// @debug int,
+	// @firmaid int,
+	// @ip nvarchar(50),
+	// @port int,
+	// @controllerno nvarchar(50),
+	// @securitycode nvarchar(150)
+
 }

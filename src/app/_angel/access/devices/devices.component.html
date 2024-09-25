@@ -4,11 +4,122 @@
 
 
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-12">
         <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [gridOptions]="gridOptionsLight"
             [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [animateRows]="true"
             [pagination]="true" [paginationPageSize]="15" (gridReady)="onGridReady($event)">
         </ag-grid-angular>
     </div>
-</div>
+</div> -->
+
+
+
+
+<div class="container-fluid">
+
+
+    <div class="row">
+
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b"
+           >
+
+                <div class="card-header border-0">
+                    <div class="card-title">
+                        <!-- <h3 class="card-label">{{"Puantaj Listesi" | translate}} </h3> -->
+                         <h3 class="card-label">Terminaller</h3>
+                    </div>
+                    <!-- 
+                    <div class="card-toolbar">
+                        <div class="card-toolbar">
+                            <div class="example-tools justify-content-center">
+                                <div class="row">
+
+                                    <div class="d-flex btn btn-icon btn-clean btn-icon-danger mr-3 my-2 my-lg-0">
+                                        <a><i style="color: #ff0000;" class="fas fa-undo-alt"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="card-body pt-3 pb-0">
+
+                    <div class="row mb-10 d-flex justify-content-end">
+                        <!-- <div class="col-6">
+                            <div style="position: relative;" class="speeddial-linear-demo">
+                                <p-speedDial [model]="items" direction="right"></p-speedDial>
+                            </div>
+                        </div> -->
+
+                        <div class="col-4 d-flex align-items-end mb-5">
+                            <a class="btn btn-danger btn-sm m-2" (click)="showNewDeviceDialog()">
+                                <!-- <i class="fa-solid fa-filter"></i> -->
+                                Yeni Terminal
+                            </a>
+                            <a class="btn btn-danger btn-sm m-2" (click)="showNewDeviceDialog()">
+                                <!-- <i class="fa-solid fa-eraser"></i> -->
+                               Mobil Terminaller
+                            </a>
+                        </div>
+
+                        <div class="col-8 d-flex align-items-end justify-content-end gap-5">
+                                <div class="fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
+                            
+                                    <div class="btn-group w-100">
+                                    <!--begin::Radio-->
+                                    <!-- <label *ngFor="let item of rangeList" class="btn btn-sm btn-outline btn-active-dark btn-color-muted fs-8" [ngClass]="{'active': this.formGroup.get('dateRange')?.value == item.range}">
+                                     
+                                        <input class="btn-check" type="radio" [value]="item.range" formControlName="dateRange" [checked]="formGroup.get('dateRange')?.value == item.range">
+                                 
+                                        {{item.name}}
+                                    </label> -->
+
+                                    <!--end::Radio-->
+                             
+                                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                    </div>
+
+                              </div>
+
+
+                        </div>
+
+           
+                    <div class="ag-theme-material">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [gridOptions]="gridOptionsLight"
+                                        [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [animateRows]="true"
+                                        [pagination]="true" [paginationPageSize]="15"  [pagination]="true" [paginationPageSize]="15">
+                                    </ag-grid-angular>
+                                </div>
+                            </div>
+                   
+                    </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+ <!-- <ng-container *ngIf="newDeviceModal">
+    <app-dialog-new-device></app-dialog-new-device>
+ </ng-container> -->
+    <p-dialog
+     header="AÇıldı mı?"
+     [modal]="true"
+     [(visible)]="newDeviceModal" 
+     [style]="{ width: '75vw' }" 
+     [breakpoints]="{'2560px': '70vw', '992px': '90vw', '576px': '99vw' }"
+     [maximizable]="true" 
+     [baseZIndex]="10000">
+            <app-dialog-new-device></app-dialog-new-device>
+    </p-dialog>

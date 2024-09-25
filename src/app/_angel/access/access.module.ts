@@ -46,12 +46,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '../shared/shared.module';
 import { AgGridModule } from 'ag-grid-angular';
-
-
+import { InlineSVGModule } from 'ng-inline-svg-2';
 import 'ag-grid-enterprise'
 import { LicenseManager } from 'ag-grid-enterprise';
 import { DevicesComponent } from './devices/devices.component';
 import { CustomizedCellComponent } from './customized-cell/customized-cell.component';
+import { DialogNewDeviceComponent } from './devices/dialog-new-device/dialog-new-device.component';
+
+import { DropdownModule } from 'primeng/dropdown';
 
 
 @NgModule({
@@ -76,7 +78,9 @@ import { CustomizedCellComponent } from './customized-cell/customized-cell.compo
     Widget2003Component,
     Widget2004Component,
     DialogWidget1001Component,
-    CustomizedCellComponent
+    CustomizedCellComponent,
+    DialogNewDeviceComponent,
+
   ],
 
   imports: [
@@ -112,7 +116,9 @@ import { CustomizedCellComponent } from './customized-cell/customized-cell.compo
     MatIconModule,
     MatSelectModule,
     SharedModule,
-    AgGridModule
+    AgGridModule,
+    InlineSVGModule.forRoot(),
+    DropdownModule
   ]
 })
 export class AccessModule { }

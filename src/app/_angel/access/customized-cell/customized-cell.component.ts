@@ -11,7 +11,6 @@ export interface CustomParams{
 @Component({
   selector: 'app-customized-cell',
   templateUrl: './customized-cell.component.html',
-  //template:`#{{value}}`,
   styleUrls: ['./customized-cell.component.scss']
 })
 
