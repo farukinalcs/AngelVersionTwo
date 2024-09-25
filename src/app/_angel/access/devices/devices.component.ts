@@ -10,9 +10,6 @@ import { Device } from 'src/app/_angel/access/models/device'
 import { ColDef, ColGroupDef} from 'ag-grid-enterprise';
 import { AgGridAngular } from 'ag-grid-angular';
 import { IHeaderParams, ICellRendererParams } from 'ag-grid-community';
-import { CustomizedCellComponent } from '../customized-cell/customized-cell.component';
-import { Column } from 'ag-grid-community';
-
 
 
 
@@ -23,14 +20,15 @@ import { Column } from 'ag-grid-community';
   templateUrl: './devices.component.html',
   styleUrls: ['./devices.component.scss']
 })
+
 export class DevicesComponent implements OnInit {
   public rowData!: Device[];
-  public type_Tk: any[];
+  public type_device: any[];
   private gridApi:any;
   private gridColumnApi:any;
   public frameworkComponents:any;
   savedFilterModel: any;
-
+  newDeviceModal:boolean;
   gridOptionsLight = {};
   gridOptionsDark = {};
  
@@ -71,9 +69,9 @@ export class DevicesComponent implements OnInit {
 
   typeOfDevice(source:string){
     this.access.getType_S(source).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
-      this.type_Tk = response[0].x;
+      this.type_device = response[0].x;
       this.ref.detectChanges();
-      console.log("type_Tk ",this.type_Tk );
+      console.log("type_Tk ",this.type_device );
     })
   }
 
@@ -266,12 +264,12 @@ export class DevicesComponent implements OnInit {
   ];
 
   public defaultColDef: ColDef = {
-    minWidth: 70,
+    minWidth: 20,
     filter: true,
     floatingFilter: true,
     sortable: true,
     resizable: true,
-    editable: false,
+    editable: true,
   };
   
   // onGridReady(params:any) {
@@ -284,6 +282,10 @@ export class DevicesComponent implements OnInit {
   //   params.columnApi.autoSizeColumns(allColumnIds);
   // }
 
+  showNewDeviceDialog(){
+    this.newDeviceModal = true;
+    console.log("SELAM")
+  }
 
 }
 

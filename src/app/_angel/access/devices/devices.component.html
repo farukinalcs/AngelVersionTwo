@@ -17,11 +17,9 @@
 
 
 <div class="container-fluid">
+
+
     <div class="row">
-
-
-
-
 
         <div class="col-12">
 
@@ -49,6 +47,7 @@
                 </div>
 
                 <div class="card-body pt-3 pb-0">
+
                     <div class="row mb-10 d-flex justify-content-end">
                         <!-- <div class="col-6">
                             <div style="position: relative;" class="speeddial-linear-demo">
@@ -56,22 +55,21 @@
                             </div>
                         </div> -->
 
-                        <div class="col-4 d-flex align-items-end gap-2">
-                            <a class="btn btn-danger btn-sm">
+                        <div class="col-4 d-flex align-items-end mb-5">
+                            <a class="btn btn-danger btn-sm m-2" (click)="showNewDeviceDialog()">
                                 <!-- <i class="fa-solid fa-filter"></i> -->
                                 Yeni Terminal
                             </a>
-
-                            <a class="btn btn-danger btn-sm">
+                            <a class="btn btn-danger btn-sm m-2" (click)="showNewDeviceDialog()">
                                 <!-- <i class="fa-solid fa-eraser"></i> -->
                                Mobil Terminaller
                             </a>
                         </div>
 
                         <div class="col-8 d-flex align-items-end justify-content-end gap-5">
-                            <div class="fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
-                                <!--begin::Radio group-->
-                                <div class="btn-group w-100">
+                                <div class="fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
+                            
+                                    <div class="btn-group w-100">
                                     <!--begin::Radio-->
                                     <!-- <label *ngFor="let item of rangeList" class="btn btn-sm btn-outline btn-active-dark btn-color-muted fs-8" [ngClass]="{'active': this.formGroup.get('dateRange')?.value == item.range}">
                                      
@@ -81,90 +79,47 @@
                                     </label> -->
 
                                     <!--end::Radio-->
-                                </div>
-                                <!--end::Radio group-->
-                                <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-                            </div>
-
-                            <div class="row">
-                                <!-- <ng-container>
-                                    <div class="col d-flex align-items-end">
-                                        <i class="fa-solid fa-caret-left fs-3x text-dark cursor-pointer text-hover-gray-600" ></i>
+                             
+                                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                                     </div>
-                                </ng-container> -->
+
+                              </div>
 
 
-                                <!-- <div class="col">
-                                    <label class="d-flex align-items-center fs-9 fw-semibold mb-2">
-                                        <span>{{"Başlangıç_Tarihi" | translate}}</span>
-                                    </label>
-
-                                    <input type="date" class="form-control form-control-sm form-control-solid" formControlName="startDate">
-                                </div>
-
-                                <div class="col">
-                                    <label class="d-flex align-items-center fs-9 fw-semibold mb-2">
-                                        <span>{{"Bitiş_Tarihi" | translate}}</span>
-                                    </label>
-
-                                    <input type="date" class="form-control form-control-sm form-control-solid" formControlName="endDate">
-                                </div> -->
-
-                                <!-- <ng-container >
-                                    <div class="col d-flex align-items-end">
-                                        <i class="fa-solid fa-caret-right fs-3x text-dark cursor-pointer text-hover-gray-600"></i>
-                                    </div>
-                                </ng-container> -->
-
-
-                            </div>
                         </div>
 
-
-                    </div>
-
-
-                    <div class="">
-                        <ul class="nav nav-pills nav-pills-custom item position-relative mx-1 mb-1" role="tablist">
-                          
-                            <li class="nav-item col mx-0 p-0" role="presentation">
-                        
-                                <a class="nav-link d-flex justify-content-center w-100 border-0 h-100">
-                                
-                                    <!-- <span class="nav-text text-gray-800 fw-bold fs-7 mb-3">
-                                        {{item.name}}
-                                    </span> -->
-                                 
-
-                                 
-                                    <span class="bullet-custom position-absolute z-index-2 bottom-0 w-100 h-4px bg-dark rounded"></span>
-                                 
-                                </a>
-                              
-                            </li>
-                        
-
-                            <span class="position-absolute z-index-1 bottom-0 w-100 h-4px bg-light rounded"></span>
-                        
-                        </ul>
-                    </div>
-
+           
                     <div class="ag-theme-material">
 
-                        <div class="row">
-                            <div class="col-12">
-                                <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [gridOptions]="gridOptionsLight"
-                                    [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [animateRows]="true"
-                                    [pagination]="true" [paginationPageSize]="15"  [pagination]="true" [paginationPageSize]="15">
-                                </ag-grid-angular>
+                            <div class="row">
+                                <div class="col-12">
+                                    <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [gridOptions]="gridOptionsLight"
+                                        [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [animateRows]="true"
+                                        [pagination]="true" [paginationPageSize]="15"  [pagination]="true" [paginationPageSize]="15">
+                                    </ag-grid-angular>
+                                </div>
                             </div>
-                        </div>
                    
                     </div>
+
+                    </div>
+
+
                 </div>
-
-
             </div>
         </div>
     </div>
-</div>
+
+ <!-- <ng-container *ngIf="newDeviceModal">
+    <app-dialog-new-device></app-dialog-new-device>
+ </ng-container> -->
+    <p-dialog
+     header="AÇıldı mı?"
+     [modal]="true"
+     [(visible)]="newDeviceModal" 
+     [style]="{ width: '75vw' }" 
+     [breakpoints]="{'2560px': '70vw', '992px': '90vw', '576px': '99vw' }"
+     [maximizable]="true" 
+     [baseZIndex]="10000">
+            <app-dialog-new-device></app-dialog-new-device>
+    </p-dialog>

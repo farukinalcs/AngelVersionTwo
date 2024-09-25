@@ -98,6 +98,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   showVacationDialog(){
     this.displayVacationForm = true;
   }
+  
   onHideVacationForm() {
     this.displayVacationForm = false;
   }
