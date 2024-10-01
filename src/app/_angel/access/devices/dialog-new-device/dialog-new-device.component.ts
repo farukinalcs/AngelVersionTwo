@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule, formatDate } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { HelperService } from 'src/app/_helpers/helper.service';
@@ -11,6 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-dialog-new-device',
   templateUrl: './dialog-new-device.component.html',
@@ -44,13 +45,16 @@ export class DialogNewDeviceComponent implements OnInit{
     isCompleted: boolean = false;
 
     @Input() isFromAttendance: boolean;
+    @Input() closedForm: BehaviorSubject<boolean>;
+    @Output() advanceFormIsSend: EventEmitter<void> = new EventEmitter<void>();
 
     stepperFields: any[] = [
       { class: 'stepper-item current', number: 1, title: "Cihaz Ad ve Modeli" },
       { class: 'stepper-item', number: 2, title: "Cihaz Port/Ip/ModuleId"},
       { class: 'stepper-item', number: 3,title: "Cihaz Yön/Tanım"},
       { class: 'stepper-item', number: 4, title: "Pc/Kart/Kapı" },
-      { id : '0', class: 'stepper-item', number: 5,title: "Ping/ByPass/Pasif?/"},
+      { class: 'stepper-item', number: 5, title: "Ping/ByPass/Pasif?" },
+      { id : '0', class: 'stepper-item', number: 6,title: "Lokasyon"},
     ];
 
     // form listeleri
@@ -77,7 +81,7 @@ export class DialogNewDeviceComponent implements OnInit{
 
     // form setting
     newDeviceForm: FormGroup;
-    formsCount: any = 6;
+    formsCount: any = 7;
     currentStep$: BehaviorSubject<number> = new BehaviorSubject(1);
     currentItem: any = this.stepperFields[0];
     newDeviceFormValues: any;
@@ -88,6 +92,7 @@ export class DialogNewDeviceComponent implements OnInit{
     this.sys_IO('sys_IO');
     this.typeOfDevice('sys_terminalkind');
     this.typeOfCard('sys_cardformat');
+    this.createFormGroup();
   }
 
   createFormGroup() {
@@ -112,6 +117,18 @@ export class DialogNewDeviceComponent implements OnInit{
       // bitsaat: [formatDate(this.currentDate, 'HH:mm', 'en'), Validators.required],
       // file: [null] 
     });
+
+    // this.newDeviceForm = this.formBuilder.group({
+    //   step1: this.formBuilder.group({
+    //     cihazAdi: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
+    //   }),
+    //   step2: this.formBuilder.group({
+    //     email: ['', [Validators.required, Validators.email]],
+    //   }),
+    //   step3: this.formBuilder.group({
+    //     address: ['', Validators.required],
+    //   })
+    // });
   }
 
   nextStep() {
@@ -217,6 +234,25 @@ export class DialogNewDeviceComponent implements OnInit{
       return;
     }
    }
+  }
+
+  closedFormDialog() {
+    this.closedForm.subscribe(_ => {
+      console.log("Closed Form : ", _);
+      this.newDeviceForm.reset();
+      //this.selectedAdvance = '';
+      //this.uploadedFile = '';
+      this.resetStepperFieldsClass();
+      this.currentStep$.next(1);
+      this.currentItem = this.stepperFields[0];
+      this.advanceFormIsSend.emit();
+    });
+  }
+
+  resetStepperFieldsClass() {
+    this.stepperFields.forEach((item, index) => {
+      item.class = index === 0 ? "stepper-item current" : "stepper-item";
+    });
   }
 
   modelOfDevice(source:string){

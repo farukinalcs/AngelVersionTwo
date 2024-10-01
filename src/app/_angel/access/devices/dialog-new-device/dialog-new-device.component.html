@@ -257,33 +257,36 @@
                                             <span class="required">Ping Test Yapılsın mı?</span>
                                         </label>
 
-                                        <input formControlName="pingTest" class="form-control" type="checkbox" [(ngModel)]="pingTest">
+                                        <input formControlName="pingTest"  type="checkbox" [(ngModel)]="pingTest">
                                     </div>
                                     <div class="w-100">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span class="required">Cihaz ByPass</span>
                                         </label>
 
-                                        <input formControlName="byPass" class="form-control" type="checkbox" [(ngModel)]="byPass">
+                                        <input formControlName="byPass"  type="checkbox" [(ngModel)]="byPass">
                                     </div>
                                     <div class="w-100">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span class="required">Cihaz Pasif Durumda Mı?</span>
                                         </label>
 
-                                        <input formControlName="aktifPasif" class="form-control form-control-solid" type="checkbox" [(ngModel)]="IsDevicePassive">
+                                        <input formControlName="aktifPasif"  type="checkbox" [(ngModel)]="IsDevicePassive">
                                     </div>
                                     <div class="w-100">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span class="required">Cihaz Zaman Gönderilsin Mi?</span>
                                         </label>
 
-                                        <input formControlName="showTime" class="form-control form-control-solid" type="checkbox" [(ngModel)]="IsShowTimeOfDevice">
+                                        <input formControlName="showTime"  type="checkbox" [(ngModel)]="IsShowTimeOfDevice">
                                     </div>
                                 </div>
                             </ng-container>
 
 
+                            <ng-container *ngIf="currentStep$.value == 6">
+                                <h1>Lokasyon</h1>
+                            </ng-container>
                         </form>
                     </div>
 
@@ -295,7 +298,7 @@
                                         (click)="prevStep()">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                        Geri
+                                            {{"Geri" | translate}}
                                     </button>
                                 </ng-container>
 
@@ -303,7 +306,7 @@
                                     <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                            Kapat
+                                            {{"Kapat" | translate}}
                                     </button>
                                 </ng-container>
                             </div>
@@ -314,27 +317,46 @@
                                         <button type="button" class="btn btn-lg btn-danger me-3"
                                             (click)="nextStep()">
                                             <span class="indicator-label">
-                                              İleri
+                                                {{"İleri" | translate}} {{ " " }}
                                                 <span
                                                     [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
                                                     class="svg-icon svg-icon-3 ms-2 me-0"></span>
-                                                <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                                Gönder
-                                                </ng-container>
+                                                    <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                        {{"Gönder" | translate}}
+                                                    </ng-container>
                                             </span>
                                         </button>
                                     </ng-container>
-                                    <ng-container *ngIf="currentStep$.value === formsCount - 1">
+
+                                    <!-- <ng-container *ngIf="currentStep$.value === formsCount - 1">
                                         <button type="button" class="btn btn-lg btn-danger me-3"
                                             >
                                             <span class="indicator-label">
-                                              
+                                                {{"Kapat" | translate}}
                                             </span>
                                         </button>
 
                                         <button type="button" class="btn btn-lg btn-danger me-3"
                                             >
-                                          
+                                            <span class="indicator-label">
+                                                {{"Gönder" | translate}}
+                                            </span>
+                                        </button>
+
+                                    </ng-container> -->
+
+                                    <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="closedFormDialog()">
+                                            <span class="indicator-label">
+                                                {{"Kapat" | translate}}
+                                            </span>
+                                        </button>
+                                        
+                                        <button type="button" class="btn btn-lg btn-danger me-3"
+                                            (click)="getFormValues()">
+                                            <span class="indicator-label">
+                                                {{"Gönder" | translate}}
+                                            </span>
                                         </button>
 
                                     </ng-container>
