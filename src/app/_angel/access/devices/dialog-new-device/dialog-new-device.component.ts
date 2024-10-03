@@ -7,7 +7,6 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ToastrService } from 'ngx-toastr';
@@ -15,24 +14,15 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-dialog-new-device',
   templateUrl: './dialog-new-device.component.html',
-  styleUrls: ['./dialog-new-device.component.scss'],
-  animations: [
-    trigger("fileUploaded", [
-      state("uploaded", style({ transform: "translateY(0)" })),
-      transition(":enter", [
-        style({ transform: 'translateY(-50%)' }),
-        animate("500ms")
-      ]),
-      transition(':leave', [
-        animate(200, style({ transform: 'translateY(-100%)' }))
-      ])
-    ])
-  ]
+  styleUrls: ['./dialog-new-device.component.scss']
 })
 
 
 export class DialogNewDeviceComponent implements OnInit{
+
   private unsubscribe: Subscription[] = [];
+  @Input() isFromAttendance: boolean;
+
   constructor(
     private access: AccessService,
     private helper: HelperService,
@@ -44,17 +34,14 @@ export class DialogNewDeviceComponent implements OnInit{
     
     isCompleted: boolean = false;
 
-    @Input() isFromAttendance: boolean;
-    @Input() closedForm: BehaviorSubject<boolean>;
-    @Output() advanceFormIsSend: EventEmitter<void> = new EventEmitter<void>();
-
     stepperFields: any[] = [
       { class: 'stepper-item current', number: 1, title: "Cihaz Ad ve Modeli" },
       { class: 'stepper-item', number: 2, title: "Cihaz Port/Ip/ModuleId"},
       { class: 'stepper-item', number: 3,title: "Cihaz Yön/Tanım"},
       { class: 'stepper-item', number: 4, title: "Pc/Kart/Kapı" },
       { class: 'stepper-item', number: 5, title: "Ping/ByPass/Pasif?" },
-      { id : '0', class: 'stepper-item', number: 6,title: "Lokasyon"},
+      { class: 'stepper-item', number: 6, title: "Lokasyon" },
+      { id : '0', class: 'stepper-item', number: 7,title: "Özet"},
     ];
 
     // form listeleri
@@ -77,27 +64,33 @@ export class DialogNewDeviceComponent implements OnInit{
     byPass:boolean = false;
     IsDevicePassive:boolean = false;
     IsShowTimeOfDevice:boolean = false;
-
-
     // form setting
     newDeviceForm: FormGroup;
-    formsCount: any = 7;
+    formsCount: any = 8;
     currentStep$: BehaviorSubject<number> = new BehaviorSubject(1);
     currentItem: any = this.stepperFields[0];
     newDeviceFormValues: any;
     currentDate = new Date(Date.now());
 
   ngOnInit(): void {
+    
+    this.fillToList();
+   
+  }
+
+  fillToList(){
+    this.createFormGroup();
     this.modelOfDevice('sys_terminalmodel');
     this.sys_IO('sys_IO');
     this.typeOfDevice('sys_terminalkind');
     this.typeOfCard('sys_cardformat');
-    this.createFormGroup();
+    //this.createFormGroup();
   }
 
   createFormGroup() {
     this.newDeviceForm = this.formBuilder.group({
-      cihazAdi: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
+      // cihazAdi: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
+      cihazAdi: ['', Validators.required],
       model: ['', Validators.required],
       port: ['', Validators.required],
       ip: ['', Validators.required],
@@ -111,11 +104,6 @@ export class DialogNewDeviceComponent implements OnInit{
       byPass: ['', Validators.required],
       aktifPasif: ['', Validators.required],
       showTime: ['', Validators.required],
-      // bastarih: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), Validators.required],
-      // bassaat: [formatDate(this.currentDate, 'HH:mm', 'en'), Validators.required],
-      // bittarih: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), Validators.required],
-      // bitsaat: [formatDate(this.currentDate, 'HH:mm', 'en'), Validators.required],
-      // file: [null] 
     });
 
     // this.newDeviceForm = this.formBuilder.group({
@@ -132,14 +120,14 @@ export class DialogNewDeviceComponent implements OnInit{
   }
 
   nextStep() {
-    // if (!this.canProceedToNextStep()) {
-    //   this.toastrService.error(
-    //     this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
-    //     this.translateService.instant('Hata')
-    //   );
-    //   return;
+    if (!this.canProceedToNextStep()) {
+      this.toastrService.error(
+        this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
+        this.translateService.instant('Hata')
+      );
+      return;
 
-    // }
+    }
   
     const nextStep = this.currentStep$.value + 1;
     if (nextStep <= this.formsCount) {
@@ -157,96 +145,57 @@ export class DialogNewDeviceComponent implements OnInit{
     //   this.overtimeForm.reset();
     // }
     
-    const prevStep = this.currentStep$.value - 1;
-    if (prevStep === 0) {
-      return;
-    }
-    this.currentStep$.next(prevStep);
-    this.currentItem = this.stepperFields[prevStep - 1];
-    let prevItem = this.stepperFields[prevStep];
-    this.currentItem.class = "stepper-item current";
-    prevItem.class = "stepper-item";
+    // const prevStep = this.currentStep$.value - 1;
+    // if (prevStep === 0) {
+    //   return;
+    // }
+    // this.currentStep$.next(prevStep);
+    // this.currentItem = this.stepperFields[prevStep - 1];
+    // let prevItem = this.stepperFields[prevStep];
+    // this.currentItem.class = "stepper-item current";
+    // prevItem.class = "stepper-item";
   }
+  // canProceedToNextStep2(): boolean {
+  //   this.advanceFormValues = Object.assign({}, this.advanceForm.value);
+  //   // this.advanceFormValues.tutar != '' ? this.advanceFormValues.tutar = this.advanceFormValues.tutar.toFixed(2) : ''; 
+  //   this.advanceFormValues.ibanKaydet ? this.advanceFormValues.ibanKaydet = 1 : this.advanceFormValues.ibanKaydet = 0;
+  //   console.log("Avans Talep Form :", this.advanceFormValues);
 
+  //   if (this.currentStep$.value === 3) {
+  //     return this.advanceForm.valid;
+
+  //   } else if (this.currentStep$.value === 4) {
+  //     this.postForm(this.advanceFormValues);
+  //     return true;
+  //   }
+
+  //   return true;
+  // }
+  
   canProceedToNextStep(): boolean {
     this.newDeviceFormValues = Object.assign({}, this.newDeviceForm.value);
+    console.log("NEDİR?" ,this.newDeviceFormValues);
+    if(this.currentStep$.value === 1) {
+      return !!this.newDeviceForm.get('cihazAdi')?.valid;
 
-    for (let key in this.newDeviceFormValues) {
-      if (this.newDeviceFormValues.hasOwnProperty(key) && this.newDeviceFormValues[key] === '') {
-        if (key === 'cihazAdi' || key === 'model') {
-          this.newDeviceFormValues[key] = '0';
-        } else if (key === 'port' || key === 'ip' || key === 'moduleid' || key === 'girisCıkıs' || key === 'cihazTanimi') {
-          this.newDeviceFormValues[key] = '';
-        }
-      }
-    }
 
-    // this.newDeviceFormValues.izinadresi = '';
-    console.log("newDeviceFormValues Form :", this.newDeviceFormValues);
-
-    if(this.currentStep$.value === 3) {
-      return this.newDeviceForm.valid;
-
-    } else if(this.currentStep$.value === 4) {
-      // this.postOvertimeForm(this.newDeviceFormValues);
+    } else if(this.currentStep$.value === 3) {
+    
       return true;
     }
 
     return true;
   }
 
-  getNewDeviceFormValues() {
-    this.newDeviceFormValues = Object.assign({}, this.newDeviceForm.value);
-
-    for (let key in this.newDeviceFormValues) {
-      if (this.newDeviceFormValues.hasOwnProperty(key) && this.newDeviceFormValues[key] === '') {
-        if (key === 'cihazAdi' || key === 'model') {
-          this.newDeviceFormValues[key] = '0';
-        } else if (key === 'port' || key === 'ip' || key === 'moduleid' || key === 'girisCıkıs' || key === 'cihazTanimi') {
-          this.newDeviceFormValues[key] = '';
-        }
-      }
-    }
-    console.log("newDeviceFormValues:", this.newDeviceFormValues);
-  }
-
-  getFormValues() {
-    this.newDeviceFormValues = Object.assign({}, this.newDeviceForm.value);
-
-    for (let key in this.newDeviceFormValues) {
-      if (this.newDeviceFormValues.hasOwnProperty(key) && this.newDeviceFormValues[key] === '') {
-        if (this.newDeviceFormValues.hasOwnProperty(key) && this.newDeviceFormValues[key] === '') {
-          if (key === 'cihazAdi' || key === 'model') {
-            this.newDeviceFormValues[key] = '0';
-          } else if (key === 'port' || key === 'ip' || key === 'moduleid' || key === 'girisCıkıs' || key === 'cihazTanimi') {
-            this.newDeviceFormValues[key] = '';
-          }
-        }
-    }
-
-    console.log("newDeviceFormValues:", this.newDeviceFormValues);
-
-    // if (this.isFromAttendance) {
-    //   this.postOvertimeForm(this.newDeviceFormValues);
-    //   return;
-    // }
-    if (this.isFromAttendance) {
-      return;
-    }
-   }
-  }
 
   closedFormDialog() {
-    this.closedForm.subscribe(_ => {
-      console.log("Closed Form : ", _);
+  
       this.newDeviceForm.reset();
-      //this.selectedAdvance = '';
-      //this.uploadedFile = '';
       this.resetStepperFieldsClass();
       this.currentStep$.next(1);
       this.currentItem = this.stepperFields[0];
-      this.advanceFormIsSend.emit();
-    });
+      // this.advanceFormIsSend.emit();
+    
   }
 
   resetStepperFieldsClass() {
