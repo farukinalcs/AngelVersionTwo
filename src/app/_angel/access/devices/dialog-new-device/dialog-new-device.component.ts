@@ -84,7 +84,6 @@ export class DialogNewDeviceComponent implements OnInit{
     this.sys_IO('sys_IO');
     this.typeOfDevice('sys_terminalkind');
     this.typeOfCard('sys_cardformat');
-    //this.createFormGroup();
   }
 
   createFormGroup() {
@@ -103,20 +102,13 @@ export class DialogNewDeviceComponent implements OnInit{
       pingTest: ['', Validators.required],
       byPass: ['', Validators.required],
       aktifPasif: ['', Validators.required],
-      showTime: ['', Validators.required],
+      lokasyon:['', Validators.required],
+      katNo:['', Validators.required],
+      odaNo:['', Validators.required],
+      adres:['', Validators.required],
     });
 
-    // this.newDeviceForm = this.formBuilder.group({
-    //   step1: this.formBuilder.group({
-    //     cihazAdi: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
-    //   }),
-    //   step2: this.formBuilder.group({
-    //     email: ['', [Validators.required, Validators.email]],
-    //   }),
-    //   step3: this.formBuilder.group({
-    //     address: ['', Validators.required],
-    //   })
-    // });
+ 
   }
 
   nextStep() {
@@ -124,78 +116,68 @@ export class DialogNewDeviceComponent implements OnInit{
       this.toastrService.error(
         this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
         this.translateService.instant('Hata')
-      );
-      return;
-
+      ); return;
     }
-  
     const nextStep = this.currentStep$.value + 1;
     if (nextStep <= this.formsCount) {
       this.currentStep$.next(nextStep);
-      this.currentItem = this.stepperFields[nextStep - 1];
-      this.currentItem.class = "stepper-item current";
-      if (nextStep > 1) {
-        this.stepperFields[nextStep - 2].class = "stepper-item completed";
-      }
+      this.updateStepperClasses(nextStep);
     }
   }
+
+  updateStepperClasses(nextStep: number) {
+    // Mevcut adımın sınıfını 'current' yapıyoruz
+    this.currentItem = this.stepperFields[nextStep - 1];
+    this.currentItem.class = "stepper-item current";
   
+    // Önceki adımı 'completed' olarak işaretliyoruz
+    if (nextStep > 1) {
+      this.stepperFields[nextStep - 2].class = "stepper-item completed";
+    }
+  }
+
   prevStep() {
-    // if (this.currentStep$.value === 2) {
-    //   this.overtimeForm.reset();
-    // }
-    
-    // const prevStep = this.currentStep$.value - 1;
-    // if (prevStep === 0) {
-    //   return;
-    // }
-    // this.currentStep$.next(prevStep);
-    // this.currentItem = this.stepperFields[prevStep - 1];
-    // let prevItem = this.stepperFields[prevStep];
-    // this.currentItem.class = "stepper-item current";
-    // prevItem.class = "stepper-item";
-  }
-  // canProceedToNextStep2(): boolean {
-  //   this.advanceFormValues = Object.assign({}, this.advanceForm.value);
-  //   // this.advanceFormValues.tutar != '' ? this.advanceFormValues.tutar = this.advanceFormValues.tutar.toFixed(2) : ''; 
-  //   this.advanceFormValues.ibanKaydet ? this.advanceFormValues.ibanKaydet = 1 : this.advanceFormValues.ibanKaydet = 0;
-  //   console.log("Avans Talep Form :", this.advanceFormValues);
-
-  //   if (this.currentStep$.value === 3) {
-  //     return this.advanceForm.valid;
-
-  //   } else if (this.currentStep$.value === 4) {
-  //     this.postForm(this.advanceFormValues);
-  //     return true;
-  //   }
-
-  //   return true;
-  // }
-  
-  canProceedToNextStep(): boolean {
-    this.newDeviceFormValues = Object.assign({}, this.newDeviceForm.value);
-    console.log("NEDİR?" ,this.newDeviceFormValues);
-    if(this.currentStep$.value === 1) {
-      return !!this.newDeviceForm.get('cihazAdi')?.valid;
-
-
-    } else if(this.currentStep$.value === 3) {
-    
-      return true;
+    const prevStep = this.currentStep$.value - 1;
+    if (prevStep === 0) {
+      return;
     }
-
-    return true;
+    this.currentStep$.next(prevStep);
+    this.currentItem = this.stepperFields[prevStep - 1];
+    let prevItem = this.stepperFields[prevStep];
+    this.currentItem.class = "stepper-item current";
+    prevItem.class = "stepper-item";
   }
 
 
-  closedFormDialog() {
+  canProceedToNextStep(): boolean {
+    this.newDeviceFormValues = { ...this.newDeviceForm.value };
+    console.log("Form Değerleri: ", this.newDeviceFormValues);
   
+    const currentStepFields = this.getStepFields(this.currentStep$.value);
+  
+    // Tüm gerekli alanlar geçerli mi kontrol ediliyor
+    return currentStepFields.every(field => this.newDeviceForm.get(field)?.valid);
+  }
+  getStepFields(step: number): string[] {
+    // Adım numarasına göre gerekli form kontrol isimlerini döndürür
+    const stepFieldsMap: { [key: number]: string[] } = {
+      1: ['cihazAdi', 'model'],
+      2: ['port', 'ip', 'moduleid'],
+      3: ['girisCıkıs', 'cihazTanimi'],
+      4: ['pcAdi', 'kartFormat', 'kapiBilgi'],
+      5: ['pingTest', 'byPass', 'aktifPasif'],
+      6: ['lokasyon','katNo','odaNo','adres']
+      //6: ['enlem','boylam','lokasyon','katNo','odaNo','adres']
+    };
+  
+    return stepFieldsMap[step] || [];
+  }
+  closedFormDialog() {
       this.newDeviceForm.reset();
       this.resetStepperFieldsClass();
       this.currentStep$.next(1);
       this.currentItem = this.stepperFields[0];
-      // this.advanceFormIsSend.emit();
-    
+      // this.advanceFormIsSend.emit(); 
   }
 
   resetStepperFieldsClass() {
@@ -219,6 +201,7 @@ export class DialogNewDeviceComponent implements OnInit{
       console.log("IO ",this.IO );
     })
   }
+
   typeOfDevice(source:string){
     this.access.getType_S(source).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
       this.type_device = response[0].x;
@@ -226,6 +209,7 @@ export class DialogNewDeviceComponent implements OnInit{
       console.log("type_device ",this.type_device );
     })
   }
+
   typeOfCard(source:string){
     this.access.getType_S(source).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
       this.type_card = response[0].x;
@@ -233,7 +217,9 @@ export class DialogNewDeviceComponent implements OnInit{
       console.log("type_card ",this.type_card );
     })
   }
+
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
+
 }
