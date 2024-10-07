@@ -2,19 +2,14 @@ import { ProfileService } from './../../profile/profile.service';
 import { AccessService } from './../access.service';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { map, Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { TranslateService } from '@ngx-translate/core';
-import { AttendanceService } from '../../puantaj/attendance.service';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { Device } from 'src/app/_angel/access/models/device'
-import { ColDef, ColGroupDef,GridOptions,ModuleRegistry} from 'ag-grid-enterprise';
+import { ColDef, ColGroupDef} from 'ag-grid-enterprise';
 import { AgGridAngular } from 'ag-grid-angular';
 import { IHeaderParams, ICellRendererParams } from 'ag-grid-community';
-import { CustomizedCellComponent } from '../customized-cell/customized-cell.component';
-
-
 
 
 
@@ -25,22 +20,23 @@ import { CustomizedCellComponent } from '../customized-cell/customized-cell.comp
   templateUrl: './devices.component.html',
   styleUrls: ['./devices.component.scss']
 })
+
 export class DevicesComponent implements OnInit {
   public rowData!: Device[];
+  public type_device: any[];
   private gridApi:any;
   private gridColumnApi:any;
   public frameworkComponents:any;
   savedFilterModel: any;
-
+  newDeviceModal:boolean;
   gridOptionsLight = {};
   gridOptionsDark = {};
-
-  // _getDevices : Device[] = []
+ 
   @ViewChild('agGridLight', { static: false }) agGridLight: AgGridAngular;
   @ViewChild('agGridDark', { static: false }) agGridDark: AgGridAngular;
   
  constructor(
-  private Access : AccessService,
+  private access : AccessService,
   private toastr : ToastrService,
   private translateService: TranslateService,
   private themeModeService: ThemeModeService,
@@ -50,20 +46,20 @@ export class DevicesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDevices();
+    this.typeOfDevice('sys_terminalkind');
   }
 
-  onGridReady(params:any){
-    console.log("params",params);
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-  }
+  // onGridReady(params:any){
+  //   console.log("params",params);
+  //   this.gridApi = params.api;
+  //   this.gridColumnApi = params.columnApi;
+  // }
 
   getDevices(){
-    this.Access.getDevices().subscribe((response : ResponseModel<Device, ResponseDetailZ>[])=>{
+    this.access.getDevices().subscribe((response : ResponseModel<Device, ResponseDetailZ>[])=>{
       this.rowData = response[0].x;
       const message = response[0];
       const responseToken = response[0].y;
-      // this.rowData = this._getDevices;
       this.ref.detectChanges();
       console.log("this.rowData ",this.rowData );
       console.log("zzzzzzzzzzzz",message);
@@ -71,51 +67,184 @@ export class DevicesComponent implements OnInit {
     })
   }
 
+  typeOfDevice(source:string){
+    this.access.getType_S(source).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+      this.type_device = response[0].x;
+      this.ref.detectChanges();
+      console.log("type_Tk ",this.type_device );
+    })
+  }
+
   public  columnDefs: (ColDef | ColGroupDef)[]  = [
-    
+    {
+      headerName: '#',
+      colId: 'checkbox',
+      pinned: 'left',
+      minWidth: 30,
+      maxWidth: 30,
+      headerCheckboxSelection: true,
+      headerCheckboxSelectionFilteredOnly: true,
+      filter: false,
+      checkboxSelection: true,
+      hide: false,
+    },
     { field: 'name', 
       headerName: 'Ad', 
-      cellClass: 'header-class',
+      filter: true,
+      filterParams: {
+        // buttons: ['reset', 'apply'],
+        textMatcher: ({
+          filterOption,
+          value,
+          filterText,
+        }: {
+          filterOption: string;
+          value: string;
+          filterText: string;
+        }) => {
+          return true;
+        },
+        debounceMs: 3000,
+      },
+      cellStyle: { 
+        border: '0.5px solid #f5f8fa',
+        textAlign: 'center'  
+      },
+   
       cellRenderer: (item:any)=>{
           return "" +item.value
     }},
 
     { field: 'modelad',  
       headerName: 'Model',
-      cellRenderer:CustomizedCellComponent,
-      cellRendererParams:{
-        buttontext:"MODEEEEEEL"
-    }},
+      cellStyle: { 
+        border: '0.5px solid #f5f8fa',
+        textAlign: 'center'  
+      }
+    //   cellRenderer:CustomizedCellComponent,
+    //   cellRendererParams:{
+    //     buttontext:"MODEEEEEEL"
+    // }
+    },
 
     { field: 'port', 
       headerName: 'Port',
-      cellRenderer:CustomizedCellComponent,
-      cellRendererParams:{
-      buttontext:"POOOORT"
-    }},
-
-    { field: 'ip', headerName: 'Ip'},
-    { field: 'controllerno', headerName: 'Module ID'},
-    { field: 'IO', 
-    cellRenderer: function(params: ICellRendererParams) {
-      if (params.value > 2) {
-          return '<span style="color: green;">' + params.value + '</span>';
-      } else {
-          return '<span style="color: red;">' + params.value + '</span>';
+      cellStyle: { 
+        border: '0.5px solid #f5f8fa',
+        textAlign: 'center'  
       }
-    }
     },
-    { field: 'kind', headerName: 'Tanım'},
-    { field: 'durum', headerName: 'Durum'},
-    { field: 'networkdurum', headerName: 'Network Durum'},
-    { field: 'CardFormat', headerName: 'Kart Format'},
-    { field: 'SourceName', headerName: 'PC'},
-    { field: 'Door', headerName: 'Door'},
-    { field: 'Ping', headerName: 'Ping'},
-    { field: 'Debug', headerName: 'Debug'},
-    { field: 'TimeSend', headerName: 'Time Send'},
-    { field: 'Id', headerName: 'Id'},
-    { field: 'lokasyon', headerName: 'Lokasyon'},
+
+    { field: 'ip', headerName: 'Ip',
+      cellStyle: { 
+        border: '0.5px solid #f5f8fa',
+        textAlign: 'center' 
+      }
+    },
+    { field: 'controllerno', headerName: 'Module ID', 
+      cellStyle: { 
+        border: '0.5px solid #f5f8fa',
+        textAlign: 'center'  
+      }
+    },
+    { field: 'IOad', headerName: 'IO',
+      cellStyle: { 
+        border: '0.5px solid #f5f8fa',
+        textAlign: 'center' 
+      }
+
+    },
+
+    { field: 'kindad', headerName: 'Tanım',
+      cellStyle: { 
+        border: '0.5px solid #f5f8fa',
+        textAlign: 'center' 
+      } 
+    },
+
+    { field: 'durum', headerName: 'Durum',
+      cellStyle: { 
+        border: '0.5px solid #f5f8fa',
+        textAlign: 'center' 
+      }
+    },
+
+    { field: 'networkdurum', headerName: 'Network Durum',
+      cellStyle: { 
+      border: '1px solid #f5f8fa',
+      textAlign: 'center' 
+      },
+      cellRenderer: function(params: ICellRendererParams) {
+      if (params.value === 'Cihaz Bağlı') {
+          return '<span style="color:#659be0">' + params.value + '</span>';
+      } else {
+          return '<span style="color: #e3c464;">' + params.value + '</span>';
+      }}
+    },
+
+    { field: 'CardFormat', headerName: 'Kart Format',
+      cellStyle: { 
+      border: '1px solid #f5f8fa',
+      textAlign: 'center' 
+    }},
+    { field: 'SourceName', headerName: 'PC',
+    cellStyle: { 
+      border: '0.5px solid #f5f8fa',
+      textAlign: 'center' 
+    },},
+    { field: 'Door', headerName: 'Door',
+    cellStyle: { 
+      border: '0.5px solid #f5f8fa',
+      textAlign: 'center'  
+    },},
+    { field: 'PingCheck', headerName: 'Ping',
+    cellStyle: { 
+      border: '0.5px solid #f5f8fa',
+      textAlign: 'center'  
+    },
+    cellRenderer: function(params: ICellRendererParams) {
+      if (params.value === 1) {
+        return '<span style="color: green;">Evet</span>';
+      } else if (params.value === 0) {
+        return '<span style="color: red;">Hayır</span>';
+      } else {
+        return ''; 
+      }
+    }},
+    { field: 'Debug', headerName: 'Debug',
+        cellStyle: { 
+        border: '0.5px solid #f5f8fa',
+        textAlign: 'center'  
+      },
+    cellRenderer: function(params: ICellRendererParams) {
+      if (params.value === 1) {
+        return '<span style="color: green;">Evet</span>';
+      } else if (params.value === 0) {
+        return '<span style="color: red;">Hayır</span>';
+      } else {
+        return ''; // Değer 1 veya 0 değilse boş bırak
+      }
+    }},
+    { field: 'TimeSend', headerName: 'Time Send',
+    cellStyle: { 
+      border: '0.5px solid #f5f8fa',
+      textAlign: 'center'  
+    },
+    cellRenderer: function(params: ICellRendererParams) {
+      if (params.value === 1) {
+        return '<span style="color: green;">Evet</span>';
+      } else if (params.value === 0) {
+        return '<span style="color: red;">Hayır</span>';
+      } else {
+        return ''; // Değer 1 veya 0 değilse boş bırak
+      }
+    }},
+    { field: 'lokasyon', headerName: 'Lokasyon',
+      cellStyle: { 
+      border: '0.5px solid #f5f8fa',
+      textAlign: 'center'  
+    }},
+    //{ field: 'Id', headerName: 'Id'},
     //{ field: 'IOad', headerName: 'IO ad' },
     //{ field: 'model', headerName: 'Model'},
     //{ field: 'LastEventTime', headerName: 'Last Event Time' },
@@ -135,26 +264,29 @@ export class DevicesComponent implements OnInit {
   ];
 
   public defaultColDef: ColDef = {
+    minWidth: 20,
+    filter: true,
+    floatingFilter: true,
+    sortable: true,
+    resizable: true,
     editable: true,
-    filter: true
   };
   
-  // saveFilterModel() {
-  //   var savedFilterModel: any = null;
-  //   const subscr = this.themeModeService.mode
-  //     .asObservable()
-  //     .subscribe((mode) => {
-  //       savedFilterModel =
-  //         mode === 'light'
-  //           ? this.agGridLight.api.getFilterModel()
-  //           : this.agGridDark.api.getFilterModel();
-  //     });
+  // onGridReady(params:any) {
+   
+  //   params.api.sizeColumnsToFit(); 
+  
 
-  //   console.log('SavedFilterModel: ', savedFilterModel);
+  //   const allColumnIds = params.columnApi.getAllColumns().map((column: Column) => column.getColId());
 
-  //   this.savedFilterModel = savedFilterModel;
-  //   // this.getAttendanceInfo();
+  //   params.columnApi.autoSizeColumns(allColumnIds);
   // }
+
+  showNewDeviceDialog(){
+    this.newDeviceModal = true;
+    console.log("SELAM")
+  }
+
 }
 
 export class CustomHeaderComponent {
