@@ -137,51 +137,140 @@
         border-right: none !important;
     }
 
-    .cell-wrapper {
-        position: relative;
-        overflow: hidden;
+    // .cell-wrapper {
+    //     // position: relative;
+    //     overflow: hidden;
       
-        &::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: 0;
-          height: 0;
-          border-left: 20px solid transparent;
-          border-top: 20px solid #007bff;
-          z-index: 1;
-          transition: background-color 0.5s ease;
+    //     &::before {
+    //       content: '';
+    //       position: absolute;
+    //       top: 0;
+    //       right: 0;
+    //       width: 0;
+    //       height: 0;
+    //       border-left: 20px solid transparent;
+    //       border-top: 20px solid #007bff;
+    //       z-index: 1;
+    //       transition: background-color 0.5s ease;
+    //     }
+      
+    //     &::after {
+    //       content: 'Yıllık İzin';
+    //       position: absolute;
+    //       top: 0;
+    //       right: 0;
+    //       padding: 2px 5px;
+    //       background-color: #007bff; 
+    //       color: white;
+    //       font-weight: bold;
+    //       transform: translate(100%, -100%);
+    //       transition: transform 0.5s ease;
+    //       z-index: 2;
+    //     }
+      
+    //     &:hover::before {
+    //       border-bottom-color: #007bff52;
+    //       width: 100%;
+    //       height: 100%;
+    //       border-left: none;
+    //       border-bottom: none;
+    //       border-top: none;
+    //       background-color: #007bff52;
+    //     }
+      
+    //     &:hover::after {
+    //       transform: translate(0, 0);
+    //     }
+    // }
+
+        .cell-wrapper {
+            overflow: hidden;
+            // position: relative;
+    
+            // Sağ üst çentik
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 0;
+                height: 0;
+                border-left: 20px solid transparent;
+                border-top: 20px solid #007bff;
+                z-index: 1;
+                transition: all 0.5s ease;
+            }
+    
+            // Sağ üst çentiğin dinamik içeriği
+            .dynamic-content {
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 2px 5px;
+                background-color: #007bff;
+                color: white;
+                font-weight: bold;
+                transform: translate(100%, -100%);
+                transition: transform 0.5s ease;
+                z-index: 2;
+            }
+    
+            // Sol alt çentik
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 0;
+                border-right: 20px solid transparent;
+                border-bottom: 20px solid #007bff;
+                z-index: 1;
+                transition: all 0.5s ease;
+            }
+    
+            // Sol alt çentiğin dinamik içeriği
+            .bottom-content {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                padding: 2px 5px;
+                background-color: #007bff;
+                color: white;
+                font-weight: bold;
+                transform: translate(-100%, 100%);
+                transition: transform 0.5s ease;
+                z-index: 2;
+            }
+    
+            // Hover durumunda çentiklerin açılması
+            &:hover::before {
+                width: 50%;
+                height: 50%;
+                border-left: none;
+                border-top: none;
+                background-color: transparent;
+            }
+    
+            &:hover .dynamic-content {
+                transform: translate(0, 0);
+            }
+    
+            &:hover::after {
+                width: 50%;
+                height: 50%;
+                border-right: none;
+                border-bottom: none;
+                background-color: transparent;
+            }
+    
+            &:hover .bottom-content {
+                transform: translate(0, 0);
+            }
         }
       
-        &::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          right: 0;
-          padding: 2px 5px;
-          background-color: #007bff; 
-          color: white;
-          font-weight: bold;
-          transform: translate(100%, -100%);
-          transition: transform 0.5s ease;
-          z-index: 2;
-        }
+    
       
-        &:hover::before {
-          border-bottom-color: #007bff52;
-          width: 100%;
-          height: 100%;
-          border-left: none;
-          border-bottom: none;
-          border-top: none;
-          background-color: #007bff52;
-        }
-      
-        &:hover::after {
-          transform: translate(0, 0);
-        }
-    }
     
       
 }
