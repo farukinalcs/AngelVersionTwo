@@ -635,7 +635,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
     // }
     // return 30;
 
-    return 40;
+    return 46;
   }
 
   getAttendancePivotData() {
@@ -1033,11 +1033,15 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
             if (color === 'green') {
               let firstValue = parts[0].split('<br>')[0] || '';
               let secondValue = parts[0].split('<br>')[1] || '';
+              
               return `
+              <span class="dynamic-content"> ${secondValue} </span>
+              <span class="bottom-content"> ${params?.column?.colId} </span>
               <div class="fw-bolder">
                 ${firstValue}
+                <!--
                 <br>
-                ${secondValue}
+                ${secondValue} -->
               </div>
             `;
             }
@@ -1126,7 +1130,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
           case 'yellow-casablanca':
             return 'piv-cell-yellow-casablanca d-flex justify-content-center align-items-center';
           case 'green':
-            return 'piv-cell-green d-flex justify-content-center align-items-center lh-sm';
+            return 'piv-cell-green d-flex justify-content-center align-items-center lh-sm cell-wrapper';
           case 'red':
             return 'piv-cell-red d-flex justify-content-center align-items-center';
           // case 'orange':
