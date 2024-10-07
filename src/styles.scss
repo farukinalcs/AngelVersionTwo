@@ -540,7 +540,16 @@
     --ag-checkbox-unchecked-color: var(--kt-danger);
     --ag-font-family: Inter, Helvetica, "sans-serif";
     font-weight: 500;
-    --ag-range-selection-background-color: rgb(243 33 33 / 54%);
+    // --ag-range-selection-background-color: rgb(243 33 33 / 54%);
+    --ag-range-selection-background-color: rgb(255, 0, 128, 0.1);
+    /* these next 3 variables control the background colour when 2, 3 or 4+ ranges overlap,
+       and should have progressively greater opacity to look realistic - see the docs below
+       for the correct formulas to use */
+    --ag-range-selection-background-color-2: rgb(255, 0, 128, 0.19);
+    --ag-range-selection-background-color-3: rgb(255, 0, 128, 0.27);
+    --ag-range-selection-background-color-4: rgb(255, 0, 128, 0.34);
+
+    --ag-range-selection-highlight-color: rgb(60, 188, 0, 0.3);
     // --ag-header-background-color: var(--kt-danger);
     // --ag-header-foreground-color: var(--kt-white);
     --ag-grid-size: 4px;
@@ -557,7 +566,16 @@
     --ag-checkbox-unchecked-color: var(--kt-danger);
     --ag-font-family: Inter, Helvetica, "sans-serif";
     font-weight: 500;
-    --ag-range-selection-background-color: rgb(243 33 33 / 54%);
+    // --ag-range-selection-background-color: rgb(243 33 33 / 54%);
+    --ag-range-selection-background-color: rgb(255, 0, 128, 0.1);
+    /* these next 3 variables control the background colour when 2, 3 or 4+ ranges overlap,
+       and should have progressively greater opacity to look realistic - see the docs below
+       for the correct formulas to use */
+    --ag-range-selection-background-color-2: rgb(255, 0, 128, 0.19);
+    --ag-range-selection-background-color-3: rgb(255, 0, 128, 0.27);
+    --ag-range-selection-background-color-4: rgb(255, 0, 128, 0.34);
+
+    --ag-range-selection-highlight-color: rgb(60, 188, 0, 0.3);
     // --ag-header-background-color: var(--kt-danger);
     // --ag-header-foreground-color: var(--kt-white);
     --ag-grid-size: 4px;
@@ -605,3 +623,8 @@
 
 
 
+
+.custom-btn:hover{
+    position: relative;
+    top: -3px;
+}

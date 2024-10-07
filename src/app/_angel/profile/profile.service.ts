@@ -19,6 +19,10 @@ export class ProfileService {
     console.log("Profile Service Çalıştı");
    }
 
+  getApiUrl() {
+    return API_URL;
+  }
+
   getMenuAuthorization() {
     // const authData = JSON.parse(localStorage.getItem("token") || '{}');
     // console.log("token : ", authData);
