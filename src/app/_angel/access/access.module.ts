@@ -52,7 +52,7 @@ import { LicenseManager } from 'ag-grid-enterprise';
 import { DevicesComponent } from './devices/devices.component';
 import { CustomizedCellComponent } from './customized-cell/customized-cell.component';
 import { DialogNewDeviceComponent } from './devices/dialog-new-device/dialog-new-device.component';
-
+import { TranslationModule } from 'src/app/modules/i18n';
 import { DropdownModule } from 'primeng/dropdown';
 
 
@@ -118,7 +118,8 @@ import { DropdownModule } from 'primeng/dropdown';
     SharedModule,
     AgGridModule,
     InlineSVGModule.forRoot(),
-    DropdownModule
+    DropdownModule,
+    TranslationModule
   ]
 })
 export class AccessModule { }

@@ -56,12 +56,7 @@
                                                    
                                                     placeholder="Cihaz Modelini Seçiniz"
                                                     formControlName="model">
-                                                    <!-- <ng-template pTemplate="selectedItem">
-                                                        <div class="item-item item-item-value"
-                                                            >
-                                                            <div></div>
-                                                        </div>
-                                                    </ng-template> -->
+                                              
                                                     <ng-template let-item pTemplate="item">
                                                         <div class="item-item">
                                                             <div>{{item.Ad}}</div>
@@ -69,11 +64,7 @@
                                                     </ng-template>
                                                 </p-dropdown>
                                                 <p>Seçilen Cihaz Modeli: {{ selectModelDevice }}</p>
-                                                <!-- <textarea class="form-control form-control-solid" rows="3"
-                                                    formControlName="aciklama"
-                                                    placeholder="'Açıklama_Giriniz'"
-                                                    style="height: 12px;">
-                                                </textarea> -->
+                                           
                                             </div>
                                         </div>
                                     </div>
@@ -126,12 +117,7 @@
                                                    
                                                     placeholder="Cihaz Yönünü Seçiniz"
                                                     formControlName="girisCıkıs">
-                                                    <!-- <ng-template pTemplate="selectedItem">
-                                                        <div class="item-item item-item-value"
-                                                            >
-                                                            <div></div>
-                                                        </div>
-                                                    </ng-template> -->
+                                                  
                                                     <ng-template let-item pTemplate="item">
                                                         <div class="item-item">
                                                             <div>{{item.Ad}}</div>
@@ -139,11 +125,7 @@
                                                     </ng-template>
                                                 </p-dropdown>
                                               
-                                                <!-- <textarea class="form-control form-control-solid" rows="3"
-                                                    formControlName="aciklama"
-                                                    placeholder="'Açıklama_Giriniz'"
-                                                    style="height: 12px;">
-                                                </textarea> -->
+                                            
                                             </div>
 
                                             <div class="col-12 my-2">
@@ -155,12 +137,7 @@
                                                    
                                                     placeholder="Cihaz Tanımını Seçiniz"
                                                     formControlName="cihazTanimi">
-                                                    <!-- <ng-template pTemplate="selectedItem">
-                                                        <div class="item-item item-item-value"
-                                                            >
-                                                            <div></div>
-                                                        </div>
-                                                    </ng-template> -->
+                                               
                                                     <ng-template let-item pTemplate="item">
                                                         <div class="item-item">
                                                             <div>{{item.Ad}}</div>
@@ -226,28 +203,7 @@
 
                                     </div>
 
-                                
-<!-- 
-                                <div class="row" *ngIf="isCompleted">
-                                    <div class="col-12 mb-10">
-
-                                        <div class="table-responsive scroll h-350px">
-
-                                            <table class="table table-hover table-rounded border gy-7 gs-7">
-                                                <thead>
-                                                    <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-                                                        <th>Ad</th>
-                                                        <th>Soyad</th>
-                                                        <th class="text-center">Talep Durumu</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                               
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div> -->
+                            
                             </ng-container>
 
                             <ng-container *ngIf="currentStep$.value == 5">
@@ -257,53 +213,99 @@
                                             <span class="required">Ping Test Yapılsın mı?</span>
                                         </label>
 
-                                        <input formControlName="pingTest" class="form-control" type="checkbox" [(ngModel)]="pingTest">
+                                        <input formControlName="pingTest"  type="checkbox" [(ngModel)]="pingTest">
                                     </div>
                                     <div class="w-100">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span class="required">Cihaz ByPass</span>
                                         </label>
 
-                                        <input formControlName="byPass" class="form-control" type="checkbox" [(ngModel)]="byPass">
+                                        <input formControlName="byPass"  type="checkbox" [(ngModel)]="byPass">
                                     </div>
                                     <div class="w-100">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span class="required">Cihaz Pasif Durumda Mı?</span>
                                         </label>
 
-                                        <input formControlName="aktifPasif" class="form-control form-control-solid" type="checkbox" [(ngModel)]="IsDevicePassive">
+                                        <input formControlName="aktifPasif"  type="checkbox" [(ngModel)]="IsDevicePassive">
                                     </div>
                                     <div class="w-100">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span class="required">Cihaz Zaman Gönderilsin Mi?</span>
                                         </label>
 
-                                        <input formControlName="showTime" class="form-control form-control-solid" type="checkbox" [(ngModel)]="IsShowTimeOfDevice">
+                                        <input formControlName="showTime"  type="checkbox" [(ngModel)]="IsShowTimeOfDevice">
                                     </div>
                                 </div>
                             </ng-container>
 
 
+                            <ng-container *ngIf="currentStep$.value == 6">
+                                <div class="row py-2 px-4">
+
+                            
+                                    <div class="col-12 my-2">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span class="required">Adres</span>
+                                        </label>
+
+                                        <input formControlName="adres" class="form-control form-control-solid" type="text" [(ngModel)]="nameOfPc">
+
+                                      
+                                    </div>
+                                    <div class="col-12 my-2">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span class="required">Kat No</span>
+                                        </label>
+
+                                        <input formControlName="katNo" class="form-control form-control-solid" type="text" [(ngModel)]="nameOfPc">
+
+                                      
+                                    </div>
+                                    <div class="col-12 my-2">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span class="required">Oda No</span>
+                                        </label>
+
+                                        <input formControlName="odaNo" class="form-control form-control-solid" type="text" [(ngModel)]="nameOfPc">
+
+                                      
+                                    </div>
+                        
+
+                                    <div class="col-12 my-2">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span class="required">Lokasyon</span>
+                                        </label>
+
+                                        <input formControlName="lokasyon" class="form-control form-control-solid" type="text" [(ngModel)]="infoOfDeviceDoor">
+
+                                      
+                                    </div>
+
+                                </div>
+                            </ng-container>
                         </form>
                     </div>
 
                     <div class="col-12 d-flex align-items-end justify-content-center justify-content-md-end">
                         <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
-                                <ng-container *ngIf=" 5 > currentStep$.value && currentStep$.value > 1">
+                                <ng-container *ngIf=" 7 > currentStep$.value && currentStep$.value > 1">
                                     <button type="button" class="btn btn-lg btn-light-danger me-3"
                                         (click)="prevStep()">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                        Geri
+                                            {{"Geri" | translate}}
                                     </button>
                                 </ng-container>
 
                                 <ng-container *ngIf="currentStep$.value == formsCount">
+                                  
                                     <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
-                                            Kapat
+                                            {{"Kapat" | translate}}
                                     </button>
                                 </ng-container>
                             </div>
@@ -311,34 +313,30 @@
                             <ng-container *ngIf="currentStep$.value !== formsCount">
                                 <div>
                                     <ng-container *ngIf="currentStep$.value < formsCount - 1">
-                                        <button type="button" class="btn btn-lg btn-danger me-3"
-                                            (click)="nextStep()">
+                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="nextStep()">
                                             <span class="indicator-label">
-                                              İleri
-                                                <span
-                                                    [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
+                                                {{ "İleri" | translate }} {{ " " }}
+                                                <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
                                                     class="svg-icon svg-icon-3 ms-2 me-0"></span>
                                                 <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                                Gönder
+                                                    {{ "Gönder" | translate }}
                                                 </ng-container>
                                             </span>
                                         </button>
                                     </ng-container>
                                     <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                        <button type="button" class="btn btn-lg btn-danger me-3"
-                                            >
+                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="closedFormDialog()">
                                             <span class="indicator-label">
-                                              
+                                                {{ "Kapat" | translate }}
                                             </span>
                                         </button>
-
-                                        <button type="button" class="btn btn-lg btn-danger me-3"
-                                            >
-                                          
+                                        
+                                        <button type="button" class="btn btn-lg btn-danger me-3">
+                                            <span class="indicator-label">
+                                                {{ "Gönder" | translate }}
+                                            </span>
                                         </button>
-
                                     </ng-container>
-
                                 </div>
                             </ng-container>
                         </div>
