@@ -2,12 +2,12 @@
   <div class="menu-item px-3">
     <div class="menu-content d-flex align-items-center px-3">
       <div class="symbol symbol-50px me-5">
-        <img alt="Logo" src="{{'data:image/jpg;base64,' + _user.fotoimage}}" />
+        <img alt="Logo" src="{{'data:image/jpg;base64,' + _user.FotoImage}}" />
       </div>
 
       <div class="d-flex flex-column">
         <div class="fw-bolder d-flex align-items-center fs-5">
-          {{ _user.loginname }}
+          {{ _user.adsoyad }}
           <!-- <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">
             Pro
           </span> -->
@@ -18,25 +18,24 @@
       </div>
     </div>
   </div>
-
   <div class="separator my-2"></div>
 
   <div class="menu-item px-5">
     <a routerLink="profile" class="menu-link px-5">
-      My Profile
+      {{"Profilim" | translate}}
     </a>
   </div>
 
   <div class="menu-item px-5">
     <a class="menu-link px-5 cursor-pointer" placement="top-start" ngbTooltip="Coming soon">
-      <span class="menu-text">My Projects</span>
+      <span class="menu-text">{{"Projelerim" | translate}}</span>
       <span class="menu-badge">
         <span class="badge badge-light-danger badge-circle fw-bolder fs-7">3</span>
       </span>
     </a>
   </div>
 
-  <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="left-start"
+  <!-- <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="left-start"
     data-kt-menu-flip="bottom">
     <a class="menu-link px-5 cursor-pointer">
       <span class="menu-title">My Subscription</span>
@@ -79,15 +78,15 @@
 
   <div class="menu-item px-5">
     <a class="menu-link px-5 cursor-pointer" placement="top-start" ngbTooltip="Coming soon">My Statements</a>
-  </div>
+  </div> -->
 
   <div class="separator my-2"></div>
 
   <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="left-start"
     data-kt-menu-flip="bottom">
-    <a class="menu-link px-5 cursor-pointer">
+    <!-- <a class="menu-link px-5 cursor-pointer">
       <span class="menu-title position-relative">
-        Language
+        {{"Dil" | translate}}
         <span class="
             fs-8
             rounded
@@ -103,7 +102,7 @@
           <img class="w-15px h-15px rounded-1 ms-2" [src]="language.flag" alt="metronic" />
         </span>
       </span>
-    </a>
+    </a> -->
 
     <div class="menu-sub menu-sub-dropdown w-175px py-4">
       <div *ngFor="let l of langs" class="menu-item px-3 cursor-pointer" (click)="selectLanguage(l.lang)">
@@ -117,13 +116,13 @@
     </div>
   </div>
 
-  <div class="menu-item px-5 my-1">
+  <!-- <div class="menu-item px-5 my-1">
     <a routerLink="/crafted/account/settings" class="menu-link px-5">
-      Account Settings
+      {{"Hesap_Ayarları" | translate}}
     </a>
-  </div>
+  </div> -->
 
   <div class="menu-item px-5">
-    <a (click)="logout()" class="menu-link px-5 cursor-pointer"> Sign Out </a>
+    <a (click)="logout()" class="menu-link px-5 cursor-pointer"> {{"Çıkış_Yap" | translate}} </a>
   </div>
 </ng-container>

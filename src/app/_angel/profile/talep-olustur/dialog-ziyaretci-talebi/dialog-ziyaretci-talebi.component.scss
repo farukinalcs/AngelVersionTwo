@@ -1,8 +1,16 @@
-.mat-stepper-horizontal {
-    margin-top: 8px;
+:host ::ng-deep {
+    .p-dropdown {
+        background-color: #f5f8fa;
+        width: 100%;
+    }
+
 }
 
-.mat-form-field {
-    width: 100%;
-    margin-top: 16px;
+::ng-deep .mat-tooltip {
+    white-space: pre-line;
 }
+
+// .content {
+//     background-image: url('../../../../../assets/media/auth/bg10-dark.jpeg');
+//     background-repeat: no-repeat;
+// }

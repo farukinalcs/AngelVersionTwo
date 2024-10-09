@@ -1,5 +1,5 @@
 <!--begin::Toolbar container-->
-<div id="kt_app_toolbar_container" class="app-container" [ngClass]="appToolbarContainerCSSClass">
+<div id="kt_app_toolbar_container" class="app-container" [ngClass]="appToolbarContainerCSSClass" style="padding: 0px;">
   <ng-container *ngIf="showPageTitle()">
     <app-page-title [appPageTitleDirection]="appPageTitleDirection" [appPageTitleBreadcrumb]="appPageTitleBreadcrumb"
       [appPageTitleDescription]="appPageTitleDescription" class="page-title d-flex flex-wrap me-3"
@@ -23,5 +23,19 @@
   <ng-container *ngIf="appToolbarLayout === 'saas'">
     <app-saas class="d-flex align-items-center gap-2" [appPageTitleDisplay]="appPageTitleDisplay"></app-saas>
   </ng-container>
+
+
+  <ng-container *ngIf="pageTitle.includes('Tanımlamalar') ? false : true">
+    <div class="d-flex justify-content-end">
+      <div class="symbol symbol-45px cursor-pointer me-2" (click)="setPageTitle()">
+        <span class="symbol-label symbol-label bg-hover-secondary">
+          <i class="fa-solid fa-gear fs-2 text-danger"></i>
+        </span>
+      </div>
+    </div>
+  </ng-container>
+  
 </div>
 <!--end::Toolbar container-->
+
+

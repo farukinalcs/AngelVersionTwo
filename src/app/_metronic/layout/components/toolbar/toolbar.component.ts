@@ -1,7 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { ILayout, LayoutType } from '../../core/configs/config';
 import { LayoutService } from '../../core/layout.service';
+import { PageInfoService, PageLink } from '../../core/page-info.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -34,7 +36,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   appPageTitleBreadcrumb: boolean;
   appPageTitleDescription: boolean;
 
-  constructor(private layout: LayoutService) {}
+  title$: Observable<string>;
+  description$: Observable<string>;
+  bc$: Observable<Array<PageLink>>;
+  pageTitle: string = '';
+
+  constructor(private layout: LayoutService, private pageInfo : PageInfoService, private router : Router) {}
 
   ngOnInit(): void {
     const subscr = this.layout.layoutConfigSubject
@@ -100,7 +107,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       config
     ) as string;
     this.appPageTitleBreadcrumb = this.layout.getProp(
-      'app.pageTitle.breadcrumb',
+      'app.pageTitle.breadCrumb',
       config
     ) as boolean;
     this.appPageTitleDescription = this.layout.getProp(
@@ -121,5 +128,59 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.appPageTitleDisplay &&
       viewsWithPageTitles.some((t) => t === this.appToolbarLayout)
     );
+  }
+
+  setPageTitle() {
+    this.title$ = this.pageInfo.title.asObservable();
+    this.description$ = this.pageInfo.description.asObservable();
+    this.bc$ = this.pageInfo.breadcrumbs.asObservable();
+
+    console.log("appPageTitleDescription : ", this.appPageTitleDescription);
+    
+    let pageTitle;
+    this.title$.subscribe(v => {
+      this.pageTitle = v;
+      pageTitle = v;
+      console.log("title$ : ", v);
+    });
+
+    if (pageTitle == '' ||
+      pageTitle == 'Light' ||
+      pageTitle == 'Genel Bakış' ||
+      pageTitle == 'Dashboard' ||
+      pageTitle == 'Geçişlerim' ||
+      pageTitle == 'Sürelerim' ||
+      pageTitle == 'İzinlerim' ||
+      pageTitle == 'Talep Edilenler' ||
+      pageTitle == 'Taleplerim' ||
+      pageTitle == 'Ziyaretçi Taleplerim' ||
+      pageTitle == 'Mobil Lokasyon' ||
+      pageTitle == 'Task Listem' ||
+      pageTitle == 'Takımım' ||
+      pageTitle == 'Eksik Sürelerim' ||
+      pageTitle == 'My Transitions' ||
+      pageTitle == 'My Durations' ||
+      pageTitle == 'My Permission' ||
+      pageTitle == 'Requested Things' ||
+      pageTitle == 'My Demands' ||
+      pageTitle == 'My Visitor Requests' ||
+      pageTitle == 'Mobile Location' ||
+      pageTitle == 'My Task List' ||
+      pageTitle == 'My Team' ||
+      pageTitle == 'Incomplete Time') {
+        
+      this.router.navigate(['profile/profil_tanimlamalar']);
+        
+    } else {
+      this.router.navigate(['access/tanimlamalar']);
+    }
+
+    this.description$.subscribe(v => {
+      console.log("description$ : ", this.description$);
+    });
+
+    this.bc$.subscribe(v => {
+      console.log("bc$ : ", this.bc$);
+    });
   }
 }

@@ -107,7 +107,8 @@ $warning-light-dark: 			#392F28 !default;
 $warning-inverse: 				$white !default;
 
 // Danger colors
-$danger: 						#F64E60 !default; 
+// $danger: 						#F64E60 !default; 
+$danger: 						#ed1b24 !default; 
 $danger-active: 				#EE2D41 !default;
 $danger-light: 					#FFE2E5 !default;
 $danger-light-dark:				#3A2434 !default;
@@ -1423,10 +1424,10 @@ $scrolltop-size: 36px !default;
 $scrolltop-size-mobile: 30px !default;
 $scrolltop-box-shadow: $box-shadow !default;
 $scrolltop-box-shadow-dark: $box-shadow-dark !default;
-$scrolltop-bg-color: $primary !default;
-$scrolltop-bg-color-dark: $primary !default;
-$scrolltop-bg-color-hover: $primary !default;
-$scrolltop-bg-color-hover-dark: $primary !default;
+$scrolltop-bg-color: $danger !default;
+$scrolltop-bg-color-dark: $danger !default;
+$scrolltop-bg-color-hover: $danger !default;
+$scrolltop-bg-color-hover-dark: $danger !default;
 $scrolltop-icon-color: $primary-inverse !default;
 $scrolltop-icon-color-dark: $primary-inverse !default;
 $scrolltop-icon-color-hover: $primary-inverse !default;

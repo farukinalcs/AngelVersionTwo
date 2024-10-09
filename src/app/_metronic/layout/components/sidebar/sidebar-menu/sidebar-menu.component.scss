@@ -1,0 +1,16 @@
+i {
+    font-size: 1.5rem;
+}
+
+.menu-title:focus {
+    color: #f1416c;
+}
+
+.menu-bullet:focus {
+    color: #f1416c;
+}
+
+
+::ng-deep [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-title {
+    color: #ed2831;
+}

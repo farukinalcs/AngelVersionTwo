@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 export class Widget1004Component implements OnInit, OnDestroy {
   @Input() widget : any;
   @Input() resizeEvent : EventEmitter<GridsterItem>;
+  @Input() kesikCihazlar : any[];
 
   resizeSub: Subscription;
 
@@ -23,7 +24,7 @@ export class Widget1004Component implements OnInit, OnDestroy {
         // resize your widget, chart, map , etc.
         console.log("widget : ", widget);
       }
-    });
+    });    
   }
 
 

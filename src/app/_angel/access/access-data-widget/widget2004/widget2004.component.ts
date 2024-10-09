@@ -18,7 +18,7 @@ export class Widget2004Component implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator, {static : true}) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns : string[] = ['KapiAdi', 'durum','IslemZamani', 'btn1', 'btn2', 'btn3', 'btn4']; 
+  displayedColumns : string[] = ['kapiAdi', 'durum','islemZamani', 'btn1', 'btn2', 'btn3', 'btn4']; 
   dataSource :MatTableDataSource<any>;
 
   kapiIslemleri : any[] = [

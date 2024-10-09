@@ -1,0 +1,54 @@
+#container {
+    // width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 35px;
+    padding: 8px;
+    background-color: #ffffff7a;
+    border: 1px solid var(--kt-dark-light);
+    border-radius: 45px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+::ng-deep[data-theme="dark"] #container {
+    // width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 35px;
+    padding: 8px;
+    background-color: rgb(58 36 52);
+    border: 1px solid var(--kt-dark-light);
+    border-radius: 45px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.date-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.month {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.year {
+    font-size: 16px;
+    color: #888888;
+}
+
+
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #e33a37;
+    height: 30px;
+}
+
+::ng-deep .mat-progress-spinner svg {
+    height: 30px !important;
+}
+

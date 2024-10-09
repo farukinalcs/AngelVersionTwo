@@ -1,0 +1,109 @@
+<div class="container">
+    <div class="card p-5">
+        <div class="row">
+            <div class="col-6">
+                <p-dropdown [options]="timeRange" (onChange)="onDropdownChange($event)" [(ngModel)]="selectedTime"
+                    optionLabel="text" [filter]="true" filterBy="text" [showClear]="false">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="selectedTime">
+                            <div>{{selectedTime.text}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.text}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+            <div class="col-6 d-flex justify-content-end">
+                <input class="form-control form-control-solid w-50" type="text" [(ngModel)]="filterText"
+                    placeholder="{{'Arama' | translate}}" (keyup)="applyFilter($event)">
+            </div>
+
+            <div class="col-12 pt-5">
+                <ng-container *ngIf="incompleteTimes.length == 0">
+                    <div class="row pt-10">
+                        <div class="col-12 d-flex justify-content-center align-items-center">
+                            <div class="row">
+                                <app-data-not-found [imgWidth]=" '70%' "></app-data-not-found>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="incompleteTimes.length > 0">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="table-responsive">
+                                <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                                    <thead>
+                                        <tr class="rounded fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                            <th class="text-center rounded-start">{{"Vardiya" | translate}}</th>
+                                            <th class="text-center">{{"Eksik_Süre" | translate}}</th>
+                                            <th class="text-center">{{"Mesai_Tarihi" | translate}}</th>
+                                            <th class="text-center">{{"Giriş" | translate}}</th>
+                                            <th class="text-center">{{"Çıkış" | translate}}</th>
+                                            <th class="text-center rounded-end"></th>
+                                        </tr>
+                                    </thead>
+    
+                                    <tbody>
+                                        <tr *ngFor="let item of incompleteTimes | searchFilter:filterText: ['aciklama', 'eksiksure', 'mesaitarih', 'ggiris', 'gcikis']">
+                                            <td class="text-center">
+                                                <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.aciklama}}</a>
+                                            </td>
+    
+                                            <td class="text-center text-muted fw-bold fs-4">
+                                                <span class="badge badge-danger fs-5">
+                                                    {{item.eksiksure | timeFormat}}
+                                                </span>
+                                            </td>
+    
+                                            <td class="text-center">
+                                                <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.mesaitarih | date : 'yyyy-MM-dd'}}</a>
+                                                <span class="text-muted fw-semibold d-block">{{item.mesaitarih | date : 'HH:mm'}}</span>
+                                            </td>
+    
+                                            <td class="text-center text-muted fw-bold fs-4">
+                                                <span class="p-3">
+                                                    <ng-container *ngIf="item.ggiris">
+                                                        <span> {{item.ggiris | date : 'HH:mm'}} </span>
+                                                    </ng-container>
+    
+                                                    <ng-container *ngIf="!item.ggiris">
+                                                        <span> __:__ </span>
+                                                    </ng-container>
+                                                </span>
+                                            </td>
+    
+                                            <td class="text-center text-muted fw-bold fs-4">
+                                                <span class="p-3">
+                                                    <ng-container *ngIf="item.gcikis">
+                                                        <span> {{item.gcikis | date : 'HH:mm'}} </span>
+                                                    </ng-container>
+    
+                                                    <ng-container *ngIf="!item.gcikis">
+                                                        <span> __:__ </span>
+                                                    </ng-container>
+    
+                                                </span>
+                                            </td>
+
+                                            <td class="text-center text-muted fw-bold fs-4">
+                                                <a class="btn btn-icon btn-light-danger btn-sm me-3"  matTooltip="{{'Eksik_Süre_Formu' | translate}}">
+                                                    <i class="fa-solid fa-file-lines fs-4"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

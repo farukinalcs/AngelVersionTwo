@@ -1,529 +1,543 @@
-<mat-dialog-content style="width: 1200px; height: 600px; ">
-    <div class="row border-bottom border-2 rounded">
-        <div class="col-8">
-            <h1 mat-dialog-title class="text-danger">Fazla Mesai Talep Formu</h1>
-        </div>
+<p-dialog header="{{'Fazla_Mesai_Talep_Formu' | translate}}" [(visible)]="displayOvertimeForm"
+    (onHide)="closedFormDialog()" [modal]="true"
+    [breakpoints]="{ '2560px': '70vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true" [baseZIndex]="10000"
+    [draggable]="true" [resizable]="false">
 
-        <div class="col-4" style="display: flex; justify-content: end;">
-            <a mat-dialog-close class="text-hover-danger">
-                <i class="fa fa-2x mt-2 mr-2" style="font-size: 30px;">&#xf00d;</i>
-            </a>
-        </div>
-    </div>
+    <div class="container py-0 px-5">
+        <div class="container">
+            <div class="row">
+                <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
 
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <mat-stepper #stepper [linear]="isLinear" [orientation]="(stepperOrientation | async)!">
-                    <mat-step [stepControl]="firstFormGroup">
-                        <form [formGroup]="firstFormGroup">
-                            <ng-template matStepLabel>Bilgiler</ng-template>
-                            <div class="card wave wave-animate-fast">
-                                <div class="container mt-15" >
-                                    <!-- style="background-image: url(../../../../../assets/media/illustrations/dozzy-1/14.png); background-size: contain;" -->
-                                    <div class="row">
-                                        <div class="col-6">
-    
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Fazla Mesai Nedeni</label>
-                                                <div class="input-group bg-transparent">
-                                                    <select class="form-control" formControlName="fmNedeni"
-                                                        [ngClass]="{
-                                                        'is-invalid': firstFormGroup.controls['fmNedeni'].invalid,
-                                                        'is-valid': firstFormGroup.controls['fmNedeni'].valid
-                                                        }">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </select>
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'required',
-                                                        message: 'Password is required',
-                                                        control: firstFormGroup.controls['fmNedeni']}">
-                                                    </ng-container>
-    
-                                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                        message: 'Success! You\'ve done it.',
-                                                        control: firstFormGroup.controls['fmNedeni']}">
-                                                    </ng-container>
+                    <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                        <div class="stepper-nav d-flex justify-content-center">
+                            <img src="../../../../../assets/media/illustrations/storyset-1/5.svg" width="100%" alt="">
+                        </div>
+                    </div>
+
+                    <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields"
+                    [isFromAttendance]="isFromAttendance"></app-form-stepper>
+
+                    <div class="row w-xl-700px">
+                        <div class="col-12">
+                            <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10"
+                                [formGroup]="overtimeForm">
+
+                                <ng-container *ngIf="currentStep$.value == 1">
+                                    <div class="current">
+                                        <div class="w-100">
+                                            <div class="row">
+                                                <ng-container *ngIf="currentStep$.value == 1 && isFromAttendance">
+                                                    <div class="col-12">
+                                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                            <span class="">{{"Seçilen_Kişiler" | translate}}</span>
+                                                        </label>
+
+                                                        <!-- <div class="table-responsive scroll h-250px">
+                                                            <table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+                                                                <thead>
+                                                                    <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                                        <th>Ad</th>
+                                                                        <th>Soyad</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let item of selectedEmployeesFromAttendance">
+                                                                        <td class="fw-bold">{{item.ad}}</td>
+                                                                        <td class="fw-bold">{{item.soyad}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div> -->
+
+                                                        <div class="d-flex justify-content-center align-items-center border border-3 rounded p-5">
+                                                            <span class="badge badge-circle badge-danger mx-5">
+                                                                <i class="fa-solid fa-info text-white"></i>
+                                                            </span>
+                                                            <span class="text-gray-500 pt-1 fw-semibold fs-6">{{getTooltipScript()}}</span>
+                                                        </div>
+                                                    </div>  
+                                                </ng-container>
+
+                                                <div class="col-12 my-2">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Fazla_Mesai_Tipi" | translate}}</span>
+                                                    </label>
+
+                                                    <p-dropdown [options]="fmNedenleri" [(ngModel)]="selectedOvertime"
+                                                        optionLabel="ad" [filter]="true" filterBy="ad"
+                                                        [showClear]="true"
+                                                        placeholder="{{'Fazla_Mesai_Tipi_Seçiniz' | translate}}"
+                                                        formControlName="tip">
+                                                        <ng-template pTemplate="selectedItem">
+                                                            <div class="item-item item-item-value"
+                                                                *ngIf="selectedOvertime">
+                                                                <div>{{selectedOvertime.ad}}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template let-item pTemplate="item">
+                                                            <div class="item-item">
+                                                                <div>{{item.ad}}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </p-dropdown>
+                                                </div>
+
+                                                <div class="col-12 my-2">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Açıklama" | translate}}</span>
+                                                    </label>
+
+                                                    <textarea class="form-control form-control-solid" rows="3"
+                                                        formControlName="aciklama"
+                                                        placeholder="{{'Açıklama_Giriniz' | translate}}"
+                                                        style="height: 12px;">
+                                                    </textarea>
                                                 </div>
                                             </div>
-    
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Fazla Mesai Nedeni</mat-label>
-                                                <mat-select formControlName="fmNedeni" required>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                </mat-select>
-                                                <mat-icon matSuffix>message</mat-icon>
-                                            </mat-form-field> -->
-                                        </div>
-    
-                                        <div class="col-6">
-    
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Açıklama</label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" formControlName="fmAciklama" 
-                                                        [ngClass]="{
-                                                        'is-invalid': firstFormGroup.controls['fmAciklama'].invalid,
-                                                        'is-valid': firstFormGroup.controls['fmAciklama'].valid}"
-                                                    />
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'required',
-                                                        message: 'Password is required',
-                                                        control: firstFormGroup.controls['fmAciklama']}">
-                                                    </ng-container>
-    
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'minlength',
-                                                        message: 'Password should have at least 5 symbols',
-                                                        control: firstFormGroup.controls['fmAciklama']}">
-                                                    </ng-container>
-    
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'maxlength',
-                                                        message: 'Password should have maximum 25 symbols',
-                                                        control: firstFormGroup.controls['fmAciklama']}">
-                                                    </ng-container>
-    
-                                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                        message: 'Success! You\'ve done it.',
-                                                        control: firstFormGroup.controls['fmAciklama']}">
-                                                    </ng-container>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Açıklama</mat-label>
-                                                <input matInput  formControlName="fmAciklama" required>
-                                                <mat-icon matSuffix>email</mat-icon>
-                                            </mat-form-field> -->
                                         </div>
                                     </div>
-    
-                                    <div class="row mt-10">
-                                        <div class="col-6">
-    
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Ulaşım</label>
-                                                <div class="input-group bg-transparent">
-                                                    <select class="form-control" formControlName="ulasim"
-                                                        [ngClass]="{
-                                                            'is-invalid': firstFormGroup.controls['ulasim'].invalid,
-                                                            'is-valid': firstFormGroup.controls['ulasim'].valid
-                                                        }">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </select>
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'required',
-                                                        message: 'Password is required',
-                                                        control: firstFormGroup.controls['ulasim']}">
-                                                    </ng-container>
-    
-                                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                        message: 'Success! You\'ve done it.',
-                                                        control: firstFormGroup.controls['ulasim']}">
-                                                    </ng-container>
+                                </ng-container>
+
+                                <ng-container *ngIf="currentStep$.value == 2">
+                                    <div class="current">
+                                        <div class="w-100">
+                                            <div class="row">
+                                                <div class="col-12 my-5">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Ulaşım" | translate}}</span>
+                                                    </label>
+
+                                                    <p-dropdown [options]="ulasim" [(ngModel)]="selectedUlasim"
+                                                        optionLabel="ad" [filter]="true" filterBy="ad"
+                                                        [showClear]="true"
+                                                        placeholder="{{'Ulaşım_Seçiniz' | translate}}"
+                                                        formControlName="ulasim">
+                                                        <ng-template pTemplate="selectedItem">
+                                                            <div class="item-item item-item-value"
+                                                                *ngIf="selectedUlasim">
+                                                                <div>{{selectedUlasim.ad}}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template let-item pTemplate="item">
+                                                            <div class="item-item">
+                                                                <div>{{item.ad}}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </p-dropdown>
+                                                </div>
+
+                                                <div class="col-12 my-5">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Yemek" | translate}}</span>
+                                                    </label>
+
+                                                    <p-dropdown [options]="yemek" [(ngModel)]="selectedYemek"
+                                                        optionLabel="ad" [filter]="true" filterBy="ad"
+                                                        [showClear]="true" placeholder="{{'Yemek_Seçiniz' | translate}}"
+                                                        formControlName="yemek">
+                                                        <ng-template pTemplate="selectedItem">
+                                                            <div class="item-item item-item-value"
+                                                                *ngIf="selectedYemek">
+                                                                <div>{{selectedYemek.ad}}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template let-item pTemplate="item">
+                                                            <div class="item-item">
+                                                                <div>{{item.ad}}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </p-dropdown>
                                                 </div>
                                             </div>
-    
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Ulaşım</mat-label>
-                                                <mat-select formControlName="ulasim" required>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                </mat-select>
-                                                <mat-icon matSuffix>directions_bus</mat-icon>
-                                            </mat-form-field> -->
-                                        </div>
-    
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Yemek</label>
-                                                <div class="input-group bg-transparent">
-                                                    <select class="form-control" formControlName="yemek" 
-                                                    [ngClass]="{
-                                                        'is-invalid': firstFormGroup.controls['yemek'].invalid,
-                                                        'is-valid': firstFormGroup.controls['yemek'].valid
-                                                    }">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </select>
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'required',
-                                                        message: 'Password is required',
-                                                        control: firstFormGroup.controls['yemek']}">
-                                                    </ng-container>
-    
-                                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                        message: 'Success! You\'ve done it.',
-                                                        control: firstFormGroup.controls['yemek']}">
-                                                    </ng-container>
-                                                </div>
-                                            </div>
-    
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Yemek</mat-label>
-                                                <mat-select formControlName="yemek" required>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                    <mat-option value="option">Option</mat-option>
-                                                </mat-select>
-                                                <mat-icon matSuffix>fastfood</mat-icon>
-                                            </mat-form-field> -->
                                         </div>
                                     </div>
-        
-                                    
-                                </div>
-                            </div>
-                            
-                            <div class="row mt-20 ">
-                                <div class="col-12 d-flex align-items-end justify-content-end">
-                                    <button  class="w-25 btn btn-primary" [disabled]="!isFirstFormValid"   matStepperNext (click)="getFirstFormValues()">İleri</button>
-                                </div>
-                            </div>
 
-                        </form>
-                    </mat-step>
-                    <mat-step [stepControl]="secondFormGroup" >
-                        <form [formGroup]="secondFormGroup">
-                            <ng-template matStepLabel>Tarih</ng-template>
-                            <div class="card wave wave-animate-fast">
-                                <div class="container mt-15">
-                                    <div class="row">
-                                        <div class="col-6">
-    
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Başlangıç Tarihi</label>
-                                                    <input class="form-control" type="date" value="" formControlName="fmBaslangicTarihi"
-                                                    [ngClass]="{
-                                                        'is-invalid': secondFormGroup.controls['fmBaslangicTarihi'].invalid,
-                                                        'is-valid': secondFormGroup.controls['fmBaslangicTarihi'].valid
-                                                    }"/>
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                        validation: 'required',
-                                                        message: 'Password is required',
-                                                        control: secondFormGroup.controls['fmBaslangicTarihi']}">
+
+                                </ng-container>
+
+                                <ng-container *ngIf="currentStep$.value == 3">
+                                    <div class="current">
+                                        <div class="w-100">
+                                            <div class="row">
+                                                <div class="col-6 p-5">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Başlangıç_Tarihi" | translate}}</span>
+                                                    </label>
+
+                                                    <input type="date"
+                                                        class="form-control form-control-lg form-control-solid"
+                                                        formControlName="bastarih">
+
+                                                </div>
+
+                                                <div class="col-6 p-5">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Başlangıç_Saati" | translate}}</span>
+                                                    </label>
+
+                                                    <input type="time"
+                                                        class="form-control form-control-lg form-control-solid"
+                                                        formControlName="bassaat">
+                                                </div>
+
+                                                <div class="col-6 p-5">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Bitiş_Tarihi" | translate}}</span>
+                                                    </label>
+
+                                                    <input type="date"
+                                                        class="form-control form-control-lg form-control-solid"
+                                                        formControlName="bittarih">
+                                                </div>
+
+                                                <div class="col-6 p-5">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Bitiş_Saati" | translate}}</span>
+                                                    </label>
+
+                                                    <input type="time"
+                                                        class="form-control form-control-lg form-control-solid"
+                                                        formControlName="bitsaat">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="currentStep$.value == 4">
+                                    <div class="border border-3 rounded-5" *ngIf="!isCompleted">
+                                        <div class="row py-2 px-4">
+
+                                            <div class="col-12 d-flex justify-content-center pb-2">
+                                                <span
+                                                    class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Talep_Sahibi"
+                                                    | translate}}</span>
+                                            </div>
+
+                                            <div class="col-12 d-flex justify-content-center  pb-2"
+                                                *ngIf="this.authService.currentUserSubject | async as _user">
+                                                <span class="text-gray-800 fs-6 fw-bolder">{{_user.adsoyad}}</span>
+                                                <span class="text-muted fw-bold d-block fs-7"></span>
+                                            </div>
+
+                                            <div class="separator mb-2"></div>
+
+                                            <div>
+                                                <div class="col-12 d-flex justify-content-center">
+                                                    <span
+                                                        class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Fazla_Mesai_Talep_Formu"
+                                                        | translate}}</span>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div class="row text-center">
+                                                        <div class="col-12 py-2">
+                                                            <span
+                                                                class="text-gray-800  fs-6 fw-bolder">{{"Fazla_Mesai_Tipi"
+                                                                | translate}}:</span>
+                                                            <span class="text-muted fw-bold d-block fs-7">
+                                                                {{overtimeFormValues.tip.ad}} </span>
+                                                        </div>
+
+                                                        <div class="col-12 py-2">
+                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Açıklama" |
+                                                                translate}}:</span>
+                                                            <span class="text-muted fw-bold d-block fs-7">
+                                                                {{overtimeFormValues.aciklama}} </span>
+                                                        </div>
+
+                                                        <div class="col-12 py-2">
+                                                            <span
+                                                                class="text-gray-800  fs-6 fw-bolder">{{"Başlangıç_Tarihi"
+                                                                |
+                                                                translate}}:</span>
+                                                            <span class="text-muted fw-bold d-block fs-7">
+                                                                {{overtimeFormValues.bastarih}}
+                                                                <ng-container *ngIf="overtimeFormValues.bassaat">
+                                                                    {{overtimeFormValues.bassaat}}
+                                                                </ng-container>
+                                                            </span>
+                                                        </div>
+
+                                                        <div class="col-12 py-2">
+                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Bitiş_Tarihi"
+                                                                | translate}}:</span>
+                                                            <span class="text-muted fw-bold d-block fs-7">
+                                                                {{overtimeFormValues.bittarih}}
+                                                                <ng-container *ngIf="overtimeFormValues.bitsaat">
+                                                                    {{overtimeFormValues.bitsaat}}
+                                                                </ng-container>
+                                                            </span>
+                                                        </div>
+
+                                                        <div class="col-12 py-2">
+                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Ulaşım" |
+                                                                translate}}:</span>
+                                                            <span class="text-muted fw-bold d-block fs-7">
+                                                                {{overtimeFormValues.ulasim.ad}} </span>
+                                                        </div>
+
+                                                        <div class="col-12 py-2">
+                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Yemek" |
+                                                                translate}}:</span>
+                                                            <span class="text-muted fw-bold d-block fs-7">
+                                                                {{overtimeFormValues.yemek.ad}} </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" *ngIf="isCompleted">
+                                        <div class="col-12 mb-10">
+
+                                            <div class="table-responsive scroll h-350px">
+
+                                                <table class="table table-hover table-rounded border gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th>Ad</th>
+                                                            <th>Soyad</th>
+                                                            <th class="text-center">Talep Durumu</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <ng-container *ngFor="let item of selectedEmployeesFromAttendance">
+                                                            <tr [ngClass]="{'bg-light-danger' : item.sonuc != 1, 'bg-light-success' : item.sonuc == 1}">
+                                                                <td class="fw-bold">{{item.ad}}</td>
+                                                                <td class="fw-bold">{{item.soyad}}</td>
+                                                                <ng-container *ngIf="item.sonuc == 1">
+                                                                    <td class="fw-bolder text-center">
+                                                                        <i class="fa-solid fa-check fs-2 text-success"></i>
+                                                                    </td>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="item.sonuc != 1">
+                                                                    <td class="fw-bolder text-center">
+                                                                        <i class="fa-solid fa-xmark fs-2 text-danger"></i>
+                                                                    </td>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="currentStep$.value == 5">
+                                    <div class="current h-xl-500px scroll">
+                                        <div class="w-100">
+                                            <div class="row pb-3" *ngFor="let item of fileTypes; index as i">
+                                                <div class="col-12 d-flex justify-content-center align-items-center">
+                                                    <input type="file" [id]="'upload_' + i" style="display: none;"
+                                                        (change)="getFile($event, item)" formControlName="file">
+                                                    <label [for]="'upload_' + i" class="w-100">
+                                                        <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center"
+                                                            style="padding: 1.5rem 0;">
+                                                            <div class="dropzone-msg dz-message needsclick">
+                                                                <h3 class="dropzone-msg-title text-center">
+                                                                    {{"DOSYA_YUKLE" | translate: { fileType: item.ad }
+                                                                    }}</h3>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <ng-container *ngIf="item.files">
+                                                        <div [@fileUploaded]="'uploaded'"
+                                                            class="card bg-light-dark mx-8 my-5">
+                                                            <div class="card-body">
+                                                                <div
+                                                                    class="row d-flex justify-content-center align-items-center">
+
+                                                                    <!-- <ng-container *ngIf="!item.files.type.startsWith('image')"> -->
+                                                                    <div class="col-3 text-center">
+                                                                        <div [ngSwitch]="item.files.type">
+                                                                            <div
+                                                                                *ngSwitchCase="['image/jpeg', 'image/png', 'image/svg'].includes(item.files.type) ? item.files.type : !item.files.type">
+                                                                                <i class="file-type cursor-pointer fa-solid fa-file-image text-dark fs-3x"
+                                                                                    (click)="showUploadedFile(item)"></i>
+                                                                            </div>
+
+                                                                            <div
+                                                                                *ngSwitchCase="['text/plain'].includes(item.files.type) ? item.files.type : !item.files.type">
+                                                                                <i class="file-type cursor-pointer fa-solid fa-file-lines text-dark fs-3x"
+                                                                                    (click)="showUploadedFile(item)"></i>
+                                                                            </div>
+
+                                                                            <div
+                                                                                *ngSwitchCase="['application/pdf'].includes(item.files.type) ? item.files.type : !item.files.type">
+                                                                                <i class="file-type cursor-pointer fa-solid fa-file-pdf text-dark fs-3x"
+                                                                                    (click)="showUploadedFile(item)"></i>
+                                                                            </div>
+
+                                                                            <div *ngSwitchDefault>
+                                                                                <i class="fa-solid cursor-pointer fa-file text-dark fs-3x"
+                                                                                    (click)="showUploadedFile(item)"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- </ng-container> -->
+
+
+                                                                    <div class="col-7">
+                                                                        <div
+                                                                            class="fs-6 fw-bold text-gray-800 text-center">
+                                                                            {{ item.files.name }}
+                                                                        </div>
+
+                                                                        <div
+                                                                            class="fs-6 fw-bold text-gray-800 text-center">
+                                                                            {{ item.files.fileSize }} {{
+                                                                            item.files.fileSizeType }}
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-2">
+                                                                        <a (click)="item.files = null"
+                                                                            class="btn btn-icon btn-danger btn-sm me-3">
+                                                                            <i class="fa-solid fa-xmark fs-4"></i>
+                                                                        </a>
+                                                                    </div>
+
+                                                                    <!-- <ng-container *ngIf="item.files.type.startsWith('image')">
+                                                                        <div class="col-12 d-flex justify-content-center">
+                                                                            <div class="symbol symbol-75px">
+                                                                                <img alt="Uploaded File" src="{{item.files.url}}">
+                                                                                <iframe [src]="item.files.url" iframeborder="0"></iframe>
+                                                                            </div>
+                                                                        </div>    
+                                                                    </ng-container> -->
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
                                                     </ng-container>
+                                                </div>
+
+                                                <!-- <ng-container *ngIf="uploadedFile">
+                                                    <div [@fileUploaded]="'uploaded'" class="card bg-light-dark m-3">
+                                                        <div class="card-body">
+                                                            <div class="row d-flex justify-content-center align-items-center">
+                                            
+                                                                <div class="col-12 d-flex justify-content-end mb-3">
+                                                                    <a (click)="uploadedFile = null" class="btn btn-icon btn-danger btn-sm me-3">
+                                                                        <i class="fa-solid fa-xmark fs-4"></i>
+                                                                    </a>
+                                                                </div>
+                                                                
+                                                                <div class="col-12">
+                                                                    <iframe [src]="uploadedFile.url" width="100%" height="300px"></iframe>
+                                                                </div>
+                                            
+                                                                <div class="col-4">
+                                                                    <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                                        {{uploadedFile.name}}
+                                                                    </div>
+                                                                </div>
     
-                                                    <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                        message: 'Success! You\'ve done it.',
-                                                        control: secondFormGroup.controls['fmBaslangicTarihi']}">
+                                                                <div class="col-4">
+                                                                    <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                                        {{uploadedFile.fileSize}} {{uploadedFile.fileSizeType}}
+                                                                    </div>
+                                                                </div>
+                                            
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-container> -->
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+
+                            </form>
+                        </div>
+
+                        <div class="col-12 d-flex align-items-end justify-content-center justify-content-md-end">
+                            <div class="d-flex flex-stack pt-0">
+                                <div class="mr-2">
+                                    <ng-container *ngIf=" 5 > currentStep$.value && currentStep$.value > 1">
+                                        <button type="button" class="btn btn-lg btn-light-danger me-3"
+                                            (click)="prevStep()">
+                                            <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                                                class="svg-icon svg-icon-4 me-1"></span>
+                                            {{"Geri" | translate}}
+                                        </button>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="currentStep$.value == formsCount">
+                                        <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
+                                            <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                                                class="svg-icon svg-icon-4 me-1"></span>
+                                            {{"Kapat" | translate}}
+                                        </button>
+                                    </ng-container>
+                                </div>
+
+                                <ng-container *ngIf="currentStep$.value !== formsCount">
+                                    <div>
+                                        <ng-container *ngIf="currentStep$.value < formsCount - 1">
+                                            <button type="button" class="btn btn-lg btn-danger me-3"
+                                                (click)="nextStep()">
+                                                <span class="indicator-label">
+                                                    {{"İleri" | translate}} {{ " " }}
+                                                    <span
+                                                        [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
+                                                        class="svg-icon svg-icon-3 ms-2 me-0"></span>
+                                                    <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                        {{"Gönder" | translate}}
                                                     </ng-container>
-                                            </div>
-    
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Başlangıç Tarihi</mat-label>
-                                                <input matInput [matDatepicker]="picker1" formControlName="fmBaslangicTarihi">
-                                                <mat-hint>MM/DD/YYYY</mat-hint>
-                                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                                <mat-datepicker #picker1></mat-datepicker>
-                                            </mat-form-field> -->
-                                        </div>
-    
-                                        <div class="col-6">
-    
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Bitiş Tarihi</label>
-                                                <input class="form-control" type="date" value="" formControlName="fmBitisTarihi"
-                                                [ngClass]="{
-                                                    'is-invalid': secondFormGroup.controls['fmBitisTarihi'].invalid,
-                                                    'is-valid': secondFormGroup.controls['fmBitisTarihi'].valid
-                                                }"/>
-                                                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                    validation: 'required',
-                                                    message: 'Password is required',
-                                                    control: secondFormGroup.controls['fmBitisTarihi']}">
-                                                </ng-container>
-    
-                                                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                    message: 'Success! You\'ve done it.',
-                                                    control: secondFormGroup.controls['fmBitisTarihi']}">
-                                                </ng-container>
-                                            </div>
-    
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Bitis Tarihi</mat-label>
-                                                <input matInput [matDatepicker]="picker2" formControlName="fmBitisTarihi">
-                                                <mat-hint>MM/DD/YYYY</mat-hint>
-                                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                                <mat-datepicker #picker2></mat-datepicker>
-                                            </mat-form-field> -->
-                                        </div>
+                                                </span>
+                                            </button>
+                                        </ng-container>
+                                        <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                            <button type="button" class="btn btn-lg btn-danger me-3"
+                                                (click)="closedFormDialog()">
+                                                <span class="indicator-label">
+                                                    {{"Kapat" | translate}}
+                                                </span>
+                                            </button>
+
+                                            <button type="button" class="btn btn-lg btn-danger me-3"
+                                                (click)="getFormValues()">
+                                                <span class="indicator-label">
+                                                    {{"Gönder" | translate}}
+                                                </span>
+                                            </button>
+
+                                        </ng-container>
+
                                     </div>
-    
-                                    <div class="row mt-10">
-                                        <div class="col-6">
-    
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Başlangıç Saati</label>
-                                                <input class="form-control" type="time" formControlName="fmBaslangicSaati"
-                                                [ngClass]="{
-                                                    'is-invalid': secondFormGroup.controls['fmBaslangicSaati'].invalid,
-                                                    'is-valid': secondFormGroup.controls['fmBaslangicSaati'].valid
-                                                }"/>
-                                                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                    validation: 'required',
-                                                    message: 'Password is required',
-                                                    control: secondFormGroup.controls['fmBaslangicSaati']}">
-                                                </ng-container>
-    
-                                                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                    message: 'Success! You\'ve done it.',
-                                                    control: secondFormGroup.controls['fmBaslangicSaati']}">
-                                                </ng-container>
-                                            </div>
-    
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Başlangıç Saati</mat-label>
-                                                <input matInput type="time" formControlName="fmBaslangicSaati">
-                                                <mat-hint>HH:MM</mat-hint>
-                                            </mat-form-field> -->
-                                        </div>
-    
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label class="form-label fs-6 fw-bolder text-dark">Bitiş Saati</label>
-                                                <input class="form-control" type="time" formControlName="fmBitisSaati"
-                                                [ngClass]="{
-                                                    'is-invalid': secondFormGroup.controls['fmBitisSaati'].invalid,
-                                                    'is-valid': secondFormGroup.controls['fmBitisSaati'].valid
-                                                }"/>
-                                                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                    validation: 'required',
-                                                    message: 'Password is required',
-                                                    control: secondFormGroup.controls['fmBitisSaati']}">
-                                                </ng-container>
-    
-                                                <ng-container [ngTemplateOutlet]="formSuccess" [ngTemplateOutletContext]="{
-                                                    message: 'Success! You\'ve done it.',
-                                                    control: secondFormGroup.controls['fmBitisSaati']}">
-                                                </ng-container>
-                                            </div>
-                                            <!-- <mat-form-field appearance="fill">
-                                                <mat-label>Bitis Saati</mat-label>
-                                                <input matInput type="time" formControlName="fmBitisSaati">
-                                                <mat-hint>HH:MM</mat-hint>
-                                            </mat-form-field> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            
-                            <div class="row mt-20">
-                                <div class="col-6 d-flex justify-content-start">
-                                    <button class="w-50 btn btn-primary" matStepperPrevious>Geri</button>
-                                </div>
-
-                                <div class="col-6 d-flex justify-content-end">
-                                    <button class="w-50 btn btn-primary" [disabled]="!isSecondFormValid" matStepperNext (click)="getSecondFormValues()">İleri</button>
-                                </div>
-                                
-                            </div>
-                        </form>
-                    </mat-step>
-                    <mat-step>
-                        <ng-template matStepLabel>Özet</ng-template>
-                        <div class="container">
-                            <div class="row d-flex justify-content-center mt-10">
-                                <div class="col-12">
-                                    <div class="card card-custom wave wave-animate" style="background-color: #f1f3f4;">
-                                        <div class="card-header ribbon ribbon-top ribbon-ver">
-                                            <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
-                                                OK!
-                                            </div>
-                                            <h3 class="card-title">
-                                                Talep Özeti
-                                            </h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="container">
-
-
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="row">
-                                                            <div class="col-5 fw-bold fs-6 text-gray-600">
-                                                                Fazla Mesai Açıklaması :
-                                                            </div>
-                                                            <div class="col-7 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.fmAciklama}}
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                                Ulaşım :
-                                                            </div>
-                                                            <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.ulasim}}
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                                Başlangıç Tarihi :
-                                                            </div>
-                                                            <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.fmBaslangicTarihi}}
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600 ">
-                                                                Bitiş Tarihi :
-                                                            </div>
-                                                            <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.fmBitisTarihi}}
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        
-                                                    </div>
-
-                                                    <div class="col-6">
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                                Fazla Mesai Nedeni :
-                                                            </div>
-                                                            <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.fmNedeni}}
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                                Yemek :
-                                                            </div>
-                                                            <div class="col-6 col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.yemek}}
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                                Başlangıç Saati :
-                                                            </div>
-                                                            <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.fmBaslangicSaati}}
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                                Bitiş Saati :
-                                                            </div>
-                                                            <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                                {{formsValues.fmBitisSaati}}
-                                                            </div>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-
-
-                                                <!-- <div class="row">
-                                                    
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                        Başlangıç Tarihi :
-                                                    </div>
-                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.fmBaslangicTarihi}}
-                                                    </div>
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                        Başlangıç Saati :
-                                                    </div>
-                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.fmBaslangicSaati}}
-                                                    </div>
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    <div class="col-4 fw-bold fs-6 text-gray-600 ">
-                                                        Bitiş Tarihi :
-                                                    </div>
-                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.fmBitisTarihi}}
-                                                    </div>
-                                                </div>
-                                            
-                                                <div class="row">
-                                                    <div class="col-4 fw-bold fs-6 text-gray-600">
-                                                        Bitiş Saati :
-                                                    </div>
-                                                    <div class="col-8 fw-bold fs-6 text-gray-800">
-                                                        {{formsValues.fmBitisSaati}}
-                                                    </div>
-                                                </div> -->
-                                            </div>
-
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-
-                                
+                                </ng-container>
                             </div>
                         </div>
-                        <div class="row mt-20">
-                            <div class="col-6 d-flex justify-content-start">
-                                <button class="w-50 btn btn-primary" matStepperPrevious>Back</button>
-                            </div>
-
-                            <!-- <div class="col-1 d-flex justify-content-end">
-                                <button class="btn btn-danger" (click)="stepper.reset()">İptal</button>
-                            </div> -->
-
-                            <div class="col-6 d-flex justify-content-end">
-                                <button class="w-50 btn btn-success">Gönder</button>
-                            </div>
-                        </div>
-                    </mat-step>
-                </mat-stepper>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</mat-dialog-content>
+
+</p-dialog>
+
+
+
+
+
+
+
 
 
 <ng-template #formError let-control="control" let-message="message" let-validation="validation">
     <ng-container *ngIf="control.hasError(validation)">
-        <!-- && (control.dirty || control.touched) -->
         <div class="invalid-feedback">
-            {{message}}
+            {{message | translate}}
         </div>
     </ng-container>
 </ng-template>
@@ -531,7 +545,34 @@
 <ng-template #formSuccess let-control="control" let-message="message" let-validation="validation">
     <ng-container *ngIf="control.valid">
         <div class="valid-feedback">
-            {{message}}
+            {{message | translate}}
         </div>
     </ng-container>
 </ng-template>
+
+
+
+
+
+
+<p-dialog header="{{'Önizleme' | translate}}" [(visible)]="displayUploadedFile" position="center" [modal]="true"
+    [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [baseZIndex]="10000" [draggable]="false"
+    [resizable]="false">
+
+    <ng-container *ngIf="currentUploadedFile">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="symbol symbol-75px">
+                <iframe [src]="currentUploadedFile?.files?.url" iframeborder="0" width="600px" height="600px"></iframe>
+            </div>
+        </div>
+    </ng-container>
+
+
+
+    <ng-template pTemplate="footer">
+        <a (click)="displayUploadedFile=false" class="btn btn-danger">
+            <i class="fa-solid fa-xmark fs-1"></i>
+            {{'Kapat' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { HostListener, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import * as objectPath from 'object-path';
@@ -53,6 +53,8 @@ export function getEmptyCssClasses(): CSSClassesType {
   providedIn: 'root',
 })
 export class LayoutService {
+  public isMobile : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
   public currentLayoutTypeSubject = new BehaviorSubject<LayoutType | null>(
     null
   );

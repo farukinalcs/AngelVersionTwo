@@ -11,7 +11,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 export class AuthComponent implements OnInit, OnDestroy {
   today: Date = new Date();
 
-  constructor() {}
 
   ngOnInit(): void {
     // BODY_CLASSES.forEach((c) => document.body.classList.add(c));

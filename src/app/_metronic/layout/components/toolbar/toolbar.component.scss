@@ -1,0 +1,15 @@
+// .loader-container{
+//     position : fixed;
+//     width: 100%;
+//     z-index: 99;
+// }
+
+.loader-container{
+    position : absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.8;
+    z-index: 99;
+}
+

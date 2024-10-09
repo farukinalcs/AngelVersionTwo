@@ -1,5 +1,5 @@
 .options {
-    height: 400px;
+    height: 320px;
     margin: 0;
     padding: 0;
     background-color: #F5F8FA;
@@ -14,7 +14,7 @@
 
 :host {
     width: 100%;
-    height: 1200px;
+    height: 1200px; 
     display: flex;
     flex-direction: column;
 }
@@ -94,4 +94,46 @@ app-nomination-widget {
         // height: 41px;
         background-color: #ff224fc2;
     }
+}
+
+
+.p-scrollpanel {
+
+    &.custombar1 {
+        .p-scrollpanel-wrapper {
+            border-right: 9px solid var(--layer-1);
+        }
+
+        .p-scrollpanel-bar {
+            background-color: var(--primary-color);
+            opacity: 1;
+            transition: background-color .2s;
+
+            &:hover {
+                background-color: #007ad9;
+            }
+        }
+    }
+
+    &.custombar2 {
+        .p-scrollpanel-wrapper {
+            border-right: 9px solid var(--layer-1);
+            border-bottom: 9px solid var(--layer-1);
+        }
+
+        .p-scrollpanel-bar {
+            background-color: var(--layer-2);
+            border-radius: 0;
+            opacity: 1;
+            transition: background-color .2s;
+        }
+    }
+}
+
+.removeIcon:hover {
+    cursor: pointer;
+}
+
+.removeIcon2:hover {
+    cursor: pointer;
 }

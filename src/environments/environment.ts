@@ -8,6 +8,9 @@ export const environment = {
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,
   apiUrl:'https://api.meyerangel.com:8086/api',
+  
+  newApiUrl : 'http://localhost:5075/api',
+  
   appThemeName: 'Metronic',
   appPurchaseUrl: 'https://1.envato.market/EA4JP',
   appHTMLIntegration:

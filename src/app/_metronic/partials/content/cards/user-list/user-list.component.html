@@ -1,15 +1,16 @@
 <div
   class="symbol symbol-35px symbol-circle"
   *ngFor="let user of users"
-  [ngbTooltip]="user.name"
+  [ngbTooltip]="user.Personel"
   placement="top"
 >
-  <ng-container *ngIf="user.avatar">
-    <img [src]="user.avatar" alt="Pic" />
+  <ng-container *ngIf="user.fotoimage">
+    <!-- <img [src]="user.avatar" alt="Pic" /> -->
+    <img src="{{'data:image/jpg;base64,' + user.fotoimage}}" alt="Pic" />
   </ng-container>
-  <ng-container *ngIf="user.initials">
+  <!-- <ng-container *ngIf="user.initials">
     <span class="symbol-label bg-primary text-inverse-primary fw-bolder">
       {{ user.initials }}
     </span>
-  </ng-container>
+  </ng-container> -->
 </div>
