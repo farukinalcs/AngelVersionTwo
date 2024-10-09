@@ -7,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileDataWidgetComponent implements OnInit {
 
-  constructor() { }
+  isRefresh : boolean = false;
+  constructor(
+  ) { }
 
   ngOnInit(): void {
   }
-
 }

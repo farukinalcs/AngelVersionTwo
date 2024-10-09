@@ -1,35 +1,61 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
 import { UserModel } from '../../models/user.model';
 import { environment } from '../../../../../environments/environment';
-import { AuthModel } from '../../models/auth.model';
+import * as CryptoJS from "crypto-js";
+import { HelperService } from 'src/app/_helpers/helper.service';
 
 const API_USERS_URL = `${environment.apiUrl}/Login`;
-
+const API_URL = environment.newApiUrl;
 @Injectable({
   providedIn: 'root',
 })
 export class AuthHTTPService {
-  constructor(private http: HttpClient) {}
 
-  // public methods
-  // login(email: string, password: string): Observable<any> {
-  //   return this.http.post<AuthModel>(`${API_USERS_URL}/login`, {
-  //     email,
-  //     password,
-  //   });
-  // }
+  constructor(
+    private http: HttpClient,
+    private helperService : HelperService
+  ) {}
 
-  login(email:string,password:string): Observable<any>{
-  
-    var params = {Name :'LoginName='+email+'&Password='+password+'&ldap=0'}
+  gate() {
+    return this.http.get(API_URL + '/gate');
+  }
+
+  cryptoLogin(email : string, password : string, lang : any, appList : any) : Observable<any> {
+    // let headers = new HttpHeaders({
+    //   Authorization: this.helperService.gateResponseX,
+    // });
+
+    var loginOptions = {
+      loginName : email,
+      password : password,
+      langcode : lang,
+      appcode : appList,
+      mkodu : 'sysLogin'
+    };
+
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    console.log("Login Options :", loginOptions);
     
-      // let headers = new HttpHeaders({
-      //   'Content-Type': 'application/json',
-      // });
-      // let options = {headers : headers};
-      return this.http.get<AuthModel>(API_USERS_URL,{params});
+    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(loginOptions)), key, {
+      keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoJS.mode.CBC,
+      padding : CryptoJS.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+    
+    let options = {
+      // headers : headers,
+      params: data
+    };
+
+    return this.http.get<any>(API_URL + '/auth', options);
   }
 
   // CREATE =>  POST: add a new user to the server

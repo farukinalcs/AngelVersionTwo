@@ -1,6 +1,6 @@
-<app-widget1001 *ngIf="widget.type === 'İçerideki Personel Sayısı'" [resizeEvent]="resizeEvent" [widget]="widget"></app-widget1001>
-<app-widget1002 *ngIf="widget.type === 'İçerideki Ziyaretçi Sayısı'" [resizeEvent]="resizeEvent" [widget]="widget"></app-widget1002>
-<app-widget1003 *ngIf="widget.type === 'İçerideki Cihazlara Gönderilen Son 100 İşlem'" [resizeEvent]="resizeEvent" [widget]="widget"></app-widget1003>
-<app-widget1004 *ngIf="widget.type === 'İletişimi Kesik Cihaz Sayısı'" [resizeEvent]="resizeEvent" [widget]="widget"></app-widget1004>
-<app-widget1005 *ngIf="widget.type === 'Alarm Sayısı'" [resizeEvent]="resizeEvent" [widget]="widget"></app-widget1005>
-<app-widget1006 *ngIf="widget.type === 'Mesaisi Bitip Çıkmayan Personel Sayısı'" [resizeEvent]="resizeEvent" [widget]="widget"></app-widget1006>
+<app-widget1001 *ngIf="widget.type === 'İçerideki Personel Sayısı'" [resizeEvent]="resizeEvent" [widget]="widget" [personeller]="personeller"></app-widget1001>
+<app-widget1002 *ngIf="widget.type === 'İçerideki Ziyaretçi Sayısı'" [resizeEvent]="resizeEvent" [widget]="widget" [ziyaretciler]="ziyaretciler"></app-widget1002>
+<app-widget1003 *ngIf="widget.type === 'İçerideki Cihazlara Gönderilen Son 100 İşlem'" [resizeEvent]="resizeEvent" [widget]="widget" [sonIslemler]="sonIslemler"></app-widget1003>
+<app-widget1004 *ngIf="widget.type === 'İletişimi Kesik Cihaz Sayısı'" [resizeEvent]="resizeEvent" [widget]="widget" [kesikCihazlar]="kesikCihazlar"></app-widget1004>
+<app-widget1005 *ngIf="widget.type === 'Alarm Sayısı'" [resizeEvent]="resizeEvent" [widget]="widget" [alarmlar]="alarmlar"></app-widget1005>
+<app-widget1006 *ngIf="widget.type === 'Mesaisi Bitip Çıkmayan Personel Sayısı'" [resizeEvent]="resizeEvent" [widget]="widget" [mesaiBit]="mesaiBit"></app-widget1006>

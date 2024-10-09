@@ -1,13 +1,67 @@
-:host {
-  width: 100%;
-  @media (min-width: 992px) {
-    .login-form {
-      width: 100%;
-      max-width: 450px;
 
-      .mat-form-field {
-        width: 100%;
-      }
-    }
+
+// Bootstrap Function, Variables, Mixin
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins';
+
+// Bootstrap Breakpoints
+
+// Mobile Modes
+@include media-breakpoint-down(sm) {
+  .meyer-logo {
+    width: 270px;
   }
 }
+// Mobile & Tablet Modes
+@include media-breakpoint-between(sm, md) {
+  .meyer-logo {
+    width: 350px;
+  }
+}
+// Tablet Modes
+@include media-breakpoint-between(md, lg) {
+  .meyer-logo {
+    width: 450px;
+  }
+}
+// Tablet & Desktop Modes
+@include media-breakpoint-between(lg, xl) {
+  .meyer-logo {
+    width: 500px;
+  }
+}
+// Desktop Modes
+@include media-breakpoint-between(xl, xxl) {
+  .meyer-logo {
+    width: 620px;
+  }
+}
+
+@include media-breakpoint-up(xxl) {
+  .meyer-logo {
+    width: 670px;
+  }
+}
+
+.meyer-text {
+  color: var(--kt-danger);
+  font-size: x-large;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  
+}
+
+
+// ::ng-deep .btn.btn-outline.btn-outline-dashed.active {
+//   border-color: #ed1c24;
+// }
+
+// ::ng-deep .btn.btn-outline.btn-outline-dashed.active:focus {
+//   border-color: #ed1c24;
+// }
+
+// ::ng-deep .btn.btn-outline.btn-outline-dashed.active:hover {
+//   border-color: #263238;
+// }

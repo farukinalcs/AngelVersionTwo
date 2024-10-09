@@ -4,3 +4,75 @@
     border-top-left-radius: 0.42rem;
     border-top-right-radius: 0.42rem;
 }
+
+
+// .timeline.timeline-4 .timeline-items .timeline-item .timeline-content {
+//     background-color: var(--kt-danger-light) ;
+// }
+
+// .timeline.timeline-4 .timeline-items .timeline-item.timeline-item-right:after {
+//     border-right: solid 10px var(--kt-danger-light) ;
+//     border-left: solid 17px transparent ;
+// }
+
+// .timeline.timeline-4 .timeline-items .timeline-item:after {
+//     border-left: solid 10px var(--kt-danger-light) ;
+// }
+
+
+// Bootstrap Function, Variables, Mixin
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins';
+
+// Bootstrap Breakpoints
+
+// Mobile Modes
+@include media-breakpoint-down(sm) {
+    .timeline.timeline-4 .timeline-items .timeline-item:after {
+        top: 18px;
+    }
+
+    .timeline.timeline-4 .timeline-items .timeline-item .timeline-badge {
+        top: 2.5rem;
+    }
+
+    .timeline.timeline-4:after {
+        height: 100%;
+    }
+}
+
+
+// Mobile & Tablet Modes
+@include media-breakpoint-between(sm, md) {
+    .timeline.timeline-4 .timeline-items .timeline-item:after {
+        top: 18px;
+    }
+
+    .timeline.timeline-4 .timeline-items .timeline-item .timeline-badge {
+        top: 2.5rem;
+    }
+}
+
+
+// Tablet Modes
+@include media-breakpoint-between(md, lg) {
+    .timeline.timeline-4 .timeline-items .timeline-item:after {
+        top: 20px;
+    }
+
+    .timeline.timeline-4 .timeline-items .timeline-item .timeline-badge {
+        top: 2.5rem;
+    }
+
+    .timeline.timeline-4:after{
+        height: 118%;
+    }
+}
+
+// Tablet & Desktop Modes
+@include media-breakpoint-between(lg, xl) {
+    .timeline.timeline-4 .timeline-items .timeline-item:after {
+        top: 41px;
+    }
+}

@@ -13,7 +13,7 @@ import { DialogWidget1001Component } from './dialog-widget1001/dialog-widget1001
 export class Widget1001Component implements OnInit, OnDestroy {
   @Input() widget : any;
   @Input() resizeEvent : EventEmitter<GridsterItem>;
-
+  @Input() personeller : any[];
   resizeSub: Subscription;
 
   constructor(
@@ -31,13 +31,6 @@ export class Widget1001Component implements OnInit, OnDestroy {
       }
     });
 
-    console.log("securedata : ", this.accessService.getMultipleAccessWidget());
-    this.accessService.getMultipleAccessWidgetData
-    .subscribe((response : any) => {
-      console.log("Response : ", response);
-    }, (error : any) => {
-      console.log("HATA ", error);
-    })    
   }
 
   openDialog() {

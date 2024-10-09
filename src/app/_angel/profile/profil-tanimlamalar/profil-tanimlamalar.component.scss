@@ -1,0 +1,87 @@
+:host ::ng-deep {
+    .p-button {
+        color: #ed1b24;
+        background: #fff5f8;
+        border: 1px solid #ed1b24;
+    }
+
+    .p-button:hover {
+        color: #fff5f8;
+        background: #ed1b24;
+        border: 1px solid #ed1b24;
+    }
+
+    .p-button:focus {
+        box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #f77b81, 0 1px 2px 0 black;
+    }
+
+    .p-button:enabled:active {
+        background: #ed1b24;
+        color: #ffffff;
+        border-color: #ed1b24;
+    }
+
+    .p-picklist .p-picklist-list .p-picklist-item.p-highlight {
+        color: #fff5f8;
+        background: #fff5f8;
+    }
+
+    .p-picklist .p-picklist-list .p-picklist-item:focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: inset 0 0 0 0.15rem #ed1b2475;
+    }
+
+    .p-picklist .p-picklist-list:not(.cdk-drop-list-dragging) .p-picklist-item:not(.p-highlight):hover {
+        background: #fff5f8;
+        color: #ffffff;
+    }
+
+    .p-inputtext:enabled:focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: 0 0 0 0.2rem #fff5f8;
+        border-color: #ed1b24;
+    }
+
+    .p-inputtext:enabled:hover {
+        border-color: #ed1b24;
+    }
+
+    .p-picklist .p-picklist-header {
+        background: #ed1b24;
+        color: #ffffff;
+        border: 1px solid #ed1b24;
+    }
+
+    .p-dropdown:not(.p-disabled):hover {
+        border-color: #ed1b24;
+    }
+
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+        color: #ed1b24;
+        background: #fff5f8;
+    }
+
+    .p-dropdown {
+        width: 100%;
+    }
+
+    .p-dropdown:not(.p-disabled).p-focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: 0 0 0 0.2rem #fff5f8;
+        border-color: #ed1b24;
+    }
+}
+
+.product-item {
+    padding: 1.0rem;
+    width: 100%;
+}
+
+@media screen and (max-width: 576px) {
+    .product-item {
+        flex-wrap: wrap;
+    }
+}

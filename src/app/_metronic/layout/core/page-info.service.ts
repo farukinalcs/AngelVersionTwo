@@ -60,7 +60,8 @@ export class PageInfoService {
   public calculateTitle() {
     const asideTitle = this.calculateTitleInMenu('kt_app_sidebar');
     const headerTitle = this.calculateTitleInMenu('kt_app_header_wrapper');
-    const title = asideTitle || headerTitle || '';
+    // const title = asideTitle || headerTitle || '';
+    const title = asideTitle || '';
     this.setTitle(title);
   }
 

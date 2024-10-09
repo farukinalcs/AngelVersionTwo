@@ -85,14 +85,8 @@ export class ThemeModeService {
       localStorage.setItem(themeModeLSKey, updatedMode);
       localStorage.setItem(themeMenuModeLSKey, _mode);
     }
+    
     document.location.reload()
-
-    if (_mode === 'dark') {
-      
-      this.angularMaterialTheme = "~@angular/material/prebuilt-themes/purple-green.css"
-    } else {
-      this.angularMaterialTheme = "~@angular/material/prebuilt-themes/indigo-pink.css"
-    }
   }
 
   public getSelectedThemeColor(): string {

@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ParentWidget2Component implements OnInit {
   @Input() widget : any;
   @Input() resizeEvent : any;
-  
+  @Input() iceridekiler : any[];
   constructor() { }
 
   ngOnInit(): void {

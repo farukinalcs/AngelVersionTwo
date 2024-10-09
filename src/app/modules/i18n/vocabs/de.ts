@@ -3,7 +3,7 @@ export const locale = {
   lang: 'de',
   data: {
     TRANSLATOR: {
-      SELECT: 'Wähle deine Sprache',
+      Seçim_Yapınız: 'Wähle deine Sprache',
     },
     MENU: {
       NEW: 'Neu',
@@ -12,7 +12,7 @@ export const locale = {
       PAGES: 'Pages',
       FEATURES: 'Eigenschaften',
       APPS: 'Apps',
-      DASHBOARD: 'Instrumententafel'
+      Genel_Bakış: 'Instrumententafel'
     },
     AUTH: {
       GENERAL: {
@@ -22,13 +22,13 @@ export const locale = {
         SIGNUP_BUTTON: 'Anmelden',
         FORGOT_BUTTON: 'Passwort vergessen',
         BACK_BUTTON: 'Zurück',
-        PRIVACY: 'Privatsphäre',
-        LEGAL: 'Legal',
-        CONTACT: 'Kontakt',
+        Gizlilik: 'Privatsphäre',
+        Legal: 'Legal',
+        İletişim: 'Kontakt',
       },
       LOGIN: {
         TITLE: 'Create Account',
-        BUTTON: 'Sign In',
+        Giriş_Yap: 'Sign In',
       },
       FORGOT: {
         TITLE: 'Forgotten Password?',
@@ -41,11 +41,11 @@ export const locale = {
         SUCCESS: 'Your account has been successfuly registered.'
       },
       INPUT: {
-        EMAIL: 'Email',
+        Email: 'Email',
         FULLNAME: 'Fullname',
-        PASSWORD: 'Password',
-        CONFIRM_PASSWORD: 'Confirm Password',
-        USERNAME: 'Nutzername'
+        Şifre: 'Password',
+        Şifreyi_Onayla: 'Confirm Password',
+        Kullanıcı_Adı: 'Nutzername'
       },
       VALIDATION: {
         INVALID: '{{name}} is not valid',
@@ -71,7 +71,7 @@ export const locale = {
         BY_TYPE: 'by Type',
         BUSINESS: 'Business',
         INDIVIDUAL: 'Individual',
-        SEARCH: 'Search',
+        Arama: 'Search',
         IN_ALL_FIELDS: 'in all fields'
       },
       ECOMMERCE: 'eCommerce',

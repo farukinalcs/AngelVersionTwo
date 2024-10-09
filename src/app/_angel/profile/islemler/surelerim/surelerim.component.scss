@@ -1,279 +1,55 @@
-// .ma-elevation-z8 > table {
-//     width: 100%;
-//     overflow-y: scroll;
-// }
-
-// tr.example-element-row:not(.example-expanded-row):hover {
-//     background: whitesmoke;
-// }
-  
-// tr.example-element-row:not(.example-expanded-row):active {
-//     background: #efefef;
-// }
-
-// .tableHeaderCellDiv { 
-//     resize: horizontal;  
-//     overflow:hidden;
-//     font-weight: 900;
-
-// }
-
-
-// // .mat-header-row {
-// //     font-size: 15px;
-// // }
-
-
-
-/* Page title */
-/* ---------------------------------------------------------- */
-.title-holder {
-    border-bottom: 2px solid #f2f2f2;
-    margin-bottom: 10px;
+#container {
+    // width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 35px;
+    padding: 8px;
+    background-color: #ffffff7a;
+    border: 1px solid var(--kt-dark-light);
+    border-radius: 45px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-.table-holder {
-    background-color: white;
-    padding: 15px;
-    padding-top: 5px;
-    border-radius: 5px;
-    margin-left: 45px;
-    margin-right: 45px;
+::ng-deep[data-theme="dark"] #container {
+    // width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 35px;
+    padding: 8px;
+    background-color: rgb(58 36 52);
+    border: 1px solid var(--kt-dark-light);
+    border-radius: 45px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-.list-title {
-    font-size: 20px;
+.date-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.month {
+    font-size: 24px;
     font-weight: bold;
-    line-height: normal;
-    letter-spacing: 0.5px;
-    margin: 5px;
 }
 
-/* ---------------------------------------------------------- */
-
-
-/* Table styles */
-/* ---------------------------------------------------------- */
-.mat-table {
-    width: 100%;
-    box-shadow: none;
-}
-
-.float-right {
-    float: right;
-}
-
-/* ---------------------------------------------------------- */
-
-/* Header styles */
-/* ---------------------------------------------------------- */
-.mat-header-cell {
-    background-color: #311D3F;
-    color: white;
-}
-
-.mat-sort-header-arrow {
-    color: white;
-}
-
-.mat-header-cell:not(:first-child) {
-    padding-left: 0;
-}
-
-/* Style just the text in the header */
-.mat-header-cell span {
-    font-weight: 600;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: 0.5px;
-}
-
-/* Round the top table corners */
-.mat-header-cell:first-child {
-    border-top-left-radius: 5px;
-}
-
-.mat-header-cell:last-child {
-    border-top-right-radius: 5px;
-}
-
-.mat-header-row {
-    height: 3em;
-}
-
-.btn-icon {
-    height: 17px;
-    width: 17px;
-    background-color: #e8e1e4;
-    border: none;
-}
-
-.sort-icon {
-    height: 17px;
-    width: 17px;
-    color: white;
-}
-
-::ng-deep .mat-sort-header-arrow {
-    position: relative;
-    left: -1.5rem;
-    display: none !important;
-    opacity: 0;
-}
-
-.header {
-    padding: 5px;
+.year {
+    font-size: 16px;
+    color: #888888;
 }
 
 
-/* ---------------------------------------------------------- */
-
-
-/* Column styles */
-/* ---------------------------------------------------------- */
-.type-column {
-    width: 15%;
-    padding-right: 3rem;
-    padding-top: 0px;
-    padding-bottom: 0px;
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #e33a37;
+    height: 30px;
 }
 
-.tarih-column {
-    width: 25%;
-    padding-right: 3rem;
-    padding-top: 0px;
-    padding-bottom: 0px;
+::ng-deep .mat-progress-spinner svg {
+    height: 30px !important;
 }
 
-.girisCikis-column {
-    width: 25%;
-    padding-right: 3rem;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
 
-.normalSure-column {
-    width: 5%;
-    padding-right: 3rem;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
-
-.araSure-column {
-    width: 5%;
-    padding-right: 3rem;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
-
-.izinSure-column {
-    width: 5%;
-    padding-right: 3rem;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
-
-.fazlaSure-column {
-    width: 5%;
-    padding-right: 3rem;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
-
-.eksikSure-column {
-    width: 5%;
-    padding-right: 3rem;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
-
-.Button-column {
-    width: 5%;
-}
-
-/* ---------------------------------------------------------- */
-
-/* Row styles */
-/* ---------------------------------------------------------- */
-.mat-row:nth-child(2n) {
-    background-color: #f2f2f2;
-}
-
-.mat-row:hover {
-    background-color: #cccaca;
-}
-
-/* ---------------------------------------------------------- */
-
-/* Cell styles */
-/* ---------------------------------------------------------- */
-.state-cell {
-    text-align: right;
-}
-
-.mat-cell {
-    border: none;
-}
-
-.green-svg {
-    fill: #6dd400;
-}
-
-.gray-svg {
-    fill: #b2b4b6;
-}
-
-/* ---------------------------------------------------------- */
-
-
-/* Paginator styles */
-/* ---------------------------------------------------------- */
-.mat-paginator {
-    font-size: 14px;
-    font-weight: 600;
-    color: #311D3F;
-}
-
-.mat-paginator .mat-paginator-range-label {
-    color: #e0e0e0;
-}
-
-.mat-paginator .mat-paginator-page-size {
-    background-color: #fafafa;
-    transition: all 0.3s ease-in-out;
-}
-
-.mat-paginator .mat-paginator-page-size:hover {
-    background-color: #c5cae9;
-}
-/* ---------------------------------------------------------- */
-
-/* Sort arrow styless */ 
-/* ---------------------------------------------------------- */
-// ::ng-deep .tableHeaderCellDiv .mat-sort-header-arrow {
-//     color: rgb(255, 255, 255);
-// }
-::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
-    color: white !important;
-}
-/* ---------------------------------------------------------- */
-
-
-/* Table Responsive Styles */
-/* ---------------------------------------------------------- */
-
-@media screen and (max-width: 960px) {
-    .mat-table {
-        width: 100%;
-    }
-    
-    table td p {
-        font-size: 8px;
-    }
-    
-    table th {
-        font-size: 11px;
-    }
-    
-}
-/* ---------------------------------------------------------- */

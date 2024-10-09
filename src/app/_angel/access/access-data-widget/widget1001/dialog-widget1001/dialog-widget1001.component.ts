@@ -10,6 +10,7 @@ export class DialogWidget1001Component implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    
   }
 
 }

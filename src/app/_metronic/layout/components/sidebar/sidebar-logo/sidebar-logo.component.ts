@@ -21,7 +21,8 @@ export class SidebarLogoComponent implements OnInit, OnDestroy {
   constructor(private layout: LayoutService) {}
 
   ngOnInit(): void {
-    this.toggleAttr = `app-sidebar-${this.toggleType}`;
+    this.toggleAttr = `app-sidebar-minimize`;
+    // this.toggleAttr = `app-sidebar-${this.toggleType}`;
     const layoutSubscr = this.layout.currentLayoutTypeSubject
       .asObservable()
       .subscribe((layout) => {

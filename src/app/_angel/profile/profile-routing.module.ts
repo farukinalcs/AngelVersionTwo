@@ -11,12 +11,20 @@ import { ZiyaretcitaleplerimComponent } from './talepler/ziyaretcitaleplerim/ziy
 import { MobillokasyonComponent } from './talepler/mobillokasyon/mobillokasyon.component';
 import { TasklistemComponent } from './talepler/tasklistem/tasklistem.component';
 import { TakimimComponent } from './talepler/takimim/takimim.component';
+import { EksikSurelerimComponent } from './islemler/eksik-surelerim/eksik-surelerim.component';
+import { ProfileDataWidgetComponent } from './profile-data-widget/profile-data-widget.component';
+import { ProfilTanimlamalarComponent } from './profil-tanimlamalar/profil-tanimlamalar.component';
+import { VisitorRequestsComponent } from './talepler/visitor-requests/visitor-requests.component';
 
 const routes: Routes = [
   {
     path: '',
     component: ProfiledashboardComponent,
     children: [
+      {
+        path: 'dashboard',
+        component : ProfileDataWidgetComponent
+      },
       {
         path: 'gecislerim',
         component: GecislerimComponent,
@@ -38,6 +46,10 @@ const routes: Routes = [
         component: TaleplerimComponent,
       },
       {
+        path: 'ziyaretci_talepleri',
+        component: VisitorRequestsComponent,
+      },
+      {
         path: 'ziyaretci_taleplerim',
         component: ZiyaretcitaleplerimComponent,
       },
@@ -53,8 +65,16 @@ const routes: Routes = [
         path: 'takimim',
         component: TakimimComponent,
       },
-      { path: '', redirectTo: 'gecislerim', pathMatch: 'full' },
-      { path: '**', redirectTo: 'gecislerim', pathMatch: 'full' },
+      {
+        path: 'eksik_surelerim',
+        component: EksikSurelerimComponent,
+      },
+      {
+        path: 'profil_tanimlamalar',
+        component: ProfilTanimlamalarComponent,
+      },
+      // { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
 ];

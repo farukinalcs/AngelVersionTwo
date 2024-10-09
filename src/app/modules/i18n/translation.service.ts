@@ -3,6 +3,7 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
 
 export interface Locale {
   lang: string;
@@ -17,6 +18,8 @@ const LOCALIZATION_LOCAL_STORAGE_KEY = 'language';
 export class TranslationService {
   // Private properties
   private langIds: any = [];
+  
+  langObs = new Subject();
 
   constructor(private translate: TranslateService) {
     // add new langIds to the list
@@ -46,6 +49,7 @@ export class TranslationService {
       this.translate.use(this.translate.getDefaultLang());
       this.translate.use(lang);
       localStorage.setItem(LOCALIZATION_LOCAL_STORAGE_KEY, lang);
+      this.langObs.next(lang);
     }
   }
 
