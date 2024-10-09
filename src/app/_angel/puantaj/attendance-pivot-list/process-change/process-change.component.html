@@ -1,0 +1,94 @@
+<p-dialog header="{{'Özet' | translate}}" [(visible)]="displayProcessChange" position="top"
+
+	[breakpoints]="{ '2560px': '74vw', '992px': '67vw', '576px': '74vw' }" [modal]="true" [baseZIndex]="10000"
+
+	[draggable]="false" [resizable]="false" (onHide)="hideProcessChange()">
+
+    <div class="container">
+        <ng-container *ngIf="!processLoading">
+            <div class="row">
+                <div class="col-12 pt-10">
+                    <div class="loader-container">
+                        <div id="splash-screen" class="splash-screen"
+                            style="position: inherit; color:transparent; background-color: transparent;">
+                            <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo" style="margin-left: 0; height: 0;" />
+                            <mat-spinner></mat-spinner>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="processLoading">
+            <ng-container *ngIf="!processChangeList.length">
+                <div class="row pt-10">
+                    <div class="col-12 d-flex justify-content-center align-items-center">
+                        <div class="row">
+                            <app-data-not-found [imgWidth]=" '70%' "></app-data-not-found>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        
+            <ng-container *ngIf="processChangeList.length">
+
+                <div class="row d-flex justify-content-center">
+
+                    <div class="col-10">
+                        <div class="row">
+                            <ng-container *ngFor="let item of processChangeList">
+                                <div class="" [ngClass]="{'col-12': processChangeList.length == 1, 'col-6': processChangeList.length > 1}">
+                                    <div class="card my-2" style="box-shadow: 0px 0px 20px 0px rgb(76 87 125 / 17%);">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="symbol symbol-60px  flex-shrink-0 me-4">
+                                                    <img src="{{profileService.getApiUrl()}}/Image?sicilid={{item.sicilid}}" alt="{{item.Ad}} {{item.Soyad}}" class="mw-100">
+                                                </div>
+                
+                                                <div class="d-flex align-items-end flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
+                                                    <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                                        <a class="fs-5 text-gray-800 text-hover-danger fw-bold">{{item.mesaiAciklama}}</a>
+                                                        <span class="text-gray-500 fw-semibold fs-7 my-1">{{item.Ad}} {{item.Soyad}}-{{item.sicilid}} </span>
+                                                        <span class="text-gray-500 fw-semibold fs-7"> {{"Durum" | translate}}: 
+                                                            <a class="text-danger fw-bold">{{item.exMesaiAciklama}}</a>
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-end py-lg-0 py-2">
+                                                        <!-- <span class="text-gray-800 fw-bolder fs-3">24,900</span> -->
+                                                        <span class="text-gray-500 fs-7 fw-semibold d-block">{{item.tarih | date:'yyyy-MM-dd'}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end align-items-center mt-5">
+                        <a class="btn btn-sm btn-danger mx-2">
+                            <i class="fa-solid fa-check fs-7"></i>
+                            {{'Gönder' | translate}}
+                        </a>
+            
+                        <a (click)="hideProcessChange()" class="btn btn-sm btn-danger">
+                            <i class="fa-solid fa-xmark fs-7"></i>
+                            {{'Vazgeç' | translate}}
+                        </a>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        
+        
+        
+    </div>
+
+    
+	
+
+</p-dialog>
