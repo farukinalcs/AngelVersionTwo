@@ -20,6 +20,7 @@ export class ProcessChangeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getProcessChangeList();
+    
   }
 
   getProcessChangeList() {
