@@ -1,5 +1,7 @@
 <p-dialog header="{{'Özet' | translate}}" [(visible)]="displayProcessChange" position="top"
+
 	[breakpoints]="{ '2560px': '74vw', '992px': '67vw', '576px': '74vw' }" [modal]="true" [baseZIndex]="10000"
+
 	[draggable]="false" [resizable]="false" (onHide)="hideProcessChange()">
 
     <div class="container">
@@ -29,7 +31,9 @@
             </ng-container>
         
             <ng-container *ngIf="processChangeList.length">
+
                 <div class="row d-flex justify-content-center">
+
                     <div class="col-10">
                         <div class="row">
                             <ng-container *ngFor="let item of processChangeList">
