@@ -28,6 +28,10 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     "enableIvy": true
-  }
+  },
+  "include": [
+    "src/**/*",
+    "src/google-maps.d.ts" 
+  ]
 }
 

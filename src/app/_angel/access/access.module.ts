@@ -54,6 +54,7 @@ import { CustomizedCellComponent } from './customized-cell/customized-cell.compo
 import { DialogNewDeviceComponent } from './devices/dialog-new-device/dialog-new-device.component';
 import { TranslationModule } from 'src/app/modules/i18n';
 import { DropdownModule } from 'primeng/dropdown';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -119,7 +120,10 @@ import { DropdownModule } from 'primeng/dropdown';
     AgGridModule,
     InlineSVGModule.forRoot(),
     DropdownModule,
-    TranslationModule
+    TranslationModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAdALF-5HPnZFuvYRXmGY8qkv21TGD25ak',
+    }),
   ]
 })
 export class AccessModule { }

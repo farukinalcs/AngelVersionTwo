@@ -19,10 +19,10 @@ import { ToastrService } from 'ngx-toastr';
 
 
 export class DialogNewDeviceComponent implements OnInit{
-
+  selectedLocation: { lat: number; lng: number } | null = null;
   private unsubscribe: Subscription[] = [];
   @Input() isFromAttendance: boolean;
-
+  @Input() mapTypeId: keyof typeof google.maps.MapTypeId = 'TERRAIN';
   constructor(
     private access: AccessService,
     private helper: HelperService,
@@ -64,6 +64,9 @@ export class DialogNewDeviceComponent implements OnInit{
     byPass:boolean = false;
     IsDevicePassive:boolean = false;
     IsShowTimeOfDevice:boolean = false;
+    latitude:number = 39.9334;
+    longitude:number = 32.8597;
+    koordinatModal:boolean = false;
     // form setting
     newDeviceForm: FormGroup;
     formsCount: any = 8;
@@ -88,7 +91,6 @@ export class DialogNewDeviceComponent implements OnInit{
 
   createFormGroup() {
     this.newDeviceForm = this.formBuilder.group({
-      // cihazAdi: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
       cihazAdi: ['', Validators.required],
       model: ['', Validators.required],
       port: ['', Validators.required],
@@ -96,12 +98,13 @@ export class DialogNewDeviceComponent implements OnInit{
       moduleid: ['', Validators.required],
       girisCıkıs: ['', Validators.required],
       cihazTanimi: ['', Validators.required],
-      pcAdi: ['', Validators.required],
+      pcAdi: [''],
       kartFormat: ['', Validators.required],
       kapiBilgi: ['', Validators.required],
       pingTest: ['', Validators.required],
       byPass: ['', Validators.required],
       aktifPasif: ['', Validators.required],
+      showTime:['', Validators.required],
       lokasyon:['', Validators.required],
       katNo:['', Validators.required],
       odaNo:['', Validators.required],
@@ -112,12 +115,12 @@ export class DialogNewDeviceComponent implements OnInit{
   }
 
   nextStep() {
-    if (!this.canProceedToNextStep()) {
-      this.toastrService.error(
-        this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
-        this.translateService.instant('Hata')
-      ); return;
-    }
+    // if (!this.canProceedToNextStep()) {
+    //   this.toastrService.error(
+    //     this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
+    //     this.translateService.instant('Hata')
+    //   ); return;
+    // }
     const nextStep = this.currentStep$.value + 1;
     if (nextStep <= this.formsCount) {
       this.currentStep$.next(nextStep);
@@ -165,13 +168,14 @@ export class DialogNewDeviceComponent implements OnInit{
       2: ['port', 'ip', 'moduleid'],
       3: ['girisCıkıs', 'cihazTanimi'],
       4: ['pcAdi', 'kartFormat', 'kapiBilgi'],
-      5: ['pingTest', 'byPass', 'aktifPasif'],
+      5: ['pingTest', 'byPass', 'aktifPasif','showTime'],
       6: ['lokasyon','katNo','odaNo','adres']
       //6: ['enlem','boylam','lokasyon','katNo','odaNo','adres']
     };
   
     return stepFieldsMap[step] || [];
   }
+
   closedFormDialog() {
       this.newDeviceForm.reset();
       this.resetStepperFieldsClass();
@@ -216,6 +220,32 @@ export class DialogNewDeviceComponent implements OnInit{
       this.ref.detectChanges();
       console.log("type_card ",this.type_card );
     })
+  }
+
+  openKoordinatModal()
+  {
+    this.koordinatModal = true;
+  }
+
+  onChoseLocation(event: any) {
+    console.log("OLAAY",event);
+    // this.latitude = event.coords.lat;   
+    // this.longitude = event.coords.lng;  
+    // this.selectedLocation = {
+    //   lat: event.coords.lat,
+    //   lng: event.coords.lng,
+    // };
+    // console.log('Seçilen koordinatlar:', this.latitude, this.longitude);
+    const latLng = event.latLng;
+    if (latLng) {
+      this.latitude = latLng.lat();   // Enlem
+      this.longitude = latLng.lng();  // Boylam
+  
+      console.log('Seçilen koordinatlar:', this.latitude, this.longitude);
+    } else {
+      console.log('Koordinatlar alınamadı.');
+    }
+    this.ref.detectChanges();
   }
 
   ngOnDestroy() {

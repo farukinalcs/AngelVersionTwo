@@ -3,11 +3,11 @@
         <div class="row">
             <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
 
-                <!-- <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
                     <div class="stepper-nav d-flex justify-content-center">
                         <img src="../../../../../assets/media/illustrations/dozzy-1/1.png" width="100%" alt="">
                     </div>
-                </div> -->
+                </div>
 
                 <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields"
                 [isFromAttendance]="isFromAttendance"></app-form-stepper>
@@ -249,7 +249,7 @@
                                             <span class="required">Adres</span>
                                         </label>
 
-                                        <input formControlName="adres" class="form-control form-control-solid" type="text" [(ngModel)]="nameOfPc">
+                                        <input formControlName="adres" class="form-control form-control-solid" type="text">
 
                                       
                                     </div>
@@ -258,7 +258,7 @@
                                             <span class="required">Kat No</span>
                                         </label>
 
-                                        <input formControlName="katNo" class="form-control form-control-solid" type="text" [(ngModel)]="nameOfPc">
+                                        <input formControlName="katNo" class="form-control form-control-solid" type="text">
 
                                       
                                     </div>
@@ -267,7 +267,7 @@
                                             <span class="required">Oda No</span>
                                         </label>
 
-                                        <input formControlName="odaNo" class="form-control form-control-solid" type="text" [(ngModel)]="nameOfPc">
+                                        <input formControlName="odaNo" class="form-control form-control-solid" type="text">
 
                                       
                                     </div>
@@ -278,9 +278,22 @@
                                             <span class="required">Lokasyon</span>
                                         </label>
 
-                                        <input formControlName="lokasyon" class="form-control form-control-solid" type="text" [(ngModel)]="infoOfDeviceDoor">
+                                        <input formControlName="lokasyon" class="form-control form-control-solid" type="text">
 
-                                      
+                                   
+
+
+                                    </div>
+
+                                    <agm-map [latitude]="latitude" [longitude]="longitude"  [zoom]=19 (mapClick)="onChoseLocation($event)">
+                                        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                                        <agm-map-type-control></agm-map-type-control>
+                                    </agm-map>
+
+                                    <div class="col-12 my-2">
+                                        <button type="button" class="btn btn-lg btn-danger me-3" (click)="openKoordinatModal()">
+                                            Koordinat
+                                        </button>
                                     </div>
 
                                 </div>
@@ -345,4 +358,28 @@
             </div>
         </div>
     </div>
+
 </div>
+
+
+      <!-- <object type="text/html" id="mapx" [data]="data" width="100%" height="100%"></object> -->
+    <!-- <iframe id="mapx" width="100%" height="100%" [src]="src" frameborder="0"></iframe> -->
+
+    <p-dialog
+     header="Cihaz Koordinat"
+     [modal]="true"
+     [(visible)]="koordinatModal" 
+     [style]="{ width: '75vw' }" 
+     [breakpoints]="{'2560px': '70vw', '992px': '90vw', '576px': '99vw' }"
+     [maximizable]="true" 
+     [baseZIndex]="10000">
+     <agm-map [latitude]="latitude" [longitude]="longitude"  [zoom]=19 (mapClick)="onChoseLocation($event)">
+        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+        <agm-map-type-control></agm-map-type-control>
+    </agm-map>
+
+        <!-- <agm-map  [zoom]=19>
+            <agm-marker></agm-marker>
+            <agm-map-type-control></agm-map-type-control>
+            </agm-map> -->
+    </p-dialog>
