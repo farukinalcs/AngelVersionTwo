@@ -122,7 +122,7 @@ import { AgmCoreModule } from '@agm/core';
     DropdownModule,
     TranslationModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAdALF-5HPnZFuvYRXmGY8qkv21TGD25ak',
+      apiKey: 'AIzaSyDXtjkQ56Mi1TtWXAsAEOTVqo_Gx9nMruE',
     }),
   ]
 })

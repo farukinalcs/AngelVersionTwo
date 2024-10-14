@@ -18,6 +18,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 
+
+//declare var google: any;
+
 export class DialogNewDeviceComponent implements OnInit{
   selectedLocation: { lat: number; lng: number } | null = null;
   private unsubscribe: Subscription[] = [];
@@ -31,7 +34,6 @@ export class DialogNewDeviceComponent implements OnInit{
     private translateService : TranslateService,
     private formBuilder: FormBuilder,
     private toastrService : ToastrService) { }
-    
     isCompleted: boolean = false;
 
     stepperFields: any[] = [
@@ -64,8 +66,8 @@ export class DialogNewDeviceComponent implements OnInit{
     byPass:boolean = false;
     IsDevicePassive:boolean = false;
     IsShowTimeOfDevice:boolean = false;
-    latitude:number = 39.9334;
-    longitude:number = 32.8597;
+    latitude:number;
+    longitude:number;
     koordinatModal:boolean = false;
     // form setting
     newDeviceForm: FormGroup;
@@ -74,11 +76,28 @@ export class DialogNewDeviceComponent implements OnInit{
     currentItem: any = this.stepperFields[0];
     newDeviceFormValues: any;
     currentDate = new Date(Date.now());
+    map: any;
 
   ngOnInit(): void {
     
     this.fillToList();
    
+  }
+
+  olustur(){
+    const mapOptions = {
+      center: new google.maps.LatLng(this.latitude, this.longitude),
+      zoom: 19,
+    };
+
+    this.map = new google.maps.Map(document.getElementById('map')!, mapOptions);
+
+    // Haritaya tıklama olayını ekleyin
+    this.map.addListener('click', (event: any) => {
+      this.latitude = event.latLng.lat();
+      this.longitude = event.latLng.lng();
+      console.log('Tıklanan koordinatlar:', this.latitude, this.longitude);
+    });
   }
 
   fillToList(){
@@ -227,25 +246,21 @@ export class DialogNewDeviceComponent implements OnInit{
     this.koordinatModal = true;
   }
 
-  onChoseLocation(event: any) {
+    
+ 
+
+
+  onChoseLocation(event: any){
     console.log("OLAAY",event);
-    // this.latitude = event.coords.lat;   
-    // this.longitude = event.coords.lng;  
-    // this.selectedLocation = {
-    //   lat: event.coords.lat,
-    //   lng: event.coords.lng,
-    // };
-    // console.log('Seçilen koordinatlar:', this.latitude, this.longitude);
-    const latLng = event.latLng;
-    if (latLng) {
-      this.latitude = latLng.lat();   // Enlem
-      this.longitude = latLng.lng();  // Boylam
-  
-      console.log('Seçilen koordinatlar:', this.latitude, this.longitude);
-    } else {
-      console.log('Koordinatlar alınamadı.');
-    }
-    this.ref.detectChanges();
+
+    const map = new google.maps.Map(document.getElementById("map")!, {
+    });
+    // map.addListener("click", (mapsMouseEvent) => {
+
+    //   console.log("mapsMouseEvent");
+    
+    // })
+     
   }
 
   ngOnDestroy() {
