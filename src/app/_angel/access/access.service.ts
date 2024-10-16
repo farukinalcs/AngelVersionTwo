@@ -110,13 +110,35 @@ export class AccessService {
       pingcheck:pingcheck,
       timesend:timesend,
       door:door,
-      debug:debug
-
-
+      debug:debug,
+      firmaid:'0',
+      securitycode:'',
+      latitude:'',
+      longtitude:''
     }]
     return this.requestMethod(sp);
   }
-
+  addNewDevice(detailFormValues : any,latitude:any,longtitude:any){
+    var sp : any[] = [{
+      mkodu : 'yek116',
+      id : '0',
+      name:detailFormValues.cihazAdi,
+      kind:detailFormValues.cihazTanimi,
+      model:detailFormValues.model,
+      io:detailFormValues.girisCıkıs,
+      sourcename:detailFormValues.pcAdi,
+      cardformat:detailFormValues.kartFormat,
+      pingcheck:detailFormValues.pingTest,
+      timesend:detailFormValues.showTime,
+      door:detailFormValues.kapiBilgi,
+      debug:detailFormValues.aktifPasif,
+      firmaid:'0',
+      securitycode:'',
+      latitude:latitude,
+      longtitude:longtitude
+    }]
+    return this.requestMethod(sp);
+  }
 	// @islemno nvarchar(200),
 	// @langcode nvarchar(10),
 	// @loginid bigint,

@@ -66,9 +66,10 @@ export class DialogNewDeviceComponent implements OnInit{
     byPass:boolean = false;
     IsDevicePassive:boolean = false;
     IsShowTimeOfDevice:boolean = false;
-    latitude:number;
-    longitude:number;
+    latitude:number = 39.9334;
+    longitude:number = 32.8597;
     koordinatModal:boolean = false;
+    lokasyon:any;
     // form setting
     newDeviceForm: FormGroup;
     formsCount: any = 8;
@@ -81,21 +82,22 @@ export class DialogNewDeviceComponent implements OnInit{
   ngOnInit(): void {
     
     this.fillToList();
-   
+  
   }
 
   olustur(){
     const mapOptions = {
       center: new google.maps.LatLng(this.latitude, this.longitude),
-      zoom: 19,
+      zoom: 8,
     };
-
+    console.log('ilk koordinatlar:', this.latitude, this.longitude);
     this.map = new google.maps.Map(document.getElementById('map')!, mapOptions);
 
     // Haritaya tıklama olayını ekleyin
     this.map.addListener('click', (event: any) => {
       this.latitude = event.latLng.lat();
       this.longitude = event.latLng.lng();
+      this.lokasyon = this.latitude + ',' + this.longitude;
       console.log('Tıklanan koordinatlar:', this.latitude, this.longitude);
     });
   }
@@ -125,9 +127,9 @@ export class DialogNewDeviceComponent implements OnInit{
       aktifPasif: ['', Validators.required],
       showTime:['', Validators.required],
       lokasyon:['', Validators.required],
-      katNo:['', Validators.required],
-      odaNo:['', Validators.required],
-      adres:['', Validators.required],
+      katNo:[''],
+      odaNo:[''],
+      adres:[''],
     });
 
  
@@ -179,6 +181,7 @@ export class DialogNewDeviceComponent implements OnInit{
   
     // Tüm gerekli alanlar geçerli mi kontrol ediliyor
     return currentStepFields.every(field => this.newDeviceForm.get(field)?.valid);
+    
   }
   getStepFields(step: number): string[] {
     // Adım numarasına göre gerekli form kontrol isimlerini döndürür
@@ -207,6 +210,14 @@ export class DialogNewDeviceComponent implements OnInit{
     this.stepperFields.forEach((item, index) => {
       item.class = index === 0 ? "stepper-item current" : "stepper-item";
     });
+  }
+
+  submitForm(){
+    this.access.addNewDevice(this.newDeviceFormValues, this.latitude,this.longitude).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+      const REsult = response[0].x
+      this.ref.detectChanges();
+      console.log("SUBMİT ",REsult);
+    })
   }
 
   modelOfDevice(source:string){
@@ -244,24 +255,25 @@ export class DialogNewDeviceComponent implements OnInit{
   openKoordinatModal()
   {
     this.koordinatModal = true;
+
+    setTimeout(() => {
+      const mapOptions = {
+        center: new google.maps.LatLng(this.latitude, this.longitude),
+        zoom: 8,
+      };
+      console.log('ilk koordinatlar:', this.latitude, this.longitude);
+      this.map = new google.maps.Map(document.getElementById('map')!, mapOptions);
+  
+      this.map.addListener('click', (event: any) => {
+        this.latitude = event.latLng.lat();
+        this.longitude = event.latLng.lng();
+        this.lokasyon = this.latitude + ',' + this.longitude;
+        console.log('Tıklanan koordinatlar:', this.latitude, this.longitude);
+      });
+    }, 1000); 
+
   }
 
-    
- 
-
-
-  onChoseLocation(event: any){
-    console.log("OLAAY",event);
-
-    const map = new google.maps.Map(document.getElementById("map")!, {
-    });
-    // map.addListener("click", (mapsMouseEvent) => {
-
-    //   console.log("mapsMouseEvent");
-    
-    // })
-     
-  }
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());

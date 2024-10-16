@@ -9,7 +9,7 @@ import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-s
 import { Device } from 'src/app/_angel/access/models/device'
 import { ColDef, ColGroupDef} from 'ag-grid-enterprise';
 import { AgGridAngular } from 'ag-grid-angular';
-import { IHeaderParams, ICellRendererParams } from 'ag-grid-community';
+import { IHeaderParams, ICellRendererParams, SideBarDef } from 'ag-grid-community';
 
 
 
@@ -74,7 +74,26 @@ export class DevicesComponent implements OnInit {
       console.log("type_Tk ",this.type_device );
     })
   }
-
+  public sideBar: SideBarDef | string | string[] | boolean | null = {
+    toolPanels: [
+      'filters',
+      {
+        id: 'columns',
+        labelDefault: 'Columns',
+        labelKey: 'columns',
+        iconKey: 'columns',
+        toolPanel: 'agColumnsToolPanel',
+        toolPanelParams: {
+          suppressRowGroups: true,
+          suppressValues: true,
+          suppressPivots: true,
+          suppressPivotMode: true,
+        },
+      },
+    ],
+  };
+  public rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never' = 'always';
+  public rowSelection: 'single' | 'multiple' = 'multiple';
   public  columnDefs: (ColDef | ColGroupDef)[]  = [
     {
       headerName: '#',
@@ -91,6 +110,7 @@ export class DevicesComponent implements OnInit {
     { field: 'name', 
       headerName: 'Ad', 
       filter: true,
+      rowGroup: false,
       filterParams: {
         // buttons: ['reset', 'apply'],
         textMatcher: ({
@@ -120,7 +140,8 @@ export class DevicesComponent implements OnInit {
       cellStyle: { 
         border: '0.5px solid #f5f8fa',
         textAlign: 'center'  
-      }
+      },
+      rowGroup: false,
     //   cellRenderer:CustomizedCellComponent,
     //   cellRendererParams:{
     //     buttontext:"MODEEEEEEL"
@@ -132,7 +153,8 @@ export class DevicesComponent implements OnInit {
       cellStyle: { 
         border: '0.5px solid #f5f8fa',
         textAlign: 'center'  
-      }
+      },
+      rowGroup: false,
     },
 
     { field: 'ip', headerName: 'Ip',
