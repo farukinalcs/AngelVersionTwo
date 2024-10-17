@@ -51,17 +51,20 @@ export class DialogNewDeviceComponent implements OnInit{
     public IO:any [] = [];
     public type_device:any[] = [];
     public type_card:any[] = [];
+    public type_door:any[] = [];
     //form değişkenler
     nameOfDevice:string = ""; //cihaz Adı
     selectModelDevice:any; // cihaz modeli
     portOfDevice:string = ""; // Cihaz port 
     ipOfDevice:string = ""; // cihaz Ip
-    moduleIdOfDevice:string = ""; //Cihaz module id
+    moduleIdOfDevice:number; //Cihaz module id
     selectIO:any; // giriş çıkıs
     selectTypeOfDevice:any; // cihaz tanımı
     nameOfPc:string = ""; // Pc Adı
     selectFormatOfCard:any // Cihaz kart Fortmatı
     infoOfDeviceDoor:string = ""; // Kapı Bilgisi
+    secureKey:string = "";
+    selectDoorType:number;
     pingTest: boolean = false;
     byPass:boolean = false;
     IsDevicePassive:boolean = false;
@@ -82,24 +85,15 @@ export class DialogNewDeviceComponent implements OnInit{
   ngOnInit(): void {
     
     this.fillToList();
-  
+    this.olustur()
   }
 
   olustur(){
-    const mapOptions = {
-      center: new google.maps.LatLng(this.latitude, this.longitude),
-      zoom: 8,
-    };
-    console.log('ilk koordinatlar:', this.latitude, this.longitude);
-    this.map = new google.maps.Map(document.getElementById('map')!, mapOptions);
-
-    // Haritaya tıklama olayını ekleyin
-    this.map.addListener('click', (event: any) => {
-      this.latitude = event.latLng.lat();
-      this.longitude = event.latLng.lng();
-      this.lokasyon = this.latitude + ',' + this.longitude;
-      console.log('Tıklanan koordinatlar:', this.latitude, this.longitude);
-    });
+    this.access.getSecurityCode(546096986,this.helper.customerCode).subscribe((response:any)=>{
+      this.secureKey  = response[0].securekey;
+      this.ref.detectChanges();
+      console.log("this.secureKey ",this.secureKey);
+    })
   }
 
   fillToList(){
@@ -108,6 +102,7 @@ export class DialogNewDeviceComponent implements OnInit{
     this.sys_IO('sys_IO');
     this.typeOfDevice('sys_terminalkind');
     this.typeOfCard('sys_cardformat');
+    this.typeOfDoor('sys_doortype');
   }
 
   createFormGroup() {
@@ -249,6 +244,14 @@ export class DialogNewDeviceComponent implements OnInit{
       this.type_card = response[0].x;
       this.ref.detectChanges();
       console.log("type_card ",this.type_card );
+    })
+  }
+
+  typeOfDoor(source:string){
+    this.access.getType_S(source).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+      this.type_door = response[0].x;
+      this.ref.detectChanges();
+      console.log("type_door ",this.type_door );
     })
   }
 
