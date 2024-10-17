@@ -18,6 +18,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 
+
+//declare var google: any;
+
 export class DialogNewDeviceComponent implements OnInit{
   selectedLocation: { lat: number; lng: number } | null = null;
   private unsubscribe: Subscription[] = [];
@@ -31,7 +34,6 @@ export class DialogNewDeviceComponent implements OnInit{
     private translateService : TranslateService,
     private formBuilder: FormBuilder,
     private toastrService : ToastrService) { }
-    
     isCompleted: boolean = false;
 
     stepperFields: any[] = [
@@ -49,17 +51,20 @@ export class DialogNewDeviceComponent implements OnInit{
     public IO:any [] = [];
     public type_device:any[] = [];
     public type_card:any[] = [];
+    public type_door:any[] = [];
     //form değişkenler
     nameOfDevice:string = ""; //cihaz Adı
     selectModelDevice:any; // cihaz modeli
     portOfDevice:string = ""; // Cihaz port 
     ipOfDevice:string = ""; // cihaz Ip
-    moduleIdOfDevice:string = ""; //Cihaz module id
+    moduleIdOfDevice:number; //Cihaz module id
     selectIO:any; // giriş çıkıs
     selectTypeOfDevice:any; // cihaz tanımı
     nameOfPc:string = ""; // Pc Adı
     selectFormatOfCard:any // Cihaz kart Fortmatı
     infoOfDeviceDoor:string = ""; // Kapı Bilgisi
+    secureKey:string = "";
+    selectDoorType:number;
     pingTest: boolean = false;
     byPass:boolean = false;
     IsDevicePassive:boolean = false;
@@ -67,6 +72,7 @@ export class DialogNewDeviceComponent implements OnInit{
     latitude:number = 39.9334;
     longitude:number = 32.8597;
     koordinatModal:boolean = false;
+    lokasyon:any;
     // form setting
     newDeviceForm: FormGroup;
     formsCount: any = 8;
@@ -74,11 +80,20 @@ export class DialogNewDeviceComponent implements OnInit{
     currentItem: any = this.stepperFields[0];
     newDeviceFormValues: any;
     currentDate = new Date(Date.now());
+    map: any;
 
   ngOnInit(): void {
     
     this.fillToList();
-   
+    this.olustur()
+  }
+
+  olustur(){
+    this.access.getSecurityCode(546096986,this.helper.customerCode).subscribe((response:any)=>{
+      this.secureKey  = response[0].securekey;
+      this.ref.detectChanges();
+      console.log("this.secureKey ",this.secureKey);
+    })
   }
 
   fillToList(){
@@ -87,6 +102,7 @@ export class DialogNewDeviceComponent implements OnInit{
     this.sys_IO('sys_IO');
     this.typeOfDevice('sys_terminalkind');
     this.typeOfCard('sys_cardformat');
+    this.typeOfDoor('sys_doortype');
   }
 
   createFormGroup() {
@@ -106,9 +122,9 @@ export class DialogNewDeviceComponent implements OnInit{
       aktifPasif: ['', Validators.required],
       showTime:['', Validators.required],
       lokasyon:['', Validators.required],
-      katNo:['', Validators.required],
-      odaNo:['', Validators.required],
-      adres:['', Validators.required],
+      katNo:[''],
+      odaNo:[''],
+      adres:[''],
     });
 
  
@@ -160,6 +176,7 @@ export class DialogNewDeviceComponent implements OnInit{
   
     // Tüm gerekli alanlar geçerli mi kontrol ediliyor
     return currentStepFields.every(field => this.newDeviceForm.get(field)?.valid);
+    
   }
   getStepFields(step: number): string[] {
     // Adım numarasına göre gerekli form kontrol isimlerini döndürür
@@ -188,6 +205,14 @@ export class DialogNewDeviceComponent implements OnInit{
     this.stepperFields.forEach((item, index) => {
       item.class = index === 0 ? "stepper-item current" : "stepper-item";
     });
+  }
+
+  submitForm(){
+    this.access.addNewDevice(this.newDeviceFormValues, this.latitude,this.longitude).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+      const REsult = response[0].x
+      this.ref.detectChanges();
+      console.log("SUBMİT ",REsult);
+    })
   }
 
   modelOfDevice(source:string){
@@ -222,31 +247,36 @@ export class DialogNewDeviceComponent implements OnInit{
     })
   }
 
+  typeOfDoor(source:string){
+    this.access.getType_S(source).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+      this.type_door = response[0].x;
+      this.ref.detectChanges();
+      console.log("type_door ",this.type_door );
+    })
+  }
+
   openKoordinatModal()
   {
     this.koordinatModal = true;
+
+    setTimeout(() => {
+      const mapOptions = {
+        center: new google.maps.LatLng(this.latitude, this.longitude),
+        zoom: 8,
+      };
+      console.log('ilk koordinatlar:', this.latitude, this.longitude);
+      this.map = new google.maps.Map(document.getElementById('map')!, mapOptions);
+  
+      this.map.addListener('click', (event: any) => {
+        this.latitude = event.latLng.lat();
+        this.longitude = event.latLng.lng();
+        this.lokasyon = this.latitude + ',' + this.longitude;
+        console.log('Tıklanan koordinatlar:', this.latitude, this.longitude);
+      });
+    }, 1000); 
+
   }
 
-  onChoseLocation(event: any) {
-    console.log("OLAAY",event);
-    // this.latitude = event.coords.lat;   
-    // this.longitude = event.coords.lng;  
-    // this.selectedLocation = {
-    //   lat: event.coords.lat,
-    //   lng: event.coords.lng,
-    // };
-    // console.log('Seçilen koordinatlar:', this.latitude, this.longitude);
-    const latLng = event.latLng;
-    if (latLng) {
-      this.latitude = latLng.lat();   // Enlem
-      this.longitude = latLng.lng();  // Boylam
-  
-      console.log('Seçilen koordinatlar:', this.latitude, this.longitude);
-    } else {
-      console.log('Koordinatlar alınamadı.');
-    }
-    this.ref.detectChanges();
-  }
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());

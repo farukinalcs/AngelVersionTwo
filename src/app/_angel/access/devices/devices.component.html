@@ -94,8 +94,12 @@
                             <div class="row">
                                 <div class="col-12">
                                     <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [gridOptions]="gridOptionsLight"
-                                        [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [animateRows]="true"
-                                        [pagination]="true" [paginationPageSize]="15"  [pagination]="true" [paginationPageSize]="15">
+                                        [rowData]="rowData" [columnDefs]="columnDefs" 
+                                        [defaultColDef]="defaultColDef" [animateRows]="true"
+                                        [pagination]="true" [paginationPageSize]="15" 
+                                        [sideBar]="sideBar" [rowGroupPanelShow]="rowGroupPanelShow" 
+                                        [pagination]="true" [paginationPageSize]="15"
+                                        [rowSelection]="rowSelection">
                                     </ag-grid-angular>
                                 </div>
                             </div>
@@ -114,7 +118,7 @@
     <app-dialog-new-device></app-dialog-new-device>
  </ng-container> -->
     <p-dialog
-     header="AÇıldı mı?"
+     header="New Devices"
      [modal]="true"
      [(visible)]="newDeviceModal" 
      [style]="{ width: '75vw' }" 

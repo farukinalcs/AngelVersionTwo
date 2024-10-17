@@ -55,7 +55,7 @@ export class AuthService implements OnDestroy {
         let response : ResponseXloginDetail[] = auth[0].x;
         console.log("response :", response[0]);
         let response_z : ResponseDetailZ = auth[0].z;        
-        
+        this.helper.customerCode = response[0].CustomerCode;
         if (response_z.islemsonuc == 1) {
             var user = response[0];
             
