@@ -121,7 +121,11 @@ export class TokenInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     // İstek başladığında loading'i göster
     this.loadingService.show();
-
+    if (request.headers.has('skipInterceptor')) {
+      const headers = request.headers.delete('skipInterceptor'); 
+      const clonedRequest = request.clone({ headers });
+      return next.handle(clonedRequest);
+    }
     if (!this.flag) {
       this.flag = true;
       return next.handle(request).pipe(
