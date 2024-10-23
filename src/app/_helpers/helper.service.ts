@@ -10,7 +10,7 @@ export class HelperService {
 
   gateResponseX : any;
   gateResponseY : any;
-  
+  customerCode:any;
   userLoginModel : any;
 
   yetki : any[];

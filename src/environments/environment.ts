@@ -8,7 +8,7 @@ export const environment = {
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,
   apiUrl:'https://api.meyerangel.com:8086/api',
-  
+  apiUrl2:'https://api.meyerangel.com/api/DynamicPlus',
   newApiUrl : 'http://localhost:5075/api',
   
   appThemeName: 'Metronic',

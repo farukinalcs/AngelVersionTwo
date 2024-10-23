@@ -18,11 +18,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 
-export class DialogNewDeviceComponent implements OnInit{
 
+//declare var google: any;
+
+export class DialogNewDeviceComponent implements OnInit{
+  selectedLocation: { lat: number; lng: number } | null = null;
   private unsubscribe: Subscription[] = [];
   @Input() isFromAttendance: boolean;
-
+  @Input() mapTypeId: keyof typeof google.maps.MapTypeId = 'TERRAIN';
   constructor(
     private access: AccessService,
     private helper: HelperService,
@@ -31,7 +34,6 @@ export class DialogNewDeviceComponent implements OnInit{
     private translateService : TranslateService,
     private formBuilder: FormBuilder,
     private toastrService : ToastrService) { }
-    
     isCompleted: boolean = false;
 
     stepperFields: any[] = [
@@ -49,21 +51,28 @@ export class DialogNewDeviceComponent implements OnInit{
     public IO:any [] = [];
     public type_device:any[] = [];
     public type_card:any[] = [];
+    public type_door:any[] = [];
     //form değişkenler
     nameOfDevice:string = ""; //cihaz Adı
     selectModelDevice:any; // cihaz modeli
     portOfDevice:string = ""; // Cihaz port 
     ipOfDevice:string = ""; // cihaz Ip
-    moduleIdOfDevice:string = ""; //Cihaz module id
+    moduleIdOfDevice:number; //Cihaz module id
     selectIO:any; // giriş çıkıs
     selectTypeOfDevice:any; // cihaz tanımı
     nameOfPc:string = ""; // Pc Adı
     selectFormatOfCard:any // Cihaz kart Fortmatı
     infoOfDeviceDoor:string = ""; // Kapı Bilgisi
+    secureKey:string = "";
+    selectDoorType:number;
     pingTest: boolean = false;
     byPass:boolean = false;
     IsDevicePassive:boolean = false;
     IsShowTimeOfDevice:boolean = false;
+    latitude:number = 39.9334;
+    longitude:number = 32.8597;
+    koordinatModal:boolean = false;
+    lokasyon:any;
     // form setting
     newDeviceForm: FormGroup;
     formsCount: any = 8;
@@ -71,11 +80,20 @@ export class DialogNewDeviceComponent implements OnInit{
     currentItem: any = this.stepperFields[0];
     newDeviceFormValues: any;
     currentDate = new Date(Date.now());
+    map: any;
 
   ngOnInit(): void {
     
     this.fillToList();
-   
+    this.olustur()
+  }
+
+  olustur(){
+    this.access.getSecurityCode(546096986,this.helper.customerCode).subscribe((response:any)=>{
+      this.secureKey  = response[0].securekey;
+      this.ref.detectChanges();
+      console.log("this.secureKey ",this.secureKey);
+    })
   }
 
   fillToList(){
@@ -84,11 +102,11 @@ export class DialogNewDeviceComponent implements OnInit{
     this.sys_IO('sys_IO');
     this.typeOfDevice('sys_terminalkind');
     this.typeOfCard('sys_cardformat');
+    this.typeOfDoor('sys_doortype');
   }
 
   createFormGroup() {
     this.newDeviceForm = this.formBuilder.group({
-      // cihazAdi: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
       cihazAdi: ['', Validators.required],
       model: ['', Validators.required],
       port: ['', Validators.required],
@@ -96,28 +114,29 @@ export class DialogNewDeviceComponent implements OnInit{
       moduleid: ['', Validators.required],
       girisCıkıs: ['', Validators.required],
       cihazTanimi: ['', Validators.required],
-      pcAdi: ['', Validators.required],
+      pcAdi: [''],
       kartFormat: ['', Validators.required],
       kapiBilgi: ['', Validators.required],
       pingTest: ['', Validators.required],
       byPass: ['', Validators.required],
       aktifPasif: ['', Validators.required],
+      showTime:['', Validators.required],
       lokasyon:['', Validators.required],
-      katNo:['', Validators.required],
-      odaNo:['', Validators.required],
-      adres:['', Validators.required],
+      katNo:[''],
+      odaNo:[''],
+      adres:[''],
     });
 
  
   }
 
   nextStep() {
-    if (!this.canProceedToNextStep()) {
-      this.toastrService.error(
-        this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
-        this.translateService.instant('Hata')
-      ); return;
-    }
+    // if (!this.canProceedToNextStep()) {
+    //   this.toastrService.error(
+    //     this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
+    //     this.translateService.instant('Hata')
+    //   ); return;
+    // }
     const nextStep = this.currentStep$.value + 1;
     if (nextStep <= this.formsCount) {
       this.currentStep$.next(nextStep);
@@ -157,6 +176,7 @@ export class DialogNewDeviceComponent implements OnInit{
   
     // Tüm gerekli alanlar geçerli mi kontrol ediliyor
     return currentStepFields.every(field => this.newDeviceForm.get(field)?.valid);
+    
   }
   getStepFields(step: number): string[] {
     // Adım numarasına göre gerekli form kontrol isimlerini döndürür
@@ -165,13 +185,14 @@ export class DialogNewDeviceComponent implements OnInit{
       2: ['port', 'ip', 'moduleid'],
       3: ['girisCıkıs', 'cihazTanimi'],
       4: ['pcAdi', 'kartFormat', 'kapiBilgi'],
-      5: ['pingTest', 'byPass', 'aktifPasif'],
+      5: ['pingTest', 'byPass', 'aktifPasif','showTime'],
       6: ['lokasyon','katNo','odaNo','adres']
       //6: ['enlem','boylam','lokasyon','katNo','odaNo','adres']
     };
   
     return stepFieldsMap[step] || [];
   }
+
   closedFormDialog() {
       this.newDeviceForm.reset();
       this.resetStepperFieldsClass();
@@ -184,6 +205,14 @@ export class DialogNewDeviceComponent implements OnInit{
     this.stepperFields.forEach((item, index) => {
       item.class = index === 0 ? "stepper-item current" : "stepper-item";
     });
+  }
+
+  submitForm(){
+    this.access.addNewDevice(this.newDeviceFormValues, this.latitude,this.longitude).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+      const REsult = response[0].x
+      this.ref.detectChanges();
+      console.log("SUBMİT ",REsult);
+    })
   }
 
   modelOfDevice(source:string){
@@ -217,6 +246,37 @@ export class DialogNewDeviceComponent implements OnInit{
       console.log("type_card ",this.type_card );
     })
   }
+
+  typeOfDoor(source:string){
+    this.access.getType_S(source).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+      this.type_door = response[0].x;
+      this.ref.detectChanges();
+      console.log("type_door ",this.type_door );
+    })
+  }
+
+  openKoordinatModal()
+  {
+    this.koordinatModal = true;
+
+    setTimeout(() => {
+      const mapOptions = {
+        center: new google.maps.LatLng(this.latitude, this.longitude),
+        zoom: 8,
+      };
+      console.log('ilk koordinatlar:', this.latitude, this.longitude);
+      this.map = new google.maps.Map(document.getElementById('map')!, mapOptions);
+  
+      this.map.addListener('click', (event: any) => {
+        this.latitude = event.latLng.lat();
+        this.longitude = event.latLng.lng();
+        this.lokasyon = this.latitude + ',' + this.longitude;
+        console.log('Tıklanan koordinatlar:', this.latitude, this.longitude);
+      });
+    }, 1000); 
+
+  }
+
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
