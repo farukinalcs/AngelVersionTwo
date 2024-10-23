@@ -33,12 +33,27 @@
             <ng-container *ngIf="processChangeList.length">
 
                 <div class="row d-flex justify-content-center">
+                    <div class="col-12 mb-5">
+                        <div class="input-group h-100 w-25" style="flex: 1;">
+                            <input
+                                class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
+                                [(ngModel)]="filterText"
+                                type="text" placeholder="{{'Arama' | translate}}">
+
+                            <button class="search-icon">
+                                <div class="svg">
+                                    <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
 
                     <div class="col-10">
                         <div class="row">
-                            <ng-container *ngFor="let item of processChangeList">
+                            <ng-container *ngFor="let item of processChangeList | searchFilter:filterText: ['Ad', 'Soyad', 'exMesaiAciklama', 'mesaiAciklama', 'tarih']">
                                 <div class="" [ngClass]="{'col-12': processChangeList.length == 1, 'col-6': processChangeList.length > 1}">
                                     <div class="card my-2" style="box-shadow: 0px 0px 20px 0px rgb(76 87 125 / 17%);">
+                                        <button type="button" class="btn-close position-absolute top-0 end-0 m-2 fs-2x btn-hover-danger" (click)="removeItem(item.Id)"></button>
                                         <div class="card-body">
                                             <div class="d-flex">
                                                 <div class="symbol symbol-60px  flex-shrink-0 me-4">

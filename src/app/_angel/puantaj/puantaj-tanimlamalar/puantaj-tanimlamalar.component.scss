@@ -1,0 +1,39 @@
+.tab-list {
+    display: flex;
+    overflow: hidden;
+    width: 80%;
+    position: relative; // Tab listesi sabit pozisyonda olmalı
+}
+
+.tab-list li {
+    transition: all 0.5s ease;
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.tab-list.slide-right li {
+    transform: translateX(100%); // Sağdan gelen tablar
+    opacity: 0; // Şeffaflık
+    pointer-events: none; // Tıklanamaz
+}
+
+.tab-list.slide-left li {
+    transform: translateX(-100%); // Soldan gelen tablar
+    opacity: 0;
+    pointer-events: none;
+}
+
+.arrow-left,
+.arrow-right {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #000;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: #d9534f; // Kırmızıya dönüşüm
+    }
+}

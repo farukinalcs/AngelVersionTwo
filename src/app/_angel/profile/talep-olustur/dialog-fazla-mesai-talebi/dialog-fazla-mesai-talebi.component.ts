@@ -227,7 +227,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   // Formların oluşması
   createFormGroup() {
     this.overtimeForm = this.formBuilder.group({
-      aciklama: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
+      aciklama: ['', Validators.required],
       tip: ['', Validators.required],
       ulasim: ['', Validators.required],
       yemek: ['', Validators.required],

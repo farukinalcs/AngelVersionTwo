@@ -527,3 +527,9 @@
 #lbRangeCount:active {
     background-color: #adff2f;
 }
+
+.selected-cell {
+    background-color: rgba(0, 123, 255, 0.5); // Seçilen hücre rengi
+    border: 1px solid #007bff;
+}
+  

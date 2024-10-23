@@ -31,6 +31,11 @@ import { SharedModule } from '../shared/shared.module';
 import { AttendancePivotListComponent } from './attendance-pivot-list/attendance-pivot-list.component';
 import { DrawersModule } from 'src/app/_metronic/partials';
 import { ProcessChangeComponent } from './attendance-pivot-list/process-change/process-change.component';
+import { LevelDefinitionComponent } from './puantaj-tanimlamalar/definitions/level-definition/level-definition.component';
+import { OvertimeCausesComponent } from './puantaj-tanimlamalar/definitions/overtime-causes/overtime-causes.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AttendanceRestrictionComponent } from './puantaj-tanimlamalar/definitions/attendance-restriction/attendance-restriction.component';
+import { FormMailsComponent } from './puantaj-tanimlamalar/definitions/form-mails/form-mails.component';
 
 
 @NgModule({
@@ -46,7 +51,11 @@ import { ProcessChangeComponent } from './attendance-pivot-list/process-change/p
     OrganizationColumnFilterComponent,
     AttendanceListFilterComponent,
     AttendancePivotListComponent,
-    ProcessChangeComponent
+    ProcessChangeComponent,
+    LevelDefinitionComponent,
+    OvertimeCausesComponent,
+    AttendanceRestrictionComponent,
+    FormMailsComponent
   ],
 
   imports: [
@@ -70,7 +79,8 @@ import { ProcessChangeComponent } from './attendance-pivot-list/process-change/p
     NgbTooltipModule,
     ProfileModule,
     SharedModule,
-    DrawersModule
+    DrawersModule,
+    MatTooltipModule
   ],
   
   exports: [
