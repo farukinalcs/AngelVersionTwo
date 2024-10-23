@@ -53,26 +53,29 @@ export class DialogNewDeviceComponent implements OnInit{
     public type_card:any[] = [];
     public type_door:any[] = [];
     //form değişkenler
-    nameOfDevice:string = ""; //cihaz Adı
+    nameOfDevice:string = ""; //cihaz Adık
     selectModelDevice:any; // cihaz modeli
-    portOfDevice:string = ""; // Cihaz port 
+    portOfDevice:number; // Cihaz port 
     ipOfDevice:string = ""; // cihaz Ip
-    moduleIdOfDevice:number; //Cihaz module id
+    moduleIdOfDevice:number =546096986; //Cihaz module id (ControllerNo)
     selectIO:any; // giriş çıkıs
     selectTypeOfDevice:any; // cihaz tanımı
     nameOfPc:string = ""; // Pc Adı
     selectFormatOfCard:any // Cihaz kart Fortmatı
     infoOfDeviceDoor:string = ""; // Kapı Bilgisi
     secureKey:string = "";
-    selectDoorType:number;
+    selectDoorType:any;
     pingTest: boolean = false;
     byPass:boolean = false;
     IsDevicePassive:boolean = false;
     IsShowTimeOfDevice:boolean = false;
-    latitude:number = 39.9334;
-    longitude:number = 32.8597;
+    latitude:any = "39.9334";
+    longitude:any = "32.8597";
     koordinatModal:boolean = false;
     lokasyon:any;
+    numberOfFloor:string = "";
+    numberOfRoom:string = "";
+    address:string = "";
     // form setting
     newDeviceForm: FormGroup;
     formsCount: any = 8;
@@ -83,17 +86,23 @@ export class DialogNewDeviceComponent implements OnInit{
     map: any;
 
   ngOnInit(): void {
-    
     this.fillToList();
-    this.olustur()
   }
 
   olustur(){
-    this.access.getSecurityCode(546096986,this.helper.customerCode).subscribe((response:any)=>{
-      this.secureKey  = response[0].securekey;
-      this.ref.detectChanges();
-      console.log("this.secureKey ",this.secureKey);
-    })
+    if(this.moduleIdOfDevice != undefined){
+      this.access.getSecurityCode(this.moduleIdOfDevice,this.helper.customerCode).subscribe((response:any)=>{
+        this.secureKey  = response[0].securekey;
+        this.ref.detectChanges();
+        console.log("this.secureKey ",this.secureKey);
+        console.log("this.moduleIdOfDevice ",this.moduleIdOfDevice);
+      })
+    }else
+    this.toastrService.error(
+      this.translateService.instant('Eksik ya da yanlış Cihaz Module Id'),
+      this.translateService.instant('Hata')
+    );
+    
   }
 
   fillToList(){
@@ -102,7 +111,7 @@ export class DialogNewDeviceComponent implements OnInit{
     this.sys_IO('sys_IO');
     this.typeOfDevice('sys_terminalkind');
     this.typeOfCard('sys_cardformat');
-    this.typeOfDoor('sys_doortype');
+    this.typeOfDoor('doortype');
   }
 
   createFormGroup() {
@@ -112,11 +121,13 @@ export class DialogNewDeviceComponent implements OnInit{
       port: ['', Validators.required],
       ip: ['', Validators.required],
       moduleid: ['', Validators.required],
+      secureKey:['',Validators.required],
       girisCıkıs: ['', Validators.required],
       cihazTanimi: ['', Validators.required],
       pcAdi: [''],
       kartFormat: ['', Validators.required],
       kapiBilgi: ['', Validators.required],
+      doortype:["",Validators.required],
       pingTest: ['', Validators.required],
       byPass: ['', Validators.required],
       aktifPasif: ['', Validators.required],
@@ -131,12 +142,12 @@ export class DialogNewDeviceComponent implements OnInit{
   }
 
   nextStep() {
-    // if (!this.canProceedToNextStep()) {
-    //   this.toastrService.error(
-    //     this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
-    //     this.translateService.instant('Hata')
-    //   ); return;
-    // }
+    if (!this.canProceedToNextStep()) {
+      this.toastrService.error(
+        this.translateService.instant('Form_Alanlarını_Doldurmalısınız'),
+        this.translateService.instant('Hata')
+      ); return;
+    }
     const nextStep = this.currentStep$.value + 1;
     if (nextStep <= this.formsCount) {
       this.currentStep$.next(nextStep);
@@ -182,7 +193,7 @@ export class DialogNewDeviceComponent implements OnInit{
     // Adım numarasına göre gerekli form kontrol isimlerini döndürür
     const stepFieldsMap: { [key: number]: string[] } = {
       1: ['cihazAdi', 'model'],
-      2: ['port', 'ip', 'moduleid'],
+      2: ['port', 'ip', 'moduleid',],
       3: ['girisCıkıs', 'cihazTanimi'],
       4: ['pcAdi', 'kartFormat', 'kapiBilgi'],
       5: ['pingTest', 'byPass', 'aktifPasif','showTime'],
@@ -208,8 +219,14 @@ export class DialogNewDeviceComponent implements OnInit{
   }
 
   submitForm(){
+    console.log("newDeviceFormValues....... ",this.newDeviceFormValues);
+    console.log("selectIO ",this.selectIO);
+    console.log("selectTypeOfDevice ",this.selectTypeOfDevice);
+    console.log("selectModelDevice ",this.selectModelDevice);
+    const enlem = this.latitude.toString();
+    const boylam = this.longitude.toString();
     this.access.addNewDevice(this.newDeviceFormValues, this.latitude,this.longitude).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
-      const REsult = response[0].x
+      const REsult = response[0];
       this.ref.detectChanges();
       console.log("SUBMİT ",REsult);
     })

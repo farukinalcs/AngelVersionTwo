@@ -133,7 +133,7 @@ export class AuthService implements OnDestroy {
   }
 
   // private methods
-  setAuthFromLocalStorage(token:any): boolean {
+  setAuthFromLocalStorage2(token:any): boolean {
     // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
 
     const storageToken = JSON.parse(localStorage.getItem('token') || '{}');
@@ -146,6 +146,22 @@ export class AuthService implements OnDestroy {
     return false;
   }
 
+  setAuthFromLocalStorage(token:any): boolean {
+    const storageTokenStr = localStorage.getItem('token');
+  
+    let storageToken;
+    try {
+      storageToken = storageTokenStr ? JSON.parse(storageTokenStr) : {};
+    } catch (error) {
+      console.error("Geçersiz JSON formatı:", error);
+      storageToken = {}; 
+    }
+    if (storageToken !== token) {
+      localStorage.setItem(this.authLocalStorageToken, JSON.stringify(token));
+      return true;
+    }
+    return false;
+  }
 
   // 
   // if (storageToken != responseToken) {
