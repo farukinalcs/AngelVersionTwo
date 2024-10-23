@@ -20,6 +20,7 @@ export class ProcessChangeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getProcessChangeList();
+    
   }
 
   getProcessChangeList() {
@@ -27,6 +28,8 @@ export class ProcessChangeComponent implements OnInit, OnDestroy {
     var sp: any[] = [
       {mkodu: 'yek119'}
     ];
+    
+
 
     this.profileService
       .requestMethod(sp)
