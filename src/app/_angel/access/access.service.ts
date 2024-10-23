@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { environment } from 'src/environments/environment';
@@ -18,9 +18,10 @@ export class AccessService {
   ) {}
 
   requestMethod(sp : any[]){
+
     var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
     var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
+    console.log("SP",sp);
     var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
       keySize : 128 / 8,
       iv : iv,
@@ -122,40 +123,45 @@ export class AccessService {
   // }
 
   addNewDevice(detailFormValues : any,latitude:any,longtitude:any){
+    let a = 0;
     var sp : any[] = [{
       mkodu : 'yek116',
-      id : '0',
-      name:detailFormValues.cihazAdi,
-      kind:detailFormValues.cihazTanimi,
-      model:detailFormValues.model,
-      io:detailFormValues.girisCıkıs,
-      sourcename:detailFormValues.pcAdi,
-      cardformat:detailFormValues.kartFormat,
-      pingcheck:detailFormValues.pingTest,
-      timesend:detailFormValues.showTime,
-      doortype:detailFormValues.doortype,
-      door:detailFormValues.kapiBilgi,
-      debug:detailFormValues.aktifPasif,
-      firmaid:'0',
-      securitycode:'',
-      latitude:latitude,
-      longtitude:longtitude,
-      adres:detailFormValues.adres,
-      katbilgisi:detailFormValues.katbilgisi,
-      odabilgisi:detailFormValues.odabilgisi
+      id : a.toString(),
+      name:detailFormValues?.cihazAdi.toString(),
+      kind:detailFormValues?.cihazTanimi.toString(),
+      model:detailFormValues?.model.toString(),
+      io:detailFormValues?.girisCıkıs.toString(),
+      sourcename:detailFormValues?.pcAdi.toString(),
+      cardformat:detailFormValues?.kartFormat.toString(),
+      pingcheck:this.convertToNumber(detailFormValues?.pingTest).toString(),
+      debug:this.convertToNumber(detailFormValues?.aktifPasif).toString(),
+      timesend:this.convertToNumber(detailFormValues?.showTime).toString(),
+      doortype:detailFormValues?.doortype.toString(),
+      door:detailFormValues?.kapiBilgi.toString(),
+      firmaid:a.toString(),
+      ip:detailFormValues?.ip.toString(),
+      port:detailFormValues.port.toString(),
+      controllerno:detailFormValues.moduleid.toString(),
+      securitycode:detailFormValues?.secureKey.toString(),
+      latitude:latitude.toString(),
+      longtitude:longtitude.toString(),
+      adres:detailFormValues?.adres.toString(),
+      katbilgisi:detailFormValues?.katNo.toString(),
+      odabilgisi:detailFormValues?.odaNo.toString()
     }]
     return this.requestMethod(sp);
   }
-
+  convertToNumber(value: boolean): number {
+    return value ? 1 : 0;
+  }
   getSecurityCode(serino:number,customerCode:any){
     var params = {Name:'tokenid='+ '9b612-mds58d-e45gdf-y54fg4-e4554r-1878f' + '&point=stokkayitex&islemtipi=s&serino='+serino+'&customercode='+customerCode}
-    return this.httpClient.get<any>(API_DynamicPlus,{params});
+    const headers = new HttpHeaders({ 'skipInterceptor': 'true' });
+    return this.httpClient.get<any>(API_DynamicPlus,{params,headers});
   }
 
  
-
-
-	// @islemno nvarchar(200),
+  // @islemno nvarchar(200),
 	// @langcode nvarchar(10),
 	// @loginid bigint,
 	// @xsicilid bigint,
@@ -181,4 +187,9 @@ export class AccessService {
 	// @adres nvarchar(500),
 	// @katbilgisi nvarchar(150),
 	// @odabilgisi	nvarchar(150)
+
+
+
+
+
 }

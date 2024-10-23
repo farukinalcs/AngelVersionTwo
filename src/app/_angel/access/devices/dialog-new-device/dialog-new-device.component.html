@@ -52,7 +52,7 @@
                                                     <span class="required">Cihaz Modeli</span>
                                                 </label>
                                                 <p-dropdown [options]="model_device" [(ngModel)]="selectModelDevice"
-                                                    optionLabel="Ad" [filter]="true" filterBy="Ad"
+                                                    optionLabel="Ad" [filter]="true" filterBy="Ad" optionValue="ID"
                                                    
                                                     placeholder="Cihaz Modelini Seçiniz"
                                                     formControlName="model">
@@ -88,7 +88,7 @@
                                                     <span class="required">Cihaz Ip</span>
                                                 </label>
 
-                                                <input formControlName="ip" class="form-control form-control-solid" type="number" [(ngModel)]="ipOfDevice">
+                                                <input formControlName="ip" class="form-control form-control-solid" type="text" [(ngModel)]="ipOfDevice">
                                             </div>
                                             <div class="col-12 my-5">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
@@ -99,10 +99,11 @@
                                             </div>
                                             <div class="col-12 my-5">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                    <span class="required">Güvenlik Anahtarı</span>
+                                                    <span class="required">Güvenlik Anahtarı</span> 
+                                                    <span class="badge text-bg-danger text-light sck ml-4" (click)="olustur()">Oluştur</span>
                                                 </label>
 
-                                                <input formControlName="moduleid" class="form-control form-control-solid" type="text" [(ngModel)]="moduleIdOfDevice">
+                                                <input formControlName="secureKey" class="form-control form-control-solid" type="text" [(ngModel)]="secureKey">
                                             </div>
                                         </div>
                                     </div>
@@ -119,8 +120,8 @@
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                     <span class="required">Giriş/Çıkış</span>
                                                 </label>
-                                                <p-dropdown [options]="IO" [(ngModel)]="selectIO"
-                                                    optionLabel="Ad" 
+                                                <p-dropdown [options]="IO" [(ngModel)]="selectIO" 
+                                                    optionLabel="Ad" optionValue="ID"
                                                    
                                                     placeholder="Cihaz Yönünü Seçiniz"
                                                     formControlName="girisCıkıs">
@@ -140,7 +141,7 @@
                                                     <span class="required">Cihaz Tanımı</span>
                                                 </label>
                                                 <p-dropdown [options]="type_device" [(ngModel)]="selectTypeOfDevice"
-                                                    optionLabel="Ad"
+                                                    optionLabel="Ad" optionValue="ID"
                                                    
                                                     placeholder="Cihaz Tanımını Seçiniz"
                                                     formControlName="cihazTanimi">
@@ -180,7 +181,7 @@
                                                 <span class="required">Cihaz Kart Formatı</span>
                                             </label>
                                             <p-dropdown [options]="type_card" [(ngModel)]="selectFormatOfCard"
-                                                optionLabel="Ad" [filter]="true" filterBy="Ad"
+                                                optionLabel="Ad" [filter]="true" filterBy="Ad" optionLabel="Ad" optionValue="ID"
                                                
                                                 placeholder="Cihaz Modelini Seçiniz"
                                                 formControlName="kartFormat">
@@ -191,7 +192,26 @@
                                                     </div>
                                                 </ng-template>
                                             </p-dropdown>
-                                         
+                                            <p>Seçilen Cihaz Modelini: {{ selectFormatOfCard}}</p>
+                                        </div>
+
+
+                                        <div class="col-12 my-2">
+                                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                <span class="required">Cihaz Kapı Tipi</span>
+                                            </label>
+                                            <p-dropdown [options]="type_door" [(ngModel)]="selectDoorType"
+                                                placeholder="Cihaz Kapı Tipini Seçiniz"
+                                                formControlName="doortype" optionLabel="GateTypeName" optionValue="Id">
+                                          
+                                                <ng-template let-item pTemplate="item">
+                                                    <div class="item-item">
+                                                        <div>{{item.GateTypeName}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-dropdown>
+                                            <p>Seçilen Kapı Tipini: {{ selectDoorType }}</p>
+                                       
                                         </div>
 
                                         <div class="col-12 my-2">
@@ -203,6 +223,8 @@
 
                                           
                                         </div>
+
+                                
 
                                     </div>
 
@@ -252,7 +274,7 @@
                                             <span>Adres</span>
                                         </label>
 
-                                        <input formControlName="adres" class="form-control form-control-solid" type="text">
+                                        <input formControlName="adres" class="form-control form-control-solid" type="text" [(ngModel)]="address">
 
                                       
                                     </div>
@@ -261,7 +283,7 @@
                                             <span>Kat No</span>
                                         </label>
 
-                                        <input formControlName="katNo" class="form-control form-control-solid" type="text">
+                                        <input formControlName="katNo" class="form-control form-control-solid" type="text" [(ngModel)]="numberOfFloor">
 
                                       
                                     </div>
@@ -270,7 +292,7 @@
                                             <span>Oda No</span>
                                         </label>
 
-                                        <input formControlName="odaNo" class="form-control form-control-solid" type="text">
+                                        <input formControlName="odaNo" class="form-control form-control-solid" type="text" [(ngModel)]="numberOfRoom">
 
                                       
                                     </div>
@@ -315,12 +337,12 @@
                                     <div class="border border-3 rounded-5" *ngIf="!isCompleted">
                                         <div class="row py-2 px-4">
 
-                                            <div class="col-12 d-flex justify-content-center pb-2">
+                                            <div class="col-12 d-flex justify-content-center p-2">
                                                 <span
                                                     class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">Yeni Cihaz Bilgileri</span>
                                             </div>
 
-                                            <div class="col-12 d-flex justify-content-center  pb-2">
+                                            <div class="col-12 d-flex justify-content-center  p-2">
                                                 <span class="text-gray-800 fs-6 fw-bolder">Cihaz adı : {{nameOfDevice}}</span>
                                                 <span class="text-muted fw-bold d-block fs-7"></span>
                                             </div>
@@ -335,7 +357,7 @@
                                                 <div class="separator mb-2"></div>
                                                 <div class="col-12">
                                                     <div class="row text-center">
-                                                        <div class="col-12 py-2">
+                                                        <div class="col-12 d-flex justify-content-center p-2">
                                                             <span
                                                                 class="text-gray-800  fs-6 fw-bolder">Cihaz port : {{portOfDevice}}</span>
                                                             <span class="text-muted fw-bold d-block fs-7">
@@ -343,7 +365,7 @@
                                                             <span class="text-gray-800  fs-6 fw-bolder">Cihaz moduleId : {{moduleIdOfDevice}}</span>
                                                         </div>
                                                         <div class="separator mb-2"></div>
-                                                        <div class="col-12 py-2 d-flex">
+                                                        <div class="col-12 d-flex justify-content-center p-2">
                                             
                                                             <span class="text-gray-800  fs-6 fw-bolder">
                                                             Giriş/Çıkış   :  {{selectIO?.Ad}} </span>
@@ -351,7 +373,7 @@
                                                             class="text-gray-800  fs-6 fw-bolder">Cihaz Tanımı : {{selectTypeOfDevice?.Ad}}</span>
                                                         </div>
                                                         <div class="separator mb-2"></div>
-                                                        <div class="col-12 py-2">
+                                                        <div class="col-12 d-flex justify-content-center p-2">
                                                           
                                                             <span class="text-gray-800  fs-6 fw-bolder">
                                                                Pc Name :  {{nameOfPc}}</span>
@@ -365,7 +387,7 @@
 
                                                         <div class="separator mb-2"></div>
 
-                                                        <div class="col-12 py-2">
+                                                        <div class="col-12 d-flex justify-content-center p-2">
                                                             
                                                         
                                                             <span class="text-gray-800  fs-6 fw-bolder"> 
@@ -439,7 +461,7 @@
                                             </span>
                                         </button>
                                         
-                                        <button type="button" class="btn btn-lg btn-success me-3" (click)="submitForm()">
+                                        <button type="button" class="btn btn-lg btn-primary me-3" (click)="submitForm()">
                                             <span class="indicator-label">
                                                 {{ "Gönder" | translate }}
                                             </span>
