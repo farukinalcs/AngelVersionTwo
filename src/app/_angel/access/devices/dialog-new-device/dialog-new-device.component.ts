@@ -53,11 +53,11 @@ export class DialogNewDeviceComponent implements OnInit{
     public type_card:any[] = [];
     public type_door:any[] = [];
     //form değişkenler
-    nameOfDevice:string = ""; //cihaz Adı
+    nameOfDevice:string = ""; //cihaz Adık
     selectModelDevice:any; // cihaz modeli
-    portOfDevice:string = ""; // Cihaz port 
+    portOfDevice:number; // Cihaz port 
     ipOfDevice:string = ""; // cihaz Ip
-    moduleIdOfDevice:number =546096986; //Cihaz module id
+    moduleIdOfDevice:number =546096986; //Cihaz module id (ControllerNo)
     selectIO:any; // giriş çıkıs
     selectTypeOfDevice:any; // cihaz tanımı
     nameOfPc:string = ""; // Pc Adı
@@ -73,6 +73,9 @@ export class DialogNewDeviceComponent implements OnInit{
     longitude:any = "32.8597";
     koordinatModal:boolean = false;
     lokasyon:any;
+    numberOfFloor:string = "";
+    numberOfRoom:string = "";
+    address:string = "";
     // form setting
     newDeviceForm: FormGroup;
     formsCount: any = 8;

@@ -18,9 +18,10 @@ export class AccessService {
   ) {}
 
   requestMethod(sp : any[]){
+
     var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
     var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-
+    console.log("SP",sp);
     var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
       keySize : 128 / 8,
       iv : iv,
@@ -138,12 +139,15 @@ export class AccessService {
       doortype:detailFormValues?.doortype.toString(),
       door:detailFormValues?.kapiBilgi.toString(),
       firmaid:a.toString(),
+      ip:detailFormValues?.ip.toString(),
+      port:detailFormValues.port.toString(),
+      controllerno:detailFormValues.moduleid.toString(),
       securitycode:detailFormValues?.secureKey.toString(),
       latitude:latitude.toString(),
       longtitude:longtitude.toString(),
-      adres:detailFormValues?.adres,
-      katbilgisi:detailFormValues?.katbilgisi,
-      odabilgisi:detailFormValues?.odabilgisi
+      adres:detailFormValues?.adres.toString(),
+      katbilgisi:detailFormValues?.katNo.toString(),
+      odabilgisi:detailFormValues?.odaNo.toString()
     }]
     return this.requestMethod(sp);
   }
@@ -157,7 +161,32 @@ export class AccessService {
   }
 
  
-
+  // @islemno nvarchar(200),
+	// @langcode nvarchar(10),
+	// @loginid bigint,
+	// @xsicilid bigint,
+	// @id int,
+	// @name nvarchar(150),
+	// @kind int,
+	// @model int,
+	// @io int,
+	// @sourcename nvarchar(200),
+	// @cardformat nvarchar(50),
+	// @pingcheck int,
+	// @timesend int,
+	// @door nvarchar(100),
+	// @doortype int,
+	// @debug int,
+	// @firmaid int,
+	// @ip nvarchar(50),
+	// @port int,
+	// @controllerno nvarchar(50),
+	// @securitycode nvarchar(150),
+	// @latitude nvarchar(150),
+	// @longtitude nvarchar(150),
+	// @adres nvarchar(500),
+	// @katbilgisi nvarchar(150),
+	// @odabilgisi	nvarchar(150)
 
 
 

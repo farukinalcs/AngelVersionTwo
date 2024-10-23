@@ -88,7 +88,7 @@
                                                     <span class="required">Cihaz Ip</span>
                                                 </label>
 
-                                                <input formControlName="ip" class="form-control form-control-solid" type="number" [(ngModel)]="ipOfDevice">
+                                                <input formControlName="ip" class="form-control form-control-solid" type="text" [(ngModel)]="ipOfDevice">
                                             </div>
                                             <div class="col-12 my-5">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
@@ -274,7 +274,7 @@
                                             <span>Adres</span>
                                         </label>
 
-                                        <input formControlName="adres" class="form-control form-control-solid" type="text">
+                                        <input formControlName="adres" class="form-control form-control-solid" type="text" [(ngModel)]="address">
 
                                       
                                     </div>
@@ -283,7 +283,7 @@
                                             <span>Kat No</span>
                                         </label>
 
-                                        <input formControlName="katNo" class="form-control form-control-solid" type="text">
+                                        <input formControlName="katNo" class="form-control form-control-solid" type="text" [(ngModel)]="numberOfFloor">
 
                                       
                                     </div>
@@ -292,7 +292,7 @@
                                             <span>Oda No</span>
                                         </label>
 
-                                        <input formControlName="odaNo" class="form-control form-control-solid" type="text">
+                                        <input formControlName="odaNo" class="form-control form-control-solid" type="text" [(ngModel)]="numberOfRoom">
 
                                       
                                     </div>
