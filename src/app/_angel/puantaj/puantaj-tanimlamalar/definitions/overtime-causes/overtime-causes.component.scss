@@ -1,0 +1,30 @@
+.search-icon {
+    background-color: var(--kt-danger);
+    cursor: pointer;
+    width: 45px;
+    height: 37px;
+    display: flex;
+    justify-content: center;
+    border: none;
+    outline: none;
+    border-radius: 0 39px 39px 0;
+
+}
+
+.search-icon .svg {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.selected-row {
+    background-color: var(--kt-danger-light);
+    /* Arka plan rengi */
+    color: #721c24;
+    /* Yazı rengi */
+}
+
+.selected-row a {
+    color: #721c24;
+    /* Seçilen satırdaki bağlantıların rengi */
+}

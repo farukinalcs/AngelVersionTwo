@@ -1,0 +1,106 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Kademe_Tanımları" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Gerçekleşme_Kademesini_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+            
+                <div class="card-body">
+                    <div class="row gap-5" [formGroup]="formGroup">
+                        <div class="col-5">
+                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                <span class="required">{{"İzin_Gerçekleşme_Kademesi" | translate}}</span>
+                            </label>
+            
+                            <p-dropdown [options]="levels" [(ngModel)]="selectedPermitType" optionLabel="level" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="level"
+                                [showClear]="true" placeholder="{{'Kademe_Seçiniz' | translate}}" formControlName="permitLevel">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="selectedPermitType">
+                                        <div>{{selectedPermitType.level}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.level}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+            
+                        <div class="col-5">
+                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                <span class="required">{{"Fazla_Mesai_Gerçekleşme_Kademesi" | translate}}</span>
+                            </label>
+            
+                            <p-dropdown [options]="levels" [(ngModel)]="selectedOvertimeType" optionLabel="level" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="level"
+                                [showClear]="true" placeholder="{{'Kademe_Seçiniz' | translate}}" formControlName="overtimeLevel">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="selectedOvertimeType">
+                                        <div>{{selectedOvertimeType.level}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.level}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+            
+                        <div class="col-5">
+                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                <span class="required">{{"Vardiya_Planı_Gerçekleşme_Kademesi" | translate}}</span>
+                            </label>
+            
+                            <p-dropdown [options]="levels" [(ngModel)]="selectedShiftType" optionLabel="level" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="level"
+                                [showClear]="true" placeholder="{{'Kademe_Seçiniz' | translate}}" formControlName="shiftPlanLevel">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="selectedShiftType">
+                                        <div>{{selectedShiftType.level}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.level}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+            
+                        <div class="col-5">
+                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                <span class="required">{{"Mail_Servis_Gerçekleşme_Kademesi" | translate}}</span>
+                            </label>
+            
+                            <p-dropdown [options]="levels" [(ngModel)]="selectedMailType" optionLabel="level" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="level"
+                                [showClear]="true" placeholder="{{'Kademe_Seçiniz' | translate}}" formControlName="mailServiceLevel">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="selectedMailType">
+                                        <div>{{selectedMailType.level}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.level}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+            
+                        <div class="col-12 d-flex justify-content-end">
+                            <a class="btn btn-danger btn-sm custom-btn" (click)="setLevelDefinition()">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                {{"Kaydet" | translate}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

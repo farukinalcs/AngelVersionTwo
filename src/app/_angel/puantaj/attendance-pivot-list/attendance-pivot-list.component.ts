@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
@@ -6,7 +12,16 @@ import { combineLatest, delay, filter, map, Subject, takeUntil } from 'rxjs';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { ProfileService } from '../../profile/profile.service';
 import { AttendanceService } from '../attendance.service';
-import { CellRange, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, GridApi, IProvidedFilter, ISetFilterParams, RangeSelectionChangedEvent } from 'ag-grid-community';
+import {
+  CellRange,
+  FilterChangedEvent,
+  FilterModifiedEvent,
+  FilterOpenedEvent,
+  GridApi,
+  IProvidedFilter,
+  ISetFilterParams,
+  RangeSelectionChangedEvent,
+} from 'ag-grid-community';
 import {
   ColDef,
   ColGroupDef,
@@ -99,7 +114,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
     //   hide: false,
     // },
     {
-      headerName: this.translateService.instant('Fotoğraf'),
+      headerName: this.translateService.instant('#'),
       field: 'imagePath',
       editable: false,
       pinned: 'left',
@@ -112,6 +127,8 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
       cellRenderer: (params: any) => this.getImageGrid(params),
       cellRendererParams: { exampleParameter: 'red' },
       hide: false,
+      resizable: false,
+      lockPosition: 'left',
     },
 
     //Kişi Bilgileri
@@ -156,6 +173,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
           pinned: 'left',
           width: 120,
           minWidth: 120,
+          lockPosition: 'left',
         },
         {
           headerName: this.translateService.instant('Personel'),
@@ -182,6 +200,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
           width: 150,
           minWidth: 150,
           cellRenderer: (params: any) => this.pivotSetValueForPerson(params),
+          lockPosition: 'left',
         },
       ],
     },
@@ -281,6 +300,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
       cellClass: (params) => this.applyWeekendClass(params),
       width: 100,
       minWidth: 100,
+      lockPosition: 'right',
     },
   ];
 
@@ -296,9 +316,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
     // cellStyle: { height: '100px', fontWeight: 'bold' }
   };
   public rowSelection: 'single' | 'multiple' = 'multiple';
-  public isRowSelectable: IsRowSelectable = (params: IRowNode<any>) => {
-    return !!params.data && params.data.year >= 2012;
-  };
+
   public rowData: any[] = [];
   public sideBar: SideBarDef | string | string[] | boolean | null = {
     toolPanels: [
@@ -333,7 +351,10 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
     ],
   };
   // gridApi: any;
-  gridOptionsLight = {onCellClicked: this.onCellClicked.bind(this)};
+  gridOptionsLight = {
+    // onCellClicked: this.onCellClicked.bind(this),
+  };
+
   gridOptionsDark = {};
 
   loading: boolean = false;
@@ -388,6 +409,12 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
 
   displayProcessChange: boolean = false;
   clickedCells: any[] = [];
+
+  isDragging: boolean = false; // Drag işlemi başlatıldı mı
+  selectedCells: any[] = []; // Seçilen hücreler
+
+  selectedCellsData: any[] = []; // Seçilen hücrelerin verilerini saklayacağınız dizi
+  processChangeList: any[] = [];
   constructor(
     private formBuilder: FormBuilder,
     private profileService: ProfileService,
@@ -618,7 +645,9 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
     return (
       `
       <div class="bg-hover-light d-flex justify-content-center mt-1">
-        <img style="width: 23px; height: 23px; border-radius: 5px;" src="http://localhost:5075/api/Image?sicilid=` + params.data.sicilid +`">
+        <img style="width: 23px; height: 23px; border-radius: 5px;" src="http://localhost:5075/api/Image?sicilid=` +
+      params.data.sicilid +
+      `">
       </div>`
     );
   }
@@ -907,12 +936,12 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
     });
   }
 
-  createColumnDefs(data: any[]): ColDef[] {
+  createColumnDefs(data: any[]): (ColDef | ColGroupDef)[] {
     const dateKeys = Object.keys(data[0]).filter((key) =>
       /^y\d{4}x\d{2}x\d{2}$/.test(key)
     );
 
-    const dateColumns = dateKeys.map((dateKey) => {
+    const dateColumns: (ColDef | ColGroupDef)[] = dateKeys.map((dateKey) => {
       // Tarih anahtarını '2024.08.06' formatına dönüştürdüm
       const parts = dateKey.split('x');
       const year = parts[0].slice(1); // 'y' karakterini atmak için slice(1) kullandım
@@ -930,6 +959,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
         filter: false,
         width: 90,
         minWidth: 90,
+        lockPosition: 'left',
         headerComponentParams: {
           template: `<div class="m-auto" (click)="onHeaderClicked($event)">
                       <div class="ui-grid-vertical-bar">&nbsp;</div>
@@ -941,6 +971,10 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
         cellClass: (params: any) => this.pivotCellClass(params),
         // valueFormatter: (params:any) => this.pivotCellParse(params),
         cellRenderer: (params: any) => this.pivotSetValue(params),
+        // onCellMouseDown: this.onCellMouseDown.bind(this),
+        // onCellMouseOver: this.onCellMouseOver.bind(this),
+        // onCellMouseUp: this.onCellMouseUp.bind(this),
+        // cellClass: (params) => (params.node.isSelected() ? 'selected-cell' : this.pivotCellClass(params)),
       };
     });
 
@@ -1033,7 +1067,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
             if (color === 'green') {
               let firstValue = parts[0].split('<br>')[0] || '';
               let secondValue = parts[0].split('<br>')[1] || '';
-              
+
               return `
               <span class="dynamic-content"> ${secondValue} </span>
               <span class="bottom-content"> ${params?.column?.colId} </span>
@@ -1057,7 +1091,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
             if (color === 'green') {
               let firstValue = parts[0].split('<br>')[0] || '';
               let secondValue = parts[0].split('<br>')[1] || '';
-              let label = "TEST";
+              let label = 'TEST';
               return `
               <div class="fw-bolder cell-wrapper" data-label="${label}">
                 ${firstValue}
@@ -1543,15 +1577,18 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
     if (!pattern.test(event.colDef.field)) {
       return;
     }
-  
+
     if (event.event.ctrlKey) {
-      console.log("Ctrl ile hücre seçildi:", event);
-  
+      console.log('Ctrl ile hücre seçildi:', event);
+
       let cellAlreadySelected = false;
-  
+
       if (this.clickedCells.length > 0) {
-        this.clickedCells.forEach(item => {
-          if (item.rowIndex === event.rowIndex && item.column.colId === event.column.colId) {
+        this.clickedCells.forEach((item) => {
+          if (
+            item.rowIndex === event.rowIndex &&
+            item.column.colId === event.column.colId
+          ) {
             this.toastrService.warning(
               this.translateService.instant('Zaten_Seçildi'),
               this.translateService.instant('Uyarı')
@@ -1559,14 +1596,18 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
             cellAlreadySelected = true;
           }
         });
-  
+
         if (cellAlreadySelected) {
           return; // Zaten seçiliyse fonksiyon burada sonlanır
         }
       }
-  
+
       if (this.selectedVacation || this.selectedShift) {
-        this.setPivotProcess(event.data, event.column.colId, this.selectedShift || this.selectedVacation);
+        this.setPivotProcess(
+          event.data,
+          event.column.colId,
+          this.selectedShift || this.selectedVacation
+        );
         this.clickedCells.push(event);
       } else {
         this.toastrService.error(
@@ -1574,25 +1615,23 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
           this.translateService.instant('Hata')
         );
       }
-  
     } else {
-      console.log("Normal tıklama yapıldı:", event);
+      console.log('Normal tıklama yapıldı:', event);
     }
   }
-  
 
   setPivotProcess(item: any, colId: string, process: any) {
     var sp: any[] = [
       {
         mkodu: 'yek118',
-	      sicilid: item.sicilid.toString(),
-	      tarih: this.transformDate(colId),
-	      mesaibirimi: process.ID.toString() 
+        sicilid: item.sicilid.toString(),
+        tarih: this.transformDate(colId),
+        mesaibirimi: process.ID.toString(),
       },
     ];
 
-    console.log("Sepet paramatreler :", sp);
-    
+    console.log('Sepet paramatreler :', sp);
+
     this.profileService
       .requestMethod(sp)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -1621,46 +1660,125 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
   }
 
   onRangeSelectionChanged(event: RangeSelectionChangedEvent) {
-    var lbRangeCount = document.querySelector("#lbRangeCount")!;
-    
-    var cellRanges = this.agGridLight.api.getCellRanges();//this.gridApi.getCellRanges();
-    // if no selection, clear all the results and do nothing more
-    if (!cellRanges || cellRanges.length === 0) {
-      lbRangeCount.textContent = "0";
-      return;
-    }
-    // set range count to the number of ranges selected
-    lbRangeCount.textContent = cellRanges.length + "";
-    var sum = 0;
-    if (cellRanges) {
-      cellRanges.forEach((range: CellRange) => {
-        // get starting and ending row, remember rowEnd could be before rowStart
-        var startRow = Math.min(
-          range.startRow!.rowIndex,
-          range.endRow!.rowIndex,
-        );
-        var endRow = Math.max(range.startRow!.rowIndex, range.endRow!.rowIndex);
-        for (var rowIndex = startRow; rowIndex <= endRow; rowIndex++) {
-          range.columns.forEach((column) => {
-            var rowNode = this.agGridLight.api.getDisplayedRowAtIndex(rowIndex);
+    const selectedRanges = this.agGridLight.api.getCellRanges();
 
-            
+    selectedRanges?.forEach((range) => {
+      if (range.startRow == range.endRow) {
+        if (event.started && event.finished) {
+          this.getSelectedCellsData(false);
+        }
+      } else {
+        if (!event.started && event.finished) {
+          this.getSelectedCellsData(true);
+        }
+      }
+    });
+    //     if (!event.started && event.finished) {
+    //       this.getSelectedCellsData(true);
+    //     }
+  }
+
+  getSelectedCellsData(isMultiple: boolean) {
+    const selectedRanges = this.agGridLight.api.getCellRanges();
+    this.selectedCellsData = [];
+
+    const uniqueCells = new Set<string>();
+
+    if (selectedRanges && selectedRanges.length > 0) {
+      selectedRanges.forEach((range) => {
+        if (range.startRow && range.endRow) {
+          const startRow = Math.min(
+            range.startRow.rowIndex,
+            range.endRow.rowIndex
+          );
+          const endRow = Math.max(
+            range.startRow.rowIndex,
+            range.endRow.rowIndex
+          );
+
+          for (let rowIndex = startRow; rowIndex <= endRow; rowIndex++) {
+            const rowNode =
+              this.agGridLight.api.getDisplayedRowAtIndex(rowIndex);
+
             if (rowNode) {
-              var value = this.agGridLight.api.getValue(column, rowNode);
-              if (typeof value === 'number') {
-                sum += value;
-              }
+              range.columns.forEach((column) => {
+                const cellValue = this.agGridLight.api.getValue(
+                  column.getColId(),
+                  rowNode
+                );
+                const cellKey = `${rowNode.rowIndex}-${column.getColId()}`; // Hücreyi benzersiz kılacak bir anahtar
+
+                if (!uniqueCells.has(cellKey)) {
+                  uniqueCells.add(cellKey);
+                  this.selectedCellsData.push({
+                    column: column.getColId(),
+                    value: cellValue,
+                    rowIndex: rowNode.rowIndex,
+                    colDef: column.getColDef(),
+                    rowData: rowNode.data,
+                    cellKey: cellKey,
+                  });
+                }
+              });
             }
-          });
+          }
         }
       });
-    }
-    if (event.started) {
 
+      //  if (isMultiple) {
+      //    this.selectedCellsData.shift();
+      //  }
+
+      console.log('Selected Cells Data:', this.selectedCellsData);
+    } else {
+      console.warn('No cells are selected or no range found.');
     }
-    if (event.finished) {
-      
+
+    // İşlem seçimi kontrolü ve gönderme işlemi
+    if (!this.selectedVacation && !this.selectedShift) {
+      this.toastrService.error(
+        this.translateService.instant('İşlem_Seçilmedi'),
+        this.translateService.instant('Hata')
+      );
+      return;
+    } else {
+      this.gonder();
     }
+  }
+
+  gonder() {
+    this.selectedCellsData.forEach((selectedCell: any) => {
+      if (this.selectedVacation || this.selectedShift) {
+        this.setPivotProcess(
+          selectedCell.rowData,
+          selectedCell.column,
+          this.selectedShift || this.selectedVacation
+        );
+      }
+    });
+  }
+
+  isThereProcessChange() {
+    // Pivot özete istek atıp grid üzerinde hücrelerin stilini değiştirmem lazım
+    this.processLoading = false;
+    var sp: any[] = [{ mkodu: 'yek119' }];
+
+    this.profileService
+      .requestMethod(sp)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const data = response[0].x;
+        const message = response[0].z;
+
+        if (message.islemsonuc == -1) {
+          return;
+        }
+
+        this.processChangeList = data;
+        console.log('Pivot Özet (s) : ', data);
+
+        this.processLoading = true;
+      });
   }
 
   ngOnDestroy(): void {

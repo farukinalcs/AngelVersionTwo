@@ -144,7 +144,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       console.log("title$ : ", v);
     });
 
-    if (pageTitle == '' ||
+    if (
+      pageTitle == '' ||
       pageTitle == 'Light' ||
       pageTitle == 'Genel Bakış' ||
       pageTitle == 'Dashboard' ||
@@ -167,10 +168,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       pageTitle == 'Mobile Location' ||
       pageTitle == 'My Task List' ||
       pageTitle == 'My Team' ||
-      pageTitle == 'Incomplete Time') {
-        
+      pageTitle == 'Incomplete Time'
+    ) {
       this.router.navigate(['profile/profil_tanimlamalar']);
-        
+    } else if (
+      pageTitle == 'Pdks' ||
+      pageTitle == 'Pdks Pivot'
+    ) {
+      this.router.navigate(['puantaj/tanimlamalar']);
     } else {
       this.router.navigate(['access/tanimlamalar']);
     }

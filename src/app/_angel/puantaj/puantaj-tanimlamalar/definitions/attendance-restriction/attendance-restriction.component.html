@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"PDKS_Bloklama" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+            
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6 p-5">
+                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                <span class="required">{{"Başlangıç_Tarihi" | translate}}</span>
+                            </label>
+
+                            <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="startDate">
+                        </div>
+
+                        <div class="col-6 d-flex align-items-end justify-content-end gap-2 p-0">
+                            <a class="btn btn-dark btn-sm custom-btn" (click)="save()">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                {{"Kaydet" | translate}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
