@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AccessdashboardComponent } from './accessdashboard/accessdashboard.component';
 import { RouterModule } from '@angular/router';
-import { TerminalComponent } from './terminal/terminal.component';
 import { GecisgruplariComponent } from './gecisgruplari/gecisgruplari.component';
 import { TanimlamalarComponent } from './tanimlamalar/tanimlamalar.component';
 import { RaporlarComponent } from './raporlar/raporlar.component';
@@ -55,12 +54,12 @@ import { DialogNewDeviceComponent } from './devices/dialog-new-device/dialog-new
 import { TranslationModule } from 'src/app/modules/i18n';
 import { DropdownModule } from 'primeng/dropdown';
 import { AgmCoreModule } from '@agm/core';
+import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dialog-update-device.component';
 
 
 @NgModule({
   declarations: [
     AccessdashboardComponent,
-    TerminalComponent,
     DevicesComponent,
     GecisgruplariComponent,
     TanimlamalarComponent,
@@ -81,7 +80,7 @@ import { AgmCoreModule } from '@agm/core';
     DialogWidget1001Component,
     CustomizedCellComponent,
     DialogNewDeviceComponent,
-
+    DialogUpdateDeviceComponent
   ],
 
   imports: [
