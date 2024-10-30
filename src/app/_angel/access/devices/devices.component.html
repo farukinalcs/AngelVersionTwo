@@ -99,7 +99,7 @@
                                         [pagination]="true" [paginationPageSize]="15" 
                                         [sideBar]="sideBar" [rowGroupPanelShow]="rowGroupPanelShow" 
                                         [pagination]="true" [paginationPageSize]="15"
-                                        [rowSelection]="rowSelection">
+                                        [rowSelection]="rowSelection"  (rowClicked)="onRowClicked($event)">
                                     </ag-grid-angular>
                                 </div>
                             </div>
@@ -127,3 +127,14 @@
      [baseZIndex]="10000">
             <app-dialog-new-device></app-dialog-new-device>
     </p-dialog>
+
+    <p-dialog
+    header="Update Devices"
+    [modal]="true"
+    [(visible)]="updateDeviceModal" 
+    [style]="{ width: '75vw' }" 
+    [breakpoints]="{'2560px': '70vw', '992px': '90vw', '576px': '99vw' }"
+    [maximizable]="true" 
+    [baseZIndex]="10000">
+          
+   </p-dialog>

@@ -29,9 +29,10 @@ export class DevicesComponent implements OnInit {
   public frameworkComponents:any;
   savedFilterModel: any;
   newDeviceModal:boolean;
+  updateDeviceModal:boolean;
   gridOptionsLight = {};
   gridOptionsDark = {};
- 
+  selectedRowData: any = null;
   @ViewChild('agGridLight', { static: false }) agGridLight: AgGridAngular;
   @ViewChild('agGridDark', { static: false }) agGridDark: AgGridAngular;
   
@@ -306,7 +307,13 @@ export class DevicesComponent implements OnInit {
 
   showNewDeviceDialog(){
     this.newDeviceModal = true;
-    console.log("SELAM")
+  
+  }
+  
+  onRowClicked(event: any) {
+    this.selectedRowData = event.data;
+    this.updateDeviceModal= true;
+    console.log(".....selectedRowData",this.selectedRowData)
   }
 
 }
