@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { environment } from 'src/environments/environment';
 import * as CryptoJS from "crypto-js";
+import { Subject } from 'rxjs';
 
 const API_URL = environment.newApiUrl;
 const API_DynamicPlus = environment.apiUrl2;
@@ -16,6 +17,13 @@ export class AccessService {
     private httpClient: HttpClient,
     private helperService : HelperService
   ) {}
+
+  private triggerEvent = new Subject<void>();
+  triggerEvent$ = this.triggerEvent.asObservable(); 
+
+  triggerOtherComponentInit() {
+    this.triggerEvent.next();  // Data list yenileme
+  }
 
   requestMethod(sp : any[]){
 
@@ -149,8 +157,84 @@ export class AccessService {
       katbilgisi:detailFormValues?.katNo.toString(),
       odabilgisi:detailFormValues?.odaNo.toString()
     }]
+    console.log("REEEEEEEEEEEEEEEEEE",sp)
     return this.requestMethod(sp);
   }
+
+  UpdateDevice(name:string,kind:string,model:number,io:number,
+    sourcename:string,cardformat:string,ping:boolean,debug:boolean,timesend:boolean,
+    doortype:string,door:string,ip:string,port:number,controllerno:number,securitycode:string,
+    latitude:number,longtitude:number){
+    let a = 0;
+    var sp : any[] = [{
+      mkodu : 'yek135',
+      id : a.toString(),
+      name:name.toString(),
+      kind:kind.toString(),
+      model:model.toString(),
+      io:io.toString(),
+
+      sourcename:sourcename.toString(),
+      cardformat:cardformat.toString(),
+      pingcheck:this.convertToNumber(ping).toString(),
+      debug:this.convertToNumber(debug).toString(),
+      timesend:this.convertToNumber(timesend).toString(),
+
+      doortype:doortype.toString(),
+      door:door.toString(),
+      firmaid:a.toString(),
+      ip:ip.toString(),
+      port:port.toString(),
+      controllerno:controllerno.toString(),
+      securitycode:securitycode.toString(),
+      latitude:latitude.toString(),
+      longtitude:longtitude.toString(),
+      adres:'',
+      katbilgisi:'',
+      odabilgisi:'',
+      lasteventtarih:'',
+	    tip: 'update'
+    }]
+    return this.requestMethod(sp);
+  }
+
+  UpdateDevice2(name:string,kind:number,model:number,io:number,
+    sourcename:string,cardformat:string,ping:boolean,debug:boolean,timesend:boolean,
+    doortype:string,ip:string,port:number,controllerno:string,securitycode:string,
+    latitude:string,longtitude:string){
+    let a = 0;
+    var sp : any[] = [{
+      mkodu : 'yek135',
+      id : a.toString(),
+      name:name.toString(),
+      kind:kind.toString(),
+      model:model.toString(),
+      io:io.toString(),
+
+      sourcename:sourcename.toString(),
+      cardformat:cardformat.toString(),
+      pingcheck:this.convertToNumber(ping).toString(),
+      debug:this.convertToNumber(debug).toString(),
+      timesend:this.convertToNumber(timesend).toString(),
+      doortype:doortype.toString(),
+      door:"bla bla",
+      firmaid:a.toString(),
+      ip:ip.toString(),
+      port:port.toString(),
+      controllerno:'546096986',
+      securitycode:'+MeUs0zu8JzdR7jp1BA1AQEHzODgve6/C824YpjwGwo=',
+
+      latitude:latitude.toString(),
+      longtitude:longtitude.toString(),
+      adres:'',
+      katbilgisi:'',
+      odabilgisi:'',
+      lasteventtarih:'',
+	    tip: 'update'
+    }]
+    return this.requestMethod(sp);
+  }
+
   convertToNumber(value: boolean): number {
     return value ? 1 : 0;
   }
@@ -159,36 +243,6 @@ export class AccessService {
     const headers = new HttpHeaders({ 'skipInterceptor': 'true' });
     return this.httpClient.get<any>(API_DynamicPlus,{params,headers});
   }
-
- 
-  // @islemno nvarchar(200),
-	// @langcode nvarchar(10),
-	// @loginid bigint,
-	// @xsicilid bigint,
-	// @id int,
-	// @name nvarchar(150),
-	// @kind int,
-	// @model int,
-	// @io int,
-	// @sourcename nvarchar(200),
-	// @cardformat nvarchar(50),
-	// @pingcheck int,
-	// @timesend int,
-	// @door nvarchar(100),
-	// @doortype int,
-	// @debug int,
-	// @firmaid int,
-	// @ip nvarchar(50),
-	// @port int,
-	// @controllerno nvarchar(50),
-	// @securitycode nvarchar(150),
-	// @latitude nvarchar(150),
-	// @longtitude nvarchar(150),
-	// @adres nvarchar(500),
-	// @katbilgisi nvarchar(150),
-	// @odabilgisi	nvarchar(150)
-
-
 
 
 

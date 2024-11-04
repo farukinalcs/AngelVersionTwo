@@ -99,7 +99,7 @@
                                         [pagination]="true" [paginationPageSize]="15" 
                                         [sideBar]="sideBar" [rowGroupPanelShow]="rowGroupPanelShow" 
                                         [pagination]="true" [paginationPageSize]="15"
-                                        [rowSelection]="rowSelection"  (rowClicked)="onRowClicked($event)">
+                                        [rowSelection]="rowSelection"  (rowClicked)="showUpdateDevice($event)">
                                     </ag-grid-angular>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
             <app-dialog-new-device></app-dialog-new-device>
     </p-dialog>
 
-    <p-dialog
+    <!-- <p-dialog
     header="Update Devices"
     [modal]="true"
     [(visible)]="updateDeviceModal" 
@@ -136,5 +136,13 @@
     [breakpoints]="{'2560px': '70vw', '992px': '90vw', '576px': '99vw' }"
     [maximizable]="true" 
     [baseZIndex]="10000">
-            <app-dialog-update-device></app-dialog-update-device>
-   </p-dialog>
+           
+   </p-dialog> -->
+
+   <ng-container *ngIf="displayUpdateDevice">
+         <app-dialog-update-device
+                [displayUpdateDevice]="displayUpdateDevice"
+                [data]="selectedRowData"
+                (hideUpdateDevice) = hideUpdateDevice();
+                (close)="hideUpdateDevice();"></app-dialog-update-device>
+   </ng-container>

@@ -29,7 +29,10 @@ export class DevicesComponent implements OnInit {
   public frameworkComponents:any;
   savedFilterModel: any;
   newDeviceModal:boolean;
-  updateDeviceModal:boolean;
+
+  displayUpdateDevice:boolean;
+  //updateDeviceModal:boolean;
+
   gridOptionsLight = {};
   gridOptionsDark = {};
   selectedRowData: any = null;
@@ -47,7 +50,10 @@ export class DevicesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDevices();
-    this.typeOfDevice('sys_terminalkind');
+    //this.typeOfDevice('sys_terminalkind');
+    this.access.triggerEvent$.subscribe(() => {
+      this.getDevices();
+    });
   }
 
   // onGridReady(params:any){
@@ -63,8 +69,6 @@ export class DevicesComponent implements OnInit {
       const responseToken = response[0].y;
       this.ref.detectChanges();
       console.log("this.rowData ",this.rowData );
-      console.log("zzzzzzzzzzzz",message);
-      console.log("yyyyyyyyyyyy",responseToken);
     })
   }
 
@@ -75,6 +79,7 @@ export class DevicesComponent implements OnInit {
       console.log("type_Tk ",this.type_device );
     })
   }
+
   public sideBar: SideBarDef | string | string[] | boolean | null = {
     toolPanels: [
       'filters',
@@ -93,6 +98,7 @@ export class DevicesComponent implements OnInit {
       },
     ],
   };
+
   public rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never' = 'always';
   public rowSelection: 'single' | 'multiple' = 'multiple';
   public  columnDefs: (ColDef | ColGroupDef)[]  = [
@@ -310,10 +316,17 @@ export class DevicesComponent implements OnInit {
   
   }
   
-  onRowClicked(event: any) {
+
+  showUpdateDevice(event: any) {
     this.selectedRowData = event.data;
-    this.updateDeviceModal= true;
+    // this.updateDeviceModal= true;
+    this.displayUpdateDevice = true;
+  
     console.log(".....selectedRowData",this.selectedRowData)
+  }
+
+  hideUpdateDevice(){
+    this.displayUpdateDevice = false;
   }
 
 }

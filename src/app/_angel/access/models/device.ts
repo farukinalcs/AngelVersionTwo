@@ -2,6 +2,7 @@ export class Device{
 CardFormat:string;
 Debug:number;
 Door:any | null;
+Doortype:string;
 IO:number;
 IOad:string;
 Id:number;
@@ -14,6 +15,7 @@ TemplateCount:number;
 TimeSend:number;
 UserCount:number;
 controllerno:number;
+securitycode:string;
 deviceImage:any | null;
 durum:string;
 firma:any|null;
