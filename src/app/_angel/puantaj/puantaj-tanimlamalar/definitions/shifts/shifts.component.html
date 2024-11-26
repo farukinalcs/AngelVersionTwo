@@ -1,0 +1,549 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Mesai_Tanımları" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Çalışma_Saatlerinizi_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="!loading">
+                    <div class="card-body">
+                        <div class="col-12 pt-10">
+                            <div class="loader-container">
+                                <div id="splash-screen" class="splash-screen"
+                                    style="position: inherit; color:transparent; background-color: transparent;">
+                                    <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                                        style="margin-left: 0; height: 0;" />
+                                    <mat-spinner></mat-spinner>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="loading">
+                    <div class="card-body">
+                        <div class="row d-flex align-items-strech">
+                            <div class="col-3">
+                                <div class="input-group py-3" style="flex: 1;">
+                                    <input class="form-control form-control-solid p-2 border-1 border-dark rounded-lg font-size-h6"
+                                        [(ngModel)]="filterText" style="height: 30px;"
+                                        type="text" placeholder="{{'Arama' | translate}}">
+
+                                    <button class="search-icon">
+                                        <div class="svg">
+                                            <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
+                                        </div>
+                                    </button>
+                                </div>
+
+                                <div class="h-550px scroll">
+                                    <ng-container *ngFor="let shift of shifts | searchFilter:filterText: ['ad']">
+                                        <div class="d-flex align-items-center my-4 process-item rounded cursor-pointer"
+                                            [ngClass]="{'bg-dark': selectedShift?.ID == shift.ID}"
+                                            (click)="selectShift(shift)">
+                                            <span class="bullet bullet-vertical h-20px bg-dark me-5"></span>
+                                            <div class="d-flex flex-column">
+                                                <a class="fs-9 fw-bolder"
+                                                    [ngClass]="{'text-white': selectedShift?.ID == shift.ID, 'text-gray-900':selectedShift?.ID != shift.ID}">
+                                                    {{shift.ad}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                
+                            </div>
+
+                            <div class="col-9 h-100" [formGroup]="form">
+                                <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="changeTabMenu($event)" [selectedIndex]="selectedIndex">
+                                    <mat-tab label="{{'Tanım' | translate}}">
+                                        <div class="row w-100">
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"Açıklama" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="text" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['shiftName']?.active}" formControlName="shiftName">
+                                            </div>
+                                    
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"Kod" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="text" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['shiftCode']?.active}" formControlName="shiftCode" />
+                                            </div>
+
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"Başlangıç_Saati" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['startTime']?.active}" formControlName="startTime" />
+                                            </div>
+
+                                            <div class="col-3 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"Artı" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['plus']?.active}" formControlName="plus" />
+                                            </div>
+
+                                            <div class="col-3 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"Eksi" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['minus']?.active}" formControlName="minus" />
+                                            </div>
+
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"Bitiş_Saati" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['endTime']?.active}" formControlName="endTime" />
+                                            </div>
+
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"En_Çok_Çalışma_Süresi" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['maxWorkingTime']?.active}" formControlName="maxWorkingTime" />
+                                            </div>
+
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"Fazla_Mesai_Yüzdesi" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="number" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['overtimePercentage']?.active}" formControlName="overtimePercentage" />
+                                            </div>
+
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"Eksik_Mesai_Yüzdesi" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="number" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['incompleteTimeZone']?.active}" formControlName="incompleteTimeZone" />
+                                            </div>
+
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"En_Az_Fazla_Mesai_Süresi" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['minOvertimeTime']?.active}" formControlName="minOvertimeTime" />
+                                            </div>
+
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"En_Çok_Fazla_Mesai_Süresi" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['maxOvertimeTime']?.active}" formControlName="maxOvertimeTime" />
+                                            </div>
+
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"En_Çok_Erken_Mesai_Süresi" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['mostEarlyDuration']?.active}" formControlName="mostEarlyDuration" />
+                                            </div>
+
+                                            <div class="col-3 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"Giriş_Toleransı" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['inputTolerance']?.active}" formControlName="inputTolerance" />
+                                            </div>
+
+                                            <div class="col-3 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"Çıkış_Toleransı" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['outputTolerance']?.active}" formControlName="outputTolerance" />
+                                            </div>
+
+
+                                            <div class="d-flex flex-row-reverse my-5">
+                                                <div class="p-2">
+                                                    <a class="btn btn-dark btn-sm custom-btn" (click)="saveShiftDefinition()">
+                                                        <i class="fa-solid fa-floppy-disk"></i>
+                                                        {{"Kaydet" | translate}}
+                                                    </a>
+                                                </div>
+                    
+                                                <div class="p-2">
+                                                    <a class="btn btn-dark btn-sm custom-btn" (click)="addShiftDefinition()">
+                                                        <i class="fa-solid fa-plus"></i>
+                                                        {{"Ekle" | translate}}
+                                                    </a>
+                                                </div>
+
+                                                <div class="p-2" *ngIf="selectedShift" (click)="deleteShift()">
+                                                    <a class="btn btn-dark btn-sm custom-btn">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                        {{"Seçili_Mesai_Tipini_Sil" | translate}}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </mat-tab>
+                              
+                                    <mat-tab label="{{'Yuvarlamalar' | translate}}">
+                                        <div class="row w-100">
+                                            <div class="col-12 pt-5">
+                                                <ul class="nav mb-1 gap-2" role="tablist">
+                                                    <li class="nav-item mb-3" role="presentation">
+                                                        <a class="nav-link btn btn-flex flex-center border border-2 btn-light-dark btn-active-dark btn-color-gray-600 btn-active-color-white rounded-2"
+                                                            [class.active]="roundingType === 1" 
+                                                            [attr.aria-selected]="roundingType === 1 ? 'true' : 'false'"
+                                                            data-bs-toggle="tab" id="kt_charts_widget_35_tab_1" 
+                                                            (click)="selectRoundingType(1)"
+                                                            role="tab" tabindex="-1">
+                                                            {{"Hareket_Yuvarlama" | translate}}
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item mb-3" role="presentation">
+                                                        <a class="nav-link btn btn-flex flex-center btn-light-dark btn-active-dark btn-color-gray-600 btn-active-color-white rounded-2"
+                                                            [class.active]="roundingType === 2" 
+                                                            [attr.aria-selected]="roundingType === 2 ? 'true' : 'false'"
+                                                            data-bs-toggle="tab" id="kt_charts_widget_35_tab_2" 
+                                                            (click)="selectRoundingType(2)"
+                                                            role="tab" tabindex="-1">
+                                                            {{"Süre_Yuvarlama" | translate}}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        
+                                            <div class="col-12">
+                                                <div class="fs-7 fw-semibold text-muted">
+                                                    {{roundingType == 1 ? ("Hareket_Yuvarlama_Açıklama" | translate) : ("Süre_Yuvarlama_Açıklama" | translate) }}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 py-10">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                                        <thead>
+                                                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                                                <th class=" rounded-start" style="width: 22%;">{{"Hedef" | translate}}</th>
+                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 22%;">{{"Yuvarlama_Başlangıcı" | translate}}</th>
+                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 22%;">{{"Yuvarlama_Bitişi" | translate}}</th>
+                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 22%;">{{"Yuvarlanacak_Saat" | translate}}</th>
+                                                                <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 16%;">{{"#" | translate}}</th>
+                                                            </tr>
+                                                        </thead>
+                                        
+                                                        <tbody>
+                                                            <ng-container >
+                                                                <tr class="cursor-pointer fs-7">
+                                                                    <td>
+                                                                        <span class="mb-1" *ngIf="roundingType == 1">
+                                                                            <select class="form-select form-select-sm" formControlName="target">
+                                                                                <option value="1">{{"Giriş" | translate}}</option>
+                                                                                <option value="2">{{"Çıkış" | translate}}</option>
+                                                                            </select>                                                                            
+                                                                        </span>
+
+                                                                        <span class="mb-1" *ngIf="roundingType == 2">
+                                                                            <select class="form-select form-select-sm" formControlName="target">
+                                                                                <option value="1">{{"Normal_Mesai" | translate}}</option>
+                                                                                <option value="2">{{"Fazla_Mesai" | translate}}</option>
+                                                                                <option value="2">{{"Gece_Zammı" | translate}}</option>
+                                                                            </select>                                                                            
+                                                                        </span>
+                                                                    </td>
+                                        
+                                                                    <td>
+                                                                        <span class="mb-1">
+                                                                            <input type="time" class="form-control form-control-sm" formControlName="roundingStart"/>
+                                                                        </span>
+                                                                    </td>
+                                        
+                                                                    <td>
+                                                                        <span class="mb-1">
+                                                                            <input type="time" class="form-control form-control-sm" formControlName="roundingEnd"/>
+                                                                        </span>
+                                                                    </td>
+                                        
+                                                                    <td>
+                                                                        <span class="mb-1" *ngIf="form.get('restIrregular')?.value">
+                                                                            <input type="time" class="form-control form-control-sm" formControlName="roundingTime"/>
+                                                                        </span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <a class="btn btn-secondary btn-sm py-1 px-2" (click)="addRounding(roundingType == 1 ? 'yuvarlamalar' : 'sureyuvarlamalar')">
+                                                                            <i class="fa-solid fa-plus p-0"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <ng-container *ngIf="roundingType == 1">
+                                                                    <tr *ngFor="let item of movementRoundings " class="cursor-pointer fs-7">
+                                                                        <td>
+                                                                            <ng-container [ngSwitch]="item.Hedef">
+                                                                                <span *ngSwitchCase="1">{{"Giriş" | translate}}</span>
+                                                                                <span *ngSwitchCase="2">{{"Çıkış" | translate}}</span>
+                                                                                <span *ngSwitchDefault>{{ item.Hedef }}</span>
+                                                                            </ng-container>
+                                                                        </td>
+
+                                                                        
+                                            
+                                                                        <td>
+                                                                            <span class="mb-1">{{ item.Saat1 | date:'HH:mm' }}</span>
+                                                                        </td>
+                                            
+                                                                        <td>
+                                                                            <span class="mb-1">{{ item.Saat2 | date:'HH:mm' }}</span>
+                                                                        </td>
+                                            
+                                                                        <td>
+                                                                            <span class="mb-1">{{ item.Saat3 | date:'HH:mm' }}</span>
+                                                                        </td>
+                                            
+                                                                        <td>
+                                                                            <a class="btn btn-secondary btn-sm py-1 px-2" (click)="deleteRounding(item, 'yuvarlamalar')">
+                                                                                <i class="fa-solid fa-trash p-0"></i>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </ng-container>
+
+                                                                <ng-container *ngIf="roundingType == 2">
+                                                                    <tr *ngFor="let item of timeRoundings " class="cursor-pointer fs-7">
+                                                                        <td>
+                                                                            <ng-container [ngSwitch]="item.Hedef">
+                                                                                <span *ngSwitchCase="1">{{"Normal_Mesai" | translate}}</span>
+                                                                                <span *ngSwitchCase="2">{{"Fazla_Mesai" | translate}}</span>
+                                                                                <span *ngSwitchCase="3">{{"Gece_Zammı" | translate}}</span>
+                                                                                <span *ngSwitchDefault>{{ item.Hedef }}</span>
+                                                                            </ng-container>
+                                                                        </td>
+                                            
+                                                                        <td>
+                                                                            <span class="mb-1">{{ item.Saat1 | date:'HH:mm' }}</span>
+                                                                        </td>
+                                            
+                                                                        <td>
+                                                                            <span class="mb-1">{{ item.Saat2 | date:'HH:mm' }}</span>
+                                                                        </td>
+                                            
+                                                                        <td>
+                                                                            <span class="mb-1">{{ item.Saat3 | date:'HH:mm' }}</span>
+                                                                        </td>
+                                            
+                                                                        <td>
+                                                                            <a class="btn btn-secondary btn-sm py-1 px-2" (click)="deleteRounding(item, 'sureyuvarlamalar')">
+                                                                                <i class="fa-solid fa-trash p-0"></i>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </ng-container>
+
+                                                                
+                                                                
+                                                            </ng-container>
+                                        
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </mat-tab>
+                              
+                                    <mat-tab label="{{'Dinlemeler' | translate}}">
+                                        <div class="row w-100">
+                                            <div class="col-12 py-10">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                                        <thead>
+                                                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                                                <th class=" rounded-start" style="width: 17%;">{{"Açıklama" | translate}}</th>
+                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Başlangıç" | translate}}</th>
+                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Bitiş" | translate}}</th>
+                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Süre" | translate}}</th>
+                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 8%;">{{"Düzensiz" | translate}}</th>
+                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 12%;">{{"Fazla_Mesai" | translate}}</th>
+                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Gece_Vardiyası" | translate}}</th>
+                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Resmi_Tatil" | translate}}</th>
+                                                                <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 6%;">{{"#" | translate}}</th>
+                                                            </tr>
+                                                        </thead>
+                                        
+                                                        <tbody>
+                                                            <ng-container >
+                                                                <tr class="cursor-pointer fs-7">
+                                                                    <td>
+                                                                        <span class="mb-1">
+                                                                            <input type="text" class="form-control form-control-sm" formControlName="restDescription"/>
+                                                                        </span>
+                                                                    </td>
+                                        
+                                                                    <td>
+                                                                        <span class="mb-1">
+                                                                            <input type="time" class="form-control form-control-sm" formControlName="restStartTime"/>
+                                                                        </span>
+                                                                    </td>
+                                        
+                                                                    <td>
+                                                                        <span class="mb-1">
+                                                                            <input type="time" class="form-control form-control-sm" formControlName="restEndTime"/>
+                                                                        </span>
+                                                                    </td>
+                                        
+                                                                    <td>
+                                                                        <span class="mb-1" *ngIf="form.get('restIrregular')?.value">
+                                                                            <input type="time" class="form-control form-control-sm" formControlName="restTime"/>
+                                                                        </span>
+                                                                    </td>
+                                        
+                                                                    <td>
+                                                                        <span class="mb-1">
+                                                                            <div class="form-check form-check-sm">
+                                                                                <input class="form-check-input" type="checkbox" formControlName="restIrregular"/>
+                                                                            </div>
+
+                                                                            <!-- <input class="form-check-input" type="checkbox" formControlName="restIrregular"/> -->
+                                                                        </span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <span class="mb-1"></span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <span class="mb-1"></span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <span class="mb-1"></span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <a class="btn btn-secondary btn-sm py-1 px-2" (click)="addResting()">
+                                                                            <i class="fa-solid fa-plus p-0"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr *ngFor="let item of resting " class="cursor-pointer fs-7">
+                                                                    <td>
+                                                                        <span class="mb-1">{{ item.Aciklama }}</span>
+                                                                    </td>
+                                        
+                                                                    <td>
+                                                                        <span class="mb-1">{{ item.Baslama | timeFormat }}</span>
+                                                                    </td>
+                                        
+                                                                    <td>
+                                                                        <span class="mb-1">{{ item.Bitis | timeFormat }}</span>
+                                                                    </td>
+                                        
+                                                                    <td>
+                                                                        <span class="mb-1">{{ item.Sure | timeFormat }}</span>
+                                                                    </td>
+                                        
+                                                                    <td class="text-hover-danger" (click)="updateRestIrregular(item)">
+                                                                        <span class="fw-bolder mb-1">{{ item.Duzensiz ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                                    </td>
+
+                                                                    <td class="text-hover-danger" (click)="updateRestOvertime(item)">
+                                                                        <span class="fw-bolder mb-1">{{ item.FazlaMesai ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                                    </td>
+
+                                                                    <td class="text-hover-danger" (click)="updateRestNightShift(item)">
+                                                                        <span class="fw-bolder mb-1">{{ item.gecevardiya ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                                    </td>
+
+                                                                    <td class="text-hover-danger" (click)="updateRestPublicHoliday(item)">
+                                                                        <span class="fw-bolder mb-1">{{ item.resmitatil ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <a class="btn btn-secondary btn-sm py-1 px-2" (click)="deleteResting(item)">
+                                                                            <i class="fa-solid fa-trash p-0"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-container>
+                                        
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-tab>
+
+                                    <mat-tab label="{{'FM_Bölümleri' | translate}}">
+                                        <div class="row w-100">
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"FM1_Başlangıç_Saati" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" formControlName="overtimeOneStartTime" />
+                                            </div>
+
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"FM1_Bitiş_Saati" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" formControlName="overtimeOneEndTime" />
+                                            </div>
+
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"FM2_Başlangıç_Saati" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" formControlName="overtimeTwoStartTime" />
+                                            </div>
+
+                                            <div class="col-6 py-4">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span>{{"FM2_Bitiş_Saati" | translate}}</span>
+                                                </label>
+                                    
+                                                <input type="time" class="form-control form-control-sm form-control-solid" formControlName="overtimeTwoEndTime" />
+                                            </div>
+
+
+                                            <div class="d-flex flex-row-reverse my-5">
+                                                <div class="p-2">
+                                                    <a class="btn btn-dark btn-sm custom-btn" (click)="saveOvertimePart()">
+                                                        <i class="fa-solid fa-floppy-disk"></i>
+                                                        {{"Kaydet" | translate}}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-tab>
+                                </mat-tab-group>
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>

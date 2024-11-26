@@ -36,21 +36,15 @@
 
 <ng-container *ngIf="approvedRequests.length > 0">
     <div class="row mt-5 m-0 d-flex justify-content-center">
-        <div class="card bg-light-danger p-4">
+        <div class="card bg-light-secondary p-4">
 
             <div class="row d-flex justify-content-center justify-content-sm-start gy-4 gy-sm-0">
                 <div class="col-12 col-sm-4 d-flex justify-content-start">
                     <div class="input-group h-100 ">
-                        <input class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
+                        <input class="form-control form-control-solid h-30px p-2 border-1 border-dark rounded-lg font-size-h6"
                             [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}">
                         <button class="search-icon">
                             <div class="svg">
-                                <!-- <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M8.6 16.2C12.7974 16.2 16.2 12.7974 16.2 8.6C16.2 4.40263 12.7974 1 8.6 1C4.40263 1 1 4.40263 1 8.6C1 12.7974 4.40263 16.2 8.6 16.2Z"
-                                                                stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path d="M16.6 17L15 15.4" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg> -->
                                 <i class="fa-solid fa-magnifying-glass text-white fs-4"></i>
                             </div>
                         </button>
@@ -58,14 +52,14 @@
                 </div>
 
                 <div class="col-10 col-sm-7 d-flex justify-content-end">
-                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold w-100 w-sm-auto"  (click)="showDetailSearchDialog()">
+                    <a class="btn btn-sm btn-dark btn-shadow-hover font-weight-bold w-100 w-sm-auto"  (click)="showDetailSearchDialog()">
                         {{"Detaylı_Arama" | translate}}
                         <i class="fa fa-search"></i>
                     </a>
                 </div>
 
                 <div class="col-1 col-sm-1">
-                    <a class="btn btn-icon btn-danger btn-sm me-3" (click)="checkGrid = !checkGrid">
+                    <a class="btn btn-icon btn-dark btn-sm me-3" (click)="checkGrid = !checkGrid">
                         <i class="fa-solid fa-list fs-4" [ngClass]="{'fa-grip': checkGrid, 'fa-list' : !checkGrid}"></i>
                     </a>
                 </div>

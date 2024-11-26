@@ -9,76 +9,98 @@
                     </div>
                 </div>
 
-                <div class="card-body">
-                    <div class="row mb-5">
-                        <div class="col-8">
-                            <div class="input-group h-100 w-50" style="flex: 1;">
-                                <input
-                                    class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
-                                    [(ngModel)]="filterText"
-                                    type="text" placeholder="{{'Arama' | translate}}">
-    
-                                <button class="search-icon">
-                                    <div class="svg">
-                                        <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
-                                    </div>
-                                </button>
+                <ng-container *ngIf="!loading">
+                    <div class="card-body">
+                        <div class="col-12 pt-10">
+                            <div class="loader-container">
+                                <div id="splash-screen" class="splash-screen"
+                                    style="position: inherit; color:transparent; background-color: transparent;">
+                                    <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo" style="margin-left: 0; height: 0;" />
+                                    <mat-spinner></mat-spinner>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-4 d-flex align-items-end justify-content-end gap-2 p-0">
-                            <a class="btn btn-dark btn-sm custom-btn" (click)="openAction('add')">
-                                <i class="fa-solid fa-plus"></i>
-                                {{"Ekle" | translate}}
-                            </a>
-                        </div>
                     </div>
+                </ng-container>
 
-                    <div class="row my-5">
-                        <div class="col-12">
-                            <div class="table-responsive">
-                                <table class="table table-row-dashed table-row-gray-200 align-middle gs-3 gy-2">
-                                    <thead>
-                                        <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-light-danger rounded text-danger">
-                                            <th class="text-center rounded-start">#</th>
-                                            <th class="text-center fw-bolder me-1 cursor-pointer">{{"Neden_Açıklama" | translate}}</th>
-                                            <th class="text-center fw-bolder me-1 cursor-pointer rounded-end">{{"İşlemler" | translate}}
-                                            </th>
-                                        </tr>
-                                    </thead>
-                            
-                                    <tbody>
-                                        <tr *ngFor="let item of overtimeCauses | searchFilter:filterText: ['ID', 'ad']"
-                                            (click)="onRowClick(item)" 
-                                            [ngClass]="{'selected-row': selectedRowId === item.ID}"
-                                            class="fs-7">
-                                            
-                                            <td class="text-center">
-                                                <a class="text-dark fw-bold text-hover-danger mb-1">{{item.ID}}</a>
-                                            </td>
-                            
-                                            <td class="text-center">
-                                                <a class="text-dark fw-bold text-hover-danger mb-1">{{item.ad}}</a>
-                                            </td>
-                            
-                                            <td class="text-center">
-                                                <a *ngIf="selectedRowId === item.ID" matTooltip="{{'Güncelle' | translate}}" (click)="openAction('update', item)"
-                                                    class="btn btn-icon btn-light-dark btn-sm me-3">
-                                                    <i class="fa-solid fa-pen-to-square fs-4"></i>
-                                                </a>
-                                                <a *ngIf="selectedRowId === item.ID" matTooltip="{{'Kaldır' | translate}}" (click)="removeCause(item)"
-                                                    class="btn btn-icon btn-light-dark btn-sm me-3">
-                                                    <i class="fa-solid fa-xmark fs-4"></i>
-                                                </a>
-                                            </td>
-                                              
-                            
-                                        </tr>
-                                    </tbody>
-                                </table>
+                <ng-container *ngIf="loading">
+                    <div class="card-body">
+                        <div class="row mb-5">
+                            <div class="col-8">
+                                <div class="input-group h-100 w-50" style="flex: 1;">
+                                    <input
+                                        class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
+                                        [(ngModel)]="filterText"
+                                        type="text" placeholder="{{'Arama' | translate}}">
+        
+                                    <button class="search-icon">
+                                        <div class="svg">
+                                            <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex align-items-end justify-content-end gap-2 p-0">
+                                <a class="btn btn-dark btn-sm custom-btn" (click)="openAction('add')">
+                                    <i class="fa-solid fa-plus"></i>
+                                    {{"Ekle" | translate}}
+                                </a>
+                            </div>
+                        </div>
+    
+                        <div class="row my-5">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-2">
+                                        <thead>
+                                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                                <th class="text-center rounded-start">#</th>
+                                                <th class="text-center fw-bolder me-1 cursor-pointer">{{"Neden_Açıklama" | translate}}</th>
+                                                <th class="text-center fw-bolder me-1 cursor-pointer rounded-end">{{"İşlemler" | translate}}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                
+                                        <tbody>
+                                            <tr *ngFor="let item of overtimeCauses | searchFilter:filterText: ['ID', 'ad']"
+                                                (click)="onRowClick(item)" 
+                                                [ngClass]="{
+                                                    'bg-gray-700': selectedRowId == item.ID,
+                                                    'text-white' : selectedRowId == item.ID,
+                                                    'fw-bold' : selectedRowId == item.ID,
+                                                    'fw-normal' : selectedRowId != item.ID 
+                                                }"
+                                                class="cursor-pointer fs-7">
+                                                
+                                                <td class="text-center">
+                                                    <span class="mb-1">{{item.ID}}</span>
+                                                </td>
+                                
+                                                <td class="text-center">
+                                                    <span class="mb-1">{{item.ad}}</span>
+                                                </td>
+                                
+                                                <td class="text-center">
+                                                    <a *ngIf="selectedRowId === item.ID" matTooltip="{{'Güncelle' | translate}}" (click)="openAction('update', item)"
+                                                        class="btn btn-icon btn-light-dark btn-sm me-3">
+                                                        <i class="fa-solid fa-pen-to-square fs-4"></i>
+                                                    </a>
+                                                    <a *ngIf="selectedRowId === item.ID" matTooltip="{{'Kaldır' | translate}}" (click)="removeCause(item)"
+                                                        class="btn btn-icon btn-light-dark btn-sm me-3">
+                                                        <i class="fa-solid fa-xmark fs-4"></i>
+                                                    </a>
+                                                </td>
+                                                  
+                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </ng-container>
+                
             </div>
 
         </div>
@@ -95,7 +117,7 @@
             <span class="required">{{"Neden" | translate}}</span>
         </label>
         
-        <input type="text" class="form-control form-control-lg form-control-solid" [(ngModel)]="cause" >
+        <input type="text" class="form-control form-control-sm form-control-solid" [(ngModel)]="cause" >
 
         <div class="fv-plugins-message-container invalid-feedback"></div>
     </div>

@@ -1,0 +1,152 @@
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+
+			<div class="card card-custom gutter-b my-5 pb-5">
+				<div class="card-header border-0 bg-danger" style="min-height: 45px;">
+					<div class="card-title">
+						<h3 class="card-label text-white">{{"Ben_Sayfası" | translate}}</h3>
+						<h4 class="card-label text-gray-200 fs-8">
+							{{"Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+					</div>
+				</div>
+
+				<ng-container *ngIf="!loading">
+					<div class="card-body">
+						<div class="col-12 pt-10">
+							<div class="loader-container">
+								<div id="splash-screen" class="splash-screen"
+									style="position: inherit; color:transparent; background-color: transparent;">
+									<img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+										style="margin-left: 0; height: 0;" />
+									<mat-spinner></mat-spinner>
+								</div>
+							</div>
+						</div>
+					</div>
+				</ng-container>
+
+				<ng-container *ngIf="loading">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-9 my-5">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Giriş_Tarihi" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ben_Ekranında_Giriş_Tarihini_Görmek_İstiyorsanız_Bu_Seçenek_Aktif_Olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="entryDate" (ngModelChange)="save('bengiristarihi', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ entryDate ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-9 my-5">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Kıdem_Tarihi" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ben_Ekranında_Kıdem_Tarihi_Görmek_İstiyorsanız_Bu_Seçenek_Aktif_Olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="seniorityDate" (ngModelChange)="save('benkidemtarihi', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ seniorityDate ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+							
+							<div class="col-9 my-5">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Kıdem" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ben_Ekranında_Kıdem_Görmek_İstiyorsanız_Bu_Seçenek_Aktif_Olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="seniority" (ngModelChange)="save('benkidem', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ seniority ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-9 my-5">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"İzin_Hakkı" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ben_Ekranında_İzin_Hakkı_İstiyorsanız_Bu_Seçenek_Aktif_Olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="vacationRights" (ngModelChange)="save('benizinhakki', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ vacationRights ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-9 my-5">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Kullanılan" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ben_Ekranında_Kullanılan_İzin_Hakkı_İstiyorsanız_Bu_Seçenek_Aktif_Olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="used" (ngModelChange)="save('benkullanilan', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ used ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-9 my-5">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Devir" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ben_Ekranında_Devir_İstiyorsanız_Bu_Seçenek_Aktif_Olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="transfer" (ngModelChange)="save('bendevir', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ transfer ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-9 my-5">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Kalan" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ben_Ekranında_Kalan_İstiyorsanız_Bu_Seçenek_Aktif_Olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="left" (ngModelChange)="save('benkalan', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ left ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							
+							
+						</div>
+					</div>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>

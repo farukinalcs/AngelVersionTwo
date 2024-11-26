@@ -55,6 +55,20 @@ import { DialogNewDeviceComponent } from './devices/dialog-new-device/dialog-new
 import { TranslationModule } from 'src/app/modules/i18n';
 import { DropdownModule } from 'primeng/dropdown';
 import { AgmCoreModule } from '@agm/core';
+import { AccessDefinitionsComponent } from './access-definitions/access-definitions.component';
+import { OrganizationDefinitionsComponent } from './access-definitions/definitions/organization-definitions/organization-definitions.component';
+import { FingerprintComponent } from './access-definitions/definitions/fingerprint/fingerprint.component';
+import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FtpInfoComponent } from './access-definitions/definitions/ftp-info/ftp-info.component';
+import { MailServiceComponent } from './access-definitions/definitions/mail-service/mail-service.component';
+import { SecurityComponent } from './access-definitions/definitions/security/security.component';
+import { MyPageComponent } from './access-definitions/definitions/my-page/my-page.component';
+import { EventCodesComponent } from './access-definitions/definitions/event-codes/event-codes.component';
+import { AuthorityRolesComponent } from './access-definitions/definitions/authority-roles/authority-roles.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { DeviceGroupsComponent } from './access-definitions/definitions/device-groups/device-groups.component';
+import { TimeZoneComponent } from './access-definitions/definitions/time-zone/time-zone.component';
 
 
 @NgModule({
@@ -81,6 +95,17 @@ import { AgmCoreModule } from '@agm/core';
     DialogWidget1001Component,
     CustomizedCellComponent,
     DialogNewDeviceComponent,
+    AccessDefinitionsComponent,
+    OrganizationDefinitionsComponent,
+    FingerprintComponent,
+    FtpInfoComponent,
+    MailServiceComponent,
+    SecurityComponent,
+    MyPageComponent,
+    EventCodesComponent,
+    AuthorityRolesComponent,
+    DeviceGroupsComponent,
+    TimeZoneComponent,
 
   ],
 
@@ -124,6 +149,9 @@ import { AgmCoreModule } from '@agm/core';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAdALF-5HPnZFuvYRXmGY8qkv21TGD25ak',
     }),
+    CustomPipeModule,
+    MatProgressSpinnerModule,
+    MatTabsModule
   ]
 })
 export class AccessModule { }

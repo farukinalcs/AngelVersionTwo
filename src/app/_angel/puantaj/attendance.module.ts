@@ -36,6 +36,18 @@ import { OvertimeCausesComponent } from './puantaj-tanimlamalar/definitions/over
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AttendanceRestrictionComponent } from './puantaj-tanimlamalar/definitions/attendance-restriction/attendance-restriction.component';
 import { FormMailsComponent } from './puantaj-tanimlamalar/definitions/form-mails/form-mails.component';
+import { ExcuseCardPermissionAssignmentComponent } from './puantaj-tanimlamalar/definitions/excuse-card-permission-assignment/excuse-card-permission-assignment.component';
+import { ShiftPlanningComponent } from './puantaj-tanimlamalar/definitions/shift-planning/shift-planning.component';
+import { BreakTimesComponent } from './puantaj-tanimlamalar/definitions/break-times/break-times.component';
+import { SplitTheDayComponent } from './puantaj-tanimlamalar/definitions/split-the-day/split-the-day.component';
+import { AdvertComponent } from './puantaj-tanimlamalar/definitions/advert/advert.component';
+import { PermitTypesComponent } from './puantaj-tanimlamalar/definitions/permit-types/permit-types.component';
+import { HolidayTypesComponent } from './puantaj-tanimlamalar/definitions/holiday-types/holiday-types.component';
+import { ShiftsComponent } from './puantaj-tanimlamalar/definitions/shifts/shifts.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { OverrideComponent } from './puantaj-tanimlamalar/definitions/override/override.component';
+import { ShiftGroupsComponent } from './puantaj-tanimlamalar/definitions/shift-groups/shift-groups.component';
+import { ShiftPeriodsComponent } from './puantaj-tanimlamalar/definitions/shift-periods/shift-periods.component';
 
 
 @NgModule({
@@ -55,7 +67,18 @@ import { FormMailsComponent } from './puantaj-tanimlamalar/definitions/form-mail
     LevelDefinitionComponent,
     OvertimeCausesComponent,
     AttendanceRestrictionComponent,
-    FormMailsComponent
+    FormMailsComponent,
+    ExcuseCardPermissionAssignmentComponent,
+    ShiftPlanningComponent,
+    BreakTimesComponent,
+    SplitTheDayComponent,
+    AdvertComponent,
+    PermitTypesComponent,
+    HolidayTypesComponent,
+    ShiftsComponent,
+    OverrideComponent,
+    ShiftGroupsComponent,
+    ShiftPeriodsComponent
   ],
 
   imports: [
@@ -80,7 +103,8 @@ import { FormMailsComponent } from './puantaj-tanimlamalar/definitions/form-mail
     ProfileModule,
     SharedModule,
     DrawersModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatTabsModule
   ],
   
   exports: [

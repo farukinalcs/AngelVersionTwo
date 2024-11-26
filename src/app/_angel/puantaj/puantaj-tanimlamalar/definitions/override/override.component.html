@@ -1,0 +1,172 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"İzin_Ezme" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">
+                            {{"İzinlerin_Hangi_Günleri_Ezip_Ezmediğini_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="!loading">
+                    <div class="card-body">
+                        <div class="col-12 pt-10">
+                            <div class="loader-container">
+                                <div id="splash-screen" class="splash-screen"
+                                    style="position: inherit; color:transparent; background-color: transparent;">
+                                    <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                                        style="margin-left: 0; height: 0;" />
+                                    <mat-spinner></mat-spinner>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="loading">
+                    <div class="card-body">
+                        
+                        
+                        <div class="row py-1">
+                            <div class="col-3">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span class="required">{{"Yaka" | translate}}</span>
+                                </label>
+                
+                                <p-dropdown [options]="collars" (onChange)="filterOverride()" [(ngModel)]="selectedCollar" optionLabel="Ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="Ad"
+                                    [showClear]="true" placeholder="{{'Yaka_Seçiniz' | translate}}">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="item-item item-item-value" *ngIf="selectedCollar">
+                                            <div>{{selectedCollar.Ad}}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-item pTemplate="item">
+                                        <div class="item-item">
+                                            <div>{{item.Ad}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </div>
+
+                            <div class="col-3">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span class="required">{{"İzin_Tipi" | translate}}</span>
+                                </label>
+                
+                                <p-dropdown [options]="permitTypes" (onChange)="filterOverride()" [(ngModel)]="selectedPermitType" optionLabel="ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad"
+                                    [showClear]="true" placeholder="{{'İzin_Tipi_Seçiniz' | translate}}">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="item-item item-item-value" *ngIf="selectedPermitType">
+                                            <div>{{selectedPermitType.ad}}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-item pTemplate="item">
+                                        <div class="item-item">
+                                            <div>{{item.ad}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </div>
+                        </div>
+                        
+                        <div class="row py-5">
+                            
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table
+                                        class="table table-hover border table-striped table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-2">
+                                        <thead>
+                                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                                <th class=" rounded-start" style="width: 30%;">{{"Yaka" | translate}}</th>
+                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 25%;">{{"İzin_Tipi" | translate}}</th>
+                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 15%;">{{"Cumartesi" | translate}}</th>
+                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 15%;">{{"Pazar" | translate}}</th>
+                                                <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 15%;">{{"Resmi_Tatil" | translate}}</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <ng-container
+                                                *ngFor="let item of override | pagination: pageNumber : pageSize">
+                                                <tr class="text-dark fw-normal fs-7">
+
+                                                    <td>
+                                                        <span class="mb-1">{{item.Yaka}}</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="mb-1">{{item.Izintipi}}</span>
+                                                    </td>
+
+                                                    <td class="cursor-pointer ">
+                                                        <span class="mb-1">
+                                                            <a class="btn btn-sm py-1 px-2" [ngClass]="{'btn-success': item.Cumartesi, 'btn-danger': !item.Cumartesi}" (click)="updateOverride(item, '1')">
+                                                                <i class="fa-solid p-0" [ngClass]="{'fa-check': item.Cumartesi, 'fa-xmark': !item.Cumartesi}"></i>
+                                                            </a>
+                                                        </span>
+                                                    </td>
+
+                                                    <td class="cursor-pointer ">
+                                                        <span class="mb-1">
+                                                            <a class="btn btn-sm py-1 px-2" [ngClass]="{'btn-success': item.Pazar, 'btn-danger': !item.Pazar}" (click)="updateOverride(item, '2')">
+                                                                <i class="fa-solid p-0" [ngClass]="{'fa-check': item.Pazar, 'fa-xmark': !item.Pazar}"></i>
+                                                            </a>
+                                                        </span>
+                                                    </td>
+
+                                                    <td class="cursor-pointer ">
+                                                        <span class="mb-1">
+                                                            <a class="btn btn-sm py-1 px-2" [ngClass]="{'btn-success': item.Resmitatil, 'btn-danger': !item.Resmitatil}" (click)="updateOverride(item, '3')">
+                                                                <i class="fa-solid p-0" [ngClass]="{'fa-check': item.Resmitatil, 'fa-xmark': !item.Resmitatil}"></i>
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="pagination-controls">
+                                    <button
+                                        class="btn btn-outline btn-outline btn-outline-dark btn-active-light-dark py-2 px-3 mx-1"
+                                        (click)="goToFirstPage()" [disabled]="pageNumber === 1">
+                                        <i class="fa-solid fa-angles-left"></i>
+                                    </button>
+
+                                    <button
+                                        class="btn btn-outline btn-outline btn-outline-dark btn-active-light-dark py-2 px-3 mx-1"
+                                        (click)="previousPage()" [disabled]="pageNumber === 1">
+                                        <i class="fa-solid fa-angle-left"></i>
+                                    </button>
+
+                                    <span>Sayfa {{ pageNumber }} / {{ totalPages }}</span>
+
+                                    <button
+                                        class="btn btn-outline btn-outline btn-outline-dark btn-active-light-dark py-2 px-3 mx-1"
+                                        (click)="nextPage()" [disabled]="pageNumber === totalPages">
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </button>
+
+                                    <button
+                                        class="btn btn-outline btn-outline btn-outline-dark btn-active-light-dark py-2 px-3 mx-1"
+                                        (click)="goToLastPage()" [disabled]="pageNumber === totalPages">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>

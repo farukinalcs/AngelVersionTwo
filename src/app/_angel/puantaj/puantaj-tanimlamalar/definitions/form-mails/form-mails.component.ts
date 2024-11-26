@@ -1,4 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 
@@ -11,53 +13,94 @@ export class FormMailsComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject()
 
   webLink: any;
-  state: any;
+  state: any = false;
   constructor(
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private toastrService: ToastrService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
-    this.getState();
-    this.getLink();
+    this.getParameters();
   }
 
-  getState() {
-    this.getParameters('taleponaymail');
-  }
-
-
-  getLink() {
-    this.getParameters('weblink');
-  }
-
-  getParameters(source:any) {
+  getParameters() {
     var sp: any[] = [
       {
         mkodu: 'yek121',
-        kaynak: source,
+        kaynak: 'taleponaymail',
       },
+      {
+        mkodu: 'yek121',
+        kaynak: 'weblink',
+      }
     ];
 
     this.profileService
       .requestMethod(sp)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((response: any) => {
-        const data = response[0].x;
-        const message = response[0].z;
+        const data = response;
 
-        if (message.islemsonuc != 1) {
-          return;
-        }
-        console.log('Parametres Tanımları: ', data);
+        data.forEach((item:any) => {
+          if (item.z.islemsonuc != 1) {
+            return;
+          }
+          
+          item.x.forEach((itemx:any) => {
+            if (itemx.ad == "weblink") {
+              this.webLink = itemx.deger;
+            } else if (itemx.ad == "TalepFormuMailOnay") {
+              this.state = itemx.deger == 1 ? true : false;
+            }
+          });
+      
+        });
+        
+      });
+  }
 
-        if (data.ad == "weblink") {
-          this.webLink = data.deger;
-        } else if (data.ad == "TalepFormuMailOnay") {
-          this.state = data.deger;
-        }
+  save() {
+    var sp: any[] = [
+      {
+        mkodu: 'yek127',
+        deger: this.webLink,
+        type: 'weblink'
+      },
+      {
+        mkodu: 'yek127',
+        deger: this.state ? '1' : '0',
+        type: 'formmail'
+      }
+    ];
+
+    this.profileService
+      .requestMethod(sp)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const data = response;
+        console.log("Talep Form Mailleri Güncellend: ", data);
         
-        
-        
+
+        data.forEach((item:any) => {
+          if (item.z.islemsonuc != 1) {
+            return;
+          }
+          
+          item.x.forEach((itemx:any) => {
+            if (itemx.ad == "weblink") {
+              this.webLink = itemx.deger;
+            } else if (itemx.ad == "TalepFormuMailOnay") {
+              this.state = itemx.deger == 1 ? true : false;
+            }
+          });
+      
+        });
+
+        this.toastrService.success(
+          this.translateService.instant('Tanımlama_Ayarları_Güncellendi'),
+          this.translateService.instant('Başarılı')
+        );
       });
   }
 

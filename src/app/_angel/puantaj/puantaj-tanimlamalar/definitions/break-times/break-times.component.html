@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Ara_Süre_Kesim" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Ara_Süre_Alt_Başlık" | translate}}
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-9 my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{"Normal_Mesai" | translate}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{"Ara_Süre_Normal_Mesaiden_Kesilsin_Mi" | translate}}</div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" [(ngModel)]="regularWorking">
+                                    <span class="form-check-label fw-semibold text-muted">
+                                        {{ regularWorking ? ("Aktif" | translate) : ("Pasif" | translate) }}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-9 my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{"Fazla_Mesai" | translate}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{"Ara_Süre_Fazla_Mesaiden_Kesilsin_Mi" | translate}}</div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" [(ngModel)]="overtime">
+                                    <span class="form-check-label fw-semibold text-muted">
+                                        {{ overtime ? ("Aktif" | translate) : ("Pasif" | translate) }}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-3 d-flex align-items-end justify-content-end my-5">
+                            <a class="btn btn-dark btn-sm custom-btn" (click)="save()">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                {{"Kaydet" | translate}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

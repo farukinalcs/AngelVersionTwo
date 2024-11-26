@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
@@ -19,11 +19,12 @@ export class OvertimeCausesComponent implements OnInit, OnDestroy {
   cause: string = '';
   actionType: any;
   selectedCause: any;
-
+  loading: boolean = false;
   constructor(
     private profileService: ProfileService,
     private toastrService: ToastrService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +37,8 @@ export class OvertimeCausesComponent implements OnInit, OnDestroy {
   
 
   getOvertimeCauses() {
+    this.loading = false;
+    
     var sp: any[] = [
       {
         mkodu: 'yek041',
@@ -56,7 +59,13 @@ export class OvertimeCausesComponent implements OnInit, OnDestroy {
         }
         console.log('FM Nedenleri: ', data);
 
-        this.overtimeCauses = data;        
+        this.overtimeCauses = [...data];        
+
+        setTimeout(() => {
+          this.loading = true;
+          this.ref.detectChanges();      
+        }, 1000);
+
       }, (err) => {
         this.toastrService.error(
           this.translateService.instant('Beklenmeyen_Bir_Hata_Oluştu'),

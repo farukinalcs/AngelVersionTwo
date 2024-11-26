@@ -143,7 +143,7 @@ export class LevelDefinitionComponent implements OnInit, OnDestroy {
         });
         
         this.toastrService.success(
-          this.translateService.instant('Kademe_Tanımları_Güncellendi'),
+          this.translateService.instant('Tanımlama_Ayarları_Güncellendi'),
           this.translateService.instant('Başarılı')
         );
         

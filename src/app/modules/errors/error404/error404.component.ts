@@ -32,7 +32,7 @@ export class Error404Component implements OnInit, OnDestroy {
   }
 
   routeToDashboard() {
-    this.router.navigate(['profile']);
+    this.router.navigate(['profile/dashboard']);
     setTimeout(() => {
       ToggleComponent.reinitialization();
       ScrollTopComponent.reinitialization();

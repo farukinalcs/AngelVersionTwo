@@ -1,0 +1,283 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Mesai_Periyorları_Tanımları" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">
+                            {{"Mesai_Gruplarından_Çalışma_Periyotları_Oluşturabilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="!loading">
+                    <div class="card-body">
+                        <div class="col-12 pt-10">
+                            <div class="loader-container">
+                                <div id="splash-screen" class="splash-screen"
+                                    style="position: inherit; color:transparent; background-color: transparent;">
+                                    <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                                        style="margin-left: 0; height: 0;" />
+                                    <mat-spinner></mat-spinner>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="loading">
+                    <div class="card-body">
+                        <div class="row d-flex align-items-strech">
+                            <div class="col-3">
+                                <div class="input-group py-3" style="flex: 1;">
+                                    <input
+                                        class="form-control form-control-solid p-2 border-1 border-dark rounded-lg font-size-h6"
+                                        [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}"
+                                        style="height: 30px;">
+
+                                    <button class="search-icon">
+                                        <div class="svg">
+                                            <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
+                                        </div>
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <a class="btn btn-secondary btn-sm custom-btn px-2 py-1 mx-1"
+                                        (click)="openAddForm()">
+                                        <i class="fa-solid fa-plus fs-9"></i>
+                                        {{"Ekle" | translate}}
+                                    </a>
+                                    <a class="btn btn-secondary btn-sm custom-btn px-2 py-1 mx-1"
+                                        (click)="openUpdateForm()">
+                                        <i class="fa-solid fa-pen-to-square fs-9"></i>
+                                        {{"Değiştir" | translate}}
+                                    </a>
+                                    <a class="btn btn-secondary btn-sm custom-btn px-2 py-1 mx-1"
+                                        (click)="deleteShiftPeriod()">
+                                        <i class="fa-solid fa-trash fs-9"></i>
+                                        {{"Sil" | translate}}
+                                    </a>
+                                </div>
+
+                                <div class="h-550px scroll">
+                                    <ng-container *ngFor="let sg of shiftPeriods | searchFilter:filterText: ['ad']">
+                                        <div class="d-flex align-items-center my-4 process-item rounded cursor-pointer"
+                                            [ngClass]="{'bg-dark': selectedShiftPeriod?.ID == sg.ID}"
+                                            (click)="selectShiftPeriod(sg)">
+                                            <span class="bullet bullet-vertical h-20px bg-dark me-5"></span>
+                                            <div class="d-flex flex-row align-items-center w-100" style="justify-content: space-between;">
+                                                <a class="fs-9 fw-bolder"
+                                                    [ngClass]="{'text-white': selectedShiftPeriod?.ID == sg.ID, 'text-gray-900':selectedShiftPeriod?.ID != sg.ID}">
+                                                    {{sg.ad}}
+
+                                                </a>
+
+                                                <a class="fs-9 fw-bolder me-5 text-hover-primary" (click)="changePriority(sg)">
+                                                    <i class="fa-solid p-0"
+                                                        [ngClass]="{
+                                                            'fa-angles-up': sg.varsayilan == '1',
+                                                            'fa-minus': sg.varsayilan == '0'
+                                                        }">
+                                                    </i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+
+                            </div>
+
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-12 py-3">
+                                        <span class="fs-2 fw-bold" style="text-decoration: underline;">
+                                            {{selectedShiftPeriod.ad}}
+                                        </span>
+                                    </div>
+
+                                    <div class="col-3 py-3">
+                                        <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                            <span class="">{{"Periyot_Başlangıç_Tarihi" | translate}}</span>
+                                        </label>
+            
+                                        <input type="date" [(ngModel)]="startPeriodDate" class="form-control form-control-sm form-control-solid">
+                                    </div>
+
+                                    <div class="col-3 py-3" *ngIf="shiftCorrection">
+                                        <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                            <span class="">{{"Periyot_Başlangıç_Saati" | translate}}</span>
+                                        </label>
+            
+                                        <input type="time" [(ngModel)]="startPeriodTime" class="form-control form-control-sm form-control-solid">
+                                    </div>
+
+                                    <div class="py-3" [ngClass]="{'col-6': !shiftCorrection, 'col-3': shiftCorrection}">
+                                        <div class="d-flex" style="flex-direction: column;">
+                                            <div class="me-5">
+                                                <label class="fs-7 fw-semibold form-label">{{"Vardiya_Düzeltmesi" | translate}}</label>
+                                                <!-- <div class="fs-8 fw-semibold text-muted">{{"Test" | translate}}</div> -->
+                                            </div>
+            
+                                            <label class="form-check form-switch form-check-custom form-check-solid">
+                                                <input class="form-check-input" type="checkbox" [(ngModel)]="shiftCorrection">
+                                                <span class="form-check-label fw-semibold text-muted">
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3 d-flex justify-content-end align-items-center py-3">
+                                        <a class="btn btn-dark btn-sm custom-btn">
+                                            <i class="fa-solid fa-floppy-disk"></i>
+                                            {{"Kaydet" | translate}}
+                                        </a>
+                                    </div>
+
+
+
+
+                                    <div class="col-6 h-550px scroll">
+                                        <div class="table-responsive">
+                                            <table
+                                                class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                                <thead>
+                                                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                                        <th class="fw-bolder me-1 cursor-pointer rounded-start" style="width: 70%;"> {{"Grup_Açıklama" | translate}}</th>
+                                                        <th class="fw-bolder me-1 cursor-pointer rounded-end" style="width: 30%;">{{"İşlem" | translate}}</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr *ngFor="let item of relations " class="cursor-pointer fs-8">
+                                                        <td>
+                                                            <span class="mb-1">{{ item.kaynakad }}</span>
+                                                        </td>
+
+                                                        <td>
+                                                            <a class="btn btn-warning btn-sm py-1 px-2"
+                                                                (click)="relationStateChange(item, 'd')">
+                                                                <i class="fa-solid fa-minus p-0"></i>
+                                                            </a>
+                                                        </td>
+
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 h-550px scroll">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                                <thead>
+                                                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                                        <th class=" rounded-start" style="width: 30%;">{{"İşlem" | translate}}</th>
+                                                        <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 70%;"> {{"Mesai_Açıklama" | translate}}</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr *ngFor="let item of shiftGroups " class="cursor-pointer fs-8">
+                                                        <td>
+                                                            <a class="btn btn-primary btn-sm py-1 px-2"
+                                                                (click)="relationStateChange(item, 'i')">
+                                                                <i class="fa-solid fa-plus p-0"></i>
+                                                            </a>
+                                                        </td>
+
+                                                        <td>
+                                                            <span class="mb-1">{{ item.ad }}</span>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<p-dialog header="{{'Mesai_Periyodu_Ekle' | translate}}" [(visible)]="addDisplay" [position]="'top'" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="-40" [draggable]="false" [resizable]="false"
+    (onHide)="closeAction()">
+
+    <div class="fv-row my-5 fv-plugins-icon-container">
+        <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+            <span class="required">{{"Terminal_Grubu" | translate}}</span>
+        </label>
+
+        <select class="form-select form-select-sm form-select-solid" [(ngModel)]="selectedDeviceGroup">
+            <option value="{{item.Id}}" *ngFor="let item of deviceGroups">{{item.Ad}}</option>
+        </select>
+    </div>
+
+    <div class="fv-row mb-10 fv-plugins-icon-container">
+        <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+            <span class="required">{{"Mesai_Periyodu_Adı" | translate}}</span>
+        </label>
+        
+        <input type="text" class="form-control form-control-sm form-control-solid" [(ngModel)]="shiftPeriodInput" >
+    </div>
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="closeAction()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'İptal' | translate}}
+        </a>
+
+        <a class="btn btn-sm btn-danger mx-1" (click)="addShiftPeriod()">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="{{'Mesai_Periyodu_Güncelle' | translate}}" [(visible)]="updateDisplay" [position]="'top'" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="-40" [draggable]="false" [resizable]="false" (onHide)="closeAction()">
+
+    <div class="fv-row my-5 fv-plugins-icon-container">
+        <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+            <span class="required">{{"Terminal_Grubu" | translate}}</span>
+        </label>
+
+        <select class="form-select form-select-sm form-select-solid" [(ngModel)]="selectedDeviceGroup">
+            <option value="{{item.Id}}" *ngFor="let item of deviceGroups">{{item.Ad}}</option>
+        </select>
+    </div>
+
+    <div class="fv-row mb-10 fv-plugins-icon-container">
+        <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+            <span class="required">{{"Mesai_Periyodu_Adı" | translate}}</span>
+        </label>
+        
+        <input type="text" class="form-control form-control-sm form-control-solid" [(ngModel)]="shiftPeriodInput" >
+    </div>
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="closeAction()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'İptal' | translate}}
+        </a>
+
+        <a class="btn btn-sm btn-danger mx-1" (click)="updateShiftPeriod()">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>

@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"İlan" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-7 p-5">
+                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                <span >{{"Kullanıcı_Adı" | translate}}</span>
+                            </label>
+
+                            <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'İlan' | translate}} {{'Kullanıcı_Adı'}}"
+                                [(ngModel)]="username">
+                        </div>
+
+                        <div class="col-7 p-5">
+                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                <span >{{"Şifre" | translate}}</span>
+                            </label>
+
+                            <div class="input-group">
+                                <input 
+                                    [type]="isPasswordVisible ? 'text' : 'password'" 
+                                    class="form-control form-control-sm form-control-solid" 
+                                    placeholder="{{'İlan' | translate}} {{'Şifre' | translate}}" 
+                                    [(ngModel)]="password"
+                                />
+                                <span class="input-group-text cursor-pointer" (click)="togglePasswordVisibility()">
+                                    <i class="fa text-dark" [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-5 d-flex align-items-end justify-content-end gap-2 p-0">
+                            <a class="btn btn-dark btn-sm custom-btn" (click)="save()">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                {{"Kaydet" | translate}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

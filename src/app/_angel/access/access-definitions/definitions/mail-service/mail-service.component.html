@@ -1,0 +1,230 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Mail_Servis" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">
+                            {{"Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="!loading">
+                    <div class="card-body">
+                        <div class="col-12 pt-10">
+                            <div class="loader-container">
+                                <div id="splash-screen" class="splash-screen"
+                                    style="position: inherit; color:transparent; background-color: transparent;">
+                                    <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                                        style="margin-left: 0; height: 0;" />
+                                    <mat-spinner></mat-spinner>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="loading">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 px-5">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Aktif" | translate}}</span>
+                                </label>
+                            
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input h-20px" type="checkbox" [(ngModel)]="active">
+                                </label>
+                            </div>
+
+                            <div class="col-9 p-5" [ngClass]="{'opacity-50': !active}">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"SMPT_Mail_Sunucu" | translate}}</span>
+                                </label>
+                                <input [disabled]="!active" type="text" class="form-control form-control-sm form-control-solid" [ngStyle]="{ 'cursor': !active ? 'no-drop' : 'auto'}"
+                                    [(ngModel)]="smptMailServer">
+                            </div>
+
+                            <div class="col-3 p-5" [ngClass]="{'opacity-50': !active}">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"SMPT_Port" | translate}}</span>
+                                </label>
+                                <input [disabled]="!active" type="number" class="form-control form-control-sm form-control-solid" [ngStyle]="{ 'cursor': !active ? 'no-drop' : 'auto'}"
+                                    [(ngModel)]="smptPort">
+                            </div>
+
+                            <div class="col-9 p-5" [ngClass]="{'opacity-50': !active}">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"POP_Mail_Sunucu" | translate}}</span>
+                                </label>
+                                <input [disabled]="!active" type="text" class="form-control form-control-sm form-control-solid" [ngStyle]="{ 'cursor': !active ? 'no-drop' : 'auto'}"
+                                    [(ngModel)]="popMailServer">
+                            </div>
+
+                            <div class="col-3 p-5" [ngClass]="{'opacity-50': !active}">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"POP_Port" | translate}}</span>
+                                </label>
+                                <input [disabled]="!active" type="number" class="form-control form-control-sm form-control-solid" [ngStyle]="{ 'cursor': !active ? 'no-drop' : 'auto'}"
+                                    [(ngModel)]="popPort">
+                            </div>
+
+                            <div class="col-12 p-5" [ngClass]="{'opacity-50': !active}">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Etki_Alanı" | translate}}</span>
+                                </label>
+                                <input [disabled]="!active" type="text" class="form-control form-control-sm form-control-solid" [ngStyle]="{ 'cursor': !active ? 'no-drop' : 'auto'}"
+                                    [(ngModel)]="domain">
+                            </div>
+
+                            <div class="col-4 px-5">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"SSL_Kullan" | translate}}</span>
+                                </label>
+                            
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input h-20px" type="checkbox" [(ngModel)]="sslUse">
+                                </label>
+                            </div>
+                            
+                            <div class="col-9 p-5" [ngClass]="{'opacity-50': !active}">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Kullanıcı_Adı" | translate}}</span>
+                                </label>
+                                <input [disabled]="!active" type="text" class="form-control form-control-sm form-control-solid" [ngStyle]="{ 'cursor': !active ? 'no-drop' : 'auto'}"
+                                    [(ngModel)]="loginName">
+                            </div>
+
+                            <div class="col-3 p-5 position-relative" [ngClass]="{'opacity-50': !active}" [ngClass]="{'opacity-50': !active}">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Şifre" | translate}}</span>
+                                </label>
+                                <input [disabled]="!active" [type]="isPasswordVisible ? 'text' : 'password'" [ngStyle]="{ 'cursor': !active ? 'no-drop' : 'auto'}"
+                                    class="form-control form-control-sm form-control-solid" [(ngModel)]="password">
+
+                                <span class="btn btn-sm btn-icon position-absolute top-50 end-0 translate-middle-y me-2"
+                                    (click)="togglePasswordVisibility()">
+                                    <i [class]="isPasswordVisible ? 'fa-solid fa-eye-slash fs-3' : 'fa-solid fa-eye fs-3'"></i>
+                                </span>
+                            </div>
+
+                            <div class="col-12 p-5" [ngClass]="{'opacity-50': !active}">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"From_Mail_Adresi" | translate}}</span>
+                                </label>
+                                <input [disabled]="!active" type="text" class="form-control form-control-sm form-control-solid" [ngStyle]="{ 'cursor': !active ? 'no-drop' : 'auto'}"
+                                    [(ngModel)]="fromMailAddress">
+                            </div>
+
+                            <div class="col-8 d-flex align-items-end justify-content-start gap-2 p-0">
+                                <a class="btn btn-dark btn-sm custom-btn" (click)="showSendMail()">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                    {{"Test_Mail_Gönder" | translate}}
+                                </a>
+
+                                <a class="btn btn-dark btn-sm custom-btn" (click)="showHistory()">
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                    {{"Test_Mail_Geçmişi" | translate}}
+                                </a>
+                            </div>
+
+                            <div class="col-4 d-flex align-items-end justify-content-end gap-2 p-0">
+                                <a class="btn btn-dark btn-sm custom-btn" (click)="save()">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    {{"Kaydet" | translate}}
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="{{'Test_Mail_Geçmişi' | translate}}" [(visible)]="displayHistory" [position]="'top'" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="-40" [draggable]="false" [resizable]="false" (onHide)="closeAction()">
+
+    <div class="row my-4">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped border table-rounded table-row-dashed align-middle gs-4 gy-2">
+                    <thead>
+                        <tr class="fs-6 fw-bold text-white border-bottom-0 text-uppercase rounded text-gray-500">
+                            <th class="rounded-start">{{"From" | translate}}</th>
+                            <th class="fw-bolder me-1 cursor-pointer">{{"To" | translate}}</th>
+                            <th class="fw-bolder me-1 cursor-pointer">{{"Kayıt_Zamanı" | translate}}</th>
+                            <th class="fw-bolder me-1 cursor-pointer">{{"Gönderim_Zamanı" | translate}}</th>
+                            <th class="rounded-end text-center">{{"Açıklama" | translate}}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <ng-container *ngFor="let item of mailHistories">
+                            <tr class="cursor-pointer fs-7">
+                                <td>
+                                    <span class="mb-1 fw-bolder">{{item.from}}</span>
+                                </td>
+
+                                <td>
+                                    <span class="mb-1 fw-bolder">{{item.to}}</span>
+                                </td>
+
+                                <td>
+                                    <span class="mb-1 fw-bolder">{{item.recorddate | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
+                                </td>
+
+                                <td>
+                                    <span class="mb-1 fw-bolder">{{item.sendtime | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
+                                </td>
+
+                                <td>
+                                    <span class="mb-1 fw-bolder">{{item.result}}</span>
+                                </td>
+                            </tr>
+                        </ng-container>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="closeAction()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'İptal' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>
+
+
+
+
+<p-dialog header="{{'Gönderilecek_Mail_Adresini_Giriniz'}}" [(visible)]="displaySendMail" [position]="'top'" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="-40" [draggable]="false" [resizable]="false" (onHide)="closeAction()">
+
+    <div class="fv-row my-5 fv-plugins-icon-container">
+        <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+            <span class="required">{{"Mail_Adresi" | translate}}</span>
+        </label>
+        
+        <input type="text" class="form-control form-control-sm form-control-solid" [(ngModel)]="mail" >
+    </div>
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="closeAction()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'İptal' | translate}}
+        </a>
+
+        <a class="btn btn-sm btn-danger mx-1" (click)="sendMail()">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>
