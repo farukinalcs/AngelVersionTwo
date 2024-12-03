@@ -22,6 +22,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslationModule } from 'src/app/modules/i18n';
 import { AgGridModule } from 'ag-grid-angular';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DashboardCardComponent } from './dashboard-card/dashboard-card.component';
+import { DashboardCardDetailComponent } from './dashboard-card/dashboard-card-detail/dashboard-card-detail.component';
+import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     DetailSearchComponent,
     RequestProcessComponent,
     RequestMenuComponent,
-    AnnualCalendarComponent
+    AnnualCalendarComponent,
+    DashboardCardComponent,
+    DashboardCardDetailComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +53,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     InputTextModule,
     TranslationModule,
     AgGridModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    CustomPipeModule
   ],
   exports: [
     FullScreenDivComponent,
@@ -68,7 +74,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CardModule,
     TimelineModule,
     ButtonModule,
-    InputTextModule
+    InputTextModule,
+    DashboardCardComponent
   ]
 })
 export class SharedModule { }

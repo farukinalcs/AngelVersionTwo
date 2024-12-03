@@ -43,6 +43,8 @@ export class DosyaTipiTanimlamaComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    console.log("Selected item : ", this.selectedItem);
+    
     this.createForm();
     this.configureComponentBehavior();
     this.getFormValue();

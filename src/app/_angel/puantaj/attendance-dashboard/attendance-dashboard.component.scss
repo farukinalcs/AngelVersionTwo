@@ -1,0 +1,22 @@
+
+
+
+// .card-body {
+//     width: 100%; // Card'ın genişliği tüm ekrana yayılsın
+//     height: auto; // Yüksekliği içeriğe göre ayarlansın
+//     display: flex;
+//     flex-direction: column;
+// }
+
+#chart {
+    width: 100%; // Chart kapsayıcısının genişliği
+    height: 100%; // Yüksekliği card-body'ye uyumlu
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+apx-chart {
+    width: 100% !important; // ApexChart'ın genişliğini zorla tam yap
+    height: auto !important; // Gerekirse yüksekliği de otomatik yap
+}

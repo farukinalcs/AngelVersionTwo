@@ -1,0 +1,27 @@
+.icon-container {
+    font-size: 4rem;
+    /* Daha büyük ikon */
+    color: var(--red-200);
+    /* İkonun rengi */
+    opacity: 0.5;
+    /* Şeffaflık */
+    position: absolute;
+    /* Kenara hizalama için */
+    top: 4px;
+    /* Yukarı kaydırma */
+    left: -4px;
+    /* Sola kaydırma */
+    z-index: 0;
+    /* Metinle çakışmaması için */
+    transform: scale(1.5);
+    /* İkonu büyüt */
+}
+
+.card-body {
+    position: relative;
+    /* İkonun yerleşimi için gerekli */
+    padding-top: 3rem;
+    /* İkonun metinle çakışmaması için */
+    overflow: hidden;
+    align-items: end;
+}

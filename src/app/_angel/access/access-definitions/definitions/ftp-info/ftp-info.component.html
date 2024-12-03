@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"FTP" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">
+                            {{"Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="!loading">
+                    <div class="card-body">
+                        <div class="col-12 pt-10">
+                            <div class="loader-container">
+                                <div id="splash-screen" class="splash-screen"
+                                    style="position: inherit; color:transparent; background-color: transparent;">
+                                    <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                                        style="margin-left: 0; height: 0;" />
+                                    <mat-spinner></mat-spinner>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="loading">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 p-5">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Kullanıcı_Adı" | translate}}</span>
+                                </label>
+                                <input type="text" class="form-control form-control-sm form-control-solid" [(ngModel)]="loginName">
+                            </div>
+                        
+                            <div class="col-6 p-5 position-relative">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Şifre" | translate}}</span>
+                                </label>
+                                <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control form-control-sm form-control-solid" [(ngModel)]="password">
+                                
+                                <span class="btn btn-sm btn-icon position-absolute top-50 end-0 translate-middle-y me-2" (click)="togglePasswordVisibility()">
+                                    <i [class]="isPasswordVisible ? 'fa-solid fa-eye-slash fs-3' : 'fa-solid fa-eye fs-3'"></i>
+                                </span>
+                            </div>
+                        
+                            <div class="col-6 p-5">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"FTP_Sunucu" | translate}}</span>
+                                </label>
+                                <input type="text" class="form-control form-control-sm form-control-solid" [(ngModel)]="ftpServer">
+                            </div>
+                        
+                            <div class="col-6 d-flex align-items-end justify-content-end gap-2 p-0">
+                                <a class="btn btn-dark btn-sm custom-btn" (click)="save()">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    {{"Kaydet" | translate}}
+                                </a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

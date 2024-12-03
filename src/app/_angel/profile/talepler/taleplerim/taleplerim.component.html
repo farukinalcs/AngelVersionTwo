@@ -1,7 +1,7 @@
 <div class="container" style="height: 500px;">
   <div class="row card p-5">
     <div class="col-12">
-      <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="resetArr()">
+      <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="resetArr()" style="min-height: 300px;">
         <mat-tab label="{{'Süreci_Devam_Eden_Formlar' | translate}}">
           <app-ongoing-requests [ongoingRequests]="sureciDevamEdenFormlar" [selectedNavItem]="kaynak"
             [menuItems]="menuItems" (getMyDemandsEvent)="getMyDemands($event)"

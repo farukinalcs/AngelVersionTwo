@@ -1,25 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AccessdashboardComponent } from './accessdashboard/accessdashboard.component';
 import { RouterModule } from '@angular/router';
 import { GecisgruplariComponent } from './gecisgruplari/gecisgruplari.component';
-import { TanimlamalarComponent } from './tanimlamalar/tanimlamalar.component';
 import { RaporlarComponent } from './raporlar/raporlar.component';
-import { AccessDataWidgetComponent } from './access-data-widget/access-data-widget.component';
 import { AccessRoutingModule } from './access-routing.module';
 import { GridsterModule } from 'angular-gridster2';
-import { ParentWidgetComponent } from './access-data-widget/parent-widget/parent-widget.component';
-import { Widget1001Component } from './access-data-widget/widget1001/widget1001.component';
-import { Widget1002Component } from './access-data-widget/widget1002/widget1002.component';
-import { Widget1003Component } from './access-data-widget/widget1003/widget1003.component';
-import { Widget1004Component } from './access-data-widget/widget1004/widget1004.component';
-import { Widget1005Component } from './access-data-widget/widget1005/widget1005.component';
-import { Widget1006Component } from './access-data-widget/widget1006/widget1006.component';
-import { ParentWidget2Component } from './access-data-widget/parent-widget2/parent-widget2.component';
-import { Widget2001Component } from './access-data-widget/widget2001/widget2001.component';
-import { Widget2002Component } from './access-data-widget/widget2002/widget2002.component';
-import { Widget2003Component } from './access-data-widget/widget2003/widget2003.component';
-import { Widget2004Component } from './access-data-widget/widget2004/widget2004.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
@@ -27,8 +12,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DialogWidget1001Component } from './access-data-widget/widget1001/dialog-widget1001/dialog-widget1001.component';
-import { FullScreenDivComponent } from '../shared/full-screen-div/full-screen-div.component';
 import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -54,44 +37,55 @@ import { DialogNewDeviceComponent } from './devices/dialog-new-device/dialog-new
 import { TranslationModule } from 'src/app/modules/i18n';
 import { DropdownModule } from 'primeng/dropdown';
 import { AgmCoreModule } from '@agm/core';
+import { AccessDefinitionsComponent } from './access-definitions/access-definitions.component';
+import { OrganizationDefinitionsComponent } from './access-definitions/definitions/organization-definitions/organization-definitions.component';
+import { FingerprintComponent } from './access-definitions/definitions/fingerprint/fingerprint.component';
+import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FtpInfoComponent } from './access-definitions/definitions/ftp-info/ftp-info.component';
+import { MailServiceComponent } from './access-definitions/definitions/mail-service/mail-service.component';
+import { SecurityComponent } from './access-definitions/definitions/security/security.component';
+import { MyPageComponent } from './access-definitions/definitions/my-page/my-page.component';
+import { EventCodesComponent } from './access-definitions/definitions/event-codes/event-codes.component';
+import { AuthorityRolesComponent } from './access-definitions/definitions/authority-roles/authority-roles.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { DeviceGroupsComponent } from './access-definitions/definitions/device-groups/device-groups.component';
+import { TimeZoneComponent } from './access-definitions/definitions/time-zone/time-zone.component';
+import { LedPanelsComponent } from './access-definitions/definitions/led-panels/led-panels.component';
+import { PrintersComponent } from './access-definitions/definitions/printers/printers.component';
+import { AccessDashboardComponent } from './access-dashboard/access-dashboard.component';
 import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dialog-update-device.component';
 
 
 @NgModule({
   declarations: [
-    AccessdashboardComponent,
+    TerminalComponent,
     DevicesComponent,
     GecisgruplariComponent,
-    TanimlamalarComponent,
     RaporlarComponent,
-    AccessDataWidgetComponent,
-    ParentWidgetComponent,
-    Widget1001Component,
-    Widget1002Component,
-    Widget1003Component,
-    Widget1004Component,
-    Widget1005Component,
-    Widget1006Component,
-    ParentWidget2Component,
-    Widget2001Component,
-    Widget2002Component,
-    Widget2003Component,
-    Widget2004Component,
-    DialogWidget1001Component,
     CustomizedCellComponent,
     DialogNewDeviceComponent,
+    AccessDefinitionsComponent,
+    OrganizationDefinitionsComponent,
+    FingerprintComponent,
+    FtpInfoComponent,
+    MailServiceComponent,
+    SecurityComponent,
+    MyPageComponent,
+    EventCodesComponent,
+    AuthorityRolesComponent,
+    DeviceGroupsComponent,
+    TimeZoneComponent,
+    LedPanelsComponent,
+    PrintersComponent,
+    AccessDashboardComponent,
     DialogUpdateDeviceComponent
+
   ],
 
   imports: [
     CommonModule,
     AccessRoutingModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: AccessdashboardComponent,
-      },
-    ]),
     GridsterModule,
     MatTableModule,
     MatPaginatorModule,
@@ -123,6 +117,10 @@ import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dial
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAdALF-5HPnZFuvYRXmGY8qkv21TGD25ak',
     }),
+    CustomPipeModule,
+    MatProgressSpinnerModule,
+    MatTabsModule
+  ]
   ],
 
 })

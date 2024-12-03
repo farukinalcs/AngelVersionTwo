@@ -1,0 +1,191 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Mesai_Grupları_Tanımları" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Gün_İçi_Vardiya_Çeşitlerinizi_Buradan_Tanımlayabilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="!loading">
+                    <div class="card-body">
+                        <div class="col-12 pt-10">
+                            <div class="loader-container">
+                                <div id="splash-screen" class="splash-screen"
+                                    style="position: inherit; color:transparent; background-color: transparent;">
+                                    <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                                        style="margin-left: 0; height: 0;" />
+                                    <mat-spinner></mat-spinner>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="loading">
+                    <div class="card-body">
+                        <div class="row d-flex align-items-strech">
+                            <div class="col-3">
+                                <div class="input-group py-3" style="flex: 1;">
+                                    <input
+                                        class="form-control form-control-solid p-2 border-1 border-dark rounded-lg font-size-h6"
+                                        [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}"
+                                        style="height: 30px;">
+
+                                    <button class="search-icon">
+                                        <div class="svg">
+                                            <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
+                                        </div>
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <a class="btn btn-secondary btn-sm custom-btn px-2 py-1 mx-1" (click)="addShiftGroup()">
+                                        <i class="fa-solid fa-plus fs-9"></i>
+                                        {{"Ekle" | translate}}
+                                    </a>
+                                    <a class="btn btn-secondary btn-sm custom-btn px-2 py-1 mx-1" (click)="updateShiftGroup()">
+                                        <i class="fa-solid fa-pen-to-square fs-9"></i>
+                                        {{"Değiştir" | translate}}
+                                    </a>
+                                    <a class="btn btn-secondary btn-sm custom-btn px-2 py-1 mx-1" (click)="deleteShiftGroup()">
+                                        <i class="fa-solid fa-trash fs-9"></i>
+                                        {{"Sil" | translate}}
+                                    </a>
+                                </div>
+
+                                <div class="h-550px scroll">
+                                    <ng-container *ngFor="let sg of shiftGroups | searchFilter:filterText: ['ad']">
+                                        <div class="d-flex align-items-center my-4 process-item rounded cursor-pointer"
+                                            [ngClass]="{'bg-dark': selectedShiftGroup?.ID == sg.ID}"
+                                            (click)="selectShiftGroup(sg)">
+                                            <span class="bullet bullet-vertical h-20px bg-dark me-5"></span>
+                                            <div class="d-flex flex-column">
+                                                <a class="fs-9 fw-bolder"
+                                                    [ngClass]="{'text-white': selectedShiftGroup?.ID == sg.ID, 'text-gray-900':selectedShiftGroup?.ID != sg.ID}">
+                                                    {{sg.ad}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+
+                            </div>
+
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-12 py-3">
+                                        <span class="fs-2 fw-bold" style="text-decoration: underline;">
+                                            {{selectedShiftGroup.ad}}
+                                        </span>                                        
+                                    </div>
+                                    
+                                    <div class="col-6 h-550px scroll">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                                <thead>
+                                                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                                        <th class=" rounded-start" style="width: 10%;">{{"Öncelik" | translate}}</th>
+                                                        <th class=" fw-bolder me-1 cursor-pointer" style="width: 40%;">{{"Mesai_Açıklama" | translate}}</th>
+                                                        <th class=" fw-bolder me-1 cursor-pointer" style="width: 20%;">{{"Başlangıç" | translate}}</th>
+                                                        <th class=" fw-bolder me-1 cursor-pointer" style="width: 20%;">{{"Bitiş" | translate}}</th>
+                                                        <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 10%;">{{"İşlem" | translate}}</th>
+                                                    </tr>
+                                                </thead>
+                                
+                                                <tbody>
+                                                    <tr *ngFor="let item of relations " class="cursor-pointer fs-8">
+                                                        <ng-container *ngIf="item.dahil == 1">
+                                                        
+                                                            <td class="text-hover-dark" (click)="changePriority(item)">
+                                                                <span class="mb-1">
+                                                                    <i class="fa-solid p-0 fs-2" [ngClass]="{'fa-angles-up': item.extra3 == '1', 'fa-minus': item.extra3 == '0'}"></i>
+                                                                </span>
+                                                            </td>
+                                                        
+                                                            <td>
+                                                                <span class="mb-1">{{ item.kaynakad }}</span>
+                                                            </td>
+                                                        
+                                                            <td>
+                                                                <span class="mb-1">{{ item.extra1 | timeFormat }}</span>
+                                                            </td>
+                                                        
+                                                            <td>
+                                                                <span class="mb-1">{{ item.extra2 | timeFormat }}</span>
+                                                            </td>
+                                                        
+                                                            <td>
+                                                                <a class="btn btn-warning btn-sm py-1 px-2" (click)="relationStateChange(item, 'd')">
+                                                                    <i class="fa-solid fa-minus p-0"></i>
+                                                                </a>
+                                                            </td>
+                                                        </ng-container>
+                                                
+                                                    </tr>
+                                                
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-6 h-550px scroll">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                                <thead>
+                                                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                                        <th class=" rounded-start" style="width: 10%;">{{"İşlem" | translate}}</th>
+                                                        <th class=" fw-bolder me-1 cursor-pointer" style="width: 40%;">{{"Mesai_Açıklama" | translate}}</th>
+                                                        <th class=" fw-bolder me-1 cursor-pointer" style="width: 25%;">{{"Başlangıç" | translate}}</th>
+                                                        <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 25%;">{{"Bitiş" | translate}}</th>
+                                                    </tr>
+                                                </thead>
+                                
+                                                <tbody>
+                                                        <tr *ngFor="let item of relations " class="cursor-pointer fs-8">
+                                                            <ng-container *ngIf="item.dahil == 0">
+                                                            
+                                                                <td>
+                                                                    <a class="btn btn-primary btn-sm py-1 px-2" (click)="relationStateChange(item, 'i')">
+                                                                        <i class="fa-solid fa-plus p-0"></i>
+                                                                    </a>
+                                                                </td>
+                                                            
+                                                                <td>
+                                                                    <span class="mb-1">{{ item.kaynakad }}</span>
+                                                                </td>
+                                                            
+                                                                <td>
+                                                                    <span class="mb-1">{{ item.extra1 | timeFormat }}</span>
+                                                                </td>
+                                                            
+                                                                <td>
+                                                                    <span class="mb-1">{{ item.extra2 | timeFormat }}</span>
+                                                                </td>
+                                                            
+                                                            </ng-container>
+        
+                                                        </tr>
+                                
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

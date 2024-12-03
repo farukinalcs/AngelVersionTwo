@@ -1,0 +1,252 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Terminal_Grupları_Tanımları" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="!loading">
+                    <div class="card-body">
+                        <div class="col-12 pt-10">
+                            <div class="loader-container">
+                                <div id="splash-screen" class="splash-screen"
+                                    style="position: inherit; color:transparent; background-color: transparent;">
+                                    <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                                        style="margin-left: 0; height: 0;" />
+                                    <mat-spinner></mat-spinner>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="loading">
+                    <div class="card-body">
+                        <div class="row d-flex align-items-strech">
+                            <div class="col-3">
+                                <div class="input-group py-3" style="flex: 1;">
+                                    <input
+                                        class="form-control form-control-solid p-2 border-1 border-dark rounded-lg font-size-h6"
+                                        [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}"
+                                        style="height: 30px;">
+
+                                    <button class="search-icon">
+                                        <div class="svg">
+                                            <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
+                                        </div>
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <a class="btn btn-secondary btn-sm custom-btn px-2 py-1 mx-1"
+                                        (click)="openAddDialog()">
+                                        <i class="fa-solid fa-plus fs-9"></i>
+                                        {{"Ekle" | translate}}
+                                    </a>
+                                    <a class="btn btn-secondary btn-sm custom-btn px-2 py-1 mx-1"
+                                        (click)="openUpdateDialog()">
+                                        <i class="fa-solid fa-pen-to-square fs-9"></i>
+                                        {{"Değiştir" | translate}}
+                                    </a>
+                                    <a class="btn btn-secondary btn-sm custom-btn px-2 py-1 mx-1"
+                                        (click)="deleteDeviceGroup()">
+                                        <i class="fa-solid fa-trash fs-9"></i>
+                                        {{"Sil" | translate}}
+                                    </a>
+                                </div>
+
+                                <div class="h-550px scroll">
+                                    <ng-container *ngFor="let item of deviceGroups | searchFilter:filterText: ['ad']">
+                                        <div class="d-flex align-items-center my-4 process-item rounded cursor-pointer"
+                                            [ngClass]="{'bg-dark': selectedDeviceGroup?.id == item.id}"
+                                            (click)="selectDeviceGroup(item)">
+                                            <span class="bullet bullet-vertical h-20px bg-dark me-5"></span>
+                                            <div class="d-flex flex-column">
+                                                <a class="fs-9 fw-bolder"
+                                                    [ngClass]="{'text-white': selectedDeviceGroup?.id == item.id, 'text-gray-900':selectedDeviceGroup?.id != item.id}">
+                                                    {{item.ad}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+
+                            </div>
+
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-12 py-3">
+                                        <span class="fs-2 fw-bold" style="text-decoration: underline;">
+                                            {{selectedDeviceGroup?.ad}}
+                                        </span>
+                                    </div>
+
+                                    <div class="col-12 py-3">
+                                        <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                            <span>{{"Terminal_Grubu_Amacı" | translate}}</span>
+                                        </label>
+                        
+                                        <p-dropdown [options]="purposes" [(ngModel)]="selectedPurpose" (ngModelChange)="onChangePurpose()" optionLabel="ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad"
+                                            [showClear]="true" placeholder="{{'Terminal_Grubu_Amacı_Seçiniz' | translate}}">
+                                            <ng-template pTemplate="selectedItem">
+                                                <div class="item-item item-item-value" *ngIf="selectedPurpose">
+                                                    <div>{{selectedPurpose?.ad}}</div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template let-item pTemplate="item">
+                                                <div class="item-item">
+                                                    <div>{{item?.ad}}</div>
+                                                </div>
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </div>
+
+                                    <div class="col-6 h-550px scroll">
+                                        <div class="table-responsive">
+                                            <table
+                                                class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                                <thead>
+                                                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                                        <th class=" fw-bolder me-1 cursor-pointer rounded-start" style="width: 80%;">{{"Gruptaki_Terminaller" | translate}}</th>
+                                                        <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 20%;">{{"İşlem" | translate}}</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr *ngFor="let item of relations " class="cursor-pointer fs-8">
+                                                        <ng-container *ngIf="item.dahil == 1">
+                                                            <td>
+                                                                <span class="mb-1">{{ item?.kaynakad }}</span>
+                                                            </td>
+
+                                                            <td>
+                                                                <a class="btn btn-warning btn-sm py-1 px-2" (click)="relationStateChange(item, 'd')">
+                                                                    <i class="fa-solid fa-minus p-0"></i>
+                                                                </a>
+                                                            </td>
+                                                        </ng-container>
+
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 h-550px scroll">
+                                        <div class="table-responsive">
+                                            <table
+                                                class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                                <thead>
+                                                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                                        <th class=" rounded-start" style="width: 20%;">{{"İşlem" | translate}}</th>
+                                                        <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 80%;">{{"Eklenebilir_Terminaller" | translate}}</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr *ngFor="let item of relations " class="cursor-pointer fs-8">
+                                                        <ng-container *ngIf="item.dahil == 0">
+                                                            <td>
+                                                                <a class="btn btn-primary btn-sm py-1 px-2" (click)="relationStateChange(item, 'i')">
+                                                                    <i class="fa-solid fa-plus p-0"></i>
+                                                                </a>
+                                                            </td>
+
+                                                            <td>
+                                                                <span class="mb-1">{{ item?.kaynakad }}</span>
+                                                            </td>
+                                                        </ng-container>
+
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<p-dialog header="{{'Terminal_Grubunu_Güncelle' | translate}}" [(visible)]="displayUpdate" [position]="'top'" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="-40" [draggable]="false" [resizable]="false" (onHide)="closeAction()">
+
+    <form #deviceUpdateForm="ngForm">
+        <div class="fv-row my-5 fv-plugins-icon-container">
+            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                <span class="required">{{"Terminal_Grubu_Adı" | translate}}</span>
+            </label>
+            
+            <input type="text" class="form-control form-control-sm form-control-solid" name="deviceName" ngModel >
+        </div>
+    </form>
+    
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="closeAction()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'İptal' | translate}}
+        </a>
+
+        <a class="btn btn-sm btn-danger mx-1" (click)="updateDeviceGroup(deviceUpdateForm.value)">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="{{'Terminal_Grubu_Ekle' | translate}}" [(visible)]="displayAdd" [position]="'top'" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="-40" [draggable]="false" [resizable]="false" (onHide)="closeAction()">
+
+    <form #deviceAddForm="ngForm">
+        <div class="fv-row my-5 fv-plugins-icon-container">
+            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                <span>{{"Terminal_Grubu_Ekleme_Amacı" | translate}}</span>
+            </label>
+
+            <p-dropdown [options]="purposes" ngModel name="purpose" optionLabel="ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="false"
+                [showClear]="true" placeholder="{{'Terminal_Grubu_Ekleme_Amacınızı_Seçiniz' | translate}}">
+                
+                <ng-template let-item pTemplate="item">
+                    <div class="item-item">
+                        <div>{{item?.ad}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+
+        <div class="fv-row my-5 fv-plugins-icon-container">
+            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                <span class="required">{{"Terminal_Grubu_Adı" | translate}}</span>
+            </label>
+            
+            <input type="text" class="form-control form-control-sm form-control-solid" name="deviceName" ngModel >
+        </div>
+    </form>
+    
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="closeAction()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'İptal' | translate}}
+        </a>
+
+        <a class="btn btn-sm btn-danger mx-1" (click)="addDeviceGroup(deviceAddForm.value)">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>

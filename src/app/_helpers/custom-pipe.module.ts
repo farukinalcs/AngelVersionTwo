@@ -5,6 +5,7 @@ import { TimeFormatPipe } from './pipes/time-format.pipe';
 import { FirstSevenPipe } from './pipes/first-seven.pipe';
 import { FormatFileSizePipe } from './pipes/format-file-size.pipe';
 import { IbanMaskPipe } from './pipes/iban-mask.pipe';
+import { PaginationPipe } from './pipes/pagination.pipe';
 
 
 
@@ -15,6 +16,7 @@ import { IbanMaskPipe } from './pipes/iban-mask.pipe';
     FirstSevenPipe,
     FormatFileSizePipe,
     IbanMaskPipe,
+    PaginationPipe
 
   ],
   imports: [
@@ -26,7 +28,8 @@ import { IbanMaskPipe } from './pipes/iban-mask.pipe';
     FirstSevenPipe,
     FormatFileSizePipe,
     IbanMaskPipe,
-
+    PaginationPipe
+    
   ]
 })
 export class CustomPipeModule { }

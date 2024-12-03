@@ -1,0 +1,204 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Tatil_Tipleri" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="!loading">
+                    <div class="card-body">
+                        <div class="col-12 pt-10">
+                            <div class="loader-container">
+                                <div id="splash-screen" class="splash-screen"
+                                    style="position: inherit; color:transparent; background-color: transparent;">
+                                    <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                                        style="margin-left: 0; height: 0;" />
+                                    <mat-spinner></mat-spinner>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="loading">
+                    <div class="card-body">
+                        <div class="row" [formGroup]="form">
+                            <div class="col-4">
+                                <label class="d-flex align-items-center fs-8 fw-semibold mb-2">
+                                    <span>{{"Açıklama" | translate}}</span>
+                                </label>
+
+                                <input type="text" class="form-control form-control-sm form-control-solid"
+                                    formControlName="explanation">
+                            </div>
+
+                            <div class="col-2">
+                                <label class="d-flex align-items-center fs-8 fw-semibold mb-2">
+                                    <span>{{"Kod" | translate}}</span>
+                                </label>
+
+                                <input type="text" class="form-control form-control-sm form-control-solid" formControlName="code" />
+                            </div>
+
+                            <div class="col-2">
+                                <label class="d-flex align-items-center fs-8 fw-semibold mb-2">
+                                    <span>{{"Tarih" | translate}}</span>
+                                </label>
+
+                                <input type="date" class="form-control form-control-sm form-control-solid" formControlName="date" />
+                            </div>
+
+                            <div class="col-1">
+                                <label class="d-flex align-items-center fs-9 fw-semibold mb-2">
+                                    <span>{{"Sabit_Mi" | translate}}</span>
+                                </label>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" formControlName="fixed">
+
+                                </label>
+                            </div>
+
+                            <div class="col-1">
+                                <label class="d-flex align-items-center fs-9 fw-semibold mb-2">
+                                    <span>{{"Yarım_Gün" | translate}}</span>
+                                </label>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" formControlName="halfDay">
+                                </label>
+                            </div>
+
+                            <ng-container *ngIf="form.get('halfDay')?.value">
+                                <div class="col-2">
+                                    <label class="d-flex align-items-center fs-8 fw-semibold mb-2">
+                                        <span>{{"Başlangıç_Saati" | translate}}</span>
+                                    </label>
+    
+                                    <input type="time" class="form-control form-control-sm form-control-solid" formControlName="startTime" />
+                                </div>
+                            </ng-container>
+                            
+
+
+                        </div>
+
+                        <div class="d-flex flex-row-reverse my-5">
+                            <div class="p-2">
+                                <a class="btn btn-dark btn-sm custom-btn" (click)="deleteHolidayType()">
+                                    <i class="fa-solid fa-trash"></i>
+                                    {{"Seçili_Tatil_Tipini_Sil" | translate}}
+                                </a>
+                            </div>
+
+                            <div class="p-2">
+                                <a class="btn btn-dark btn-sm custom-btn" (click)="updateHolidayType()">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                    {{"Seçili_Tatil_Tipini_Güncelle" | translate}}
+                                </a>
+                            </div>
+
+                            <div class="p-2">
+                                <a class="btn btn-dark btn-sm custom-btn" (click)="addHolidayType()">
+                                    <i class="fa-solid fa-plus"></i>
+                                    {{"Tatil_Tipi_Ekle" | translate}}
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table
+                                        class="table table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-2">
+                                        <thead>
+                                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                                <th class=" rounded-start">{{"Kod" | translate}}</th>
+                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Açıklama" | translate}}</th>
+                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Tarih" | translate}}</th>
+                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Sabit" | translate}}</th>
+                                                <th class=" fw-bolder me-1 cursor-pointer rounded-end">{{"Yarım_Gün" | translate}}</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <ng-container
+                                                *ngFor="let item of holidayTypes | pagination: pageNumber : pageSize">
+                                                <tr class="cursor-pointer fs-7" [ngClass]="{
+                                                              'bg-gray-700': item.Id == selectedType?.Id,
+                                                              'text-white' : item.Id == selectedType?.Id,
+                                                              'text-dark': item.Id != selectedType?.Id,
+                                                              'fw-bold' : item.Id == selectedType?.Id,
+                                                              'fw-normal' : item.Id != selectedType?.Id 
+                                                          }" (click)="selectType(item)">
+
+                                                    <td>
+                                                        <span class="mb-1">{{item.Kod}}</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="mb-1">{{item.Aciklama}}</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="mb-1">{{item.Tarih | date: 'dd.MM.yyyy'}}</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="mb-1">{{ item.Sabit ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="mb-1">{{ item.YarimGun == 1 ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="pagination-controls">
+                                    <button
+                                        class="btn btn-outline btn-outline btn-outline-dark btn-active-light-dark py-2 px-3 mx-1"
+                                        (click)="goToFirstPage()" [disabled]="pageNumber === 1">
+                                        <i class="fa-solid fa-angles-left"></i>
+                                    </button>
+
+                                    <button
+                                        class="btn btn-outline btn-outline btn-outline-dark btn-active-light-dark py-2 px-3 mx-1"
+                                        (click)="previousPage()" [disabled]="pageNumber === 1">
+                                        <i class="fa-solid fa-angle-left"></i>
+                                    </button>
+
+                                    <span>Sayfa {{ pageNumber }} / {{ totalPages }}</span>
+
+                                    <button
+                                        class="btn btn-outline btn-outline btn-outline-dark btn-active-light-dark py-2 px-3 mx-1"
+                                        (click)="nextPage()" [disabled]="pageNumber === totalPages">
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </button>
+
+                                    <button
+                                        class="btn btn-outline btn-outline btn-outline-dark btn-active-light-dark py-2 px-3 mx-1"
+                                        (click)="goToLastPage()" [disabled]="pageNumber === totalPages">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>

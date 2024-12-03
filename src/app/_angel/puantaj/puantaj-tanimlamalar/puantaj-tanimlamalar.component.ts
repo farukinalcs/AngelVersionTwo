@@ -26,39 +26,60 @@ export class PuantajTanimlamalarComponent implements OnInit, OnDestroy {
     {id: 12, label: this.translateService.instant('Ara_Süreler'), icon: "fa-solid fa-right-left"},
     {id: 13, label: this.translateService.instant('Gün_Bölme'), icon: "fa-solid fa-hourglass-half"},
     {id: 14, label: this.translateService.instant('İzin_Ezme'), icon: "fa-solid fa-ban"},
-    {id: 15, label: this.translateService.instant('İlan'), icon: "fa-solid fa-clipboard"}
+    // {id: 15, label: this.translateService.instant('İlan'), icon: "fa-solid fa-clipboard"}
   ];
 
-  visibleTabs: any[] = [];  // Görüntülenen tablar
+  visibleTabs: any[] = [];
   selectedTab: any;
-  startIndex: number = 0;
+  startIndex = 0;
+  slideDirection: 'left' | 'right' = 'left'; // Animasyon yönü için değişken
+  currentPage = 0; // Aktif sayfa numarası
+  pageSize = 9; // Her sayfada gösterilecek öğe sayısı
+  pages: number[] = []; // Sayfa numaraları dizisi
 
   constructor(
     private profileService: ProfileService,
     private translateService: TranslateService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.changeTab(this.tabList[0]);
     this.updateVisibleTabs();
+    this.createPages();
+    this.changeTab(this.tabList[0]);
   }
 
   updateVisibleTabs() {
-    this.visibleTabs = this.tabList.slice(this.startIndex, this.startIndex + 9); // Sadece 9 tab göster
+    this.visibleTabs = this.tabList.slice(this.startIndex, this.startIndex + this.pageSize);
+  }
+
+  createPages() {
+    const totalPages = Math.ceil(this.tabList.length / this.pageSize);
+    this.pages = Array(totalPages).fill(0).map((x, i) => i); // Sayfa numaraları oluşturuluyor
   }
 
   moveLeft() {
     if (this.startIndex > 0) {
-      this.startIndex--;
+      this.startIndex -= this.pageSize;
+      this.slideDirection = 'left';
+      this.currentPage = Math.floor(this.startIndex / this.pageSize);
       this.updateVisibleTabs();
     }
   }
 
   moveRight() {
-    if (this.startIndex + 9 < this.tabList.length) {
-      this.startIndex++;
+    if (this.startIndex + this.pageSize < this.tabList.length) {
+      this.startIndex += this.pageSize;
+      this.slideDirection = 'right';
+      this.currentPage = Math.floor(this.startIndex / this.pageSize);
       this.updateVisibleTabs();
     }
+  }
+
+  goToPage(pageIndex: number) {
+    this.startIndex = pageIndex * this.pageSize;
+    this.slideDirection = pageIndex > this.currentPage ? 'right' : 'left';
+    this.currentPage = pageIndex;
+    this.updateVisibleTabs();
   }
 
   changeTab(tab: any) {

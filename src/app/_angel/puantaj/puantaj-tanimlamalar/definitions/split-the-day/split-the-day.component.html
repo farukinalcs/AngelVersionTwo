@@ -1,0 +1,200 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Gün_Bölme" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Parametrelerini_Buradan_Ayarlayabilirsiniz" | translate}}
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row" style="justify-content: space-between;" [formGroup]="form">
+                        <div class="col-5 my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{"Normal_Mesai" | translate}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{"Test" | translate}}</div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" formControlName="regularWorking">
+                                    <span class="form-check-label fw-semibold text-muted">
+                                        {{ form.get('regularWorking')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-5 my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{"Fazla_Mesai" | translate}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{"Test" | translate}}</div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" formControlName="overtime">
+                                    <span class="form-check-label fw-semibold text-muted">
+                                        {{ form.get('overtime')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-5 my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{"Resmi_Tatil" | translate}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{"Test" | translate}}</div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" formControlName="publicHoliday">
+                                    <span class="form-check-label fw-semibold text-muted">
+                                        {{ form.get('publicHoliday')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-5 my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{"Resmi_Tatil_Süre" | translate}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{"Test" | translate}}</div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" formControlName="publicHolidayTime">
+                                    <span class="form-check-label fw-semibold text-muted">
+                                        {{ form.get('publicHolidayTime')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-5 my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{"Gece_Zammı" | translate}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{"Test" | translate}}</div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" formControlName="nightRaise">
+                                    <span class="form-check-label fw-semibold text-muted">
+                                        {{ form.get('nightRaise')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-5 my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{"Gece_Vardiyası" | translate}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{"Test" | translate}}</div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" formControlName="nightShiftTime">
+                                    <span class="form-check-label fw-semibold text-muted">
+                                        {{ form.get('nightShiftTime')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-5 my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{"Fazla_Mesai_Form" | translate}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{"Test" | translate}}</div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" formControlName="overtimeForm">
+                                    <span class="form-check-label fw-semibold text-muted">
+                                        {{ form.get('overtimeForm')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-5 my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{"Hafta_Tatili_Form" | translate}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{"Test" | translate}}</div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" formControlName="weekBreakForm">
+                                    <span class="form-check-label fw-semibold text-muted">
+                                        {{ form.get('weekBreakForm')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-5 my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{"Resmi_Tatil_Form" | translate}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{"Test" | translate}}</div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" formControlName="publicHolidayForm">
+                                    <span class="form-check-label fw-semibold text-muted">
+                                        {{ form.get('publicHolidayForm')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-5 my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{"İzinler_Formdan_Mı" | translate}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{"Test" | translate}}</div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" formControlName="permissionForm">
+                                    <span class="form-check-label fw-semibold text-muted">
+                                        {{ form.get('permissionForm')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-5 my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{"Gün_Bölme_Saati" | translate}}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{"Test" | translate}}</div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input type="time" class="form-control form-control-sm form-control-solid" formControlName="daySplitTime">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-3 d-flex align-items-end justify-content-end my-5">
+                            <a class="btn btn-dark btn-sm custom-btn" (click)="save()">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                {{"Kaydet" | translate}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

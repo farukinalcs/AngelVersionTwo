@@ -1,0 +1,117 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Şifre_Değiştirme" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="!loading">
+                    <div class="card-body">
+                        <div class="col-12 pt-10">
+                            <div class="loader-container">
+                                <div id="splash-screen" class="splash-screen"
+                                    style="position: inherit; color:transparent; background-color: transparent;">
+                                    <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                                        style="margin-left: 0; height: 0;" />
+                                    <mat-spinner></mat-spinner>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="loading">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 p-5">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Zaman_Aralığı" | translate}}</span>
+                                </label>
+                                        
+                                <input type="number" class="form-control form-control-sm form-control-solid" [(ngModel)]="timeRange">
+                            </div>
+
+                            <div class="col-4 p-5">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"En_Az_Şifre_Uzunluğu" | translate}}</span>
+                                </label>
+                                        
+                                <input type="number" class="form-control form-control-sm form-control-solid" [(ngModel)]="minPassLength">
+                            </div>
+
+                            <div class="col-4 p-5">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Kullanılan_Şifre_Farklılığı" | translate}}</span>
+                                </label>
+                                        
+                                <input type="number" class="form-control form-control-sm form-control-solid" [(ngModel)]="usePassDifference">
+                            </div>
+
+                            <div class="col-6 p-5">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Şifre_Rakam_İçerme_Zorlama" | translate}}</span>
+                                </label>
+                            
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input h-20px" type="checkbox" [(ngModel)]="includeNumber">
+                                </label>
+                            </div>
+
+                            <div class="col-6 p-5">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Şifre_Büyük_Küçük_Harf_Zorlama" | translate}}</span>
+                                </label>
+                            
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input h-20px" type="checkbox" [(ngModel)]="capitalization">
+                                </label>
+                            </div>
+
+                            <div class="col-6 p-5">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Şifre_Özel_Karakter_Zorlama" | translate}}</span>
+                                </label>
+                            
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input h-20px" type="checkbox" [(ngModel)]="specialCharacter">
+                                </label>
+                            </div>
+
+                            <div class="col-6 p-5">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Login_Mesajları" | translate}}</span>
+                                </label>
+                            
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input h-20px" type="checkbox" [(ngModel)]="loginMessage">
+                                </label>
+                            </div>
+
+                            <div class="col-6 p-5">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Mobil_Belirli_Lokasyonda_Giriş_Çıkış" | translate}}</span>
+                                </label>
+                            
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input h-20px" type="checkbox" [(ngModel)]="mobileSpecificLocation">
+                                </label>
+                            </div>
+    
+                            <div class="col-6 d-flex align-items-end justify-content-end gap-2 p-0">
+                                <a class="btn btn-dark btn-sm custom-btn" (click)="save()">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    {{"Kaydet" | translate}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

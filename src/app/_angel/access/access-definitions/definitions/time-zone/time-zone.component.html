@@ -1,0 +1,948 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Time_Zone_Tanımları" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Bilgilerini_Buradan_Belirleyebilirsiniz" |
+                            translate}}</h4>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="!loading">
+                    <div class="card-body">
+                        <div class="col-12 pt-10">
+                            <div class="loader-container">
+                                <div id="splash-screen" class="splash-screen"
+                                    style="position: inherit; color:transparent; background-color: transparent;">
+                                    <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                                        style="margin-left: 0; height: 0;" />
+                                    <mat-spinner></mat-spinner>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="loading">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Time_Zone" | translate}}</span>
+                                </label>
+
+                                <p-dropdown [options]="timeZoneList" [(ngModel)]="selectedTimeZone"
+                                    (ngModelChange)="onChangeTimeZone($event)" optionLabel="Ad"
+                                    [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad"
+                                    [showClear]="true" placeholder="{{'Time_Zone_Seçiniz' | translate}}">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="item-item item-item-value" *ngIf="selectedTimeZone">
+                                            <div>{{selectedTimeZone?.Ad}}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-item pTemplate="item">
+                                        <div class="item-item">
+                                            <div>{{item?.Ad}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="changeTabMenu($event)" style='min-height:300px'>
+                                <mat-tab label="{{'1' | translate}}">
+                                    <div class="row mx-0 my-4">
+                                        <form [formGroup]="form">
+                                            <div class="row py-10">
+                                                <div class="col-6">
+                                                    <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                        <span>{{"Başlangıç" | translate}}</span>
+                                                        <div class="form-check form-check-sm mx-3">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                formControlName="temp1startTimeCheck" />
+                                                        </div>
+                                                    </label>
+
+                                                    <input type="time"
+                                                        class="form-control form-control-sm form-control-solid"
+                                                        formControlName="temp1startTime">
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                        <span>{{"Bitiş" | translate}}</span>
+                                                        <div class="form-check form-check-sm mx-3">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                formControlName="temp1endTimeCheck" />
+                                                        </div>
+                                                    </label>
+
+                                                    <input type="time"
+                                                        class="form-control form-control-sm form-control-solid"
+                                                        formControlName="temp1endTime">
+                                                </div>
+
+                                                <div class="row gap-3 my-4">
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp1monday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Pazartesi"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp1tuesday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Salı" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp1wednesday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Çarşamba"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp1thursday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Perşembe"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp1friday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Cuma" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp1saturday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Cumartesi"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp1sunday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Pazar" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp1vac1">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Tatil1" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp1vac2">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Tatil2" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </mat-tab>
+
+                                <mat-tab label="{{'2' | translate}}">
+                                    <div class="row mx-0 my-4">
+                                        <form [formGroup]="form">
+                                            <div class="row py-10">
+                                                <div class="col-6">
+                                                    <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                        <span>{{"Başlangıç" | translate}}</span>
+                                                        <div class="form-check form-check-sm mx-3">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                formControlName="temp2startTimeCheck" />
+                                                        </div>
+                                                    </label>
+
+                                                    <input type="time"
+                                                        class="form-control form-control-sm form-control-solid"
+                                                        formControlName="temp2startTime">
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                        <span>{{"Bitiş" | translate}}</span>
+                                                        <div class="form-check form-check-sm mx-3">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                formControlName="temp2endTimeCheck" />
+                                                        </div>
+                                                    </label>
+
+                                                    <input type="time"
+                                                        class="form-control form-control-sm form-control-solid"
+                                                        formControlName="temp2endTime">
+                                                </div>
+
+                                                <div class="row gap-3 my-4">
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp2monday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Pazartesi"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp2tuesday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Salı" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp2wednesday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Çarşamba"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp2thursday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Perşembe"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp2friday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Cuma" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp2saturday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Cumartesi"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp2sunday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Pazar" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp2vac1">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Tatil1" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp2vac2">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Tatil2" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </mat-tab>
+
+                                <mat-tab label="{{'3' | translate}}">
+                                    <div class="row mx-0 my-4">
+                                        <form [formGroup]="form">
+                                            <div class="row py-10">
+                                                <div class="col-6">
+                                                    <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                        <span>{{"Başlangıç" | translate}}</span>
+                                                        <div class="form-check form-check-sm mx-3">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                formControlName="temp3startTimeCheck" />
+                                                        </div>
+                                                    </label>
+
+                                                    <input type="time"
+                                                        class="form-control form-control-sm form-control-solid"
+                                                        formControlName="temp3startTime">
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                        <span>{{"Bitiş" | translate}}</span>
+                                                        <div class="form-check form-check-sm mx-3">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                formControlName="temp3endTimeCheck" />
+                                                        </div>
+                                                    </label>
+
+                                                    <input type="time"
+                                                        class="form-control form-control-sm form-control-solid"
+                                                        formControlName="temp3endTime">
+                                                </div>
+
+                                                <div class="row gap-3 my-4">
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp3monday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Pazartesi"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp3tuesday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Salı" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp3wednesday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Çarşamba"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp3thursday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Perşembe"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp3friday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Cuma" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp3saturday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Cumartesi"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp3sunday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Pazar" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp3vac1">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Tatil1" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp3vac2">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Tatil2" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </mat-tab>
+
+                                <mat-tab label="{{'4' | translate}}">
+                                    <div class="row mx-0 my-4">
+                                        <form [formGroup]="form">
+                                            <div class="row py-10">
+                                                <div class="col-6">
+                                                    <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                        <span>{{"Başlangıç" | translate}}</span>
+                                                        <div class="form-check form-check-sm mx-3">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                formControlName="temp4startTimeCheck" />
+                                                        </div>
+                                                    </label>
+
+                                                    <input type="time"
+                                                        class="form-control form-control-sm form-control-solid"
+                                                        formControlName="temp4startTime">
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                        <span>{{"Bitiş" | translate}}</span>
+                                                        <div class="form-check form-check-sm mx-3">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                formControlName="temp4endTimeCheck" />
+                                                        </div>
+                                                    </label>
+
+                                                    <input type="time"
+                                                        class="form-control form-control-sm form-control-solid"
+                                                        formControlName="temp4endTime">
+                                                </div>
+
+                                                <div class="row gap-3 my-4">
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp4monday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Pazartesi"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp4tuesday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Salı" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp4wednesday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Çarşamba"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp4thursday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Perşembe"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp4friday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Cuma" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp4saturday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Cumartesi"
+                                                                    | translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp4sunday">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Pazar" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp4vac1">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Tatil1" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="d-flex align-items-center">
+                                                            <label
+                                                                class="form-check form-switch form-check-custom form-check-solid">
+                                                                <input class="form-check-input h-20px" type="checkbox"
+                                                                    formControlName="temp4vac2">
+                                                                <span class="form-check-label fw-semibold text-muted">
+
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="me-5">
+                                                                <label class="fs-7 fw-semibold form-label">{{"Tatil2" |
+                                                                    translate}}</label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </mat-tab>
+                            </mat-tab-group>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 d-flex align-items-end justify-content-end gap-2 p-0">
+                                <a class="btn btn-dark btn-sm custom-btn" (click)="getFormValues()">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    {{"Kaydet" | translate}}
+                                </a>
+
+                                <a class="btn btn-dark btn-sm custom-btn" (click)="remove()">
+                                    <i class="fa-solid fa-trash"></i>
+                                    {{"Kaldır" | translate}}
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<p-dialog header="{{'Yeni_Timezone_Ekle' | translate}}" [(visible)]="displayAdd" [position]="'top'" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="-40" [draggable]="false" [resizable]="false"
+    (onHide)="closeAction()">
+
+    <div class="fv-row my-5 fv-plugins-icon-container">
+        <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+            <span class="required">{{"Timezone_Adı" | translate}}</span>
+        </label>
+        
+        <input type="text" class="form-control form-control-sm form-control-solid" [(ngModel)]="name" >
+    </div>
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="closeAction()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'İptal' | translate}}
+        </a>
+
+        <a class="btn btn-sm btn-danger mx-1" (click)="add()">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>

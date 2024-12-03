@@ -1,0 +1,100 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{selectedItem.label}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Dosya_Gereklilik_Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 py-3" [formGroup]="form">
+                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                <span class="required">{{selectedItem.label}}</span>
+                            </label>
+                    
+                            <p-dropdown [options]="vacationReasons" [(ngModel)]="selectedType" optionLabel="ad"
+                                [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad" [showClear]="true"
+                                placeholder="{{'Seçim_Yapınız' | translate}}" formControlName="type">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="selectedType">
+                                        <div>{{selectedType.ad}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    
+                        <div class="col-6 h-550px scroll">
+                            <div class="table-responsive">
+                                <table
+                                    class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                    <thead>
+                                        <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                            <th class=" fw-bolder me-1 cursor-pointer rounded-start" style="width: 80%;">{{"Gruptaki_Belgeler" | translate}}</th>
+                                            <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 20%;">{{"İşlem" | translate}}</th>
+                                        </tr>
+                                    </thead>
+                    
+                                    <tbody>
+                                        <tr *ngFor="let item of targetItems " class="cursor-pointer fs-8">
+                                            <td>
+                                                <span class="mb-1">{{ item?.ad }}</span>
+                                            </td>
+                                        
+                                            <td>
+                                                <a class="btn btn-warning btn-sm py-1 px-2" (click)="onMoveToSource(item)">
+                                                    <i class="fa-solid fa-minus p-0"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    
+                        <div class="col-6 h-550px scroll">
+                            <div class="table-responsive">
+                                <table
+                                    class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                    <thead>
+                                        <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                            <th class=" rounded-start" style="width: 20%;">{{"İşlem" | translate}}</th>
+                                            <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 80%;">{{"Eklenebilir_Belgeler" | translate}}</th>
+                                        </tr>
+                                    </thead>
+                    
+                                    <tbody>
+                                        <tr *ngFor="let item of sourceItems " class="cursor-pointer fs-8">
+                                            <td>
+                                                <a class="btn btn-primary btn-sm py-1 px-2" (click)="onMoveToTarget(item)">
+                                                    <i class="fa-solid fa-plus p-0"></i>
+                                                </a>
+                                            </td>
+                                        
+                                            <td>
+                                                <span class="mb-1">{{ item?.Ad }}</span>
+                                            </td>
+                                        </tr>
+                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

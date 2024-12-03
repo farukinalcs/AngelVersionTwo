@@ -15,6 +15,7 @@ import { EksikSurelerimComponent } from './islemler/eksik-surelerim/eksik-surele
 import { ProfileDataWidgetComponent } from './profile-data-widget/profile-data-widget.component';
 import { ProfilTanimlamalarComponent } from './profil-tanimlamalar/profil-tanimlamalar.component';
 import { VisitorRequestsComponent } from './talepler/visitor-requests/visitor-requests.component';
+import { ProfileDefinitionsComponent } from './profile-definitions/profile-definitions.component';
 
 const routes: Routes = [
   {
@@ -69,9 +70,13 @@ const routes: Routes = [
         path: 'eksik_surelerim',
         component: EksikSurelerimComponent,
       },
+      // {
+      //   path: 'profil_tanimlamalar',
+      //   component: ProfilTanimlamalarComponent,
+      // },
       {
         path: 'profil_tanimlamalar',
-        component: ProfilTanimlamalarComponent,
+        component: ProfileDefinitionsComponent,
       },
       // { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },

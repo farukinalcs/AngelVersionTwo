@@ -1,0 +1,103 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Yazıcılar" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">
+                            {{"Angel_Sunucuya_Bağlı_Yazıcıları_Buradan_Görebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="!loading">
+                    <div class="card-body">
+                        <div class="col-12 pt-10">
+                            <div class="loader-container">
+                                <div id="splash-screen" class="splash-screen"
+                                    style="position: inherit; color:transparent; background-color: transparent;">
+                                    <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                                        style="margin-left: 0; height: 0;" />
+                                    <mat-spinner></mat-spinner>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="loading">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="input-group py-3" style="flex: 1;">
+                                    <input
+                                        class="form-control form-control-solid p-2 border-1 border-dark rounded-lg font-size-h6"
+                                        [(ngModel)]="filterText" style="height: 30px;" type="text"
+                                        placeholder="{{'Arama' | translate}}">
+
+                                    <button class="search-icon">
+                                        <div class="svg">
+                                            <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-8 d-flex justify-content-end">
+                                
+                            </div>
+                        </div>
+
+
+                        <div class="row my-4">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <!-- <table class="table table-hover border table-striped table-rounded table-row-dashed table-row-gray-400 align-middle gs-4 gy-2"> -->
+                                    <table
+                                        class="table table-hover table-striped border table-rounded table-row-dashed align-middle gs-4 gy-2">
+                                        <thead>
+                                            <tr class="fs-6 fw-bold text-white border-bottom-0 text-uppercase rounded text-gray-500">
+                                                <th class="rounded-start fw-bolder me-1 cursor-pointer" style="width: 80%;">{{"Ad" | translate}}</th>
+                                                <th class="rounded-end text-center" style="width: 20%;">{{"" | translate}}</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <ng-container
+                                                *ngFor="let item of printers | searchFilter:filterText: ['ad']">
+                                                <tr class="cursor-pointer fs-7">
+
+                                                    <td>
+                                                        <span class="mb-1 fw-bolder">{{item.ad}}</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <a class="btn btn-secondary btn-sm py-1 px-2 mx-2"
+                                                            (click)="printerTest(item)">
+                                                            {{'Test' | translate}}
+                                                        </a>
+
+                                                        <a *ngIf="item.ad != myExPrinter[0].myexprinter" class="btn btn-secondary btn-sm py-1 px-2 mx-2"
+                                                            (click)="selectPrinter(item)">
+                                                            {{'Seç' | translate}}
+                                                        </a>
+
+                                                        <a *ngIf="item.ad == myExPrinter[0].myexprinter" class="btn btn-danger btn-sm py-1 px-2 mx-2">
+                                                            {{'Varsayılan' | translate}}
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

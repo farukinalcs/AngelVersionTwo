@@ -36,7 +36,7 @@
 
 <ng-container *ngIf="selectedNavItem && pendingRequests.length > 0">
     <div class="row mt-5 m-0 d-flex justify-content-center w-sm-75 w-md-100 m-auto">
-        <div class="card bg-light-danger p-4">
+        <div class="card bg-light-secondary p-4">
             
 
 
@@ -45,7 +45,7 @@
 
                 <div class="col-12 col-md-4 col-xl-4">
                     <div class="input-group h-100" style="flex: 1;">
-                        <input class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
+                        <input class="form-control form-control-solid h-30px p-2 border-1 border-dark rounded-lg font-size-h6"
                             [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}">
                     
                         <button class="search-icon">
@@ -74,25 +74,25 @@
                 <div class="col-6 col-md-4 col-xl-3 d-flex justify-content-md-center">
 
                     <div class="symbol symbol-30px cursor-pointer me-2" matTooltip="{{'Seçilenleri_Onayla' | translate}}">
-                        <span class="symbol-label symbol-label bg-danger" (click)="openDialog('+')">
+                        <span class="symbol-label symbol-label bg-dark" (click)="openDialog('+')">
                             <i class="fa-solid fa-check fs-7 text-white"></i>
                         </span>
                     </div>
 
                     <div class="symbol symbol-30px cursor-pointer me-2" matTooltip="{{'Seçilenleri_Reddet' | translate}}">
-                        <span class="symbol-label symbol-label bg-danger" (click)="openDialog('-')">
+                        <span class="symbol-label symbol-label bg-dark" (click)="openDialog('-')">
                             <i class="fa-solid fa-xmark fs-7 text-white"></i>
                         </span>
                     </div>
 
                     <div class="symbol symbol-30px cursor-pointer me-2" matTooltip="{{'Detaylı_Arama' | translate}}">
-                        <span class="symbol-label symbol-label bg-danger" (click)="showDetailSearchDialog()">
+                        <span class="symbol-label symbol-label bg-dark" (click)="showDetailSearchDialog()">
                             <i class="fa-solid fa-search fs-7 text-white"></i>
                         </span>
                     </div>
 
                     <div class="symbol symbol-30px cursor-pointer me-2">
-                        <span class="symbol-label symbol-label bg-danger" (click)="checkGrid = !checkGrid">
+                        <span class="symbol-label symbol-label bg-dark" (click)="checkGrid = !checkGrid">
                             <i class="fa-solid fa-list fs-7 text-white" [ngClass]="{'fa-grip': checkGrid, 'fa-list' : !checkGrid}"></i>
                         </span>
                     </div>

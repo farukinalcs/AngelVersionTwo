@@ -22,7 +22,7 @@ const Routing: Routes = [
 
   },
   {
-    path: 'puantaj',
+    path: 'attendance',
     loadChildren: () =>
       import('../_angel/puantaj/attendance.module').then((m) => m.AttendanceModule),
       data: { layout: 'light-sidebar' },
