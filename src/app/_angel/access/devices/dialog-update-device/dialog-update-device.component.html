@@ -137,8 +137,8 @@
                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                             <span class="required">Cihaz Modeli</span>
                         </label>
-                        <p-dropdown [options]="model_device" [(ngModel)]="selectModelDeviceID"
-                            optionLabel="Ad" [filter]="true" filterBy="Ad" optionValue="ID"
+                        <p-dropdown [options]="model_device" [(ngModel)]="selectModelDevice"
+                            optionLabel="Ad" [filter]="true" filterBy="Ad" 
                            
                             placeholder="Cihaz Modelini Seçiniz">
                       
@@ -198,7 +198,7 @@
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Giriş/Çıkış</span>
                             </label>
-                            <p-dropdown [options]="IO" [(ngModel)]="selectIOID" 
+                            <p-dropdown [options]="IO" [(ngModel)]="selectIO" 
                                 optionLabel="Ad" optionValue="ID"
                                
                                 placeholder="Cihaz Yönünü Seçiniz">
@@ -217,7 +217,7 @@
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Cihaz Tanımı</span>
                             </label>
-                            <p-dropdown [options]="type_device" [(ngModel)]="selectTypeOfDeviceID"
+                            <p-dropdown [options]="type_device" [(ngModel)]="selectTypeOfDevice"
                                 optionLabel="Ad" optionValue="ID"
                                
                                 placeholder="Cihaz Tanımını Seçiniz">
@@ -265,7 +265,7 @@
                                     </div>
                                 </ng-template>
                             </p-dropdown>
-                            <p>Seçilen Cihaz Modelini: {{ selectFormatOfCard}}</p>
+                            <p>Seçilen Cihaz Modelini: {{ selectFormatOfCardName}}</p>
                         </div>
             
             
@@ -273,9 +273,9 @@
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Cihaz Kapı Tipi</span>
                             </label>
-                            <p-dropdown [options]="type_door" [(ngModel)]="selectDoorTypeName"
+                            <p-dropdown [options]="type_door" [(ngModel)]="selectDoorType"
                                 placeholder="Cihaz Kapı Tipini Seçiniz"
-                               optionLabel="GateTypeName" optionValue="GateTypeName">
+                               optionLabel="GateTypeName" optionValue="Id">
                           
                                 <ng-template let-item pTemplate="item">
                                     <div class="item-item">
@@ -283,7 +283,7 @@
                                     </div>
                                 </ng-template>
                             </p-dropdown>
-                            <p>Seçilen Kapı Tipini: {{ selectDoorType}}</p>
+                            <p>Seçilen Kapı Tipini: {{ selectDoorType.GateTypeName}}</p>
                        
                         </div>
             
@@ -341,7 +341,7 @@
                     <div class="row py-2 px-4">
 
                             
-                        <div class="col-12 my-2">
+                        <div class="col-8 my-2">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span>Adres</span>
                             </label>
@@ -350,7 +350,7 @@
             
                           
                         </div>
-                        <div class="col-12 my-2">
+                        <div class="col-8 my-2">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span>Kat No</span>
                             </label>
@@ -359,7 +359,7 @@
             
                           
                         </div>
-                        <div class="col-12 my-2">
+                        <div class="col-8 my-2">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span>Oda No</span>
                             </label>
@@ -370,7 +370,7 @@
                         </div>
             
             
-                        <div class="col-12 my-2">
+                        <div class="col-8 my-2">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Lokasyon</span>
                             </label>
@@ -384,18 +384,20 @@
                                    value="Tıklayın"/>  -->
                                    <input 
                                    class="form-control form-control-solid" 
-                                   type="text" [(ngModel)]="lokasyon" 
-                                   [readonly]="true" /> 
+                                   type="text" [(ngModel)]="lokasyon"  (click)="openKoordinatModal()" 
+                                   [readonly]="true" value="Tıklayın" /> 
             
-            
+                                  
                         </div>
-                       
-                      
-                       <div class="col-12 my-2">
-                        <div id="map" style="height: 500px; width: 100%;"></div>
-                        </div> 
+                       <div class="col-8 my-2">
                         <button type="button" (click)="submitForm()"
                         class="btn btn-success">Güncelle</button> 
+                       </div>
+                      
+                       <!-- <div class="col-12 my-2">
+                        <div id="map" style="height: 500px; width: 100%;"></div>
+                        </div>  -->
+                   
                     </div>
                 </div>
                 <div *ngSwitchDefault>
@@ -708,3 +710,21 @@
         </div>
       </div>
 </ng-container>    -->   
+<p-dialog
+header="Cihaz Koordinat"
+[modal]="true"
+[(visible)]="koordinatModal" 
+[style]="{ width: '75vw' }" 
+[breakpoints]="{'2560px': '70vw', '992px': '90vw', '576px': '99vw' }"
+[maximizable]="true" 
+[baseZIndex]="10000">
+<!-- <agm-map [latitude]="latitude" [longitude]="longitude"  [zoom]=19 (mapClick)="onChoseLocation($event)">
+   <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+   <agm-map-type-control></agm-map-type-control>
+</agm-map> -->
+<div id="map" #mapContainer  style="height: 500px; width: 100%;"></div>
+   <!-- <agm-map  [zoom]=19>
+       <agm-marker></agm-marker>
+       <agm-map-type-control></agm-map-type-control>
+       </agm-map> -->
+</p-dialog>

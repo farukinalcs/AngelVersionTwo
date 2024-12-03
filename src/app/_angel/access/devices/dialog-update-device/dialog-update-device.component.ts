@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { AccessService } from '../../access.service';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
@@ -19,8 +19,8 @@ export class DialogUpdateDeviceComponent {
   @Output() close = new EventEmitter<void>();
   @Output() hideUpdateDevice = new EventEmitter<void>();
   @Input() displayUpdateDevice:boolean;
-
-
+  @Input() mapTypeId: keyof typeof google.maps.MapTypeId = 'TERRAIN';
+  @ViewChild('mapContainer', { static: false }) mapContainer!: ElementRef;
   // form listeleri
   public model_device: any[] = [];
   public IO:any [] = [];
@@ -30,34 +30,34 @@ export class DialogUpdateDeviceComponent {
     //form değişkenler
     nameOfDevice:string = ""; //cihaz Adık  ++
     selectModelDevice: any = { ID: 0, Ad: ''}; // cihaz modeli +++
-    selectModelDeviceID:number;
+    //selectModelDeviceID:number;
     portOfDevice:number; // Cihaz port 
     ipOfDevice:string = ""; // cihaz Ip ++
-    moduleIdOfDevice:number = 546096986; //Cihaz module id (ControllerNo) ++
+    moduleIdOfDevice:any = 546096986; //Cihaz module id (ControllerNo) ++
     selectIO:any = { ID: 0, Ad: ''} // giriş çıkıs +++
-    selectIOID:number;
-    selectTypeOfDevice:any; // cihaz tanımı +++
-    selectTypeOfDeviceID:number;
+    //selectIOID:number;
+    selectTypeOfDevice:any = { ID: 0, Ad: ''}; // cihaz tanımı +++
+    //selectTypeOfDeviceID:number;
     nameOfPc:string = ""; // Pc Adı
-    selectFormatOfCard:any // Cihaz kart Fortmatı ++
+    //selectFormatOfCard:any = { ID: 0, Ad: ''}; // Cihaz kart Fortmatı ++
     selectFormatOfCardName:string;
     infoOfDeviceDoor:string = ""; // Kapı Bilgisi
     secureKey:string = "";
-    selectDoorType:any;
-    selectDoorTypeName:string;
+    selectDoorType:any = {Id: 0, GateTypeName: '', RelayTime: 0, GateFoto: null};
+    //selectDoorTypeName:string;
     pingTest: boolean = false;
     byPass:boolean = false;
     IsDevicePassive:boolean = false;
     IsShowTimeOfDevice:boolean = false;
-    latitude:number;
-    longitude:number;
+    latitude:any;
+    longitude:any;
     koordinatModal:boolean = false;
     lokasyon:any;
     numberOfFloor:string = "";
     numberOfRoom:string = "";
     address:string = "";
     map: any;
-    @Input() mapTypeId: keyof typeof google.maps.MapTypeId = 'TERRAIN';
+   
 
   constructor(
     private access: AccessService,
@@ -70,18 +70,19 @@ export class DialogUpdateDeviceComponent {
   }
 
   ngOnInit(): void{
-    console.log("DATAAAA",this.data);
+  
     this.getDeviceValues(this.data); 
     this.fillToList();
+
     setTimeout(() => {
       const mapOptions = {
         center: new google.maps.LatLng(this.latitude, this.longitude),
         zoom: 8,
       };
       console.log('ilk koordinatlar:', this.latitude, this.longitude);
-      this.map = new google.maps.Map(document.getElementById('map')!, mapOptions);
-  
-      this.map.addListener('click', (event: any) => {
+      //this.map = new google.maps.Map(document.getElementById('map')!, mapOptions);
+      const map = new google.maps.Map(this.mapContainer.nativeElement, mapOptions);
+      map.addListener('click', (event: any) => {
         this.latitude = event.latLng.lat();
         this.longitude = event.latLng.lng();
         this.lokasyon = this.latitude + ',' + this.longitude;
@@ -112,32 +113,43 @@ export class DialogUpdateDeviceComponent {
     this.nameOfDevice = values.name;
     this.ipOfDevice = values.ip
     this.selectFormatOfCardName = values.CardFormat;
-    this.selectDoorTypeName = values.Doortype;
-    this.selectModelDeviceID = values.model;
-    this.selectIOID = values.IO;
+    this.selectDoorType = values.Doortype;
+    this.selectModelDevice = values.model;
+    this.selectIO = values.IO;
     this.portOfDevice = values.port;
-    this.selectTypeOfDeviceID = values.kind;
+    this.selectTypeOfDevice = values.kind;
     this.secureKey = values.securitycode;
     this.latitude = values.latitude;
     this.longitude = values.longtitude;
-    this.lokasyon = this.latitude +','+this.longitude;
+    this.lokasyon =`${this.latitude},${this.longitude}`;
     this.nameOfPc = values.SourceName;
     this.infoOfDeviceDoor = values.Door;
-    this.selectFormatOfCard = this.type_card.find(item => item.Ad === this.selectFormatOfCardName);
-    this.selectIO = this.IO.find(item => item.ID === this.selectIOID);
-    this.selectTypeOfDevice = this.type_device.find(item => item.ID === this.selectTypeOfDeviceID);
-    this.selectDoorType = this.type_door.find(item => item.GateTypeName === this.selectDoorTypeName);
-    this.selectModelDevice = this.model_device.find(item => item.ID === this.selectModelDeviceID);
-    console.log("!!!!!!!!!!!!", this.selectDoorTypeName);
-    console.log("???????????", this.selectDoorType);
+    this.findObject()
+
+
+    console.log("selectDoorType", this.selectDoorType);
+    console.log("selectModelDevice", this.selectModelDevice);
+    console.log("selectTypeOfDevice", this.selectTypeOfDevice);
+  }
+
+  onSelectionChange(newId: number): void {
+    this.selectIO = newId;
+  }
+
+  findObject(){
+    //this.selectFormatOfCard = JSON.parse(this.type_card.find(item => item.Ad === this.selectFormatOfCardName));
+    // this.selectIO = JSON.parse(this.IO.find(item => item.ID === this.selectIOID) || null);
+    // this.selectTypeOfDevice = JSON.parse(this.type_device.find(item => item.ID === this.selectTypeOfDeviceID) || null);
+    // this.selectDoorType = JSON.parse(this.type_door.find(item => item.GateTypeName === this.selectDoorTypeName) || null) ;
+    // this.selectModelDevice = JSON.parse(this.model_device.find(item => item.ID === this.selectModelDeviceID) || null) ;
   }
 
   submitForm(){
     const enlem = this.latitude.toString();
     const boylam = this.longitude.toString();
-    this.access.UpdateDevice(this.nameOfDevice,this.selectTypeOfDevice,this.selectModelDevice,this.selectIO,
-      this.nameOfPc, this.selectFormatOfCard,this.pingTest,this.IsDevicePassive,this.IsShowTimeOfDevice,
-      this.selectDoorType,this.infoOfDeviceDoor,this.ipOfDevice,this.portOfDevice,this.moduleIdOfDevice,this.secureKey,this.latitude,this.longitude).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+    this.access.UpdateDevice(this.nameOfDevice,this.selectTypeOfDevice,this.selectModelDevice.ID,this.selectIO.ID,
+      this.nameOfPc, this.selectFormatOfCardName,this.pingTest,this.IsDevicePassive,this.IsShowTimeOfDevice,
+      this.selectDoorType.Id,this.infoOfDeviceDoor,this.ipOfDevice,this.portOfDevice,this.moduleIdOfDevice,this.secureKey,this.latitude,this.longitude).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
       const REsult = response[0];
       this.ref.detectChanges();
       console.log("SUBMİT UPDATEEEE ",REsult);
@@ -173,6 +185,28 @@ export class DialogUpdateDeviceComponent {
   //     $('#koordinat').modal('hide');
   //   }
   // }
+
+  openKoordinatModal()
+  {
+    this.koordinatModal = true;
+
+    setTimeout(() => {
+      const mapOptions = {
+        center: new google.maps.LatLng(this.latitude, this.longitude),
+        zoom: 8,
+      };
+      console.log('ilk koordinatlar:', this.latitude, this.longitude);
+      this.map = new google.maps.Map(document.getElementById('map')!, mapOptions);
+  
+      this.map.addListener('click', (event: any) => {
+        this.latitude = event.latLng.lat();
+        this.longitude = event.latLng.lng();
+        this.lokasyon = this.latitude + ',' + this.longitude;
+        console.log('Tıklanan koordinatlar:', this.latitude, this.longitude);
+      });
+    }, 1000); 
+
+  }
 
   fillToList(){
     this.modelOfDevice('sys_terminalmodel');

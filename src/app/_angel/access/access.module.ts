@@ -123,6 +123,7 @@ import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dial
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAdALF-5HPnZFuvYRXmGY8qkv21TGD25ak',
     }),
-  ]
+  ],
+
 })
 export class AccessModule { }

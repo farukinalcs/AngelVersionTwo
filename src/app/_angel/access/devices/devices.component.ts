@@ -1,4 +1,4 @@
-import { ProfileService } from './../../profile/profile.service';
+
 import { AccessService } from './../access.service';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -44,8 +44,7 @@ export class DevicesComponent implements OnInit {
   private toastr : ToastrService,
   private translateService: TranslateService,
   private themeModeService: ThemeModeService,
-  private ref: ChangeDetectorRef,
-  private profil : ProfileService
+  private ref: ChangeDetectorRef
  ){}
 
   ngOnInit(): void {

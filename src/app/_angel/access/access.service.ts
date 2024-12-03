@@ -157,14 +157,14 @@ export class AccessService {
       katbilgisi:detailFormValues?.katNo.toString(),
       odabilgisi:detailFormValues?.odaNo.toString()
     }]
-    console.log("REEEEEEEEEEEEEEEEEE",sp)
+    console.log("ADD DEVİCE",sp)
     return this.requestMethod(sp);
   }
 
-  UpdateDevice(name:string,kind:string,model:number,io:number,
+  UpdateDevice(name:string,kind:number,model:number,io:number,
     sourcename:string,cardformat:string,ping:boolean,debug:boolean,timesend:boolean,
-    doortype:string,door:string,ip:string,port:number,controllerno:number,securitycode:string,
-    latitude:number,longtitude:number){
+    doortype:string,door:string,ip:string,port:number,controllerno:string,securitycode:string,
+    latitude:string,longtitude:string){
     let a = 0;
     var sp : any[] = [{
       mkodu : 'yek135',
@@ -195,8 +195,10 @@ export class AccessService {
       lasteventtarih:'',
 	    tip: 'update'
     }]
+    console.log("UPDATE DEVİCE",sp)
     return this.requestMethod(sp);
   }
+
 
   UpdateDevice2(name:string,kind:number,model:number,io:number,
     sourcename:string,cardformat:string,ping:boolean,debug:boolean,timesend:boolean,

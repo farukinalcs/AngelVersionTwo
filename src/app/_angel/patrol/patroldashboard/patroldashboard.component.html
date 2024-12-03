@@ -1,0 +1,73 @@
+
+
+  <div class="container my-4">
+    <!-- Üstteki Widget Kartlar -->
+    <div class="row g-3">
+      <div class="col-md-2">
+        <div class="widget-card bg-left">Planlanan Turlar </div>
+      </div>
+      <div class="col-md-2">
+        <div class="widget-card bg-right">Atılan Turlar</div>
+      </div>
+      <div class="col-md-2">
+        <div class="widget-card bg-left">Atılmayan Turlar</div>
+      </div>
+      <div class="col-md-2">
+        <div class="widget-card bg-right">Atılacak Turlar</div>
+      </div>
+      <div class="col-md-2">
+        <div class="widget-card bg-left">Alarmlar</div>
+      </div>
+      <div class="col-md-2">
+        <div class="widget-card bg-right">Olaylar</div>
+      </div>
+    </div>
+  
+    <!-- Sol Taraf Tablo, Sağ Taraf Harita -->
+    <div class="row mt-4">
+      <!-- Sol Taraf Tablo -->
+      <div class="col-md-6">
+        <div class="card">
+          <!-- <div class="card-header">Tablo</div> -->
+          <div class="card-body">
+            <table class="table table-striped-columns table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Konum</th>
+                  <th scope="col">Cihaz Adı</th>
+                  <th scope="col">Pil</th>
+                  <th scope="col">Nfc</th>
+                  <th scope="col">Wifi</th>
+                  <th scope="col">Durum</th>
+                  <th scope="col">Versiyon</th>
+                  <th scope="col">Olay</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of patrolInfo; let i=index" >
+                  <td>{{i + 1}}</td>
+                  <td><i class="fa fa-map-marker"></i></td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.battery}}%</td>
+                  <td>{{item.nfc}}</td>
+                  <td>{{item.wifi}}</td>
+                  <td>{{item.durum}}</td>
+                  <td>{{item.appversion}}</td>
+                  <td>{{item.olay}}</td>
+                </tr>
+              
+                <!-- Daha fazla satır ekleyebilirsiniz -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Sağ Taraf Harita -->
+      <div class="col-md-6">
+        <div id="map" style="height: 50vh; width: 100%; border: 1px solid #ddd;"></div>
+      </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
