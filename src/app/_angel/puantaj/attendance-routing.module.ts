@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AttendanceDashboardComponent } from './attendance-dashboard/attendance-dashboard.component';
 import { AttendanceListComponent } from './attendance-list/attendance-list.component';
 import { AttendancePivotListComponent } from './attendance-pivot-list/attendance-pivot-list.component';
 import { PuantajRaporlarComponent } from './puantaj-raporlar/puantaj-raporlar.component';
 import { PuantajTanimlamalarComponent } from './puantaj-tanimlamalar/puantaj-tanimlamalar.component';
-import { PuantajdashboardComponent } from './puantajdashboard/puantajdashboard.component';
 
 const routes: Routes = [
   // {
@@ -13,22 +13,22 @@ const routes: Routes = [
   // },
   {
     path: 'dashboard',
-    component: PuantajdashboardComponent,
+    component: AttendanceDashboardComponent,
   },
   {
-    path: 'pdks',
+    path: 'attendance-list',
     component: AttendanceListComponent,
   },
   {
-    path: 'pdkspiv',
+    path: 'attendance-pivot',
     component: AttendancePivotListComponent,
   },
   {
-    path: 'tanimlamalar',
+    path: 'definitions',
     component: PuantajTanimlamalarComponent,
   },
   {
-    path: 'raporlar',
+    path: 'reports',
     component: PuantajRaporlarComponent,
   },
 ];

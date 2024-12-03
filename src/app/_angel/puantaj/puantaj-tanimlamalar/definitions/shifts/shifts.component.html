@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="col-9 h-100" [formGroup]="form">
-                                <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="changeTabMenu($event)" [selectedIndex]="selectedIndex">
+                                <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="changeTabMenu($event)" [selectedIndex]="selectedIndex" style="min-height: 300px;">
                                     <mat-tab label="{{'Tanım' | translate}}">
                                         <div class="row w-100">
                                             <div class="col-6 py-4">

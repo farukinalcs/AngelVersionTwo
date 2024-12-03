@@ -100,6 +100,10 @@ import { SharedModule } from '../shared/shared.module';
 import { ShiftChangeFormComponent } from './talep-olustur/shift-change-form/shift-change-form.component';
 import { AttendanceChangeFormComponent } from './talep-olustur/attendance-change-form/attendance-change-form.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { ProfileDefinitionsComponent } from './profile-definitions/profile-definitions.component';
+import { FileTypeDefinitionComponent } from './profile-definitions/definitions/file-type-definition/file-type-definition.component';
+import { MenuDefinitionComponent } from './profile-definitions/definitions/menu-definition/menu-definition.component';
+import { FoodTypeDefinitionComponent } from './profile-definitions/definitions/food-type-definition/food-type-definition.component';
 
 
 LicenseManager.setLicenseKey(
@@ -153,7 +157,11 @@ LicenseManager.setLicenseKey(
     PendingRequestsComponent,
     DialogMasrafTalebiComponent,
     ShiftChangeFormComponent,
-    AttendanceChangeFormComponent
+    AttendanceChangeFormComponent,
+    ProfileDefinitionsComponent,
+    FileTypeDefinitionComponent,
+    MenuDefinitionComponent,
+    FoodTypeDefinitionComponent
   ],
   imports: [
     CommonModule,

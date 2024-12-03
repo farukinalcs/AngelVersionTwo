@@ -1,0 +1,48 @@
+.page-btn {
+    background: #ddd;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+
+    &.active-page {
+        background: var(--kt-danger);
+        color: #fff;
+        font-weight: bold;
+    }
+}
+
+// Sağ geçiş animasyonu
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+// Sol geçiş animasyonu
+@keyframes slideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+// Animasyon sınıfları
+.animate-slide-right {
+    animation: slideRight 0.8s ease forwards;
+}
+
+.animate-slide-left {
+    animation: slideLeft 0.8s ease forwards;
+}

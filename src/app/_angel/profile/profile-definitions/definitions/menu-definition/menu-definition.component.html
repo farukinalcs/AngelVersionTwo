@@ -1,0 +1,266 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{selectedItem.label}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Menü_Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <form #frm="ngForm" (ngSubmit)="onSubmit(frm.value)">
+                            <!-- <form #frm="ngForm" (ngSubmit)="onSubmit(frm.value)"></form> -->
+                            <div class="row mb-4">
+                                <div class="col-3 d-flex align-items-center justify-content-end">
+                                    <i class="fa-solid fa-chevron-left text-hover-danger fs-2"
+                                        (click)="previousMonth()"></i>
+                                </div>
+                                <div class="col-6 d-flex justify-content-center">
+                                    <span class="fw-bold fs-2x text-gray-800">
+                                        {{ currentMonthName }} {{ currentYear }}
+                                    </span>
+                                </div>
+                                <div class="col-3 d-flex align-items-center">
+                                    <i class="fa-solid fa-chevron-right text-hover-danger fs-2"
+                                        (click)="nextMonth()"></i>
+                                </div>
+                            </div>
+                            <div class="row mb-8">
+                                <div class="col-1 d-flex justify-content-center align-items-center">
+                                    <i class="fa-solid fa-chevron-left text-hover-danger fs-2"
+                                        (click)="previousWeek()"></i>
+                                </div>
+
+                                <div class="col-10 list p-0 m-0 p-md-auto m-md-auto">
+                                    <ul class="nav nav-stretch nav-pills nav-pills-custom nav-pills-active-custom d-flex justify-content-around justify-content-md-between px-0 px-md-5"
+                                        role="tablist">
+                                        <li class="nav-item p-0 ms-0" role="presentation"
+                                            *ngFor="let item of weeks[currentWeekIndex]">
+                                            <a class="nav-link border border-2 btn d-flex flex-column flex-center rounded-pill min-w-45px py-4 px-3 px-md-1 btn-active-danger"
+                                                [ngClass]="
+                                                      {
+                                                          'active': item.date.getDate() == currentDate.getDate() && item.date.getMonth() == currentDate.getMonth(),
+                                                          'bg-light-dark text-dark text-hover-white' : !item.isCurrentMonth
+                                                      }" data-bs-toggle="tab" aria-selected="false" tabindex="-1"
+                                                role="tab" (click)="showMenu(item)"
+                                                [attr.id]="'date-' + item.monthName + item.day + item.dayName">
+                                                <span class="fs-7 fw-semibold">{{ item.dayName }}</span>
+                                                <span class="fs-6 fw-bold"
+                                                    [ngClass]="{'text-gray-500': !item.isCurrentMonth}">
+                                                    {{ item.day }}
+                                                </span>
+                                                <span class="fs-8 fw-bold">{{ item.monthName }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-1 d-flex justify-content-center align-items-center">
+                                    <i class="fa-solid fa-chevron-right text-hover-danger fs-2"
+                                        (click)="nextWeek()"></i>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <label class="required" for="inputMeal">Çorba</label>
+                                    <select [(ngModel)]="selectedCorba" name="corba"
+                                        (change)="onSelectionChange(selectedCorba,'Corba')" class="form-select"
+                                        aria-label="Default select example" ngModel>
+                                        <option *ngFor="let item of corbaOptions" [ngValue]="item">
+                                            <span>{{item?.Aciklama}}</span></option>
+                                    </select>
+                                    <div *ngIf="this.corbaMenu.length != 0">
+                                        <span *ngFor="let item of corbaMenu" class="badge text-bg-danger m-2"><button
+                                                (click)="onSelectionChange(item,'Corba')" type="button"
+                                                class="btn-close" aria-label="Close"></button>{{item?.Aciklama}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <label class="required" for="inputMeal">Ana Yemek</label>
+                                    <select [(ngModel)]="selectedAnaYemek" name="anayemek"
+                                        (change)="onSelectionChange(selectedAnaYemek,'AnaYemek')" class="form-select"
+                                        aria-label="Default select example">
+                                        <option *ngFor="let item of anayemekOptions" [ngValue]="item">
+                                            <span>{{item?.Aciklama}}</span></option>
+                                    </select>
+                                    <div *ngIf="this.anayemekMenu.length != 0">
+                                        <span *ngFor="let item of anayemekMenu" class="badge text-bg-danger m-2"><button
+                                                (click)="onSelectionChange(item,'AnaYemek')" type="button"
+                                                class="btn-close" aria-label="Close"></button>{{item?.Aciklama}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <label class="required" for="inputMeal">Salata</label>
+                                    <select [(ngModel)]="selectedSalata" name="salata"
+                                        (change)="onSelectionChange(selectedSalata, 'Salata')" class="form-select"
+                                        aria-label="Default select example" ngModel>
+                                        <option *ngFor="let item of salataOptions" [ngValue]="item">
+                                            <span>{{item?.Aciklama}}</span></option>
+                                    </select>
+                                    <div *ngIf="this.salataMenu.length != 0">
+                                        <span *ngFor="let item of salataMenu" class="badge text-bg-danger m-2"><button
+                                                (click)="onSelectionChange(item,'Salata')" type="button"
+                                                class="btn-close" aria-label="Close"></button>{{item?.Aciklama}}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <label class="required" for="inputMeal">Tatlı</label>
+                                    <select [(ngModel)]="selectedTatli" name="tatli"
+                                        (change)="onSelectionChange(selectedTatli,'Tatli')" class="form-select"
+                                        aria-label="Default select example" ngModel>
+                                        <option *ngFor="let item of tatliOptions" [ngValue]="item">
+                                            <span>{{item?.Aciklama}}</span></option>
+                                    </select>
+                                    <div *ngIf="this.tatliMenu.length != 0">
+                                        <span *ngFor="let item of tatliMenu" class="badge text-bg-danger m-2"><button
+                                                (click)="onSelectionChange(item,'Tatli')" type="button"
+                                                class="btn-close" aria-label="Close"></button>{{item?.Aciklama}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <label class="required" for="inputMeal">Meze</label>
+                                    <select [(ngModel)]="selectedMeze" name="meze"
+                                        (change)="onSelectionChange(selectedMeze,'Meze')" class="form-select"
+                                        aria-label="Default select example" ngModel>
+                                        <option *ngFor="let item of mezeOptions" [ngValue]="item">
+                                            <span>{{item?.Aciklama}}</span></option>
+                                    </select>
+                                    <div *ngIf="this.mezeMenu.length != 0">
+                                        <span *ngFor="let item of mezeMenu" class="badge text-bg-danger m-2"><button
+                                                (click)="onSelectionChange(item,'Meze')" type="button" class="btn-close"
+                                                aria-label="Close"></button>{{item?.Aciklama}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <label class="required" for="inputMeal">Ara Sıcak</label>
+                                    <select [(ngModel)]="selectedAraSicak" name="arasicak"
+                                        (change)="onSelectionChange(selectedAraSicak, 'AraSicak')" class="form-select"
+                                        aria-label="Default select example" ngModel>
+                                        <option *ngFor="let item of arasicakOptions" [ngValue]="item">
+                                            <span>{{item?.Aciklama}}</span></option>
+                                    </select>
+                                    <div *ngIf="this.arasicakMenu.length != 0">
+                                        <span *ngFor="let item of arasicakMenu" class="badge text-bg-danger m-2"><button
+                                                (click)="onSelectionChange(item,'AraSicak')" type="button"
+                                                class="btn-close" aria-label="Close"></button>{{item?.Aciklama}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <label class="required" for="inputMeal">Ara Soguk</label>
+                                    <select [(ngModel)]="selectedAraSoguk" name="arasoguk"
+                                        (change)="onSelectionChange(selectedAraSoguk,'AraSoguk')" class="form-select"
+                                        aria-label="Default select example" ngModel>
+                                        <option *ngFor="let item of arasogukOptions" [ngValue]="item">
+                                            <span>{{item?.Aciklama}}</span></option>
+                                    </select>
+                                    <div *ngIf="this.arasogukMenu.length != 0">
+                                        <span *ngFor="let item of arasogukMenu" class="badge text-bg-danger m-2"><button
+                                                (click)="onSelectionChange(item,'AraSoguk')" type="button"
+                                                class="btn-close" aria-label="Close"></button>{{item?.Aciklama}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <label class="required" for="inputMeal">İçecek</label>
+                                    <select [(ngModel)]="selectedIcecek" name="icecek"
+                                        (change)="onSelectionChange(selectedIcecek,'icecekler')" class="form-select"
+                                        aria-label="Default select example" ngModel>
+                                        <option *ngFor="let item of icecekOptions" [ngValue]="item">
+                                            <span>{{item?.Aciklama}}</span></option>
+                                    </select>
+                                    <div *ngIf="this.icecekMenu.length != 0">
+                                        <span *ngFor="let item of icecekMenu" class="badge text-bg-danger m-2"><button
+                                                (click)="onSelectionChange(item,'icecekler')" type="button"
+                                                class="btn-close" aria-label="Close"></button>{{item?.Aciklama}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <label class="required" for="inputMeal">Meyve</label>
+                                    <select [(ngModel)]="selectedMeyve" name="meyve"
+                                        (change)="onSelectionChange(selectedMeyve,'Meyve')" class="form-select"
+                                        aria-label="Default select example" ngModel>
+                                        <option *ngFor="let item of meyveOptions" [ngValue]="item">
+                                            <span>{{item?.Aciklama}}</span></option>
+                                    </select>
+                                    <div *ngIf="this.meyveMenu.length != 0">
+                                        <span *ngFor="let item of meyveMenu" class="badge text-bg-danger m-2"><button
+                                                (click)="onSelectionChange(item,'Meyve')" type="button"
+                                                class="btn-close" aria-label="Close"></button>{{item?.Aciklama}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <label class="required" for="inputMeal">Kahvaltılık</label>
+                                    <select [(ngModel)]="selectedKahvaltilik" name="kahvaltilik"
+                                        (change)="onSelectionChange(selectedKahvaltilik,'Kahvaltilik')"
+                                        class="form-select" aria-label="Default select example" ngModel>
+                                        <option *ngFor="let item of kahvaltilikOptions" [ngValue]="item">
+                                            <span>{{item?.Aciklama}}</span></option>
+                                    </select>
+                                    <div *ngIf="this.kahvaltilikMenu.length != 0">
+                                        <span *ngFor="let item of kahvaltilikMenu"
+                                            class="badge text-bg-danger m-2"><button
+                                                (click)="onSelectionChange(item,'Kahvaltilik')" type="button"
+                                                class="btn-close" aria-label="Close"></button>{{item?.Aciklama}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- <div class="row">
+                                  <div class="d-grid gap-2">
+                                      <button type="submit" class="btn btn-danger">Oluştur</button>
+                                  </div>
+                              </div> -->
+
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 <div class="container">
     <div class="card p-5">
 
-        <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="resetArr($event)">
+        <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="resetArr($event)" style="min-height: 300px;">
 
             <mat-tab label="{{'Onayınızı_Bekleyen_Formlar' | translate}}">
                 <ng-container *ngIf="ongoingVisitRequests.length == 0">

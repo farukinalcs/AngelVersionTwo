@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AttendanceRoutingModule } from './attendance-routing.module';
-import { PuantajdashboardComponent } from './puantajdashboard/puantajdashboard.component';
 import { AttendanceListComponent } from './attendance-list/attendance-list.component';
-import { PuantajListesiComponent } from './puantaj-listesi/puantaj-listesi.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyGridCellComponent } from './my-grid-cell/my-grid-cell.component';
 import { PuantajTanimlamalarComponent } from './puantaj-tanimlamalar/puantaj-tanimlamalar.component';
 import { PuantajRaporlarComponent } from './puantaj-raporlar/puantaj-raporlar.component';
-import { PuantajWidgetComponent } from './puantaj-widget/puantaj-widget.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProgressBarModule } from 'primeng/progressbar';
@@ -48,17 +45,16 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { OverrideComponent } from './puantaj-tanimlamalar/definitions/override/override.component';
 import { ShiftGroupsComponent } from './puantaj-tanimlamalar/definitions/shift-groups/shift-groups.component';
 import { ShiftPeriodsComponent } from './puantaj-tanimlamalar/definitions/shift-periods/shift-periods.component';
+import { AttendanceDashboardComponent } from './attendance-dashboard/attendance-dashboard.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 @NgModule({
   declarations: [
-    PuantajdashboardComponent,
     AttendanceListComponent,
-    PuantajListesiComponent,
     MyGridCellComponent,
     PuantajTanimlamalarComponent,
     PuantajRaporlarComponent,
-    PuantajWidgetComponent,
     AttendanceManagementSystemComponent,
     OrganizationColumnFilterComponent,
     AttendanceListFilterComponent,
@@ -78,7 +74,8 @@ import { ShiftPeriodsComponent } from './puantaj-tanimlamalar/definitions/shift-
     ShiftsComponent,
     OverrideComponent,
     ShiftGroupsComponent,
-    ShiftPeriodsComponent
+    ShiftPeriodsComponent,
+    AttendanceDashboardComponent
   ],
 
   imports: [
@@ -104,7 +101,8 @@ import { ShiftPeriodsComponent } from './puantaj-tanimlamalar/definitions/shift-
     SharedModule,
     DrawersModule,
     MatTooltipModule,
-    MatTabsModule
+    MatTabsModule,
+    NgApexchartsModule
   ],
   
   exports: [

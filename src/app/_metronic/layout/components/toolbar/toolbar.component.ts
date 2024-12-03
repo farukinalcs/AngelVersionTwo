@@ -175,9 +175,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       pageTitle == 'Pdks' ||
       pageTitle == 'Pdks Pivot'
     ) {
-      this.router.navigate(['puantaj/tanimlamalar']);
+      this.router.navigate(['puantaj/definitions']);
     } else {
-      this.router.navigate(['access/tanimlamalar']);
+      this.router.navigate(['access/definitions']);
     }
 
     this.description$.subscribe(v => {

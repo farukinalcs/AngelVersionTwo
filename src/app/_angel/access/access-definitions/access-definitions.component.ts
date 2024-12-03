@@ -28,9 +28,9 @@ export class AccessDefinitionsComponent implements OnInit, OnDestroy {
     {id: 14, label: this.translateService.instant("FTP_Bilgileri"), icon: "fa-solid fa-server", path: "ftp-info"},
     {id: 15, label: this.translateService.instant("Ayrılış_Nedeni"), icon: "fa-solid fa-clipboard-question", source: "sys_ayrilisnedeni", path: "leave-reason"},
     {id: 16, label: this.translateService.instant("Güvenlik"), icon: "fa-solid fa-shield-halved", path: "security"},
-    {id: 17, label: this.translateService.instant("Olay_Kodları"), icon: "fa-solid fa-ban", path: "event-codes"},
-    {id: 18, label: this.translateService.instant("Yazıcılar"), icon: "fa-solid fa-print"},
-    {id: 19, label: this.translateService.instant("Led_Panalor"), icon: "fa-solid fa-ban"},
+    {id: 17, label: this.translateService.instant("Olay_Kodları"), icon: "fa-solid fa-list-ol", path: "event-codes"},
+    {id: 18, label: this.translateService.instant("Yazıcılar"), icon: "fa-solid fa-print", path: "printers"},
+    {id: 19, label: this.translateService.instant("Led_Panalor"), icon: "fa-solid fa-tachograph-digital", path: "led-panels"},
     {id: 20, label: this.translateService.instant("Yetki_Rolleri"), icon: "fa-solid fa-key", path: "authority-roles"},
     {id: 21, label: this.translateService.instant("Ben_Sayfası"), icon: "fa-solid fa-user", path: "my-page"}
   ];
