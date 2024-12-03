@@ -30,6 +30,7 @@ export class SidebarMenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getMenuConfig();
     this.getMenuAuthorization();
+
   }
 
   getMenuConfig() {

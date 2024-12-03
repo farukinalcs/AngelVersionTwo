@@ -1,0 +1,46 @@
+.widget-card {
+    height: 100px;
+    color: white;
+    position: relative;
+  }
+  .widget-title {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  .widget-card {
+    height: 120px;
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: flex-end;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: linear-gradient(135deg, #6e7dfa, #b39dfd);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Hover Efekti */
+  .widget-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Renk Varyasyonları */
+//   .bg-primary-gradient { background: linear-gradient(135deg, #6e7dfa, #b39dfd); }
+//   .bg-secondary-gradient { background: linear-gradient(135deg, #6aabd2, #88d3fd); }
+//   .bg-success-gradient { background: linear-gradient(135deg, #ffffff, #ed1e28); }
+//   .bg-danger-gradient { background: linear-gradient(135deg, #ed1e28, #ffffff); }
+//   .bg-warning-gradient { background: linear-gradient(135deg, #f7b851, #ffd276); }
+//   .bg-info-gradient { background: linear-gradient(135deg, #58c5d3, #81e6f9); }
+
+
+
+  
+  .bg-left { background: linear-gradient(140deg, #ffffff, #ed1e28); }
+  .bg-right { background: linear-gradient(135deg, #ed1e28, #ffffff); }

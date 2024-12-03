@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ILayout, LayoutType } from '../../core/configs/config';
 import { LayoutService } from '../../core/layout.service';
+import { HelperService } from 'src/app/_helpers/helper.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -72,7 +73,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
   toggleType: string;
   toggleState: string;
 
-  constructor(private layout: LayoutService) {}
+  constructor(
+    private layout: LayoutService,
+    public helperService : HelperService
+  ) {}
 
   ngOnInit(): void {
     const subscr = this.layout.layoutConfigSubject
@@ -81,6 +85,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.updateProps(config);
       });
     this.unsubscribe.push(subscr);
+    console.log("....SİDE BAR", this.helperService.loginOptions.appcode);
   }
 
   updateProps(config: ILayout) {
