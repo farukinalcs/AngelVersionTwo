@@ -13,6 +13,14 @@ export class HelperService {
   customerCode:any;
   userLoginModel : any;
 
+ loginOptions:any = {
+    loginName : "",
+    password : "",
+    langcode : "",
+    appcode : "",
+    mkodu : ''
+  };
+
   yetki : any[];
 
   isMobileSubsDynamicDialog: Subscription = new Subscription();

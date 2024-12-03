@@ -35,10 +35,16 @@ const Routing: Routes = [
       data: { layout: 'light-sidebar' },
 
   },
+  // {
+  //   path:'guvenlik',
+  //   loadChildren:() => 
+  //   import('../_angel/guvenlik/guvenlik.module').then((m) => m.GuvenlikModule),
+  //   data: { layout: 'light-sidebar' },
+  // },
   {
-    path:'guvenlik',
+    path:'patrol',
     loadChildren:() => 
-    import('../_angel/guvenlik/guvenlik.module').then((m) => m.GuvenlikModule),
+    import('../_angel/patrol/patrol.module').then((m) => m.PatrolModule),
     data: { layout: 'light-sidebar' },
   },
   // {

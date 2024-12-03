@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { TerminalComponent } from './terminal/terminal.component';
 import { GecisgruplariComponent } from './gecisgruplari/gecisgruplari.component';
 import { RaporlarComponent } from './raporlar/raporlar.component';
 import { AccessRoutingModule } from './access-routing.module';
@@ -55,6 +54,7 @@ import { TimeZoneComponent } from './access-definitions/definitions/time-zone/ti
 import { LedPanelsComponent } from './access-definitions/definitions/led-panels/led-panels.component';
 import { PrintersComponent } from './access-definitions/definitions/printers/printers.component';
 import { AccessDashboardComponent } from './access-dashboard/access-dashboard.component';
+import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dialog-update-device.component';
 
 
 @NgModule({
@@ -79,6 +79,7 @@ import { AccessDashboardComponent } from './access-dashboard/access-dashboard.co
     LedPanelsComponent,
     PrintersComponent,
     AccessDashboardComponent,
+    DialogUpdateDeviceComponent
 
   ],
 
@@ -120,5 +121,7 @@ import { AccessDashboardComponent } from './access-dashboard/access-dashboard.co
     MatProgressSpinnerModule,
     MatTabsModule
   ]
+  ],
+
 })
 export class AccessModule { }

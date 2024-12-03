@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes,RouterModule } from '@angular/router';
+
 import { GecisgruplariComponent } from './gecisgruplari/gecisgruplari.component';
 import { RaporlarComponent } from './raporlar/raporlar.component';
 import { DevicesComponent } from './devices/devices.component';

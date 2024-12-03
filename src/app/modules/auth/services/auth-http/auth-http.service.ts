@@ -6,6 +6,7 @@ import { environment } from '../../../../../environments/environment';
 import * as CryptoJS from "crypto-js";
 import { HelperService } from 'src/app/_helpers/helper.service';
 
+
 const API_USERS_URL = `${environment.apiUrl}/Login`;
 const API_URL = environment.newApiUrl;
 @Injectable({
@@ -35,9 +36,13 @@ export class AuthHTTPService {
       mkodu : 'sysLogin'
     };
 
+    this.helperService.loginOptions = loginOptions;
+
     var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
     var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
     console.log("Login Options :", loginOptions);
+    
+    console.log("this.helperService.loginOptions:", this.helperService.loginOptions);
     
     var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(loginOptions)), key, {
       keySize : 128 / 8,

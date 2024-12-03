@@ -1,4 +1,4 @@
-import { ProfileService } from './../../profile/profile.service';
+
 import { AccessService } from './../access.service';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -29,9 +29,13 @@ export class DevicesComponent implements OnInit {
   public frameworkComponents:any;
   savedFilterModel: any;
   newDeviceModal:boolean;
+
+  displayUpdateDevice:boolean;
+  //updateDeviceModal:boolean;
+
   gridOptionsLight = {};
   gridOptionsDark = {};
- 
+  selectedRowData: any = null;
   @ViewChild('agGridLight', { static: false }) agGridLight: AgGridAngular;
   @ViewChild('agGridDark', { static: false }) agGridDark: AgGridAngular;
   
@@ -40,13 +44,15 @@ export class DevicesComponent implements OnInit {
   private toastr : ToastrService,
   private translateService: TranslateService,
   private themeModeService: ThemeModeService,
-  private ref: ChangeDetectorRef,
-  private profil : ProfileService
+  private ref: ChangeDetectorRef
  ){}
 
   ngOnInit(): void {
     this.getDevices();
-    this.typeOfDevice('sys_terminalkind');
+    //this.typeOfDevice('sys_terminalkind');
+    this.access.triggerEvent$.subscribe(() => {
+      this.getDevices();
+    });
   }
 
   // onGridReady(params:any){
@@ -62,8 +68,6 @@ export class DevicesComponent implements OnInit {
       const responseToken = response[0].y;
       this.ref.detectChanges();
       console.log("this.rowData ",this.rowData );
-      console.log("zzzzzzzzzzzz",message);
-      console.log("yyyyyyyyyyyy",responseToken);
     })
   }
 
@@ -74,6 +78,7 @@ export class DevicesComponent implements OnInit {
       console.log("type_Tk ",this.type_device );
     })
   }
+
   public sideBar: SideBarDef | string | string[] | boolean | null = {
     toolPanels: [
       'filters',
@@ -92,6 +97,7 @@ export class DevicesComponent implements OnInit {
       },
     ],
   };
+
   public rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never' = 'always';
   public rowSelection: 'single' | 'multiple' = 'multiple';
   public  columnDefs: (ColDef | ColGroupDef)[]  = [
@@ -306,7 +312,20 @@ export class DevicesComponent implements OnInit {
 
   showNewDeviceDialog(){
     this.newDeviceModal = true;
-    console.log("SELAM")
+  
+  }
+  
+
+  showUpdateDevice(event: any) {
+    this.selectedRowData = event.data;
+    // this.updateDeviceModal= true;
+    this.displayUpdateDevice = true;
+  
+    console.log(".....selectedRowData",this.selectedRowData)
+  }
+
+  hideUpdateDevice(){
+    this.displayUpdateDevice = false;
   }
 
 }

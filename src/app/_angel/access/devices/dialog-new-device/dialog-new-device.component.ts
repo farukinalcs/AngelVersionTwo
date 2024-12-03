@@ -1,10 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CommonModule, formatDate } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { AccessService } from '../../access.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
@@ -29,7 +26,6 @@ export class DialogNewDeviceComponent implements OnInit{
   constructor(
     private access: AccessService,
     private helper: HelperService,
-    public dialog: MatDialog,
     private ref: ChangeDetectorRef, 
     private translateService : TranslateService,
     private formBuilder: FormBuilder,
@@ -57,7 +53,7 @@ export class DialogNewDeviceComponent implements OnInit{
     selectModelDevice:any; // cihaz modeli
     portOfDevice:number; // Cihaz port 
     ipOfDevice:string = ""; // cihaz Ip
-    moduleIdOfDevice:number =546096986; //Cihaz module id (ControllerNo)
+    moduleIdOfDevice:number = 546096986; //Cihaz module id (ControllerNo)
     selectIO:any; // giriş çıkıs
     selectTypeOfDevice:any; // cihaz tanımı
     nameOfPc:string = ""; // Pc Adı
@@ -82,7 +78,6 @@ export class DialogNewDeviceComponent implements OnInit{
     currentStep$: BehaviorSubject<number> = new BehaviorSubject(1);
     currentItem: any = this.stepperFields[0];
     newDeviceFormValues: any;
-    currentDate = new Date(Date.now());
     map: any;
 
   ngOnInit(): void {
@@ -228,7 +223,9 @@ export class DialogNewDeviceComponent implements OnInit{
     this.access.addNewDevice(this.newDeviceFormValues, this.latitude,this.longitude).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
       const REsult = response[0];
       this.ref.detectChanges();
-      console.log("SUBMİT ",REsult);
+      this.access.triggerOtherComponentInit();
+      this.closedFormDialog();
+      console.log("SUBMİTTT NEW ",REsult);
     })
   }
 

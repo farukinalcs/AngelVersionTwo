@@ -1,28 +1,28 @@
-import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { FirstDataRenderedEvent } from 'ag-grid-community';
-// import { ColDef, IRowNode, IsRowSelectable, SideBarDef } from 'ag-grid-community';
-import { ColDef, IRowNode, IsRowSelectable, RowHeightParams, SideBarDef, StatusPanelDef } from 'ag-grid-enterprise';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
+import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
+import { PatrolService } from '../patrol.service';
 import { Subject, takeUntil } from 'rxjs';
-import { ProfileService } from '../../profile/profile.service';
-
-
+import { ColDef, IRowNode, IsRowSelectable, RowHeightParams, SideBarDef, StatusPanelDef } from 'ag-grid-enterprise';
+import { FirstDataRenderedEvent } from 'ag-grid-community';
 @Component({
-  selector: 'app-sicil-liste',
-  templateUrl: './sicil-liste.component.html',
-  styleUrls: ['./sicil-liste.component.scss']
+  selector: 'app-security-guards',
+  // standalone: true,
+  // imports: [CommonModule],
+  templateUrl: './security-guards.component.html',
+  styleUrls: ['./security-guards.component.scss']
 })
-export class SicilListeComponent implements OnInit {
+
+export class SecurityGuardsComponent implements OnInit {
   private ngUnsubscribe = new Subject();
 
-  @Input() displayPersonsList: boolean;
-  @Input() selectedPersons: any[];
+  // @Input() displayPersonsList: boolean;
+  selectedPersons: any[];
   @Output() displayPersonsListEvent: EventEmitter<void> = new EventEmitter<void>();
   @Output() selectedPersonsList: EventEmitter<any> = new EventEmitter<any>();
-  
+
   @ViewChild("agGridLight",{static:false}) agGridLight:AgGridAngular;
   @ViewChild("agGridDark",{static:false}) agGridDark:AgGridAngular;
 
@@ -52,13 +52,14 @@ export class SicilListeComponent implements OnInit {
   
   public defaultColDef: ColDef = {
     flex: 1,
-    minWidth: 180,
+    minWidth: 200,
     filter: true,
     floatingFilter: false,
     sortable: true,
     resizable: true,
     editable: false,
   };
+
   public rowSelection: 'single' | 'multiple' = 'multiple';
   public isRowSelectable: IsRowSelectable = (
     params: IRowNode<any>
@@ -98,19 +99,18 @@ export class SicilListeComponent implements OnInit {
     ],
   };
   gridApi: any;
-
   constructor(
-    private profileService: ProfileService,
-    private toastrService: ToastrService,
+    private toastr : ToastrService,
     private translateService: TranslateService,
-    private ref: ChangeDetectorRef,
-    private http: HttpClient
-  ) { }
+    private themeModeService: ThemeModeService,
+    private patrol: PatrolService,
+    private ref: ChangeDetectorRef
+  ) {}
 
+  
   ngOnInit(): void {
-    this.getPersonsList();
+  this.getPersonsList();
   }
-
   getContextMenuItems(params:any) {
     return [
       'copy',
@@ -127,8 +127,6 @@ export class SicilListeComponent implements OnInit {
       },
     ];
   }
-  
-
   onSelectionChangedLight() {
     const selectedRows = this.agGridLight.api.getSelectedRows();
     console.log("Seçilenler : ", selectedRows);
@@ -158,7 +156,6 @@ export class SicilListeComponent implements OnInit {
     return params?.data?.rowHeight;
   }
 
-  
   getPersonsList() {
     var sp: any[] = [{
       mkodu: 'yek081',
@@ -175,7 +172,7 @@ export class SicilListeComponent implements OnInit {
       yaka: '0',
       direktorluk: '0',
       sicilgroup: '0',
-      userdef: '1',
+      userdef: '9',
       yetki: '-1',
       cardid: '',
       aktif: '1',
@@ -187,7 +184,8 @@ export class SicilListeComponent implements OnInit {
       okod6: '',
       okod7: ''
     }];
-    this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response:any) => {
+
+    this.patrol.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response:any) => {
       const data = response[0].x;
       const message = response[0].z;
 
@@ -203,21 +201,18 @@ export class SicilListeComponent implements OnInit {
     });
   }
 
-  onFirstDataRendered(params: FirstDataRenderedEvent<any>) {
-   // const selectedPersons = this.selectedPersons;
-    const selectedPersons = this.selectedPersons;
+  // onFirstDataRendered(params: FirstDataRenderedEvent<any>) {
+  //   const selectedPersons = this.selectedPersons;
   
-    const nodesToSelect: IRowNode[] = [];
-    params.api.forEachNode((node: IRowNode) => {
-      if (node.data && selectedPersons?.some(person => person.Id === node.data.Id)) {
-        nodesToSelect.push(node);
-      }
-    });
-    params.api.setNodesSelected({ nodes: nodesToSelect, newValue: true });
-  }
-  
+  //   const nodesToSelect: IRowNode[] = [];
+  //   params.api.forEachNode((node: IRowNode) => {
+  //     if (node.data && selectedPersons.some(person => person.Id === node.data.Id)) {
+  //       nodesToSelect.push(node);
+  //     }
+  //   });
+  //   params.api.setNodesSelected({ nodes: nodesToSelect, newValue: true });
+  // }
 
-  
   hidePersonsList() {
     this.displayPersonsListEvent.emit();
   }
@@ -228,5 +223,4 @@ export class SicilListeComponent implements OnInit {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
   }
-
 }
