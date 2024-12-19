@@ -43,8 +43,18 @@ export class PatrolService {
   getPatrolInfo(){
     var sp : any[] = [{
       mkodu : 'yek189',
+   
     }]
 
+    return this.requestMethod(sp);
+  }
+
+  getGuardEvents(olayid:any,imei:any){
+    var sp: any[] = [{
+      mkodu:'yek203',
+      olayid:olayid.toString(),
+      imei:imei.toString()
+    }]
     return this.requestMethod(sp);
   }
 }
