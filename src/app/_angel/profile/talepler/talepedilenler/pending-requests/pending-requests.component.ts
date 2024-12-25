@@ -83,6 +83,7 @@ export class PendingRequestsComponent implements OnInit, OnDestroy {
       confirmButtonText: `Evet, ${isOnay == '+' ? 'Onayla' : 'Reddet'}!`,
       allowOutsideClick: false,
       allowEscapeKey: false,
+      heightAuto: false
     }).then((result) => {
       if (result.isConfirmed) {
 
@@ -97,6 +98,7 @@ export class PendingRequestsComponent implements OnInit, OnDestroy {
           confirmButtonText: 'Kapat',
           allowOutsideClick: false,
           allowEscapeKey: false,
+          heightAuto: false
         });
       } else if (
         result.dismiss === Swal.DismissReason.cancel
@@ -110,6 +112,7 @@ export class PendingRequestsComponent implements OnInit, OnDestroy {
           confirmButtonText: 'Kapat',
           allowOutsideClick: false,
           allowEscapeKey: false,
+          heightAuto: false
         });
       }
     });

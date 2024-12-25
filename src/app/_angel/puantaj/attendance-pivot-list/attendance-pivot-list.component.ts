@@ -1259,7 +1259,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
       .requestMethod(sp)
       .pipe(
         takeUntil(this.ngUnsubscribe),
-        map((response) => this.parseValue(response[0].x[0].deger))
+        map((response) => this.parseValue(response[0].x[0]?.deger))
       )
       .subscribe((response: any) => {
         console.log('Grid Settings: ', response);

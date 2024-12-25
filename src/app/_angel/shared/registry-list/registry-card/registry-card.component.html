@@ -1,0 +1,228 @@
+<p-dialog [header]="header" [(visible)]="display" position="center" [modal]="true"
+    [breakpoints]="{ '2560px': '90vw', '992px': '90vw', '576px': '99vw' }" [baseZIndex]="10000" [draggable]="false"
+    [resizable]="false" (onHide)="close()" [styleClass]="'lightgray'">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <p-carousel [value]="tabs" [numVisible]="5" [numScroll]="4" [circular]="true" >
+                    <ng-template let-tab pTemplate="item">
+                        <li class="nav-item px-2" role="presentation" style="list-style: none;" *ngIf="tab.action.includes(operationType)">
+                            <a class="border border-2 rounded nav-link btn btn-active-dark btn-color-gray-600 btn-active-color-gray-100 fs-6 fw-bold py-2" [ngClass]="{'active': selectedIndex == tab.id}"
+                                (click)="changeTabMenu(tab.id)" role="tab">
+                                {{tab.label}}
+                            </a>
+                        </li>
+                    </ng-template>
+                </p-carousel>
+            
+            
+            
+                <!-- <ul class="nav nav-pills nav-pills-custom item position-relative mx-1 mb-1" role="tablist">
+                    <ng-container *ngFor="let item of tabs">
+                        <li class="nav-item col mx-0 p-0 cursor-pointer" role="presentation"
+                            *ngIf="item.action.includes(operationType)">
+                            <a class="nav-link d-flex justify-content-center w-100 border-0 h-100"
+                                [ngClass]="{'active': selectedIndex == item.id}" (click)="changeTabMenu(item.id)"
+                                data-bs-toggle="pill" aria-selected="true" role="tab">
+                                <span class="nav-text text-gray-800 fw-bolder fs-7 mb-3">
+                                    {{item.label}}
+                                </span>
+            
+                                <span class="bullet-custom position-absolute z-index-2 bottom-0 w-100 h-4px bg-dark rounded"></span>
+                            </a>
+                        </li>
+                    </ng-container>
+            
+                    <span class="position-absolute z-index-1 bottom-0 w-100 h-4px bg-light rounded"></span>
+                </ul> -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="d-flex flex-column flex-lg-row">
+                
+                <div class="flex-column flex-lg-row-auto w-lg-250px w-xl-350px mb-10">
+
+                    <div class="card mb-5 mb-xl-8">
+                        <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                            <div class="card-title">
+                                <h3 class="card-label text-white">{{"Özet_Bilgiler" | translate}}</h3>
+                            </div>
+                        </div>
+                        
+                        <div class="card-body">
+                            
+                            <div class="d-flex flex-center flex-column py-1">
+                                <div class="symbol symbol-100px symbol-circle mb-7">
+                                    <img src="../../../../../assets/media/avatars/blank.png" alt="image">
+                                </div>
+
+                                <a class="fs-3 text-gray-800 text-hover-danger fw-bold mb-3">
+                                    {{ name }} {{ surname }}
+                                </a>
+
+                                <div class="mb-9">
+                                    <div class="badge badge-lg badge-light-danger d-inline">{{department}}</div>
+                                </div>
+
+                                <div class="fw-bold mb-3">
+                                    {{"Sayısal_Bilgiler" | translate}}
+                                </div>
+
+                                <div class="d-flex flex-wrap flex-center">
+                                    <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
+                                        <div class="fs-4 fw-bold text-gray-700">
+                                            <span class="w-75px">{{ seniority }}</span>
+                                        </div>
+                                        <div class="fw-semibold text-muted">{{"Kıdem" | translate}}</div>
+                                    </div>
+
+                                    <div class="border border-gray-300 border-dashed rounded py-3 px-3 mx-4 mb-3">
+                                        <div class="fs-4 fw-bold text-gray-700">
+                                            <span class="w-50px">{{ left }}</span>
+                                        </div>
+                                        <div class="fw-semibold text-muted">{{"İzin_Hakkı" | translate}}</div>
+                                    </div>
+
+                                    <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
+                                        <div class="fs-4 fw-bold text-gray-700">
+                                            <span class="w-50px">{{ used }}</span>
+                                        </div>
+                                        <div class="fw-semibold text-muted">{{"Kullanılan" | translate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-stack fs-4 py-3">
+                                <div class="fw-bold rotate collapsible" (click)="toggleDetails()">
+                                    {{"Detaylar" | translate}}
+                                    <span class="ms-2">
+                                        <i class="fas" [ngClass]="isDetailsOpen ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                                    </span>
+                                </div>
+                            
+                                <span>
+                                    <a class="btn btn-sm btn-light-danger" (click)="edit()">
+                                        {{isEdit ? "Vazgeç" : "Düzenle" | translate}}
+                                    </a>
+                                </span>
+                            </div>
+
+                            
+                            <div class="separator"></div>
+                            
+                            <div
+                                id="kt_user_view_details"
+                                class="details-content"
+                                [ngClass]="{ 'open': isDetailsOpen }">
+                                <div class="pb-5 fs-6">
+                                    <div class="fw-bold mt-5">ID</div>
+                                    <div class="text-gray-600">{{registerId || '000'}}</div>
+                                    <div class="fw-bold mt-5">{{"Doğum_Tarihi" | translate}}</div>
+                                    <div class="text-gray-600" *ngIf="!isEdit">
+                                        <a class="text-gray-600 text-hover-danger">{{birthday}}</a>
+                                    </div>
+                                    <div *ngIf="isEdit">
+                                        <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="birthday">
+                                    </div>
+                                    <div class="fw-bold mt-5">{{"Giriş_Tarihi" | translate}}</div>
+                                    <div class="text-gray-600" *ngIf="!isEdit">{{employmentDate}}</div>
+                                    <div *ngIf="isEdit">
+                                        <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="employmentDate">
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-lg-row-fluid ms-lg-10">
+                    <ng-container>
+                        <app-personal-info 
+                            [hidden]="selectedIndex !== 1" 
+                            (formEvent)="formEvent($event)" 
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-personal-info>
+
+                        <app-contact-info 
+                            [hidden]="selectedIndex !== 2"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-contact-info>
+                        
+                        <app-organization-info 
+                            [hidden]="selectedIndex !== 3" 
+                            (formEvent)="organizationFormEvent($event)" 
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-organization-info>
+                        
+                        <app-custom-info
+                            [hidden]="selectedIndex !== 4"
+                            [inputValue]="1"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-custom-info>
+                        
+                        <app-custom-info
+                            [hidden]="selectedIndex !== 5"
+                            [inputValue]="2"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-custom-info>
+                        
+                        <app-shift-info
+                            [hidden]="selectedIndex !== 6"
+                            (formEvent)="formEvent($event)" 
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-shift-info>
+                        
+                        <app-access-info
+                            [hidden]="selectedIndex !== 7"
+                            [fromWhere]="fromWhere"
+                            (formEvent)="formEvent($event)" 
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-access-info>
+
+                        <app-access-group
+                            [hidden]="selectedIndex !== 8"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-access-group>
+
+                        <app-register-authorized-areas
+                            [hidden]="selectedIndex !== 9"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-register-authorized-areas>
+
+                        <app-splits
+                            [hidden]="selectedIndex !== 14"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-splits>
+                    </ng-container>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="close()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'Kapat' | translate}}
+        </a>
+        <a class="btn btn-sm btn-danger mx-1" (click)="collectAllFormData()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'Kaydet' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>

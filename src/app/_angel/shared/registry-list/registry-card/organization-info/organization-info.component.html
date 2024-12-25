@@ -1,0 +1,191 @@
+<div class="card mb-6 mb-xl-9 mx-2">
+    <!-- <div class="card-header border-0">
+        <div class="card-title">
+            <h2>{{"Organizasyon_Bilgileri" | translate}}</h2>
+        </div>
+    </div> -->
+
+    <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+        <div class="card-title">
+            <h3 class="card-label text-white">{{"Organizasyon_Bilgileri" | translate}}</h3>
+            <h4 class="card-label text-gray-200 fs-8">{{"Organizasyon_Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+        </div>
+    </div>
+
+    <div class="card-body pt-0 pb-5">
+        <div class="row" [formGroup]="form">
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Firma" | translate}}</span>
+                </label>
+
+                <p-dropdown [options]="companies" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                    [showClear]="true" placeholder="{{ 'Firma_Seçiniz' | translate }}" formControlName="company"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="form.get('company')?.value">
+                            <div>{{form.get('company')?.value.Ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.Ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Bölüm" | translate}}</span>
+                </label>
+
+                <p-dropdown [options]="departments" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                    [showClear]="true" placeholder="{{ 'Bölüm_Seçiniz' | translate }}" formControlName="department"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="form.get('department')?.value">
+                            <div>{{form.get('department')?.value.Ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.Ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Pozisyon" | translate}}</span>
+                </label>
+
+                <p-dropdown [options]="positions" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                    [showClear]="true" placeholder="{{ 'Pozisyon_Seçiniz' | translate }}" formControlName="position"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="form.get('position')?.value">
+                            <div>{{form.get('position')?.value.Ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.Ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Görev" | translate}}</span>
+                </label>
+
+                <p-dropdown [options]="jobs" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                    [showClear]="true" placeholder="{{ 'Görev_Seçiniz' | translate }}" formControlName="job"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="form.get('job')?.value">
+                            <div>{{form.get('job')?.value.Ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.Ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Alt_Firma" | translate}}</span>
+                </label>
+
+                <p-dropdown [options]="subCompanies" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                    [showClear]="true" placeholder="{{ 'Alt_Firma_Seçiniz' | translate }}" formControlName="subCompany"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="form.get('subCompany')?.value">
+                            <div>{{form.get('subCompany')?.value.Ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.Ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Yaka" | translate}}</span>
+                </label>
+
+                <p-dropdown [options]="collars" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                    [showClear]="true" placeholder="{{ 'Yaka_Seçiniz' | translate }}" formControlName="collar"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="form.get('collar')?.value">
+                            <div>{{form.get('collar')?.value.Ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.Ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Direktörlük" | translate}}</span>
+                </label>
+
+                <p-dropdown [options]="directorships" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                    [showClear]="true" placeholder="{{ 'Direktörlük_Seçiniz' | translate }}" formControlName="directorship"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="form.get('directorship')?.value">
+                            <div>{{form.get('directorship')?.value.Ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.Ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Puantaj" | translate}}</span>
+                </label>
+
+                <p-dropdown [options]="timeAttendances" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                    [showClear]="true" placeholder="{{ 'Puantaj_Seçiniz' | translate }}" formControlName="timeAttendance"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="form.get('timeAttendance')?.value">
+                            <div>{{form.get('timeAttendance')?.value.Ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.Ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+            
+            
+
+            
+        </div>    
+    </div>
+</div>

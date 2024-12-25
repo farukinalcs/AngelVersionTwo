@@ -1,0 +1,132 @@
+<div class="card mb-6 mb-xl-9 mx-2">
+    <!-- <div class="card-header border-0">
+        <div class="card-title">
+            <h2>{{"Mesai_Bilgiler" | translate}}</h2>
+        </div>
+    </div> -->
+
+    <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+        <div class="card-title">
+            <h3 class="card-label text-white">{{"Mesai_Bilgileri" | translate}}</h3>
+            <h4 class="card-label text-gray-200 fs-8">{{"Mesai_Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+        </div>
+    </div>
+
+    <div class="card-body pt-0 pb-5">
+        <div class="row" [formGroup]="form">
+            <div class="col-12 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Maaş_Tipi" | translate}}</span>
+                </label>
+
+                <p-dropdown [options]="salaryTypes" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                    [showClear]="true" placeholder="{{ 'Maaş_Tipi_Seçiniz' | translate }}" formControlName="salaryType"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="form.get('salaryType')?.value">
+                            <div>{{form.get('salaryType')?.value.Ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.Ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+            <div class="col-6 p-5">
+                <div class="">
+                    <div class="me-5">
+                        <label class="fs-6 fw-semibold form-label">{{"Fazla_Mesai" | translate}}</label>
+                    </div>
+            
+                    <label class="form-check form-switch form-check-custom form-check-solid">
+                        <input class="form-check-input" type="checkbox" formControlName="overtime">
+                        <span class="form-check-label fw-semibold text-muted">
+                            <!-- {{ form.get('overtime')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }} -->
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-6 p-5">
+                <div class="">
+                    <div class="me-5">
+                        <label class="fs-6 fw-semibold form-label">{{"Eksik_Mesai" | translate}}</label>
+                    </div>
+            
+                    <label class="form-check form-switch form-check-custom form-check-solid">
+                        <input class="form-check-input" type="checkbox" formControlName="missingTime">
+                        <span class="form-check-label fw-semibold text-muted">
+                            <!-- {{ form.get('missingTime')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }} -->
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-6 p-5">
+                <div class="">
+                    <div class="me-5">
+                        <label class="fs-6 fw-semibold form-label">{{"Eksik_Gün_Fazla_Mesai_Gün_İçi" | translate}}</label>
+                    </div>
+            
+                    <label class="form-check form-switch form-check-custom form-check-solid">
+                        <input class="form-check-input" type="checkbox" formControlName="missingTimeOvertime">
+                        <span class="form-check-label fw-semibold text-muted">
+                            <!-- {{ form.get('missingTimeOvertime')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }} -->
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-6 p-5">
+                <div class="">
+                    <div class="me-5">
+                        <label class="fs-6 fw-semibold form-label">{{"Erken_Mesai" | translate}}</label>
+                    </div>
+            
+                    <label class="form-check form-switch form-check-custom form-check-solid">
+                        <input class="form-check-input" type="checkbox" formControlName="earlyWork">
+                        <span class="form-check-label fw-semibold text-muted">
+                            <!-- {{ form.get('earlyWork')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }} -->
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-6 p-5">
+                <div class="">
+                    <div class="me-5">
+                        <label class="fs-6 fw-semibold form-label">{{"Eksik_Gün" | translate}}</label>
+                    </div>
+            
+                    <label class="form-check form-switch form-check-custom form-check-solid">
+                        <input class="form-check-input" type="checkbox" formControlName="missingDay">
+                        <span class="form-check-label fw-semibold text-muted">
+                            <!-- {{ form.get('missingDay')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }} -->
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-6 p-5">
+                <div class="">
+                    <div class="me-5">
+                        <label class="fs-6 fw-semibold form-label">{{"Gece_Zammı" | translate}}</label>
+                    </div>
+            
+                    <label class="form-check form-switch form-check-custom form-check-solid">
+                        <input class="form-check-input" type="checkbox" formControlName="nightRaise">
+                        <span class="form-check-label fw-semibold text-muted">
+                            <!-- {{ form.get('nightRaise')?.value ? ("Aktif" | translate) : ("Pasif" | translate) }} -->
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

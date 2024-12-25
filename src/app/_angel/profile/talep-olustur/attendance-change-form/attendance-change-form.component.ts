@@ -571,6 +571,7 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
         confirmButtonText: `Evet`,
         allowOutsideClick: false,
         allowEscapeKey: false,
+        heightAuto: false
       }).then((result) => {
         if (result.isConfirmed) {
           this.attendanceForm.get('isDelete')?.setValue('1');
@@ -581,13 +582,14 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
           this.postForm(this.attendanceFormValues, 'i', []);
 
           Swal.fire({
-            title: `Kayıtlar silinerek talep gönderildi`,
+            title: `Kayıtlar silindi ve talep gönderildi`,
             icon: 'success',
             iconColor: '#ed1b24',
             confirmButtonColor: '#ed1b24',
             confirmButtonText: 'Kapat',
             allowOutsideClick: false,
             allowEscapeKey: false,
+            heightAuto: false
           });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           this.postForm(this.attendanceFormValues, 'i', []);
@@ -600,6 +602,7 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
             confirmButtonText: 'Kapat',
             allowOutsideClick: false,
             allowEscapeKey: false,
+            heightAuto: false
           });
         } else if (result.isDenied) {
         }

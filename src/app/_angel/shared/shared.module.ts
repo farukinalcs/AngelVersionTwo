@@ -25,6 +25,21 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DashboardCardComponent } from './dashboard-card/dashboard-card.component';
 import { DashboardCardDetailComponent } from './dashboard-card/dashboard-card-detail/dashboard-card-detail.component';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
+import { RegistryListComponent } from './registry-list/registry-list.component';
+import { RegistryCardComponent } from './registry-list/registry-card/registry-card.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { PersonalInfoComponent } from './registry-list/registry-card/personal-info/personal-info.component';
+import { ContactInfoComponent } from './registry-list/registry-card/contact-info/contact-info.component';
+import { OrganizationInfoComponent } from './registry-list/registry-card/organization-info/organization-info.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { CustomInfoComponent } from './registry-list/registry-card/custom-info/custom-info.component';
+import { ShiftInfoComponent } from './registry-list/registry-card/shift-info/shift-info.component';
+import { AccessInfoComponent } from './registry-list/registry-card/access-info/access-info.component';
+import { AccessGroupComponent } from './registry-list/registry-card/access-group/access-group.component';
+import { RegisterAuthorizedAreasComponent } from './registry-list/registry-card/register-authorized-areas/register-authorized-areas.component';
+import { SplitsComponent } from './registry-list/registry-card/splits/splits.component';
+import { CarouselModule } from 'primeng/carousel';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -39,7 +54,18 @@ import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
     RequestMenuComponent,
     AnnualCalendarComponent,
     DashboardCardComponent,
-    DashboardCardDetailComponent
+    DashboardCardDetailComponent,
+    RegistryListComponent,
+    RegistryCardComponent,
+    PersonalInfoComponent,
+    ContactInfoComponent,
+    OrganizationInfoComponent,
+    CustomInfoComponent,
+    ShiftInfoComponent,
+    AccessInfoComponent,
+    AccessGroupComponent,
+    RegisterAuthorizedAreasComponent,
+    SplitsComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +80,11 @@ import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
     TranslationModule,
     AgGridModule,
     MatProgressSpinnerModule,
-    CustomPipeModule
+    CustomPipeModule,
+    MatTabsModule,
+    DropdownModule,
+    CarouselModule,
+    TooltipModule
   ],
   exports: [
     FullScreenDivComponent,
@@ -75,7 +105,9 @@ import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
     TimelineModule,
     ButtonModule,
     InputTextModule,
-    DashboardCardComponent
+    DashboardCardComponent,
+    RegistryListComponent,
+    RegistryCardComponent
   ]
 })
 export class SharedModule { }

@@ -18,12 +18,17 @@ import { TimeZoneComponent } from './access-definitions/definitions/time-zone/ti
 import { LedPanelsComponent } from './access-definitions/definitions/led-panels/led-panels.component';
 import { PrintersComponent } from './access-definitions/definitions/printers/printers.component';
 import { AccessDashboardComponent } from './access-dashboard/access-dashboard.component';
+import { AccessRegistryListComponent } from './access-registry-list/access-registry-list.component';
 
 
 const routes: Routes = [
   {
     path: 'dashboard',
     component: AccessDashboardComponent,
+  },
+  {
+    path: 'registry-list',
+    component: AccessRegistryListComponent,
   },
   {
     path: 'terminal',

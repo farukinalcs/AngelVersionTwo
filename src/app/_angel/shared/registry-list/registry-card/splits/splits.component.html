@@ -1,0 +1,316 @@
+<div class="flip-card">
+    <div class="flip-card-inner" [class.flipped]="isFlipped">
+        <!-- Ön Yüz - Data Ekranı -->
+        <div class="flip-card-front">
+            <div class="card mb-6 mb-xl-9 mx-2">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{ "Splitler" | translate }}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Splitlerle_İlgili_İşlemini_Buradan_Belirleyebilirsiniz" | translate }}</h4>
+                    </div>
+                </div>
+                <div class="card-body pt-0 pb-5">
+                    <div class="row">
+
+                        <div class="col-12 pt-3 pb-1">
+                            <a class="btn btn-sm btn-secondary mx-1 fw-bolder d-flex justify-content-center align-item-center w-100" (click)="toggleFlip()">
+                                <i class="fa-solid fa-plus fs-7 d-flex align-items-center"></i>
+                                {{'Yeni_Split_Ekle' | translate}}
+                            </a>
+                        </div>
+                        
+                        <div class="col-12 h-500px scroll">
+                            <div class="table-responsive">
+                                <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                                    <thead>
+                                        <tr class="fs-7 fw-bold text-gray-500 border-bottom-0">
+                                            <th class="fw-bolder me-1 cursor-pointer rounded-start" style="width: 5%;">#</th>
+                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 5%;">{{"Başlangıç" | translate}}</th>
+                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 21%;">{{"Bitiş" | translate}}</th>
+                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 30%;">{{"Kaydeden" | translate}}</th>
+                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Firma" | translate}}</th>
+                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Bölüm" | translate}}</th>
+                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Pozisyon" | translate}}</th>
+                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Görev" | translate}}</th>
+                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Alt_Firma" | translate}}</th>
+                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Direktörlük" | translate}}</th>
+                                            <th class="fw-bolder me-1 cursor-pointer rounded-end" style="width: 10%;">{{"Yaka" | translate}}</th>
+                                            <!-- <th class="fw-bolder me-1 cursor-pointer rounded-end" style="width: 5%;">{{"Durum" | translate}}</th> -->
+                                        </tr>
+                                    </thead>
+                                
+                                    <tbody>
+                                        
+                                        <ng-container *ngIf="splits.length > 0">
+                                            <tr *ngFor="let item of splits" class="cursor-pointer fs-9 fw-bolder">
+                                                <td>
+                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                        <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
+                                                        <span>{{"Sil" | translate}}</span>
+                                                    </a>
+                                            
+                                                    <a class="btn btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                        [ngClass]="{'btn-success': item.aktif == '1', 'btn-warning': item.aktif == '0'}">
+                                                        <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
+                                                        <span>{{ item.aktif == '1' ? "Aktif"  : "Pasif" | translate}}</span>
+                                                    </a>
+                                                </td>
+                                                
+                                                <td class="text-center">
+                                                    <span class="mb-1" *ngIf="item.Donembaslangic">{{ item.Donembaslangic | date: 'dd-MM-yyyy' }}</span>
+                                                    <span class="mb-1" *ngIf="!item.Donembaslangic">-</span>
+                                                </td>
+        
+                                                <td class="text-center">
+                                                    <span class="mb-1" *ngIf="item.Donembitis">{{ item.Donembitis | date: 'dd-MM-yyyy' }}</span>
+                                                    <span class="mb-1" *ngIf="!item.Donembitis">-</span>
+                                                </td>
+        
+                                                <td style="display: flex; flex-direction: column;">
+                                                    <span class="mb-1">{{ item.duzenleyen }}</span>
+                                                    <span class="mb-1">{{ item.islemtarihi | date: 'dd-MM-yyyy HH:mm:ss' }}</span>
+                                                </td>
+                                            
+                                                <td pTooltip="{{item.firma}}" tooltipPosition="top">
+                                                    <span class="mb-1">{{ item.firma | truncate:15 }}</span>
+                                                </td>
+        
+                                                <td pTooltip="{{item.bolum}}" tooltipPosition="top">
+                                                    <span class="mb-1">{{ item.bolum | truncate:15 }}</span>
+                                                </td>
+        
+                                                <td pTooltip="{{item.pozisyon}}" tooltipPosition="top">
+                                                    <span class="mb-1">{{ item.pozisyon | truncate:15 }}</span>
+                                                </td>
+        
+                                                <td pTooltip="{{item.gorev}}" tooltipPosition="top">
+                                                    <span class="mb-1">{{ item.gorev | truncate:15 }}</span>
+                                                </td>
+        
+                                                <td pTooltip="{{item.altfirma}}" tooltipPosition="top">
+                                                    <span class="mb-1">{{ item.altfirma | truncate:15 }}</span>
+                                                </td>
+        
+                                                <td pTooltip="{{item.direktorluk}}" tooltipPosition="top">
+                                                    <span class="mb-1">{{ item.direktorluk | truncate:15 }}</span>
+                                                </td>
+        
+                                                <td pTooltip="{{item.yaka}}" tooltipPosition="top">
+                                                    <span class="mb-1">{{ item.yaka | truncate:15 }}</span>
+                                                </td>
+        
+                                                <!-- <td>
+                                                    <span class="mb-1">{{ item.durum }}</span>
+                                                </td> -->
+                                            </tr>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="splits.length == 0">
+                                            <tr>
+                                                <td colspan="12" class="text-center">
+                                                    <app-data-not-found [imgWidth]="'40%'"></app-data-not-found>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arka Yüz - Form Ekranı -->
+        <div class="flip-card-back">
+            <div class="card mb-6 mb-xl-9 mx-2">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{ "Splitler" | translate }}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Splitlerle_İlgili_İşlemini_Buradan_Belirleyebilirsiniz" | translate }}</h4>
+                    </div>
+                </div>
+                <div class="card-body pt-0 pb-5">
+                    
+                    <div class="row" [formGroup]="form">
+                        <div class="col-6 p-5">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span >{{"Dönem_Başlangıç_Tarihi" | translate}}</span>
+                            </label>
+            
+                            <input type="date" class="form-control form-control-sm form-control-solid" formControlName="startDate">
+                        </div>
+
+                        <div class="col-6 p-5">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span >{{"Dönem_Bitiş_Tarihi" | translate}}</span>
+                            </label>
+            
+                            <input type="date" class="form-control form-control-sm form-control-solid" formControlName="endDate">
+                        </div>
+                        
+                        <div class="col-6 p-5">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span >{{"Firma" | translate}}</span>
+                            </label>
+            
+                            <p-dropdown [options]="companies" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                                [showClear]="true" placeholder="{{ 'Firma_Seçiniz' | translate }}" formControlName="company"
+                                emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="form.get('company')?.value">
+                                        <div>{{form.get('company')?.value.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+            
+                        <div class="col-6 p-5">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span >{{"Bölüm" | translate}}</span>
+                            </label>
+            
+                            <p-dropdown [options]="departments" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                                [showClear]="true" placeholder="{{ 'Bölüm_Seçiniz' | translate }}" formControlName="department"
+                                emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="form.get('department')?.value">
+                                        <div>{{form.get('department')?.value.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+            
+                        <div class="col-6 p-5">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span >{{"Pozisyon" | translate}}</span>
+                            </label>
+            
+                            <p-dropdown [options]="positions" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                                [showClear]="true" placeholder="{{ 'Pozisyon_Seçiniz' | translate }}" formControlName="position"
+                                emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="form.get('position')?.value">
+                                        <div>{{form.get('position')?.value.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+            
+                        <div class="col-6 p-5">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span >{{"Görev" | translate}}</span>
+                            </label>
+            
+                            <p-dropdown [options]="jobs" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                                [showClear]="true" placeholder="{{ 'Görev_Seçiniz' | translate }}" formControlName="job"
+                                emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="form.get('job')?.value">
+                                        <div>{{form.get('job')?.value.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+            
+                        <div class="col-6 p-5">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span >{{"Alt_Firma" | translate}}</span>
+                            </label>
+            
+                            <p-dropdown [options]="subCompanies" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                                [showClear]="true" placeholder="{{ 'Alt_Firma_Seçiniz' | translate }}" formControlName="subCompany"
+                                emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="form.get('subCompany')?.value">
+                                        <div>{{form.get('subCompany')?.value.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+            
+                        <div class="col-6 p-5">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span >{{"Yaka" | translate}}</span>
+                            </label>
+            
+                            <p-dropdown [options]="collars" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                                [showClear]="true" placeholder="{{ 'Yaka_Seçiniz' | translate }}" formControlName="collar"
+                                emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="form.get('collar')?.value">
+                                        <div>{{form.get('collar')?.value.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+            
+                        <div class="col-6 p-5">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span >{{"Direktörlük" | translate}}</span>
+                            </label>
+            
+                            <p-dropdown [options]="directorships" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                                [showClear]="true" placeholder="{{ 'Direktörlük_Seçiniz' | translate }}" formControlName="directorship"
+                                emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="form.get('directorship')?.value">
+                                        <div>{{form.get('directorship')?.value.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-6 p-5 d-flex align-items-end justify-conten-end">
+                            <a class="btn btn-sm btn-danger mx-1" (click)="toggleFlip()">
+                                <i class="fa-solid fa-arrow-left fs-7"></i>
+                                {{'Geri_Dön' | translate}}
+                            </a>
+                            <a class="btn btn-sm btn-danger mx-1">
+                                <i class="fa-solid fa-plus fs-7"></i>
+                                {{'Ekle' | translate}}
+                            </a>
+                        </div>
+                    </div>  
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

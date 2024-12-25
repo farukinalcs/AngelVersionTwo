@@ -1,0 +1,225 @@
+<div class="card mb-6 mb-xl-9 mx-2">
+    <!-- <div class="card-header border-0">
+        <div class="card-title">
+            <h2>{{"Organizasyon_Bilgileri" | translate}}</h2>
+        </div>
+    </div> -->
+
+    <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+        <div class="card-title">
+            <h3 class="card-label text-white">{{"Kart_RF_Parmak_Yüz_Bilgileri" | translate}}</h3>
+            <h4 class="card-label text-gray-200 fs-8">{{"Access_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+        </div>
+    </div>
+
+    <div class="card-body pt-0 pb-5">
+        <div class="row" [formGroup]="form">
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Kullanıcı_Numarası" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Kullanıcı_Numarası' | translate}}" formControlName="userNumber"
+                    [ngStyle]="{'cursor': operationType == 'u' ? 'not-allowed' : ''}">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Kart_Numarası" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Kart_Numarası' | translate}}" formControlName="cardNumber">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Facility_Numarası" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Facility_Numarası' | translate}}" formControlName="facilityNumber">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Rf_Etiket_Numarası" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Rf_Etiket_Numarası' | translate}}" formControlName="rfLabelNumber">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Rf_Son_Geçerlilik_Tarihi" | translate}}</span>
+                </label>
+
+                <input type="date" class="form-control form-control-sm form-control-solid" placeholder="{{'Rf_Son_Geçerlilik_Tarihi' | translate}}" formControlName="rfLastValidty">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span>{{"Kullanıcı_Tanımı" | translate}}</span>
+                </label>
+
+                <p-dropdown [options]="userDefinitions" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                    [showClear]="true" placeholder="{{ 'Kullanıcı_Tanımı_Seçiniz' | translate }}"
+                    formControlName="userDefinition" emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                    appendTo="body">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="form.get('userDefinition')?.value">
+                            <div>{{form.get('userDefinition')?.value.Ad}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.Ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+            <div class="col-12 p-5" *ngIf="operationType == 'u'">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span>{{"Kart_Veya_Biometic_Tanıtma_Cihazları" | translate}}</span>
+                </label>
+
+                <p-dropdown [options]="devices" optionLabel="name" [filter]="true" filterBy="name"
+                    [showClear]="true" placeholder="{{ 'Terminal_Seçiniz' | translate }}"
+                    formControlName="device" emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                    appendTo="body">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="item-item item-item-value" *ngIf="form.get('device')?.value">
+                            <div>{{form.get('device')?.value.name}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+            <div class="col-12 p-5" *ngIf="operationType == 'u'">
+                <div class="d-flex flex-stack">  
+                    <div class="symbol symbol-40px me-4">
+                        <div class="symbol-label fs-2 fw-semibold bg-light-danger text-inverse-danger">
+                            <i class="fa-solid fa-fingerprint fs-1 text-danger"></i>
+                        </div>
+                    </div>
+    
+                    <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                        <div class="flex-grow-1 me-2">
+                            <a class="text-gray-800 text-hover-danger fs-6 fw-bold">{{"Parmak_İzi" | translate}}</a>
+                            
+                            <span class="text-muted fw-semibold d-block fs-7">
+                                <i class="fa-regular" [ngClass]="{'fa-circle text-danger': deviceDetail[0]?.finger == '0', 'fa-circle-check text-success': deviceDetail[0]?.finger == '1'}"></i>
+                                {{deviceDetail[0]?.finger == '0' ? "Veritabanında_Yok" : "Veritabanında_Mevcut" | translate}}
+                            </span>
+                        </div>
+                        
+                        <a class="btn btn-sm btn-danger mx-1" *ngIf="deviceDetail[0]?.ScanFinger">
+                            <i class="fa-solid fa-expand fs-6"></i>                   
+                            {{'Tara' | translate}}
+                        </a>
+                    </div>
+                </div>
+                <div class="separator separator-dashed my-4"></div>
+                <div class="d-flex flex-stack">  
+                    <div class="symbol symbol-40px me-4">
+                        <div class="symbol-label fs-2 fw-semibold bg-light-danger text-inverse-danger">
+                            <i class="fa-regular fa-circle-user fs-1 text-danger"></i>
+                            <!-- <i class="fa-regular fa-face-smile fs-1 text-danger"></i> -->
+                            
+
+                            <!-- <span class="fa-stack fa-1x">
+                                <i class="fa-solid fa-expand fa-stack-1x text-danger fs-3x"></i>
+                                <i class="fa-regular fa-face-smile fa-stack-2x text-danger fs-1" 
+                                    style="
+                                    position: absolute;
+                                    top: 9px;
+                                    left: 1px;
+                                    ">
+                                </i>
+                            </span> -->
+
+                        </div>
+                    </div>
+    
+                    <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                        <div class="flex-grow-1 me-2">
+                            <a class="text-gray-800 text-hover-danger fs-6 fw-bold">{{"Yüz_Bilgisi" | translate}}</a>
+                            
+                            <span class="text-muted fw-semibold d-block fs-7">
+                                <i class="fa-regular" [ngClass]="{'fa-circle text-danger': deviceDetail[0]?.face1 == '0', 'fa-circle-check text-success': deviceDetail[0]?.face1 == '1'}"></i>
+                                {{deviceDetail[0]?.face1 == '0' ? "Veritabanında_Yok" : "Veritabanında_Mevcut" | translate}}
+                            </span>
+                        </div>
+                        
+                        <a class="btn btn-sm btn-danger mx-1" *ngIf="deviceDetail[0]?.ScanFace">
+                            <i class="fa-solid fa-expand fs-6"></i>                   
+                            {{'Tara' | translate}}
+                        </a>
+                    </div>
+                </div>
+                <div class="separator separator-dashed my-4"></div>
+                <div class="d-flex flex-stack">  
+                    <div class="symbol symbol-40px me-4">
+                        <div class="symbol-label fs-2 fw-semibold bg-light-danger text-inverse-danger">
+                            <i class="fa-solid fa-id-card-clip fs-1 text-danger"></i>
+                        </div>
+                    </div>
+    
+                    <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                        <div class="flex-grow-1 me-2">
+                            <a class="text-gray-800 text-hover-danger fs-6 fw-bold">{{"Kart" | translate}}</a>
+                            
+                            <span class="text-muted fw-semibold d-block fs-7">
+                                <i class="fa-regular" [ngClass]="{'fa-circle text-danger': deviceDetail[0]?.card == '0', 'fa-circle-check text-success': deviceDetail[0]?.card == '1'}"></i>
+                                {{deviceDetail[0]?.card == '0' ? "Veritabanında_Yok" : "Veritabanında_Mevcut" | translate}}
+                            </span>
+                        </div>
+                        
+                        <a class="btn btn-sm btn-danger mx-1" *ngIf="deviceDetail[0]?.ScanCard">
+                            <i class="fa-solid fa-expand fs-6"></i>                   
+                            {{'Tara' | translate}}
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-6 p-5">
+                <div class="">
+                    <div class="me-5">
+                        <label class="fs-6 fw-semibold form-label">{{"Master" | translate}}</label>
+                    </div>
+            
+                    <label class="form-check form-switch form-check-custom form-check-solid">
+                        <input class="form-check-input" type="checkbox" formControlName="master">
+                        <span class="form-check-label fw-semibold text-muted"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-6 p-5">
+                <div class="">
+                    <div class="me-5">
+                        <label class="fs-6 fw-semibold form-label">{{"By_PassCard_Sadece_Kart" | translate}}</label>
+                    </div>
+            
+                    <label class="form-check form-switch form-check-custom form-check-solid">
+                        <input class="form-check-input" type="checkbox" formControlName="passCard">
+                        <span class="form-check-label fw-semibold text-muted"></span>
+                    </label>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+

@@ -8,7 +8,7 @@
 
             <div class="col-1 m-auto">
                 <div class="text-gray-400 fw-semibold fs-7">
-                    <a class="btn btn-sm btn-danger px-5 py-1 custom-btn"> {{"İptal_Et" | translate}}</a>
+                    <a class="btn btn-sm btn-danger px-5 py-1 hover-elevate-up"> {{"İptal_Et" | translate}}</a>
                 </div>
             </div>
         </div>
@@ -43,17 +43,17 @@
                 <div class="card-body pt-3 pb-0">
                     <div class="row mb-10 d-flex justify-content-end" [formGroup]="formGroup">
                         <div class="col-4 d-flex align-items-end gap-2 p-0">
-                            <a class="btn btn-dark btn-sm custom-btn" (click)="showFilterModal()">
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="showFilterModal()">
                                 <i class="fa-solid fa-filter"></i>
                                 {{"Filtrele" | translate}}
                             </a>
 
-                            <a class="btn btn-dark btn-sm custom-btn" (click)="clearFilters()">
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="clearFilters()">
                                 <i class="fa-solid fa-eraser"></i>
                                 {{"Temizle" | translate}}
                             </a>
 
-                            <a class="btn btn-dark btn-sm custom-btn" (click)="displayProcessChange = true">
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="displayProcessChange = true">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i>
                                 {{"Pivot_Özet" | translate}}
                             </a>

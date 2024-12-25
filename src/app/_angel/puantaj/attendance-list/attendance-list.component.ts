@@ -14,7 +14,6 @@ import {
   IMultiFilterParams,
   IRowNode,
   IsRowSelectable,
-  ITextFilterParams,
   RowHeightParams,
   SideBarDef,
   StatusPanelDef,
@@ -23,14 +22,10 @@ import {
 import { AgGridAngular } from 'ag-grid-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { formatDate } from '@angular/common';
 import * as moment from 'moment';
 import { AttendanceService } from '../attendance.service';
-import { FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, GridApi, IProvidedFilter, ISetFilterParams } from 'ag-grid-community';
+import { FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, GridApi } from 'ag-grid-community';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
-import { ResponseModel } from 'src/app/modules/auth/models/response-model';
-import { OKodFieldsModel } from '../../profile/models/oKodFields';
-import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { OrganizationColumnFilterComponent } from '../organization-column-filter/organization-column-filter.component';
 import { ToastrService } from 'ngx-toastr';
 import { LoadingService } from 'src/app/_helpers/loading.service';
@@ -1738,7 +1733,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
       .requestMethod(sp)
       .pipe(
         takeUntil(this.ngUnsubscribe),
-        map((response) => this.parseValue(response[0].x[0].deger))
+        map((response) => this.parseValue(response[0].x[0]?.deger))
       )
       .subscribe((response: any) => {
         console.log('Grid Settings: ', response);

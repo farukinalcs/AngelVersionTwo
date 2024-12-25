@@ -55,11 +55,11 @@ import { LedPanelsComponent } from './access-definitions/definitions/led-panels/
 import { PrintersComponent } from './access-definitions/definitions/printers/printers.component';
 import { AccessDashboardComponent } from './access-dashboard/access-dashboard.component';
 import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dialog-update-device.component';
+import { AccessRegistryListComponent } from './access-registry-list/access-registry-list.component';
 
 
 @NgModule({
   declarations: [
-    TerminalComponent,
     DevicesComponent,
     GecisgruplariComponent,
     RaporlarComponent,
@@ -79,7 +79,8 @@ import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dial
     LedPanelsComponent,
     PrintersComponent,
     AccessDashboardComponent,
-    DialogUpdateDeviceComponent
+    DialogUpdateDeviceComponent,
+    AccessRegistryListComponent
 
   ],
 
@@ -121,7 +122,6 @@ import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dial
     MatProgressSpinnerModule,
     MatTabsModule
   ]
-  ],
 
 })
 export class AccessModule { }

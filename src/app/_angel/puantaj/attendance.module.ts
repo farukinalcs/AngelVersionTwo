@@ -47,6 +47,7 @@ import { ShiftGroupsComponent } from './puantaj-tanimlamalar/definitions/shift-g
 import { ShiftPeriodsComponent } from './puantaj-tanimlamalar/definitions/shift-periods/shift-periods.component';
 import { AttendanceDashboardComponent } from './attendance-dashboard/attendance-dashboard.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { AttendanceRegistryListComponent } from './attendance-registry-list/attendance-registry-list.component';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     OverrideComponent,
     ShiftGroupsComponent,
     ShiftPeriodsComponent,
-    AttendanceDashboardComponent
+    AttendanceDashboardComponent,
+    AttendanceRegistryListComponent
   ],
 
   imports: [

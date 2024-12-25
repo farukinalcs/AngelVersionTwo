@@ -1,0 +1,115 @@
+<div class="card mb-6 mb-xl-9 mx-2">
+    <!-- <div class="card-header border-0">
+        <div class="card-title">
+            <h2>{{"Özel_Bilgiler" | translate}} {{inputValue}}</h2>
+        </div>
+    </div> -->
+
+    <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+        <div class="card-title">
+            <h3 class="card-label text-white">{{"Özel_Bilgiler" | translate}}</h3>
+            <h4 class="card-label text-gray-200 fs-8">{{"Özel_Bilgileri_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+        </div>
+    </div>
+
+    <div class="card-body pt-0 pb-5">
+        
+          
+        
+        <div class="row" [formGroup]="form">
+            <ng-container *ngFor="let item of customCodes">
+                <ng-container *ngIf="10 >= item.ID && inputValue == 1">
+                    <div class="col-md-6 col-sm-12 p-5">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2 border border-hover border-3 rounded px-2 cursor-pointer" (click)="showEdit(item)">
+                            <span>{{item.ad}}</span>
+                            <i class="fa-solid fa-pen-to-square fs-3 ms-auto"></i>
+                        </label>
+        
+                        <input [type]="item.type || 'text'" class="form-control form-control-sm form-control-solid" placeholder="{{item.ad}}" formControlName="{{item.controlName}}">
+                    </div>        
+                </ng-container>
+
+                <ng-container *ngIf="10 < item.ID && inputValue == 2">
+                    <div class="col-md-6 col-sm-12 p-5">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2 border border-hover border-3 rounded px-2 cursor-pointer" (click)="showEdit(item)">
+                            <span>{{item.ad}}</span>
+                            <i class="fa-solid fa-pen-to-square fs-3 ms-auto"></i>
+                        </label>
+        
+                        <input [type]="item.type || 'text'" class="form-control form-control-sm form-control-solid" placeholder="{{item.ad}}" formControlName="{{item.controlName}}">
+                    </div>        
+                </ng-container>
+
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+
+
+
+<p-dialog header="{{'Düzenle' | translate}}" [(visible)]="display" position="center" [modal]="true"
+    [breakpoints]="{ '2560px': '34vw', '992px': '90vw', '576px': '99vw' }" [baseZIndex]="10000" [draggable]="false"
+    [resizable]="false" (onHide)="closeEdit()">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span>{{"Yeni_Alan_Adı" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Yeni_Alan_Adı' | translate}}" [(ngModel)]="newName">
+            </div>
+
+            <div class="col-12 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span>{{"Form_Tipi" | translate}}</span>
+                </label>
+            
+                <div class="form-check form-check-custom form-check-solid form-check-sm py-1">
+                    <input class="form-check-input" type="radio" value="text" id="text" name="formType" [(ngModel)]="selectedFormType"/>
+                    <label class="form-check-label fw-semibold text-gray-600" for="text">
+                        {{"Text" | translate}}
+                    </label>
+                </div>
+            
+                <div class="form-check form-check-custom form-check-solid form-check-sm py-1">
+                    <input class="form-check-input" type="radio" value="number" id="number" name="formType" [(ngModel)]="selectedFormType"/>
+                    <label class="form-check-label fw-semibold text-gray-600" for="number">
+                        {{"Number" | translate}}
+                    </label>
+                </div>
+            
+                <div class="form-check form-check-custom form-check-solid form-check-sm py-1">
+                    <input class="form-check-input" type="radio" value="date" id="date" name="formType" [(ngModel)]="selectedFormType"/>
+                    <label class="form-check-label fw-semibold text-gray-600" for="date">
+                        {{"Date" | translate}}
+                    </label>
+                </div>
+            
+                <div class="form-check form-check-custom form-check-solid form-check-sm py-1">
+                    <input class="form-check-input" type="radio" value="time" id="time" name="formType" [(ngModel)]="selectedFormType"/>
+                    <label class="form-check-label fw-semibold text-gray-600" for="time">
+                        {{"Time" | translate}}
+                    </label>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="closeEdit()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'Kapat' | translate}}
+        </a>
+        <a class="btn btn-sm btn-danger mx-1" (click)="editCustomCode()">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>
+

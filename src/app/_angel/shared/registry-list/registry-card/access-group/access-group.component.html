@@ -1,0 +1,349 @@
+<div class="card mb-6 mb-xl-9 mx-2">
+    <!-- <div class="card-header border-0">
+        <div class="card-title">
+            <h2>{{"Geçiş_Grupları" | translate}}</h2>
+        </div>
+    </div> -->
+    
+    <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+        <div class="card-title">
+            <h3 class="card-label text-white">{{"Geçiş_Grupları" | translate}}</h3>
+            <h4 class="card-label text-gray-200 fs-8">{{"Geçiş_Grubu_Atama_İşlemini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+        </div>
+    </div>
+
+    <div class="card-body pt-0 pb-5">
+        <div class="row">
+            <div class="col-6">
+                <div class="input-group py-3" style="flex: 1;">
+                    <input class="form-control form-control-solid p-2 border-1 border-dark rounded-lg font-size-h6"
+                        [(ngModel)]="filterTextAdded" style="height: 30px;" type="text" placeholder="{{'Arama' | translate}}">
+            
+                    <button class="search-icon">
+                        <div class="svg">
+                            <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="input-group py-3" style="flex: 1;">
+                    <input class="form-control form-control-solid p-2 border-1 border-dark rounded-lg font-size-h6"
+                        [(ngModel)]="filterTextMain" style="height: 30px;" type="text" placeholder="{{'Arama' | translate}}">
+            
+                    <button class="search-icon">
+                        <div class="svg">
+                            <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">            
+            <div class="col-6 h-550px scroll">
+                <div class="table-responsive">
+                    <!-- <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                        <thead>
+                            <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                <th class=" fw-bolder me-1 cursor-pointer rounded-start" style="width: 20%;">#</th>
+                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 70%;">{{"Bağlı_Olduğu_Geçiş_Grupları" | translate}}
+                                </th>
+                                <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 10%;">{{"İşlem" | translate}}</th>
+                            </tr>
+                        </thead>
+                        <ng-container *ngIf="addedGroups.length > 0">
+                
+                            <tbody>
+                                <tr *ngFor="let item of addedGroups | searchFilter:filterTextAdded: ['Ad'] " class="cursor-pointer fs-8 fw-bolder">
+                                    <ng-container *ngIf="item.hasItem">
+                                        <td>
+                                            <span class="mb-1" (click)="showDetail(item)">?</span>
+                                        </td>
+                
+                                        <td>
+                                            <span class="mb-1">{{ item.Ad }}</span>
+                                        </td>
+                
+                                        <td>
+                                            <a class="btn btn-warning btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                (click)="relationStateChange(item, 'd', item?.isTemp ? true : false)">
+                                                <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
+                                                <span>{{"Kaldır" | translate}}</span>
+                                            </a>
+                
+                                        </td>
+                                    </ng-container>
+                
+                                </tr>
+                            </tbody>
+                        </ng-container>
+                
+                        <ng-container *ngIf="addedGroups.length == 0">
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    <app-data-not-found [imgWidth]="'60%'"></app-data-not-found>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </table> -->
+                
+                    <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                        <thead>
+                            <tr class="fs-7 fw-bold text-gray-500 border-bottom-0">
+                                <th class=" fw-bolder me-1 cursor-pointer rounded-start" style="width: 20%;">#</th>
+                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 70%;">{{"Bağlı_Olduğu_Geçiş_Grupları" | translate}}</th>
+                                <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 10%;">{{"İşlem" | translate}}</th>
+                            </tr>
+                        </thead>
+                    
+                        <ng-container *ngIf="addedGroups.length > 0">
+                
+                            <tbody>
+                                <tr *ngFor="let item of addedGroups | searchFilter:filterTextAdded: ['Ad'] " class="cursor-pointer fs-8 fw-bolder">
+                                    <ng-container *ngIf="item.hasItem">
+                                        <td>
+                                            <!-- <span class="mb-1" (click)="showDetail(item)">?</span> -->
+                                            <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px" (click)="showDetail(item)">
+                                                <i class="fa-solid fa-question fs-5"></i>
+                                            </div>
+                                        </td>
+                
+                                        <td>
+                                            <span class="mb-1">{{ item.Ad }}</span>
+                                        </td>
+                
+                                        <td>
+                                            <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                (click)="relationStateChange(item, 'd', item?.isTemp ? true : false)">
+                                                <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
+                                                <span>{{"Kaldır" | translate}}</span>
+                                            </a>
+                
+                                        </td>
+                                    </ng-container>
+                
+                                </tr>
+                            </tbody>
+                        </ng-container>
+                
+                        <ng-container *ngIf="addedGroups.length == 0">
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    <app-data-not-found [imgWidth]="'60%'"></app-data-not-found>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </table>
+                
+                    
+                </div>
+            </div>
+            
+            <div class="col-6 h-550px scroll">
+                <div class="table-responsive">
+                    <!-- <table
+                        class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                        <thead>
+                            <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                <th class=" rounded-start" style="width: 10%;">{{"İşlem" | translate}}</th>
+                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 70%;">{{"Eklenebilir_Geçiş_Grupları" | translate}}</th>
+                                <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 20%;">#</th>
+                            </tr>
+                        </thead>
+            
+                        <tbody>
+                            <tr *ngFor="let item of accessGroups | searchFilter:filterTextMain: ['Ad'] " class="cursor-pointer fs-8 fw-bolder">
+                                <ng-container *ngIf="!item.hasItem">
+            
+                                    <td>
+                                        <a class="btn btn-primary btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2" (click)="relationStateChange(item, 'i', false)">
+                                            <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
+                                            <span>{{"Ekle" | translate}}</span>
+                                        </a>
+
+                                        <a class="btn btn-info btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2" (click)="open(item)">
+                                            <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
+                                            <span>{{"Süreli_Ekle" | translate}}</span>
+                                        </a>
+                                    </td>
+            
+                                    <td>
+                                        <span class="mb-1">{{ item.Ad }}</span>
+                                    </td>
+            
+                                    <td>
+                                        <span class="mb-1" (click)="showDetail(item)">?</span>
+                                    </td>
+            
+                                </ng-container>
+            
+                            </tr>
+            
+                        </tbody>
+                    </table> -->
+
+
+                    <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                        <thead>
+                            <tr class="fs-7 fw-bold text-gray-500 border-bottom-0">
+                                <th class=" rounded-start" style="width: 10%;">{{"İşlem" | translate}}</th>
+                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 70%;">{{"Eklenebilir_Geçiş_Grupları" | translate}}</th>
+                                <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 20%;">#</th>
+                            </tr>
+                        </thead>
+                    
+                        <tbody>
+                            <tr *ngFor="let item of accessGroups | searchFilter:filterTextMain: ['Ad'] " class="cursor-pointer fs-8 fw-bolder">
+                                <ng-container *ngIf="!item.hasItem">
+            
+                                    <td>
+                                        <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2" (click)="relationStateChange(item, 'i', false)">
+                                            <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
+                                            <span>{{"Ekle" | translate}}</span>
+                                        </a>
+
+                                        <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2" (click)="open(item)">
+                                            <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
+                                            <span>{{"Süreli_Ekle" | translate}}</span>
+                                        </a>
+                                    </td>
+            
+                                    <td>
+                                        <span class="mb-1">{{ item.Ad }}</span>
+                                    </td>
+            
+                                    <td>
+                                        <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px" (click)="showDetail(item)">
+                                            <i class="fa-solid fa-question fs-5"></i>
+                                        </div>
+                                        <!-- <span class="mb-1" (click)="showDetail(item)">?</span> -->
+                                    </td>
+            
+                                </ng-container>
+            
+                            </tr>
+            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<p-dialog header="{{'Süreli_Grup' | translate}}" [(visible)]="display" position="center" [modal]="true"
+    [breakpoints]="{ '2560px': '34vw', '992px': '90vw', '576px': '99vw' }" [baseZIndex]="10000" [draggable]="false"
+    [resizable]="false" (onHide)="close()">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span>{{"Süre_Başlangıç_Tarihi" | translate}}</span>
+                </label>
+
+                <input type="date" class="form-control form-control-sm form-control-solid" placeholder="{{'Süre_Başlangıç_Tarihi' | translate}}" [(ngModel)]="startDate">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span>{{"Süre_Başlangıç_Saati" | translate}}</span>
+                </label>
+
+                <input type="time" class="form-control form-control-sm form-control-solid" placeholder="{{'Süre_Başlangıç_Saati' | translate}}" [(ngModel)]="startTime">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span>{{"Süre_Bitiş_Tarihi" | translate}}</span>
+                </label>
+
+                <input type="date" class="form-control form-control-sm form-control-solid" placeholder="{{'Süre_Bitiş_Tarihi' | translate}}" [(ngModel)]="endDate">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span>{{"Süre_Bitiş_Saati" | translate}}</span>
+                </label>
+
+                <input type="time" class="form-control form-control-sm form-control-solid" placeholder="{{'Süre_Bitiş_Saati' | translate}}" [(ngModel)]="endTime">
+            </div>
+
+            <div class="col-12 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span>{{"Açıklama" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Açıklama' | translate}}" [(ngModel)]="desc">
+            </div>
+
+            
+            
+        </div>
+    </div>
+
+
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="close()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'Kapat' | translate}}
+        </a>
+        <a class="btn btn-sm btn-danger mx-1" (click)="addItemToAddedGroups(selectedItem, true)">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>
+
+
+<p-dialog [header]="header" [(visible)]="detailDisplay" position="center" [modal]="true"
+    [breakpoints]="{ '2560px': '34vw', '992px': '90vw', '576px': '99vw' }" [baseZIndex]="10000" [draggable]="false"
+    [resizable]="false" (onHide)="close()">
+
+    <div class="container-fluid">
+        <div class="row">
+            
+            <div class="col-12 h-100 scroll">
+                <div class="table-responsive">
+                    <table
+                        class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                        <thead>
+                            <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                <th class="fw-bolder me-1 cursor-pointer rounded-start" >{{"Id" | translate}}</th>
+                                <th class="fw-bolder me-1 cursor-pointer rounded-end" >{{"Ad" | translate}}</th>
+                            </tr>
+                        </thead>
+            
+                        <tbody>
+                            <tr *ngFor="let item of groupDetail " class="cursor-pointer fs-8 fw-bolder">
+                                <td>
+                                    <span class="mb-1">{{item.tid}}</span>
+                                </td>
+                            
+                                <td>
+                                    <span class="mb-1">{{item.ad}}</span>
+                                </td>
+                            </tr>
+            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+
+
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="hideDetail()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'Kapat' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>

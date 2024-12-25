@@ -314,6 +314,7 @@ export class DeviceGroupsComponent implements OnInit, OnDestroy {
       confirmButtonText: `Evet`,
       allowOutsideClick: false,
       allowEscapeKey: false,
+      heightAuto: false
     }).then((result) => {
       if (result.isConfirmed) {
         var sp: any[] = [
@@ -348,6 +349,7 @@ export class DeviceGroupsComponent implements OnInit, OnDestroy {
               confirmButtonText: 'Kapat',
               allowOutsideClick: false,
               allowEscapeKey: false,
+              heightAuto: false
             });
 
           });
@@ -363,6 +365,7 @@ export class DeviceGroupsComponent implements OnInit, OnDestroy {
           confirmButtonText: 'Kapat',
           allowOutsideClick: false,
           allowEscapeKey: false,
+          heightAuto: false
         });
       } else if (result.isDenied) {
       }
