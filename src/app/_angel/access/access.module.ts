@@ -56,6 +56,7 @@ import { PrintersComponent } from './access-definitions/definitions/printers/pri
 import { AccessDashboardComponent } from './access-dashboard/access-dashboard.component';
 import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dialog-update-device.component';
 import { AccessRegistryListComponent } from './access-registry-list/access-registry-list.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -120,7 +121,8 @@ import { AccessRegistryListComponent } from './access-registry-list/access-regis
     }),
     CustomPipeModule,
     MatProgressSpinnerModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTooltipModule
   ]
 
 })

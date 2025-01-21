@@ -40,6 +40,13 @@ import { RegisterAuthorizedAreasComponent } from './registry-list/registry-card/
 import { SplitsComponent } from './registry-list/registry-card/splits/splits.component';
 import { CarouselModule } from 'primeng/carousel';
 import { TooltipModule } from 'primeng/tooltip';
+import { RegisterHistoryComponent } from './registry-list/registry-card/register-history/register-history.component';
+import { WorkingPeriodsComponent } from './registry-list/registry-card/working-periods/working-periods.component';
+import { FilesComponent } from './registry-list/registry-card/files/files.component';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+import { InlineSVGModule } from 'ng-inline-svg-2';
+import { ApplicationUseComponent } from './registry-list/registry-card/application-use/application-use.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +72,11 @@ import { TooltipModule } from 'primeng/tooltip';
     AccessInfoComponent,
     AccessGroupComponent,
     RegisterAuthorizedAreasComponent,
-    SplitsComponent
+    SplitsComponent,
+    RegisterHistoryComponent,
+    WorkingPeriodsComponent,
+    FilesComponent,
+    ApplicationUseComponent
   ],
   imports: [
     CommonModule,
@@ -84,7 +95,10 @@ import { TooltipModule } from 'primeng/tooltip';
     MatTabsModule,
     DropdownModule,
     CarouselModule,
-    TooltipModule
+    TooltipModule,
+    ProgressBarModule,
+    NgbProgressbarModule,
+    InlineSVGModule
   ],
   exports: [
     FullScreenDivComponent,

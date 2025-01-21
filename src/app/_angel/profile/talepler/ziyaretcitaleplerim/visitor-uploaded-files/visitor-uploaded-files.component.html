@@ -20,7 +20,7 @@
                         <div class="table-responsive">
                             <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                 <thead>
-                                    <tr class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                    <tr class="roundend fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light">
                                         <th class="text-center rounded-start"> </th>
                                         <th class="text-center"> {{ "Belge_Adı" | translate }} </th>
                                         <th class="text-center"> {{ "Yüklenme_Tarihi" | translate }}</th>
@@ -31,7 +31,7 @@
         
                                 <tbody>
                                     <ng-container *ngFor="let item of selectedVisit.Dosyalar; index as i">
-                                        <tr [ngClass]="{ 'bg-light-danger' : !item.uploadedFile }">
+                                        <tr>
                                             <td class="text-center">
                                                 <ng-container *ngIf="item.uploadedFile">
                                                     <div [ngSwitch]="item.uploadedFile.DosyaTipi">

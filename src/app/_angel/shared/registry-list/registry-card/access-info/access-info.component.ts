@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Subject, take, takeUntil } from 'rxjs';
+import { updateForm } from 'src/app/store/actions/form.action';
+import { FormState } from 'src/app/store/models/form.state';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 
 @Component({
@@ -22,7 +25,8 @@ export class AccessInfoComponent implements OnInit, OnDestroy{
   fingerCount: any[] = [];
   constructor(
     private profileService: ProfileService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private store: Store<{ form: FormState }>
   ) {}
   
   ngOnInit(): void {
@@ -36,6 +40,14 @@ export class AccessInfoComponent implements OnInit, OnDestroy{
       this.deviceChanged();
       this.getFingerCount();
     }
+
+    this.store.select('form').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+      if (state.accessInfo) {
+        this.form.patchValue(state.accessInfo, { emitEvent: false });
+      }
+    });
+
+    this.saveFormToStore();
   }
 
   ngOnChanges() {
@@ -71,9 +83,11 @@ export class AccessInfoComponent implements OnInit, OnDestroy{
 
       this.userDefinitions = data.filter((item: any) => this.fromWhere?.includes(item.ID));
 
-      if (this.operationType == 'u') {
-        this.getRegisterDetail();
-      }
+      this.store.select('form').pipe(take(1)).subscribe((state) => {
+        if (!state.accessInfo && this.operationType == 'u') {
+          this.getRegisterDetail();
+        }
+      });
     });
   }
 
@@ -191,6 +205,12 @@ export class AccessInfoComponent implements OnInit, OnDestroy{
       console.log("Parmak Sayısı Geldi :", this.deviceDetail);
       
     });
+  }
+
+  saveFormToStore() {
+    this.form.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value:any) => {
+      this.store.dispatch(updateForm({ formName: 'accessInfo', formData: this.form.value }));
+    });    
   }
   
   ngOnDestroy(): void {

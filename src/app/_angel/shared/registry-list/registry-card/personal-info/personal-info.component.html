@@ -20,6 +20,13 @@
                 </label>
 
                 <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Ad' | translate}}" formControlName="name">
+                <ng-container [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: translateService.instant('Boş_Geçilemez!'),
+                    control: form.controls['name']
+                    }">
+                </ng-container>
             </div>
 
             <div class="col-6 p-5">
@@ -28,6 +35,13 @@
                 </label>
 
                 <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Soyad' | translate}}" formControlName="surname">
+                <ng-container [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: translateService.instant('Boş_Geçilemez!'),
+                    control: form.controls['surname']
+                    }">
+                </ng-container>
             </div>
 
             <div class="col-6 p-5">
@@ -83,3 +97,16 @@
         </div>    
     </div>
 </div>
+
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+    <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+        <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+                <span role="alert">
+                    {{ message }}
+                </span>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

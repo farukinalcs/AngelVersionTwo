@@ -26,13 +26,12 @@
                 <ng-container *ngIf="loading">
                     <div class="card-body">
                         <div class="row mb-5">
-                            <div class="col-8">
-                                <div class="input-group h-100 w-50" style="flex: 1;">
-                                    <input
-                                        class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
-                                        [(ngModel)]="filterText"
+                            <div class="col-3">
+                                <div class="input-group py-3" style="flex: 1;">
+                                    <input class="form-control form-control-solid p-2 border-1 border-dark rounded-lg font-size-h6"
+                                        [(ngModel)]="filterText" style="height: 30px;"
                                         type="text" placeholder="{{'Arama' | translate}}">
-        
+
                                     <button class="search-icon">
                                         <div class="svg">
                                             <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
@@ -40,7 +39,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="col-4 d-flex align-items-end justify-content-end gap-2 p-0">
+                            <div class="col-9 d-flex align-items-center justify-content-end">
                                 <a class="btn btn-dark btn-sm hover-elevate-up" (click)="openAction('add')">
                                     <i class="fa-solid fa-plus"></i>
                                     {{"Ekle" | translate}}
@@ -53,10 +52,10 @@
                                 <div class="table-responsive">
                                     <table class="table table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-2">
                                         <thead>
-                                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
-                                                <th class="text-center rounded-start">#</th>
-                                                <th class="text-center fw-bolder me-1 cursor-pointer">{{"Neden_Açıklama" | translate}}</th>
-                                                <th class="text-center fw-bolder me-1 cursor-pointer rounded-end">{{"İşlemler" | translate}}
+                                            <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
+                                                <th class="fw-bolder me-1 rounded-start">#</th>
+                                                <th class="fw-bolder me-1">{{"Neden_Açıklama" | translate}}</th>
+                                                <th class="fw-bolder me-1 rounded-end">{{"İşlemler" | translate}}
                                                 </th>
                                             </tr>
                                         </thead>
@@ -72,22 +71,22 @@
                                                 }"
                                                 class="cursor-pointer fs-7">
                                                 
-                                                <td class="text-center">
-                                                    <span class="mb-1">{{item.ID}}</span>
+                                                <td class="">
+                                                    <span class="mb-1 fw-semibold">{{item.ID}}</span>
                                                 </td>
                                 
-                                                <td class="text-center">
-                                                    <span class="mb-1">{{item.ad}}</span>
+                                                <td class="">
+                                                    <span class="mb-1 fw-semibold">{{item.ad}}</span>
                                                 </td>
                                 
-                                                <td class="text-center">
-                                                    <a *ngIf="selectedRowId === item.ID" matTooltip="{{'Güncelle' | translate}}" (click)="openAction('update', item)"
-                                                        class="btn btn-icon btn-light-dark btn-sm me-3">
-                                                        <i class="fa-solid fa-pen-to-square fs-4"></i>
+                                                <td class="">
+                                                    <a matTooltip="{{'Güncelle' | translate}}" (click)="openAction('update', item)"
+                                                        class="btn btn-light btn-sm py-1 px-2 mx-1">
+                                                        <i class="fa-solid fa-pen-to-square p-0 text-gray-900"></i>
                                                     </a>
-                                                    <a *ngIf="selectedRowId === item.ID" matTooltip="{{'Kaldır' | translate}}" (click)="removeCause(item)"
-                                                        class="btn btn-icon btn-light-dark btn-sm me-3">
-                                                        <i class="fa-solid fa-xmark fs-4"></i>
+                                                    <a matTooltip="{{'Kaldır' | translate}}" (click)="removeCause(item)"
+                                                        class="btn btn-light btn-sm py-1 px-2 mx-1">
+                                                        <i class="fa-solid fa-xmark p-0 text-gray-900"></i>
                                                     </a>
                                                 </td>
                                                   

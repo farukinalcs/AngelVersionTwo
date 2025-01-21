@@ -34,7 +34,7 @@
                                 </label>
 
                                 <input type="text" class="form-control form-control-sm form-control-solid"
-                                    formControlName="explanation">
+                                    formControlName="explanation" placeholder="{{'Açıklama_Giriniz' | translate}}">
                             </div>
 
                             <div class="col-2">
@@ -42,7 +42,7 @@
                                     <span>{{"Kod" | translate}}</span>
                                 </label>
 
-                                <input type="text" class="form-control form-control-sm form-control-solid" formControlName="code" />
+                                <input type="text" class="form-control form-control-sm form-control-solid" formControlName="code" placeholder="{{'Kod_Giriniz' | translate}}" />
                             </div>
 
                             <div class="col-2">
@@ -114,15 +114,14 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="table-responsive">
-                                    <table
-                                        class="table table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-2">
+                                    <table class="table border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-2">
                                         <thead>
-                                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                            <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
                                                 <th class=" rounded-start">{{"Kod" | translate}}</th>
-                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Açıklama" | translate}}</th>
-                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Tarih" | translate}}</th>
-                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Sabit" | translate}}</th>
-                                                <th class=" fw-bolder me-1 cursor-pointer rounded-end">{{"Yarım_Gün" | translate}}</th>
+                                                <th class=" fw-bolder me-1">{{"Açıklama" | translate}}</th>
+                                                <th class=" fw-bolder me-1">{{"Tarih" | translate}}</th>
+                                                <th class=" fw-bolder me-1">{{"Sabit" | translate}}</th>
+                                                <th class=" fw-bolder me-1 rounded-end">{{"Yarım_Gün" | translate}}</th>
                                             </tr>
                                         </thead>
 
@@ -138,23 +137,23 @@
                                                           }" (click)="selectType(item)">
 
                                                     <td>
-                                                        <span class="mb-1">{{item.Kod}}</span>
+                                                        <span class="mb-1 fw-semibold">{{item.Kod}}</span>
                                                     </td>
 
                                                     <td>
-                                                        <span class="mb-1">{{item.Aciklama}}</span>
+                                                        <span class="mb-1 fw-semibold">{{item.Aciklama}}</span>
                                                     </td>
 
                                                     <td>
-                                                        <span class="mb-1">{{item.Tarih | date: 'dd.MM.yyyy'}}</span>
+                                                        <span class="mb-1 fw-semibold">{{item.Tarih | date: 'dd.MM.yyyy'}}</span>
                                                     </td>
 
                                                     <td>
-                                                        <span class="mb-1">{{ item.Sabit ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                        <span class="mb-1 fw-semibold">{{ item.Sabit ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
                                                     </td>
 
                                                     <td>
-                                                        <span class="mb-1">{{ item.YarimGun == 1 ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                        <span class="mb-1 fw-semibold">{{ item.YarimGun == 1 ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
                                                     </td>
                                                 </tr>
                                             </ng-container>

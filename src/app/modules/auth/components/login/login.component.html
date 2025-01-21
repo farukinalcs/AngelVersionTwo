@@ -41,13 +41,13 @@
           <div class="col-sm-12 col-md-8 col-lg-7 d-flex justify-content-center flex-column">
             <label class="form-label fs-6 fw-bolder text-dark">{{"Uygulamalar" | translate}}</label>
             <label *ngFor="let item of appList"
-              class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex text-start p-6 active"
+              class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex text-start px-6 py-3 m-1 active"
               data-kt-button="true">
               <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
                 <input class="form-check-input bg-danger" type="radio" formControlName="appList" value="{{item.appId}}"
                   checked="checked">
               </span>
-              <i class="fa-solid fa-cloud fs-2x me-4 ms-10 align-items-center"></i>
+              <i class="fa-solid fa-cloud fs-4 me-4 ms-10 align-items-center"></i>
               <span class="ms-5">
                 <span class="fs-4 fw-bold mb-1 d-block">{{item.appName}}</span>
 

@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
+import { updateForm } from 'src/app/store/actions/form.action';
+import { FormState } from 'src/app/store/models/form.state';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 
 @Component({
@@ -29,7 +32,8 @@ export class OrganizationInfoComponent implements OnInit, OnDestroy, OnChanges {
     private translateService: TranslateService,
     private profileService: ProfileService,
     private toastrService: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private store: Store<{ form: FormState }>
   ) {}
   
   ngOnInit(): void {
@@ -39,6 +43,14 @@ export class OrganizationInfoComponent implements OnInit, OnDestroy, OnChanges {
     if (this.operationType == 'i') {
       this.changedFormValue(); 
     } 
+
+    this.store.select('form').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+      if (state.organizationInfo) {
+        this.form.patchValue(state.organizationInfo, { emitEvent: false });
+      }
+    });
+
+    this.saveFormToStore();
   }
 
   ngOnChanges() {
@@ -119,9 +131,11 @@ export class OrganizationInfoComponent implements OnInit, OnDestroy, OnChanges {
           
         });
         
-        if (this.operationType == 'u') {
-          this.getRegisterDetail();
-        }
+        this.store.select('form').pipe(take(1)).subscribe((state) => {
+          if (!state.organizationInfo && this.operationType == 'u') {
+            this.getRegisterDetail();
+          }
+        });
       }, (err) => {
         this.toastrService.error(
           this.translateService.instant('Beklenmeyen_Bir_Hata_Oluştu'),
@@ -182,6 +196,11 @@ export class OrganizationInfoComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
   
+  saveFormToStore() {
+    this.form.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value:any) => {
+      this.store.dispatch(updateForm({ formName: 'organizationInfo', formData: this.form.value }));
+    });    
+  }
   
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

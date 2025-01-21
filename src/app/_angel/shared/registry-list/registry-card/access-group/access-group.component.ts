@@ -1,7 +1,11 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
+import { addItemToAddedGroups, loadAccessGroups, loadAddedGroups, removeItemFromAddedGroups } from 'src/app/store/actions/access-group.action';
+import { AccessGroupState } from 'src/app/store/models/access-group.state';
+import { selectAccessGroups, selectAddedGroups } from 'src/app/store/selectors/access-group.selector';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 
 @Component({
@@ -27,11 +31,15 @@ export class AccessGroupComponent implements OnInit, OnDestroy {
   header: string;
   filterTextAdded: string = "";
   filterTextMain: string = "";
+
+  accessGroups$ = this.store.pipe(select(selectAccessGroups));
+  addedGroups$ = this.store.pipe(select(selectAddedGroups));
   constructor(
     private profileService: ProfileService,
     private toastrService: ToastrService,
     private translateService: TranslateService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private store: Store<AccessGroupState>
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +71,8 @@ export class AccessGroupComponent implements OnInit, OnDestroy {
         ...item,
         hasItem: false 
       }));
+
+      this.store.dispatch(loadAccessGroups({ accessGroups:this.accessGroups }));
     });
   }
 
@@ -85,6 +95,8 @@ export class AccessGroupComponent implements OnInit, OnDestroy {
         ...item,
         hasItem: true 
       }));
+
+      this.store.dispatch(loadAddedGroups({ addedGroups: this.addedGroups }));
     });
   }
   
@@ -107,6 +119,8 @@ export class AccessGroupComponent implements OnInit, OnDestroy {
         ...item,
         hasItem: false 
       }));
+
+      this.store.dispatch(loadAccessGroups({ accessGroups:this.accessGroups }));
     });
   }
 
@@ -122,74 +136,20 @@ export class AccessGroupComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Item'ı eklenmiş tabloya ekle
-  addItemToAddedGroups(item: any, isTemp: any) {
-    // Eğer eklenmek istenen item'in ID'si 0 veya 1 ise
-    if (item.ID === 0 || item.ID === 1) {
-      // addedGroups içindeki mevcut item'leri accessGroups'a taşı ve hasItem değerini false yap
-      this.addedGroups.forEach((group) => {
-        group.hasItem = false; // hasItem değerini false yap
-        this.accessGroups.push(group);
-      });
-      // addedGroups'u temizle
-      this.addedGroups = [];
-    } else {
-      // Eğer addedGroups içinde 0 veya 1 ID'sine sahip bir item varsa
-      const existingSpecialItem = this.addedGroups.find(
-        (group) => group.ID === 0 || group.ID === 1
-      );
-  
-      if (existingSpecialItem) {
-        // Mevcut olanı addedGroups'tan çıkar ve accessGroups'a taşı
-        this.addedGroups = this.addedGroups.filter(
-          (group) => group.ID !== existingSpecialItem.ID
-        );
-        existingSpecialItem.hasItem = false; // hasItem değerini false yap
-        this.accessGroups.push(existingSpecialItem);
-      }
-    }
-  
-    // Yeni item'i addedGroups'a ekle
-    this.accessGroups = this.accessGroups.filter((group) => group.ID !== item.ID);
-    item.hasItem = true;
-  
+  addItemToAddedGroups(item: any, isTemp: boolean) {
+    this.store.dispatch(addItemToAddedGroups({ item, isTemp, startDate: this.startDate, endDate: this.endDate, startTime: this.startTime, endTime: this.endTime, desc: this.desc }));
+    let accessGroups$ = this.store.pipe(select(selectAccessGroups));
+    let addedGroups$ = this.store.pipe(select(selectAddedGroups));
+    accessGroups$.subscribe(value => console.log("access :", value));
+    addedGroups$.subscribe(value => console.log("add :", value));
+    
     if (isTemp) {
-      item.isTemp = true;
-      item.tempStartDate = this.startDate;
-      item.tempEndDate = this.endDate;
-      item.tempStartTime = this.startTime;
-      item.tempEndTime = this.endTime;
-      item.tempDesc = this.desc;
       this.close();
     }
-  
-    this.addedGroups.push(item);
-  
-    // Angular değişiklik algılaması için dizileri yeniden oluştur
-    this.addedGroups = [...this.addedGroups];
-    this.accessGroups = [...this.accessGroups];
-  
-    console.log("AddedGroup:", this.addedGroups);
-    console.log("AccessGroups:", this.accessGroups);
   }
-  
-  
-  
 
-  // Item'ı eklenmiş tablodan çıkar
-  removeItemFromAddedGroups(item: any, isTemp: any) {
-    // Eklenen tablodan item'ı çıkar
-    this.addedGroups = this.addedGroups.filter(group => group.ID !== item.ID);
-    // Ana tablodan item'ı ekle
-    item.hasItem = false;
-
-    if (isTemp) {
-      item.isTemp = false;
-    }
-    this.accessGroups.push(item);
-
-    console.log("Main Group : ", this.accessGroups);
-    
+  removeItemFromAddedGroups(item: any, isTemp: boolean) {
+    this.store.dispatch(removeItemFromAddedGroups({ item, isTemp }));
   }
   
   open(item: any) {

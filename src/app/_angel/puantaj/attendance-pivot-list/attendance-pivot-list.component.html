@@ -228,7 +228,7 @@
                                                                     <tr class="text-center" *ngFor="let item of overtimeSubtotal | searchFilter:filterText: ['ad', 'soyad', 'sicilno']">
                                                                         <td>
                                                                             <div class="symbol symbol-30px">
-                                                                                <img src="http://localhost:5075/api/Image?sicilid={{item.sicilid}}" alt="{{item.ad}} {{item.soyad}}" class=""> 
+                                                                                <img src="{{imageUrl}}?sicilid={{item.sicilid}}" alt="{{item.ad}} {{item.soyad}}" class=""> 
                                                                             </div>
                                                                         </td>
     

@@ -667,6 +667,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
   displayOvertimeForm: boolean = false;
   displayShiftForm: boolean = false;
   displayAttendanceForm: boolean = false;
+  imageUrl: string;
   constructor(
     private formBuilder: FormBuilder,
     private profileService: ProfileService,
@@ -676,7 +677,9 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     private ref: ChangeDetectorRef,
     private toastrService: ToastrService,
     private loadingService: LoadingService
-  ) {}
+  ) {
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   // ngOnInit(): void {
   //   this.createForm();
@@ -1080,7 +1083,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     return (
       `
     <div class="bg-hover-light d-flex justify-content-center mt-1">
-      <img style="width: 23px; height: 23px; border-radius: 5px;" src="http://localhost:5075/api/Image?sicilid=` +
+      <img style="width: 23px; height: 23px; border-radius: 5px;" src="${this.imageUrl}?sicilid=` +
       params.data.sicilid +
       `">
     </div>`
@@ -1654,7 +1657,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
   // }
 
   applyWeekendClass(params: any) {
-    if (params.data.mesaibas == params.data.mesaibit) {
+    if (params?.data?.mesaibas == params?.data?.mesaibit) {
       return 'cell-weekend';
     }
   }

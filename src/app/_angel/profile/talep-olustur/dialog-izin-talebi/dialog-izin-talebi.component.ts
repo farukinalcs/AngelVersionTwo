@@ -77,7 +77,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   calcTimeDesc: any;
   calcTimeValue: any;
   currentSicilId: any;
-  izinKalan: number;
+  izinKalan: number = 0;
   userInformation: UserInformation;
   vacationReasons : any[] = [];
   selectedType  : any;
@@ -98,7 +98,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private toastrService : ToastrService,
     public authService : AuthService,
-    private translateService : TranslateService,
+    public translateService : TranslateService,
     private sanitizer: DomSanitizer,
     private helperService : HelperService,
     private ref: ChangeDetectorRef,
@@ -126,13 +126,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
 
     this.setResponsiveForm();
     this.createFormGroup();
-    // this.closedFormDialog();
-
     this.getVacationReason();
-    
-    // this.getVacationRight();
-    // this.getUserInformation();
-    
     this.valueChanges();
     this.dateChanges();
     this.typeChanges();
@@ -389,6 +383,10 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
       const data = response[0].x;
       const apiMessage = response[0].z;
 
+      if (apiMessage.islemsonuc == -1) {
+        return; 
+      }
+      
       if (apiMessage.islemsonuc == 1) {
         this.calcTimeValue = data[0].izinhesapsure;
 
@@ -397,8 +395,6 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
       }
       console.log("İzin Süresi Hesaplama :", response);
 
-
-      this.ref.detectChanges();
     });
   }
 
@@ -409,15 +405,14 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
 
       console.log("Sicil Bilgiler :", data);
 
-
-      if (message.islemsonuc == 1) {
-        this.izinKalan = data[0].Kalan;
-        this.userInformation = data[0];
-        console.log("USER :", this.izinKalan);
+      if (message.islemsonuc == -1) {
+        return;
       }
 
+      this.izinKalan = data[0]?.Kalan;
+      this.userInformation = data[0];
+      console.log("USER :", this.izinKalan);
 
-      this.ref.detectChanges();
     })
   }
 
@@ -491,12 +486,13 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
       const data = response[0].x;
       const message = response[0].z;
 
-      if (message.islemsonuc == 1) {
-        this.vacationReasons = data;
-        console.log("İzin Tipleri : ", data);
+      if (message.islemsonuc == -1) {
+        return;
       }
 
-      this.ref.detectChanges();
+      this.vacationReasons = [...data];
+      console.log("İzin Tipleri : ", data);
+
     });
   }
 
@@ -514,6 +510,15 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
         const data = response[0].x;
         const apiMessage = response[0].z;
         const spMessage = response[0].m[0];
+
+        if (apiMessage.islemsonuc == -1) {
+          this.toastrService.error(
+            this.translateService.instant('Talep_Gönderilemedi_Daha_Sonra_Tekrar_Deneyiniz'),
+            this.translateService.instant('Hata')
+          );
+          this.prevStep();
+          return;
+        }
 
         console.log('İzin Form gönderildi :', response);
         if (data[0].sonuc == 1) {
@@ -609,10 +614,16 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
       const data = response[0].x;
       const message = response[0].z;
 
-      console.log("Tipi geldi", data);
-      this.fileTypes = data;
+      if (message.islemsonuc == -1) {
+        this.toastrService.error(
+          this.translateService.instant('Zorunlu_Yüklenmesi_Gereken_Belge_Bulunamadı!'),
+          this.translateService.instant('Hata')
+        );
+        return;
+      }
 
-      this.ref.detectChanges();
+      console.log("Tipi geldi", data);
+      this.fileTypes = [...data];
     });
   }
 

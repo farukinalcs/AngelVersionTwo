@@ -62,7 +62,7 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private toastrService : ToastrService,
     public authService : AuthService,
-    private translateService : TranslateService,
+    public translateService : TranslateService,
     private ref: ChangeDetectorRef,
     public auth : AuthService,
   ) { }
@@ -159,7 +159,7 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
       surname: [''],
       email: ['', Validators.compose([Validators.required, Validators.email]) ],
       company: ['', Validators.required],
-      description: ['', Validators.required],
+      description: ['', [Validators.required, Validators.maxLength(500)]],
       type: ['', Validators.required],
       entryDate: ['', Validators.required],
       entryTime: ['', Validators.required],
@@ -448,6 +448,14 @@ export class DialogZiyaretciTalebiComponent implements OnInit, OnDestroy {
     console.log("Form Values : ", formValues);
     this.profileService.postVisitForm(formValues).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : any) => {
       const data = response[0].x;
+      const message = response[0].z;
+
+      if (message.islemsonuc == -1) {
+        this.toastrService.error("Form Gönderilemedi!", "HATA");
+        this.prevStep();
+        return;
+      }
+      
       console.log("Ziyaret Formu Gönderildi : ", data);
       this.visitors = data;
       

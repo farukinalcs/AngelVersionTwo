@@ -77,6 +77,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
   savedFilterModel: any;
   displayRegistryCard: boolean = false;
   selectedRegister: any;
+  imageUrl: string;
 
   constructor(
     private profileService: ProfileService,
@@ -84,7 +85,9 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
     private themeModeService: ThemeModeService,
     private attendanceService: AttendanceService,
     private ref: ChangeDetectorRef
-  ) { }
+  ) { 
+    this.imageUrl = this.profileService.getImageUrl();
+  }
   
   ngOnInit(): void {
     
@@ -462,7 +465,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
     return (
       `
         <div class="bg-hover-light d-flex justify-content-center mt-1">
-          <img style="width: 23px; height: 23px; border-radius: 5px;" src="http://localhost:5075/api/Image?sicilid=` +
+          <img style="width: 23px; height: 23px; border-radius: 5px;" src="${this.imageUrl}?sicilid=` +
           params.data.Id +
           `">
         </div>
@@ -701,39 +704,39 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   iconClass(params: any) {    
-    if (params.column.colId === 'icon') {
+    if (params?.column?.colId === 'icon') {
       const icons: string[] = [];
   
       // Geçici Kart
-      if (params.data.cardID === 'Geçici Kart') {
+      if (params?.data?.cardID === 'Geçici Kart') {
         icons.push(`
           <i class="fa-solid fa-id-card-clip text-dark fs-4 mx-1" title="${this.translateService.instant('Geçici_Kart')}"></i>
         `);
       }
   
       // İzleme Yetkisi
-      if (params.data.lYetki.toString() === '59') {
+      if (params?.data?.lYetki.toString() === '59') {
         icons.push(`
           <i class="fa-solid fa-eye text-dark fs-4 mx-1" title="${this.translateService.instant('İzleme Yetkisi')}"></i>
         `);
       }
   
       // Online
-      if (params.data.lYetki.toString() === '59') {
+      if (params?.data?.lYetki.toString() === '59') {
         icons.push(`
           <i class="fa-solid fa-circle-play text-dark fs-4 mx-1" title="${this.translateService.instant('Online')}"></i>
         `);
       }
   
       // Offline
-      if (params.data.lYetki.toString() === '59') {
+      if (params?.data?.lYetki.toString() === '59') {
         icons.push(`
           <i class="fa-solid fa-circle-pause text-dark fs-4 mx-1" title="${this.translateService.instant('Offline')}"></i>
         `);
       }
   
       // Mobile
-      if (params.data.lYetki.toString() === '59') {
+      if (params?.data?.lYetki.toString() === '59') {
         icons.push(`
           <i class="fa-solid fa-mobile text-dark fs-4 mx-1" title="${this.translateService.instant('Mobile')}"></i>
         `);

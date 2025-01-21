@@ -1,8 +1,11 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
+import { updateForm } from 'src/app/store/actions/form.action';
+import { FormState } from 'src/app/store/models/form.state';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 
 @Component({
@@ -26,7 +29,8 @@ export class CustomInfoComponent implements OnInit, OnDestroy, OnChanges {
     private profileService: ProfileService,
     private translateService: TranslateService,
     private toastrService: ToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private store: Store<{ form: FormState }>
   ) {}
   
   ngOnInit(): void {
@@ -58,9 +62,11 @@ export class CustomInfoComponent implements OnInit, OnDestroy, OnChanges {
       this.customCodes = [...data];
       this.createForm(data);
 
-      if (this.operationType == 'u') {
-        this.getRegisterDetail();
-      }
+      this.store.select('form').pipe(take(1)).subscribe((state) => {
+        if (!state.customInfo && this.operationType == 'u') {
+          this.getRegisterDetail();
+        }
+      });
     });
   }
 
@@ -71,6 +77,17 @@ export class CustomInfoComponent implements OnInit, OnDestroy, OnChanges {
       group[item.controlName] = [""];
     });
     this.form = this.fb.group(group);
+
+
+    // Store ile bağlan
+    this.saveFormToStore();
+
+    // State'ten gelen veriyi yükle
+    this.store.select('form').pipe(take(1)).subscribe((state) => {
+      if (state.customInfo) {
+        this.form.patchValue(state.customInfo, { emitEvent: false });
+      }
+    });
   }
 
   showEdit(item:any) {
@@ -131,6 +148,12 @@ export class CustomInfoComponent implements OnInit, OnDestroy, OnChanges {
       const value = registerDetail?.[field];
       this.form?.get(field)?.setValue(value);
     });
+  }
+
+  saveFormToStore() {
+    this.form.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value:any) => {
+      this.store.dispatch(updateForm({ formName: 'customInfo', formData: this.form.value }));
+    });    
   }
 
   ngOnDestroy(): void {

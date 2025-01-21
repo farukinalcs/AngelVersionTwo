@@ -13,29 +13,29 @@
                     <div class="row">
 
                         <div class="col-12 pt-3 pb-1">
-                            <a class="btn btn-sm btn-secondary mx-1 fw-bolder d-flex justify-content-center align-item-center w-100" (click)="toggleFlip()">
+                            <a class="btn btn-sm btn-light mx-1 fw-bolder d-flex justify-content-center align-item-center w-100 text-hover-danger" (click)="toggleFlip()">
                                 <i class="fa-solid fa-plus fs-7 d-flex align-items-center"></i>
                                 {{'Yeni_Split_Ekle' | translate}}
                             </a>
                         </div>
                         
-                        <div class="col-12 h-500px scroll">
+                        <div class="col-12 py-5 h-500px scroll">
                             <div class="table-responsive">
-                                <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                                <table class="table table-row-dashed table-row-gray-200 align-middle gs-2 gy-4">
                                     <thead>
-                                        <tr class="fs-7 fw-bold text-gray-500 border-bottom-0">
-                                            <th class="fw-bolder me-1 cursor-pointer rounded-start" style="width: 5%;">#</th>
-                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 5%;">{{"Başlangıç" | translate}}</th>
-                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 21%;">{{"Bitiş" | translate}}</th>
-                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 30%;">{{"Kaydeden" | translate}}</th>
-                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Firma" | translate}}</th>
-                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Bölüm" | translate}}</th>
-                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Pozisyon" | translate}}</th>
-                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Görev" | translate}}</th>
-                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Alt_Firma" | translate}}</th>
-                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Direktörlük" | translate}}</th>
-                                            <th class="fw-bolder me-1 cursor-pointer rounded-end" style="width: 10%;">{{"Yaka" | translate}}</th>
-                                            <!-- <th class="fw-bolder me-1 cursor-pointer rounded-end" style="width: 5%;">{{"Durum" | translate}}</th> -->
+                                        <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light">
+                                            <th class="rounded-start" style="width: 5%;">#</th>
+                                            <th class="" style="width: 5%;">{{"Başlangıç" | translate}}</th>
+                                            <th class="" style="width: 21%;">{{"Bitiş" | translate}}</th>
+                                            <th class="" style="width: 30%;">{{"Kaydeden" | translate}}</th>
+                                            <th class="" style="width: 10%;">{{"Firma" | translate}}</th>
+                                            <th class="" style="width: 10%;">{{"Bölüm" | translate}}</th>
+                                            <th class="" style="width: 10%;">{{"Pozisyon" | translate}}</th>
+                                            <th class="" style="width: 10%;">{{"Görev" | translate}}</th>
+                                            <th class="" style="width: 10%;">{{"Alt_Firma" | translate}}</th>
+                                            <th class="" style="width: 10%;">{{"Direktörlük" | translate}}</th>
+                                            <th class="rounded-end" style="width: 10%;">{{"Yaka" | translate}}</th>
+                                            <!-- <th class=" rounded-end" style="width: 5%;">{{"Durum" | translate}}</th> -->
                                         </tr>
                                     </thead>
                                 
@@ -132,6 +132,15 @@
                     </div>
                 </div>
                 <div class="card-body pt-0 pb-5">
+                    
+                    <div class="row">
+                        <div class="col-12 p-3">
+                            <a class="btn btn-sm btn-light mx-1 text-hover-danger" (click)="toggleFlip()">
+                                <i class="fa-solid fa-arrow-left fs-7"></i>
+                                {{'Geri_Dön' | translate}}
+                            </a>
+                        </div>
+                    </div>
                     
                     <div class="row" [formGroup]="form">
                         <div class="col-6 p-5">
@@ -298,11 +307,8 @@
                         </div>
 
                         <div class="col-6 p-5 d-flex align-items-end justify-conten-end">
-                            <a class="btn btn-sm btn-danger mx-1" (click)="toggleFlip()">
-                                <i class="fa-solid fa-arrow-left fs-7"></i>
-                                {{'Geri_Dön' | translate}}
-                            </a>
-                            <a class="btn btn-sm btn-danger mx-1">
+                            
+                            <a class="btn btn-sm btn-light mx-1 text-hover-danger">
                                 <i class="fa-solid fa-plus fs-7"></i>
                                 {{'Ekle' | translate}}
                             </a>

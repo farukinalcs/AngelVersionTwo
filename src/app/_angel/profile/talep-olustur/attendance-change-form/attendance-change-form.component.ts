@@ -96,6 +96,7 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
   personActivityTemp: any;
   personActivityOriginal: any[] = [];
   isReset: boolean = false;
+  imageUrl: string;
   constructor(
     private profileService: ProfileService,
     private formBuilder: FormBuilder,
@@ -106,7 +107,9 @@ export class AttendanceChangeFormComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private attendanceService: AttendanceService,
     public authService: AuthService
-  ) {}
+  ) {
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   ngOnInit(): void {
     console.log('gridStartDate: ', this.gridStartDate);

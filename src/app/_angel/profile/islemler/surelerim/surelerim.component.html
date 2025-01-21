@@ -38,7 +38,7 @@
                                 <div class="table-responsive">
                                     <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                         <thead>
-                                            <tr class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                                                 <th class="text-center rounded-start">  </th>
                                                 <th class="text-center"> {{ "Tarih" | translate }} </th>
                                                 <th class="text-center"> {{ "Giriş" | translate }} </th>
@@ -53,35 +53,35 @@
                                                 <td class="text-center">
                                                     <ng-container *ngIf="item.simge == '1'">
                                                         <div matTooltip="{{ 'Başarılı_Giriş_Çıkış' | translate}}"
-                                                            class="symbol symbol-50px me-2">
+                                                            class="symbol symbol-40px me-2">
                                                             <span class="symbol-label bg-light-success">
-                                                                <i class="fa-solid fa-circle-check text-success fs-2x"></i>
+                                                                <i class="fa-solid fa-circle-check text-success fs-2"></i>
                                                             </span>
                                                         </div>
                                                     </ng-container>
     
                                                     <ng-container *ngIf="item.simge == '2'">
                                                         <div matTooltip="{{ 'Giriş_Çıkış_Bulunamadı' | translate}}"
-                                                            class="symbol symbol-50px me-2">
+                                                            class="symbol symbol-40px me-2">
                                                             <span class="symbol-label bg-light-danger">
-                                                                <i class="fa-solid fa-circle-xmark text-danger fs-2x"></i>
+                                                                <i class="fa-solid fa-circle-xmark text-danger fs-2"></i>
                                                             </span>
                                                         </div>
                                                     </ng-container>
     
                                                     <ng-container *ngIf="item.simge == '3'">
                                                         <div matTooltip="{{ 'Hatalı_Giriş_Çıkış' | translate}}"
-                                                            class="symbol symbol-50px me-2">
+                                                            class="symbol symbol-40px me-2">
                                                             <span class="symbol-label bg-light-warning">
-                                                                <i class="fa-solid fa-triangle-exclamation text-warning fs-2x"></i>
+                                                                <i class="fa-solid fa-triangle-exclamation text-warning fs-2"></i>
                                                             </span>
                                                         </div>
                                                     </ng-container>
     
                                                     <ng-container *ngIf="item.simge == '4'">
-                                                        <div matTooltip="{{ 'Tatil' | translate}}" class="symbol symbol-50px me-2">
+                                                        <div matTooltip="{{ 'Tatil' | translate}}" class="symbol symbol-40px me-2">
                                                             <span class="symbol-label bg-light-info">
-                                                                <i class="fa-solid fa-umbrella-beach text-info fs-2x"></i>
+                                                                <i class="fa-solid fa-umbrella-beach text-info fs-2"></i>
                                                             </span>
                                                         </div>
                                                     </ng-container>

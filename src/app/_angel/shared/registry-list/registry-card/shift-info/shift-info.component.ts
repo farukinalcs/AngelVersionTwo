@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
+import { updateForm } from 'src/app/store/actions/form.action';
+import { FormState } from 'src/app/store/models/form.state';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 
 @Component({
@@ -23,7 +26,8 @@ export class ShiftInfoComponent implements OnInit, OnDestroy, OnChanges{
     private profileService: ProfileService,
     private toasterService: ToastrService,
     private translateService: TranslateService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private store: Store<{ form: FormState }>
   ) {}
   
   ngOnInit(): void {
@@ -33,6 +37,14 @@ export class ShiftInfoComponent implements OnInit, OnDestroy, OnChanges{
     if (this.operationType == 'i') {
       this.changedFormValue(); 
     }
+
+    this.store.select('form').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+      if (state.shiftInfo) {
+        this.form.patchValue(state.shiftInfo, { emitEvent: false });
+      }
+    });
+
+    this.saveFormToStore();
   }
 
   ngOnChanges() {
@@ -57,15 +69,17 @@ export class ShiftInfoComponent implements OnInit, OnDestroy, OnChanges{
       console.log("Maaş Tipleri Geldi :", data);
       this.salaryTypes = [...data];
 
-      if (this.operationType == 'u') {
-        this.getRegisterDetail();
-      }
+      this.store.select('form').pipe(take(1)).subscribe((state) => {
+        if (!state.shiftInfo && this.operationType == 'u') {
+          this.getRegisterDetail();
+        }
+      });
     });
   }
 
   createForm() {
     this.form = this.fb.group({
-      salaryType: [],
+      salaryType: [""],
       overtime: [false],
       missingTime: [false],
       missingTimeOvertime: [false],
@@ -109,6 +123,12 @@ export class ShiftInfoComponent implements OnInit, OnDestroy, OnChanges{
       missingDay: this.registerDetail[0].eksikgun,
       nightRaise: this.registerDetail[0].gecezammi
     });
+  }
+
+  saveFormToStore() {
+    this.form.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value:any) => {
+      this.store.dispatch(updateForm({ formName: 'shiftInfo', formData: this.form.value }));
+    });    
   }
 
   ngOnDestroy(): void {

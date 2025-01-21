@@ -16,11 +16,14 @@ export class TakimimComponent implements OnInit, OnDestroy {
   myTeam : any[] = [];
   filterText : string = "";
   filteredItems: any[] = [];
+  imageUrl: string;
 
   constructor(
     private profileService : ProfileService,
     private ref : ChangeDetectorRef
-  ) { }
+  ) {
+    this.imageUrl = this.profileService.getImageUrl();
+  }
   
 
   ngOnInit(): void {

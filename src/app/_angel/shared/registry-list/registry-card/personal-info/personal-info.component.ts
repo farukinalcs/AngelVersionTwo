@@ -1,8 +1,11 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
+import { resetForm, updateForm } from 'src/app/store/actions/form.action';
+import { FormState } from 'src/app/store/models/form.state';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 
 @Component({
@@ -22,10 +25,11 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
   form: FormGroup;
   registerDetail: any[] = [];
   constructor(
-    private translateService: TranslateService,
+    public translateService: TranslateService,
     private profileService: ProfileService,
     private toastrService: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private store: Store<{ form: FormState }>
   ) {}
   
   ngOnInit(): void {
@@ -36,6 +40,14 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
     if (this.operationType == 'i') {
       this.changedFormValue(); 
     } 
+
+    this.store.select('form').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+      if (state.personalInfo) {
+        this.form.patchValue(state.personalInfo, { emitEvent: false });
+      }
+    });
+
+    this.saveFormToStore();
   }
 
   ngOnChanges() {
@@ -46,8 +58,8 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
 
   createForm() {
     this.form = this.formBuilder.group({
-      name: [""],
-      surname: [""],
+      name: ["", Validators.required],
+      surname: ["", Validators.required],
       registryNo: [""],
       personNo: [""],
       bloodGroup: [""],
@@ -108,9 +120,12 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
 
         this.bloodGroups = [...data];      
 
-        if (this.operationType == 'u') {
-          this.getRegisterDetail();
-        }
+        this.store.select('form').pipe(take(1)).subscribe((state) => {
+          if (!state.personalInfo && this.operationType == 'u') {
+            this.getRegisterDetail();
+          }
+        });
+        
       }, (err) => {
         this.toastrService.error(
           this.translateService.instant('Beklenmeyen_Bir_Hata_Oluştu'),
@@ -156,7 +171,14 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
   
+  saveFormToStore() {
+    this.form.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value:any) => {
+      this.store.dispatch(updateForm({ formName: 'personalInfo', formData: this.form.value }));
+    });    
+  }
+  
   ngOnDestroy(): void {
+    // this.store.dispatch(resetForm()); // Form state'ini sıfırla
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
   }

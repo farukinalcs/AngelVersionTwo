@@ -15,9 +15,11 @@ export class ProfileService {
   constructor(
     private httpClient : HttpClient,
     private helperService : HelperService
-  ) {
-    console.log("Profile Service Çalıştı");
-   }
+  ) { }
+
+  getImageUrl(path?: string): string {
+    return `${environment.imageUrl}`;
+  }
 
   getApiUrl() {
     return API_URL;
@@ -337,6 +339,7 @@ export class ProfileService {
       });  
     }
     
+    console.log("İzin talebi param : ", sp);
     
 
     return this.requestMethodPost(sp);
@@ -538,6 +541,8 @@ export class ProfileService {
     }
     ];
 
+    console.log("Ziyaretçi ekle parametreler: ", sp);
+    
     return this.requestMethod(sp);
   }
 

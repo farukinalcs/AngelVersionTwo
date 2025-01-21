@@ -41,14 +41,17 @@ export class PendingRequestsComponent implements OnInit, OnDestroy {
   @ViewChild('cancelAlert') cancelAlert: TemplateRef<any>; // Toplu reddetmek için özet ekran dialog pencersinin açılması için
   cancelAlertRef: any; // Dialog pencersini kapatmak için
   confirmAlertRef: any; // Dialog pencersini kapatmak için
+  imageUrl: any;
 
   constructor(
-    private profilService: ProfileService,
+    private profileService: ProfileService,
     private toastrService: ToastrService,
     private translateService: TranslateService,
     private ref: ChangeDetectorRef,
     private dialog: MatDialog
-  ) {}
+  ) {
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   ngOnInit(): void {}
 
@@ -126,7 +129,7 @@ export class PendingRequestsComponent implements OnInit, OnDestroy {
     }
 
 
-    this.profilService.confirmDemandSingle(formid, kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+    this.profileService.confirmDemandSingle(formid, kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
       const data = response[0].x;
       console.log("Talep Onaylama :", response);
 
@@ -142,7 +145,7 @@ export class PendingRequestsComponent implements OnInit, OnDestroy {
 
   confirmDemandMultiple(aktifMenu: any) {
     if (this.checkedList.length > 0) {
-      this.profilService
+      this.profileService
         .confirmDemandMultiple(this.checkedList)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((response: any) => {

@@ -12,7 +12,6 @@ import { ProfileService } from '../../profile.service';
 })
 export class GecislerimComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
-  currentLang : any;
   transitions : any[]  = [];
   
   constructor(
@@ -35,17 +34,23 @@ export class GecislerimComponent implements OnInit, OnDestroy {
         zamanAralik = '30';
       }  
     }
-    
-    this.profileService.getTransitions(zamanAralik).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<TransitionsModel, ResponseDetailZ>[]) => {
-      let data = response[0].x;
-      let message = response[0].z;
-      let responseToken = response[0].y;
 
-      this.transitions = data;
-      console.log("Geçişler :", this.transitions);
-      
-      this.ref.detectChanges();
-    })
+    var sp : any[] = [{
+      mkodu : 'yek033',
+      zamanaralik : zamanAralik,
+    }];
+    
+    this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<TransitionsModel, ResponseDetailZ>[]) => {
+      const data = response[0].x;
+      const message = response[0].z;
+
+      if(message.islemsonuc == -1) {
+        return;
+      }
+
+      this.transitions = [...data];
+      console.log("Geçişler Geldi :", this.transitions);      
+    });
   }
 
 

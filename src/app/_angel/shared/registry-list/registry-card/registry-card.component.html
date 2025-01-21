@@ -2,7 +2,22 @@
     [breakpoints]="{ '2560px': '90vw', '992px': '90vw', '576px': '99vw' }" [baseZIndex]="10000" [draggable]="false"
     [resizable]="false" (onHide)="close()" [styleClass]="'lightgray'">
 
-    <div class="container-fluid">
+    <ng-container *ngIf="loading">
+        <div class="card-body">
+            <div class="col-12 pt-10">
+                <div class="loader-container">
+                    <div id="splash-screen" class="splash-screen"
+                        style="position: inherit; color:transparent; background-color: transparent;">
+                        <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+                            style="margin-left: 0; height: 0;" />
+                        <mat-spinner></mat-spinner>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <div class="container-fluid" *ngIf="!loading">
         <div class="row">
             <div class="col-12">
                 <p-carousel [value]="tabs" [numVisible]="5" [numScroll]="4" [circular]="true" >
@@ -120,13 +135,13 @@
                                     <div class="text-gray-600">{{registerId || '000'}}</div>
                                     <div class="fw-bold mt-5">{{"Doğum_Tarihi" | translate}}</div>
                                     <div class="text-gray-600" *ngIf="!isEdit">
-                                        <a class="text-gray-600 text-hover-danger">{{birthday}}</a>
+                                        <a class="text-gray-600 text-hover-danger">{{birthday == "" ? "dd-mm-yyyy" : birthday}}</a>
                                     </div>
                                     <div *ngIf="isEdit">
                                         <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="birthday">
                                     </div>
                                     <div class="fw-bold mt-5">{{"Giriş_Tarihi" | translate}}</div>
-                                    <div class="text-gray-600" *ngIf="!isEdit">{{employmentDate}}</div>
+                                    <div class="text-gray-600" *ngIf="!isEdit">{{employmentDate == "" ? "dd-mm-yyyy" : employmentDate}}</div>
                                     <div *ngIf="isEdit">
                                         <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="employmentDate">
                                     </div>
@@ -138,7 +153,7 @@
                 </div>
 
                 <div class="flex-lg-row-fluid ms-lg-10">
-                    <ng-container>
+                    <!-- <ng-container>
                         <app-personal-info 
                             [hidden]="selectedIndex !== 1" 
                             (formEvent)="formEvent($event)" 
@@ -205,9 +220,103 @@
                             [operationType]="operationType"
                             [selectedRegister]="selectedRegister">
                         </app-splits>
+                    </ng-container> -->
+                    
+                    
+                    <ng-container>
+                        <app-personal-info 
+                            *ngIf="selectedIndex == 1"
+                            (formEvent)="formEvent($event)" 
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-personal-info>
+
+                        <app-contact-info 
+                            *ngIf="selectedIndex == 2"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-contact-info>
+                        
+                        <app-organization-info 
+                            *ngIf="selectedIndex == 3" 
+                            (formEvent)="organizationFormEvent($event)" 
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-organization-info>
+                        
+                        <app-custom-info
+                            *ngIf="selectedIndex == 4"
+                            [inputValue]="1"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-custom-info>
+                        
+                        <app-custom-info
+                            *ngIf="selectedIndex == 5"
+                            [inputValue]="2"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-custom-info>
+                        
+                        <app-shift-info
+                            *ngIf="selectedIndex == 6"
+                            (formEvent)="formEvent($event)" 
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-shift-info>
+                        
+                        <app-access-info
+                            *ngIf="selectedIndex == 7"
+                            [fromWhere]="fromWhere"
+                            (formEvent)="formEvent($event)" 
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-access-info>
+
+                        <app-access-group
+                            *ngIf="selectedIndex == 8"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-access-group>
+
+                        <app-register-authorized-areas
+                            *ngIf="selectedIndex == 9"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-register-authorized-areas>
+
+                        <app-application-use
+                            *ngIf="selectedIndex == 10"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-application-use>
+
+                        <app-register-history
+                            *ngIf="selectedIndex == 11"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-register-history>
+
+                        <app-working-periods
+                            *ngIf="selectedIndex == 12"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-working-periods>
+
+                        <app-files
+                            *ngIf="selectedIndex == 13"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-files>
+
+                        <app-splits
+                            *ngIf="selectedIndex == 14"
+                            [operationType]="operationType"
+                            [selectedRegister]="selectedRegister">
+                        </app-splits>
+
+                        
                     </ng-container>
-                    
-                    
                 </div>
             </div>
         </div>
@@ -216,12 +325,12 @@
 
 
     <ng-template pTemplate="footer">
-        <a class="btn btn-sm btn-danger mx-1" (click)="close()">
+        <a class="btn btn-sm btn-danger mx-1" (click)="close()" *ngIf="!loading">
             <i class="fa-solid fa-xmark fs-7"></i>
             {{'Kapat' | translate}}
         </a>
-        <a class="btn btn-sm btn-danger mx-1" (click)="collectAllFormData()">
-            <i class="fa-solid fa-xmark fs-7"></i>
+        <a class="btn btn-sm btn-danger mx-1" (click)="collectAllFormData()" *ngIf="!loading">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
             {{'Kaydet' | translate}}
         </a>
     </ng-template>

@@ -239,12 +239,12 @@
                                                 <div class="table-responsive">
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                                                         <thead>
-                                                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
-                                                                <th class=" rounded-start" style="width: 22%;">{{"Hedef" | translate}}</th>
-                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 22%;">{{"Yuvarlama_Başlangıcı" | translate}}</th>
-                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 22%;">{{"Yuvarlama_Bitişi" | translate}}</th>
-                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 22%;">{{"Yuvarlanacak_Saat" | translate}}</th>
-                                                                <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 16%;">{{"#" | translate}}</th>
+                                                            <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
+                                                                <th class="fw-bolder me-1 rounded-start" style="width: 22%;">{{"Hedef" | translate}}</th>
+                                                                <th class="fw-bolder me-1" style="width: 22%;">{{"Yuvarlama_Başlangıcı" | translate}}</th>
+                                                                <th class="fw-bolder me-1" style="width: 22%;">{{"Yuvarlama_Bitişi" | translate}}</th>
+                                                                <th class="fw-bolder me-1" style="width: 22%;">{{"Yuvarlanacak_Saat" | translate}}</th>
+                                                                <th class="fw-bolder me-1 rounded-end" style="width: 16%;">{{"#" | translate}}</th>
                                                             </tr>
                                                         </thead>
                                         
@@ -269,26 +269,26 @@
                                                                     </td>
                                         
                                                                     <td>
-                                                                        <span class="mb-1">
+                                                                        <span class="mb-1 fw-semibold">
                                                                             <input type="time" class="form-control form-control-sm" formControlName="roundingStart"/>
                                                                         </span>
                                                                     </td>
                                         
                                                                     <td>
-                                                                        <span class="mb-1">
+                                                                        <span class="mb-1 fw-semibold">
                                                                             <input type="time" class="form-control form-control-sm" formControlName="roundingEnd"/>
                                                                         </span>
                                                                     </td>
                                         
                                                                     <td>
-                                                                        <span class="mb-1" *ngIf="form.get('restIrregular')?.value">
+                                                                        <span class="mb-1 fw-semibold" *ngIf="form.get('restIrregular')?.value">
                                                                             <input type="time" class="form-control form-control-sm" formControlName="roundingTime"/>
                                                                         </span>
                                                                     </td>
 
                                                                     <td>
-                                                                        <a class="btn btn-secondary btn-sm py-1 px-2" (click)="addRounding(roundingType == 1 ? 'yuvarlamalar' : 'sureyuvarlamalar')">
-                                                                            <i class="fa-solid fa-plus p-0"></i>
+                                                                        <a class="btn btn-light btn-sm py-1 px-2" (click)="addRounding(roundingType == 1 ? 'yuvarlamalar' : 'sureyuvarlamalar')">
+                                                                            <i class="fa-solid fa-plus p-0 text-gray-900"></i>
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -297,29 +297,29 @@
                                                                     <tr *ngFor="let item of movementRoundings " class="cursor-pointer fs-7">
                                                                         <td>
                                                                             <ng-container [ngSwitch]="item.Hedef">
-                                                                                <span *ngSwitchCase="1">{{"Giriş" | translate}}</span>
-                                                                                <span *ngSwitchCase="2">{{"Çıkış" | translate}}</span>
-                                                                                <span *ngSwitchDefault>{{ item.Hedef }}</span>
+                                                                                <span class="mb-1 fw-semibold" *ngSwitchCase="1">{{"Giriş" | translate}}</span>
+                                                                                <span class="mb-1 fw-semibold" *ngSwitchCase="2">{{"Çıkış" | translate}}</span>
+                                                                                <span class="mb-1 fw-semibold" *ngSwitchDefault>{{ item.Hedef }}</span>
                                                                             </ng-container>
                                                                         </td>
 
                                                                         
                                             
                                                                         <td>
-                                                                            <span class="mb-1">{{ item.Saat1 | date:'HH:mm' }}</span>
+                                                                            <span class="mb-1 fw-semibold">{{ item.Saat1 | date:'HH:mm' }}</span>
                                                                         </td>
                                             
                                                                         <td>
-                                                                            <span class="mb-1">{{ item.Saat2 | date:'HH:mm' }}</span>
+                                                                            <span class="mb-1 fw-semibold">{{ item.Saat2 | date:'HH:mm' }}</span>
                                                                         </td>
                                             
                                                                         <td>
-                                                                            <span class="mb-1">{{ item.Saat3 | date:'HH:mm' }}</span>
+                                                                            <span class="mb-1 fw-semibold">{{ item.Saat3 | date:'HH:mm' }}</span>
                                                                         </td>
                                             
                                                                         <td>
-                                                                            <a class="btn btn-secondary btn-sm py-1 px-2" (click)="deleteRounding(item, 'yuvarlamalar')">
-                                                                                <i class="fa-solid fa-trash p-0"></i>
+                                                                            <a class="btn btn-light btn-sm py-1 px-2" (click)="deleteRounding(item, 'yuvarlamalar')">
+                                                                                <i class="fa-solid fa-trash p-0 text-gray-900"></i>
                                                                             </a>
                                                                         </td>
                                                                     </tr>
@@ -329,28 +329,28 @@
                                                                     <tr *ngFor="let item of timeRoundings " class="cursor-pointer fs-7">
                                                                         <td>
                                                                             <ng-container [ngSwitch]="item.Hedef">
-                                                                                <span *ngSwitchCase="1">{{"Normal_Mesai" | translate}}</span>
-                                                                                <span *ngSwitchCase="2">{{"Fazla_Mesai" | translate}}</span>
-                                                                                <span *ngSwitchCase="3">{{"Gece_Zammı" | translate}}</span>
-                                                                                <span *ngSwitchDefault>{{ item.Hedef }}</span>
+                                                                                <span class="mb-1 fw-semibold" *ngSwitchCase="1">{{"Normal_Mesai" | translate}}</span>
+                                                                                <span class="mb-1 fw-semibold" *ngSwitchCase="2">{{"Fazla_Mesai" | translate}}</span>
+                                                                                <span class="mb-1 fw-semibold" *ngSwitchCase="3">{{"Gece_Zammı" | translate}}</span>
+                                                                                <span class="mb-1 fw-semibold" *ngSwitchDefault>{{ item.Hedef }}</span>
                                                                             </ng-container>
                                                                         </td>
                                             
                                                                         <td>
-                                                                            <span class="mb-1">{{ item.Saat1 | date:'HH:mm' }}</span>
+                                                                            <span class="mb-1 fw-semibold">{{ item.Saat1 | date:'HH:mm' }}</span>
                                                                         </td>
                                             
                                                                         <td>
-                                                                            <span class="mb-1">{{ item.Saat2 | date:'HH:mm' }}</span>
+                                                                            <span class="mb-1 fw-semibold">{{ item.Saat2 | date:'HH:mm' }}</span>
                                                                         </td>
                                             
                                                                         <td>
-                                                                            <span class="mb-1">{{ item.Saat3 | date:'HH:mm' }}</span>
+                                                                            <span class="mb-1 fw-semibold">{{ item.Saat3 | date:'HH:mm' }}</span>
                                                                         </td>
                                             
                                                                         <td>
-                                                                            <a class="btn btn-secondary btn-sm py-1 px-2" (click)="deleteRounding(item, 'sureyuvarlamalar')">
-                                                                                <i class="fa-solid fa-trash p-0"></i>
+                                                                            <a class="btn btn-light btn-sm py-1 px-2" (click)="deleteRounding(item, 'sureyuvarlamalar')">
+                                                                                <i class="fa-solid fa-trash p-0 text-gray-900"></i>
                                                                             </a>
                                                                         </td>
                                                                     </tr>
@@ -374,16 +374,16 @@
                                                 <div class="table-responsive">
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                                                         <thead>
-                                                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
-                                                                <th class=" rounded-start" style="width: 17%;">{{"Açıklama" | translate}}</th>
-                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Başlangıç" | translate}}</th>
-                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Bitiş" | translate}}</th>
-                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Süre" | translate}}</th>
-                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 8%;">{{"Düzensiz" | translate}}</th>
-                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 12%;">{{"Fazla_Mesai" | translate}}</th>
-                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Gece_Vardiyası" | translate}}</th>
-                                                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 10%;">{{"Resmi_Tatil" | translate}}</th>
-                                                                <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 6%;">{{"#" | translate}}</th>
+                                                            <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
+                                                                <th class="fw-bolder me-1 rounded-start" style="width: 17%;">{{"Açıklama" | translate}}</th>
+                                                                <th class="fw-bolder me-1" style="width: 10%;">{{"Başlangıç" | translate}}</th>
+                                                                <th class="fw-bolder me-1" style="width: 10%;">{{"Bitiş" | translate}}</th>
+                                                                <th class="fw-bolder me-1" style="width: 10%;">{{"Süre" | translate}}</th>
+                                                                <th class="fw-bolder me-1" style="width: 8%;">{{"Düzensiz" | translate}}</th>
+                                                                <th class="fw-bolder me-1" style="width: 12%;">{{"Fazla_Mesai" | translate}}</th>
+                                                                <th class="fw-bolder me-1" style="width: 10%;">{{"Gece_Vardiyası" | translate}}</th>
+                                                                <th class="fw-bolder me-1" style="width: 10%;">{{"Resmi_Tatil" | translate}}</th>
+                                                                <th class="fw-bolder me-1 rounded-end" style="width: 6%;">{{"#" | translate}}</th>
                                                             </tr>
                                                         </thead>
                                         
@@ -437,27 +437,27 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <a class="btn btn-secondary btn-sm py-1 px-2" (click)="addResting()">
-                                                                            <i class="fa-solid fa-plus p-0"></i>
+                                                                        <a class="btn btn-light btn-sm py-1 px-2" (click)="addResting()">
+                                                                            <i class="fa-solid fa-plus p-0 text-gray-900"></i>
                                                                         </a>
                                                                     </td>
                                                                 </tr>
 
                                                                 <tr *ngFor="let item of resting " class="cursor-pointer fs-7">
                                                                     <td>
-                                                                        <span class="mb-1">{{ item.Aciklama }}</span>
+                                                                        <span class="mb-1 fw-semibold">{{ item.Aciklama }}</span>
                                                                     </td>
                                         
                                                                     <td>
-                                                                        <span class="mb-1">{{ item.Baslama | timeFormat }}</span>
+                                                                        <span class="mb-1 fw-semibold">{{ item.Baslama | timeFormat }}</span>
                                                                     </td>
                                         
                                                                     <td>
-                                                                        <span class="mb-1">{{ item.Bitis | timeFormat }}</span>
+                                                                        <span class="mb-1 fw-semibold">{{ item.Bitis | timeFormat }}</span>
                                                                     </td>
                                         
                                                                     <td>
-                                                                        <span class="mb-1">{{ item.Sure | timeFormat }}</span>
+                                                                        <span class="mb-1 fw-semibold">{{ item.Sure | timeFormat }}</span>
                                                                     </td>
                                         
                                                                     <td class="text-hover-danger" (click)="updateRestIrregular(item)">
@@ -477,8 +477,8 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <a class="btn btn-secondary btn-sm py-1 px-2" (click)="deleteResting(item)">
-                                                                            <i class="fa-solid fa-trash p-0"></i>
+                                                                        <a class="btn btn-light btn-sm py-1 px-2" (click)="deleteResting(item)">
+                                                                            <i class="fa-solid fa-trash p-0 text-gray-900"></i>
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -493,7 +493,7 @@
 
                                     <mat-tab label="{{'FM_Bölümleri' | translate}}">
                                         <div class="row w-100">
-                                            <div class="col-6 py-4">
+                                            <div class="col-6 p-5">
                                                 <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
                                                     <span>{{"FM1_Başlangıç_Saati" | translate}}</span>
                                                 </label>
@@ -501,7 +501,7 @@
                                                 <input type="time" class="form-control form-control-sm form-control-solid" formControlName="overtimeOneStartTime" />
                                             </div>
 
-                                            <div class="col-6 py-4">
+                                            <div class="col-6 p-5">
                                                 <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
                                                     <span>{{"FM1_Bitiş_Saati" | translate}}</span>
                                                 </label>
@@ -509,7 +509,7 @@
                                                 <input type="time" class="form-control form-control-sm form-control-solid" formControlName="overtimeOneEndTime" />
                                             </div>
 
-                                            <div class="col-6 py-4">
+                                            <div class="col-6 p-5">
                                                 <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
                                                     <span>{{"FM2_Başlangıç_Saati" | translate}}</span>
                                                 </label>
@@ -517,7 +517,7 @@
                                                 <input type="time" class="form-control form-control-sm form-control-solid" formControlName="overtimeTwoStartTime" />
                                             </div>
 
-                                            <div class="col-6 py-4">
+                                            <div class="col-6 p-5">
                                                 <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
                                                     <span>{{"FM2_Bitiş_Saati" | translate}}</span>
                                                 </label>

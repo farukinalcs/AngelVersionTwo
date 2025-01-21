@@ -17,12 +17,15 @@ export class YeniKatilanlarComponent implements OnInit, OnDestroy {
   newPersons : NewPerson[] = [];
   todayNewPerson: NewPerson[] = [];
   displayAllNewPerson : boolean;
+  imageUrl: string;
 
   constructor(
     private profileService : ProfileService,
     public layoutService : LayoutService,
     private ref : ChangeDetectorRef
-  ) { }
+  ) {
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   ngOnInit(): void {
     this.getNewPersons('1');

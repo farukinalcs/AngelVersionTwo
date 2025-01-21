@@ -21,7 +21,7 @@
                 <div class="symbol symbol-100px symbol-xl-160px symbol-fixed position-relative">
                   <!-- <img alt="Logo" src="{{'data:image/jpg;base64,' + _user.FotoImage}}" /> -->
 
-                  <img alt="Logo" src="https://yekgateway.mecloud.com.tr/api/Image?sicilid={{_user.xSicilID}}" />
+                  <img alt="Logo" src="{{imageUrl}}?sicilid={{_user.xSicilID}}" />
 
                   <div
                     class="theme-light-show position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
@@ -68,57 +68,57 @@
                   <mat-menu #talepler="matMenu">
 
                     <button mat-menu-item (click)="showVacationDialog()">
-                      <i class="icon-l fas fa-skiing pe-4 fs-3"> </i>
+                      <i class="icon-l fas fa-skiing pe-4 fs-3 text-danger"> </i>
                       {{"İzin" | translate}}
                     </button>
 
                     <button (click)="showOvertimeDialog()" mat-menu-item>
-                      <i class="icon-l fas fa-business-time pe-4 fs-3"> </i>
+                      <i class="icon-l fas fa-business-time pe-4 fs-3 text-danger"> </i>
                       {{"Fazla_Mesai" | translate}}
                     </button>
 
                     <button mat-menu-item (click)="showVisitRequestDialog()">
-                      <i class="fa-solid fa-person-walking pe-4 fs-3"> </i>
+                      <i class="fa-solid fa-person-walking pe-4 fs-3 text-danger"> </i>
                       {{"Ziyaretçi" | translate}}
                     </button>
 
                     <button mat-menu-item (click)="showAuthorityDialog()">
-                      <i class="fa-solid fa-fingerprint pe-4 fs-3"></i>
+                      <i class="fa-solid fa-fingerprint pe-4 fs-3 text-danger"></i>
                       {{"Yetki" | translate}}
                     </button>
 
                     <button mat-menu-item (click)="showVehicleRequestDialog()">
-                      <i class="fa-solid fa-car-side pe-4 fs-3"></i>
+                      <i class="fa-solid fa-car-side pe-4 fs-3 text-danger"></i>
                       {{"Araç" | translate}}
                     </button>
 
                     <button mat-menu-item (click)="showAdvancePaymentDialog()">
-                      <i class="fa-solid fa-sack-dollar pe-4 fs-3"></i>
+                      <i class="fa-solid fa-sack-dollar pe-4 fs-3 text-danger"></i>
                       {{"Avans" | translate}}
                     </button>
 
                     <button mat-menu-item>
-                      <i class="fa-solid fa-van-shuttle pe-4 fs-3"></i>
+                      <i class="fa-solid fa-van-shuttle pe-4 fs-3 text-danger"></i>
                       {{"Servis" | translate}}
                     </button>
 
                     <button mat-menu-item>
-                      <i class="fa-solid fa-screwdriver-wrench pe-4 fs-3"></i>
+                      <i class="fa-solid fa-screwdriver-wrench pe-4 fs-3 text-danger"></i>
                       {{"Malzeme_Envanter" | translate}}
                     </button>
 
                     <button mat-menu-item (click)="showExpenseDialog()">
-                      <i class="fa-solid fa-file-invoice-dollar pe-4 fs-3"></i>
+                      <i class="fa-solid fa-file-invoice-dollar pe-4 fs-3 text-danger"></i>
                       {{"Masraf" | translate}}
                     </button>
 
                     <button mat-menu-item (click)="showShiftDialog()">
-                      <i class="fa-solid fa-calendar-days pe-4 fs-3"></i>
+                      <i class="fa-solid fa-calendar-days pe-4 fs-3 text-danger"></i>
                       {{"Mesai_Birimi_Değişikliği" | translate}}
                     </button>
                     
                     <button mat-menu-item (click)="showAttendanceDialog()">
-                      <i class="fa-solid fa-door-open pe-4 fs-3"></i>
+                      <i class="fa-solid fa-door-open pe-4 fs-3 text-danger"></i>
                       {{"Hareket_Değişikliği" | translate}}
                     </button>
                   </mat-menu>
@@ -358,8 +358,7 @@
 <ng-container *ngIf="displayVisitRequestForm">
   <p-dialog header="{{'Ziyaretçi_Talep_Formu' | translate}}" [(visible)]="displayVisitRequestForm"
     (visibleChange)="visitRequestFormIsSend()" [modal]="true" [maximizable]="true" [baseZIndex]="10000"
-    [draggable]="true" [resizable]="false">
-
+    [draggable]="true" [resizable]="false" [style]="{width: '80%', 'max-width': '100%', height: '80%', 'max-height':'100%'}">
     <ng-container *ngIf="displayVisitRequestForm">
       <app-dialog-ziyaretci-talebi (visitRequestFormIsSend)="visitRequestFormIsSend()"></app-dialog-ziyaretci-talebi>
     </ng-container>

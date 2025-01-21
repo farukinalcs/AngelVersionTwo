@@ -43,16 +43,16 @@
                                 </div>
 
                                 <div>
-                                    <a class="btn btn-secondary btn-sm hover-elevate-up px-2 py-1 mx-1" (click)="addShiftGroup()">
-                                        <i class="fa-solid fa-plus fs-9"></i>
+                                    <a class="btn btn-light btn-sm hover-elevate-up px-2 py-1 mx-1 text-gray-800" (click)="addShiftGroup()">
+                                        <i class="fa-solid fa-plus fs-9 text-gray-800"></i>
                                         {{"Ekle" | translate}}
                                     </a>
-                                    <a class="btn btn-secondary btn-sm hover-elevate-up px-2 py-1 mx-1" (click)="updateShiftGroup()">
-                                        <i class="fa-solid fa-pen-to-square fs-9"></i>
+                                    <a class="btn btn-light btn-sm hover-elevate-up px-2 py-1 mx-1 text-gray-800" (click)="updateShiftGroup()">
+                                        <i class="fa-solid fa-pen-to-square fs-9 text-gray-800"></i>
                                         {{"Değiştir" | translate}}
                                     </a>
-                                    <a class="btn btn-secondary btn-sm hover-elevate-up px-2 py-1 mx-1" (click)="deleteShiftGroup()">
-                                        <i class="fa-solid fa-trash fs-9"></i>
+                                    <a class="btn btn-light btn-sm hover-elevate-up px-2 py-1 mx-1 text-gray-800" (click)="deleteShiftGroup()">
+                                        <i class="fa-solid fa-trash fs-9 text-gray-800"></i>
                                         {{"Sil" | translate}}
                                     </a>
                                 </div>
@@ -87,12 +87,12 @@
                                         <div class="table-responsive">
                                             <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                                                 <thead>
-                                                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                                    <tr class="fs-8 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
                                                         <th class=" rounded-start" style="width: 10%;">{{"Öncelik" | translate}}</th>
-                                                        <th class=" fw-bolder me-1 cursor-pointer" style="width: 40%;">{{"Mesai_Açıklama" | translate}}</th>
-                                                        <th class=" fw-bolder me-1 cursor-pointer" style="width: 20%;">{{"Başlangıç" | translate}}</th>
-                                                        <th class=" fw-bolder me-1 cursor-pointer" style="width: 20%;">{{"Bitiş" | translate}}</th>
-                                                        <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 10%;">{{"İşlem" | translate}}</th>
+                                                        <th class=" fw-bolder me-1" style="width: 40%;">{{"Mesai_Açıklama" | translate}}</th>
+                                                        <th class=" fw-bolder me-1" style="width: 20%;">{{"Başlangıç" | translate}}</th>
+                                                        <th class=" fw-bolder me-1" style="width: 20%;">{{"Bitiş" | translate}}</th>
+                                                        <th class=" fw-bolder me-1 rounded-end" style="width: 10%;">{{"İşlem" | translate}}</th>
                                                     </tr>
                                                 </thead>
                                 
@@ -101,21 +101,21 @@
                                                         <ng-container *ngIf="item.dahil == 1">
                                                         
                                                             <td class="text-hover-dark" (click)="changePriority(item)">
-                                                                <span class="mb-1">
+                                                                <span class="mb-1 fw-semibold">
                                                                     <i class="fa-solid p-0 fs-2" [ngClass]="{'fa-angles-up': item.extra3 == '1', 'fa-minus': item.extra3 == '0'}"></i>
                                                                 </span>
                                                             </td>
                                                         
                                                             <td>
-                                                                <span class="mb-1">{{ item.kaynakad }}</span>
+                                                                <span class="mb-1 fw-semibold">{{ item.kaynakad }}</span>
                                                             </td>
                                                         
                                                             <td>
-                                                                <span class="mb-1">{{ item.extra1 | timeFormat }}</span>
+                                                                <span class="mb-1 fw-semibold">{{ item.extra1 | timeFormat }}</span>
                                                             </td>
                                                         
                                                             <td>
-                                                                <span class="mb-1">{{ item.extra2 | timeFormat }}</span>
+                                                                <span class="mb-1 fw-semibold">{{ item.extra2 | timeFormat }}</span>
                                                             </td>
                                                         
                                                             <td>
@@ -136,11 +136,11 @@
                                         <div class="table-responsive">
                                             <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                                                 <thead>
-                                                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                                    <tr class="fs-8 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
                                                         <th class=" rounded-start" style="width: 10%;">{{"İşlem" | translate}}</th>
-                                                        <th class=" fw-bolder me-1 cursor-pointer" style="width: 40%;">{{"Mesai_Açıklama" | translate}}</th>
-                                                        <th class=" fw-bolder me-1 cursor-pointer" style="width: 25%;">{{"Başlangıç" | translate}}</th>
-                                                        <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 25%;">{{"Bitiş" | translate}}</th>
+                                                        <th class=" fw-bolder me-1" style="width: 40%;">{{"Mesai_Açıklama" | translate}}</th>
+                                                        <th class=" fw-bolder me-1" style="width: 25%;">{{"Başlangıç" | translate}}</th>
+                                                        <th class=" fw-bolder me-1 rounded-end" style="width: 25%;">{{"Bitiş" | translate}}</th>
                                                     </tr>
                                                 </thead>
                                 
@@ -155,15 +155,15 @@
                                                                 </td>
                                                             
                                                                 <td>
-                                                                    <span class="mb-1">{{ item.kaynakad }}</span>
+                                                                    <span class="mb-1 fw-semibold">{{ item.kaynakad }}</span>
                                                                 </td>
                                                             
                                                                 <td>
-                                                                    <span class="mb-1">{{ item.extra1 | timeFormat }}</span>
+                                                                    <span class="mb-1 fw-semibold">{{ item.extra1 | timeFormat }}</span>
                                                                 </td>
                                                             
                                                                 <td>
-                                                                    <span class="mb-1">{{ item.extra2 | timeFormat }}</span>
+                                                                    <span class="mb-1 fw-semibold">{{ item.extra2 | timeFormat }}</span>
                                                                 </td>
                                                             
                                                             </ng-container>

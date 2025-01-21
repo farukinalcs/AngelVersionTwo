@@ -1,80 +1,75 @@
-<div class="container" style="height: 500px;">
-  <div class="row card p-5">
-    <div class="col-12">
-      <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="resetArr()" style="min-height: 300px;">
-        <mat-tab label="{{'Süreci_Devam_Eden_Formlar' | translate}}">
-          <app-ongoing-requests [ongoingRequests]="sureciDevamEdenFormlar" [selectedNavItem]="kaynak"
-            [menuItems]="menuItems" (getMyDemandsEvent)="getMyDemands($event)"
-            (showDetailSearchDialogEvent)="showDetailSearchDialog($event)"
-            (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
-            (showPositionDialogEvent)="showPositionDialog($event)">
-          </app-ongoing-requests>
-        </mat-tab>
+<div class="container-xxl">
+    <div class="card p-5">
+        <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="resetArr()" style="min-height: 300px;">
+            <mat-tab label="{{'Süreci_Devam_Eden_Formlar' | translate}}">
+                <app-ongoing-requests [ongoingRequests]="sureciDevamEdenFormlar" [selectedNavItem]="kaynak"
+                    [menuItems]="menuItems" (getMyDemandsEvent)="getMyDemands($event)"
+                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)"
+                    (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
+                    (showPositionDialogEvent)="showPositionDialog($event)">
+                </app-ongoing-requests>
+            </mat-tab>
 
-        <mat-tab label="{{'Onaylananlar' | translate}}">
-          <app-approved-requests [approvedRequests]="onaylananFormlar" [selectedNavItem]="kaynak"
-            [menuItems]="menuItems" (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
-            (getMyDemandsEvent)="getMyDemands($event)" (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
-          </app-approved-requests>
-        </mat-tab>
+            <mat-tab label="{{'Onaylananlar' | translate}}">
+                <app-approved-requests [approvedRequests]="onaylananFormlar" [selectedNavItem]="kaynak"
+                    [menuItems]="menuItems" (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
+                    (getMyDemandsEvent)="getMyDemands($event)"
+                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
+                </app-approved-requests>
+            </mat-tab>
 
-        <mat-tab label="{{'Reddedilenler' | translate}}">
-          <app-denied-requests [deniedRequests]="reddedilenFormlar" [selectedNavItem]="kaynak" [menuItems]="menuItems"
-            (showDemandProcessDialogEvent)="showDemandProcessDialog($event)" (getMyDemandsEvent)="getMyDemands($event)"
-            (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
-          </app-denied-requests>
-        </mat-tab>
-      </mat-tab-group>
+            <mat-tab label="{{'Reddedilenler' | translate}}">
+                <app-denied-requests [deniedRequests]="reddedilenFormlar" [selectedNavItem]="kaynak"
+                    [menuItems]="menuItems" (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
+                    (getMyDemandsEvent)="getMyDemands($event)"
+                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
+                </app-denied-requests>
+            </mat-tab>
+        </mat-tab-group>
     </div>
-  </div>
 </div>
 
 <ng-container *ngIf="displayDemandProcess">
-  <app-request-process [demandId]="demandIdForProcess" [demandTypeName]="demandTypeNameForProcess" [displayRequestProcess]="displayDemandProcess"
-    (displayRequestProcessEvent)="displayDemandProcess = false">
-  </app-request-process>
+    <app-request-process [demandId]="demandIdForProcess" [demandTypeName]="demandTypeNameForProcess"
+        [displayRequestProcess]="displayDemandProcess" (displayRequestProcessEvent)="displayDemandProcess = false">
+    </app-request-process>
 </ng-container>
 
 
 
 <ng-container *ngIf="displayDetailSearch">
-  <app-detail-search [selectedNavItem]="kaynak" [displayDetailSearch]="displayDetailSearch"
-    (formValuesEvent)="getFormValues($event)" (displayDetailSearchEvent)="displayDetailSearch = false">
-  </app-detail-search>
+    <app-detail-search [selectedNavItem]="kaynak" [displayDetailSearch]="displayDetailSearch"
+        (formValuesEvent)="getFormValues($event)" (displayDetailSearchEvent)="displayDetailSearch = false">
+    </app-detail-search>
 </ng-container>
 
 
-<p-dialog header="{{'Talep_İptal' | translate}}" [(visible)]="displayPosition" [position]="position" [modal]="true" [style]="{width: '50vw'}"
-  [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+<p-dialog header="{{'Talep_İptal' | translate}}" [(visible)]="displayPosition" [position]="position" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
 
-  <div class="fv-row mb-10 fv-plugins-icon-container">
+    <div class="fv-row mb-10 fv-plugins-icon-container">
 
-    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-      <span class="required">{{"Açıklama" | translate}}</span>
-    </label>
+        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+            <span class="required">{{"Açıklama" | translate}}</span>
+        </label>
 
-    <textarea [(ngModel)]="descriptionText" class="form-control form-control-solid" rows="3"
-      placeholder="{{'Açıklama_Giriniz' | translate}}" style="height: 12px;"></textarea>
-    <div class="fv-plugins-message-container invalid-feedback"></div>
-  </div>
-
-  <!-- <ng-template pTemplate="footer">
-    <p-button icon="pi pi-check" (click)="cancelMyDemands(selectedItem.Id, selectedItem.tipad, descriptionText, kaynak)"
-      label="{{'Gönder' | translate}}" class="p-button-text"></p-button>
-    <p-button icon="pi pi-times" (click)="displayPosition=false; descriptionText = ''" label="{{'Vazgeç' | translate}}"></p-button>
-  </ng-template> -->
-
-  <div class="row">
-    <div class="col-12 d-flex justify-content-end align-items-center mt-5">
-      <a (click)="cancelMyDemands(selectedItem.Id, selectedItem.tipad, descriptionText, kaynak)" class="btn btn-danger mx-2">
-        <i class="fa-solid fa-check fs-1"></i>
-        {{'Gönder' | translate}}
-      </a>
-  
-      <a (click)="displayPosition=false; descriptionText = ''" class="btn btn-danger">
-        <i class="fa-solid fa-xmark fs-1"></i>
-        {{'Vazgeç' | translate}}
-      </a>
+        <textarea [(ngModel)]="descriptionText" class="form-control form-control-solid" rows="3"
+            placeholder="{{'Açıklama_Giriniz' | translate}}" style="height: 12px;"></textarea>
+        <div class="fv-plugins-message-container invalid-feedback"></div>
     </div>
-  </div>
+
+    <div class="row">
+        <div class="col-12 d-flex justify-content-end align-items-center mt-5">
+            <a (click)="cancelMyDemands(selectedItem.Id, selectedItem.tipad, descriptionText, kaynak)"
+                class="btn btn-danger mx-2">
+                <i class="fa-solid fa-check fs-1"></i>
+                {{'Gönder' | translate}}
+            </a>
+
+            <a (click)="displayPosition=false; descriptionText = ''" class="btn btn-danger">
+                <i class="fa-solid fa-xmark fs-1"></i>
+                {{'Vazgeç' | translate}}
+            </a>
+        </div>
+    </div>
 </p-dialog>

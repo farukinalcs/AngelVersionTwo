@@ -7,6 +7,7 @@ import { PatrolService } from '../patrol.service';
 import { Subject, takeUntil } from 'rxjs';
 import { ColDef, IRowNode, IsRowSelectable, RowHeightParams, SideBarDef, StatusPanelDef } from 'ag-grid-enterprise';
 import { FirstDataRenderedEvent } from 'ag-grid-community';
+import { ProfileService } from '../../profile/profile.service';
 @Component({
   selector: 'app-security-guards',
   // standalone: true,
@@ -99,13 +100,17 @@ export class SecurityGuardsComponent implements OnInit {
     ],
   };
   gridApi: any;
+  imageUrl: string;
   constructor(
     private toastr : ToastrService,
     private translateService: TranslateService,
     private themeModeService: ThemeModeService,
     private patrol: PatrolService,
-    private ref: ChangeDetectorRef
-  ) {}
+    private ref: ChangeDetectorRef,
+    private profileService: ProfileService
+  ) {
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   
   ngOnInit(): void {
@@ -147,7 +152,7 @@ export class SecurityGuardsComponent implements OnInit {
 
     return `
     <div  style="padding:0px !important" class="symbol symbol-` + imageSize + `  bg-hover-light ">
-      <img class="symbol-label" src="http://localhost:5075/api/Image?sicilid=` + params.data.Id + `">
+      <img class="symbol-label" src="${this.imageUrl}?sicilid=` + params.data.Id + `">
     </div>`
     // <img alt="Logo" src="http://localhost:5075/api/Image?sicilid={{_user.xSicilID}}" />
   }

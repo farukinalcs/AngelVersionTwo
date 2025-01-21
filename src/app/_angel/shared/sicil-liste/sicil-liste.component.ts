@@ -98,6 +98,7 @@ export class SicilListeComponent implements OnInit {
     ],
   };
   gridApi: any;
+  imageUrl: string;
 
   constructor(
     private profileService: ProfileService,
@@ -105,7 +106,9 @@ export class SicilListeComponent implements OnInit {
     private translateService: TranslateService,
     private ref: ChangeDetectorRef,
     private http: HttpClient
-  ) { }
+  ) { 
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   ngOnInit(): void {
     this.getPersonsList();
@@ -149,7 +152,7 @@ export class SicilListeComponent implements OnInit {
 
     return `
     <div  style="padding:0px !important" class="symbol symbol-` + imageSize + `  bg-hover-light ">
-      <img class="symbol-label" src="http://localhost:5075/api/Image?sicilid=` + params.data.Id + `">
+      <img class="symbol-label" src="${this.imageUrl}?sicilid=` + params.data.Id + `">
     </div>`
     // <img alt="Logo" src="http://localhost:5075/api/Image?sicilid={{_user.xSicilID}}" />
   }
@@ -174,6 +177,7 @@ export class SicilListeComponent implements OnInit {
       altfirma: '0',
       yaka: '0',
       direktorluk: '0',
+      mesaiperiyodu: '0',
       sicilgroup: '0',
       userdef: '1',
       yetki: '-1',

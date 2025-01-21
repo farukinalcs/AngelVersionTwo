@@ -90,7 +90,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private toastrService : ToastrService,
     public authService : AuthService,
-    private translateService : TranslateService,
+    public translateService : TranslateService,
     private sanitizer: DomSanitizer,
     private helperService : HelperService,
     private ref: ChangeDetectorRef,
@@ -231,10 +231,10 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
       tip: ['', Validators.required],
       ulasim: ['', Validators.required],
       yemek: ['', Validators.required],
-      bastarih: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), Validators.required],
-      bassaat: [formatDate(this.currentDate, 'HH:mm', 'en'), Validators.required],
-      bittarih: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en'), Validators.required],
-      bitsaat: [formatDate(this.currentDate, 'HH:mm', 'en'), Validators.required],
+      bastarih: ['', Validators.required],
+      bassaat: ['', Validators.required],
+      bittarih: ['', Validators.required],
+      bitsaat: ['', Validators.required],
       file: [null] 
     });
   }

@@ -1,0 +1,433 @@
+<div class="flip-card">
+    <div class="flip-card-inner" [class.flipped]="isFlipped">
+        <!-- Ön Yüz - Data Ekranı -->
+        <div class="flip-card-front">
+            <div class="card mb-6 mb-xl-9 mx-2">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{ "Program_Kullanımı" | translate }}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">
+                            {{"Kullanıcı_İlgili_İşlemini_Buradan_Belirleyebilirsiniz" | translate }}</h4>
+                    </div>
+                </div>
+                <div class="card-body py-5">
+                    <ng-container *ngIf="!detail?.LoginName">
+                        <div class="row" style="
+                            flex-direction: column;
+                            align-items: center;
+                            ">
+                            <div class="col-12 p-5">
+                                <div class="alert alert-danger d-flex align-items-center p-5">
+                                    <i class="fa-solid fa-triangle-exclamation fs-2hx me-4 text-danger"></i>
+                                    <div class="d-flex flex-column">
+                                        <h4 class="mb-1 text-danger">{{"Dikkat!" | translate}}</h4>
+                                
+                                        <span>{{"Henüz_Program_Kullanıcısı_Olarak_Tanımlanmamış" | translate}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 p-5 py-1">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
+                                    <span >{{"Kullanıcı_Adı" | translate}}</span>
+                                </label>
+                
+                                <input type="text" class="form-control form-control-sm form-control-solid" [(ngModel)]="loginName" placeholder="{{'Kullanıcı_Adı' | translate}}">
+                            </div>
+
+                            <div class="col-6 p-5 py-1">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
+                                    <span >{{"Şifre" | translate}}</span>
+                                </label>
+                
+                                <input type="password" class="form-control form-control-sm form-control-solid" [(ngModel)]="password" placeholder="{{'Şifre' | translate}}">
+                            </div>
+
+                            <div class="col-6 p-5 py-10 d-flex justify-content-center">
+                                <a class="btn btn-sm btn-light mx-1 fw-bolder d-flex justify-content-center align-item-center text-hover-danger">
+                                    <i class="fa-solid fa-floppy-disk fs-7 d-flex align-items-center"></i>
+                                    {{'Kaydet' | translate}}
+                                </a>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="detail?.LoginName">
+                        <div class="row">
+                            <div class="col-12 py-3">
+                                <a class="btn btn-sm btn-light mx-1 fw-bolder d-flex justify-content-center align-item-center w-100 text-hover-danger"
+                                    (click)="toggleFlip()">
+                                    <i class="fa-solid fa-plus fs-7 d-flex align-items-center"></i>
+                                    {{'Yetkileri_Düzenle' | translate}}
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-start align-item-center">
+                            <div class="col-5 p-2">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
+                                    <span >{{"Kullanıcı_Adı" | translate}}</span>
+                                    <i class="fa-solid fa-pen-to-square fs-5 ms-auto text-hover-danger cursor-pointer" pTooltip="{{'Düzenle' | translate}}" tooltipPosition="top" (click)="editState('loginName')"></i>
+                                </label>
+                
+                                <input #loginInput type="text" class="form-control form-control-sm form-control-solid" [(ngModel)]="loginName" placeholder="{{'Kullanıcı_Adı' | translate}}" 
+                                    [ngStyle]="{'cursor': disabledLoginName ? 'not-allowed' : ''}" [disabled]="disabledLoginName">                               
+                            </div>
+
+                            <div class="col-7 d-flex align-items-end justify-conten-end flex-column p-2">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 px-2" >
+                                    <span >{{"2FA" | translate}}</span>
+                                </label>
+                                
+                                <div class="fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
+                                    <div class="btn-group w-100">
+                                        <ng-container *ngFor="let item of twoFactorAuth">
+                                            <label *ngIf="item?.visible" class="btn btn-sm btn-outline btn-active-dark btn-color-muted fs-8" [ngClass]="{'active': selectedTwoFactorAuth == item.value}">
+                                                <input class="btn-check" type="radio" [value]="item.value" [(ngModel)]="selectedTwoFactorAuth" [checked]="selectedTwoFactorAuth == item.value">
+                                                {{item.name}}
+                                            </label>
+                                        </ng-container>
+                                        
+                                    </div>
+                                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-start align-item-center">
+                            <div class="col-5 p-2">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2" >
+                                    <span >{{"Şifre" | translate}}</span>
+                                    <i class="fa-solid fa-pen-to-square fs-5 ms-auto text-hover-danger cursor-pointer" pTooltip="{{'Düzenle' | translate}}" tooltipPosition="top" (click)="editState('password')"></i>
+                                </label>
+                
+                                <input #passInput type="password" class="form-control form-control-sm form-control-solid" placeholder="{{'Şifre' | translate}}"
+                                    [ngStyle]="{'cursor': disabledPass ? 'not-allowed' : ''}" [disabled]="disabledPass">                               
+                            </div>
+
+                            <div *ngIf="twoFactorAuthInfo?.hasmobil >= 0" class="col-7 d-flex align-items-end justify-content-end flex-column p-2">
+                                <a class="btn btn-sm btn-light-dark mx-1 fw-bolder d-flex justify-content-center align-item-center"
+                                    (click)="removeMobile()">
+                                    <i class="fa-solid fa-minus fs-7 d-flex align-items-center"></i>
+                                    {{'Mobili_Kaldır' | translate}}
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="separator border-5 separator-content my-10">{{"PIN_Ayarları" | translate}}</div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12 p-2">
+                                <div class="otp-container">
+                                    <input
+                                      class="otp-input form-control form-control-sm form-control-solid"
+                                      type="text"
+                                      *ngFor="let char of otpArray"
+                                      [value]="char"
+                                      readonly
+                                    />
+                                  </div>                            
+                            </div>
+
+                            <div class="col-5 d-flex" style="justify-content: space-evenly;">
+                                <button type="button" class="btn btn-icon btn-sm h-auto btn-color-gray-500 btn-active-color-danger justify-content-end" (click)="setPin()">
+                                    {{"Yenile" | translate}}
+                                </button>
+
+                                <button type="button" class="btn btn-icon btn-sm h-auto btn-color-gray-500 btn-active-color-danger justify-content-end" (click)="removePin()">
+                                    {{"Kaldır" | translate}}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="separator border-4 my-10"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6 p-2">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Terminal_Grubu" | translate}}</span>
+                                </label>
+                
+                                <p-dropdown [options]="deviceGroups" [(ngModel)]="selectedDevice"  optionLabel="ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad"
+                                    [showClear]="true" placeholder="{{'Terminal_Grubu_Seçiniz' | translate}}">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="item-item item-item-value" *ngIf="selectedDevice">
+                                            <div>{{selectedDevice?.ad}}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-item pTemplate="item">
+                                        <div class="item-item">
+                                            <div>{{item?.ad}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </div>
+
+                            <div class="col-6 p-2">
+                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                    <span>{{"Geçiş_Grubu" | translate}}</span>
+                                </label>
+                
+                                <p-dropdown [options]="accessGroups" [(ngModel)]="selectedAccessGroup" optionLabel="Ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="Ad"
+                                    [showClear]="true" placeholder="{{'Geçiş_Grubu_Seçiniz' | translate}}">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="item-item item-item-value" *ngIf="selectedAccessGroup">
+                                            <div>{{selectedAccessGroup?.Ad}}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-item pTemplate="item">
+                                        <div class="item-item">
+                                            <div>{{item?.Ad}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arka Yüz - Form Ekranı -->
+        <div class="flip-card-back">
+            <div class="card mb-6 mb-xl-9 mx-2">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{ "Program_Kullanımı" | translate }}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">
+                            {{"Kullanıcı_İlgili_İşlemini_Buradan_Belirleyebilirsiniz" | translate }}</h4>
+                    </div>
+                </div>
+                <div class="card-body pt-0 pb-5">
+
+                    <div class="row">
+                        <div class="col-12 py-4">
+                            <a class="btn btn-sm btn-light mx-1 text-hover-danger" (click)="toggleFlip()">
+                                <i class="fa-solid fa-arrow-left fs-7"></i>
+                                {{'Geri_Dön' | translate}}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-12 py-4">
+                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                <span>{{"Yetki_Rolleri" | translate}}</span>
+                            </label>
+            
+                            <p-dropdown [options]="roles" [(ngModel)]="selectedRole" (ngModelChange)="selectRole(selectedRole)" optionLabel="Ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="Ad"
+                                [showClear]="true" placeholder="{{'Yetki_Rolü_Seçiniz' | translate}}">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="selectedRole">
+                                        <div>{{selectedRole?.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item?.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                            
+                        </div>
+                        
+                        <div class="col-12 py-4">
+                            <div class="row">
+                                <div *ngFor="let key of keys" class="col-2">
+                                    <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                        <span>{{ key | translate }}</span>
+                                    </label>
+                            
+                                    <div class="d-flex">
+                                        <div *ngFor="let value of checkboxData[key]; let i = index" class="form-check form-check-sm">
+                                            <input type="checkbox" class="form-check-input" [disabled]="disabled" [(ngModel)]="checkboxData[key][i]" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 py-4">
+                            <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="changeTabMenu($event)" [selectedIndex]="selectedIndex"  style="min-height: 300px;">
+                                <mat-tab label="{{'Menü_Yetkilendirme' | translate}}">
+                                    <div class="row mx-0 my-4">
+                                        <div class="col-12 h-500px scroll">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped border table-rounded table-row-dashed align-middle gs-4 gy-2">
+                                                    <thead>
+                                                        <tr class="fs-6 fw-bold text-white border-bottom-0 text-uppercase rounded text-gray-500 bg-secondary">
+                                                            <th class="rounded-start" style="width: 60%;">{{"Menu" | translate}}</th>
+                                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 25%;">{{"Modül" | translate}}</th>
+                                                            <th class="rounded-end text-center" style="width: 15%;">{{"Görüntüleme" | translate}}</th>
+                                                        </tr>
+                                                    </thead>
+            
+                                                    <tbody>
+                                                        <ng-container *ngFor="let item of menuAuthorizations">
+                                                            <tr class="cursor-pointer fs-7">
+                                                                <td>
+                                                                    <span class="mb-1 fw-bolder">{{item.ad}}</span>
+                                                                </td>
+            
+                                                                <td>
+                                                                    <span class="mb-1 fw-bolder">{{item.modul}}</span>
+                                                                </td>
+            
+                                                                <td>
+                                                                    <span class="mb-1">
+                                                                        <div class="form-check form-check-sm">
+                                                                            <input class="form-check-input" type="checkbox" [(ngModel)]="item.Goruntulenme" [disabled]="disabled" />
+                                                                        </div>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+            
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+
+                                <mat-tab label="{{'Vardiya_Yetkilendirme' | translate}}">
+                                    <div class="row mx-0 my-4">
+                                        <div class="col-12 h-500px scroll">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped border table-rounded table-row-dashed align-middle gs-4 gy-2">
+                                                    <thead>
+                                                        <tr class="fs-6 fw-bold text-white border-bottom-0 text-uppercase rounded text-gray-500 bg-secondary">
+                                                            <th class="rounded-start" style="width: 60%;">{{"Menu" | translate}}</th>
+                                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 25%;">{{"Kod" | translate}}</th>
+                                                            <th class="rounded-end text-center" style="width: 15%;">{{"Görüntüleme" | translate}}</th>
+                                                        </tr>
+                                                    </thead>
+            
+                                                    <tbody>
+                                                        <ng-container *ngFor="let item of shiftAuthorizations">
+                                                            <tr class="cursor-pointer fs-7">
+                                                                <td>
+                                                                    <span class="mb-1 fw-bolder">{{item.Aciklama}}</span>
+                                                                </td>
+            
+                                                                <td>
+                                                                    <span class="mb-1 fw-bolder">{{item.MesaiID}}</span>
+                                                                </td>
+            
+                                                                <td>
+                                                                    <span class="mb-1">
+                                                                        <div class="form-check form-check-sm">
+                                                                            <input class="form-check-input" type="checkbox" [(ngModel)]="item.Goruntulenme" [disabled]="disabled"/>
+                                                                        </div>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+            
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </mat-tab>
+
+                                <mat-tab label="{{'İzin_Yetkilendirme' | translate}}">
+                                    <div class="row mx-0 my-4">
+                                        <div class="col-12 h-500px scroll">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped border table-rounded table-row-dashed align-middle gs-4 gy-2">
+                                                    <thead>
+                                                        <tr class="fs-6 fw-bold text-white border-bottom-0 text-uppercase rounded text-gray-500 bg-secondary">
+                                                            <th class="rounded-start" style="width: 60%;">{{"Menu" | translate}}</th>
+                                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 25%;">{{"Kod" | translate}}</th>
+                                                            <th class="rounded-end text-center" style="width: 15%;">{{"Görüntüleme" | translate}}</th>
+                                                        </tr>
+                                                    </thead>
+            
+                                                    <tbody>
+                                                        <ng-container *ngFor="let item of vacationAuthorizations">
+                                                            <tr class="cursor-pointer fs-7">
+                                                                <td>
+                                                                    <span class="mb-1 fw-bolder">{{item.Aciklama}}</span>
+                                                                </td>
+            
+                                                                <td>
+                                                                    <span class="mb-1 fw-bolder">{{item.IzinID}}</span>
+                                                                </td>
+            
+                                                                <td>
+                                                                    <span class="mb-1">
+                                                                        <div class="form-check form-check-sm">
+                                                                            <input class="form-check-input" type="checkbox" [(ngModel)]="item.Goruntulenme" [disabled]="disabled"/>
+                                                                        </div>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+            
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+
+                                <mat-tab label="{{'Rapor_Yetkilendirme' | translate}}">
+                                    <div class="row mx-0 my-4">
+                                        <div class="col-12 h-500px scroll">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped border table-rounded table-row-dashed align-middle gs-4 gy-2">
+                                                    <thead>
+                                                        <tr class="fs-6 fw-bold text-white border-bottom-0 text-uppercase rounded text-gray-500 bg-secondary">
+                                                            <th class="rounded-start" style="width: 60%;">{{"Menu" | translate}}</th>
+                                                            <th class="fw-bolder me-1 cursor-pointer" style="width: 25%;">{{"Modül" | translate}}</th>
+                                                            <th class="rounded-end text-center" style="width: 15%;">{{"Görüntüleme" | translate}}</th>
+                                                        </tr>
+                                                    </thead>
+            
+                                                    <tbody>
+                                                        <ng-container *ngFor="let item of reportAuthorizations">
+                                                            <tr class="cursor-pointer fs-7">
+                                                                <td>
+                                                                    <span class="mb-1 fw-bolder">{{item.ad}}</span>
+                                                                </td>
+            
+                                                                <td>
+                                                                    <span class="mb-1 fw-bolder">{{item.Grupad}}</span>
+                                                                </td>
+            
+                                                                <td>
+                                                                    <span class="mb-1">
+                                                                        <div class="form-check form-check-sm">
+                                                                            <input class="form-check-input" type="checkbox" [(ngModel)]="item.Goruntulenme" [disabled]="disabled"/>
+                                                                        </div>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+            
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                            </mat-tab-group>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

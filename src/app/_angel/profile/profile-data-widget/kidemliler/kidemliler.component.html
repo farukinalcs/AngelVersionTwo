@@ -66,8 +66,8 @@
                                 <div class="row">
         
                                     <div class="col-12 d-flex justify-content-center">
-                                        <div class="symbol symbol-75px"><img alt="Logo"
-                                                src="{{'data:image/jpg;base64,' + item.fotoimage}}">
+                                        <div class="symbol symbol-75px">
+                                            <img alt="Logo" src="{{imageUrl}}?sicilid={{item.ID}}">
                                         </div>
                                     </div>
         
@@ -122,7 +122,7 @@
 <p-dialog header="{{'Kıdemliler' | translate}}" [(visible)]="displayAllSeniors" [modal]="true" [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }"
     [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
-    <div class="container">
+    <div class="container" style="height: 500px;">
         <div class="row card p-0 p-md-5">
             <div class="col-12">
                 <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="getSeniorPersons($event)" style="min-height: 300px;">
@@ -130,14 +130,13 @@
                         <!-- <div class="card"> -->
                             <!-- <div class="card-body py-3"> -->
                                 <ng-container *ngIf="todaySeniorPersons.length > 0">
-                                    <div class="tab-content pt-5">
+                                    <div class="tab-content pt-5 h-400px scroll">
                                         <div class="tab-pane fade active show">
                                             <div class="table-responsive">
                                                 <table
                                                     class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                                     <thead>
-                                                        <tr
-                                                            class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                                        <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light">
                                                             <th class="text-center rounded-start"></th>
                                                             <th class="text-center">{{"İsim_Soyisim" | translate}}</th>
                                                             <th class="text-center">{{"Kıdem" | translate}}</th>
@@ -149,7 +148,7 @@
                                                         <tr *ngFor="let item of todaySeniorPersons">
                                                             <td class="text-center">
                                                                 <div class="symbol symbol-50px me-2">
-                                                                    <img alt="Logo" src="{{'data:image/jpg;base64,' + item.fotoimage}}">
+                                                                    <img alt="Logo" src="{{imageUrl}}?sicilid={{item.ID}}">
                                                                 </div>
                                                             </td>
     
@@ -162,14 +161,14 @@
     
                                                             <td class="text-center">
                                                                 <a
-                                                                    class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.kidemyil}}</a>
+                                                                    class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.kidemyil}}</a>
                                                                 
                                                             </td>
     
                                                             <td class="text-center text-muted fw-bold fs-8 fs-md-4">
                                                                 <span
-                                                                    class="border border-gray-500 border-2  rounded p-3">
-                                                                    {{item.bolum}}
+                                                                    class="border border-gray-500 border-2  rounded p-3" pTooltip="{{item.bolum}}" tooltipPosition="top">
+                                                                    {{item.bolum | truncate: 15}}
                                                                 </span>
                                                             </td>
     
@@ -198,14 +197,14 @@
                         <!-- <div class="card"> -->
                             <!-- <div class="card-body py-3"> -->
                                 <ng-container *ngIf="seniorPersons.length > 0">
-                                    <div class="tab-content pt-5">
+                                    <div class="tab-content pt-5 h-400px scroll">
                                         <div class="tab-pane fade active show">
                                             <div class="table-responsive">
                                                 <table
                                                     class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                                     <thead>
                                                         <tr
-                                                            class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                                            class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light">
                                                             <th class="text-center rounded-start"></th>
                                                             <th class="text-center">{{"İsim_Soyisim" | translate}}</th>
                                                             <th class="text-center">{{"Kıdem" | translate}}</th>
@@ -217,7 +216,7 @@
                                                         <tr *ngFor="let item of seniorPersons">
                                                             <td class="text-center">
                                                                 <div class="symbol symbol-50px me-2">
-                                                                    <img alt="Logo" src="{{'data:image/jpg;base64,' + item.fotoimage}}">
+                                                                    <img alt="Logo" src="{{imageUrl}}?sicilid={{item.ID}}">
                                                                 </div>
                                                             </td>
     
@@ -230,14 +229,14 @@
     
                                                             <td class="text-center">
                                                                 <a
-                                                                    class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.kidemyil}}</a>
+                                                                    class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.kidemyil}}</a>
                                                                 
                                                             </td>
     
                                                             <td class="text-center text-muted fw-bold fs-8 fs-md-4">
                                                                 <span
-                                                                    class="border border-gray-500 border-2  rounded p-3">
-                                                                    {{item.bolum}}
+                                                                    class="border border-gray-500 border-2  rounded p-3" pTooltip="{{item.bolum}}" tooltipPosition="top">
+                                                                    {{item.bolum | truncate: 15}}
                                                                 </span>
                                                             </td>
     
@@ -266,14 +265,14 @@
                         <!-- <div class="card"> -->
                             <!-- <div class="card-body py-3"> -->
                                 <ng-container *ngIf="seniorPersons.length > 0">
-                                    <div class="tab-content pt-5">
+                                    <div class="tab-content pt-5 h-400px scroll">
                                         <div class="tab-pane fade active show">
                                             <div class="table-responsive">
                                                 <table
                                                     class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                                     <thead>
                                                         <tr
-                                                            class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                                            class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light">
                                                             <th class="text-center rounded-start"></th>
                                                             <th class="text-center">{{"İsim_Soyisim" | translate}}</th>
                                                             <th class="text-center">{{"Kıdem" | translate}}</th>
@@ -285,7 +284,7 @@
                                                         <tr *ngFor="let item of seniorPersons">
                                                             <td class="text-center">
                                                                 <div class="symbol symbol-50px me-2">
-                                                                    <img alt="Logo" src="{{'data:image/jpg;base64,' + item.fotoimage}}">
+                                                                    <img alt="Logo" src="{{imageUrl}}?sicilid={{item.ID}}">
                                                                 </div>
                                                             </td>
     
@@ -297,18 +296,14 @@
                                                             </td>
     
                                                             <td class="text-center">
-                                                                <a
-                                                                    class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.kidemyil}}</a>
-                                                                
+                                                                <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.kidemyil}}</a>
                                                             </td>
     
                                                             <td class="text-center text-muted fw-bold fs-8 fs-md-4">
-                                                                <span
-                                                                    class="border border-gray-500 border-2  rounded p-3">
-                                                                    {{item.bolum}}
+                                                                <span class="border border-gray-500 border-2  rounded p-3" pTooltip="{{item.bolum}}" tooltipPosition="top">
+                                                                    {{item.bolum | truncate: 15}}
                                                                 </span>
                                                             </td>
-    
                                                         </tr>
                                                     </tbody>
                                                 </table>

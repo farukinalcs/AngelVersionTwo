@@ -44,19 +44,19 @@
                                 </div>
 
                                 <div>
-                                    <a class="btn btn-secondary btn-sm hover-elevate-up px-2 py-1 mx-1"
+                                    <a class="btn btn-light btn-sm hover-elevate-up px-2 py-1 mx-1 text-gray-800"
                                         (click)="openAddForm()">
-                                        <i class="fa-solid fa-plus fs-9"></i>
+                                        <i class="fa-solid fa-plus fs-9 text-gray-800"></i>
                                         {{"Ekle" | translate}}
                                     </a>
-                                    <a class="btn btn-secondary btn-sm hover-elevate-up px-2 py-1 mx-1"
+                                    <a class="btn btn-light btn-sm hover-elevate-up px-2 py-1 mx-1 text-gray-800"
                                         (click)="openUpdateForm()">
-                                        <i class="fa-solid fa-pen-to-square fs-9"></i>
+                                        <i class="fa-solid fa-pen-to-square fs-9 text-gray-800"></i>
                                         {{"Değiştir" | translate}}
                                     </a>
-                                    <a class="btn btn-secondary btn-sm hover-elevate-up px-2 py-1 mx-1"
+                                    <a class="btn btn-light btn-sm hover-elevate-up px-2 py-1 mx-1 text-gray-800"
                                         (click)="deleteShiftPeriod()">
-                                        <i class="fa-solid fa-trash fs-9"></i>
+                                        <i class="fa-solid fa-trash fs-9 text-gray-800"></i>
                                         {{"Sil" | translate}}
                                     </a>
                                 </div>
@@ -143,16 +143,16 @@
                                             <table
                                                 class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                                                 <thead>
-                                                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
-                                                        <th class="fw-bolder me-1 cursor-pointer rounded-start" style="width: 70%;"> {{"Grup_Açıklama" | translate}}</th>
-                                                        <th class="fw-bolder me-1 cursor-pointer rounded-end" style="width: 30%;">{{"İşlem" | translate}}</th>
+                                                    <tr class="fs-8 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
+                                                        <th class="fw-bolder me-1 rounded-start" style="width: 70%;"> {{"Grup_Açıklama" | translate}}</th>
+                                                        <th class="fw-bolder me-1 rounded-end" style="width: 30%;">{{"İşlem" | translate}}</th>
                                                     </tr>
                                                 </thead>
 
                                                 <tbody>
                                                     <tr *ngFor="let item of relations " class="cursor-pointer fs-8">
                                                         <td>
-                                                            <span class="mb-1">{{ item.kaynakad }}</span>
+                                                            <span class="mb-1 fw-semibold">{{ item.kaynakad }}</span>
                                                         </td>
 
                                                         <td>
@@ -173,9 +173,9 @@
                                         <div class="table-responsive">
                                             <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                                                 <thead>
-                                                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
-                                                        <th class=" rounded-start" style="width: 30%;">{{"İşlem" | translate}}</th>
-                                                        <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 70%;"> {{"Mesai_Açıklama" | translate}}</th>
+                                                    <tr class="fs-8 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
+                                                        <th class="fw-bolder me-1 rounded-start" style="width: 30%;">{{"İşlem" | translate}}</th>
+                                                        <th class="fw-bolder me-1 rounded-end" style="width: 70%;"> {{"Mesai_Açıklama" | translate}}</th>
                                                     </tr>
                                                 </thead>
 
@@ -189,7 +189,7 @@
                                                         </td>
 
                                                         <td>
-                                                            <span class="mb-1">{{ item.ad }}</span>
+                                                            <span class="mb-1 fw-semibold">{{ item.ad }}</span>
                                                         </td>
                                                     </tr>
 

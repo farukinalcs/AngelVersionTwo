@@ -48,6 +48,7 @@ import { ShiftPeriodsComponent } from './puantaj-tanimlamalar/definitions/shift-
 import { AttendanceDashboardComponent } from './attendance-dashboard/attendance-dashboard.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { AttendanceRegistryListComponent } from './attendance-registry-list/attendance-registry-list.component';
+import { CarouselModule } from 'primeng/carousel';
 
 
 @NgModule({
@@ -104,7 +105,8 @@ import { AttendanceRegistryListComponent } from './attendance-registry-list/atte
     DrawersModule,
     MatTooltipModule,
     MatTabsModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    CarouselModule
   ],
   
   exports: [

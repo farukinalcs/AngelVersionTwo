@@ -1,8 +1,11 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
+import { updateForm } from 'src/app/store/actions/form.action';
+import { FormState } from 'src/app/store/models/form.state';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 
 @Component({
@@ -21,17 +24,28 @@ export class ContactInfoComponent implements OnInit, OnDestroy, OnChanges {
     private translateService: TranslateService,
     private profileService: ProfileService,
     private toastrService: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private store: Store<{ form: FormState }>
   ) {}
   
   ngOnInit(): void {
     this.createForm();
+
+    this.store.select('form').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+      if (state.contactInfo) {
+        this.form.patchValue(state.contactInfo, { emitEvent: false });
+      }
+    });
+
+    this.saveFormToStore();
   }
 
   ngOnChanges() {
-    if (this.operationType == 'u') {
-      this.getRegisterDetail();
-    }
+    this.store.select('form').pipe(take(1)).subscribe((state) => {
+      if (!state.contactInfo && this.operationType == 'u') {
+        this.getRegisterDetail();
+      }
+    });
   }
 
   createForm() {
@@ -70,6 +84,12 @@ export class ContactInfoComponent implements OnInit, OnDestroy, OnChanges {
     this.form?.get('address')?.setValue(this.registerDetail[0].adres);
 
     
+  }
+
+  saveFormToStore() {
+    this.form.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value:any) => {
+      this.store.dispatch(updateForm({ formName: 'contactInfo', formData: this.form.value }));
+    });    
   }
   
   

@@ -1,0 +1,223 @@
+<div class="flip-card">
+    <div class="flip-card-inner" [class.flipped]="isFlipped">
+        <!-- Ön Yüz - Data Ekranı -->
+        <div class="flip-card-front">
+            <div class="card mb-6 mb-xl-9 mx-2">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Belgeler" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Belgeleri_Buradan_Ekleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+            
+                <div class="card-body pt-0 pb-5">
+                    <div class="row">
+                        <div class="col-12 pt-3 pb-1">
+                            <a class="btn btn-sm btn-light mx-1 fw-bolder d-flex justify-content-center align-item-center w-100 text-hover-danger" (click)="toggleFlip()">
+                                <i class="fa-solid fa-plus fs-7 d-flex align-items-center"></i>
+                                {{'Yeni_Belge_Ekle' | translate}}
+                            </a>
+                        </div>
+                        
+                        <div class="col-12 p-5 h-550px scroll">
+                            <div class="table-responsive">
+            
+                                <table class="table table-row-dashed table-row-gray-200 align-middle gs-2 gy-4">
+                                    <thead>
+                                        <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light">
+                                            <th class="rounded-start" style="width: 40%;">{{"Belge_Türü" | translate}}</th>
+                                            <th class="" style="width: 40%;">{{"Eklenme_Tarihi" | translate}}</th>
+                                            <th class="rounded-end text-center" style="width: 20%;">{{"İşlem" | translate}}</th>
+                                        </tr>
+                                    </thead>
+            
+            
+                                    <ng-container *ngIf="addedFiles.length > 0">
+                                        <tbody>
+                                            <tr *ngFor="let item of addedFiles" class="cursor-pointer fs-8 fw-bolder">
+            
+                                                <td>
+                                                    <span class="mb-1">{{ item.TipAd }}</span>
+                                                </td>
+            
+                                                <td>
+                                                    <span class="mb-1">{{ item.Zaman | date: 'dd-MM-yyyy HH:mm' }}</span>
+                                                </td>
+            
+                                                <td>
+                                                    <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                        (click)="showFile(item)">
+                                                        <div [ngSwitch]="item.DosyaTipi">
+                                                            <div
+                                                                *ngSwitchCase="['jpeg', 'jpg', 'png', 'svg'].includes(item.DosyaTipi) ? item.DosyaTipi : !item.DosyaTipi">
+                                                                <i class="file-type fa-solid fa-file-image p-0 d-flex align-item-center justify-content-center"></i>
+                                                            </div>
+            
+                                                            <div *ngSwitchCase=" 'txt' ">
+                                                                <i class="file-type fa-solid fa-file-lines p-0 d-flex align-item-center justify-content-center"></i>
+                                                            </div>
+            
+                                                            <div *ngSwitchCase=" 'pdf' ">
+                                                                <i class="file-type fa-solid fa-file-pdf p-0 d-flex align-item-center justify-content-center"></i>
+                                                            </div>
+            
+                                                            <div *ngSwitchDefault>
+                                                                <i class="fa-solid fa-file p-0 d-flex align-item-center justify-content-center"></i>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <span>{{"Aç" | translate}}</span>
+                                                    </a>
+                                                    <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                        (click)="remove(item)">
+                                                        <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
+                                                        <span>{{"Kaldır" | translate}}</span>
+                                                    </a>
+                                                </td>
+            
+                                            </tr>
+                                        </tbody>
+                                    </ng-container>
+            
+                                    <ng-container *ngIf="addedFiles.length == 0">
+                                        <tr>
+                                            <td colspan="4" class="text-center">
+                                                <app-data-not-found [imgWidth]="'40%'"></app-data-not-found>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arka Yüz - Form Ekranı -->
+        <div class="flip-card-back">
+            <div class="card mb-6 mb-xl-9 mx-2">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Belgeler" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Belgeleri_Buradan_Ekleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+            
+                <div class="card-body pt-0 pb-5">
+                    <div class="row">
+                        <div class="col-12 d-flex align-items-center p-3" style="justify-content: space-between;">
+                            <a class="btn btn-sm btn-light mx-1 fw-bolder d-flex justify-content-center align-item-center text-hover-danger" (click)="toggleFlip()">
+                                <i class="fa-solid fa-arrow-left fs-7 d-flex align-items-center"></i>
+                                {{'Geri_Dön' | translate}}
+                            </a>
+                            
+                            <a class="btn btn-sm btn-light mx-1 fw-bolder d-flex justify-content-center align-item-center text-hover-danger" (click)="add()">
+                                <i class="fa-solid fa-upload fs-7 d-flex align-items-center"></i>
+                                {{'Tümünü_Yükle' | translate}}
+                            </a>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row" [formGroup]="form">
+                        
+                        <div class="col-12 p-3">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span>{{"Belge_Tipi" | translate}}</span>
+                            </label>
+            
+                            <p-dropdown [options]="fileTypes" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                                [showClear]="true" placeholder="{{ 'Belge_Tipi_Seçiniz' | translate }}"
+                                formControlName="fileType" emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                                appendTo="body">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="form.get('fileType')?.value">
+                                        <div>{{form.get('fileType')?.value.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+            
+                            <ng-container [ngTemplateOutlet]="formError" 
+                                [ngTemplateOutletContext]="{
+                                validation: 'required',
+                                message: translateService.instant('Boş_Geçilemez!'),
+                                control: form.controls['fileType']
+                                }">
+                            </ng-container>
+                        </div>
+            
+                        <ng-container>
+                            <div class="col-12 p-3">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>{{"Belge" | translate}}</span>
+                                </label>
+                
+                                <input #fileInput type="file" class="form-control form-control-sm form-control-solid" formControlName="file" multiple="true" (change)="getFile($event)">
+                                <div class="fv-plugins-message-container">
+                                    <div class="fv-help-block fs-8 text-gray-500">
+                                        <span role="alert">
+                                            {{ "Dosya_Başına_En_Fazla_1MB_Olmalı" }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <div class="col-12" *ngIf="uploadedFile.length > 0">
+                                <div class="alert alert-dismissible bg-light-secondary bg-hover-light-dark d-flex flex-column flex-sm-row px-10 py-2 mb-2 align-items-center" *ngFor="let item of uploadedFile">
+                                    <div class="row w-100">
+                                        <div class="col-7 d-flex align-items-center">
+                                            <i class="fa-solid fa-circle-dot fs-4 text-dark me-4 mb-5 mb-sm-0"></i>
+                                            <div class="d-flex flex-column pe-0 pe-sm-10">
+                                                <h4 class="upload-text fw-semibold fs-5 mb-0">{{ item.files.name }} ({{ item.files.fileSize}}{{item.files.fileSizeType}})</h4>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3 d-flex align-items-center">
+                                            <p-progressBar class="w-100" [value]="item.progressValue || 0"></p-progressBar>
+                                        </div>
+
+                                        <div class="col-2 d-flex align-items-center">
+                                            <button
+                                                type="button"
+                                                class="position-absolute position-sm-relative mx-1 m-sm-0 top-0 end-0 btn btn-light-danger btn-sm btn-icon btn-light-dark ms-sm-auto"
+                                                (click)="add(item)">
+                                                <i class="fa-solid fa-play fs-4"></i>
+                                                <span class="pulse-ring"></span>
+                                            </button>    
+    
+                                            <button type="button" class="position-absolute position-sm-relative mx-1 m-sm-0 top-0 end-0 btn btn-sm btn-icon btn-light-dark ms-sm-auto" (click)="removeUploadedFile(item)">
+                                                <i class="fa-solid fa-xmark fs-4"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </ng-container>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+    <ng-container *ngIf="control.hasError(validation)">
+        <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+                <span role="alert">
+                    {{ message }}
+                </span>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

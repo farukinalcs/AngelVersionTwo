@@ -46,19 +46,39 @@ export class VisitorUploadedFilesComponent implements OnInit, OnDestroy {
         this.selectedFile = data.base64Data;
         this.selectedContentType = contentType;
 
-        this.base64Data = this.sanitizer.bypassSecurityTrustResourceUrl(
-          'data:' + contentType + ';base64,' + data.base64Data
-        );
+        // this.base64Data = this.sanitizer.bypassSecurityTrustResourceUrl(
+        //   'data:' + contentType + ';base64,' + data.base64Data
+        // );
 
-        console.log('Download Link : ', this.base64Data);
+        // console.log('Download Link : ', this.base64Data);
 
-        const base64Data = data.base64Data;
-        const blob = new Blob([atob(base64Data)], { type: contentType });
+        // const base64Data = data.base64Data;
+        // const blob = new Blob([atob(base64Data)], { type: contentType });
 
-        const fileName = `${contentType}.${uzanti}`;
-        this.contentType = fileName;
-        let file: any = new File([blob], fileName, { type: contentType });
-        console.log('File : ', file);
+        // const fileName = `${contentType}.${uzanti}`;
+        // this.contentType = fileName;
+        // let file: any = new File([blob], fileName, { type: contentType });
+        // console.log('File : ', file);
+
+
+
+
+        // Base64'ü Blob'a dönüştür
+        const byteCharacters = atob(data.base64Data);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: contentType });
+
+        // Blob'dan bir URL oluştur
+        const blobUrl = URL.createObjectURL(blob);
+
+        // Yeni sekmede aç
+        window.open(blobUrl);
+
+        console.log('Dosya görüntüleniyor:', blobUrl);
 
         this.ref.detectChanges();
       });
@@ -241,7 +261,7 @@ export class VisitorUploadedFilesComponent implements OnInit, OnDestroy {
   }
 
   showUploadedFile(item: any) {
-    this.displayUploadedFile = true;
+    // this.displayUploadedFile = true;
     this.getFileForDemand(item.UniqueId, item.DosyaTipi, item.ContentType);
   }
 
