@@ -1,73 +1,291 @@
+  <div class="container py-4">
 
-
-  <div class="container my-4">
-    <!-- Üstteki Widget Kartlar -->
-    <div class="row g-3">
-      <div class="col-md-2">
-        <div class="widget-card bg-left">Planlanan Turlar </div>
-      </div>
-      <div class="col-md-2">
-        <div class="widget-card bg-right">Atılan Turlar</div>
-      </div>
-      <div class="col-md-2">
-        <div class="widget-card bg-left">Atılmayan Turlar</div>
-      </div>
-      <div class="col-md-2">
-        <div class="widget-card bg-right">Atılacak Turlar</div>
-      </div>
-      <div class="col-md-2">
-        <div class="widget-card bg-left">Alarmlar</div>
-      </div>
-      <div class="col-md-2">
-        <div class="widget-card bg-right">Olaylar</div>
-      </div>
+    <div class="row g-3 widget-section">
+      <ng-container *ngFor="let widget of widgets">
+        <div class="col-md-2">
+          <div class="widget-card cursor-pointer" 
+                (click)="changeContent(widget.value)">
+            <h6 class="widget-title">{{ widget.title }}</h6>
+            <p class="widget-value">{{ widget.value }}</p>
+          </div>
+        </div>
+      </ng-container>
     </div>
   
-    <!-- Sol Taraf Tablo, Sağ Taraf Harita -->
+
     <div class="row mt-4">
-      <!-- Sol Taraf Tablo -->
-      <div class="col-md-6">
-        <div class="card">
-          <!-- <div class="card-header">Tablo</div> -->
-          <div class="card-body">
-            <table class="table table-striped-columns table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Konum</th>
-                  <th scope="col">Cihaz Adı</th>
-                  <th scope="col">Pil</th>
-                  <th scope="col">Nfc</th>
-                  <th scope="col">Wifi</th>
-                  <th scope="col">Durum</th>
-                  <th scope="col">Versiyon</th>
-                  <th scope="col">Olay</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of patrolInfo; let i=index" >
-                  <td>{{i + 1}}</td>
-                  <td><i class="fa fa-map-marker"></i></td>
-                  <td>{{item.name}}</td>
-                  <td>{{item.battery}}%</td>
-                  <td>{{item.nfc}}</td>
-                  <td>{{item.wifi}}</td>
-                  <td>{{item.durum}}</td>
-                  <td>{{item.appversion}}</td>
-                  <td>{{item.olay}}</td>
-                </tr>
+      <div class="row col-md-12" *ngIf="activeWidget == 0">
+        <div class="col-md-3">
+          <div class="card custom-card h-100">
+            <div class="card-header">
+              <h5 class="mb-0">Cihaz Tablosu</h5>
+            </div>
+            <div class="card-body">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Cihaz Adı</th>
+                    <th scope="col">Pil</th>
+                    <th scope="col">Durum</th>
+                    <th scope="col">Olay</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of patrolInfo  || []; let i = index"  class="cursor-pointer" (click)="getGuardEventList(item)">
+                    <td>
+                      {{ item.name }}
+                      <br>
+                      <span *ngIf="item.securityname" class="text-muted small">
+                        {{ item.securityname }}
+                      </span>
+                    </td>
+                    <td>{{ item.battery }}%</td>
+                    <td>
+                      <span *ngIf="item.durum == 'online'">
+                        <i class="fa fa-circle text-success text-center"></i>
+                      </span>
+                      <span *ngIf="item.durum == 'offline'">
+                        <i class="fa fa-circle text-danger text-center"></i>
+                      </span>
+                    </td>
+                    <td>
+                      <span *ngIf="item.olay != 0">
+                        <i class="fa fa-flag text-danger"></i>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
               
-                <!-- Daha fazla satır ekleyebilirsiniz -->
-              </tbody>
-            </table>
+            </div>
+          </div>
+        </div>
+    
+        <div class="col-md-9">
+          <div class="card custom-card h-100">
+            <div class="card-header">
+              <h5 class="mb-0">Cihaz Haritası</h5>
+            </div>
+            <div class="card-body">
+              <div id="map" style="height: 50vh;"></div>
+            </div>
           </div>
         </div>
       </div>
-  
-      <!-- Sağ Taraf Harita -->
-      <div class="col-md-6">
-        <div id="map" style="height: 50vh; width: 100%; border: 1px solid #ddd;"></div>
+     
+
+      <div *ngIf="activeWidget == 1">
+        <h3>Planlanan Turlar</h3>
+        <p>Bu sayfa açılışında görüntülenen içeriktir.</p>
       </div>
+
+      <div *ngIf="activeWidget == 2">
+        <h3>Atılan Turlar</h3>
+        <p>Bu sayfa açılışında görüntülenen içeriktir.</p>
+      </div>
+
+      <div *ngIf="activeWidget == 3">
+        <h3>Atılmayan Turlar</h3>
+        <p>Bu sayfa açılışında görüntülenen içeriktir.</p>
+      </div>
+
+      <div *ngIf="activeWidget == 4">
+        <h3>Atılacak Turlar</h3>
+        <p>Bu sayfa açılışında görüntülenen içeriktir.</p>
+      </div>
+
+      <div *ngIf="activeWidget == 5">
+        <h3>Alarmlar</h3>
+        <p>Bu sayfa açılışında görüntülenen içeriktir.</p>
+      </div>
+
+      <div *ngIf="activeWidget == 6">
+        <h3>Olaylar</h3>
+        <p>Bu sayfa açılışında görüntülenen içeriktir.</p>
+      </div>
+    
+    </div>
+
+ 
+    
+  </div>
+  
+  
+
+
+<p-dialog
+  header="Olay Detayı"
+  [(visible)]="lastIncidentModal"
+  [modal]="true"
+  [style]="{ width: '40vw' }"
+  [breakpoints]="{ '2560px': '50vw', '992px': '70vw', '576px': '90vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000">
+  <div class="incident-modal">
+   
+    <section class="incident-info">
+      <h2 class="incident-title">Olay Bilgisi</h2>
+      <p class="incident-description">
+        <b>Açıklama:</b> {{ lastIncidentDesc || 'Bilgi bulunamadı.' }}
+      </p>
+      <p class="incident-security">
+        <b>Güvenlik:</b> {{ lastIncidentSecurity || 'Belirtilmemiş.' }}
+      </p>
+    </section>
+
+
+    <section class="incident-map">
+      <div id="mapIncident"></div>
+    </section>
+
+    <section *ngIf="hasMedia()" class="incident-media">
+      <h3 class="media-title">Medya</h3>
+
+      <div *ngIf="hasPhotos()" class="media-photos">
+        <h4>Fotoğraflar</h4>
+        <div class="photo-gallery">
+          <img
+            *ngFor="let photo of incidentMedia.photos"
+            [src]="photo"
+            alt="Olay Fotoğrafı"
+            class="photo-item" />
+        </div>
+      </div>
+
+      <div *ngIf="hasVideos()" class="media-videos">
+        <h4>Videolar</h4>
+        <div class="video-gallery">
+          <video
+            *ngFor="let video of incidentMedia.videos"
+            [src]="video"
+            controls
+            class="video-item">
+          </video>
+        </div>
+      </div>
+    </section>
+  </div>
+</p-dialog>
+
+<p-dialog
+[(visible)]="lastAlarmModal"
+[modal]="true"
+[styleClass]="'alarm-dialog'"
+[style]="{ width: '40vw'}"
+[breakpoints]="{ '2560px': '50vw', '992px': '70vw', '576px': '90vw' }"
+[maximizable]="true"
+[baseZIndex]="10000">
+<div class="incident-modal">
+ 
+  <section class="incident-info">
+    <h2 class="incident-title" style="color: #ff0000;">! ! ! ALARM ! ! !</h2>
+  </section>
+
+
+  <section class="incident-map">
+    <div id="mapIncident"></div>
+  </section>
+
+</div>
+</p-dialog>
+
+<p-dialog
+  header="Cihaz Olayları"
+  [(visible)]="deviceIncidentList"
+  [modal]="true"
+  [style]="{ width: '40vw' }"
+  [breakpoints]="{ '2560px': '50vw', '992px': '70vw', '576px': '90vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000">
+  <div class="card custom-card h-100">
+    <div class="card-body">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Olay Başlık</th>
+            <th>Olay Açıklama</th>
+            <th>Tur ID</th>
+            <th>Zaman</th>
+            <th>Linkler</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let olay of guardEventList" (click)="getEventDetail(olay)" class="cursor-pointer">
+         
+            <td>{{ olay.olaybaslik }}</td>
+            <td>{{ olay.olayaciklama }}</td>
+         
+            <td>{{ olay.turid }}</td>
+            <td>{{ olay.zaman | date: 'short' }}</td>
+            <td>
+              <ul>
+                <li *ngFor="let link of olay.link">
+                  {{ link.dosyatipi }}: <a [href]="link.link">{{ link.link }}</a>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</p-dialog>
+
+
+<p-dialog
+  header="Olay Detayları"
+  [(visible)]="eventDetailsModal"
+  [modal]="true"
+  [style]="{ width: '40vw' }"
+  [breakpoints]="{ '2560px': '50vw', '992px': '70vw', '576px': '90vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000">
+  <div class="incident-modal">
+  <section class="incident-info">
+    <h2 class="incident-title">Olay Bilgisi</h2>
+    <p class="incident-description">
+      <b>BASLIK:</b> {{ IncidentHeader || 'Bilgi bulunamadı.' }}
+    </p>
+    <p class="incident-security">
+      <b>ACIKLAMA:</b> {{ IncidentDesc || 'Belirtilmemiş.' }}
+
+      
+    </p>
+    <p><b>{{IncidentTime | date: 'short' }}</b></p>
+  </section>
+    <section class="incident-map">
+      <div id="mapIncident"></div>
+    </section>
+
+    <section *ngIf="hasMedia()" class="incident-media">
+      <h3 class="media-title">Medya</h3>
+
+      <div *ngIf="hasPhotos()" class="media-photos">
+        <h4>Fotoğraflar</h4>
+        <div class="photo-gallery">
+          <img
+            *ngFor="let photo of incidentMedia.photos"
+            [src]="photo"
+            alt="Olay Fotoğrafı"
+            class="photo-item" />
+        </div>
+      </div>
+
+      <div *ngIf="hasVideos()" class="media-videos">
+        <h4>Videolar</h4>
+        <div class="video-gallery">
+          <video
+            *ngFor="let video of incidentMedia.videos"
+            [src]="video"
+            controls
+            class="video-item">
+          </video>
+        </div>
+      </div>
+    </section>
+  </div>
+</p-dialog>
+
+
   <router-outlet></router-outlet>
+

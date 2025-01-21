@@ -630,7 +630,8 @@ export class ProfileService {
       okod4: '',
       okod5: '',
       okod6: '',
-      okod7: ''
+      okod7: '',
+      mesaiperiyodu:'0'
     }];
 
     return this.requestMethod(sp);

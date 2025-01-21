@@ -189,7 +189,8 @@ export class SicilListeComponent implements OnInit {
       okod4: '',
       okod5: '',
       okod6: '',
-      okod7: ''
+      okod7: '',
+      mesaiperiyodu:0
     }];
     this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response:any) => {
       const data = response[0].x;

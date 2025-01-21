@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { GecisgruplariComponent } from './gecisgruplari/gecisgruplari.component';
 import { RaporlarComponent } from './raporlar/raporlar.component';
 import { AccessRoutingModule } from './access-routing.module';
@@ -30,7 +29,6 @@ import { SharedModule } from '../shared/shared.module';
 import { AgGridModule } from 'ag-grid-angular';
 import { InlineSVGModule } from 'ng-inline-svg-2';
 import 'ag-grid-enterprise'
-import { LicenseManager } from 'ag-grid-enterprise';
 import { DevicesComponent } from './devices/devices.component';
 import { CustomizedCellComponent } from './customized-cell/customized-cell.component';
 import { DialogNewDeviceComponent } from './devices/dialog-new-device/dialog-new-device.component';
@@ -116,9 +114,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     InlineSVGModule.forRoot(),
     DropdownModule,
     TranslationModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAdALF-5HPnZFuvYRXmGY8qkv21TGD25ak',
-    }),
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'AIzaSyAdALF-5HPnZFuvYRXmGY8qkv21TGD25ak',
+    // }),
     CustomPipeModule,
     MatProgressSpinnerModule,
     MatTabsModule,
