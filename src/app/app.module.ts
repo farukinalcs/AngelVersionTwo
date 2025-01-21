@@ -16,6 +16,8 @@ import { PdksReducer } from './_angel/NGRX/pdks.reducer';
 import { TokenInterceptor } from './modules/auth/services/auth-http/token.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { LoadingComponent } from './modules/loading/loading.component';
+import { formReducer } from './store/reducers/form.reducer';
+import { accessGroupReducer } from './store/reducers/access-group.reducer';
 // #fake-start#
 // import { FakeAPIService } from './_fake/fake-api.service';
 
@@ -41,8 +43,10 @@ function appInitializer(authService: AuthService) {
     AppRoutingModule,
     InlineSVGModule.forRoot(),
     NgbModule,
-    StoreModule.forRoot({number: PdksReducer}),
-    ToastrModule.forRoot()
+    // StoreModule.forRoot({number: PdksReducer}),
+    ToastrModule.forRoot(),
+    StoreModule.forRoot({ form: formReducer }),
+    StoreModule.forFeature('accessGroup', accessGroupReducer)
   ],
   providers: [
     {

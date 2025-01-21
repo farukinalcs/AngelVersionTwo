@@ -17,7 +17,7 @@ export class OrganizationColumnFilterComponent implements IFilterAngularComp {
 
   private static readonly rowHeight: number = 28;
 
-  params!: IFilterParams;
+  params!: CustomFilterParams;
   organizationFilterList: OKodFieldsModel[] = [];
   filter: any;
   searchText: string = '';
@@ -27,11 +27,13 @@ export class OrganizationColumnFilterComponent implements IFilterAngularComp {
     private ref: ChangeDetectorRef
   ) {}
 
-  agInit(params: IFilterParams<any, any>): void {
+  agInit(params: CustomFilterParams): void {
+    // this.customVariable = params?.customVariable;
+    // console.log("TESTO: ", this.customVariable);
+    
     this.params = params;
     console.log('Filter Comp. Params :', this.params);
 
-    
     this.getOrganizationInfo();
   }
 
@@ -45,7 +47,13 @@ export class OrganizationColumnFilterComponent implements IFilterAngularComp {
           const message = response[0].z;
 
           if (message.islemsonuc == 1) {
-            this.organizationFilterList = data;
+            if (this.params.customVariable) {
+              // this.organizationFilterList = data.filter((item:any) => item.ID == this.params.customVariable);
+              this.organizationFilterList = data.filter((item: any) => this.params.customVariable?.includes(item.ID));
+            } else {
+              this.organizationFilterList = data;
+            }
+            
             console.log("Organizasyon Bilgisi Geldi Custom Filter Comp. :", this.organizationFilterList);
             this.ref.detectChanges();            
           } else {
@@ -95,4 +103,10 @@ export class OrganizationColumnFilterComponent implements IFilterAngularComp {
   }
 
 
+}
+
+
+
+interface CustomFilterParams extends IFilterParams {
+  customVariable?: any[];
 }

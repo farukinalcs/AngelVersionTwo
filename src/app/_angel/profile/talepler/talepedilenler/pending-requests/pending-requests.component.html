@@ -50,12 +50,6 @@
                     
                         <button class="search-icon">
                             <div class="svg">
-                                <!-- <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M8.6 16.2C12.7974 16.2 16.2 12.7974 16.2 8.6C16.2 4.40263 12.7974 1 8.6 1C4.40263 1 1 4.40263 1 8.6C1 12.7974 4.40263 16.2 8.6 16.2Z"
-                                        stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M16.6 17L15 15.4" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg> -->
                                 <i class="fa-solid fa-magnifying-glass text-white fs-4"></i>
                             </div>
                         </button>
@@ -225,7 +219,7 @@
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-12 d-flex justify-content-center">
                                         <img width="25%" style="border-radius: 5px;"
-                                            src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}"
+                                            src="{{imageUrl}}?sicilid={{item.SicilId}}"
                                             alt="Personel Foto" />
                                     </div>
                                 </div>
@@ -406,7 +400,7 @@
                             <div class="row d-flex justify-content-center">
                                 <div class="col-12 d-flex justify-content-center">
                                     <img width="25%" style="border-radius: 5px;"
-                                        src="http://localhost:5075/api/Image?sicilid={{item.sicilid}}"
+                                        src="{{imageUrl}}?sicilid={{item.sicilid}}"
                                         alt="Personel Foto" />
                                 </div>
                             </div>
@@ -530,7 +524,7 @@
                     <div class="table-responsive">
                         <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                             <thead>
-                                <tr class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                <tr class="roundend fs-9 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                                     <th class="text-center rounded-start"></th>
                                     <th class="text-center"></th>
                                     <th class="text-center"></th>
@@ -566,8 +560,8 @@
                                     </td>
 
                                     <td class="text-center">
-                                        <div class="symbol symbol-50px me-2">
-                                            <img src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}"
+                                        <div class="symbol symbol-30px me-2">
+                                            <img src="{{imageUrl}}?sicilid={{item.SicilId}}"
                                                 alt="Personel Foto">
                                         </div>
                                     </td>
@@ -659,7 +653,7 @@
                     <div class="table-responsive">
                         <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                             <thead>
-                                <tr class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                <tr class="roundend fs-9 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                                     <th class="text-center rounded-start"></th>
                                     <th class="text-center"></th>
                                     <th class="text-center"></th>
@@ -695,8 +689,8 @@
                                     </td>
 
                                     <td class="text-center">
-                                        <div class="symbol symbol-50px me-2">
-                                            <img src="http://localhost:5075/api/Image?sicilid={{item.sicilid}}"
+                                        <div class="symbol symbol-30px me-2">
+                                            <img src="{{imageUrl}}?sicilid={{item.sicilid}}"
                                                 alt="Personel Foto">
                                         </div>
                                     </td>
@@ -722,20 +716,25 @@
                                     </td>
 
                                     <td class="text-center">
-                                        <div class="text-dark fw-bold text-hover-danger mb-1 fs-8"
-                                            matTooltip="{{item?.bolum}}">
+                                        <div class="text-dark fw-bold text-hover-danger mb-1 fs-8" pTooltip="{{item.bolum}}" tooltipPosition="top">
                                             <!-- {{item?.bolum}} -->
-                                            {{ (item?.bolum.length>14)? (item?.bolum | slice:0:14)+'...':(item?.bolum) }}
+                                            {{ item.bolum | truncate:15 }}
                                         </div>
+                                        <!-- <td pTooltip="{{item.Yaka}}" tooltipPosition="top">{{item.Yaka | truncate:15}}</td> -->
                                     </td>
 
                                     <td class="text-center">
-                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-8">{{item.pozisyon}}</p>
+                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-8" pTooltip="{{item.pozisyon}}" tooltipPosition="top">
+                                            {{ item.pozisyon | truncate:15 }}
+                                        </p>
                                     </td>
 
                                     <td class="text-center">
-                                        <div class="text-dark fw-bold text-hover-danger hover-scroll h-100px mb-1 fs-8">
+                                        <!-- <div class="text-dark fw-bold text-hover-danger hover-scroll h-100px mb-1 fs-8">
                                             {{item.nedenx}}
+                                        </div> -->
+                                        <div class="text-dark fw-bold text-hover-danger mb-1 fs-8" pTooltip="{{item.nedenx}}" tooltipPosition="top">
+                                            {{item.nedenx | truncate:15 }}
                                         </div>
                                     </td>
 
@@ -806,7 +805,7 @@
                                         <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                             <thead>
                                                 <tr
-                                                    class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                                    class="roundend fs-9 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                                                     <th class="rounded-start"></th>
                                                     <th class="fs-5 fw-bolder me-1 cursor-pointer">
                                                         {{"Başlangıç_Tarihi" | translate}}</th>
@@ -947,7 +946,7 @@
                                         <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                             <thead>
                                                 <tr
-                                                    class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                                    class="roundend fs-9 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                                                     <th class="rounded-start"></th>
                                                     <th class="fs-5 fw-bolder me-1 cursor-pointer">
                                                         {{"Tarih" | translate}}</th>
@@ -1060,7 +1059,7 @@
                                     <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                         <thead>
                                             <tr
-                                                class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                                class="roundend fs-9 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                                                 <th class="rounded-start"></th>
                                                 <th class="fs-5 fw-bolder me-1 cursor-pointer">
                                                     {{"Başlangıç_Tarihi" | translate}}</th>

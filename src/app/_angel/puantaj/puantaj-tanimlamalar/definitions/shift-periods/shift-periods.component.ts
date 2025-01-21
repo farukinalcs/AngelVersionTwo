@@ -221,6 +221,7 @@ export class ShiftPeriodsComponent implements OnInit, OnDestroy {
       confirmButtonText: `Evet`,
       allowOutsideClick: false,
       allowEscapeKey: false,
+      heightAuto: false
     }).then((result) => {
       if (result.isConfirmed) {
         var sp: any[] = [
@@ -272,6 +273,7 @@ export class ShiftPeriodsComponent implements OnInit, OnDestroy {
           confirmButtonText: 'Kapat',
           allowOutsideClick: false,
           allowEscapeKey: false,
+          heightAuto: false
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         
@@ -284,6 +286,7 @@ export class ShiftPeriodsComponent implements OnInit, OnDestroy {
           confirmButtonText: 'Kapat',
           allowOutsideClick: false,
           allowEscapeKey: false,
+          heightAuto: false
         });
       } else if (result.isDenied) {
       }
@@ -308,6 +311,7 @@ export class ShiftPeriodsComponent implements OnInit, OnDestroy {
       confirmButtonText: `Evet`,
       allowOutsideClick: false,
       allowEscapeKey: false,
+      heightAuto: false
     }).then((result) => {
       if (result.isConfirmed) {
         var sp: any[] = [
@@ -356,6 +360,7 @@ export class ShiftPeriodsComponent implements OnInit, OnDestroy {
           confirmButtonText: 'Kapat',
           allowOutsideClick: false,
           allowEscapeKey: false,
+          heightAuto: false
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         
@@ -368,6 +373,7 @@ export class ShiftPeriodsComponent implements OnInit, OnDestroy {
           confirmButtonText: 'Kapat',
           allowOutsideClick: false,
           allowEscapeKey: false,
+          heightAuto: false
         });
       } else if (result.isDenied) {
       }
@@ -390,6 +396,7 @@ export class ShiftPeriodsComponent implements OnInit, OnDestroy {
       confirmButtonText: `Evet`,
       allowOutsideClick: false,
       allowEscapeKey: false,
+      heightAuto: false
     }).then((result) => {
       if (result.isConfirmed) {
         var sp: any[] = [
@@ -437,6 +444,7 @@ export class ShiftPeriodsComponent implements OnInit, OnDestroy {
           confirmButtonText: 'Kapat',
           allowOutsideClick: false,
           allowEscapeKey: false,
+          heightAuto: false
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         
@@ -449,6 +457,7 @@ export class ShiftPeriodsComponent implements OnInit, OnDestroy {
           confirmButtonText: 'Kapat',
           allowOutsideClick: false,
           allowEscapeKey: false,
+          heightAuto: false
         });
       } else if (result.isDenied) {
       }

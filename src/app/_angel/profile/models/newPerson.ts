@@ -1,5 +1,5 @@
 export class NewPerson {
-    fotoimage: string;
+    ID: number;
     ad: string;
     soyad: string;
     sicilno: string;

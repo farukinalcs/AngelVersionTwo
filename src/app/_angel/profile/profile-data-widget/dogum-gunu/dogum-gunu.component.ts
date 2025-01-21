@@ -19,11 +19,14 @@ export class DogumGunuComponent implements OnInit, OnDestroy {
   displayAllBirthdays : boolean;
   personsBirthday: PersonBirthday[] = [];
   todayPersonsBirthday: PersonBirthday[] = [];
+  imageUrl: string;
   constructor(
     private profileService : ProfileService,
     public layoutService : LayoutService,
     private ref : ChangeDetectorRef
-  ) { }
+  ) {
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   ngOnInit(): void {
     this.getPersonsBirthday('1');

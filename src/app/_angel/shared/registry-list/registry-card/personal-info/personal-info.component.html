@@ -1,0 +1,112 @@
+<div class="card mb-6 mb-xl-9 mx-2">
+    <!-- <div class="card-header border-0">
+        <div class="card-title">
+            <h2>{{"Kişisel_Bilgiler" | translate}}</h2>
+        </div>
+    </div> -->
+
+    <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+        <div class="card-title">
+            <h3 class="card-label text-white">{{"Kişisel_Bilgiler" | translate}}</h3>
+            <h4 class="card-label text-gray-200 fs-8">{{"Kişisel_Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+        </div>
+    </div>
+
+    <div class="card-body pt-0 pb-5">
+        <div class="row" [formGroup]="form">
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Ad" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Ad' | translate}}" formControlName="name">
+                <ng-container [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: translateService.instant('Boş_Geçilemez!'),
+                    control: form.controls['name']
+                    }">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Soyad" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Soyad' | translate}}" formControlName="surname">
+                <ng-container [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: translateService.instant('Boş_Geçilemez!'),
+                    control: form.controls['surname']
+                    }">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Sicil_Numarası" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Sicil_Numarası' | translate}}" formControlName="registryNo">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Personel_Numarası" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Personel_Numarası' | translate}}" formControlName="personNo">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Kan_Grubu" | translate}}</span>
+                </label>
+
+                <p-dropdown [options]="bloodGroups" optionLabel="Ad"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="false" [showClear]="true"
+                    placeholder="{{'Kan_Grubu_Seçiniz' | translate}}"  appendTo="body" formControlName="bloodGroup">
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.Ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Cinsiyet" | translate}}</span>
+                </label>
+
+                <p-dropdown [options]="genders" optionLabel="Ad"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="false" [showClear]="true"
+                    placeholder="{{'Cinsiyet_Seçiniz' | translate}}" appendTo="body" formControlName="gender">
+                    <ng-template let-item pTemplate="item">
+                        <div class="item-item">
+                            <div>{{item.Ad}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            
+
+            
+        </div>    
+    </div>
+</div>
+
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+    <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+        <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+                <span role="alert">
+                    {{ message }}
+                </span>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

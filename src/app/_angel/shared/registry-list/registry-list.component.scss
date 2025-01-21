@@ -1,0 +1,51 @@
+::ng-deep {
+    .cell-time-passive {
+        background-color: #ff9494 !important;
+        // color: var(--kt-light) !important;
+    }
+
+    .cell-weekend {
+        background-color: #5e738b !important;
+        color: var(--kt-light) !important;
+    }
+
+    .cell-time-zero {
+        color: gainsboro !important;
+    }
+
+
+
+    .cell-warning {
+        background-color: #ffa500 !important;
+    }
+
+    .cell-green {
+        background-color: #adff2f !important;
+    }
+
+    .cell-blue {
+        background-color: #5e738b !important;
+        color: var(--kt-white) !important;
+    }
+
+    .cell-lateness {
+        font-weight: 900 !important;
+        color: red;
+    }
+
+    .cell-lateness-manuel-entry {
+        text-decoration: underline !important;
+        font-weight: 900 !important;
+        color: red;
+        text-decoration-color: red;
+    }
+
+    .cell-time-active {
+        font-weight: 900 !important;
+    }
+
+    .cell-time-active-manuel-entry {
+        text-decoration: underline !important;
+        font-weight: 900 !important;
+    }
+}

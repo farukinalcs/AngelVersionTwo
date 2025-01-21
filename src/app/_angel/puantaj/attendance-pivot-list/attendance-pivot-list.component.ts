@@ -415,6 +415,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
 
   selectedCellsData: any[] = []; // Seçilen hücrelerin verilerini saklayacağınız dizi
   processChangeList: any[] = [];
+  imageUrl: string;
   constructor(
     private formBuilder: FormBuilder,
     private profileService: ProfileService,
@@ -423,7 +424,9 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
     private themeModeService: ThemeModeService,
     private ref: ChangeDetectorRef,
     private toastrService: ToastrService
-  ) {}
+  ) {
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   ngOnInit(): void {
     this.createForm();
@@ -645,7 +648,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
     return (
       `
       <div class="bg-hover-light d-flex justify-content-center mt-1">
-        <img style="width: 23px; height: 23px; border-radius: 5px;" src="http://localhost:5075/api/Image?sicilid=` +
+        <img style="width: 23px; height: 23px; border-radius: 5px;" src="${this.imageUrl}?sicilid=` +
       params.data.sicilid +
       `">
       </div>`
@@ -1259,7 +1262,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
       .requestMethod(sp)
       .pipe(
         takeUntil(this.ngUnsubscribe),
-        map((response) => this.parseValue(response[0].x[0].deger))
+        map((response) => this.parseValue(response[0].x[0]?.deger))
       )
       .subscribe((response: any) => {
         console.log('Grid Settings: ', response);

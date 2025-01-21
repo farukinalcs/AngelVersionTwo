@@ -53,6 +53,8 @@ import { LedPanelsComponent } from './access-definitions/definitions/led-panels/
 import { PrintersComponent } from './access-definitions/definitions/printers/printers.component';
 import { AccessDashboardComponent } from './access-dashboard/access-dashboard.component';
 import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dialog-update-device.component';
+import { AccessRegistryListComponent } from './access-registry-list/access-registry-list.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -76,7 +78,8 @@ import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dial
     LedPanelsComponent,
     PrintersComponent,
     AccessDashboardComponent,
-    DialogUpdateDeviceComponent
+    DialogUpdateDeviceComponent,
+    AccessRegistryListComponent
 
   ],
 
@@ -116,7 +119,8 @@ import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dial
     // }),
     CustomPipeModule,
     MatProgressSpinnerModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTooltipModule
   ]
 
 })

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ProfileService } from '../../../profile.service';
 
 @Component({
   selector: 'app-approved-requests',
@@ -18,9 +19,13 @@ export class ApprovedRequestsComponent implements OnInit, OnDestroy {
 
   checkGrid: boolean = true;
   filterText : string  = "";
+  imageUrl: any;
   
   constructor(
-  ) { }
+    private profileService: ProfileService
+  ) {
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   ngOnInit(): void {
   }

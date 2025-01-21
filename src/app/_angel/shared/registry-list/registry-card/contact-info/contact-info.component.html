@@ -1,0 +1,71 @@
+<div class="card mb-6 mb-xl-9 mx-2">
+    <!-- <div class="card-header border-0">
+        <div class="card-title">
+            <h2>{{"İletişim_Bilgileri" | translate}}</h2>
+        </div>
+    </div> -->
+
+    <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+        <div class="card-title">
+            <h3 class="card-label text-white">{{"İletişim_Bilgileri" | translate}}</h3>
+            <h4 class="card-label text-gray-200 fs-8">{{"İletişim_Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+        </div>
+    </div>
+
+    <div class="card-body pt-0 pb-5">
+        <div class="row" [formGroup]="form">
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Telefon_1" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Telefon_1' | translate}}" formControlName="tel">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Cep_Telefonu" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Cep_Telefonu' | translate}}" formControlName="mobilePhone">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"E_Mail" | translate}}</span>
+                </label>
+
+                <input type="email" class="form-control form-control-sm form-control-solid" placeholder="{{'E_Mail' | translate}}" formControlName="mail">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"İl" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'İl' | translate}}" formControlName="province">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"İlçe" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'İlçe' | translate}}" formControlName="town">
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Adres" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Adres' | translate}}" formControlName="address">
+            </div>
+
+            
+            
+
+            
+        </div>    
+    </div>
+</div>

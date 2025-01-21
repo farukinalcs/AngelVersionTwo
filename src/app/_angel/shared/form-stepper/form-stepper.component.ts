@@ -8,6 +8,7 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 export class FormStepperComponent implements OnInit {
   @Input() stepperFields : any;
   @Input() isFromAttendance: boolean;
+  @Input() lineHeight?: any = "h-40px";
   constructor() { }
 
   ngOnInit(): void {

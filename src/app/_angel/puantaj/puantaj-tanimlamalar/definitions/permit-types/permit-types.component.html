@@ -32,7 +32,7 @@
                                     <span>{{"Açıklama" | translate}}</span>
                                 </label>
     
-                                <input type="text" class="form-control form-control-sm form-control-solid" formControlName="explanation">
+                                <input type="text" class="form-control form-control-sm form-control-solid" formControlName="explanation" placeholder="{{'Açıklama_Giriniz' | translate}}">
                             </div>
     
                             <div class="col-2">
@@ -40,7 +40,7 @@
                                     <span>{{"Kod" | translate}}</span>
                                 </label>
     
-                                <input class="form-control form-control-sm form-control-solid" formControlName="code"/>    
+                                <input class="form-control form-control-sm form-control-solid" formControlName="code" placeholder="{{'Kod_Giriniz' | translate}}"/>    
                             </div>
     
                             <div class="col-1">
@@ -130,21 +130,21 @@
     
                         <div class="d-flex flex-row-reverse my-5">
                             <div class="p-2">
-                                <a class="btn btn-dark btn-sm custom-btn" (click)="deletePermission()">
+                                <a class="btn btn-dark btn-sm hover-elevate-up" (click)="deletePermission()">
                                     <i class="fa-solid fa-trash"></i>
                                     {{"Seçili_İzini_Sil" | translate}}
                                 </a>
                             </div>
                             
                             <div class="p-2">
-                                <a class="btn btn-dark btn-sm custom-btn" (click)="updatePermission()">
+                                <a class="btn btn-dark btn-sm hover-elevate-up" (click)="updatePermission()">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                     {{"Seçili_İzini_Güncelle" | translate}}
                                 </a>
                             </div>
     
                             <div class="p-2">
-                                <a class="btn btn-dark btn-sm custom-btn" (click)="addPermission()">
+                                <a class="btn btn-dark btn-sm hover-elevate-up" (click)="addPermission()">
                                     <i class="fa-solid fa-plus"></i>
                                     {{"İzin_Tipi_Ekle" | translate}}
                                 </a>
@@ -154,19 +154,19 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="table-responsive">
-                                    <table class="table table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-2">
+                                    <table class="table border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-2">
                                         <thead>
-                                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                                            <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
                                                 <th class=" rounded-start">{{"Kod" | translate}}</th>
-                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Açıklama" | translate}}</th>
-                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Saatlik_İzin" | translate}}</th>
-                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Ücretli" | translate}}</th>
-                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Açıklama_Zorunlu" | translate}}</th>
-                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Kıdem_Dışı" | translate}}</th>
-                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Görev" | translate}}</th>
-                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Hastalık_SGK" | translate}}</th>
-                                                <th class=" fw-bolder me-1 cursor-pointer">{{"Vizite" | translate}}</th>
-                                                <th class=" fw-bolder me-1 cursor-pointer rounded-end">{{"Denkleştirme" | translate}}
+                                                <th class=" fw-bolder me-1">{{"Açıklama" | translate}}</th>
+                                                <th class=" fw-bolder me-1">{{"Saatlik_İzin" | translate}}</th>
+                                                <th class=" fw-bolder me-1">{{"Ücretli" | translate}}</th>
+                                                <th class=" fw-bolder me-1">{{"Açıklama_Zorunlu" | translate}}</th>
+                                                <th class=" fw-bolder me-1">{{"Kıdem_Dışı" | translate}}</th>
+                                                <th class=" fw-bolder me-1">{{"Görev" | translate}}</th>
+                                                <th class=" fw-bolder me-1">{{"Hastalık_SGK" | translate}}</th>
+                                                <th class=" fw-bolder me-1">{{"Vizite" | translate}}</th>
+                                                <th class=" fw-bolder me-1 rounded-end">{{"Denkleştirme" | translate}}
                                                 </th>
                                             </tr>
                                         </thead>
@@ -184,43 +184,43 @@
                                                     (click)="selectType(item)">
                                                 
                                                     <td>
-                                                        <span class="mb-1">{{item.kod}}</span>
+                                                        <span class="mb-1 fw-semibold">{{item.kod}}</span>
                                                     </td>
                                     
                                                     <td>
-                                                        <span class="mb-1">{{item.ad}}</span>
+                                                        <span class="mb-1 fw-semibold">{{item.ad}}</span>
                                                     </td>
         
                                                     <td>
-                                                        <span class="mb-1">{{ item.saatlikizin ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                        <span class="mb-1 fw-semibold">{{ item.saatlikizin ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
                                                     </td>
                                                     
                                                     <td>
-                                                        <span class="mb-1">{{ item.ucretli ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                        <span class="mb-1 fw-semibold">{{ item.ucretli ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
                                                     </td>
         
                                                     <td>
-                                                        <span class="mb-1">{{ item.aciklamazorunlu ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                        <span class="mb-1 fw-semibold">{{ item.aciklamazorunlu ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
                                                     </td>
         
                                                     <td>
-                                                        <span class="mb-1">{{ item.kidemdisi ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                        <span class="mb-1 fw-semibold">{{ item.kidemdisi ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
                                                     </td>
         
                                                     <td>
-                                                        <span class="mb-1">{{ item.gorevli ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                        <span class="mb-1 fw-semibold">{{ item.gorevli ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
                                                     </td>
         
                                                     <td>
-                                                        <span class="mb-1">{{ item.sgk ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                        <span class="mb-1 fw-semibold">{{ item.sgk ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
                                                     </td>
         
                                                     <td>
-                                                        <span class="mb-1">{{ item.vizite ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                        <span class="mb-1 fw-semibold">{{ item.vizite ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
                                                     </td>
         
                                                     <td>
-                                                        <span class="mb-1">{{ item.denklestirme ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
+                                                        <span class="mb-1 fw-semibold">{{ item.denklestirme ? ("Evet" | translate) : ("Hayır" | translate) }}</span>
                                                     </td>
                                                 </tr>
                                             </ng-container>

@@ -41,7 +41,7 @@
                                     <div class="text-muted me-2 fs-8">{{item.Zaman | date: 'yyyy-MM-dd HH:mm:ss'}}</div>
                     
                                     <div class="symbol symbol-circle symbol-25px" ngbTooltip="{{item.AdSoyad}}">
-                                        <img src="http://localhost:5075/api/Image?sicilid={{item.sicilid}}" alt="img" />
+                                        <img src="{{imageUrl}}?sicilid={{item.sicilid}}" alt="img" />
                                     </div>
                                 </div>
                             </div>

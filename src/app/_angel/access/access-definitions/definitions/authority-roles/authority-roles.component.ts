@@ -421,6 +421,7 @@ export class AuthorityRolesComponent implements OnInit, OnDestroy {
       confirmButtonText: `Evet`,
       allowOutsideClick: false,
       allowEscapeKey: false,
+      heightAuto: false
     }).then((result) => {
       if (result.isConfirmed) {
         var sp: any[] = [
@@ -458,6 +459,7 @@ export class AuthorityRolesComponent implements OnInit, OnDestroy {
               confirmButtonText: 'Kapat',
               allowOutsideClick: false,
               allowEscapeKey: false,
+              heightAuto: false
             });
 
             this.closeAction();
@@ -474,6 +476,7 @@ export class AuthorityRolesComponent implements OnInit, OnDestroy {
           confirmButtonText: 'Kapat',
           allowOutsideClick: false,
           allowEscapeKey: false,
+          heightAuto: false
         });
       } else if (result.isDenied) {
       }

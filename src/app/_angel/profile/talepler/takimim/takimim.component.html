@@ -13,7 +13,7 @@
             <div class="mb-5">
               <div class="symbol symbol-100px symbol-circle">
                 <ng-container>
-                  <img src="http://localhost:5075/api/Image?sicilid={{item.sicilId}}" alt="{{item.adsoyad}}" />
+                  <img src="{{imageUrl}}?sicilid={{item.sicilId}}" alt="{{item.adsoyad}}" />
                 </ng-container>
                 <ng-container *ngIf="item.durum == 'İçeride'">
                   <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"></div>
