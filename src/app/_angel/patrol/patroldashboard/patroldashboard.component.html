@@ -4,7 +4,7 @@
       <ng-container *ngFor="let widget of widgets">
         <div class="col-md-2">
           <div class="widget-card cursor-pointer" 
-          (click)="changeContent(widget.value)">
+                (click)="changeContent(widget.value)">
             <h6 class="widget-title">{{ widget.title }}</h6>
             <p class="widget-value">{{ widget.value }}</p>
           </div>
@@ -113,7 +113,7 @@
   
 
 
-  <p-dialog
+<p-dialog
   header="Olay Detayı"
   [(visible)]="lastIncidentModal"
   [modal]="true"
@@ -168,7 +168,6 @@
 </p-dialog>
 
 <p-dialog
-header="ALARM"
 [(visible)]="lastAlarmModal"
 [modal]="true"
 [styleClass]="'alarm-dialog'"
@@ -179,13 +178,7 @@ header="ALARM"
 <div class="incident-modal">
  
   <section class="incident-info">
-    <h2 class="incident-title">Olay Bilgisi</h2>
-    <p class="incident-description">
-      <b>Açıklama:</b> {{ lastIncidentDesc || 'Bilgi bulunamadı.' }}
-    </p>
-    <p class="incident-security">
-      <b>Güvenlik:</b> {{ lastIncidentSecurity || 'Belirtilmemiş.' }}
-    </p>
+    <h2 class="incident-title" style="color: #ff0000;">! ! ! ALARM ! ! !</h2>
   </section>
 
 
@@ -193,37 +186,11 @@ header="ALARM"
     <div id="mapIncident"></div>
   </section>
 
-  <section *ngIf="hasMedia()" class="incident-media">
-    <h3 class="media-title">Medya</h3>
-
-    <div *ngIf="hasPhotos()" class="media-photos">
-      <h4>Fotoğraflar</h4>
-      <div class="photo-gallery">
-        <img
-          *ngFor="let photo of incidentMedia.photos"
-          [src]="photo"
-          alt="Olay Fotoğrafı"
-          class="photo-item" />
-      </div>
-    </div>
-
-    <div *ngIf="hasVideos()" class="media-videos">
-      <h4>Videolar</h4>
-      <div class="video-gallery">
-        <video
-          *ngFor="let video of incidentMedia.videos"
-          [src]="video"
-          controls
-          class="video-item">
-        </video>
-      </div>
-    </div>
-  </section>
 </div>
 </p-dialog>
 
 <p-dialog
-  header="Olay Detayı"
+  header="Cihaz Olayları"
   [(visible)]="deviceIncidentList"
   [modal]="true"
   [style]="{ width: '40vw' }"
@@ -263,6 +230,62 @@ header="ALARM"
     </div>
   </div>
 </p-dialog>
+
+
+<p-dialog
+  header="Olay Detayları"
+  [(visible)]="eventDetailsModal"
+  [modal]="true"
+  [style]="{ width: '40vw' }"
+  [breakpoints]="{ '2560px': '50vw', '992px': '70vw', '576px': '90vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000">
+  <div class="incident-modal">
+  <section class="incident-info">
+    <h2 class="incident-title">Olay Bilgisi</h2>
+    <p class="incident-description">
+      <b>BASLIK:</b> {{ IncidentHeader || 'Bilgi bulunamadı.' }}
+    </p>
+    <p class="incident-security">
+      <b>ACIKLAMA:</b> {{ IncidentDesc || 'Belirtilmemiş.' }}
+
+      
+    </p>
+    <p><b>{{IncidentTime | date: 'short' }}</b></p>
+  </section>
+    <section class="incident-map">
+      <div id="mapIncident"></div>
+    </section>
+
+    <section *ngIf="hasMedia()" class="incident-media">
+      <h3 class="media-title">Medya</h3>
+
+      <div *ngIf="hasPhotos()" class="media-photos">
+        <h4>Fotoğraflar</h4>
+        <div class="photo-gallery">
+          <img
+            *ngFor="let photo of incidentMedia.photos"
+            [src]="photo"
+            alt="Olay Fotoğrafı"
+            class="photo-item" />
+        </div>
+      </div>
+
+      <div *ngIf="hasVideos()" class="media-videos">
+        <h4>Videolar</h4>
+        <div class="video-gallery">
+          <video
+            *ngFor="let video of incidentMedia.videos"
+            [src]="video"
+            controls
+            class="video-item">
+          </video>
+        </div>
+      </div>
+    </section>
+  </div>
+</p-dialog>
+
 
   <router-outlet></router-outlet>
 

@@ -21,7 +21,7 @@ export class PatrolService {
 
     var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
     var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    console.log("SP",sp);
+    //console.log("SP",sp);
     var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
       keySize : 128 / 8,
       iv : iv,
@@ -57,4 +57,75 @@ export class PatrolService {
     }]
     return this.requestMethod(sp);
   }
+
+  setGuardTour(ad:string){
+    var sp: any[] = [{
+      mkodu:'yek223',
+      ad:ad.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
+  getGuardTour(lokasyon:string){
+    var sp: any[] = [{
+      mkodu:'yek225',
+      lokasyon:lokasyon.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
+  upGuardTour(ad:string,id:number){
+    var sp: any[] = [{
+      mkodu:'yek224',
+      ad:ad.toString(),
+      id:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  setGuardStation(ad:string){
+    var sp: any[] = [{
+      mkodu:'yek228',
+      ad:ad.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
+  getGuardStation(turid:string){
+    var sp: any[] = [{
+      mkodu:'yek231',
+      turid:turid.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
+  upGuardStation(ad:string,id:number){
+    var sp: any[] = [{
+      mkodu:'yek229',
+      ad:ad.toString(),
+      id:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+
+  deleteGuardStation(id:number){
+    var sp: any[] = [{
+      mkodu:'yek230',
+      id:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  relation(kaynakid:number,hedefid:number){
+    var sp : any[] = [{
+      mkodu:'yek156',
+      kaynakid : kaynakid.toString(),
+      hedefid: hedefid.toString(),
+      hedeftablo:'guvenlikturlari',
+      extra:''
+    }]
+    return this.requestMethod(sp);
+  }
+
 }

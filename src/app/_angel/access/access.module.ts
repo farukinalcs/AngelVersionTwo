@@ -111,9 +111,9 @@ import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dial
     InlineSVGModule.forRoot(),
     DropdownModule,
     TranslationModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAdALF-5HPnZFuvYRXmGY8qkv21TGD25ak',
-    }),
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'AIzaSyAdALF-5HPnZFuvYRXmGY8qkv21TGD25ak',
+    // }),
     CustomPipeModule,
     MatProgressSpinnerModule,
     MatTabsModule

@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input } from '@angular/core';
-
 import { Subscription } from 'rxjs';
 import { PatrolService } from '../patrol.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
@@ -18,14 +17,26 @@ export class PatroldashboardComponent {
   latitude:any = "";
   longitude:any = "";
   map: google.maps.Map | undefined;
-  patrolInfo1:AlarmModel[];
+
   patrolInfo:any[] = [];
-  lastIncidentModal:boolean=false;
+
+  lastIncidentModal:boolean = false;
   lastAlarmModal:boolean = false;
-  deviceIncidentList:boolean=false;
+  eventDetailsModal:boolean = false;
+  deviceIncidentList:boolean = false;
+
   lastIncidentDesc:string;
   lastIncidentSecurity:string;
+  IncidentDesc:string;
+  IncidentHeader:string;
+  IncidentTime:any;
+
+
+
+
   guardEventList:any[]=[];
+  eventDetails:any[]=[];
+
   constructor(
     private patrol : PatrolService,
     private ref : ChangeDetectorRef
@@ -54,12 +65,11 @@ export class PatroldashboardComponent {
 
     this.patrolInfo.forEach((patrol) => {
       if (+patrol.olay > 0) {
-        //this.lastIncidentModal = true;
-        // this.openOlayModal(patrol);
+       //this.lastIncidentModal = true;
+       //this.openAlarmModal(patrol);
       }
       if (+patrol.alarm > 0) {
-        //this.lastAlarmModal = true;
-        // this.openAlarmModal(patrol);
+        this.openAlarmModal(patrol);
       }
     });
 
@@ -110,34 +120,28 @@ export class PatroldashboardComponent {
     });
 
       console.log('Harita yüklendi:', this.map);
-    // this.map.addListener('click', (event: any) => {
-    //   this.latitude = event.latLng.lat();
-    //   this.longitude = event.latLng.lng();
-    //   this.latitude + ',' + this.longitude;
-    //   console.log('Tıklanan koordinatlar:', this.latitude, this.longitude);
-    // });
   this.getPatrolInfo();
   }
 
-  LastEventModal(item:AlarmModel){
-    console.log("ALARM MODEL",item);
-    if (!this.validateCoordinates(item.olat, item.olng)) {
-      console.error("Geçersiz koordinatlar:", item.olat, item.olng);
-      return;
-    }
-    this.loadMap(parseFloat(item.olat || "0"), parseFloat(item.olng || "0"), item.name);
-    this.lastIncidentModal = true;
-    this.lastIncidentDesc = item.oaciklama || '';
-    this.lastIncidentSecurity = item.securityname;
+  // LastEventModal(item:AlarmModel){
+  //   console.log("ALARM MODEL",item);
+  //   if (!this.validateCoordinates(item.olat, item.olng)) {
+  //     console.error("Geçersiz koordinatlar:", item.olat, item.olng);
+  //     return;
+  //   }
+  //   this.loadMap(parseFloat(item.olat || "0"), parseFloat(item.olng || "0"), item.name);
+  //   this.lastIncidentModal = true;
+  //   this.lastIncidentDesc = item.oaciklama || '';
+  //   this.lastIncidentSecurity = item.securityname;
 
-    const lat = parseFloat(item.olat || "0");
-    const lng = parseFloat(item.olng || "0");
+  //   const lat = parseFloat(item.olat || "0");
+  //   const lng = parseFloat(item.olng || "0");
   
-    if (isNaN(lat) || isNaN(lng)) {
-      console.error("Geçersiz koordinatlar:", item.olat, item.olng);
-      return;
-    }
-  }
+  //   if (isNaN(lat) || isNaN(lng)) {
+  //     console.error("Geçersiz koordinatlar:", item.olat, item.olng);
+  //     return;
+  //   }
+  // }
 
   incidentMedia = {
     photos: [
@@ -153,6 +157,7 @@ export class PatroldashboardComponent {
       ""
     ]
   };
+
   hasMedia(): boolean {
     return (
       (this.incidentMedia?.photos?.length ?? 0) > 0 || 
@@ -213,15 +218,36 @@ export class PatroldashboardComponent {
 
   getEventDetail(item:Incident){
     console.log(":::DETAİLS::::",item);
-    const Id = item.Id;
-    this.patrol.getGuardEvents(Id,0).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
-      this.guardEventList = response[0].x;
-      this.guardEventList = this.guardEventList.map(olay => {
-       olay.link = JSON.parse(olay.link);
-       return olay;  });
-       console.log("......OLAY OLAY OLAY........",this.guardEventList);
-     })
+    if (!this.validateCoordinates(item.latitude, item.longitude)) {
+      console.error("Geçersiz koordinatlar:",item.latitude, item.longitude);
+      return;
+    }
+    this.loadMap(parseFloat(item.latitude || "0"), parseFloat(item.longitude || "0"), item.olaybaslik);
+    this.eventDetailsModal = true;
+    this.IncidentDesc = item.olayaciklama || '';
+    this.IncidentHeader = item.olaybaslik || '';
+    this.IncidentTime = item.zaman;
+
+    const lat = parseFloat(item.latitude || "0");
+    const lng = parseFloat(item.longitude || "0");
+
+    if (isNaN(lat) || isNaN(lng)) {
+      console.error("Geçersiz koordinatlar:", item.latitude, item.longitude);
+      return;
+    }
   }
+
+  openAlarmModal(patrol:any){
+    this.lastAlarmModal = true;
+    console.log("ALARMMMM",patrol);
+    if (!this.validateCoordinates(patrol.lat, patrol.lng)) {
+      console.error("Geçersiz koordinatlar:",patrol.lat, patrol.lng);
+      return;
+    }
+    this.loadMap(parseFloat(patrol.lat || "0"), parseFloat(patrol.lng || "0"), patrol.securityname);
+  }
+
+
 
   changeContent(widgetValue: number) {
     this.activeWidget = widgetValue;

@@ -106,6 +106,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+
 .widget-title {
   font-size: 14px;
   color: #6c757d;
@@ -129,7 +130,8 @@
 
 .custom-card .card-header {
   background-color: #ffffff;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: none;
+  color: #6c757d;
   font-weight: bold;
   text-align: center;
   padding: 10px;
@@ -164,6 +166,6 @@
 }
 
 .alarm-dialog .p-dialog-content {
-  background-color: #ff0000; /* Özel arka plan rengi */
+  background-color: #ff0000 !important; /* Özel arka plan rengi */
   color: #000; /* İsteğe bağlı olarak yazı rengi */
 }

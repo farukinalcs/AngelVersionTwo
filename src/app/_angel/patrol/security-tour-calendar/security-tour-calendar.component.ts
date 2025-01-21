@@ -3,10 +3,8 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-security-tour-calendar',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './security-tour-calendar.component.html',
-  styleUrl: './security-tour-calendar.component.scss'
+  styleUrls: ['./security-tour-calendar.component.scss']
 })
 export class SecurityTourCalendarComponent {
 
