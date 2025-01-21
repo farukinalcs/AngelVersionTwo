@@ -1,0 +1,56 @@
+<div class="container py-4">
+
+    <div class="row g-3 widget-section">
+      <ng-container *ngFor="let widget of widgets">
+        <div class="col-md-2">
+          <div class="widget-card cursor-pointer" 
+                (click)="changeContent(widget.value)">
+            <h6 class="widget-title">{{ widget.title }}</h6>
+            <p class="widget-value">{{ widget.value }}</p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  
+
+    <div class="row mt-4">
+      <!-- <div class="row col-md-12" *ngIf="activeWidget == 0">
+        <div class="col-md-3">
+       
+        </div>
+    
+        <div class="col-md-9">
+     
+        </div>
+      </div> -->
+     
+
+      <div *ngIf="activeWidget == 1">
+        <h3>Güvenlik Turları</h3>
+       <app-security-tours></app-security-tours>
+      </div>
+
+      <div *ngIf="activeWidget == 2">
+        <h3>Güvenlik Lokasyonları</h3>
+        <app-security-locations></app-security-locations>
+        
+      </div>
+
+      <div *ngIf="activeWidget == 3">
+        <h3>Güvenlik İstasyonları</h3>
+        <app-security-stations></app-security-stations>
+      </div>
+
+      <div *ngIf="activeWidget == 4">
+        <h3>Güvenlik Tur Takvim</h3>
+        <app-security-tour-calendar></app-security-tour-calendar>
+      
+      </div>
+
+    
+    </div>
+
+    
+  </div>
+  
+  

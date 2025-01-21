@@ -8,10 +8,31 @@ import { AgmCoreModule } from '@agm/core';
 import { SecurityGuardsComponent } from './security-guards/security-guards.component';
 import { SharedModule } from '../shared/shared.module';
 import { TranslationModule } from 'src/app/modules/i18n';
+import { PatroldefinitionsComponent } from './patroldefinitions/patroldefinitions.component';
+import { SecurityLocationsComponent } from './security-locations/security-locations.component';
+import { SecurityStationsComponent } from './security-stations/security-stations.component';
+import { SecurityTourCalendarComponent } from './security-tour-calendar/security-tour-calendar.component';
+import { SecurityToursComponent } from './security-tours/security-tours.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { SplitterModule } from 'primeng/splitter';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { TimelineModule } from 'primeng/timeline';
+import { CardModule } from 'primeng/card';
+
 
 
 @NgModule({
-  declarations: [PatroldashboardComponent,SecurityGuardsComponent],
+  declarations: [
+    PatroldashboardComponent,
+    SecurityGuardsComponent,
+    PatroldefinitionsComponent,
+    SecurityLocationsComponent,
+    SecurityStationsComponent,
+    SecurityTourCalendarComponent,
+    SecurityToursComponent],
   imports: [
     CommonModule,
     PatrolRoutingModule,
@@ -21,7 +42,15 @@ import { TranslationModule } from 'src/app/modules/i18n';
     }),
     SharedModule,
     AgGridModule,
-    TranslationModule
+    TranslationModule,
+    OverlayPanelModule,
+    SplitterModule,
+    TableModule ,
+    InputTextModule,
+    DialogModule,
+    ButtonModule,
+    TimelineModule,
+    CardModule
   ]
 })
 export class PatrolModule { }

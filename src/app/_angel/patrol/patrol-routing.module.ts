@@ -2,6 +2,7 @@ import { SecurityGuardsComponent } from './security-guards/security-guards.compo
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PatroldashboardComponent } from './patroldashboard/patroldashboard.component';
+import { PatroldefinitionsComponent } from './patroldefinitions/patroldefinitions.component';
 
 
 
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path:'guvenlikciler',
     component:SecurityGuardsComponent
+  },
+  {
+    path:'tanimlamalar',
+    component:PatroldefinitionsComponent
   }
 ];
 
