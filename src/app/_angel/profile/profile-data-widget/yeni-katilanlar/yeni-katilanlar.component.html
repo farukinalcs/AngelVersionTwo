@@ -67,7 +67,7 @@
                                 <div class="row">
         
                                     <div class="col-12 d-flex justify-content-center">
-                                        <div class="symbol symbol-75px"><img alt="Logo" src="{{'data:image/jpg;base64,' + item.fotoimage}}"></div>
+                                        <div class="symbol symbol-75px"><img alt="Logo" src="{{imageUrl}}?sicilid={{item.ID}}"></div>
                                     </div>
                                 </div>
         
@@ -120,16 +120,16 @@
                         <div class="card">
                             <div class="card-body py-3">
                                 <ng-container *ngIf="todayNewPerson.length > 0">
-                                    <div class="tab-content">
+                                    <div class="tab-content pt-5 h-400px scroll">
                                         <div class="tab-pane fade active show">
                                             <div class="table-responsive">
                                                 <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                                     <thead>
-                                                        <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
-                                                            <th class="text-center"></th>
+                                                        <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light">
+                                                            <th class="text-center rounded-start"></th>
                                                             <th class="text-center">{{"İsim_Soyisim" | translate}}</th>
                                                             <th class="text-center">{{"Başlangıç_Tarihi" | translate}}</th>
-                                                            <th class="text-center">{{"Bölüm" | translate}}</th>
+                                                            <th class="text-center rounded-end">{{"Bölüm" | translate}}</th>
                                                         </tr>
                                                     </thead>
     
@@ -137,7 +137,7 @@
                                                         <tr *ngFor="let item of todayNewPerson">
                                                             <td class="text-center">
                                                                 <div class="symbol symbol-50px me-2">
-                                                                    <img alt="Logo" src="{{'data:image/jpg;base64,' + item.fotoimage}}">
+                                                                    <img alt="Logo" src="{{imageUrl}}?sicilid={{item.ID}}">
                                                                 </div>
                                                             </td>
     
@@ -149,12 +149,12 @@
                                                             </td>
     
                                                             <td class="text-center">
-                                                                <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.giristarih | date : 'yyyy-MM-dd'}}</a>
+                                                                <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.giristarih | date : 'yyyy-MM-dd'}}</a>
                                                             </td>
     
                                                             <td class="text-center text-muted fw-bold fs-4">
-                                                                <span class="border border-gray-500 border-2 rounded p-3">
-                                                                    {{item.bolum}}
+                                                                <span class="border border-gray-500 border-2 rounded p-3" pTooltip="{{item.bolum}}" tooltipPosition="top">
+                                                                    {{item.bolum | truncate}}
                                                                 </span>
                                                             </td>
                                                         </tr>
@@ -183,17 +183,17 @@
                         <div class="card">
                             <div class="card-body py-3">
                                 <ng-container *ngIf="newPersons.length > 0">
-                                    <div class="tab-content">
+                                    <div class="tab-content pt-5 h-400px scroll">
                                         <div class="tab-pane fade active show">
                                             <div class="table-responsive">
                                                 <table
                                                     class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                                     <thead>
-                                                        <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
-                                                            <th class="text-center"></th>
+                                                        <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light">
+                                                            <th class="text-center rounded-start"></th>
                                                             <th class="text-center">{{"İsim_Soyisim" | translate}}</th>
                                                             <th class="text-center">{{"Başlangıç_Tarihi" | translate}}</th>
-                                                            <th class="text-center">{{"Bölüm" | translate}}</th>
+                                                            <th class="text-center rounded-end">{{"Bölüm" | translate}}</th>
                                                         </tr>
                                                     </thead>
     
@@ -201,7 +201,7 @@
                                                         <tr *ngFor="let item of newPersons">
                                                             <td class="text-center">
                                                                 <div class="symbol symbol-50px me-2">
-                                                                    <img alt="Logo" src="{{'data:image/jpg;base64,' + item.fotoimage}}">
+                                                                    <img alt="Logo" src="{{imageUrl}}?sicilid={{item.ID}}">
                                                                 </div>
                                                             </td>
     
@@ -213,12 +213,12 @@
                                                             </td>
     
                                                             <td class="text-center">
-                                                                <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.giristarih | date : 'yyyy-MM-dd'}}</a>
+                                                                <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.giristarih | date : 'yyyy-MM-dd'}}</a>
                                                             </td>
     
                                                             <td class="text-center text-muted fw-bold fs-4">
-                                                                <span class="border border-gray-500 border-2 rounded p-3">
-                                                                    {{item.bolum}}
+                                                                <span class="border border-gray-500 border-2 rounded p-3" pTooltip="{{item.bolum}}" tooltipPosition="top">
+                                                                    {{item.bolum | truncate}}
                                                                 </span>
                                                             </td>
     
@@ -247,16 +247,16 @@
                         <div class="card">
                             <div class="card-body py-3">
                                 <ng-container *ngIf="newPersons.length > 0">
-                                    <div class="tab-content">
+                                    <div class="tab-content pt-5 h-400px scroll">
                                         <div class="tab-pane fade active show">
                                             <div class="table-responsive">
                                                 <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                                     <thead>
-                                                        <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase bg-light">
-                                                            <th class="text-center"></th>
+                                                        <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light">
+                                                            <th class="text-center rounded-start"></th>
                                                             <th class="text-center">{{"İsim_Soyisim" | translate}}</th>
                                                             <th class="text-center">{{"Başlangıç_Tarihi" | translate}}</th>
-                                                            <th class="text-center">{{"Bölüm" | translate}}</th>
+                                                            <th class="text-center rounded-end">{{"Bölüm" | translate}}</th>
                                                         </tr>
                                                     </thead>
     
@@ -264,7 +264,7 @@
                                                         <tr *ngFor="let item of newPersons">
                                                             <td class="text-center">
                                                                 <div class="symbol symbol-50px me-2">
-                                                                    <img alt="Logo" src="{{'data:image/jpg;base64,' + item.fotoimage}}">
+                                                                    <img alt="Logo" src="{{imageUrl}}?sicilid={{item.ID}}">
                                                                 </div>
                                                             </td>
     
@@ -276,12 +276,12 @@
                                                             </td>
     
                                                             <td class="text-center">
-                                                                <a class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.giristarih | date : 'yyyy-MM-dd'}}</a>
+                                                                <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.giristarih | date : 'yyyy-MM-dd'}}</a>
                                                             </td>
     
                                                             <td class="text-center text-muted fw-bold fs-4">
-                                                                <span class="border border-gray-500 border-2 rounded p-3">
-                                                                    {{item.bolum}}
+                                                                <span class="border border-gray-500 border-2 rounded p-3" pTooltip="{{item.bolum}}" tooltipPosition="top">
+                                                                    {{item.bolum | truncate: 15}}
                                                                 </span>
                                                             </td>
     
@@ -316,8 +316,8 @@
     </ng-template> -->
 
     <ng-template pTemplate="footer">
-        <a (click)="displayAllNewPerson=false" class="btn btn-danger">
-            <i class="fa-solid fa-xmark fs-1"></i>
+        <a (click)="displayAllNewPerson=false" class="btn btn-sm btn-danger mx-1">
+            <i class="fa-solid fa-xmark fs-7"></i>
             {{'Kapat' | translate}}
         </a>
     </ng-template>

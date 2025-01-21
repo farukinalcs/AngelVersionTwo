@@ -71,6 +71,7 @@ export class FileTypeDefinitionComponent implements OnInit, OnDestroy {
             return;
           }
           this.vacationReasons = [...data];
+          this.selectedType = this.vacationReasons[1];
           console.log('İzin Tipleri : ', data);
         }
       );

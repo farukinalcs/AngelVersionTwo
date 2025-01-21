@@ -73,7 +73,7 @@ export class TaleplerimComponent implements OnInit, OnDestroy {
       this.onaylananFormlar = [];
 
 
-      this.myDemands.forEach((item : any) => {
+      this.myDemands?.forEach((item : any) => {
         item.completed = false;
         if (item.durum == 0) {
           this.sureciDevamEdenFormlar.push(item);

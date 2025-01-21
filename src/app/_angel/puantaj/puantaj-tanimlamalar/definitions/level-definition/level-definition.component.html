@@ -10,8 +10,8 @@
                 </div>
             
                 <div class="card-body">
-                    <div class="row gap-5" [formGroup]="formGroup">
-                        <div class="col-5">
+                    <div class="row" [formGroup]="formGroup">
+                        <div class="col-6 p-5">
                             <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
                                 <span class="required">{{"İzin_Gerçekleşme_Kademesi" | translate}}</span>
                             </label>
@@ -31,7 +31,7 @@
                             </p-dropdown>
                         </div>
             
-                        <div class="col-5">
+                        <div class="col-6 p-5">
                             <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
                                 <span class="required">{{"Fazla_Mesai_Gerçekleşme_Kademesi" | translate}}</span>
                             </label>
@@ -51,7 +51,7 @@
                             </p-dropdown>
                         </div>
             
-                        <div class="col-5">
+                        <div class="col-6 p-5">
                             <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
                                 <span class="required">{{"Vardiya_Planı_Gerçekleşme_Kademesi" | translate}}</span>
                             </label>
@@ -71,7 +71,7 @@
                             </p-dropdown>
                         </div>
             
-                        <div class="col-5">
+                        <div class="col-6 p-5">
                             <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
                                 <span class="required">{{"Mail_Servis_Gerçekleşme_Kademesi" | translate}}</span>
                             </label>
@@ -92,7 +92,7 @@
                         </div>
             
                         <div class="col-12 d-flex justify-content-end">
-                            <a class="btn btn-dark btn-sm custom-btn" (click)="setLevelDefinition()">
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="setLevelDefinition()">
                                 <i class="fa-solid fa-floppy-disk"></i>
                                 {{"Kaydet" | translate}}
                             </a>

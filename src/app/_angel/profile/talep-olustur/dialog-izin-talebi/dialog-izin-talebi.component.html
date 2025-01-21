@@ -14,7 +14,7 @@
                         </div>
                     </div>
                     
-                    <app-form-stepper class="d-flex align-item-center" [stepperFields]="stepperFields" [isFromAttendance]="isFromAttendance"></app-form-stepper>
+                    <app-form-stepper class="d-flex align-item-center" [stepperFields]="stepperFields" [isFromAttendance]="isFromAttendance" [lineHeight]="'h-30px'"></app-form-stepper>
     
                     <div class="row w-xl-700px">
                         <div class="col-12">
@@ -25,11 +25,6 @@
                                         <div class="w-100">
                                             <div class="row">
                                                     
-                                                    
-                                                    
-                                                    
-                                                    
-    
                                                 <div class="col-12">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"Günlük_Saatlik" | translate}}</span>
@@ -60,6 +55,13 @@
                                                             </label>
                                                         </div>
                                                     </div>
+
+                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                                                                validation: 'required',
+                                                                                                message: translateService.instant('Boş_Geçilemez'),
+                                                                                                control: vacationForm.controls['gunluksaatlik']
+                                                                                                }">
+                                                    </ng-container>
                                                 </div>
                                             </div>
                                         </div>
@@ -136,6 +138,12 @@
                                                             </label>
                                                         </div>
                                                     </div>
+                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                                                                            validation: 'required',
+                                                                                                            message: translateService.instant('Boş_Geçilemez'),
+                                                                                                            control: vacationForm.controls['gunluksaatlik']
+                                                                                                            }">
+                                                    </ng-container>
                                                 </div>
                                             </div>
                                         </div>
@@ -164,9 +172,16 @@
                                                             </div>
                                                         </ng-template>
                                                     </p-dropdown>
+
+                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                        validation: 'required',
+                                                        message: translateService.instant('Boş_Geçilemez'),
+                                                        control: vacationForm.controls['tip']
+                                                        }">
+                                                    </ng-container>
                                                 </div>
 
-                                                <div class="col-12 mt-10">
+                                                <div class="col-12 mt-10" *ngIf="isFromAttendance">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="">{{"Seçilen_Kişiler" | translate}}</span>
                                                     </label>
@@ -214,8 +229,13 @@
                                                         <span class="required">{{"Başlangıç_Tarihi" | translate}}</span>
                                                     </label>
                                 
-                                                    <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bastarih">
-                                
+                                                    <input type="date" class="form-control form-control-sm form-control-solid" formControlName="bastarih">
+                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                        validation: 'required',
+                                                        message: translateService.instant('Boş_Geçilemez'),
+                                                        control: vacationForm.controls['bastarih']
+                                                        }">
+                                                    </ng-container>
                                                 </div>
                                 
                                                 <ng-container *ngIf="isHourly">
@@ -224,8 +244,13 @@
                                                             <span class="required">{{"Başlangıç_Saati" | translate}}</span>
                                                         </label>
                                 
-                                                        <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bassaat">
-                                
+                                                        <input type="time" class="form-control form-control-sm form-control-solid" formControlName="bassaat">
+                                                        <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                            validation: 'required',
+                                                            message: translateService.instant('Boş_Geçilemez'),
+                                                            control: vacationForm.controls['bassaat']
+                                                            }">
+                                                        </ng-container>
                                                     </div>
                                                 </ng-container>
                                 
@@ -243,8 +268,13 @@
                                                     </ng-container>
                                 
                                 
-                                                    <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bittarih">
-                                
+                                                    <input type="date" class="form-control form-control-sm form-control-solid" formControlName="bittarih">
+                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                        validation: 'required',
+                                                        message: translateService.instant('Boş_Geçilemez'),
+                                                        control: vacationForm.controls['bittarih']
+                                                        }">
+                                                    </ng-container>
                                                 </div>
                                 
                                                 <ng-container *ngIf="isHourly">
@@ -253,7 +283,13 @@
                                                             <span class="required">{{"Bitiş_Saati" | translate}}</span>
                                                         </label>
                                 
-                                                        <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bitsaat">
+                                                        <input type="time" class="form-control form-control-sm form-control-solid" formControlName="bitsaat">
+                                                        <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                            validation: 'required',
+                                                            message: translateService.instant('Boş_Geçilemez'),
+                                                            control: vacationForm.controls['bitsaat']
+                                                            }">
+                                                        </ng-container>
                                                     </div>
                                                 </ng-container>
     
@@ -304,6 +340,12 @@
                                                     <textarea class="form-control form-control-solid" rows="3" formControlName="izinadresi" placeholder="{{'Adres_Giriniz' | translate}}">
     
                                                     </textarea>
+                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                        validation: 'required',
+                                                        message: translateService.instant('Boş_Geçilemez'),
+                                                        control: vacationForm.controls['izinadresi']
+                                                        }">
+                                                    </ng-container>
                                                 </div>
     
                                                 <div class="col-12">
@@ -314,6 +356,12 @@
                                                     <textarea class="form-control form-control-solid" rows="3" formControlName="aciklama" placeholder="{{'Açıklama_Giriniz' | translate}}">
     
                                                     </textarea>
+                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                        validation: 'required',
+                                                        message: translateService.instant('Boş_Geçilemez'),
+                                                        control: vacationForm.controls['aciklama']
+                                                        }">
+                                                    </ng-container>
                                                 </div>
                                             </div>
                                         </div>
@@ -433,7 +481,7 @@
     
                                 
                                 <ng-container *ngIf="currentStep$.value == 6 && !isFromAttendance">
-                                    <div class="current h-xl-500px scroll">
+                                    <div class="current h-xl-400px scroll">
                                         <div class="w-100">
                                             <div class="row pb-3" *ngFor="let item of fileTypes; index as i">
                                                 <div class="col-12 d-flex justify-content-center align-items-center">
@@ -443,8 +491,7 @@
                                                         <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center"
                                                             style="padding: 1.5rem 0;">
                                                             <div class="dropzone-msg dz-message needsclick">
-                                                                <h3 class="dropzone-msg-title text-center">{{"DOSYA_YUKLE" | translate: { fileType:
-                                                                    item.ad } }}</h3>
+                                                                <h3 class="dropzone-msg-title text-center">{{"DOSYA_YUKLE" | translate: { fileType: item.ad } }}</h3>
                                                             </div>
                                                         </div>
                                                     </label>
@@ -456,7 +503,6 @@
                                                             <div class="card-body">
                                                                 <div class="row d-flex justify-content-center align-items-center">
                                 
-                                                                    <!-- <ng-container *ngIf="!item.files.type.startsWith('image')"> -->
                                                                     <div class="col-3 text-center">
                                                                         <div [ngSwitch]="item.files.type">
                                                                             <div
@@ -483,8 +529,6 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <!-- </ng-container> -->
-                                
                                 
                                                                     <div class="col-7">
                                                                         <div class="fs-6 fw-bold text-gray-800 text-center">
@@ -501,55 +545,12 @@
                                                                             <i class="fa-solid fa-xmark fs-4"></i>
                                                                         </a>
                                                                     </div>
-                                
-                                                                    <!-- <ng-container *ngIf="item.files.type.startsWith('image')">
-                                                                                                            <div class="col-12 d-flex justify-content-center">
-                                                                                                                <div class="symbol symbol-75px">
-                                                                                                                    <img alt="Uploaded File" src="{{item.files.url}}">
-                                                                                                                    <iframe [src]="item.files.url" iframeborder="0"></iframe>
-                                                                                                                </div>
-                                                                                                            </div>    
-                                                                                                        </ng-container> -->
                                                                 </div>
                                                             </div>
                                 
                                                         </div>
                                                     </ng-container>
                                                 </div>
-                                
-                                                <!-- <ng-container *ngIf="uploadedFile">
-                                                                                        <div [@fileUploaded]="'uploaded'" class="card bg-light-dark m-3">
-                                                                                            <div class="card-body">
-                                                                                                <div class="row d-flex justify-content-center align-items-center">
-                                                                                
-                                                                                                    <div class="col-12 d-flex justify-content-end mb-3">
-                                                                                                        <a (click)="uploadedFile = null" class="btn btn-icon btn-danger btn-sm me-3">
-                                                                                                            <i class="fa-solid fa-xmark fs-4"></i>
-                                                                                                        </a>
-                                                                                                    </div>
-                                                                                                    
-                                                                                                    <div class="col-12">
-                                                                                                        <iframe [src]="uploadedFile.url" width="100%" height="300px"></iframe>
-                                                                                                    </div>
-                                                                                
-                                                                                                    <div class="col-4">
-                                                                                                        <div class="fs-6 fw-bold text-gray-800 text-center">
-                                                                                                            {{uploadedFile.name}}
-                                                                                                        </div>
-                                                                                                    </div>
-                                        
-                                                                                                    <div class="col-4">
-                                                                                                        <div class="fs-6 fw-bold text-gray-800 text-center">
-                                                                                                            {{uploadedFile.fileSize}} {{uploadedFile.fileSizeType}}
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </ng-container> -->
-                                
-                                
                                             </div>
                                         </div>
                                     </div>
@@ -639,7 +640,7 @@
 
 
 
-<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+<!-- <ng-template #formError let-control="control" let-message="message" let-validation="validation">
     <ng-container *ngIf="control.hasError(validation)">
         <div class="invalid-feedback">
             {{message | translate}}
@@ -653,7 +654,7 @@
             {{message | translate}}
         </div>
     </ng-container>
-</ng-template>
+</ng-template> -->
 
 
 
@@ -672,9 +673,22 @@
     
 
     <ng-template pTemplate="footer">
-        <a (click)="displayUploadedFile=false" class="btn btn-danger">
-          <i class="fa-solid fa-xmark fs-1"></i>
+        <a (click)="displayUploadedFile=false" class="btn btn-sm btn-danger mx-1">
+          <i class="fa-solid fa-xmark fs-7"></i>
           {{'Kapat' | translate}}
         </a>
       </ng-template>
 </p-dialog>
+
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+    <ng-container *ngIf="control.hasError(validation)">
+        <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+                <span role="alert">
+                    {{ message }}
+                </span>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

@@ -1,169 +1,31 @@
-<!-- <div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-custom gutter-b py-3">
-                <div class="card-body pt-3 pb-0">
-                    <div class="row">
-                        <div class="col-1 d-flex justify-content-center align-items-center">
-
-                            <a (click)="moveLeft()"
-                                class="btn btn-sm btn-icon btn-bg-light btn-active-color-danger w-30px h-30px">
-                                <i class="fa-solid fa-arrow-left fs-5"></i>
-                            </a>
-                        </div>
-
-                        <div class="col-10 d-flex justify-content-center align-items-center">
-                            <ul class="nav nav-pills nav-pills-custom justify-content-center mb-3 tab-list"
-                                role="tablist" [ngClass]="{
-                                                    'animate-slide-left': slideDirection === 'left',
-                                                    'animate-slide-right': slideDirection === 'right'
-                                                  }">
-                                <li *ngFor="let item of visibleTabs" class="nav-item mb-3 me-3 me-lg-6">
-                                    <a class="nav-link btn btn-outline btn-flex btn-color-gray-800 btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                                        data-bs-toggle="pill" [attr.id]="item.id" (click)="changeTab(item)"
-                                        [ngClass]="{'active': selectedTab.id === item.id}">
-                                        <div class="nav-icon mb-3">
-                                            <i class="{{ item.icon }} fs-2 p-0"></i>
-                                        </div>
-                                        <span class="fw-bold fs-8 lh-1"> {{ item.label }} </span>
-                                        <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-danger"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="col-1 d-flex justify-content-center align-items-center">
-                            <a (click)="moveRight()"
-                                class="btn btn-sm btn-icon btn-bg-light btn-active-color-danger w-30px h-30px">
-                                <i class="fa-solid fa-arrow-right fs-5"></i>
-                            </a>
-                        </div>
-
-                        <div class="d-flex justify-content-center mt-1">
-                            <ng-container *ngFor="let page of pages; let i = index">
-                                <button class="page-btn" [ngClass]="{'active-page': i === currentPage}"
-                                    (click)="goToPage(i)"></button>
-                            </ng-container>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-
-
-            <ng-container *ngIf="selectedTab.id == 1">
-                <app-organization-definitions [crud]="selectedTab"></app-organization-definitions>
-            </ng-container>
-
-            <ng-container *ngIf="selectedTab.id == 2">
-                <app-organization-definitions [crud]="selectedTab"></app-organization-definitions>
-            </ng-container>
-
-            <ng-container *ngIf="selectedTab.id == 3">
-                <app-organization-definitions [crud]="selectedTab"></app-organization-definitions>
-            </ng-container>
-
-            <ng-container *ngIf="selectedTab.id == 4">
-                <app-organization-definitions [crud]="selectedTab"></app-organization-definitions>
-            </ng-container>
-
-            <ng-container *ngIf="selectedTab.id == 5">
-                <app-organization-definitions [crud]="selectedTab"></app-organization-definitions>
-            </ng-container>
-
-            <ng-container *ngIf="selectedTab.id == 6">
-                <app-organization-definitions [crud]="selectedTab"></app-organization-definitions>
-            </ng-container>
-
-            <ng-container *ngIf="selectedTab.id == 7">
-                <app-organization-definitions [crud]="selectedTab"></app-organization-definitions>
-            </ng-container>
-
-            <ng-container *ngIf="selectedTab.id == 10">
-                <app-fingerprint></app-fingerprint>
-            </ng-container>
-
-            <ng-container *ngIf="selectedTab.id == 11">
-                <app-organization-definitions [crud]="selectedTab"></app-organization-definitions>
-            </ng-container>
-
-            <ng-container *ngIf="selectedTab.id == 12">
-                <app-organization-definitions [crud]="selectedTab"></app-organization-definitions>
-            </ng-container>
-
-            <ng-container *ngIf="selectedTab.id == 13">
-                <app-mail-service></app-mail-service>
-            </ng-container>
-
-            <ng-container *ngIf="selectedTab.id == 14">
-                <app-ftp-info></app-ftp-info>
-            </ng-container>
-            
-            <ng-container *ngIf="selectedTab.id == 15">
-                <app-organization-definitions [crud]="selectedTab"></app-organization-definitions>
-            </ng-container>
-
-            <ng-container *ngIf="selectedTab.id == 16">
-                <app-security></app-security>
-            </ng-container>
-
-
-
-            
-
-
-        </div>
-    </div>
-</div> -->
-
-
-
-
-
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
             <div class="card card-custom gutter-b py-3">
                 <div class="card-body pt-3 pb-0">
                     <div class="row">
-                        <div class="col-1 d-flex justify-content-center align-items-center">
-                            <a (click)="moveLeft()" class="btn btn-sm btn-icon btn-bg-light btn-active-color-danger w-30px h-30px">
-                                <i class="fa-solid fa-arrow-left fs-5"></i>
-                            </a>
-                        </div>
-
-                        <div class="col-10 d-flex justify-content-center align-items-center">
-                            <ul class="nav nav-pills nav-pills-custom justify-content-center mb-3 tab-list"
-                                role="tablist" [ngClass]="{
-                                                    'animate-slide-left': slideDirection === 'left',
-                                                    'animate-slide-right': slideDirection === 'right'
-                                                  }">
-                                <li *ngFor="let item of visibleTabs" class="nav-item mb-3 me-3 me-lg-6">
-                                    <a [routerLink]="item.path" class="nav-link btn btn-outline btn-flex btn-color-gray-800 btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                                        [ngClass]="{'active': selectedTab.id === item.id}" [attr.id]="item.id" (click)="changeTab(item)">
-                                        <div class="nav-icon mb-3">
-                                            <i class="{{ item.icon }} fs-2 p-0"></i>
-                                        </div>
-                                        <span class="fw-bold fs-8 lh-1"> {{ item.label }} </span>
-                                        <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-danger"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="col-1 d-flex justify-content-center align-items-center">
-                            <a (click)="moveRight()" class="btn btn-sm btn-icon btn-bg-light btn-active-color-danger w-30px h-30px">
-                                <i class="fa-solid fa-arrow-right fs-5"></i>
-                            </a>
-                        </div>
-                        
-                        <div class="d-flex justify-content-center mt-1">
-                            <ng-container *ngFor="let page of pages; let i = index">
-                                <button class="page-btn" [ngClass]="{'active-page': i === currentPage}"
-                                    (click)="goToPage(i)"></button>
-                            </ng-container>
+                        <div class="col-12">
+                            <p-carousel [value]="tabList" [numVisible]="11" [numScroll]="10" [circular]="true" [responsiveOptions]="[
+                                                                    { breakpoint: '1024px', numVisible: 7, numScroll: 6 },
+                                                                    { breakpoint: '768px', numVisible: 5, numScroll: 4 },
+                                                                    { breakpoint: '560px', numVisible: 3, numScroll: 2 }
+                                                                ]">
+                                <ng-template let-tab pTemplate="item">
+                                    <li class="nav-item" style="list-style: none;">
+                                        <a class="nav-link btn btn-outline btn-flex btn-color-gray-800 btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2 position-relative"
+                                            [routerLink]="tab.path"
+                                            [attr.id]="tab.id" (click)="changeTab(tab)"
+                                            [ngClass]="{'active border-danger': selectedTab.id === tab.id}">
+                                            <div class="nav-icon mb-3">
+                                                <i class="{{ tab.icon }} fs-2 p-0"></i>
+                                            </div>
+                                            <span class="fw-bold fs-8 lh-1"> {{ tab.label }} </span>
+                                            <span *ngIf="selectedTab.id === tab.id"
+                                                class="bullet-custom position-absolute bottom-0 w-80px h-4px bg-danger"></span>
+                                        </a>
+                                    </li>
+                                </ng-template>
+                            </p-carousel>
                         </div>
                     </div>
                 </div>

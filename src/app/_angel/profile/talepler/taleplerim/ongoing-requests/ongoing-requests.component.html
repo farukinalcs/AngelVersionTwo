@@ -36,8 +36,40 @@
 
 <ng-container *ngIf="selectedNavItem && ongoingRequests.length > 0">
     <div class="row mt-5 m-0 d-flex justify-content-center">
-        <div class="card bg-light-danger p-4">
-            <div class="row">
+        <div class="card bg-light-secondary p-4">
+
+            <div class="row d-flex align-items-center gy-3 gy-md-0 justify-content-between">
+                <div class="col-12 col-md-4 col-xl-4">
+                    <div class="input-group h-100" style="flex: 1;">
+                        <input class="form-control form-control-solid h-30px p-2 border-1 border-dark rounded-lg font-size-h6"
+                            [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}">
+                    
+                        <button class="search-icon">
+                            <div class="svg">
+                                <i class="fa-solid fa-magnifying-glass text-white fs-4"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-6 col-md-4 col-xl-3 d-flex justify-content-md-center">
+                    <div class="symbol symbol-30px cursor-pointer me-2" matTooltip="{{'Detaylı_Arama' | translate}}">
+                        <span class="symbol-label symbol-label bg-dark" (click)="showDetailSearchDialog()">
+                            <i class="fa-solid fa-search fs-7 text-white"></i>
+                        </span>
+                    </div>
+
+                    <div class="symbol symbol-30px cursor-pointer me-2">
+                        <span class="symbol-label symbol-label bg-dark" (click)="checkGrid = !checkGrid">
+                            <i class="fa-solid fa-list fs-7 text-white" [ngClass]="{'fa-grip': checkGrid, 'fa-list' : !checkGrid}"></i>
+                        </span>
+                    </div>
+                </div>
+            
+            </div>
+            
+            
+            <!-- <div class="row">
                 <div class="col-12 col-md-6 pb-2 p-md-auto d-flex justify-content-start">
                     <div class="input-group h-100 w-100 w-md-75">
                         <input class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
@@ -63,7 +95,7 @@
                         <i class="fa-solid fa-list fs-4" [ngClass]="{'fa-grip': checkGrid, 'fa-list' : !checkGrid}"></i>
                     </a>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -100,7 +132,7 @@
                             <div class="row d-flex justify-content-center">
                                 <div class="col-12 d-flex justify-content-center">
                                     <img width="25%" style="border-radius: 5px;"
-                                        src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}"
+                                        src="{{imageUrl}}?sicilid={{item.SicilId}}"
                                         alt="Personel Foto" />
                                 </div>
                             </div>
@@ -199,38 +231,38 @@
                                 *ngFor="let item of ongoingRequests | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis', 'firma', 'bolum', 'pozisyon']">
                                 <td class="text-center">
                                     <div class="symbol symbol-50px me-2">
-                                        <img src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}"
+                                        <img src="{{imageUrl}}?sicilid={{item.SicilId}}"
                                             alt="Personel Foto">
                                     </div>
                                 </td>
 
                                 <td class="text-center text-muted fw-bold fs-4">
-                                    <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">
+                                    <span class="text-dark fw-bold text-hover-danger mb-1 fs-6">
                                         {{item.Personel}}
                                     </span>
                                 </td>
 
                                 <td class="text-center">
-                                    <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.tipad}}</p>
-                                    <span class="text-muted fw-semibold d-block">{{item.neden}}</span>
+                                    <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.tipad}}</p>
+                                    <span class="text-muted fw-semibold d-block" pTooltip="{{item.neden}}" tooltipPosition="top">{{item.neden | truncate:25}}</span>
                                 </td>
 
                                 <td class="text-center">
-                                    <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.Baslangic | date:
+                                    <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Baslangic | date:
                                         'yyyy-MM-dd'}}</p>
                                     <span class="text-muted fw-semibold d-block">{{item.Baslangic | date:
                                         'HH:mm'}}</span>
                                 </td>
 
                                 <td class="text-center">
-                                    <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.Bitis | date:
+                                    <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Bitis | date:
                                         'yyyy-MM-dd'}}</p>
                                     <span class="text-muted fw-semibold d-block">{{item.Bitis | date: 'HH:mm'}}</span>
                                 </td>
 
                                 <td class="text-center">
-                                    <p class="text-dark fw-bold text-hover-primary hover-scroll h-100px mb-1 fs-6">
-                                        {{item.nedenx}}</p>
+                                    <p class="text-dark fw-bold text-hover-danger mb-1 fs-6"  pTooltip="{{item.nedenx}}" tooltipPosition="top">
+                                        {{item.nedenx | truncate:25}}</p>
                                 </td>
 
                                 <td class="text-center text-muted fw-bold fs-4">

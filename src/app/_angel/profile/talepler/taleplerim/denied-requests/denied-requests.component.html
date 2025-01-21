@@ -37,39 +37,36 @@
 
 <ng-container *ngIf="deniedRequests.length > 0">
     <div class="row mt-5 m-0 d-flex justify-content-center">
-        <div class="card bg-light-danger p-4">
+        <div class="card bg-light-secondary p-4">
 
-            <div class="row d-flex justify-content-center justify-content-sm-start gy-4 gy-sm-0">
-                <div class="col-12 col-sm-4 d-flex justify-content-start">
-                    <div class="input-group h-100 ">
-                        <input class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
+            <div class="row d-flex align-items-center gy-3 gy-md-0 justify-content-between">
+                <div class="col-12 col-md-4 col-xl-4">
+                    <div class="input-group h-100" style="flex: 1;">
+                        <input class="form-control form-control-solid h-30px p-2 border-1 border-dark rounded-lg font-size-h6"
                             [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}">
+                    
                         <button class="search-icon">
                             <div class="svg">
-                                <!-- <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                    <path
-                                                                                        d="M8.6 16.2C12.7974 16.2 16.2 12.7974 16.2 8.6C16.2 4.40263 12.7974 1 8.6 1C4.40263 1 1 4.40263 1 8.6C1 12.7974 4.40263 16.2 8.6 16.2Z"
-                                                                                        stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                                                                                    <path d="M16.6 17L15 15.4" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                                                                                </svg> -->
                                 <i class="fa-solid fa-magnifying-glass text-white fs-4"></i>
                             </div>
                         </button>
                     </div>
                 </div>
+                
+                <div class="col-6 col-md-4 col-xl-3 d-flex justify-content-md-center">
+                    <div class="symbol symbol-30px cursor-pointer me-2" matTooltip="{{'Detaylı_Arama' | translate}}">
+                        <span class="symbol-label symbol-label bg-dark" (click)="showDetailSearchDialog()">
+                            <i class="fa-solid fa-search fs-7 text-white"></i>
+                        </span>
+                    </div>
 
-                <div class="col-10 col-sm-7 d-flex justify-content-end">
-                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold w-100 w-sm-auto"  (click)="showDetailSearchDialog()">
-                        {{"Detaylı_Arama" | translate}}
-                        <i class="fa fa-search"></i>
-                    </a>
+                    <div class="symbol symbol-30px cursor-pointer me-2">
+                        <span class="symbol-label symbol-label bg-dark" (click)="checkGrid = !checkGrid">
+                            <i class="fa-solid fa-list fs-7 text-white" [ngClass]="{'fa-grip': checkGrid, 'fa-list' : !checkGrid}"></i>
+                        </span>
+                    </div>
                 </div>
-
-                <div class="col-1 col-sm-1">
-                    <a class="btn btn-icon btn-danger btn-sm me-3" (click)="checkGrid = !checkGrid">
-                        <i class="fa-solid fa-list fs-4" [ngClass]="{'fa-grip': checkGrid, 'fa-list' : !checkGrid}"></i>
-                    </a>
-                </div>
+            
             </div>
             
         </div>
@@ -131,68 +128,13 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- <div class="row w-100">
-                                    <div class="col-6">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="fs-7 theme-dark-show text-white">
-                                                    {{item.Personel}}
-                                                </div>
-                
-                                                <div class="fs-7 theme-light-show text-dark">
-                                                    {{item.Personel}}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <ng-container *ngIf="!item.panelOpenState">
-                                                    <span class="badge badge-light-danger ml-4">{{item.sicilno}}</span>
-                                                </ng-container>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-
-                                    <div class="col-6">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="fs-7 short-text" matTooltip="{{ item.neden }}">
-                                                    <ng-container *ngIf="item.panelOpenState">
-                                                        {{ (item.neden.length>14)? (item.neden | slice:0:14)+'...':(item.neden) }}
-                                                    </ng-container>
-            
-                                                    <ng-container *ngIf="!item.panelOpenState">
-                                                        {{ (item.neden.length>12)? (item.neden | slice:0:12)+'...':(item.neden) }}
-                                                    </ng-container>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <ng-container *ngIf="!item.panelOpenState">
-                                                    <div class="text-gray-400 fs-8">
-                                                        {{item.Baslangic | date : 'yyyy-MM-dd'}}
-                                                        <span>({{item.Baslangic | date : 'HH:mm'}})</span>
-                                                    </div>
-            
-                                                    <div class="text-gray-400 fs-8">
-                                                        {{item.Bitis | date : 'yyyy-MM-dd'}}
-                                                        <span>({{item.Bitis | date : 'HH:mm'}})</span>
-                                                    </div>
-                                                </ng-container>
-                                            </div>
-                                            
-                                        </div>    
-                                    </div>
-            
-                                </div> -->
                             </mat-expansion-panel-header>
             
                             <div class="">
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-12 d-flex justify-content-center">
                                         <img width="25%" style="border-radius: 5px;"
-                                            src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}" alt="Personel Foto" />
+                                            src="{{imageUrl}}?sicilid={{item.SicilId}}" alt="Personel Foto" />
                                     </div>
                                     <div class="col-12 d-flex justify-content-center mt-4"></div>
                                 </div>
@@ -342,7 +284,7 @@
                             <div class="row d-flex justify-content-center">
                                 <div class="col-12 d-flex justify-content-center">
                                     <img width="25%" style="border-radius: 5px;"
-                                        src="http://localhost:5075/api/Image?sicilid={{item.sicilid}}" alt="Personel Foto" />
+                                        src="{{imageUrl}}?sicilid={{item.sicilid}}" alt="Personel Foto" />
                                 </div>
                             </div>
         
@@ -464,37 +406,37 @@
                                     *ngFor="let item of deniedRequests | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis', 'firma', 'bolum', 'pozisyon']">
                                     <td class="text-center">
                                         <div class="symbol symbol-50px me-2">
-                                            <img src="http://localhost:5075/api/Image?sicilid={{item.SicilId}}" alt="Personel Foto">
+                                            <img src="{{imageUrl}}?sicilid={{item.SicilId}}" alt="Personel Foto">
                                         </div>
                                     </td>
             
                                     <td class="text-center text-muted fw-bold fs-4">
-                                        <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">
+                                        <span class="text-dark fw-bold text-hover-danger mb-1 fs-6">
                                             {{item.Personel}}
                                         </span>
                                     </td>
             
                                     <td class="text-center">
-                                        <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.tipad}}</p>
-                                        <span class="text-muted fw-semibold d-block">{{item.neden}}</span>
+                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.tipad}}</p>
+                                        <span class="text-muted fw-semibold d-block" pTooltip="{{item.neden}}" tooltipPosition="top">{{item.neden|truncate:20}}</span>
                                     </td>
             
                                     <td class="text-center">
-                                        <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.Baslangic | date:
+                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Baslangic | date:
                                             'yyyy-MM-dd'}}</p>
                                         <span class="text-muted fw-semibold d-block">{{item.Baslangic | date:
                                             'HH:mm'}}</span>
                                     </td>
             
                                     <td class="text-center">
-                                        <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.Bitis | date:
+                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Bitis | date:
                                             'yyyy-MM-dd'}}</p>
                                         <span class="text-muted fw-semibold d-block">{{item.Bitis | date: 'HH:mm'}}</span>
                                     </td>
             
                                     <td class="text-center">
-                                        <p class="text-dark fw-bold text-hover-primary hover-scroll h-100px mb-1 fs-6">
-                                            {{item.nedenx}}</p>
+                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-6" pTooltip="{{item.nedenx}}" tooltipPosition="top">
+                                            {{item.nedenx|truncate:20}}</p>
                                     </td>
             
                                     <td class="text-center text-muted fw-bold fs-4">
@@ -528,8 +470,6 @@
                             <thead>
                                 <tr class="roundend fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
                                     <th class="text-center rounded-start"></th>
-                                    <!-- <th class="text-center"></th> -->
-                                    <!-- <th class="text-center"></th> -->
                                     <th class="text-center">{{"Personel" | translate}}</th>
                                     <th class="text-center"> {{"IBAN" | translate}} </th>
                                     <th class="text-center">{{"Taksit" | translate}}</th>
@@ -544,45 +484,30 @@
                             <tbody>
                                 <tr *ngFor="let item of deniedRequests | searchFilter:filterText: ['tipad', 'Personel', 'parabirimi', 'nedenx', 'Baslangic', 'tutar']"
                                     [ngClass]="{ 'bg-light-danger' : item.bosBelgeSayisi > 0 }">
-                                    <!-- <td class="text-center ps-5">
-                                        <ng-container *ngIf="item.bosBelgeSayisi > 0">
-                                            <span class="badge badge-circle badge-danger"
-                                                [matTooltip]="getTooltopScript(item.atananlar)" [matTooltipClass]="'my-tooltip'">
-                                                <i class="fa-solid fa-exclamation text-white"></i>
-                                            </span>
-                                        </ng-container>
-                                    </td> -->
-            
-                                    <!-- <td class="text-center ps-5">
-                                        <div class="symbol symbol-50px me-2">
-                                            <mat-checkbox [(ngModel)]="item.completed"
-                                                (ngModelChange)="updateAllComplete()"></mat-checkbox>
-                                        </div>
-                                    </td> -->
             
                                     <td class="text-center">
                                         <div class="symbol symbol-50px me-2">
-                                            <img src="http://localhost:5075/api/Image?sicilid={{item.sicilid}}" alt="Personel Foto">
+                                            <img src="{{imageUrl}}?sicilid={{item.sicilid}}" alt="Personel Foto">
                                         </div>
                                     </td>
             
                                     <td class="text-center text-muted fw-bold fs-4">
-                                        <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">
+                                        <span class="text-dark fw-bold text-hover-danger mb-1 fs-6">
                                             {{item.Personel}} {{item.bosBelgeSayisi}}
                                         </span>
                                     </td>
             
                                     <td class="text-center">
-                                        <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.iban | ibanMask}}</p>
+                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.iban | ibanMask}}</p>
                                     </td>
             
                                     <td class="text-center">
-                                        <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.tarih | date:
+                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.tarih | date:
                                             'yyyy-MM-dd'}}</p>
                                     </td>
             
                                     <td class="text-center">
-                                        <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">
+                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">
                                             {{ item.tutar }}
                                             <ng-container *ngIf="item?.parabirimi === 'tl'">₺</ng-container>
                                             <ng-container *ngIf="item?.parabirimi === 'eur'">€</ng-container>
@@ -592,19 +517,18 @@
                                     </td>
             
                                     <td class="text-center">
-                                        <div class="text-dark fw-bold text-hover-primary mb-1 fs-6" matTooltip="{{item.bolum}}">
-                                            <!-- {{item.bolum}} -->
+                                        <div class="text-dark fw-bold text-hover-danger mb-1 fs-6" matTooltip="{{item.bolum}}">
                                             {{ (item.bolum.length>14)? (item.bolum | slice:0:14)+'...':(item.bolum) }}
                                         </div>
                                     </td>
             
                                     <td class="text-center">
-                                        <p class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{item.pozisyon}}</p>
+                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.pozisyon}}</p>
                                     </td>
             
                                     <td class="text-center">
-                                        <div class="text-dark fw-bold text-hover-primary hover-scroll h-100px mb-1 fs-6">
-                                            {{item.nedenx}}
+                                        <div class="text-dark fw-bold text-hover-danger mb-1 fs-6" pTooltip="{{item.nedenx}}" tooltipPosition="top">
+                                            {{item.nedenx|truncate:20}}
                                         </div>
                                     </td>
             

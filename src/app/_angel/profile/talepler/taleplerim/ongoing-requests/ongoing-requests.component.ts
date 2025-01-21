@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { Subject } from 'rxjs';
 import { LayoutService } from 'src/app/_metronic/layout';
 import { MyDemands } from '../../../models/myDemands';
+import { ProfileService } from '../../../profile.service';
 
 @Component({
   selector: 'app-ongoing-requests',
@@ -21,10 +22,14 @@ export class OngoingRequestsComponent implements OnInit, OnDestroy {
 
   checkGrid: boolean = true;
   filterText : string  = "";
+  imageUrl: any;
 
   constructor(
-    public layoutService : LayoutService
-  ) { }
+    public layoutService : LayoutService,
+    private profileService: ProfileService
+  ) { 
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   ngOnInit(): void {
   }

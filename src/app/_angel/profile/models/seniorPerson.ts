@@ -1,5 +1,5 @@
 export class SeniorPerson{
-    fotoimage: string;
+    ID: number;
     ad: string;
     soyad: string;
     sicilno: string;

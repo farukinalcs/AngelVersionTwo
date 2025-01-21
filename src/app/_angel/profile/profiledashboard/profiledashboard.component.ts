@@ -34,7 +34,7 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
   displayExpenseRequestForm: boolean;
   displayShiftForm: boolean;
   displayAttendanceForm: boolean;
-
+  imageUrl: string;
   constructor(
     private auth: AuthService,
     private authMenuService : AuthMenuService,
@@ -42,7 +42,9 @@ export class ProfiledashboardComponent implements OnInit, OnDestroy {
     private profileService : ProfileService,
     private ref : ChangeDetectorRef,
     private loadingService: LoadingService
-  ) { }
+  ) {
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   ngOnInit(): void {
     this.getMenuConfig();

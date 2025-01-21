@@ -1,5 +1,5 @@
 <p-dialog header="{{'Hareket_Değişiklik_Talep_Formu' | translate}}" [(visible)]="displayAttendanceForm" [modal]="true"
-    [breakpoints]="{ '2560px': '75vw', '992px': '90vw', '576px': '99vw' }"
+    [breakpoints]="{ '2560px': '90vw', '992px': '90vw', '576px': '99vw' }"
     [style]="{backgroundColor : '#fcfcfc'} " 
     (onHide)="closedFormDialog()" [maximizable]="true" [baseZIndex]="-50" [draggable]="true" [resizable]="false">
 
@@ -134,7 +134,7 @@
                                                                 <div class="me-3">
                                                                     <!--begin::Icon-->
                                                                     <div class="symbol symbol-30px me-3">                                                   
-                                                                        <img src="http://localhost:5075/api/Image?sicilid={{item.sicilid}}" alt="{{item.adsoyad}}" class="">                                                    
+                                                                        <img src="{{imageUrl}}?sicilid={{item.sicilid}}" alt="{{item.adsoyad}}" class="">                                                    
                                                                     </div>
                                                                     <!--end::Icon-->
                                         
@@ -751,11 +751,11 @@
 
     <ng-template pTemplate="footer">
         <a (click)="resetChanges()" class="btn btn-sm btn-danger ms-2" *ngIf="attendanceForm.get('formState')?.value != 0">
-            <i class="fa-solid fa-rotate-right fs-5"></i>
+            <i class="fa-solid fa-rotate-right fs-7"></i>
             {{'Sıfırla' | translate}}
         </a>
         <a (click)="closeUploadedFile()" class="btn btn-sm btn-danger ms-2">
-            <i class="fa-solid fa-xmark fs-5"></i>
+            <i class="fa-solid fa-xmark fs-7"></i>
             {{'Kapat' | translate}}
         </a>
     </ng-template>

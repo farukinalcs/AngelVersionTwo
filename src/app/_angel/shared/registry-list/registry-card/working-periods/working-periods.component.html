@@ -1,0 +1,163 @@
+<div class="flip-card">
+    <div class="flip-card-inner" [class.flipped]="isFlipped">
+        <!-- Ön Yüz - Data Ekranı -->
+        <div class="flip-card-front">
+            <div class="card mb-6 mb-xl-9 mx-2">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Sicil_Çalışma_Dönemleri" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Dönemleri_Buradan_Belirleyebilirsiniz" |
+                            translate}}</h4>
+                    </div>
+                </div>
+
+                <div class="card-body pt-0 pb-5">
+                    <div class="row">
+                        <div class="col-12 d-flex align-items-end p-3">
+                            <a class="btn btn-sm btn-light mx-1 fw-bolder d-flex justify-content-center align-item-center w-100 text-hover-danger"
+                                (click)="toggleFlip()">
+                                <i class="fa-solid fa-plus fs-7 d-flex align-items-center"></i>
+                                {{'Yeni_Çalışma_Dönemi_Ekle' | translate}}
+                            </a>
+                        </div>
+                        
+                        <div class="col-12 p-5 h-550px scroll">
+                            <div class="table-responsive">
+                                <table class="table table-row-dashed table-row-gray-200 align-middle gs-2 gy-4">
+                                    <thead>
+                                        <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light">
+                                            <th class=" fw-bolder me-1 cursor-pointer rounded-start"
+                                                style="width: 20%;">{{"Giriş_Tarihi" | translate}}</th>
+                                            <th class=" fw-bolder me-1 cursor-pointer" style="width: 20%;">
+                                                {{"Çıkış_Tarihi" | translate}}</th>
+                                            <th class=" fw-bolder me-1 cursor-pointer" style="width: 40%;">
+                                                {{"Ayrılış_Sebebi" | translate}}</th>
+                                            <th class=" fw-bolder me-1 cursor-pointer rounded-end text-center"
+                                                style="width: 20%;">{{"İşlem" | translate}}</th>
+                                        </tr>
+                                    </thead>
+
+
+                                    <ng-container *ngIf="periods.length > 0">
+                                        <tbody>
+                                            <tr *ngFor="let item of periods" class="cursor-pointer fs-8 fw-bolder">
+
+                                                <td>
+                                                    <span class="mb-1">{{ item.giristarih | date: 'dd-MM-yyyy' }}</span>
+                                                </td>
+
+                                                <td>
+                                                    <span class="mb-1">{{ item.cikistarih | date: 'dd-MM-yyyy' }}</span>
+                                                </td>
+
+                                                <td>
+                                                    <span class="mb-1">{{ item.neden }}</span>
+                                                </td>
+
+                                                <td>
+                                                    <a *ngIf="item.cikistarih"
+                                                        class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                        (click)="removePeriod(item)">
+                                                        <i
+                                                            class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
+                                                        <span>{{"Kaldır" | translate}}</span>
+                                                    </a>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="periods.length == 0">
+                                        <tr>
+                                            <td colspan="4" class="text-center">
+                                                <app-data-not-found [imgWidth]="'60%'"></app-data-not-found>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arka Yüz - Form Ekranı -->
+        <div class="flip-card-back">
+
+
+            <div class="card mb-6 mb-xl-9 mx-2">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Sicil_Çalışma_Dönemleri" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Dönemleri_Buradan_Belirleyebilirsiniz" |
+                            translate}}</h4>
+                    </div>
+                </div>
+
+                <div class="card-body pt-0 pb-5">
+                    <div class="row">
+                        <div class="col-12 d-flex align-items-center p-3" style="justify-content: space-between;">
+                            <a class="btn btn-sm btn-light mx-1 fw-bolder d-flex justify-content-center align-item-center text-hover-danger" (click)="toggleFlip()">
+                                <i class="fa-solid fa-arrow-left fs-7 d-flex align-items-center"></i>
+                                {{'Geri_Dön' | translate}}
+                            </a>
+                            
+                        </div>
+                    </div>
+
+                    <div class="row" [formGroup]="form">
+                        <div class="col-6 p-3">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span>{{"Giriş_Tarihi" | translate}}</span>
+                            </label>
+
+                            <input type="date" class="form-control form-control-sm form-control-solid"
+                                formControlName="startDate">
+                        </div>
+
+                        <div class="col-6 p-3">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span>{{"Çıkış_Tarihi" | translate}}</span>
+                            </label>
+
+                            <input type="date" class="form-control form-control-sm form-control-solid"
+                                formControlName="endDate">
+                        </div>
+
+                        <div class="col-12 p-3">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span>{{"Ayrılış_Sebebi" | translate}}</span>
+                            </label>
+
+                            <p-dropdown [options]="reasons" optionLabel="Ad" [filter]="true" filterBy="Ad"
+                                [showClear]="true" placeholder="{{ 'Sebep_Seçiniz' | translate }}"
+                                formControlName="reason" emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                                appendTo="body" [panelStyle]="{'max-width': '500px'}">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="form.get('reason')?.value">
+                                        <div>{{form.get('reason')?.value.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-12 d-flex align-items-end p-3">
+                            <a class="btn btn-sm btn-light mx-1 fw-bolder d-flex justify-content-center align-item-center w-100 text-hover-danger"
+                                (click)="addPeriod()">
+                                <i class="fa-solid fa-plus fs-7 d-flex align-items-center"></i>
+                                {{'Ekle' | translate}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

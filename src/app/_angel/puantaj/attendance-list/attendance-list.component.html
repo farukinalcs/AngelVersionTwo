@@ -8,7 +8,7 @@
 
             <div class="col-1 m-auto">
                 <div class="text-gray-400 fw-semibold fs-7">
-                    <a class="btn btn-sm btn-danger px-5 py-1 custom-btn" (click)="cancelAttendanceRequest()"> {{"İptal_Et" | translate}}</a>
+                    <a class="btn btn-sm btn-danger px-5 py-1 hover-elevate-up" (click)="cancelAttendanceRequest()"> {{"İptal_Et" | translate}}</a>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
             </mat-progress-spinner> -->
 
             <div class="card card-custom gutter-b" [ngClass]="{'disabled': loading}"
-            [ngStyle]="{ 'opacity': loading ? 0.5 : 1, 'cursor': loading ? 'not-allowed' : 'auto' }">
+                [ngStyle]="{ 'opacity': loading ? 0.5 : 1, 'cursor': loading ? 'not-allowed' : 'auto' }">
 
                 <div class="card-header border-0">
                     <div class="card-title">
@@ -51,12 +51,12 @@
                         </div> -->
 
                         <div class="col-4 d-flex align-items-end gap-2">
-                            <a class="btn btn-dark btn-sm custom-btn" (click)="showFilterModal()">
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="showFilterModal()">
                                 <i class="fa-solid fa-filter"></i>
                                 {{"Filtrele" | translate}}
                             </a>
 
-                            <a class="btn btn-dark btn-sm custom-btn" (click)="clearFilters()">
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="clearFilters()">
                                 <i class="fa-solid fa-eraser"></i>
                                 {{"Temizle" | translate}}
                             </a>

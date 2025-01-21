@@ -24,12 +24,15 @@ export class KidemlilerComponent implements OnInit, OnDestroy {
   currentItemIndex = 0;
 
   displayAllSeniors : boolean;
+  imageUrl: string;
   
   constructor(
     private profileService : ProfileService,
     public layoutService : LayoutService,
     private ref : ChangeDetectorRef
-  ) { }
+  ) { 
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   ngOnInit(): void {
     this.getSeniorPersons('1');
