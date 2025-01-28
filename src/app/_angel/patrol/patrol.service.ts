@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import * as CryptoJS from "crypto-js";
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ApiUrlService } from 'src/app/_helpers/api-url.service';
 
 const API_URL = environment.newApiUrl;
 const API_DynamicPlus = environment.apiUrl2;
@@ -14,7 +15,8 @@ export class PatrolService {
 
   constructor(
     private httpClient: HttpClient,
-    private helperService : HelperService
+    private helperService : HelperService,
+    private apiUrlService: ApiUrlService
   ) { }
 
   requestMethod(sp : any[]){
@@ -37,7 +39,7 @@ export class PatrolService {
       params : data
     };
 
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.httpClient.get<any>(this.apiUrlService.apiUrl + '/process', options);
   }
 
   getPatrolInfo(){

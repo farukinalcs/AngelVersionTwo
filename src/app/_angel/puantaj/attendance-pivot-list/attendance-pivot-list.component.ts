@@ -1285,7 +1285,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
 
   setColumnWidths(widths: { col: string; width: string; visible: string }[]) {
     const updateColumnWidths = (colDef: any) => {
-      const widthInfo = widths.find((w) => w.col === colDef.field);
+      const widthInfo = widths?.find((w) => w.col === colDef.field);
       if (widthInfo) {
         colDef.width = parseInt(widthInfo.width, 10);
         colDef.hide = !JSON.parse(widthInfo.visible);

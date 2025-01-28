@@ -18,6 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { LoadingComponent } from './modules/loading/loading.component';
 import { formReducer } from './store/reducers/form.reducer';
 import { accessGroupReducer } from './store/reducers/access-group.reducer';
+import { ApiUrlService } from './_helpers/api-url.service';
 // #fake-start#
 // import { FakeAPIService } from './_fake/fake-api.service';
 
@@ -49,6 +50,13 @@ function appInitializer(authService: AuthService) {
     StoreModule.forFeature('accessGroup', accessGroupReducer)
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (apiUrlService: ApiUrlService) => () =>
+        apiUrlService.loadAppConfig(),
+      deps: [ApiUrlService],
+      multi: true,
+    },
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializer,

@@ -5,9 +5,11 @@ import { UserModel } from '../../models/user.model';
 import { environment } from '../../../../../environments/environment';
 import * as CryptoJS from "crypto-js";
 import { HelperService } from 'src/app/_helpers/helper.service';
+import { environment as prodEnvironment} from 'src/environments/environment.prod';
+import { ApiUrlService } from 'src/app/_helpers/api-url.service';
 
 
-const API_USERS_URL = `${environment.apiUrl}/Login`;
+const API_USERS_URL = `${environment.newApiUrl}/Login`;
 const API_URL = environment.newApiUrl;
 @Injectable({
   providedIn: 'root',
@@ -16,11 +18,14 @@ export class AuthHTTPService {
 
   constructor(
     private http: HttpClient,
-    private helperService : HelperService
+    private helperService : HelperService,
+    private apiUrlService: ApiUrlService
   ) {}
 
   gate() {
-    return this.http.get(API_URL + '/gate');
+    console.log("TESTO :", this.apiUrlService.apiUrl + '/gate');
+    
+    return this.http.get(this.apiUrlService.apiUrl + '/gate');
   }
 
   cryptoLogin(email : string, password : string, lang : any, appList : any) : Observable<any> {
@@ -60,7 +65,7 @@ export class AuthHTTPService {
       params: data
     };
 
-    return this.http.get<any>(API_URL + '/auth', options);
+    return this.http.get<any>(this.apiUrlService.apiUrl + '/auth', options);
   }
 
   // CREATE =>  POST: add a new user to the server
