@@ -46,6 +46,17 @@ export class SecurityToursComponent {
     }
   }
 
+
+ deleteGuardTour(tour:any): void {
+  this.selectedTour = tour;
+  this.selectTourId = tour.id;
+      this.patrol.deleteGuardTour(this.selectTourId).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+        const responsee = response[0].x;
+        console.log("deleteGuardTour:", responsee);
+        this.getGuardTour();
+      });
+  }
+
   getGuardTour(): void {
 
 
@@ -73,16 +84,6 @@ export class SecurityToursComponent {
     this.ref.detectChanges();
   }
 
-  addToTargetList(item: any) {
-    console.log('İSTASYON ',item)
-    console.log('targetList ',this.targetList)
-    // Eğer hedef listede yoksa ekle
-    if (!this.targetList.includes(item.id)) {
-      this.targetList.push(item);
-      this.setTourStation(item.id)
-    }
-    console.log('targetList ADDD ',this.targetList)
-  }
 
 
 
@@ -90,18 +91,40 @@ export class SecurityToursComponent {
     console.log('TOUR',tour)
     this.selectedTour = tour;
     this.selectTourId = tour.id;
+    console.log("TYPE 1",typeof tour.id)
     //this.targetList = this.allStation.filter(item => item.id === tour.id);
     this.getGuardStationForTour(tour.id);
   }
 
-  setTourStation(kaynakid:number){
-    console.log("kaynakid:", kaynakid);
-    console.log("hedefid:", this.selectTourId);
-    this.patrol.relation(kaynakid,this.selectTourId).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-        const result = response[0].x;
-        console.log("setTourStation:", result);
+  addTourStation(item:any){
+    if(this.selectTourId != 0)
+    {
+    this.patrol.relation_i(item.id,this.selectTourId).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+        // const result = response[0].x;
+        console.log("TYPE 2",typeof this.selectTourId)
+        this.targetList = response[0].x;
+        console.log("setTourStation:", this.targetList);
     })
+    }else{
+      alert("İstasyon eklemek istediğiniz turu seçin")
+    }
+    console.log("this.selectTourId",this.selectTourId)
+    console.log("itemmmmmm",item)
+
+  
   }
   
+  deleteTourStation(item:any){
+    const kaynakid = item.id;
+    const hedefid = item.hedefid;
+    console.log("kaynakid:", kaynakid);
+    console.log("hedefid:", hedefid);
+    console.log("adana:", item);
+    this.patrol.relation_d(kaynakid,hedefid).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      this.targetList = response[0].x;
+        console.log("deleteTourStation:", this.targetList);
+    })
+    this.getGuardStationForTour(hedefid);
+  }
 
 }
