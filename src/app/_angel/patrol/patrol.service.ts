@@ -66,6 +66,14 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
+  deleteGuardTour(id:number){
+    var sp: any[] = [{
+      mkodu:'yek238',
+      id:id.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
   getGuardTour(lokasyon:string){
     var sp: any[] = [{
       mkodu:'yek225',
@@ -117,9 +125,20 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
-  relation(kaynakid:number,hedefid:number){
+  relation_i(kaynakid:number,hedefid:number){
     var sp : any[] = [{
       mkodu:'yek156',
+      kaynakid : kaynakid.toString(),
+      hedefid: hedefid.toString(),
+      hedeftablo:'guvenlikturlari',
+      extra:''
+    }]
+    return this.requestMethod(sp);
+  }
+
+  relation_d(kaynakid:number,hedefid:number){
+    var sp : any[] = [{
+      mkodu:'yek157',
       kaynakid : kaynakid.toString(),
       hedefid: hedefid.toString(),
       hedeftablo:'guvenlikturlari',

@@ -25,7 +25,7 @@
                             </td>
 
                             <td>
-                                <a class="btn btn-danger btn-sm py-1 px-2">
+                                <a class="btn btn-danger btn-sm py-1 px-2" (click)="deleteGuardTour(item);">
                                     <i class="fa-solid fa-minus p-0"></i>
                                 </a>
                             </td>
@@ -55,7 +55,7 @@
                         <tbody>
                             <tr *ngFor="let item of targetList">
                                 <td> {{ item.kaynakad}} </td>
-                                <td>
+                                <td (click)="deleteTourStation(item)">
                                     <a class="btn btn-danger btn-sm py-1 px-2">
                                     <i class="fa-solid fa-minus p-0"></i>
                                 </a>
@@ -74,11 +74,17 @@
                         class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                         <thead>
                             <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
-                                <th class=" fw-bolder me-1 cursor-pointer rounded-start" style="width: 80%;">İstasyon Adı</th>
+                            
+                                <th colspan="2" class=" fw-bolder me-1 cursor-pointer rounded-start" style="width: 80%;">İstasyon Adı</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of allStation" class="cursor-pointer fs-8"  (click)="addToTargetList(item)">
+                            <tr *ngFor="let item of allStation" class="cursor-pointer fs-8">
+                                    <td (click)="addTourStation(item)">
+                                        <a class="btn btn-success btn-sm py-1 px-2">
+                                            <i class="fa-solid fa-plus p-0"></i>
+                                        </a>
+                                    </td>
                                     <td>
                                         <span class="mb-1">{{item.kaynakad}}</span>
                                     </td>
