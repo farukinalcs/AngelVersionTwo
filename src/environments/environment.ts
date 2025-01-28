@@ -15,7 +15,7 @@ export const environment = {
 
   imageUrl: 'https://yekgateway.mecloud.com.tr/api/Image',
 
-  newApiUrl : 'https://yekgateway.mecloud.com.tr/api',
+  newApiUrl : '',
   
   appThemeName: 'Metronic',
   appPurchaseUrl: 'https://1.envato.market/EA4JP',

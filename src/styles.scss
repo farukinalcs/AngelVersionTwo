@@ -5,15 +5,15 @@
 // @import "./assets/css/style.rtl.css";
 @import "./assets/sass/style.angular.scss";
 
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 .dark-theme {
-    @import "~@angular/material/prebuilt-themes/pink-blue-grey.css";
+    @import "@angular/material/prebuilt-themes/pink-blue-grey.css";
 }
 
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 
-@import "~bootstrap/dist/css/bootstrap.css";
+@import "bootstrap/dist/css/bootstrap.css";
 
 
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700");
@@ -23,7 +23,7 @@
 @import 'ag-grid-community/styles/ag-theme-balham.css';
 
 // ngx-toastr
-@import '~ngx-toastr/toastr';
+@import 'ngx-toastr/toastr';
 
 
 /* Angular Material Ve PrimeNG CSS */

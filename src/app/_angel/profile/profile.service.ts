@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as CryptoJS from "crypto-js";
+import { ApiUrlService } from 'src/app/_helpers/api-url.service';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { environment } from 'src/environments/environment';
 
@@ -14,7 +15,8 @@ export class ProfileService {
 
   constructor(
     private httpClient : HttpClient,
-    private helperService : HelperService
+    private helperService : HelperService,
+    private apiUrlService : ApiUrlService
   ) { }
 
   getImageUrl(path?: string): string {
@@ -679,7 +681,7 @@ export class ProfileService {
       params : data
     };
 
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.httpClient.get<any>(this.apiUrlService.apiUrl + '/process', options);
   }
 
   requestMethodPost(sp : any[]){
@@ -697,7 +699,7 @@ export class ProfileService {
       securedata : encryptedParam.toString()
     };
 
-    return this.httpClient.post<any>(API_URL + '/process', data);
+    return this.httpClient.post<any>(this.apiUrlService.apiUrl + '/process', data);
   }
 
 }

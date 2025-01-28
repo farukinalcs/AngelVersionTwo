@@ -3,6 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 import { TranslationService } from '../../../../../../modules/i18n';
 import { AuthService, UserType } from '../../../../../../modules/auth';
 import { HelperService } from 'src/app/_helpers/helper.service';
+import { ProfileService } from 'src/app/_angel/profile/profile.service';
 
 @Component({
   selector: 'app-user-inner',
@@ -17,12 +18,16 @@ export class UserInnerComponent implements OnInit, OnDestroy {
   user$: Observable<UserType>;
   langs = languages;
   private unsubscribe: Subscription[] = [];
+  imageUrl: string;
 
   constructor(
     private auth: AuthService,
     private translationService: TranslationService,
-    private helperService : HelperService
-  ) {}
+    private helperService : HelperService,
+    private profileService: ProfileService
+  ) {
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   ngOnInit(): void {
     this.getCurrentUserInformations();

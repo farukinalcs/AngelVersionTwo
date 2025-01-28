@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import * as CryptoJS from "crypto-js";
 import { environment } from 'src/environments/environment';
+import { ApiUrlService } from 'src/app/_helpers/api-url.service';
 
 const API_URL = environment.newApiUrl;
 
@@ -13,7 +14,8 @@ export class TanimlamalarService {
 
   constructor(
     private httpClient : HttpClient,
-    private helperService : HelperService
+    private helperService : HelperService,
+    private apiUrlService: ApiUrlService
   ) { }
 
   getMealType(){
@@ -95,6 +97,6 @@ export class TanimlamalarService {
       params : data
     };
 
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.httpClient.get<any>(this.apiUrlService.apiUrl + '/process', options);
   }
 }

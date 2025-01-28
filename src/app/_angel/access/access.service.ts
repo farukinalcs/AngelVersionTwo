@@ -4,6 +4,7 @@ import { HelperService } from 'src/app/_helpers/helper.service';
 import { environment } from 'src/environments/environment';
 import * as CryptoJS from "crypto-js";
 import { Subject } from 'rxjs';
+import { ApiUrlService } from 'src/app/_helpers/api-url.service';
 
 const API_URL = environment.newApiUrl;
 const API_DynamicPlus = environment.apiUrl2;
@@ -15,7 +16,8 @@ export class AccessService {
 
   constructor(
     private httpClient: HttpClient,
-    private helperService : HelperService
+    private helperService : HelperService,
+    private apiUrlService: ApiUrlService
   ) {}
 
   private triggerEvent = new Subject<void>();
@@ -45,7 +47,7 @@ export class AccessService {
       params : data
     };
 
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.httpClient.get<any>(this.apiUrlService.apiUrl + '/process', options);
   }
 
   getAccessDashboardHeader(arr : any[]) {
@@ -77,7 +79,7 @@ export class AccessService {
       params : data
     };
 
-    return this.httpClient.get<any>(API_URL + '/process', options);
+    return this.httpClient.get<any>(this.apiUrlService.apiUrl + '/process', options);
   } 
 
   getDevices(){
