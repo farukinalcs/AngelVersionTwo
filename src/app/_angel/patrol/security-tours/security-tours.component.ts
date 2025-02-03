@@ -17,10 +17,9 @@ export class SecurityToursComponent {
   selectTourId:number = 0;
   selectStationId:number = 0;
   allStation:any[];
-  
+  filteredItems:any[]=[];
   tourNameInput:string='';
-
-  tourList:any;
+  tourList:any[]=[];
 
   constructor(
       private patrol : PatrolService,
@@ -58,11 +57,11 @@ export class SecurityToursComponent {
   }
 
   getGuardTour(): void {
-
-
     this.patrol.getGuardTour('0').subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.tourList = response[0].x;
+      this.filteredItems = [...this.tourList]
       console.log("getGuardTour:", this.tourList);
+      this.tourNameInput = "";
     });
     this.ref.detectChanges();
   }
@@ -83,9 +82,6 @@ export class SecurityToursComponent {
     });
     this.ref.detectChanges();
   }
-
-
-
 
   getItem(tour:any){
     console.log('TOUR',tour)
@@ -109,9 +105,7 @@ export class SecurityToursComponent {
       alert("İstasyon eklemek istediğiniz turu seçin")
     }
     console.log("this.selectTourId",this.selectTourId)
-    console.log("itemmmmmm",item)
-
-  
+    console.log("itemmmmmm",item)  
   }
   
   deleteTourStation(item:any){
@@ -125,6 +119,13 @@ export class SecurityToursComponent {
         console.log("deleteTourStation:", this.targetList);
     })
     this.getGuardStationForTour(hedefid);
+  }
+
+  filterItems(){
+    const query = this.tourNameInput.toLowerCase();
+    this.filteredItems = this.tourList.filter(item =>
+      item.ad?.toLowerCase().includes(query)
+    );
   }
 
 }

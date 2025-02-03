@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { PatrolService } from '../patrol.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { PatrolService } from '../patrol.service';
   templateUrl: './patroldefinitions.component.html',
   styleUrls: ['./patroldefinitions.component.scss']
 })
-export class PatroldefinitionsComponent {
+export class PatroldefinitionsComponent implements OnInit, OnDestroy{
   activeWidget: number = 1;
 
     constructor(
@@ -32,5 +32,9 @@ export class PatroldefinitionsComponent {
     { title: 'Güvenlil Tur Takvim', value: 4},
 
   ];
+
+  ngOnDestroy(){
+
+  }
 
 }

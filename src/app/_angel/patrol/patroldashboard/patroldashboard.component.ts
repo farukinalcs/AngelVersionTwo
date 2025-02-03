@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input,OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PatrolService } from '../patrol.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
@@ -12,7 +12,7 @@ import { Incident } from '../models/incident';
   templateUrl: './patroldashboard.component.html',
   styleUrls: ['./patroldashboard.component.scss']
 })
-export class PatroldashboardComponent {
+export class PatroldashboardComponent implements OnInit, OnDestroy {
   activeWidget: number = 0;
   latitude:any = "";
   longitude:any = "";
@@ -41,6 +41,9 @@ export class PatroldashboardComponent {
     private patrol : PatrolService,
     private ref : ChangeDetectorRef
   ) { }
+  ngOnDestroy(): void {
+    console.log("destroyyy ")
+  }
   
 
   ngOnInit(): void {
@@ -63,18 +66,18 @@ export class PatroldashboardComponent {
     this.patrolInfo = response[0].x;
     console.log("Patrol Info:", this.patrolInfo);
 
-    this.patrolInfo.forEach((patrol) => {
-      if (+patrol.olay > 0) {
+    this.patrolInfo?.forEach((patrol) => {
+      if (+patrol?.olay > 0) {
        //this.lastIncidentModal = true;
        //this.openAlarmModal(patrol);
       }
-      if (+patrol.alarm > 0) {
+      if (+patrol?.alarm > 0) {
         this.openAlarmModal(patrol);
       }
     });
 
     if (this.patrolInfo?.[0]?.lat != null && this.patrolInfo?.[0]?.lng != null &&
-        !isNaN(+this.patrolInfo[0].lat) && !isNaN(+this.patrolInfo[0].lng)) {
+        !isNaN(+this.patrolInfo[0]?.lat) && !isNaN(+this.patrolInfo[0]?.lng)) {
       this.map?.setCenter({
         lat: +this.patrolInfo[0].lat,
         lng: +this.patrolInfo[0].lng,
@@ -204,12 +207,12 @@ export class PatroldashboardComponent {
   getGuardEventList(item:Incident){
 
     this.deviceIncidentList = true;
-    const imei = item.imei;
-    console.log("guard_device",item.imei);
+    const imei = item?.imei;
+    console.log("guard_device",item?.imei);
 
     this.patrol.getGuardEvents(0,imei).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
      this.guardEventList = response[0].x;
-     this.guardEventList = this.guardEventList.map(olay => {
+     this.guardEventList = this.guardEventList?.map(olay => {
       olay.link = JSON.parse(olay.link);
       return olay;  });
       console.log("......GuardEventList........",this.guardEventList);
@@ -224,9 +227,9 @@ export class PatroldashboardComponent {
     }
     this.loadMap(parseFloat(item.latitude || "0"), parseFloat(item.longitude || "0"), item.olaybaslik);
     this.eventDetailsModal = true;
-    this.IncidentDesc = item.olayaciklama || '';
-    this.IncidentHeader = item.olaybaslik || '';
-    this.IncidentTime = item.zaman;
+    this.IncidentDesc = item?.olayaciklama || '';
+    this.IncidentHeader = item?.olaybaslik || '';
+    this.IncidentTime = item?.zaman;
 
     const lat = parseFloat(item.latitude || "0");
     const lng = parseFloat(item.longitude || "0");
