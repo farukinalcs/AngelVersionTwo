@@ -51,6 +51,7 @@ import { CardModule } from 'primeng/card';
     ButtonModule,
     TimelineModule,
     CardModule
+    
   ]
 })
 export class PatrolModule { }
