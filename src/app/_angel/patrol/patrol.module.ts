@@ -50,10 +50,9 @@ import { CarouselModule } from 'primeng/carousel';
     DialogModule,
     ButtonModule,
     TimelineModule,
-    CardModule,
+    CardModule
     PickListModule,
     CarouselModule
-
   ]
 })
 export class PatrolModule { }
