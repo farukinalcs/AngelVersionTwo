@@ -21,8 +21,8 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
-
-
+import { PickListModule } from 'primeng/picklist';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,8 @@ import { CardModule } from 'primeng/card';
     ButtonModule,
     TimelineModule,
     CardModule
-    
+    PickListModule,
+    CarouselModule
   ]
 })
 export class PatrolModule { }
