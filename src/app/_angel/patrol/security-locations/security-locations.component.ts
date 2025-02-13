@@ -43,7 +43,8 @@ export class SecurityLocationsComponent {
       this.patrol.getLocation().subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         this._locations = response[0].x;
         this._filteredItems = [...this._locations];
-        console.log("getLocation:", this._locations);
+        console.log("getLocation:", this._locations); 
+        
         this.locationName = '';
       });
       this.ref.detectChanges();
