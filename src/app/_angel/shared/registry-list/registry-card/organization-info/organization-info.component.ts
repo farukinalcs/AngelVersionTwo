@@ -18,6 +18,7 @@ export class OrganizationInfoComponent implements OnInit, OnDestroy, OnChanges {
   @Input() operationType: any;
   @Input() selectedRegister: any;
   @Output() formEvent = new EventEmitter<any>();
+  @Input() checkFormController: any;
   form: FormGroup;
   companies: any[] = [];
   departments: any[] = [];
@@ -28,6 +29,19 @@ export class OrganizationInfoComponent implements OnInit, OnDestroy, OnChanges {
   directorships: any[] = [];
   timeAttendances: any[] = [];
   registerDetail: any[] = [];
+  
+  // checkFormController: any = {
+  //   checkCompany: "",
+  //   checkDepartment: "",
+  //   checkPosition: "",
+  //   checkJob: "",
+  //   checkSubcompany: "",
+  //   checkCollar: "",
+  //   checkDirectorship: "",
+  //   checkTimeAttendance: ""
+  // }
+  
+
   constructor(
     private translateService: TranslateService,
     private profileService: ProfileService,

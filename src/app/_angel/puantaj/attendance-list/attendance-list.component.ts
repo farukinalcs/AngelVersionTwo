@@ -1168,6 +1168,8 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
         const message = response[0].z;
 
         if (message.islemsonuc == -1) {
+          this.value = 100;
+          this.loading = false;
           return;
         }
         console.log('PDKS Guid: ', data);
@@ -1744,10 +1746,8 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
       });
   }
 
-  private parseValue(
-    value: string
-  ): { col: string; width: string; visible: string }[] {
-    return value.split('|').map((item) => {
+  private parseValue(value: string): { col: string; width: string; visible: string }[] {
+    return value?.split('|').map((item) => {
       const parts = item.split('#');
       return {
         col: parts[0],

@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { addItemToAddedGroups, loadAccessGroups, loadAddedGroups, removeItemFromAddedGroups } from "../actions/access-group.action";
+import { addItemToAddedGroups, loadAccessGroups, loadAddedGroups, removeItemFromAddedGroups, resetAccessGroups } from "../actions/access-group.action";
 import { initialState } from "../models/access-group.state";
 
 // Reducer
@@ -89,6 +89,10 @@ export const accessGroupReducer = createReducer(
       addedGroups: [...updatedAddedGroups],
       accessGroups: [...updatedAccessGroups]
     };
-  })
+  }),
   
+
+  on(resetAccessGroups, () => ({
+    ...initialState // State tamamen sıfırlandı
+  }))
 );

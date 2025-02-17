@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
@@ -44,7 +44,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   @Input() isFromAttendance: boolean;
   selectedEmployeesFromAttendance: any[] = [];
   @Output() isCompletedFromAttendance: EventEmitter<void> = new EventEmitter<void>();
-
+  @Input() isFromRegistryList:boolean;
   stepperFields: any[] = [
     { class: 'stepper-item current', number: 1, title: this.translateService.instant('Neden_Açıklama'), desc: this.translateService.instant('Fazla_Mesai_Nedeni') },
     { class: 'stepper-item', number: 2, title: this.translateService.instant('Diğer_Bilgiler'), desc: this.translateService.instant('Ulaşım_Yemek') },
@@ -84,6 +84,9 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
 
   currentUserValue: UserType;
   isCompleted: boolean = false;
+  matchedRegistry: string;
+
+  @ViewChild('btnComplate') btnComplate!: HTMLButtonElement;
   constructor(
     private formBuilder: FormBuilder,
     private breakpointObserver: BreakpointObserver,
@@ -94,7 +97,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private helperService : HelperService,
     private ref: ChangeDetectorRef,
-    private attendanceService: AttendanceService
+    private attendanceService: AttendanceService,
   ) { }
 
   ngOnInit(): void {
@@ -104,6 +107,10 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     if (this.isFromAttendance) {
       this.getSelectedRows();
       this.formsCount = 5;
+    }
+
+    if (this.isFromRegistryList) {
+      this.getRowsFromRegistyList();
     }
 
     this.getOvertimeReason('cbo_fmnedenleri');
@@ -169,7 +176,17 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
       return this.overtimeForm.valid;
 
     } else if(this.currentStep$.value === 4) {
-      this.postOvertimeForm(this.overtimeFormValues);
+      if (this.isFromRegistryList) {
+        this.postFormForRegistryList(this.overtimeFormValues)
+      } else {
+        this.postOvertimeForm(this.overtimeFormValues);
+      }
+      
+      return true;
+    } else if(this.currentStep$.value === 5) {
+      if (this.fileTypes.length == 0) {
+        this.closedFormDialog();
+      }
       return true;
     }
 
@@ -322,7 +339,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
   }
 
   closedFormDialog() {
-      this.overtimeForm.reset();
+      this.overtimeForm?.reset();
       this.selectedType = '';
       this.selectedOvertime = '';
       this.selectedUlasim = '';
@@ -474,6 +491,7 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
             console.log('isCompleted : ', this.selectedEmployeesFromAttendance);
             this.isCompleted = true;
           }
+          this.btnComplate.disabled = true;
           this.ref.detectChanges();
         }
       );
@@ -553,6 +571,62 @@ export class DialogFazlaMesaiTalebiComponent implements OnInit, OnDestroy {
     });
   }
 
+  getRowsFromRegistyList() {
+    this.attendanceService.getSelectedItems().pipe(takeUntil(this.ngUnsubscribe)).subscribe((items) => {
+      console.log("Sicil Listesinden Seçilenler Geldi: ", items);
+      if (items.length == 0) {
+        this.toastrService.warning(
+          this.translateService.instant('Sicil_Veya_Sicilleri_Seçiniz'),
+          this.translateService.instant('Uyarı')
+        )
+        this.closedFormDialog()
+        return;
+      }
+
+      this.matchedRegistry = this.matchRegistry(items, "#"); 
+    });
+  }
+
+  matchRegistry(items: { Id: number }[], separator: string): string {
+    return items.map(item => item.Id).join(separator);
+  }
+
+  postFormForRegistryList(form:any) {
+    var sp: any[] = [{
+      mkodu: 'yek049',
+      kaynak: 'fm',
+      siciller: this.matchedRegistry,
+      tip: form.tip.ID.toString(),
+      bastarih: form?.bassaat ? `${form.bastarih} ${form.bassaat}` : form.bastarih,
+      bittarih: form?.bitsaat ? `${form.bittarih} ${form.bitsaat}` : form.bittarih,
+      izinadresi: form.izinadresi,
+      ulasim: form.ulasim?.ID ? form.ulasim.ID.toString() : '',
+      yemek: form.yemek?.ID ? form.yemek.ID.toString() : '',
+      aciklama: form.aciklama
+    }];
+    console.log("Sicil Listesinden mesai formu params :", sp);
+
+    this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response) => {
+      const data = response[0].x;
+      const message = response[0].z;
+
+      if (message.islemsonuc == -1) {
+        this.toastrService.error(
+          this.translateService.instant("Mesai_Talep_Formu_Gönderilirken_Hata_Oluştu"),
+          this.translateService.instant("Hata")
+        );
+        this.nextStep();
+        return;
+      }
+
+      console.log("Mesai Talep Formu Gönderildi : ", data);
+      this.toastrService.success(
+        this.translateService.instant("Mesai_Talep_Formu_Gönderildi"),
+        this.translateService.instant("Başarılı")
+      );
+      this.nextStep();
+    });
+  }
 
   ngOnDestroy(): void {
     this.closedFormDialog();

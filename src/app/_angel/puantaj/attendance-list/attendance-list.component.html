@@ -280,11 +280,22 @@
 
 
 <ng-container *ngIf="displayVacationForm">
-    <app-dialog-izin-talebi [isFromAttendance]="true" [displayVacationForm]="displayVacationForm" (onHideVacationForm)="onHideVacationForm()" (isCompletedFromAttendance)="getAttendanceInfo()"></app-dialog-izin-talebi>
+    <app-dialog-izin-talebi
+        [isFromAttendance]="true"
+        [displayVacationForm]="displayVacationForm"
+        (onHideVacationForm)="onHideVacationForm()"
+        (isCompletedFromAttendance)="getAttendanceInfo()"
+        [isFromRegistryList]="false">
+    </app-dialog-izin-talebi>
 </ng-container>
 
 <ng-container *ngIf="displayOvertimeForm">
-    <app-dialog-fazla-mesai-talebi [isFromAttendance]="true" [displayOvertimeForm]="displayOvertimeForm" (onHideOvertimeForm)="onHideOvertimeForm()"></app-dialog-fazla-mesai-talebi>
+    <app-dialog-fazla-mesai-talebi
+        [isFromAttendance]="true"
+        [displayOvertimeForm]="displayOvertimeForm"
+        (onHideOvertimeForm)="onHideOvertimeForm()"
+        [isFromRegistryList]="false">
+    </app-dialog-fazla-mesai-talebi>
 </ng-container>
 
 <ng-container *ngIf="displayShiftForm">

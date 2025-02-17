@@ -188,12 +188,12 @@
 
                                                     <div class="table-responsive scroll h-250px">
 
-                                                        <table class="table table-hover table-rounded table-striped border gy-7 gs-7">
-                                                            <thead>
-                                                                <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                        <table class="table table-hover table-rounded border gy-2 gs-2">
+                                                            <thead class="sticky-top bg-white">
+                                                                <tr class="fw-semibold fs-6 text-gray-500 border-bottom-2 border-gray-200">
                                                                     <th>Ad</th>
                                                                     <th>Soyad</th>
-                                                                    <th *ngIf="vacationForm.controls['tip'].value == 3">Kalan Hak</th>
+                                                                    <th *ngIf="vacationForm.controls['tip']?.value?.ID == 3">Kalan Hak</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>

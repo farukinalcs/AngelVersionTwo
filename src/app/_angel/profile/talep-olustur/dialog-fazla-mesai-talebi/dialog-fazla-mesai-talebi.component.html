@@ -32,8 +32,8 @@
                                                             <span class="">{{"Seçilen_Kişiler" | translate}}</span>
                                                         </label>
 
-                                                        <div class="d-flex justify-content-center align-items-center border border-3 rounded p-5">
-                                                            <span class="badge badge-circle badge-danger mx-5">
+                                                        <div class="d-flex justify-content-center align-items-center border border-3 rounded p-2">
+                                                            <span class="badge badge-circle badge-danger mx-1">
                                                                 <i class="fa-solid fa-info text-white"></i>
                                                             </span>
                                                             <span class="text-gray-500 pt-1 fw-semibold fs-6">{{getTooltipScript()}}</span>
@@ -41,7 +41,7 @@
                                                     </div>  
                                                 </ng-container>
 
-                                                <div class="col-12 my-5">
+                                                <div class="col-12 my-3">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"Fazla_Mesai_Tipi" | translate}}</span>
                                                     </label>
@@ -71,7 +71,7 @@
                                                     </ng-container>
                                                 </div>
 
-                                                <div class="col-12 my-5">
+                                                <div class="col-12 my-3">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"Açıklama" | translate}}</span>
                                                     </label>
@@ -96,7 +96,7 @@
                                     <div class="current">
                                         <div class="w-100">
                                             <div class="row">
-                                                <div class="col-12 my-5">
+                                                <div class="col-12 my-3">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"Ulaşım" | translate}}</span>
                                                     </label>
@@ -126,7 +126,7 @@
                                                     </ng-container>
                                                 </div>
 
-                                                <div class="col-12 my-5">
+                                                <div class="col-12 my-3">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"Yemek" | translate}}</span>
                                                     </label>
@@ -261,7 +261,7 @@
 
                                                 <div class="col-12">
                                                     <div class="row text-center">
-                                                        <div class="col-12 py-2">
+                                                        <div class="col-12 py-1">
                                                             <span
                                                                 class="text-gray-800  fs-6 fw-bolder">{{"Fazla_Mesai_Tipi"
                                                                 | translate}}:</span>
@@ -269,14 +269,14 @@
                                                                 {{overtimeFormValues.tip.ad}} </span>
                                                         </div>
 
-                                                        <div class="col-12 py-2">
+                                                        <div class="col-12 py-1" pTooltip="{{overtimeFormValues.aciklama}}" tooltipPosition="top">
                                                             <span class="text-gray-800  fs-6 fw-bolder">{{"Açıklama" |
                                                                 translate}}:</span>
                                                             <span class="text-muted fw-bold d-block fs-7">
-                                                                {{overtimeFormValues.aciklama}} </span>
+                                                                {{overtimeFormValues.aciklama | truncate:15}} </span>
                                                         </div>
 
-                                                        <div class="col-12 py-2">
+                                                        <div class="col-12 py-1">
                                                             <span
                                                                 class="text-gray-800  fs-6 fw-bolder">{{"Başlangıç_Tarihi"
                                                                 |
@@ -289,9 +289,8 @@
                                                             </span>
                                                         </div>
 
-                                                        <div class="col-12 py-2">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Bitiş_Tarihi"
-                                                                | translate}}:</span>
+                                                        <div class="col-12 py-1">
+                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Bitiş_Tarihi" | translate}}:</span>
                                                             <span class="text-muted fw-bold d-block fs-7">
                                                                 {{overtimeFormValues.bittarih}}
                                                                 <ng-container *ngIf="overtimeFormValues.bitsaat">
@@ -300,16 +299,14 @@
                                                             </span>
                                                         </div>
 
-                                                        <div class="col-12 py-2">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Ulaşım" |
-                                                                translate}}:</span>
+                                                        <div class="col-12 py-1">
+                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Ulaşım" | translate}}:</span>
                                                             <span class="text-muted fw-bold d-block fs-7">
                                                                 {{overtimeFormValues.ulasim.ad}} </span>
                                                         </div>
 
-                                                        <div class="col-12 py-2">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Yemek" |
-                                                                translate}}:</span>
+                                                        <div class="col-12 py-1">
+                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Yemek" | translate}}:</span>
                                                             <span class="text-muted fw-bold d-block fs-7">
                                                                 {{overtimeFormValues.yemek.ad}} </span>
                                                         </div>
@@ -320,12 +317,12 @@
                                     </div>
 
                                     <div class="row" *ngIf="isCompleted">
-                                        <div class="col-12 mb-10">
+                                        <div class="col-12">
 
-                                            <div class="table-responsive scroll h-350px">
+                                            <div class="table-responsive scroll h-400px">
 
-                                                <table class="table table-hover table-rounded border gy-7 gs-7">
-                                                    <thead>
+                                                <table class="table table-rounded border gy-2 gs-2">
+                                                    <thead class="sticky-top bg-white">
                                                         <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                                             <th>Ad</th>
                                                             <th>Soyad</th>
@@ -446,7 +443,7 @@
                             <div class="d-flex flex-stack pt-0">
                                 <div class="mr-2">
                                     <ng-container *ngIf=" 5 > currentStep$.value && currentStep$.value > 1">
-                                        <button type="button" class="btn btn-lg btn-light-danger me-3"
+                                        <button type="button" class="btn btn-sm btn-light-danger me-3"
                                             (click)="prevStep()">
                                             <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                                 class="svg-icon svg-icon-4 me-1"></span>
@@ -455,7 +452,7 @@
                                     </ng-container>
 
                                     <ng-container *ngIf="currentStep$.value == formsCount">
-                                        <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
+                                        <button mat-dialog-close type="button" class="btn btn-sm btn-light-danger me-3">
                                             <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                                 class="svg-icon svg-icon-4 me-1"></span>
                                             {{"Kapat" | translate}}
@@ -466,7 +463,7 @@
                                 <ng-container *ngIf="currentStep$.value !== formsCount">
                                     <div>
                                         <ng-container *ngIf="currentStep$.value < formsCount - 1">
-                                            <button type="button" class="btn btn-lg btn-danger me-3"
+                                            <button type="button" class="btn btn-sm btn-danger me-3"
                                                 (click)="nextStep()">
                                                 <span class="indicator-label">
                                                     {{"İleri" | translate}} {{ " " }}
@@ -480,15 +477,14 @@
                                             </button>
                                         </ng-container>
                                         <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                            <button type="button" class="btn btn-lg btn-danger me-3"
+                                            <button type="button" class="btn btn-sm btn-danger me-3"
                                                 (click)="closedFormDialog()">
                                                 <span class="indicator-label">
                                                     {{"Kapat" | translate}}
                                                 </span>
                                             </button>
 
-                                            <button type="button" class="btn btn-lg btn-danger me-3"
-                                                (click)="getFormValues()">
+                                            <button #btnComplate type="button" class="btn btn-sm btn-danger me-3" (click)="getFormValues()">
                                                 <span class="indicator-label">
                                                     {{"Gönder" | translate}}
                                                 </span>

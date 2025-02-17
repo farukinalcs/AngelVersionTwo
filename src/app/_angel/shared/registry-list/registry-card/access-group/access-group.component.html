@@ -15,13 +15,35 @@
     <div class="card-body pt-0 pb-5">
         <div class="row mt-3">
             <div class="col-12">
-                <div class="alert alert-danger d-flex align-items-center p-5">
+                <div class="alert alert-danger d-flex align-items-center px-5 py-2 mb-1">
                     <i class="fa-solid fa-triangle-exclamation fs-2hx me-4 text-danger"></i>
                     <div class="d-flex flex-column">
                         <h4 class="mb-1 text-danger">{{"Dikkat!" | translate}}</h4>
                 
                         <span>{{"Değişiklikler_Kaydet_İşleminde_Uygulanır" | translate}}</span>
                     </div>
+                </div>
+            </div>
+
+            <div class="col-12 d-flex flex-row" *ngIf="operationType == 't'">
+                <span class="text-gray-500 mt-1 fw-semibold fs-8">Seçili Kişiler İçin
+                    <ng-container *ngIf="actionType == 'u'">
+                        <a class="text-gray-800 fw-bolder fs-8 cursor-pointer" style="text-decoration: underline;" (click)="changeActionType('c')">Güncelle</a>
+                        (Mevcut Yetkiler Ezilir)    
+                    </ng-container>
+                     
+                    <ng-container *ngIf="actionType == 'c'">
+                        <a class="text-gray-800 fw-bolder fs-8 cursor-pointer" style="text-decoration: underline;" (click)="changeActionType('d')">Ekle</a>
+                        (Mevcut Yetkilere Eklenir)    
+                    </ng-container>
+                    
+                    <ng-container *ngIf="actionType == 'd'">
+                        <a class="text-gray-800 fw-bolder fs-8 cursor-pointer" style="text-decoration: underline;" (click)="changeActionType('u')">Çıkar</a>
+                        (Mevcut Yetkilerden Çıkarılır)    
+                    </ng-container>
+                </span>
+                <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" >
+                    <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkAccessGroup" [ngModelOptions]="{standalone: true}"/>
                 </div>
             </div>
         </div>
@@ -54,12 +76,12 @@
         </div>
         
         <div class="row">            
-            <div class="col-6 h-550px scroll">
-                <div class="table-responsive">
+            <div class="col-6">
+                <div class="table-responsive h-300px scroll">
                     
-                    <table class="table table-row-dashed table-row-gray-200 align-middle gs-2 gy-4">
-                        <thead>
-                            <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light">
+                    <table class="table table-row-dashed table-row-gray-200 align-middle gs-2 gy-1 border">
+                        <thead class="sticky-top">
+                            <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-gray-300">
                                 <th class="rounded-start" style="width: 20%;">#</th>
                                 <th class="" style="width: 70%;">{{"Bağlı_Olduğu_Geçiş_Grupları" | translate}}</th>
                                 <th class="rounded-end" style="width: 10%;">{{"İşlem" | translate}}</th>
@@ -70,37 +92,40 @@
                 
                             <ng-container *ngIf="addedGroups.length > 0">
                                 <tbody>
-                                    <tr *ngFor="let item of addedGroups | searchFilter:filterTextAdded: ['Ad'] " class="cursor-pointer fs-8 fw-bolder">
-                                        <ng-container *ngIf="item.hasItem">
+                                    <ng-container *ngFor="let item of addedGroups | searchFilter:filterTextAdded: ['Ad']">
+                                        <tr *ngIf="item.hasItem" class="cursor-pointer fs-8 fw-bolder" [ngClass]="{'hashed-bg': item.isTemp}" pTooltip="{{item.tempDesc}}">
                                             <td>
                                                 <!-- <span class="mb-1" (click)="showDetail(item)">?</span> -->
-                                                <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px" (click)="showDetail(item)">
+                                                <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
+                                                    (click)="showDetail(item)">
                                                     <i class="fa-solid fa-question fs-5"></i>
                                                 </div>
                                             </td>
-                    
-                                            <td>
+                                    
+                                            <td class="d-flex flex-column">
                                                 <span class="mb-1">{{ item.Ad }}</span>
+                                                <span class="text-gray-500">{{item.tempStartDate}} {{item.tempStartTime}} - {{item.tempEndDate}} {{item.tempEndTime}}</span>
                                             </td>
-                    
+                                    
                                             <td>
-                                                <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                <a class="btn btn-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
                                                     (click)="relationStateChange(item, 'd', item?.isTemp ? true : false)">
                                                     <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
                                                     <span>{{"Kaldır" | translate}}</span>
                                                 </a>
-                    
+                                    
                                             </td>
-                                        </ng-container>
-                    
-                                    </tr>
+                                    
+                                        </tr>
+                                    </ng-container>
+                                    
                                 </tbody>
                             </ng-container>
                             
                             <ng-container *ngIf="addedGroups.length == 0">
                                 <tr>
                                     <td colspan="3" class="text-center">
-                                        <app-data-not-found [imgWidth]="'60%'"></app-data-not-found>
+                                        <app-data-not-found [imgWidth]="'30%'"></app-data-not-found>
                                     </td>
                                 </tr>
                             </ng-container>
@@ -109,11 +134,11 @@
                 </div>
             </div>
             
-            <div class="col-6 h-550px scroll">
-                <div class="table-responsive">
-                    <table class="table table-row-dashed table-row-gray-200 align-middle gs-2 gy-4">
-                        <thead>
-                            <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light">
+            <div class="col-6">
+                <div class="table-responsive h-300px scroll">
+                    <table class="table table-row-dashed table-row-gray-200 align-middle gs-2 gy-1 border">
+                        <thead class="sticky-top">
+                            <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-gray-300">
                                 <th class=" rounded-start" style="width: 10%;">{{"İşlem" | translate}}</th>
                                 <th class="" style="width: 70%;">{{"Eklenebilir_Geçiş_Grupları" | translate}}</th>
                                 <th class="rounded-end" style="width: 20%;">#</th>
@@ -126,12 +151,12 @@
                                     <ng-container *ngIf="!item.hasItem">
                 
                                         <td>
-                                            <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2" (click)="relationStateChange(item, 'i', false)">
+                                            <a class="btn btn-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2" (click)="relationStateChange(item, 'i', false)">
                                                 <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                 <span>{{"Ekle" | translate}}</span>
                                             </a>
     
-                                            <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2" (click)="open(item)">
+                                            <a class="btn btn-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2" (click)="open(item)">
                                                 <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                 <span>{{"Süreli_Ekle" | translate}}</span>
                                             </a>
@@ -237,11 +262,11 @@
     <div class="container-fluid">
         <div class="row">
             
-            <div class="col-12 h-100 scroll">
-                <div class="table-responsive">
+            <div class="col-12">
+                <div class="table-responsive h-100 scroll">
                     <table
                         class="table table-row-dashed table-row-gray-200 align-middle gs-2 gy-4">
-                        <thead>
+                        <thead class="sticky-top">
                             <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light">
                                 <th class="rounded-start" >{{"Id" | translate}}</th>
                                 <th class="rounded-end" >{{"Ad" | translate}}</th>

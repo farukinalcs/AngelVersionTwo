@@ -97,31 +97,7 @@
                                             <select class="form-select form-select-sm form-select-solid dropdown" formControlName="{{organization.name}}">
                                                 <option *ngFor="let item of organization.data" value="{{item.ID}}">{{item.Ad}}</option>
                                             </select>
-                            
-                                            <!-- <mat-form-field class="example-full-width" style="width: 90%;" appearance="fill">
-                                                <input type="text" placeholder="{{organization.viewName}} Seçiniz" aria-label="Number" matInput [formControlName]="organization.name"
-                                                    [matAutocomplete]="auto">
-                                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                                                    <mat-option *ngFor="let option of organization.data" [value]="option">
-                                                        {{option.Ad}}
-                                                    </mat-option>
-                                                </mat-autocomplete>
-                                            </mat-form-field> -->
-                                            
-                                            
-                                            <!-- <p-dropdown [options]="organization.data" [(ngModel)]="organization.selectedType" optionLabel="Ad" [filter]="true" filterBy="Ad"
-                                                [showClear]="true" placeholder="{{'Seçiniz' | translate}}" formControlName="{{organization.name}}">
-                                                <ng-template pTemplate="selectedItem">
-                                                    <div class="item-item item-item-value" *ngIf="organization.selectedType">
-                                                        <div>{{organization.selectedType.Ad}}</div>
-                                                    </div>
-                                                </ng-template>
-                                                <ng-template let-item pTemplate="item">
-                                                    <div class="item-item">
-                                                        <div>{{item.Ad}}</div>
-                                                    </div>
-                                                </ng-template>
-                                            </p-dropdown> -->
+                        
                                         </div>
                                     </div>
                                     
@@ -158,13 +134,13 @@
     </div>
 
     <ng-template pTemplate="footer">
-        <a (click)="setFormValues()" class="btn btn-danger btn-sm mx-1">
-            <i class="fa-solid fa-check fs-7"></i>
-            {{'Gönder' | translate}}
-        </a>
         <a (click)="onHideFilterModal()" class="btn btn-danger btn-sm mx-1">
             <i class="fa-solid fa-xmark fs-7"></i>
             {{'Kapat' | translate}}
+        </a>
+        <a (click)="setFormValues()" class="btn btn-danger btn-sm mx-1">
+            <i class="fa-solid fa-check fs-7"></i>
+            {{'Gönder' | translate}}
         </a>
     </ng-template>
 </p-dialog>

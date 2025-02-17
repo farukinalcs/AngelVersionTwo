@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
-import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ProfileService } from '../../profile.service';
 import { ToastrService } from 'ngx-toastr';
@@ -44,6 +44,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   selectedEmployeesFromAttendance: any[] = [];
   vacationRightsLoading: boolean = true;
   @Output() isCompletedFromAttendance: EventEmitter<void> = new EventEmitter<void>();
+  @Input() isFromRegistryList: boolean;
 
   stepperFields: any[] = [
     { class: 'stepper-item current', number: 1, title: this.translateService.instant('Tür'), desc: this.translateService.instant('Günlük_Saatlik') },
@@ -91,6 +92,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   currentUserValue: UserType;
   isCompleted: boolean = false;
   vacationRightState: boolean;
+  matchedRegistry: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -113,6 +115,10 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     if (this.isFromAttendance) {
       this.getSelectedRows();
       this.formsCount = 6;
+    }
+
+    if (this.isFromRegistryList) {
+      this.getRowsFromRegistry();
     }
 
     const subscr = this.modeService.mode.asObservable().subscribe((mode) => {
@@ -155,7 +161,16 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
       return this.vacationForm.valid;
 
     } else if(this.currentStep$.value === 5) {
-      this.postVacationForm(vacationFormValues);
+      if (this.isFromRegistryList) {
+        this.postFormForRegistryList(vacationFormValues);
+      } else {
+        this.postVacationForm(vacationFormValues);
+      }
+      return true;
+    } else if(this.currentStep$.value === 6) {
+      if (this.fileTypes.length == 0) {
+        this.closedFormDialog();
+      }
       return true;
     }
 
@@ -299,7 +314,7 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
   closedFormDialog() { // Dialog Penceresi Kapatıldığında İlgili Yerleri Sıfırlamak İçin
     // this.closedForm.subscribe(_ => {
       // console.log("Closed Form : ", _);
-      this.vacationForm.reset();
+      this.vacationForm?.reset();
       this.selectedType = '';
       this.uploadedFile = '';
       this.resetStepperFieldsClass();
@@ -360,23 +375,33 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
       }
     });
   }
+  
 
-  dateChanges() { // İzin Süresinin Ekranda Gösterilmesi İçin Uygunluk Kontrolü
-    this.vacationForm.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe(item => {
-      let formValue = Object.assign({}, this.vacationForm.value);
-      formValue.siciller = this.currentSicilId;
-      if (!formValue.tip) {
-        this.calcTimeDesc = 'İzin Tipi Seçmelisiniz!'
-      } else if (formValue.gunluksaatlik == 'saatlik' && (!formValue.bassaat || !formValue.bitsaat)) {
-        this.calcTimeDesc = 'Saat Bilgisi Girimelisiniz!'
-      } else {
-        this.calcTimeDesc = '';
-        if (!this.isFromAttendance) {
-          this.calculateVacationTime(formValue);          
+  dateChanges() {// İzin Süresinin Ekranda Gösterilmesi İçin Uygunluk Kontrolü
+    const bastarihChanges$ = this.vacationForm.get('bastarih')?.valueChanges.pipe(startWith(this.vacationForm.get('bastarih')?.value));
+    const bittarihChanges$ = this.vacationForm.get('bittarih')?.valueChanges.pipe(startWith(this.vacationForm.get('bittarih')?.value));
+    const bassaatChanges$ = this.vacationForm.get('bassaat')?.valueChanges.pipe(startWith(this.vacationForm.get('bassaat')?.value));
+    const bitsaatChanges$ = this.vacationForm.get('bitsaat')?.valueChanges.pipe(startWith(this.vacationForm.get('bitsaat')?.value));
+  
+    combineLatest([bastarihChanges$, bittarihChanges$, bassaatChanges$, bitsaatChanges$])
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(([bastarih, bittarih, bassaat, bitsaat]:any) => {
+        let formValue = Object.assign({}, this.vacationForm.value);
+        formValue.siciller = this.currentSicilId;
+  
+        if (!formValue.tip) {
+          this.calcTimeDesc = 'İzin Tipi Seçmelisiniz!';
+        } else if (formValue.gunluksaatlik == 'saatlik' && (!formValue.bassaat || !formValue.bitsaat)) {
+          this.calcTimeDesc = 'Saat Bilgisi Girimelisiniz!';
+        } else {
+          this.calcTimeDesc = '';
+          if (!this.isFromAttendance) {
+            this.calculateVacationTime(formValue);
+          }
         }
-      }
-    })
+      });
   }
+
 
   calculateVacationTime(form: any) { // İzin Süresinin Hesaplanması İçin API'ye İstek Atılan Fonrksiyon
     this.profileService.calculateVacationTime(form).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
@@ -645,6 +670,65 @@ export class DialogIzinTalebiComponent implements OnInit, OnDestroy {
     this.currentUploadedFile = item;
   }
 
+  getRowsFromRegistry() {
+    this.attendanceService.getSelectedItems().pipe(takeUntil(this.ngUnsubscribe)).subscribe((items) => {
+      console.log('Sicil Listesinden Seçilen Personel :', items);
+
+      if (items.length == 0) {
+        this.toastrService.warning(
+          this.translateService.instant("Sicil_Veya_Siciller_Seçiniz"),
+          this.translateService.instant("Uyarı")
+        );
+        this.closedFormDialog()
+        return;
+      }
+
+      this.matchedRegistry = this.matchRegistry(items, "#"); 
+    });
+  }
+
+  matchRegistry(items: { Id: number }[], separator: string): string {
+    return items.map(item => item.Id).join(separator);
+  }
+
+  postFormForRegistryList(form:any) {
+    var sp: any[] = [{
+      mkodu: 'yek049',
+      kaynak: 'izin',
+      siciller: this.matchedRegistry,
+      tip: form.tip.ID.toString(),
+      bastarih: form?.bassaat ? `${form.bastarih} ${form.bassaat}` : form.bastarih,
+      bittarih: form?.bitsaat ? `${form.bittarih} ${form.bitsaat}` : form.bittarih,
+      izinadresi: form.izinadresi,
+      ulasim: form.ulasim?.ID ? form.ulasim.ID.toString() : '',
+      yemek: form.yemek?.ID ? form.yemek.ID.toString() : '',
+      aciklama: form.aciklama
+    }];
+
+    console.log("Sicil Listesinden izin formu params :", sp);
+    
+    this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response) => {
+      const data = response[0].x;
+      const message = response[0].z;
+
+      if (message.islemsonuc == -1) {
+        this.toastrService.error(
+          this.translateService.instant("İzin_Talep_Formu_Gönderilirken_Hata_Oluştu"),
+          this.translateService.instant("Hata")
+        );
+        this.nextStep();
+        return;
+      }
+
+      console.log("İzin Talep Formu Gönderildi : ", data);
+      this.toastrService.success(
+        this.translateService.instant("İzin_Talep_Formu_Gönderildi"),
+        this.translateService.instant("Başarılı")
+      );
+      this.nextStep();
+    });
+  }
+  
   ngOnDestroy(): void {
     this.closedFormDialog();
     this.ngUnsubscribe.next(true);

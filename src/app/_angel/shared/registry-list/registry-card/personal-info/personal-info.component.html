@@ -100,7 +100,7 @@
 
 
 <ng-template #formError let-control="control" let-message="message" let-validation="validation">
-    <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <ng-container *ngIf="control.hasError(validation)">
         <div class="fv-plugins-message-container">
             <div class="fv-help-block">
                 <span role="alert">

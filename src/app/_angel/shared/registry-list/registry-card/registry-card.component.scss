@@ -85,3 +85,42 @@
 }
 
 
+.profile-picture-container {
+    width: 120px; /* Görsel boyutu */
+    height: 120px;
+    position: relative;
+}
+
+.profile-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Görselin düzgün kırpılması */
+    border-radius: 50%; /* Yuvarlak yap */
+    border: 2px solid #ddd; /* Hafif çerçeve */
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #6c757d;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+        background-color: #f8f9fa;
+        color: #495057;
+    }
+}
+
+.upload-btn {
+    top: -10px; /* Daha yukarı taşı */
+    right: -10px; /* Daha sağa taşı */
+}
+
+.remove-btn {
+    bottom: -10px; /* Daha aşağıya taşı */
+    right: -10px; /* Daha sağa taşı */
+}

@@ -2,17 +2,17 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, O
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { Subject, takeUntil } from 'rxjs';
+import { OKodFieldsModel } from 'src/app/_angel/profile/models/oKodFields';
+import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
-import { OKodFieldsModel } from '../../profile/models/oKodFields';
-import { ProfileService } from '../../profile/profile.service';
 
 @Component({
-  selector: 'app-attendance-list-filter',
-  templateUrl: './attendance-list-filter.component.html',
-  styleUrls: ['./attendance-list-filter.component.scss']
+  selector: 'app-registry-filter',
+  templateUrl: './registry-filter.component.html',
+  styleUrls: ['./registry-filter.component.scss']
 })
-export class AttendanceListFilterComponent implements OnInit, OnDestroy {
+export class RegistryFilterComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   @Input() displayFilterModal: boolean;
   @Input() filterByGrid: any;
@@ -65,8 +65,6 @@ export class AttendanceListFilterComponent implements OnInit, OnDestroy {
 
   createFilterForm() {
     this.filterForm = this.formBuilder.group({
-      startDate : [this.dateRangeByGrid?.startDate || ''],
-      endDate : [this.dateRangeByGrid?.endDate || ''],
       name : [this.filterByGrid?.ad?.filter || ''],
       surname : [this.filterByGrid?.soyad?.filter || ''],
       registrationNumber : [this.filterByGrid?.sicilno?.filter || ''],

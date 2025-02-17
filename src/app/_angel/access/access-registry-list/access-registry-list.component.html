@@ -78,8 +78,13 @@
                     </ul>
 
 
-                    <app-registry-list [selectedTab]="selectedTab" [clear]="clear" [fromWhere]="[1,2,3,4,5,6,7,8,9,10]"
-                        (loadingEvent)="loadingEvent($event)"></app-registry-list>
+                    <app-registry-list
+                        [selectedTab]="selectedTab"
+                        [clear]="clear"
+                        [fromWhere]="[1,2,3,4,5,6,7,8,9,10]"
+                        (loadingEvent)="loadingEvent($event)"
+                        [filterEvent]="filterEvent">
+                    </app-registry-list>
                 </div>
             </div>
         </div>

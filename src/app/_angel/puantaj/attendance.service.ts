@@ -13,4 +13,8 @@ export class AttendanceService {
   setSelectedItems(items: any[]) {
     this.selectedItemsSubject.next(items);
   }
+
+  getSelectedItems(): Observable<any[]> {
+    return this.selectedItems$;
+  }
 }

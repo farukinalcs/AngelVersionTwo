@@ -3,11 +3,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, RowHeightParams } from 'ag-grid-community';
 import { ColDef, ColGroupDef, IMultiFilterParams, IRowNode, IsRowSelectable, SideBarDef, StatusPanelDef, ValueFormatterParams } from 'ag-grid-enterprise';
-import { map, Subject, takeUntil } from 'rxjs';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { ProfileService } from '../../profile/profile.service';
 import { AttendanceService } from '../../puantaj/attendance.service';
 import { OrganizationColumnFilterComponent } from '../../puantaj/organization-column-filter/organization-column-filter.component';
+import { Store } from '@ngrx/store';
+import { loadRegistersFailure, loadRegistersSuccess } from 'src/app/store/actions/register.action';
+import { Register } from 'src/app/store/models/register.state';
+import { selectAllRegisters } from 'src/app/store/selectors/register.selector';
+import { resetAccessGroups } from 'src/app/store/actions/access-group.action';
 
 @Component({
   selector: 'app-registry-list',
@@ -20,6 +25,10 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
   @Input() selectedTab: any;
   @Input() clear: any;
   @Output() loadingEvent = new EventEmitter<boolean>();
+  @Output() requestTimeEvent = new EventEmitter<any>();
+  @Input() refreshEvent:boolean;
+  @Input() filterEvent:boolean;
+  @Input() bulkChangeEvent:boolean;
   @ViewChild('agGridLight', { static: false }) agGridLight: AgGridAngular;
   @ViewChild('agGridDark', { static: false }) agGridDark: AgGridAngular;
   gridHeight = '80vh';
@@ -78,13 +87,20 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
   displayRegistryCard: boolean = false;
   selectedRegister: any;
   imageUrl: string;
+  requestTime: any;
+  response: any;
+  displayFilterModal: boolean = false;
+  filterFromModal: boolean = false;
+  filterValueFromModal: { formValues: any };
+  displayBulkChangeModal: boolean = false;
 
   constructor(
     private profileService: ProfileService,
     private translateService: TranslateService,
     private themeModeService: ThemeModeService,
     private attendanceService: AttendanceService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private registerStore: Store
   ) { 
     this.imageUrl = this.profileService.getImageUrl();
   }
@@ -182,9 +198,9 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
                 return true;
               },
             },
-            // cellClass: (params) => this.applyWeekendClass(params),
+            cellClass: (params) => this.applyLinkClass(),
             hide: false,
-            onCellClicked: (params) => this.clickedRegistry(params),
+            onCellDoubleClicked: (params) => this.clickedRegistry(params)
           },
           {
             headerName: this.translateService.instant('Soyad'),
@@ -379,13 +395,20 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
     this.setGridSetting();
     
   }
-
+  rowData$: Observable<Register[]>; // rowData artık store'dan observable olarak gelecek
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedTab']) {
       console.log('Selected Tab değişti:', changes['selectedTab'].currentValue);
+      this.rowData$ = this.registerStore.select(selectAllRegisters); // Store'dan veriyi çekiyoruz
       this.getRegistryList();
     } else if (changes['clear']) {
       this.clearFilters();
+    } else if (changes['refreshEvent']) {
+      this.getRegistryList();
+    } else if (changes['filterEvent']) {
+      this.openFilterModal();
+    } else if (changes['bulkChangeEvent']) {
+      this.openBulkChangeModal();
     }
   }
 
@@ -394,34 +417,69 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
     this.loading = true;
     this.loadingEvent.emit(true);
     
-    var sp: any[] = [{
-      mkodu: 'yek081',
-      id: '0',
-      ad: savedFilterModel?.ad?.filter || '',
-      soyad: savedFilterModel?.soyad?.filter || '',
-      sicilno: savedFilterModel?.sicilno?.filter || '',
-      personelno: savedFilterModel?.personelno?.filter || '',
-      firma: savedFilterModel?.cbo_firma?.toString() || '0',
-      bolum: savedFilterModel?.cbo_bolum?.toString() || '0',
-      pozisyon: savedFilterModel?.cbo_pozisyon?.toString() || '0',
-      gorev: savedFilterModel?.cbo_gorev?.toString() || '0',
-      altfirma: savedFilterModel?.cbo_altfirma?.toString() || '0',
-      yaka: savedFilterModel?.yaka?.toString() || '0',
-      direktorluk: savedFilterModel?.cbo_direktorluk?.toString() || '0',
-      mesaiperiyodu: savedFilterModel?.cbo_mesaiperiyodlari?.toString() || '0',
-      sicilgroup: '0',
-      userdef: savedFilterModel?.sys_userdef?.toString() || '1',
-      yetki: savedFilterModel?.Yetki?.toString() || '-1',
-      cardid: savedFilterModel?.cardID?.filter || '',
-      aktif: this.selectedTab.type,
-      okod1: '',
-      okod2: '',
-      okod3: '',
-      okod4: '',
-      okod5: '',
-      okod6: '',
-      okod7: ''
-    }];
+    var sp: any[] = !this.filterFromModal 
+      ?
+        [{
+          mkodu: 'yek081',
+          id: '0',
+          ad: savedFilterModel?.ad?.filter || '',
+          soyad: savedFilterModel?.soyad?.filter || '',
+          sicilno: savedFilterModel?.sicilno?.filter || '',
+          personelno: savedFilterModel?.personelno?.filter || '',
+          firma: savedFilterModel?.cbo_firma?.toString() || '0',
+          bolum: savedFilterModel?.cbo_bolum?.toString() || '0',
+          pozisyon: savedFilterModel?.cbo_pozisyon?.toString() || '0',
+          gorev: savedFilterModel?.cbo_gorev?.toString() || '0',
+          altfirma: savedFilterModel?.cbo_altfirma?.toString() || '0',
+          yaka: savedFilterModel?.yaka?.toString() || '0',
+          direktorluk: savedFilterModel?.cbo_direktorluk?.toString() || '0',
+          mesaiperiyodu: savedFilterModel?.cbo_mesaiperiyodlari?.toString() || '0',
+          sicilgroup: '0',
+          userdef: savedFilterModel?.sys_userdef?.toString() || '1',
+          yetki: savedFilterModel?.Yetki?.toString() || '-1',
+          cardid: savedFilterModel?.cardID?.filter || '',
+          aktif: this.selectedTab.type,
+          okod1: '',
+          okod2: '',
+          okod3: '',
+          okod4: '',
+          okod5: '',
+          okod6: '',
+          okod7: '',
+          tumveri: '1'
+        }]
+      :
+        [{
+          mkodu: 'yek081',
+          id: '0',
+          ad: this.filterValueFromModal.formValues.name,
+          soyad: this.filterValueFromModal.formValues.surname,
+          sicilno: this.filterValueFromModal.formValues.registrationNumber,
+          personelno: savedFilterModel?.personelno?.filter || '',
+          firma: this.filterValueFromModal.formValues.company,
+          bolum: this.filterValueFromModal.formValues.department,
+          pozisyon: this.filterValueFromModal.formValues.position,
+          gorev: this.filterValueFromModal.formValues.job,
+          altfirma: this.filterValueFromModal.formValues.subcompany,
+          yaka: this.filterValueFromModal.formValues.collar,
+          direktorluk: this.filterValueFromModal.formValues.directorship,
+          mesaiperiyodu: savedFilterModel?.cbo_mesaiperiyodlari?.toString() || '0',
+          sicilgroup: '0',
+          userdef: savedFilterModel?.sys_userdef?.toString() || '1',
+          yetki: savedFilterModel?.Yetki?.toString() || '-1',
+          cardid: savedFilterModel?.cardID?.filter || '',
+          aktif: this.selectedTab.type,
+          okod1: this.filterValueFromModal.formValues.code1,
+          okod2: this.filterValueFromModal.formValues.code2,
+          okod3: this.filterValueFromModal.formValues.code3,
+          okod4: this.filterValueFromModal.formValues.code4,
+          okod5: this.filterValueFromModal.formValues.code5,
+          okod6: this.filterValueFromModal.formValues.code6,
+          okod7: this.filterValueFromModal.formValues.code7,
+          tumveri: '1'
+        }]
+
+        
     console.log("Sicil Params: ", sp);
     
     this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response:any) => {
@@ -432,11 +490,15 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
         return;
       }
       console.log("Sicil Listesi Geldi: ", data);
+      this.requestTime = data[0]?.zaman.replace('T', ' ');
+      console.log("TESTOOOO :", this.requestTime);
+      this.requestTimeEvent.emit(this.requestTime);
+      this.registerStore.dispatch(loadRegistersSuccess({ registers:data }));
       
-      this.rowData = [...this.rowData, ...data];
-      this.rowData.forEach((row: any) => {
-        row.rowHeight = 30;
-      });
+      // this.rowData = [...this.rowData, ...data];
+      // this.rowData.forEach((row: any) => {
+      //   row.rowHeight = 30;
+      // });
 
       this.gridOptionsLight = {
         localeTextFunc: (key: string, defaultValue: string) => {
@@ -454,6 +516,8 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
       
       this.loading = false;
       this.loadingEvent.emit(false); 
+    }, (error: any) => {
+      this.registerStore.dispatch(loadRegistersFailure({ error }));
     });
   }
 
@@ -556,7 +620,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   sendColumnStateToApi() {
-    const allColumns = this.agGridLight.columnApi.getAllColumns();
+    const allColumns = this.agGridLight.columnApi.getColumns();
     if (!allColumns) {
       console.error('No columns found.');
       return;
@@ -754,6 +818,10 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
   clearFilters() {
     this.agGridLight.api.setFilterModel(null);
     this.agGridDark.api.setFilterModel(null);
+    console.log("Tüm Filtreler Temizlendi!!");
+    this.filterFromModal = false;
+    this.filterValueFromModal = {formValues:""};
+    this.getRegistryList();
   }
   
   clickedRegistry(params: any) {
@@ -765,7 +833,47 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
   
   closeRegistryCard(event:any) {
     this.displayRegistryCard = event;
+    this.resetAccessGroupState();
   }
+
+  applyLinkClass() {
+    return "text-primary link-style"
+  }
+
+  openFilterModal() {
+    this.displayFilterModal = true;
+  }
+
+  onHideFilterModal() {
+    this.displayFilterModal = false;
+  }
+
+  setFilterFormFromModal(value: { formValues: any }) {
+    console.log('Filtre Geldii. :', value);
+    this.filterValueFromModal = value;
+    this.filterFromModal = true;
+    this.onHideFilterModal();
+    this.getRegistryList();
+    
+  }
+
+  openBulkChangeModal() {
+    this.displayBulkChangeModal = true;
+  }
+
+  onHideBulkChangeModal(event:any) {
+    this.displayBulkChangeModal = event;
+    this.resetAccessGroupState();
+  }
+
+  resetAccessGroupState() {
+    this.registerStore.dispatch(resetAccessGroups());
+  }
+
+  completedBulkChange() {
+    this.getRegistryList();
+  }
+  
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

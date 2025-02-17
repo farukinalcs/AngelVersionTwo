@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
@@ -17,6 +17,8 @@ export class AccessGroupComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   @Input() selectedRegister: any;
   @Input() operationType: any;
+  @Input() checkFormController: any;
+  @Output() actionTypeEvent = new EventEmitter<string>();
   accessGroups: any[] = [];  // Ana tablonun verilerini tutacak dizi
   addedGroups: any[] = [];    // Eklenen (diğer) tabloyu tutacak dizi
   display: boolean = false;
@@ -34,6 +36,7 @@ export class AccessGroupComponent implements OnInit, OnDestroy {
 
   accessGroups$ = this.store.pipe(select(selectAccessGroups));
   addedGroups$ = this.store.pipe(select(selectAddedGroups));
+  actionType: any = "u";
   constructor(
     private profileService: ProfileService,
     private toastrService: ToastrService,
@@ -43,7 +46,7 @@ export class AccessGroupComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    if (this.operationType == 'i') {
+    if (this.operationType == 'i' || this.operationType == 't') {
       this.getAccessGroup();
       
     } else if (this.operationType == 'u') {
@@ -142,6 +145,8 @@ export class AccessGroupComponent implements OnInit, OnDestroy {
     let addedGroups$ = this.store.pipe(select(selectAddedGroups));
     accessGroups$.subscribe(value => console.log("access :", value));
     addedGroups$.subscribe(value => console.log("add :", value));
+    // addedGroups$.subscribe(value => console.log("add :", value.filter((item:any)=> !('isTemp' in item)).map((item:any)=> item.ID).join(';')));
+
     
     if (isTemp) {
       this.close();
@@ -199,6 +204,12 @@ export class AccessGroupComponent implements OnInit, OnDestroy {
 
   hideDetail() {
     this.detailDisplay = false;
+  }
+
+
+  changeActionType(action: any) {
+    this.actionType = action;
+    this.actionTypeEvent.emit(action);
   }
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

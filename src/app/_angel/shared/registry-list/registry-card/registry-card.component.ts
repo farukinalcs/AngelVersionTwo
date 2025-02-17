@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, take, takeUntil } from 'rxjs';
@@ -15,6 +15,11 @@ import { OrganizationInfoComponent } from './organization-info/organization-info
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { RegisterAuthorizedAreasComponent } from './register-authorized-areas/register-authorized-areas.component';
 import { ShiftInfoComponent } from './shift-info/shift-info.component';
+import { AccessGroupState } from 'src/app/store/models/access-group.state';
+import { selectAddedGroups } from 'src/app/store/selectors/access-group.selector';
+import { DomSanitizer } from '@angular/platform-browser';
+import { insertRegisterSuccess, loadRegistersSuccess, updateRegisterSuccess } from 'src/app/store/actions/register.action';
+import { selectAllRegisters } from 'src/app/store/selectors/register.selector';
 
 @Component({
   selector: 'app-registry-card',
@@ -28,6 +33,7 @@ export class RegistryCardComponent implements OnInit, OnDestroy, OnChanges{
   @Input() display: boolean;
   @Output() closeEvent = new EventEmitter<boolean>();
   @Input() selectedRegister: any;
+  @Input() requestTime:any;
   header: any = "";
   isDetailsOpen = true;
   tabs: any[] = [
@@ -70,6 +76,9 @@ export class RegistryCardComponent implements OnInit, OnDestroy, OnChanges{
   registerId: any;
   responsiveOptions: any[] | undefined = [];
   loading: boolean = false;
+  imageUrl: string;
+  uploadedFile: any[] = [];
+  timestamp = new Date().getTime();
 
   // @ViewChild('slider') slider!: ElementRef;
   // items = Array.from({ length: 20 }, (_, i) => `Item ${i + 1}`);
@@ -82,10 +91,14 @@ export class RegistryCardComponent implements OnInit, OnDestroy, OnChanges{
     private translateService : TranslateService,
     private store: Store,
     private storeForm: Store<{ form: FormState }>,
+    private storeAccess: Store<AccessGroupState>,
     private toastrService: ToastrService,
     private router: Router,
-    private ref: ChangeDetectorRef
-  ) {}
+    private ref: ChangeDetectorRef,
+    private sanitizer: DomSanitizer,
+  ) {
+    this.imageUrl = this.profileService.getImageUrl();
+  }
 
   ngOnInit(): void {
     this.tabs = this.tabs.filter((tab:{action:any[]}) => tab.action.includes(this.operationType));
@@ -136,44 +149,24 @@ export class RegistryCardComponent implements OnInit, OnDestroy, OnChanges{
 
   changeTabMenu(event: any) {
     this.selectedIndex = event;
-    // if (event.tab) {
-    //   this.selectedIndex = event.index;
-    // }
   }
 
   collectAllFormData() {
-    let personalInfoValid; 
-    this.personalInfoComponents.map((component) => {
-      personalInfoValid = component.form.valid
-    });
-    const personalInfoData = this.personalInfoComponents.map((component) => {component.form.value});
-    const contactInfoData = this.contactInfoComponents.map((component) => component.form.value);
-    const organizationInfoData = this.organizationInfoComponents.map((component) => component.form.value);
-    const customInfoData = this.customInfoComponents.map((component) => component.form.value);
-    const shiftInfoData = this.shiftInfoComponents.map((component) => component.form.value);
-    const accessInfoData = this.accessInfoComponents.map((component) => component.form.value);
-    const accessGroupData = this.accessGroupComponents.map((component) => component.addedGroups);
-    const authorizedAreaData = this.authorizedAreasComponents.map((component) => component.devices);
-
-
-
-    console.log('Personal Info Data:', personalInfoData);
-    console.log('Contact Info Data:', contactInfoData);
-    console.log('organizationInfoData:', organizationInfoData);
-    console.log('customInfoData:', customInfoData);
-    console.log('shiftInfoData:', shiftInfoData);
-    console.log('accessInfoData:', accessInfoData);
-    console.log('accessGroupData:', accessGroupData);
-    console.log('authorizedAreaData:', authorizedAreaData);
-
-    
     let value: any;
     this.storeForm.select('form').pipe(take(1)).subscribe((state) => {
       console.log("STATE : ", state);
       value = state;
     });
 
-    if (!personalInfoValid) {
+    let accessGroupValue: any;
+    this.storeAccess.pipe(select(selectAddedGroups)).pipe(take(1)).subscribe((state) => {
+      console.log("Access Group State: ", state);
+      accessGroupValue = state;
+    });
+
+
+
+    if (!value.personalInfo?.name || !value.personalInfo?.surname) {
       this.toastrService.warning(
         this.translateService.instant('Ad_Ve_Soyad_Boş_Geçilemez!'),
         this.translateService.instant('HATA')
@@ -183,9 +176,19 @@ export class RegistryCardComponent implements OnInit, OnDestroy, OnChanges{
 
     if (this.operationType == 'i') {
       this.addNewRegister(value);
+      
+    } else if (this.operationType == 'u') {
+      this.updateRegister(value);
+      this.updateAccessGroup(accessGroupValue);
+      if (accessGroupValue.some((item:any) => item.isTemp)) {
+        this.updateAccessGroupTemp(accessGroupValue);
+      }
+      
+
     }
 
   }
+  
 
   formEvent(event: any) {
     this.name =event?.name || this.translateService.instant("Ad");
@@ -258,6 +261,7 @@ export class RegistryCardComponent implements OnInit, OnDestroy, OnChanges{
   }
 
   addNewRegister(value: any) {
+
     this.loading = true;
     console.log("Sicil Ekle:", value);
 
@@ -283,8 +287,8 @@ export class RegistryCardComponent implements OnInit, OnDestroy, OnChanges{
         il: value.contactInfo?.province || "",
         ilce: value.contactInfo?.town || "",
         email: value.contactInfo?.mail || "",
-        dogumtarih: this.birthday,
-        giristarih: this.employmentDate,
+        dogumtarih: this.birthday || "",
+        giristarih: this.employmentDate || "",
         telefon1: value.contactInfo?.tel || "",
         ceptelefon: value.contactInfo?.mobilePhone || "",
         okod1: value.customInfo?.okod1 || "",
@@ -319,7 +323,8 @@ export class RegistryCardComponent implements OnInit, OnDestroy, OnChanges{
         gecezammi: value.shiftInfo?.nightRaise ? "1" : "0",
         master: value.accessInfo?.master ? "1" : "0",
         bypasscard: value.accessInfo?.passCard ? "1" : "0",
-        userdef: value.accessInfo?.userDefinition.ID?.toString() || "",
+        userdef: value.accessInfo?.userDefinition.ID?.toString() || "1",
+        zaman: this.requestTime
       },
     ];
 
@@ -341,12 +346,18 @@ export class RegistryCardComponent implements OnInit, OnDestroy, OnChanges{
         this.translateService.instant('Başarılı')
       );
 
+      if (data[0].tumveri == 0) {
+        this.store.dispatch(insertRegisterSuccess({ register: data[0] }));
+      } else {
+        this.store.dispatch(loadRegistersSuccess({ registers:data }));
+      }
 
       setTimeout(() => {
         this.loading = false;
         this.ref.detectChanges();
       }, 1000);
 
+      this.close();
     }, () => {
       this.toastrService.error(
         this.translateService.instant('Beklenmeyen_Bir_Hata_Oluştu'),
@@ -354,6 +365,353 @@ export class RegistryCardComponent implements OnInit, OnDestroy, OnChanges{
       );
       this.router.navigate(['error/500']);
       this.loading = false;
+    });
+  }
+
+  updateRegister(value: any) {
+    this.loading = true;
+    console.log("Sicil Güncelle:", value);
+
+    var sp: any[] = [
+      {
+        mkodu: "yek249",
+        id: this.selectedRegister.Id.toString(),
+        ad: value.personalInfo ? value.personalInfo?.name || "" : null,
+        soyad: value.personalInfo ? value.personalInfo?.surname || "" : null,
+        sicilno: value.personalInfo ? value.personalInfo?.registryNo || "" : null,
+        personelno: value.personalInfo ? value.personalInfo?.personNo || "" : null,	
+        firma: value.organizationInfo ? value.organizationInfo?.company?.ID?.toString() || "" : null,
+        bolum: value.organizationInfo ? value.organizationInfo?.department?.ID?.toString() || "" : null,
+        pozisyon: value.organizationInfo ? value.organizationInfo?.position?.ID?.toString() || "" : null,
+        gorev: value.organizationInfo ? value.organizationInfo?.job?.ID?.toString() || "" : null,
+        altfirma: value.organizationInfo ? value.organizationInfo?.subCompany?.ID?.toString() || "" : null,
+        direktorluk: value.organizationInfo ? value.organizationInfo?.directorship?.ID?.toString() || "" : null,
+        yaka: value.organizationInfo ? value.organizationInfo?.collar?.ID?.toString() || "" : null,
+        kangrubu: value.personalInfo ? value.personalInfo?.bloodGroup?.ID?.toString() || "" : null,
+        cinsiyet: value.personalInfo ? value.personalInfo?.gender?.ID?.toString() || "" : null,
+        maastipi: value.shiftInfo ? value.shiftInfo?.salaryType?.ID?.toString() || "" : null,
+        adres: value.contactInfo ? value.contactInfo?.address || "" : null,
+        il: value.contactInfo ? value.contactInfo?.province || "" : null,
+        ilce: value.contactInfo ? value.contactInfo?.town || "" : null,
+        email: value.contactInfo ? value.contactInfo?.mail || "" : null,
+        dogumtarih: this.birthday || "",
+        giristarih: this.employmentDate || "",	
+        telefon1: value.contactInfo ? value.contactInfo?.tel || "" : null,
+        ceptelefon: value.contactInfo ? value.contactInfo?.mobilePhone || "" : null,
+        okod1: value.customInfo ? value.customInfo?.okod1 || "" : null,
+        okod2: value.customInfo ? value.customInfo?.okod2 || "" : null,
+        okod3: value.customInfo ? value.customInfo?.okod3 || "" : null,
+        okod4: value.customInfo ? value.customInfo?.okod4 || "" : null,
+        okod5: value.customInfo ? value.customInfo?.okod5 || "" : null,
+        okod6: value.customInfo ? value.customInfo?.okod6 || "" : null,
+        okod7: value.customInfo ? value.customInfo?.okod7 || "" : null,
+        okod8: value.customInfo ? value.customInfo?.okod8 || "" : null,
+        okod9: value.customInfo ? value.customInfo?.okod9 || "" : null,
+        okod10: value.customInfo ? value.customInfo?.okod10 || "" : null,
+        okod11: value.customInfo ? value.customInfo?.okod11 || "" : null,
+        okod12: value.customInfo ? value.customInfo?.okod12 || "" : null,
+        okod13: value.customInfo ? value.customInfo?.okod13 || "" : null,
+        okod14: value.customInfo ? value.customInfo?.okod14 || "" : null,
+        okod15: value.customInfo ? value.customInfo?.okod15 || "" : null,
+        okod16: value.customInfo ? value.customInfo?.okod16 || "" : null,
+        okod17: value.customInfo ? value.customInfo?.okod17 || "" : null,
+        okod18: value.customInfo ? value.customInfo?.okod18 || "" : null,
+        okod19: value.customInfo ? value.customInfo?.okod19 || "" : null,
+        okod20: value.customInfo ? value.customInfo?.okod20 || "" : null,
+        cardid: value.accessInfo ? value.accessInfo?.cardNumber || "" : null,
+        cardid26: value.accessInfo ? value.accessInfo?.rfLabelNumber || "" : null,
+        facilitycode: value.accessInfo ? value.accessInfo?.facilityNumber || "" : null,
+        fazlamesai: value.shiftInfo ? value.shiftInfo?.overtime ? "1" : "0" : null,
+        eksikmesai: value.shiftInfo ? value.shiftInfo?.missingTime ? "1" : "0" : null,
+        eksikfm: value.shiftInfo ? value.shiftInfo?.missingTimeOvertime ? "1" : "0" : null ,
+        eksikfmas: value.shiftInfo ? value.shiftInfo.overtime ? "1" : "0" : null,
+        erkenmesai: value.shiftInfo ? value.shiftInfo?.earlyWork ? "1" : "0" : null,
+        eksikgun: value.shiftInfo ? value.shiftInfo?.missingDay ? "1" : "0" : null,
+        gecezammi: value.shiftInfo ? value.shiftInfo?.nightRaise ? "1" : "0" : null,
+        master: value.accessInfo ? value.accessInfo?.master ? "1" : "0" : null,
+        bypasscard: value.accessInfo ? value.accessInfo?.passCard ? "1" : "0" : null,
+        puantaj: value.organizationInfo ? value.organizationInfo?.timeAttendance?.ID?.toString() || "" : null,	
+        userdef: value.accessInfo ? value.accessInfo?.userDefinition.ID?.toString() || "1" : null,
+        zaman: this.requestTime
+      },
+    ];
+
+    console.log("Sicil u params:", sp);
+
+
+    this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe(response => {
+      const data = response[0].x;
+      const message = response[0].z;
+
+      if (message.islemsonuc == -1) {
+        return;
+      }
+
+      console.log("Sicil Güncellendi :", data);
+
+      this.toastrService.success(
+        this.translateService.instant('Sicil_Güncellendi'),
+        this.translateService.instant('Başarılı')
+      );
+
+      if (data[0].tumveri == 0) {
+        this.store.dispatch(updateRegisterSuccess({ register: data[0] }));
+
+        this.store.select(selectAllRegisters).subscribe((value) => {
+          console.log("TESTO :", value);
+        })
+      } else {
+        this.store.dispatch(loadRegistersSuccess({ registers:data }));
+      }
+      
+      
+
+      setTimeout(() => {
+        this.loading = false;
+        this.ref.detectChanges();
+      }, 1000);
+
+
+      this.close();
+    }, () => {
+      this.toastrService.error(
+        this.translateService.instant('Beklenmeyen_Bir_Hata_Oluştu'),
+        this.translateService.instant('Hata')
+      );
+      this.router.navigate(['error/500']);
+      this.loading = false;
+    });
+  }
+
+  updateAccessGroup(accessGroupValue: any) {
+    const matchAccessGroup = this.matchAccessGroup(accessGroupValue);
+    
+    var sp: any[] = [
+      {
+        mkodu: 'yek250',
+        yetkistr: matchAccessGroup,
+        id: this.selectedRegister.Id.toString()
+      },
+    ];
+    console.log('Geçiş Grupları Param: ', sp);
+
+    this.profileService
+      .requestMethod(sp)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const data = response[0].x;
+        const message = response[0].z;
+
+        if (message.islemsonuc == -1) {
+          return;
+        }
+        console.log('Geçiş Grupları Gönderildi: ', data);
+        
+      }, (err) => {
+        this.toastrService.error(
+          this.translateService.instant('Beklenmeyen_Bir_Hata_Oluştu'),
+          this.translateService.instant('Hata')
+        );
+      });
+  }
+
+  matchAccessGroup(accessGroup: any) {
+    return accessGroup
+      .filter((item: any) => !('isTemp' in item))  // isTemp false olanları filtreledim
+      .map((item: any) => item.ID)  // Sadece ID'leri aldımm
+      .join(';');  // ID'leri birleştirdim
+  }
+
+  updateAccessGroupTemp(accessGroupValue: any) {
+    var sp:any[] = [];
+    
+    accessGroupValue.forEach((item:any) => {
+      if (item.isTemp) {
+        sp.push(
+          {
+            mkodu : 'yek077',
+            yetkiid : item.ID.toString(),
+            aciklama : item.tempDesc,
+            limit : '1',
+            tip: '1',
+            bastarih : item.tempEndDate, 
+            bassaat:  item.tempStartTime,
+            bittarih: item.tempEndDate,
+            bitsaat: item.tempEndTime,
+            sicillerim: this.selectedRegister.Id.toString()
+          }
+        );  
+      }
+      
+    });
+
+    console.log('Süreli Geçiş Grupları Param: ', sp);
+
+    this.profileService
+      .requestMethod(sp)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const data = response[0].x;
+        const message = response[0].z;
+
+        if (message.islemsonuc == -1) {
+          return;
+        }
+        console.log('Süreli Geçiş Grupları Gönderildi: ', data);
+        
+      }, (err) => {
+        this.toastrService.error(
+          this.translateService.instant('Beklenmeyen_Bir_Hata_Oluştu'),
+          this.translateService.instant('Hata')
+        );
+      });
+  }
+
+  addRegisterPhoto(event: any) {
+    if (this.registerDetail[0].fotoid != '0') {
+      this.remove();
+    }
+    
+    // Dosya Yüklendiğinde İlk Çalışan Fonksiyon
+    let files: FileList = event.target.files;
+
+    if (files.length > 0) {
+      const file = files[0];
+      if (!this.checkFileSize(file, 1024 * 1024)) {
+        this.toastrService.error(
+          this.translateService.instant('Dosya_Boyutu_Yuksek'),
+          this.translateService.instant('Hata')
+        );
+        return;
+      }
+    }
+    console.log(files);
+
+    for (let file of event.target.files) {
+      this.readAndPushFile(file);
+    }
+  }
+
+  checkFileSize(file: File, maxSizeInBytes: number): boolean {
+    // Dosya Boyutunu Kontrol Eden Fonksiyon
+    const fileSizeInBytes = file.size;
+    const maxSize = maxSizeInBytes;
+    return fileSizeInBytes <= maxSize;
+  }
+
+  readAndPushFile(file: File) {
+    // Yüklenen Dosyalar İçin Detay Bilgiler
+    let fileSize: any = (file.size / 1024).toFixed(1);
+    let fileSizeType = 'KB';
+    if (fileSize >= 1024) {
+      fileSize = (fileSize / 1024).toFixed(1);
+      fileSizeType = 'MB';
+    }
+
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const url = this.sanitizer.bypassSecurityTrustResourceUrl(
+        event.target?.result as string
+      );
+      let fileInfo = {
+        name: file.name,
+        type: file.type,
+        url: url,
+        fileSize: fileSize,
+        fileSizeType: fileSizeType,
+      };
+
+      this.uploadedFile.push({ files: fileInfo, sendFile: file });
+      // this.uploadedFile.push(item);
+      console.log('Uploaded File : ', this.uploadedFile);
+
+      this.setPhoto(this.uploadedFile);
+      
+      this.ref.detectChanges();
+      
+    };
+    
+  }
+
+  
+  setPhoto(item?: any) {
+    if (item) {
+      
+      this.profileService
+            .postFileForDemand(
+              item[0].sendFile,
+              this.selectedRegister.Id.toString(),
+              'sicilfoto',
+              '0'
+            )
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((response: any) => {
+              if (response[0].z.islemsonuc != 1) {
+                this.toastrService.error(
+                  this.translateService.instant(
+                    'Belge_Yüklenirken_Bir_Hata_Oluştu!'
+                  ),
+                  this.translateService.instant('HATA')
+                );
+                return;
+              }
+              this.toastrService.success(
+                this.translateService.instant('Belge_Yüklendi'),
+                this.translateService.instant('Başarılı')
+              );
+              console.log('Dosya gönderildi : ', response);
+              this.registerDetail[0].fotoid = response[0].k.split('.')[0];
+              this.registerDetail[0].DosyaTipi = response[0].k.split('.')[1];
+              console.log("Sicil Detay Güncellendi : ", this.registerDetail);
+              
+              // item = { ...item, upload: true};
+              item[0].upload = true;
+              this.timestamp = new Date().getTime();
+            });
+    }
+  }
+
+  // deletePhoto() {
+  //   this.profileService.deleteFileForDemand(item.UniqueId, item.DosyaTipi).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+  //     const data = response[0].x;
+  //     const message = response[0].z;
+
+  //     if (message.islemsonuc == -1) {
+  //       this.toastrService.warning(
+  //         this.translateService.instant('Belge_Kaldırılamadı!'),
+  //         this.translateService.instant('HATA')
+  //       );
+  //       return;
+  //     }
+
+  //     console.log("Fotoğraf Silindi :", data);
+  //     this.toastrService.success(
+  //       this.translateService.instant('Fotoğraf_Kaldırıldı'),
+  //       this.translateService.instant('Başarılı')
+  //     );
+  //   });
+  // }
+
+  remove() {
+    this.profileService.deleteFileForDemand(this.registerDetail[0].fotoid, this.registerDetail[0].DosyaTipi, 'sicilfoto').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+      const data = response[0].x;
+      const message = response[0].z;
+
+      if (message.islemsonuc == -1) {
+        this.toastrService.warning(
+          this.translateService.instant('Fotoğraf_Kaldırılamadı!'),
+          this.translateService.instant('HATA')
+        );
+        return;
+      }
+
+      this.timestamp = new Date().getTime();
+      console.log("Belge Silindi :", data);
+      this.toastrService.success(
+        this.translateService.instant('Fotoğraf_Kaldırıldı'),
+        this.translateService.instant('Başarılı')
+      );
     });
   }
 

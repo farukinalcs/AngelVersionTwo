@@ -110,7 +110,8 @@ import { CarouselModule } from 'primeng/carousel';
   ],
   
   exports: [
-    AttendanceManagementSystemComponent
+    AttendanceManagementSystemComponent,
+    AttendanceListFilterComponent
   ]
 })
 export class AttendanceModule { }

@@ -241,7 +241,7 @@
                                                     <span class="required">{{"Mesai_Tarihi" | translate}}</span>
                                                 </label>
                             
-                                                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="shiftDate">
+                                                <input type="date" class="form-control form-control-sm form-control-solid" formControlName="shiftDate">
                                             </div>
 
                                             <div class="col-6 my-5" *ngIf="attendanceForm.get('formState')?.value == 0">
@@ -249,7 +249,7 @@
                                                     <span class="required">{{"Saat" | translate}}</span>
                                                 </label>
                             
-                                                <input type="time" class="form-control form-control-lg form-control-solid" formControlName="shiftTime">
+                                                <input type="time" class="form-control form-control-sm form-control-solid" formControlName="shiftTime">
                                             </div>
 
                                             <div class="my-5 fv-plugins-icon-container" [ngClass]="{'col-6': this.gridStartDate != this.gridEndDate || this.selectedEmployeesFromAttendance.length > 1,
@@ -330,8 +330,8 @@
                                     <div class="col-12 mb-10">
 
                                         <div class="table-responsive scroll h-350px">
-                                            <table class="table table-hover table-rounded border gy-7 gs-7">
-                                                <thead>
+                                            <table class="table table-hover table-rounded border gy-2 gs-2">
+                                                <thead class="sticky-top bg-white">
                                                     <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                                         <th>Ad</th>
                                                         <th>Soyad</th>
@@ -369,7 +369,7 @@
                         <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
                                 <ng-container *ngIf=" 4 > currentStep$.value && currentStep$.value > 1">
-                                    <button type="button" class="btn btn-lg btn-light-danger me-3"
+                                    <button type="button" class="btn btn-sm btn-light-danger me-3"
                                         (click)="prevStep()">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
@@ -378,7 +378,7 @@
                                 </ng-container>
 
                                 <ng-container *ngIf="currentStep$.value == formsCount">
-                                    <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
+                                    <button mat-dialog-close type="button" class="btn btn-sm btn-light-danger me-3">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
                                         {{"Kapat" | translate}}
@@ -389,7 +389,7 @@
                             <ng-container *ngIf="currentStep$.value !== formsCount">
                                 <div>
                                     <ng-container *ngIf="currentStep$.value < formsCount - 1">
-                                        <button type="button" class="btn btn-lg btn-danger me-3"
+                                        <button type="button" class="btn btn-sm btn-danger me-3"
                                             (click)="nextStep()">
                                             <span class="indicator-label">
                                                 {{"İleri" | translate}}
@@ -404,7 +404,7 @@
                                         </button>
                                     </ng-container>
                                     <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                        <button type="button" class="btn btn-lg btn-danger me-3"
+                                        <button type="button" class="btn btn-sm btn-danger me-3"
                                             (click)="closedFormDialog()">
                                             <span class="indicator-label">
                                                 <ng-container *ngIf="isCompleted">
@@ -418,7 +418,7 @@
                                         </button>
 
                                         <ng-container *ngIf="!isCompleted">
-                                            <button type="button" class="btn btn-lg btn-danger me-3" (click)="getFormValues()">
+                                            <button type="button" class="btn btn-sm btn-danger me-3" (click)="getFormValues()">
                                                 <span class="indicator-label">
                                                     {{"Gönder" | translate}}
                                                 </span>

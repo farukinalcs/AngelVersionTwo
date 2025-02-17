@@ -100,3 +100,16 @@
         font-weight: 900 !important;
     }
 }
+
+
+:host ::ng-deep .lightgray .p-dialog-header {
+    background-color: #fcfcfc;
+}
+
+:host ::ng-deep .lightgray .p-dialog-content {
+    background-color: #fcfcfc;
+}
+
+:host ::ng-deep .lightgray .p-dialog-footer {
+    background-color: #fcfcfc;
+}

@@ -50,6 +50,7 @@ export class ApplicationUseComponent implements OnInit, OnDestroy {
   reportAuthorizations: any[]= [];
   vacationAuthorizations: any[]= [];
   disabled: boolean = true;
+  updatedPassword: any = "";
   constructor(
     private profileService: ProfileService,
     private fb: FormBuilder,
@@ -116,7 +117,7 @@ export class ApplicationUseComponent implements OnInit, OnDestroy {
 
       this.detail = data[0];
       
-      if (this.detail.LoginName) {
+      if (this.detail?.LoginName) {
         this.selectedTwoFactorAuth = this.detail['2FA'];        
         this.loginName = this.detail.LoginName;
       }
@@ -144,12 +145,12 @@ export class ApplicationUseComponent implements OnInit, OnDestroy {
       console.log("Yanıt Geldi :", data);
 
       this.twoFactorAuth = this.twoFactorAuth.map((item) => {
-        if (item.value == 'Mail') {
-          return { ...item, visible: this.twoFactorAuthInfo.hasmail >= 0 ? true : false };
-        } else if (item.value == 'Sms') {
-          return { ...item, visible: this.twoFactorAuthInfo.hassms >= 0 ? true : false };
-        } else if (item.value == 'Mobile') {
-          return { ...item, visible: this.twoFactorAuthInfo.hasmobil >= 0 ? true : false };
+        if (item?.value == 'Mail') {
+          return { ...item, visible: this.twoFactorAuthInfo?.hasmail >= 0 ? true : false };
+        } else if (item?.value == 'Sms') {
+          return { ...item, visible: this.twoFactorAuthInfo?.hassms >= 0 ? true : false };
+        } else if (item?.value == 'Mobile') {
+          return { ...item, visible: this.twoFactorAuthInfo?.hasmobil >= 0 ? true : false };
         } else {
           return { ...item, visible: true };
         }
@@ -472,6 +473,88 @@ export class ApplicationUseComponent implements OnInit, OnDestroy {
         
         this.reportAuthorizations = [...data];
         console.log("Rapor yetkilendirme Geldi : ", data);
+      });
+  }
+
+  createNewAppUser() {
+    if (!this.loginName || !this.password) {
+      this.toastrService.error(this.translateService.instant('Kullanıcı_Adı_Ve_Şifre_Boş_Bırakılamaz'), this.translateService.instant('Hata'));
+      return;
+    }
+    
+    var sp: any[] = [
+      {
+        mkodu: "yek247",
+        sicilID: this.selectedRegister.Id.toString(),
+        admin: "",
+        terminalserver: "",
+        kullad: this.loginName,
+        password: this.password
+      }
+    ];
+    console.log("Program Kullanıcı Oluştur Param : ", sp);
+
+    this.profileService
+      .requestMethod(sp)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const data = response[0].x;
+        const message = response[0].z;
+
+        if (message.islemsonuc == -1) {
+          this.toastrService.error(this.translateService.instant('Program_Kullanıcı_Oluşturulurken_Hata_Oluştu'), this.translateService.instant('Hata'));
+          return;
+        }
+        
+        console.log("Program Kullanıcı Oluşturuldu : ", data);
+        this.getLoginDetail();
+        this.toastrService.success(this.translateService.instant('Program_Kullanıcı_Oluşturuldu'), this.translateService.instant('Başarılı'));
+      });
+  }
+
+  updateAppUser() {
+    if (!this.loginName) {
+      this.toastrService.error(this.translateService.instant('Kullanıcı_Adı_Boş_Bırakılamaz'), this.translateService.instant('Hata'));
+      return;
+    }
+    
+    var sp: any[] = [
+      {
+        mkodu: "yek244",
+        sicilID: this.selectedRegister.Id.toString(),
+        admin: this.detail.Admin ? "1" : "0",
+        terminalserver: this.detail.TerminalServer ? "1" : "0",
+        kullad: this.loginName,
+        password: this.updatedPassword,
+        ldap: this.detail.ldap ? "1" : "0",
+        bilgilendirme: this.detail.Bilgilendirme ? "1" : "0",
+        access: this.detail.Access,
+        pdks: this.detail.Pdks,
+        ziyaretci: this.detail.Ziyaretci,
+        yemekhane: this.detail.Yemekhane,
+        kantin: this.detail.Kantin,
+        otopark: this.detail.Otopark,
+        terminalgrubu: this.detail.TerminalGrubu.toString(),
+        yetkigrubu: this.detail.YetkiGrubu
+      }
+    ];
+    console.log("Program Kullanıcısı Güncelle Param : ", sp);
+
+    this.profileService
+      .requestMethod(sp)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const data = response[0].x;
+        const message = response[0].z;
+
+        if (message.islemsonuc == -1) {
+          this.toastrService.error(this.translateService.instant('Program_Kullanıcı_Güncellenirken_Hata_Oluştu'), this.translateService.instant('Hata'));
+          return;
+        }
+        
+        console.log("Program Kullanıcısı Güncellendi : ", data);
+        this.getLoginDetail();
+        this.toastrService.success(this.translateService.instant('Program_Kullanıcı_Güncellendi'), this.translateService.instant('Başarılı'));
       });
   }
   
