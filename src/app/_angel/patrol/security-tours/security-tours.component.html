@@ -4,7 +4,7 @@
 
             <div class="table-responsive">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" [(ngModel)]="tourNameInput">
+                    <input type="text" class="form-control" [(ngModel)]="tourNameInput" (input)="filterItems()">
                     <button class="btn btn-danger text-white" type="button" id="button-addon2" (click)="setGuardTour()">Ekle</button>
                 </div>
                 <!-- <input class="form-control" [(ngModel)]="tourNameInput" type="text"><h3>{{tourNameInput}}</h3>
@@ -19,7 +19,7 @@
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let item of tourList" class="cursor-pointer fs-8">
+                    <tr *ngFor="let item of filteredItems" class="cursor-pointer fs-8">
                             <td (click)="getItem(item);">
                                 <span class="mb-1">{{item.ad}}</span>
                             </td>

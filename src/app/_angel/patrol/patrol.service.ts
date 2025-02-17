@@ -45,9 +45,7 @@ export class PatrolService {
   getPatrolInfo(){
     var sp : any[] = [{
       mkodu : 'yek189',
-   
     }]
-
     return this.requestMethod(sp);
   }
 
@@ -149,4 +147,70 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
+  getLocation(){
+    var sp: any[] = [{
+      mkodu:'yek239',
+    }]
+    return this.requestMethod(sp);
+  }
+
+  deletelocation(id:number){
+    var sp: any[] = [{
+      mkodu:'yek240',
+      id:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  setLocation(name:string){
+    var sp: any[] = [{
+      mkodu:'yek241',
+      ad:name,
+    }]
+    return this.requestMethod(sp);
+  }
+
+  updateLocation(name:string,id:number){
+    var sp: any[] = [{
+      mkodu:'yek242',
+      ad:name,
+      id:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  setGuardLocation(id:number,tip:string,hedefid:string,islem:number){
+    var sp: any[] = [{
+      mkodu:'yek243',
+      id:id.toString(),
+      tip:tip,
+      hedefid:hedefid,
+      islem:islem.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  allLocationDetails(id:number){
+    var sp: any[] = [{
+      mkodu:'yek245',
+      lokasyonid:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+  
+  locationDetails(id:number){
+    var sp: any[] = [{
+      mkodu:'yek248',
+      lokasyonid:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  getGuardTourCalendar(id:number){
+    var sp: any[] = [{
+      mkodu:'yek246',
+      lokasyonid:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
 }
