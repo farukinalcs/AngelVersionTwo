@@ -17,6 +17,9 @@
             <div class="col-12 p-5">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Maaş_Tipi" | translate}}</span>
+                    <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                        <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkSalaryType" [ngModelOptions]="{standalone: true}"/>
+                    </div>
                 </label>
 
                 <p-dropdown [options]="salaryTypes" optionLabel="Ad" [filter]="true" filterBy="Ad"
@@ -37,9 +40,13 @@
 
             <div class="col-6 p-5">
                 <div class="">
-                    <div class="me-5">
-                        <label class="fs-6 fw-semibold form-label">{{"Fazla_Mesai" | translate}}</label>
-                    </div>
+                    
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span >{{"Fazla_Mesai" | translate}}</span>
+                        <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                            <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkOvertime" [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                    </label>
             
                     <label class="form-check form-switch form-check-custom form-check-solid">
                         <input class="form-check-input" type="checkbox" formControlName="overtime">
@@ -52,9 +59,13 @@
 
             <div class="col-6 p-5">
                 <div class="">
-                    <div class="me-5">
-                        <label class="fs-6 fw-semibold form-label">{{"Eksik_Mesai" | translate}}</label>
-                    </div>
+                    
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span >{{"Eksik_Mesai" | translate}}</span>
+                        <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                            <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkMissingTime" [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                    </label>
             
                     <label class="form-check form-switch form-check-custom form-check-solid">
                         <input class="form-check-input" type="checkbox" formControlName="missingTime">
@@ -67,9 +78,13 @@
 
             <div class="col-6 p-5">
                 <div class="">
-                    <div class="me-5">
-                        <label class="fs-6 fw-semibold form-label">{{"Eksik_Gün_Fazla_Mesai_Gün_İçi" | translate}}</label>
-                    </div>
+                    
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span >{{"Eksik_Gün_Fazla_Mesai_Gün_İçi" | translate}}</span>
+                        <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                            <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkMissingTimeOvertime" [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                    </label>
             
                     <label class="form-check form-switch form-check-custom form-check-solid">
                         <input class="form-check-input" type="checkbox" formControlName="missingTimeOvertime">
@@ -82,9 +97,13 @@
 
             <div class="col-6 p-5">
                 <div class="">
-                    <div class="me-5">
-                        <label class="fs-6 fw-semibold form-label">{{"Erken_Mesai" | translate}}</label>
-                    </div>
+                    
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span >{{"Erken_Mesai" | translate}}</span>
+                        <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                            <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkEarylWork" [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                    </label>
             
                     <label class="form-check form-switch form-check-custom form-check-solid">
                         <input class="form-check-input" type="checkbox" formControlName="earlyWork">
@@ -97,9 +116,13 @@
 
             <div class="col-6 p-5">
                 <div class="">
-                    <div class="me-5">
-                        <label class="fs-6 fw-semibold form-label">{{"Eksik_Gün" | translate}}</label>
-                    </div>
+                    
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span >{{"Eksik_Gün" | translate}}</span>
+                        <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                            <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkMissingDay" [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                    </label>
             
                     <label class="form-check form-switch form-check-custom form-check-solid">
                         <input class="form-check-input" type="checkbox" formControlName="missingDay">
@@ -112,9 +135,13 @@
 
             <div class="col-6 p-5">
                 <div class="">
-                    <div class="me-5">
-                        <label class="fs-6 fw-semibold form-label">{{"Gece_Zammı" | translate}}</label>
-                    </div>
+                    
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span >{{"Gece_Zammı" | translate}}</span>
+                        <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                            <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkNightRaise" [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                    </label>
             
                     <label class="form-check form-switch form-check-custom form-check-solid">
                         <input class="form-check-input" type="checkbox" formControlName="nightRaise">

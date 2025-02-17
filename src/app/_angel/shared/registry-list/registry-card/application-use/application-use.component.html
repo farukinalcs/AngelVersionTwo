@@ -10,7 +10,7 @@
                             {{"Kullanıcı_İlgili_İşlemini_Buradan_Belirleyebilirsiniz" | translate }}</h4>
                     </div>
                 </div>
-                <div class="card-body py-5">
+                <div class="card-body pt-0 pb-5">
                     <ng-container *ngIf="!detail?.LoginName">
                         <div class="row" style="
                             flex-direction: column;
@@ -44,7 +44,7 @@
                             </div>
 
                             <div class="col-6 p-5 py-10 d-flex justify-content-center">
-                                <a class="btn btn-sm btn-light mx-1 fw-bolder d-flex justify-content-center align-item-center text-hover-danger">
+                                <a class="btn btn-sm btn-light mx-1 fw-bolder d-flex justify-content-center align-item-center text-hover-danger" (click)="createNewAppUser()">
                                     <i class="fa-solid fa-floppy-disk fs-7 d-flex align-items-center"></i>
                                     {{'Kaydet' | translate}}
                                 </a>
@@ -101,11 +101,21 @@
                                     <i class="fa-solid fa-pen-to-square fs-5 ms-auto text-hover-danger cursor-pointer" pTooltip="{{'Düzenle' | translate}}" tooltipPosition="top" (click)="editState('password')"></i>
                                 </label>
                 
-                                <input #passInput type="password" class="form-control form-control-sm form-control-solid" placeholder="{{'Şifre' | translate}}"
+                                <input #passInput type="password" [(ngModel)]="updatedPassword" class="form-control form-control-sm form-control-solid" placeholder="{{'Şifre' | translate}}"
                                     [ngStyle]="{'cursor': disabledPass ? 'not-allowed' : ''}" [disabled]="disabledPass">                               
                             </div>
 
-                            <div *ngIf="twoFactorAuthInfo?.hasmobil >= 0" class="col-7 d-flex align-items-end justify-content-end flex-column p-2">
+                            <div class="col-2 p-2 d-flex align-items-end">
+                                <a class="btn btn-sm btn-danger mx-1 fw-bolder d-flex justify-content-center align-item-center" (click)="updateAppUser()">
+                                    <i class="fa-solid fa-floppy-disk fs-7 d-flex align-items-center"></i>
+                                    {{'Güncelle' | translate}}
+                                </a>
+                                <span class="h-100 d-flex align-items-center">
+                                    <i class="fa-solid fa-circle-exclamation text-gray-600 mt-2 fs-4" pTooltip="{{'Şifre_alanı_Boş_Gönderildiğinde_Değişiklik_Olmayacaktır' | translate}}" tooltipPosition="top"></i>
+                                </span>
+                            </div>
+
+                            <div *ngIf="twoFactorAuthInfo?.hasmobil >= 0" class="col-5 d-flex align-items-end justify-content-end flex-column p-2">
                                 <a class="btn btn-sm btn-light-dark mx-1 fw-bolder d-flex justify-content-center align-item-center"
                                     (click)="removeMobile()">
                                     <i class="fa-solid fa-minus fs-7 d-flex align-items-center"></i>
@@ -219,7 +229,7 @@
 
                     <div class="row">
 
-                        <div class="col-12 py-4">
+                        <div class="col-12 py-1">
                             <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
                                 <span>{{"Yetki_Rolleri" | translate}}</span>
                             </label>
@@ -240,7 +250,7 @@
                             
                         </div>
                         
-                        <div class="col-12 py-4">
+                        <div class="col-12 py-1">
                             <div class="row">
                                 <div *ngFor="let key of keys" class="col-2">
                                     <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
@@ -256,14 +266,14 @@
                             </div>
                         </div>
 
-                        <div class="col-12 py-4">
+                        <div class="col-12 py-1">
                             <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="changeTabMenu($event)" [selectedIndex]="selectedIndex"  style="min-height: 300px;">
                                 <mat-tab label="{{'Menü_Yetkilendirme' | translate}}">
-                                    <div class="row mx-0 my-4">
-                                        <div class="col-12 h-500px scroll">
-                                            <div class="table-responsive">
+                                    <div class="row mx-0 my-1">
+                                        <div class="col-12">
+                                            <div class="table-responsive h-300px scroll">
                                                 <table class="table table-hover table-striped border table-rounded table-row-dashed align-middle gs-4 gy-2">
-                                                    <thead>
+                                                    <thead class="sticky-top">
                                                         <tr class="fs-6 fw-bold text-white border-bottom-0 text-uppercase rounded text-gray-500 bg-secondary">
                                                             <th class="rounded-start" style="width: 60%;">{{"Menu" | translate}}</th>
                                                             <th class="fw-bolder me-1 cursor-pointer" style="width: 25%;">{{"Modül" | translate}}</th>
@@ -300,11 +310,11 @@
                                 </mat-tab>
 
                                 <mat-tab label="{{'Vardiya_Yetkilendirme' | translate}}">
-                                    <div class="row mx-0 my-4">
-                                        <div class="col-12 h-500px scroll">
-                                            <div class="table-responsive">
+                                    <div class="row mx-0 my-1">
+                                        <div class="col-12">
+                                            <div class="table-responsive h-300px scroll">
                                                 <table class="table table-hover table-striped border table-rounded table-row-dashed align-middle gs-4 gy-2">
-                                                    <thead>
+                                                    <thead class="sticky-top">
                                                         <tr class="fs-6 fw-bold text-white border-bottom-0 text-uppercase rounded text-gray-500 bg-secondary">
                                                             <th class="rounded-start" style="width: 60%;">{{"Menu" | translate}}</th>
                                                             <th class="fw-bolder me-1 cursor-pointer" style="width: 25%;">{{"Kod" | translate}}</th>
@@ -342,11 +352,11 @@
                                 </mat-tab>
 
                                 <mat-tab label="{{'İzin_Yetkilendirme' | translate}}">
-                                    <div class="row mx-0 my-4">
-                                        <div class="col-12 h-500px scroll">
-                                            <div class="table-responsive">
+                                    <div class="row mx-0 my-1">
+                                        <div class="col-12">
+                                            <div class="table-responsive h-300px scroll">
                                                 <table class="table table-hover table-striped border table-rounded table-row-dashed align-middle gs-4 gy-2">
-                                                    <thead>
+                                                    <thead class="sticky-top">
                                                         <tr class="fs-6 fw-bold text-white border-bottom-0 text-uppercase rounded text-gray-500 bg-secondary">
                                                             <th class="rounded-start" style="width: 60%;">{{"Menu" | translate}}</th>
                                                             <th class="fw-bolder me-1 cursor-pointer" style="width: 25%;">{{"Kod" | translate}}</th>
@@ -383,11 +393,11 @@
                                 </mat-tab>
 
                                 <mat-tab label="{{'Rapor_Yetkilendirme' | translate}}">
-                                    <div class="row mx-0 my-4">
-                                        <div class="col-12 h-500px scroll">
-                                            <div class="table-responsive">
+                                    <div class="row mx-0 my-1">
+                                        <div class="col-12">
+                                            <div class="table-responsive h-300px scroll">
                                                 <table class="table table-hover table-striped border table-rounded table-row-dashed align-middle gs-4 gy-2">
-                                                    <thead>
+                                                    <thead class="sticky-top">
                                                         <tr class="fs-6 fw-bold text-white border-bottom-0 text-uppercase rounded text-gray-500 bg-secondary">
                                                             <th class="rounded-start" style="width: 60%;">{{"Menu" | translate}}</th>
                                                             <th class="fw-bolder me-1 cursor-pointer" style="width: 25%;">{{"Modül" | translate}}</th>

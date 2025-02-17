@@ -10,16 +10,23 @@
                     </div>
 
                     <div class="card-toolbar">
-                        <div class="card-toolbar">
+                        <!-- <div class="card-toolbar">
                             <div class="example-tools justify-content-center">
                                 <div class="row">
                                     <div class="d-flex btn btn-icon btn-clean btn-icon-danger mr-3 my-2 my-lg-0">
-                                        <a>
+                                        <a (click)="refreshList()">
                                             <i style="color: #ff0000;" class="fas fa-undo-alt"></i>
                                         </a>
                                     </div>
                                 </div>
+                                
                             </div>
+                        </div> -->
+
+                        <div class="symbol symbol-40px cursor-pointer me-2" (click)="refreshList()" pTooltip="{{'Listeyi_Güncelle' | translate}}" tooltipPosition="top">
+                            <span class="symbol-label symbol-label bg-hover-secondary">
+                              <i class="fas fa-undo-alt fs-3 text-danger"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -39,7 +46,7 @@
                         </div>
 
                         <div class="col-6 d-flex align-items-end justify-content-end gap-2">
-                            <a class="btn btn-dark btn-sm hover-elevate-up">
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="onFilter()">
                                 <i class="fa-solid fa-filter"></i>
                                 {{"Filtrele" | translate}}
                             </a>
@@ -54,15 +61,15 @@
                     <div class="row mt-2 mb-6">
                         <div class="col-12">
                             <span class="text-gray-500 mt-1 fw-semibold fs-8">Seçili Kişiler için
-                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">İzin Talep Formu</a>
+                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer" (click)="openVacationForm()">İzin Talep Formu</a>
                                 , 
-                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Mesai Talep Formu</a>
+                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer" (click)="openOvertimeForm()">Mesai Talep Formu</a>
                                 veya
                                 <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Mesai Ödeme Formu</a>
                                 doldurabilir. 
-                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Toplu Değişiklik</a>
+                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer" (click)="onClickBulkChange()">Toplu Değişiklik</a>
                                 veya
-                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Periyod Atama</a>
+                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer" (click)="openAssignPeriod()">Periyot Atama</a>
                                 yapabilirsiniz.
                             </span>
                         </div>
@@ -84,7 +91,16 @@
                     </ul>
                     
 
-                    <app-registry-list [selectedTab]="selectedTab" [clear]="clear" [fromWhere]="[1]" (loadingEvent)="loadingEvent($event)"></app-registry-list>
+                    <app-registry-list
+                        [selectedTab]="selectedTab"
+                        [clear]="clear"
+                        [fromWhere]="[1]"
+                        (loadingEvent)="loadingEvent($event)"
+                        (requestTimeEvent)="getRequestTime($event)"
+                        [refreshEvent]="refreshEvent"
+                        [filterEvent]="filterEvent"
+                        [bulkChangeEvent]="bulkChangeEvent">
+                    </app-registry-list>
                 </div>
             </div>
         </div>
@@ -98,6 +114,82 @@
         [fromWhere]="[1]"
         [display]="displayRegistryCard"
         (closeEvent)="closeRegistryCard($event)"
+        [requestTime]="requestTime"
         >
     </app-registry-card>
+</ng-container>
+
+
+<ng-container *ngIf="displayAssignPeriod">
+    <p-dialog header="{{'Periyot_Atama' | translate }}" [(visible)]="displayAssignPeriod" position="center" [modal]="true"
+        [breakpoints]="{ '2560px': '30vw', '992px': '30vw', '576px': '60vw' }" [baseZIndex]="10000" [draggable]="false"
+        [resizable]="false" (onHide)="closeAssignPeriod()" [styleClass]="'lightgray'">
+
+        <div class="container">
+            <div class="row" *ngIf="loadingProgress > 0">
+                <div class="col-12 py-5" *ngIf="loadingProgress > 0">
+                    <p-progressBar [value]="loadingProgress"></p-progressBar>
+                </div>
+            </div>
+
+
+            <div class="row" *ngIf="loadingProgress == 0">
+                <div class="col-12 p-3">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span >{{"Mesai_Periyodu" | translate}}</span>
+                    </label>
+    
+                    <p-dropdown [options]="periods" optionLabel="Ad"
+                        emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="false" [showClear]="true"
+                        placeholder="{{'Mesai_Periyodu_Seçiniz' | translate}}"  appendTo="body" [(ngModel)]="selectedPeriod">
+                        <ng-template let-item pTemplate="item">
+                            <div class="item-item">
+                                <div>{{item.Ad}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+
+                <div class="col-12 p-3">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span >{{"Mesai_Periyodu_Başlangıç_Tarihi" | translate}}</span>
+                    </label>
+    
+                    <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="periodStartDate">
+                </div>
+            </div>
+
+            
+        </div>
+
+        <ng-template pTemplate="footer">
+            <a class="btn btn-sm btn-danger mx-1" (click)="closeAssignPeriod()">
+                <i class="fa-solid fa-xmark fs-7"></i>
+                {{'Kapat' | translate}}
+            </a>
+            <a class="btn btn-sm btn-danger mx-1" (click)="sendRequest()">
+                <i class="fa-solid fa-floppy-disk fs-7"></i>
+                {{'Kaydet' | translate}}
+            </a>
+        </ng-template>
+    </p-dialog>
+</ng-container>
+
+
+<ng-container *ngIf="displayOvertimeForm">
+    <app-dialog-fazla-mesai-talebi
+      [isFromAttendance]="false"
+      [displayOvertimeForm]="displayOvertimeForm"
+      (onHideOvertimeForm)="onHideOvertimeForm()"
+      [isFromRegistryList]="true">
+    </app-dialog-fazla-mesai-talebi>
+</ng-container>
+
+<ng-container *ngIf="displayVacationForm">
+    <app-dialog-izin-talebi
+        [isFromAttendance]="false"
+        [displayVacationForm]="displayVacationForm"
+        (onHideVacationForm)="onHideVacationForm()"
+        [isFromRegistryList]="true">
+    </app-dialog-izin-talebi>
 </ng-container>

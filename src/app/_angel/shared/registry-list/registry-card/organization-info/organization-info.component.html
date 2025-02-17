@@ -17,6 +17,9 @@
             <div class="col-6 p-5">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Firma" | translate}}</span>
+                    <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                        <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkCompany" [ngModelOptions]="{standalone: true}"/>
+                    </div>
                 </label>
 
                 <p-dropdown [options]="companies" optionLabel="Ad" [filter]="true" filterBy="Ad"
@@ -38,6 +41,9 @@
             <div class="col-6 p-5">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Bölüm" | translate}}</span>
+                    <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                        <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkDepartment" [ngModelOptions]="{standalone: true}"/>
+                    </div>
                 </label>
 
                 <p-dropdown [options]="departments" optionLabel="Ad" [filter]="true" filterBy="Ad"
@@ -59,6 +65,9 @@
             <div class="col-6 p-5">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Pozisyon" | translate}}</span>
+                    <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                        <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkPosition" [ngModelOptions]="{standalone: true}"/>
+                    </div>
                 </label>
 
                 <p-dropdown [options]="positions" optionLabel="Ad" [filter]="true" filterBy="Ad"
@@ -80,6 +89,9 @@
             <div class="col-6 p-5">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Görev" | translate}}</span>
+                    <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                        <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkJob" [ngModelOptions]="{standalone: true}"/>
+                    </div>
                 </label>
 
                 <p-dropdown [options]="jobs" optionLabel="Ad" [filter]="true" filterBy="Ad"
@@ -101,6 +113,9 @@
             <div class="col-6 p-5">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Alt_Firma" | translate}}</span>
+                    <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                        <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkSubcompany" [ngModelOptions]="{standalone: true}"/>
+                    </div>
                 </label>
 
                 <p-dropdown [options]="subCompanies" optionLabel="Ad" [filter]="true" filterBy="Ad"
@@ -122,6 +137,9 @@
             <div class="col-6 p-5">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Yaka" | translate}}</span>
+                    <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                        <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkCollar" [ngModelOptions]="{standalone: true}"/>
+                    </div>
                 </label>
 
                 <p-dropdown [options]="collars" optionLabel="Ad" [filter]="true" filterBy="Ad"
@@ -143,6 +161,9 @@
             <div class="col-6 p-5">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Direktörlük" | translate}}</span>
+                    <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                        <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkDirectorship" [ngModelOptions]="{standalone: true}" />
+                    </div>
                 </label>
 
                 <p-dropdown [options]="directorships" optionLabel="Ad" [filter]="true" filterBy="Ad"
@@ -164,6 +185,9 @@
             <div class="col-6 p-5">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Puantaj" | translate}}</span>
+                    <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                        <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkTimeAttendance" [ngModelOptions]="{standalone: true}" />
+                    </div>
                 </label>
 
                 <p-dropdown [options]="timeAttendances" optionLabel="Ad" [filter]="true" filterBy="Ad"

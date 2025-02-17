@@ -237,7 +237,7 @@ export class FilesComponent implements OnInit, OnDestroy {
   }
 
   remove(item: any) {
-    this.profileService.deleteFileForDemand(item.UniqueId, item.DosyaTipi).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+    this.profileService.deleteFileForDemand(item.UniqueId, item.DosyaTipi, 'sicil').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
       const data = response[0].x;
       const message = response[0].z;
 

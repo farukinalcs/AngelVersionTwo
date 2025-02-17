@@ -1462,7 +1462,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
         const data = response[0].x;
         const message = response[0].z;
 
-        if (message.islemsonuc != 1) {
+        if (message.islemsonuc == -1) {
           return;
         }
         console.log('Atama log Listesi: ', data);
@@ -1557,7 +1557,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
         const data = response[0].x;
         const message = response[0].z;
 
-        if (message.islemsonuc != 1) {
+        if (message.islemsonuc == -1) {
           return;
         }
         console.log('FM Sıra Listesi: ', data);

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { Subject, take, takeUntil } from 'rxjs';
+import { catchError, Subject, take, takeUntil, throwError } from 'rxjs';
 import { updateForm } from 'src/app/store/actions/form.action';
 import { FormState } from 'src/app/store/models/form.state';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
@@ -11,13 +11,14 @@ import { ProfileService } from 'src/app/_angel/profile/profile.service';
 @Component({
   selector: 'app-custom-info',
   templateUrl: './custom-info.component.html',
-  styleUrls: ['./custom-info.component.scss']
+  styleUrls: ['./custom-info.component.scss'],
 })
 export class CustomInfoComponent implements OnInit, OnDestroy, OnChanges {
   private ngUnsubscribe = new Subject();
   @Input() inputValue!: number;
   @Input() selectedRegister: any;
   @Input() operationType: any;
+  @Input() checkFormController: any;
   form!: FormGroup;
   customCodes: any[] = [];
   display: boolean;
@@ -58,6 +59,14 @@ export class CustomInfoComponent implements OnInit, OnDestroy, OnChanges {
         ...item,
         controlName: `okod${index + 1}`
       }));
+
+      // if (this.operationType == 't') {
+      //   data.forEach((item:any,index:any) => {
+      //     this.checkFormController[`okod${index + 1}`] = undefined;
+      //   });
+      //   console.log("Testoo : ", this.checkFormController);
+        
+      // }
       console.log("OKod : ", data);
       this.customCodes = [...data];
       this.createForm(data);
@@ -101,28 +110,120 @@ export class CustomInfoComponent implements OnInit, OnDestroy, OnChanges {
     this.display = false;
   }
 
+
+  // editCustomCode() {
+  //   var sp: any[] = [
+  //     { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger: this.selectedFormType },
+  //     { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger: this.selectedFormType },
+  //     { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger: this.selectedFormType },
+  //     { mkodu: 'yek208', ad: this.newName, id: this.selectedItem.ID.toString() }
+  //   ];
+  
+  //   console.log("Form Tipi Güncelle Param :", sp);
+  
+  //   this.profileService.processMultiPost(sp)
+  //     .then(response => {
+  //       const reader = response.body?.getReader();
+  //       const decoder = new TextDecoder();
+  
+  //       return reader?.read().then(function processText({ done, value }): any {
+  //         if (done) {
+  //           console.log("İşlem tamamlandı.");
+  //           return;
+  //         }
+  
+  //         const text = decoder.decode(value, { stream: true });
+  //         console.log("Gelen veri (Stream):", text);
+          
+  //         return reader?.read().then(processText);
+  //       });
+  //     })
+  //     .catch(error => {
+  //       console.error("Hata oluştu:", error);
+  //     });
+  // }
+
   editCustomCode() {
-    var sp: any[] = [
-      { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger : this.selectedFormType},
-      { mkodu: 'yek208', ad: this.newName, id: this.selectedItem.ID.toString()}
+    const sp: any[] = [
+      { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger: this.selectedFormType },
+      { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger: this.selectedFormType },
+      { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger: this.selectedFormType },
+      { mkodu: 'yek208', ad: this.newName, id: this.selectedItem.ID.toString() }
     ];
+  
     console.log("Form Tipi Güncelle Param :", sp);
-    
-    this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response:any) => {
-      response.forEach((item:any) => {
-        let data = item.x;
-        const message = item.z;
-        
-        if (message.islemsonuc == -1) {
-          return;
-        }
-        console.log("OKod Güncellendi : ", data);
-      });
-      
-      this.closeEdit();
-      this.getCustomInfo();
+  
+    this.profileService.processMultiPost(sp).subscribe({
+      next: (text) => {
+        console.log("Gelen veri (Stream):", text);
+      },
+      error: (error) => {
+        console.error("Hata oluştu:", error);
+      },
+      complete: () => {
+        console.log("İşlem tamamlandı.");
+      }
     });
   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  // editCustomCode() {
+  //   var sp: any[] = [
+  //     { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger: this.selectedFormType },
+  //     { mkodu: 'yek208', ad: this.newName, id: this.selectedItem.ID.toString() }
+  //   ];
+  
+  //   console.log("Form Tipi Güncelle Param :", sp);
+  
+  //   this.profileService.requestMethodd(sp)
+  //     .then(response => {
+  //       const reader = response.body?.getReader();
+  //       const decoder = new TextDecoder();
+  //       let accumulatedData = ""; // Gelen veriyi biriktirmek için
+  //       let processedArray: any[] = []; // Düzeltilmiş JSON elemanlarını tutan dizi
+  
+  //       return reader?.read().then(function processText({ done, value }): any {
+  //         if (done) {
+  //           console.log("İşlem tamamlandı. Tam JSON:", processedArray);
+  //           return;
+  //         }
+  
+  //         const text = decoder.decode(value, { stream: true });
+  //         accumulatedData += text; 
+  
+  //         
+  //         accumulatedData = accumulatedData.replace(/^\[/, "").replace(/\]$/, "");
+  
+  //         
+  //         let jsonStrings = accumulatedData.split(/,(?=\{)/); 
+  
+  //         jsonStrings.forEach(jsonStr => {
+  //           try {
+  //             const parsedItem = JSON.parse(jsonStr);
+  //             processedArray.push(parsedItem); 
+  //           } catch (error) {
+  //             console.warn("Henüz tam JSON oluşmadı, devam ediliyor...");
+  //           }
+  //         });
+  
+  //         return reader?.read().then(processText);
+  //       });
+  //     })
+  //     .catch(error => {
+  //       console.error("Hata oluştu:", error);
+  //     });
+  // }
+  
+  
 
   getRegisterDetail() {
     var sp: any[] = [

@@ -18,6 +18,7 @@ export class ShiftInfoComponent implements OnInit, OnDestroy, OnChanges{
   @Input() selectedRegister: any;
   @Input() operationType: any;
   @Output() formEvent = new EventEmitter<any>();
+  @Input() checkFormController: any;
   salaryTypes: any[] = [];
   form: FormGroup;
   registerDetail: any[] = [];

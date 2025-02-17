@@ -10,11 +10,13 @@ export const loadAddedGroups = createAction(
   props<{ addedGroups: any[] }>()
 );
 export const addItemToAddedGroups = createAction(
-    '[AccessGroup] Add Item To Added Groups',
-    props<{ item: any, isTemp: boolean, startDate: any, endDate: any, startTime: any, endTime: any, desc: any }>()
-  );
-  
-  export const removeItemFromAddedGroups = createAction(
-    '[AccessGroup] Remove Item From Added Groups',
-    props<{ item: any, isTemp: boolean }>()
-  );
+  '[AccessGroup] Add Item To Added Groups',
+  props<{ item: any, isTemp: boolean, startDate: any, endDate: any, startTime: any, endTime: any, desc: any }>()
+);
+
+export const removeItemFromAddedGroups = createAction(
+  '[AccessGroup] Remove Item From Added Groups',
+  props<{ item: any, isTemp: boolean }>()
+);
+
+export const resetAccessGroups = createAction('[Access Group] Reset Access Groups');

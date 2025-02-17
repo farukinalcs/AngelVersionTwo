@@ -156,7 +156,8 @@ export class VisitorUploadedFilesComponent implements OnInit, OnDestroy {
     this.profileService
       .deleteFileForDemand(
         item.uploadedFile.UniqueId,
-        item.uploadedFile.DosyaTipi
+        item.uploadedFile.DosyaTipi,
+        'ziyaretci'
       )
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((response: any) => {

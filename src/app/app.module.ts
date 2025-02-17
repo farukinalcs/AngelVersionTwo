@@ -19,6 +19,7 @@ import { LoadingComponent } from './modules/loading/loading.component';
 import { formReducer } from './store/reducers/form.reducer';
 import { accessGroupReducer } from './store/reducers/access-group.reducer';
 import { ApiUrlService } from './_helpers/api-url.service';
+import { registerReducer } from './store/reducers/register.reducer';
 // #fake-start#
 // import { FakeAPIService } from './_fake/fake-api.service';
 
@@ -44,10 +45,17 @@ function appInitializer(authService: AuthService) {
     AppRoutingModule,
     InlineSVGModule.forRoot(),
     NgbModule,
-    // StoreModule.forRoot({number: PdksReducer}),
     ToastrModule.forRoot(),
-    StoreModule.forRoot({ form: formReducer }),
+
+
+    // NgRx State Mangement
+    StoreModule.forRoot({ 
+      form: formReducer,
+      registers: registerReducer
+    }),
     StoreModule.forFeature('accessGroup', accessGroupReducer)
+    
+    
   ],
   providers: [
     {

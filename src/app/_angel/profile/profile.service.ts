@@ -1,6 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as CryptoJS from "crypto-js";
+import { catchError, map, Observable, switchMap, tap } from 'rxjs';
 import { ApiUrlService } from 'src/app/_helpers/api-url.service';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { environment } from 'src/environments/environment';
@@ -24,24 +25,24 @@ export class ProfileService {
   }
 
   getApiUrl() {
-    return API_URL;
+    return this.apiUrlService.apiUrl;
   }
 
   getMenuAuthorization() {
     // const authData = JSON.parse(localStorage.getItem("token") || '{}');
     // console.log("token : ", authData);
-    
+
     // let headers = new HttpHeaders({
     //   Authorization: authData,
     // });
-    
+
     var sp : any[] = [
       {
         mkodu : 'yek030'
       }
     ];
 
-    
+
     // var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
     // var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
 
@@ -66,7 +67,7 @@ export class ProfileService {
     return this.requestMethod(sp);
   }
 
-  
+
 
   getUserInformation() {
     var sp : any[] = [{
@@ -126,7 +127,7 @@ export class ProfileService {
 
   cancelMyDemandsMultiple(arr : any[], aciklama : any) {
     var sp : any[] = [];
-    
+
     arr.forEach((item) => {
       if (item.tipad == 'İzin') {
         item.tipad = 'izin';
@@ -209,7 +210,7 @@ export class ProfileService {
 
     return this.requestMethod(sp);
   }
-  
+
   getAccessData() {
     var sp : any[] = [{
       mkodu : 'yek043',
@@ -232,7 +233,7 @@ export class ProfileService {
 
   confirmDemandMultiple(arr : any[]) {
     var sp : any[] = [];
-    
+
     arr.forEach((item) => {
       if (item.tipad == 'İzin') {
         item.tipad = 'izin';
@@ -277,7 +278,7 @@ export class ProfileService {
       ftip : detailFormValues.ftip
     }]
     console.log("Yek045 : ", sp);
-    
+
     return this.requestMethod(sp);
   }
 
@@ -308,7 +309,7 @@ export class ProfileService {
 
   postRequestForm(kaynak : string, form : any, employees:any[]) {
     var sp: any[] = [];
-    
+
     if (kaynak == 'vardiya') {
       employees.forEach((item:any) => {
         sp.push({
@@ -338,11 +339,11 @@ export class ProfileService {
           aciklama: form.aciklama,
           siciller: item,
         });
-      });  
+      });
     }
-    
+
     console.log("İzin talebi param : ", sp);
-    
+
 
     return this.requestMethodPost(sp);
   }
@@ -351,8 +352,8 @@ export class ProfileService {
     if (form.gunluksaatlik == 'gunluk') {
       form.bassaat = '00:00';
       form.bitsaat = '00:00';
-    } 
-    
+    }
+
     var sp : any[] = [{
       mkodu : 'yek050',
       tip : form.tip?.ID?.toString(),
@@ -382,7 +383,7 @@ export class ProfileService {
 
     return this.requestMethod(sp);
   }
-  
+
 
   getDurationsMobile(yilay : string) {
     var sp : any[] = [{
@@ -448,8 +449,8 @@ export class ProfileService {
     formData.append('formid', formId);
     formData.append('kaynak', kaynak);
     formData.append('tip', tip.toString());
-    
-    return this.httpClient.post<any>(API_URL + '/SetFile', formData);
+
+    return this.httpClient.post<any>(this.apiUrlService.apiUrl + '/File/SetFile', formData);
   }
 
   postFileTypeForDemandType(id : any, kaynak : any, belge : any[]) {
@@ -460,7 +461,7 @@ export class ProfileService {
         mkodu : 'yek060',
         tip : id.toString(),
         belge : item.ID.toString(),
-        kaynak : kaynak  
+        kaynak : kaynak
       });
     });
     // var sp : any[] = [{
@@ -480,10 +481,10 @@ export class ProfileService {
       sp.push({
         mkodu : 'yek061',
         id : item.id.toString(),
-        kaynak : kaynak  
+        kaynak : kaynak
       });
     });
-    
+
     // var sp : any[] = [{
     //   mkodu : 'yek061',
     //   id : id.toString(),
@@ -523,11 +524,11 @@ export class ProfileService {
   }
 
   getFileForDemand(id : any, uzanti : any) {
-    return this.httpClient.post<any>(API_URL + '/GetFile?uniqueid=' + id + '&filetype=' + uzanti, {});
+    return this.httpClient.post<any>(this.apiUrlService.apiUrl + '/File/GetFile?uniqueid=' + id + '&filetype=' + uzanti, {});
   }
 
-  deleteFileForDemand(id : any, uzanti : any) {
-    return this.httpClient.post<any>(API_URL + '/DeleteFile?uniqueid=' + id + '&filetype=' + uzanti, {});
+  deleteFileForDemand(id : any, uzanti : any, kaynak: any) {
+    return this.httpClient.post<any>(this.apiUrlService.apiUrl + '/File/DeleteFile?uniqueid=' + id + '&filetype=' + uzanti + '&kaynak=' + kaynak, {});
   }
 
   postVisitForm(formValues : any) {
@@ -544,7 +545,7 @@ export class ProfileService {
     ];
 
     console.log("Ziyaretçi ekle parametreler: ", sp);
-    
+
     return this.requestMethod(sp);
   }
 
@@ -565,7 +566,7 @@ export class ProfileService {
       aciklama : formValues.description,
       limit : formValues.durationType,
       tip: isRequest,
-      bastarih : formValues.startDate, 
+      bastarih : formValues.startDate,
       bassaat:  formValues.startTime,
       bittarih: formValues.endDate,
       bitsaat: formValues.endTime,
@@ -646,7 +647,7 @@ export class ProfileService {
       taksit : formValues.taksit.toString(),
       parabirimi : formValues.paraBirimi,
       aciklama : formValues.aciklama,
-      tutar : formValues.tutar.toString(), 
+      tutar : formValues.tutar.toString(),
       iban:  formValues.iban,
       ibansave: formValues.ibanKaydet.toString(),
     }];
@@ -683,6 +684,90 @@ export class ProfileService {
 
     return this.httpClient.get<any>(this.apiUrlService.apiUrl + '/process', options);
   }
+
+  // processMultiPost(sp: any[]): Promise<Response> {
+  //   var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+  //   var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+
+  //   var encryptedParam = CryptoJS.AES.encrypt(
+  //     CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)),
+  //     key,
+  //     {
+  //       keySize: 128 / 8,
+  //       iv: iv,
+  //       mode: CryptoJS.mode.CBC,
+  //       padding: CryptoJS.pad.Pkcs7
+  //     }
+  //   );
+
+  //   var data = {
+  //     securedata: encryptedParam.toString()
+  //   };
+
+  //   return fetch(this.apiUrlService.apiUrl + '/ProcessMulti', {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(data)
+  //   });
+  // }
+
+  processMultiPost(sp: any[]): Observable<string> {
+    const key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    const iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+  
+    const encryptedParam = CryptoJS.AES.encrypt(
+      CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)),
+      key,
+      {
+        keySize: 128 / 8,
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+      }
+    );
+  
+    const data = {
+      securedata: encryptedParam.toString()
+    };
+  
+    return this.httpClient.post(this.apiUrlService.apiUrl + '/ProcessMulti', data, {
+      headers: { 'Content-Type': 'application/json' },
+      responseType: 'text', // Streaming için response text olarak ayarlandı
+      observe: 'body' // Sadece body'yi almak için
+    }).pipe(
+      tap(() => console.log("İstek gönderildi, veri bekleniyor...")),
+      switchMap(response => {
+        // Response'u RxJS stream olarak işleme
+        return new Observable<string>(observer => {
+          const decoder = new TextDecoder();
+          const stream = new ReadableStream({
+            start(controller) {
+              controller.enqueue(response);
+              controller.close();
+            }
+          });
+  
+          const reader = stream.getReader();
+  
+          function processText({ done, value }: any) {
+            if (done) {
+              observer.complete();
+              return;
+            }
+            const text = decoder.decode(value, { stream: true });
+            observer.next(text);
+            reader.read().then(processText);
+          }
+  
+          reader.read().then(processText);
+        });
+      })
+    );
+  }
+  
+
+
+
 
   requestMethodPost(sp : any[]){
     var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);

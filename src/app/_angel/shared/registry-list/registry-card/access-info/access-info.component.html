@@ -14,7 +14,7 @@
 
     <div class="card-body pt-0 pb-5">
         <div class="row" [formGroup]="form">
-            <div class="col-6 p-5">
+            <div class="col-6 p-3" *ngIf="operationType != 't'">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Kullanıcı_Numarası" | translate}}</span>
                 </label>
@@ -23,7 +23,7 @@
                     [ngStyle]="{'cursor': operationType == 'u' ? 'not-allowed' : ''}">
             </div>
 
-            <div class="col-6 p-5">
+            <div class="col-6 p-3" *ngIf="operationType != 't'">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Kart_Numarası" | translate}}</span>
                 </label>
@@ -31,7 +31,7 @@
                 <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Kart_Numarası' | translate}}" formControlName="cardNumber">
             </div>
 
-            <div class="col-6 p-5">
+            <div class="col-6 p-3" *ngIf="operationType != 't'">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Facility_Numarası" | translate}}</span>
                 </label>
@@ -39,7 +39,7 @@
                 <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Facility_Numarası' | translate}}" formControlName="facilityNumber">
             </div>
 
-            <div class="col-6 p-5">
+            <div class="col-6 p-3" *ngIf="operationType != 't'">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Rf_Etiket_Numarası" | translate}}</span>
                 </label>
@@ -47,7 +47,7 @@
                 <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Rf_Etiket_Numarası' | translate}}" formControlName="rfLabelNumber">
             </div>
 
-            <div class="col-6 p-5">
+            <div class="col-6 p-3" *ngIf="operationType != 't'">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Rf_Son_Geçerlilik_Tarihi" | translate}}</span>
                 </label>
@@ -55,9 +55,12 @@
                 <input type="date" class="form-control form-control-sm form-control-solid" placeholder="{{'Rf_Son_Geçerlilik_Tarihi' | translate}}" formControlName="rfLastValidty">
             </div>
 
-            <div class="col-6 p-5">
+            <div class="p-3" [ngClass]="{'col-12': operationType == 't', 'col-6': operationType != 't'}">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span>{{"Kullanıcı_Tanımı" | translate}}</span>
+                    <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                        <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkUserDef" [ngModelOptions]="{standalone: true}"/>
+                    </div>
                 </label>
 
                 <p-dropdown [options]="userDefinitions" optionLabel="Ad" [filter]="true" filterBy="Ad"
@@ -77,7 +80,7 @@
                 </p-dropdown>
             </div>
 
-            <div class="col-12 p-5" *ngIf="operationType == 'u'">
+            <div class="col-12 p-3" *ngIf="operationType == 'u'">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span>{{"Kart_Veya_Biometic_Tanıtma_Cihazları" | translate}}</span>
                 </label>
@@ -99,11 +102,11 @@
                 </p-dropdown>
             </div>
 
-            <div class="col-12 p-5" *ngIf="operationType == 'u'">
-                <div class="d-flex flex-stack">  
+            <div class="col-12 p-3 d-flex" style="justify-content: space-between;" *ngIf="operationType == 'u'">
+                <div class="d-flex flex-stack" [ngClass]="{'border border-2 border-hover rounded cursor-pointer': deviceDetail[0]?.finger == '0'}">  
                     <div class="symbol symbol-40px me-4">
-                        <div class="symbol-label fs-2 fw-semibold bg-light-danger text-inverse-danger">
-                            <i class="fa-solid fa-fingerprint fs-1 text-danger"></i>
+                        <div class="symbol-label fs-2 fw-semibold text-inverse-danger" [ngClass]="{'bg-light-danger': deviceDetail[0]?.finger == '0', 'bg-light-success': deviceDetail[0]?.finger != '0' }">
+                            <i class="fa-solid fa-fingerprint fs-1" [ngClass]="{'text-danger': deviceDetail[0]?.finger == '0', 'text-success': deviceDetail[0]?.finger != '0' }"></i>
                         </div>
                     </div>
     
@@ -117,17 +120,17 @@
                             </span>
                         </div>
                         
-                        <a class="btn btn-sm btn-danger mx-1" *ngIf="deviceDetail[0]?.ScanFinger">
+                        <!-- <a class="btn btn-sm btn-danger mx-1" *ngIf="deviceDetail[0]?.ScanFinger">
                             <i class="fa-solid fa-expand fs-6"></i>                   
                             {{'Tara' | translate}}
-                        </a>
+                        </a> -->
                     </div>
                 </div>
                 <div class="separator separator-dashed my-4"></div>
-                <div class="d-flex flex-stack">  
+                <div class="d-flex flex-stack" [ngClass]="{'border border-2 border-hover rounded cursor-pointer': deviceDetail[0]?.face1 == '0'}">  
                     <div class="symbol symbol-40px me-4">
-                        <div class="symbol-label fs-2 fw-semibold bg-light-danger text-inverse-danger">
-                            <i class="fa-regular fa-circle-user fs-1 text-danger"></i>
+                        <div class="symbol-label fs-2 fw-semibold text-inverse-danger" [ngClass]="{'bg-light-danger': deviceDetail[0]?.face1 == '0', 'bg-light-success': deviceDetail[0]?.face1 != '0' }">
+                            <i class="fa-regular fa-circle-user fs-1" [ngClass]="{'text-danger': deviceDetail[0]?.face1 == '0', 'text-success': deviceDetail[0]?.face1 != '0' }"></i>
                             <!-- <i class="fa-regular fa-face-smile fs-1 text-danger"></i> -->
                             
 
@@ -155,17 +158,17 @@
                             </span>
                         </div>
                         
-                        <a class="btn btn-sm btn-danger mx-1" *ngIf="deviceDetail[0]?.ScanFace">
+                        <!-- <a class="btn btn-sm btn-danger mx-1" *ngIf="deviceDetail[0]?.ScanFace">
                             <i class="fa-solid fa-expand fs-6"></i>                   
                             {{'Tara' | translate}}
-                        </a>
+                        </a> -->
                     </div>
                 </div>
                 <div class="separator separator-dashed my-4"></div>
-                <div class="d-flex flex-stack">  
+                <div class="d-flex flex-stack" [ngClass]="{'border border-2 border-hover rounded cursor-pointer': deviceDetail[0]?.card == '0'}">  
                     <div class="symbol symbol-40px me-4">
-                        <div class="symbol-label fs-2 fw-semibold bg-light-danger text-inverse-danger">
-                            <i class="fa-solid fa-id-card-clip fs-1 text-danger"></i>
+                        <div class="symbol-label fs-2 fw-semibold text-inverse-danger" [ngClass]="{'bg-light-danger': deviceDetail[0]?.card == '0', 'bg-light-success': deviceDetail[0]?.card != '0' }">
+                            <i class="fa-solid fa-id-card-clip fs-1" [ngClass]="{'text-danger': deviceDetail[0]?.card == '0', 'text-success': deviceDetail[0]?.card != '0' }"></i>
                         </div>
                     </div>
     
@@ -179,21 +182,25 @@
                             </span>
                         </div>
                         
-                        <a class="btn btn-sm btn-danger mx-1" *ngIf="deviceDetail[0]?.ScanCard">
+                        <!-- <a class="btn btn-sm btn-danger mx-1" *ngIf="deviceDetail[0]?.ScanCard">
                             <i class="fa-solid fa-expand fs-6"></i>                   
                             {{'Tara' | translate}}
-                        </a>
+                        </a> -->
                     </div>
                 </div>
 
 
             </div>
 
-            <div class="col-6 p-5">
+            <div class="col-6 p-3">
                 <div class="">
-                    <div class="me-5">
-                        <label class="fs-6 fw-semibold form-label">{{"Master" | translate}}</label>
-                    </div>
+                    
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span >{{"Master" | translate}}</span>
+                        <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                            <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkMaster" [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                    </label>
             
                     <label class="form-check form-switch form-check-custom form-check-solid">
                         <input class="form-check-input" type="checkbox" formControlName="master">
@@ -202,11 +209,15 @@
                 </div>
             </div>
 
-            <div class="col-6 p-5">
+            <div class="col-6 p-3">
                 <div class="">
-                    <div class="me-5">
-                        <label class="fs-6 fw-semibold form-label">{{"By_PassCard_Sadece_Kart" | translate}}</label>
-                    </div>
+                    
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span >{{"By_PassCard_Sadece_Kart" | translate}}</span>
+                        <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                            <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkByPass" [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                    </label>
             
                     <label class="form-check form-switch form-check-custom form-check-solid">
                         <input class="form-check-input" type="checkbox" formControlName="passCard">

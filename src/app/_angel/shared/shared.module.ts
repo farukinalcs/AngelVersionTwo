@@ -47,6 +47,9 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { InlineSVGModule } from 'ng-inline-svg-2';
 import { ApplicationUseComponent } from './registry-list/registry-card/application-use/application-use.component';
+import { RegistryFilterComponent } from './registry-list/registry-filter/registry-filter.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { BulkRegistryChangeComponent } from './registry-list/bulk-registry-change/bulk-registry-change.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +79,9 @@ import { ApplicationUseComponent } from './registry-list/registry-card/applicati
     RegisterHistoryComponent,
     WorkingPeriodsComponent,
     FilesComponent,
-    ApplicationUseComponent
+    ApplicationUseComponent,
+    RegistryFilterComponent,
+    BulkRegistryChangeComponent
   ],
   imports: [
     CommonModule,
@@ -98,7 +103,8 @@ import { ApplicationUseComponent } from './registry-list/registry-card/applicati
     TooltipModule,
     ProgressBarModule,
     NgbProgressbarModule,
-    InlineSVGModule
+    InlineSVGModule,
+    MatExpansionModule
   ],
   exports: [
     FullScreenDivComponent,

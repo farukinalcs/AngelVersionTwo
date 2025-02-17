@@ -44,15 +44,15 @@
                                         <ng-container *ngIf="splits.length > 0">
                                             <tr *ngFor="let item of splits" class="cursor-pointer fs-9 fw-bolder">
                                                 <td>
-                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2" (click)="deleteSplit(item)">
                                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                         <span>{{"Sil" | translate}}</span>
                                                     </a>
                                             
-                                                    <a class="btn btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
-                                                        [ngClass]="{'btn-success': item.aktif == '1', 'btn-warning': item.aktif == '0'}">
+                                                    <a class="btn btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2" (click)="changeStateSplit(item)"
+                                                        [ngClass]="{'btn-warning': item.aktif == '1', 'btn-success': item.aktif == '0'}">
                                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
-                                                        <span>{{ item.aktif == '1' ? "Aktif"  : "Pasif" | translate}}</span>
+                                                        <span>{{ item.aktif == '1' ? "Pasife_Al"  : "Aktife_Al" | translate}}</span>
                                                     </a>
                                                 </td>
                                                 
@@ -143,7 +143,7 @@
                     </div>
                     
                     <div class="row" [formGroup]="form">
-                        <div class="col-6 p-5">
+                        <div class="col-6 p-3">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span >{{"Dönem_Başlangıç_Tarihi" | translate}}</span>
                             </label>
@@ -151,7 +151,7 @@
                             <input type="date" class="form-control form-control-sm form-control-solid" formControlName="startDate">
                         </div>
 
-                        <div class="col-6 p-5">
+                        <div class="col-6 p-3">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span >{{"Dönem_Bitiş_Tarihi" | translate}}</span>
                             </label>
@@ -159,7 +159,7 @@
                             <input type="date" class="form-control form-control-sm form-control-solid" formControlName="endDate">
                         </div>
                         
-                        <div class="col-6 p-5">
+                        <div class="col-6 p-3">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span >{{"Firma" | translate}}</span>
                             </label>
@@ -180,7 +180,7 @@
                             </p-dropdown>
                         </div>
             
-                        <div class="col-6 p-5">
+                        <div class="col-6 p-3">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span >{{"Bölüm" | translate}}</span>
                             </label>
@@ -201,7 +201,7 @@
                             </p-dropdown>
                         </div>
             
-                        <div class="col-6 p-5">
+                        <div class="col-6 p-3">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span >{{"Pozisyon" | translate}}</span>
                             </label>
@@ -222,7 +222,7 @@
                             </p-dropdown>
                         </div>
             
-                        <div class="col-6 p-5">
+                        <div class="col-6 p-3">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span >{{"Görev" | translate}}</span>
                             </label>
@@ -243,7 +243,7 @@
                             </p-dropdown>
                         </div>
             
-                        <div class="col-6 p-5">
+                        <div class="col-6 p-3">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span >{{"Alt_Firma" | translate}}</span>
                             </label>
@@ -264,7 +264,7 @@
                             </p-dropdown>
                         </div>
             
-                        <div class="col-6 p-5">
+                        <div class="col-6 p-3">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span >{{"Yaka" | translate}}</span>
                             </label>
@@ -285,7 +285,7 @@
                             </p-dropdown>
                         </div>
             
-                        <div class="col-6 p-5">
+                        <div class="col-6 p-3">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span >{{"Direktörlük" | translate}}</span>
                             </label>
@@ -306,9 +306,9 @@
                             </p-dropdown>
                         </div>
 
-                        <div class="col-6 p-5 d-flex align-items-end justify-conten-end">
+                        <div class="col-6 p-3 d-flex align-items-end justify-conten-end">
                             
-                            <a class="btn btn-sm btn-light mx-1 text-hover-danger">
+                            <a class="btn btn-sm btn-light mx-1 text-hover-danger" (click)="addSplit()">
                                 <i class="fa-solid fa-plus fs-7"></i>
                                 {{'Ekle' | translate}}
                             </a>

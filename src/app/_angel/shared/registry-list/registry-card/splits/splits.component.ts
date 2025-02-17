@@ -147,6 +147,109 @@ export class SplitsComponent implements OnInit, OnDestroy {
   }
 
   addSplit() {
+    var sp: any[] = [
+      { 
+        mkodu: 'yek214',
+        sicilid: this.selectedRegister.Id.toString(),
+        giristarih: this.form.get('startDate')?.value,
+        cikistarih: this.form.get('endDate')?.value,
+        firmaid: this.form.get('company')?.value.ID.toString(),
+        bolumid: this.form.get('department')?.value.ID.toString(),
+        pozisyonid: this.form.get('position')?.value.ID.toString(),
+        gorevid: this.form.get('job')?.value.ID.toString(),
+        direktorlukid: this.form.get('directorship')?.value.ID.toString(),
+        altfirmaid: this.form.get('subCompany')?.value.ID.toString(),
+        yakaid: this.form.get('collar')?.value.ID.toString(),
+      }
+    ];
+
+    console.log("Split Ekle Param :", sp);
+
+    this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response) => {
+      const data = response[0].x;
+      const message = response[0].z;
+
+      if (message.islemsonuc == -1) {
+        return;
+      }
+
+      console.log("Split Eklendi :", data);
+      this.toastrService.success(
+        this.translateService.instant('Split_Başarılı_Bir_Şekilde_Eklendi'),
+        this.translateService.instant('Başarılı')
+      );
+      this.getSplits();
+    }, err => {
+      this.toastrService.error(
+        this.translateService.instant('Beklenmeyen_Bir_Hata_Oluştu'),
+        this.translateService.instant('Hata')
+      );
+    });
+
+  }
+
+  deleteSplit(split:any) {
+    var sp: any[] = [
+      { 
+        mkodu: 'yek216',
+        splintid: split.KayitId.toString()
+      }
+    ];
+
+    console.log("Split Sil Param :", sp);
+
+    this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response) => {
+      const data = response[0].x;
+      const message = response[0].z;
+
+      if (message.islemsonuc == -1) {
+        return;
+      }
+
+      console.log("Split Silindi :", data);
+      this.toastrService.success(
+        this.translateService.instant('Split_Başarılı_Bir_Şekilde_Silindi'),
+        this.translateService.instant('Başarılı')
+      );
+      this.getSplits();
+    }, err => {
+      this.toastrService.error(
+        this.translateService.instant('Beklenmeyen_Bir_Hata_Oluştu'),
+        this.translateService.instant('Hata')
+      );
+    });
+  }
+
+  changeStateSplit(split:any) {
+    var sp: any[] = [
+      { 
+        mkodu: 'yek215',
+        splintid: split.KayitId.toString()
+      }
+    ];
+
+    console.log("Split Aktif-Pasif Param :", sp);
+
+    this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response) => {
+      const data = response[0].x;
+      const message = response[0].z;
+
+      if (message.islemsonuc == -1) {
+        return;
+      }
+
+      console.log("Split Aktif-Pasif Alındı :", data);
+      this.toastrService.success(
+        this.translateService.instant('Splitin_Başarılı_Bir_Şekilde_Durumu_Değiştirildi'),
+        this.translateService.instant('Başarılı')
+      );
+      this.getSplits();
+    }, err => {
+      this.toastrService.error(
+        this.translateService.instant('Beklenmeyen_Bir_Hata_Oluştu'),
+        this.translateService.instant('Hata')
+      );
+    });
   }
 
   

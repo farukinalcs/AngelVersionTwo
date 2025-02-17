@@ -221,7 +221,7 @@ export class UploadedFilesComponent implements OnInit {
     this.base64Data = null;
     
     this.profileService
-    .deleteFileForDemand(item.uploadedFile.UniqueId, item.uploadedFile.DosyaTipi)
+    .deleteFileForDemand(item.uploadedFile.UniqueId, item.uploadedFile.DosyaTipi, 'izin')
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response: any) => {
       const data = response[0].x;

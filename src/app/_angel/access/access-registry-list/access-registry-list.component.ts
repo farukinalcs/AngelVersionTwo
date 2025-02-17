@@ -23,6 +23,7 @@ export class AccessRegistryListComponent implements OnInit, OnDestroy {
   selectedTab: any;
   clear: boolean = false;
   displayRegistryCard: boolean = false;
+  filterEvent: boolean = false;
 
   constructor(
     private profileService: ProfileService,
@@ -54,6 +55,10 @@ export class AccessRegistryListComponent implements OnInit, OnDestroy {
 
   closeRegistryCard(event:any) {
     this.displayRegistryCard = event;
+  }
+
+  onFilter() {
+    this.filterEvent = !this.filterEvent;
   }
 
   ngOnDestroy(): void {

@@ -19,10 +19,15 @@
         <div class="row" [formGroup]="form">
             <ng-container *ngFor="let item of customCodes">
                 <ng-container *ngIf="10 >= item.ID && inputValue == 1">
-                    <div class="col-md-6 col-sm-12 p-5">
-                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2 border border-hover border-3 rounded px-2 cursor-pointer" (click)="showEdit(item)">
+                    <div class="col-md-6 col-sm-12 p-2">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2 px-2">
                             <span>{{item.ad}}</span>
-                            <i class="fa-solid fa-pen-to-square fs-3 ms-auto"></i>
+                            
+                            <i *ngIf="operationType != 't'" class="fa-solid fa-pen-to-square fs-3 mx-3 text-hover-danger" (click)="showEdit(item)"></i>
+
+                            <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                                <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController[item.controlName]" [ngModelOptions]="{standalone: true}"/>
+                            </div>
                         </label>
         
                         <input [type]="item.type || 'text'" class="form-control form-control-sm form-control-solid" placeholder="{{item.ad}}" formControlName="{{item.controlName}}">
@@ -30,10 +35,15 @@
                 </ng-container>
 
                 <ng-container *ngIf="10 < item.ID && inputValue == 2">
-                    <div class="col-md-6 col-sm-12 p-5">
-                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2 border border-hover border-3 rounded px-2 cursor-pointer" (click)="showEdit(item)">
+                    <div class="col-md-6 col-sm-12 p-2">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2 px-2">
                             <span>{{item.ad}}</span>
-                            <i class="fa-solid fa-pen-to-square fs-3 ms-auto"></i>
+                            
+                            <i *ngIf="operationType != 't'" class="fa-solid fa-pen-to-square fs-3 mx-3 text-hover-danger" (click)="showEdit(item)"></i>
+                            
+                            <div class="form-check form-check-custom form-check-solid form-check-sm mx-3" *ngIf="operationType == 't'">
+                                <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController[item.controlName]" [ngModelOptions]="{standalone: true}"/>
+                            </div>
                         </label>
         
                         <input [type]="item.type || 'text'" class="form-control form-control-sm form-control-solid" placeholder="{{item.ad}}" formControlName="{{item.controlName}}">

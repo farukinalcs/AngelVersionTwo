@@ -17,6 +17,8 @@ export class AccessInfoComponent implements OnInit, OnDestroy{
   @Input() selectedRegister: any;
   @Input() operationType: any;
   @Output() formEvent = new EventEmitter<any>();
+  @Input() checkFormController: any;
+
   form: FormGroup;
   userDefinitions: any[] = [];
   registerDetail: any[] = [];
