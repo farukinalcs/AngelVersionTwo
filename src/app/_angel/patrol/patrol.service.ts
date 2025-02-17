@@ -213,4 +213,26 @@ export class PatrolService {
     }]
     return this.requestMethod(sp);
   }
+
+  setGuardTourCalendar(id:number){
+    var sp: any[] = [{
+      mkodu:'yek253',
+      gun:"",
+      tur:"",
+      tursaat:"",
+      lokasyonid:id.toString(),
+      ozel:""
+    }]
+    return this.requestMethod(sp);
+  }
+
+  deleteGuardTourCalendar(id:number){
+    var sp: any[] = [{
+      mkodu:'yek254',
+      lokasyonid:id.toString(),
+      id:"",
+      ozel:""
+    }]
+    return this.requestMethod(sp);
+  }
 }
