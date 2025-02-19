@@ -7,7 +7,9 @@ import { HttpClient } from '@angular/common/http';
 import { ApiUrlService } from 'src/app/_helpers/api-url.service';
 
 const API_URL = environment.newApiUrl;
+
 const API_DynamicPlus = environment.apiUrl2;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -179,13 +181,12 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
-  setGuardLocation(id:number,tip:string,hedefid:string,islem:number){
+  setGuardLocation(id:number,tip:string,hedefid:string){
     var sp: any[] = [{
       mkodu:'yek243',
       id:id.toString(),
       tip:tip,
-      hedefid:hedefid,
-      islem:islem.toString()
+      hedefid:hedefid
     }]
     return this.requestMethod(sp);
   }

@@ -168,7 +168,7 @@
                                                             <tr *ngFor="let item of _locationDevices">
                                                                 <td style="width: 75%;">{{ item?.ad }}</td>
                                                                 <td style="width: 25%;text-align:right;">
-                                                                    <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
                                                                         <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
@@ -197,7 +197,7 @@
                                                         <tbody>
                                                             <tr *ngFor="let item of _locationDevices">
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
                                                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                             
                                                                     </a>
@@ -233,7 +233,7 @@
                                                             <tr *ngFor="let item of _locationTours">
                                                                 <td style="width: 75%;">{{ item?.ad }}</td>
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
                                                                         <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
@@ -260,7 +260,7 @@
                                                         <tbody>
                                                             <tr *ngFor="let item of _locationTours">
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
                                                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                             
                                                                     </a>
@@ -296,7 +296,7 @@
                                                             <tr *ngFor="let item of _locaitonStations">
                                                                 <td style="width: 75%;">{{ item?.ad }}</td>
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
                                                                         <i class="fa-solid fa-minus p-0 d-flex align-item-center"></i>
                                                                     </a>
                                                                 </td>
@@ -324,7 +324,7 @@
                                                         <tbody>
                                                             <tr *ngFor="let item of _locaitonStations">
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
                                                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                             
                                                                     </a>
@@ -361,7 +361,7 @@
                                                             <tr *ngFor="let item of _locationGuards">
                                                                 <td style="width: 75%;">{{ item?.ad }}</td>
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
                                                                         <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
@@ -389,7 +389,7 @@
                                                         <tbody>
                                                             <tr *ngFor="let item of _locationGuards">
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-dark btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
                                                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
@@ -414,11 +414,61 @@
                                             <div class="col-6 py-4">
                                             
                                     
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 75%;">
+                                                                    Ad
+                                                                </th>
+                                                                <th style="width: 25%;text-align:right">
+                                                                    işlem
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let item of _locationEmergencySms">
+                                                                <td style="width: 75%;">{{ item?.ad }}</td>
+                                                                <td style="width: 25%;text-align:right;">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                        <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
 
                                             </div>
                                     
                                             <div class="col-6 py-4">
                                             
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 25%;">
+                                                                   İşlem
+                                                                </th>
+                                                                <th style="width: 75%;text-align:right">
+                                                                   Ad
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let item of _locationEmergencySms">
+                                                                <td style="width: 25%;">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                        <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td style="width: 75%;text-align:right">
+                                                                    {{ item?.ad }}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                                 
                                     
                                                
@@ -432,13 +482,62 @@
                                         <div class="row w-100">
                                             <div class="col-6 py-4">
                                             
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 75%;">
+                                                                    Ad
+                                                                </th>
+                                                                <th style="width: 25%;text-align:right">
+                                                                    işlem
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let item of _locationEmergencyCall">
+                                                                <td style="width: 75%;">{{ item?.ad }}</td>
+                                                                <td style="width: 25%;text-align:right;">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                        <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                     
 
                                             </div>
                                     
                                             <div class="col-6 py-4">
                                             
-                                                
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 25%;">
+                                                                   İşlem
+                                                                </th>
+                                                                <th style="width: 75%;text-align:right">
+                                                                   Ad
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let item of _locationEmergencyCall">
+                                                                <td style="width: 25%;">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                        <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td style="width: 75%;text-align:right">
+                                                                    {{ item?.ad }}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                     
                                                
                                             </div>
@@ -450,13 +549,61 @@
                                         <div class="row w-100">
                                             <div class="col-6 py-4">
                                             
-                                    
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 75%;">
+                                                                    Ad
+                                                                </th>
+                                                                <th style="width: 25%;text-align:right">
+                                                                    işlem
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let item of _locationVehicle">
+                                                                <td style="width: 75%;">{{ item?.ad }}</td>
+                                                                <td style="width: 25%;text-align:right;">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                        <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
 
                                             </div>
                                     
                                             <div class="col-6 py-4">
                                             
-                                                
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 25%;">
+                                                                   İşlem
+                                                                </th>
+                                                                <th style="width: 75%;text-align:right">
+                                                                   Ad
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let item of _locationVehicle">
+                                                                <td style="width: 25%;">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                        <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td style="width: 75%;text-align:right">
+                                                                    {{ item?.ad }}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                     
                                                
                                             </div>
