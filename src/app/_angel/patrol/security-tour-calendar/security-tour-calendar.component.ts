@@ -22,12 +22,11 @@ export class SecurityTourCalendarComponent {
 
 
       ngOnInit(): void {
-        this.getGuardTour();
         this.getLocation();
       }
 
-        getGuardTour(): void {
-          this.patrol.getGuardTour('0').subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+        getGuardTour(id:string): void {
+          this.patrol.getGuardTour(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
             this.tourList = response[0].x;
             console.log("getGuardTour:", this.tourList);
             
@@ -57,6 +56,7 @@ export class SecurityTourCalendarComponent {
         
       getItem(item:any){
         console.log("lokasyon item",item);
+        this.getGuardTour(item.id);
         // this.allLocationDetails(item.id);
         // this.getGuardTourCalendar(item.id);
         // this.locationDetails(item.id);
