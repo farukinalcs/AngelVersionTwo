@@ -11,7 +11,7 @@
                                                                     { breakpoint: '560px', numVisible: 3, numScroll: 2 }
                                                                 ]">
                                 <ng-template let-tab pTemplate="item">
-                                    <li class="nav-item" style="list-style: none;">
+                                    <li class="nav-item d-flex justify-content-center" style="list-style: none">
                                         <a class="nav-link btn btn-outline btn-flex btn-color-gray-800 btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2 position-relative"
                                             [routerLink]="tab.path"
                                             [attr.id]="tab.id" (click)="changeTab(tab)"

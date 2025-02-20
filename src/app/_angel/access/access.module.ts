@@ -55,7 +55,7 @@ import { AccessDashboardComponent } from './access-dashboard/access-dashboard.co
 import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dialog-update-device.component';
 import { AccessRegistryListComponent } from './access-registry-list/access-registry-list.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -120,7 +120,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CustomPipeModule,
     MatProgressSpinnerModule,
     MatTabsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    TooltipModule
   ]
 
 })

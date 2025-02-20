@@ -10,16 +10,10 @@
                     </div>
 
                     <div class="card-toolbar">
-                        <div class="card-toolbar">
-                            <div class="example-tools justify-content-center">
-                                <div class="row">
-                                    <div class="d-flex btn btn-icon btn-clean btn-icon-danger mr-3 my-2 my-lg-0">
-                                        <a>
-                                            <i style="color: #ff0000;" class="fas fa-undo-alt"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="symbol symbol-40px cursor-pointer me-2" (click)="refreshList()" pTooltip="{{'Listeyi_Güncelle' | translate}}" tooltipPosition="top">
+                            <span class="symbol-label symbol-label bg-hover-secondary">
+                              <i class="fas fa-undo-alt fs-3 text-danger"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -83,6 +77,8 @@
                         [clear]="clear"
                         [fromWhere]="[1,2,3,4,5,6,7,8,9,10]"
                         (loadingEvent)="loadingEvent($event)"
+                        (requestTimeEvent)="getRequestTime($event)"
+                        [refreshEvent]="refreshEvent"
                         [filterEvent]="filterEvent">
                     </app-registry-list>
                 </div>
@@ -93,7 +89,11 @@
 
 
 <ng-container *ngIf="displayRegistryCard">
-    <app-registry-card [operationType]="'i'" [fromWhere]="[1,2,3,4,5,6,7,8,9,10]" [display]="displayRegistryCard"
-        (closeEvent)="closeRegistryCard($event)">
+    <app-registry-card
+        [operationType]="'i'"
+        [fromWhere]="[1,2,3,4,5,6,7,8,9,10]"
+        [display]="displayRegistryCard"
+        (closeEvent)="closeRegistryCard($event)"
+        [requestTime]="requestTime">
     </app-registry-card>
 </ng-container>

@@ -1,0 +1,8 @@
+.img-container {
+    overflow: hidden !important;
+    transition: overflow 0.4s ease-in-out !important; // Yumuşak geçiş
+
+    &:hover {
+        overflow: auto !important; // Hover'da kesilmeye izin ver
+    }
+}

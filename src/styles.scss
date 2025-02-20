@@ -632,7 +632,25 @@
 
 
 
-.custom-btn:hover{
-    position: relative;
-    top: -3px;
+// Loading için 
+.disabled-link {
+    pointer-events: none;
+    /* Tıklanabilirliği engeller */
+    opacity: 0.5;
+    /* Butonu soluklaştırır */
 }
+
+
+.spinner-overlay {
+    position: absolute; /* Parent elementin üzerine yerleştiriyoruz */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background: rgba(255, 255, 255, 0.7); /* Hafif beyaz bir overlay */
+    z-index: 9990; /* Diğer elemanlardan üstte görünmesini sağlar */
+}
+// /*--------------------------------------------*/

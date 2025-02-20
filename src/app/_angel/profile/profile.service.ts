@@ -685,85 +685,34 @@ export class ProfileService {
     return this.httpClient.get<any>(this.apiUrlService.apiUrl + '/process', options);
   }
 
-  // processMultiPost(sp: any[]): Promise<Response> {
-  //   var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-  //   var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+  processMultiPost(sp: any[], signal?: AbortSignal): Promise<Response> {
+    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
 
-  //   var encryptedParam = CryptoJS.AES.encrypt(
-  //     CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)),
-  //     key,
-  //     {
-  //       keySize: 128 / 8,
-  //       iv: iv,
-  //       mode: CryptoJS.mode.CBC,
-  //       padding: CryptoJS.pad.Pkcs7
-  //     }
-  //   );
-
-  //   var data = {
-  //     securedata: encryptedParam.toString()
-  //   };
-
-  //   return fetch(this.apiUrlService.apiUrl + '/ProcessMulti', {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(data)
-  //   });
-  // }
-
-  processMultiPost(sp: any[]): Observable<string> {
-    const key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    const iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-  
-    const encryptedParam = CryptoJS.AES.encrypt(
+    var encryptedParam = CryptoJS.AES.encrypt(
       CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)),
       key,
       {
         keySize: 128 / 8,
-        iv: iv,
+        iv: iv, 
         mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7
       }
     );
-  
-    const data = {
+
+    var data = {
       securedata: encryptedParam.toString()
     };
-  
-    return this.httpClient.post(this.apiUrlService.apiUrl + '/ProcessMulti', data, {
-      headers: { 'Content-Type': 'application/json' },
-      responseType: 'text', // Streaming için response text olarak ayarlandı
-      observe: 'body' // Sadece body'yi almak için
-    }).pipe(
-      tap(() => console.log("İstek gönderildi, veri bekleniyor...")),
-      switchMap(response => {
-        // Response'u RxJS stream olarak işleme
-        return new Observable<string>(observer => {
-          const decoder = new TextDecoder();
-          const stream = new ReadableStream({
-            start(controller) {
-              controller.enqueue(response);
-              controller.close();
-            }
-          });
-  
-          const reader = stream.getReader();
-  
-          function processText({ done, value }: any) {
-            if (done) {
-              observer.complete();
-              return;
-            }
-            const text = decoder.decode(value, { stream: true });
-            observer.next(text);
-            reader.read().then(processText);
-          }
-  
-          reader.read().then(processText);
-        });
-      })
-    );
+
+    return fetch(this.apiUrlService.apiUrl + '/ProcessMulti', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+      signal // AbortController'dan gelen sinyali ekledim
+    });
   }
+
+  
   
 
 

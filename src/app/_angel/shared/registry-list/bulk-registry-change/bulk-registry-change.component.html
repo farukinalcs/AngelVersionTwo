@@ -6,7 +6,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12" *ngIf="loadingProgress == 0">
+            <div class="col-12" *ngIf="loadingProgress == 0" [ngClass]="{'disabled-link': bulkChangeLoading}">
                 <p-carousel [value]="tabs" [numVisible]="5" [numScroll]="4" [circular]="true" >
                     <ng-template let-tab pTemplate="item">
                         <li class="nav-item px-2" role="presentation" style="list-style: none;">
@@ -28,8 +28,84 @@
                 
                 <div class="flex-lg-row-fluid">
                     <ng-container *ngIf="loadingProgress > 0">
+                        <div class="row">
+                            <div class="col-6 d-flex justify-content-center py-5">
+                                <div class="rounded-pill bg-light d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden cursor-pointer border border-3 border-danger"
+                                    [ngClass]="{'border-hover': selectedRequestState != 'successful'}" (click)="selectRequestState('successful')">
+                                    <div class="position-absolute rounded-pill d-block bg-gray-200 start-0 top-0 h-100 z-index-1" style="width:80%;"></div>
+                        
+                                    <div class="d-flex align-items-center position-relative z-index-2">
+                                        <div class="symbol-group symbol-hover flex-nowrap me-3">
+                                            <div class="symbol symbol-circle symbol-25px" *ngFor="let item of successfulChange | slice:0:5">
+                                                <img alt="" [src]="imageUrl + '?sicilid=' + item.Id" pTooltip="{{item.adsoyad}}">
+                                            </div>
+                                        </div>
+                        
+                                        <a class="fw-bold text-gray-800 text-hover-dark">Başarılı</a>
+                                    </div>
+                        
+                                    <div class="d-flex flex-center bg-body rounded-pill fs-7 fw-bolder ms-auto h-100 px-3 position-relative z-index-2">
+                                        {{successfulChange.length}}
+                                    </div>
+                                </div>                    
+                            </div>
+            
+                            <div class="col-6 d-flex justify-content-center py-5">
+                                <div class="rounded-pill bg-light d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden cursor-pointer border border-3 border-danger"
+                                    [ngClass]="{'border-hover': selectedRequestState != 'incorrect'}" (click)="selectRequestState('incorrect')">
+                                    <div class="position-absolute rounded-pill d-block bg-gray-200 start-0 top-0 h-100 z-index-1" style="width:80%;"></div>
+                        
+                                    <div class="d-flex align-items-center position-relative z-index-2">
+                                        <div class="symbol-group symbol-hover flex-nowrap me-3">
+                                            <div class="symbol symbol-circle symbol-25px" *ngFor="let item of incorrectChange">
+                                                <img alt="" [src]="imageUrl + '?sicilid=' + item.Id" pTooltip="{{item.adsoyad}}">
+                                            </div>
+                                        </div>
+                        
+                                        <a class="fw-bold text-gray-800 text-hover-dark">Başarısız</a>
+                                    </div>
+                        
+                                    <div class="d-flex flex-center bg-body rounded-pill fs-7 fw-bolder ms-auto h-100 px-3 position-relative z-index-2">
+                                        {{incorrectChange.length}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
 
-                        <div class="card mb-6 mb-xl-9 mx-2">
+                        <div class="row h-350px scroll">
+                            <ng-container  *ngFor="let item of showRequestState()">
+                                <div class="col-6 p-1"  *ngIf="item.hasOwnProperty('requestState')">
+                                    <div class="border border-1 border-gray-300 rounded pe-7 py-0 mb-2" style="box-shadow: -3px -1px 11px -5px rgba(184,171,184,1);">
+                                        <div class="h-90px">
+                                            <div class="d-flex flex-column justify-content-center img-container position-relative me-3 h-90px">
+                                                <img [src]="imageUrl + '?sicilid=' + item.Id" class="position-absolute w-90px h-90px ms-n1 me-1" style="left: -22px; border-radius: 100%;" alt="">
+            
+                                                <span class="fw-bold" style="padding-left: 95px;">
+                                                    <span class="text-gray-400">{{'Ad_Soyad' | translate}}:</span>
+                                                    <a class="text-gray-800 text-hover-danger fw-bold"> {{item.adsoyad}} </a>
+                                                </span>
+            
+                                                <span class="fw-bold" style="padding-left: 95px;">
+                                                    <span class="text-gray-400">{{'Sicil_No' | translate}}:</span>
+                                                    <a class="text-gray-800 text-hover-danger fw-bold"> {{item.sicilno}} </a>
+                                                </span>
+            
+                                                <span class="d-flex fw-bold" style="padding-left: 95px; justify-content: space-between;">
+                                                    <div>
+                                                        <span class="text-gray-400">{{'Bölüm' | translate}}:</span>
+                                                        <a class="text-gray-800 text-hover-danger fw-bold"> {{item.bolumad}} </a>
+                                                    </div>
+                                                    <span *ngIf="item.hasOwnProperty('requestState') && item.requestState" class="ms-auto badge badge-success">{{'Başarılı' |  translate}}</span>
+                                                    <span *ngIf="item.hasOwnProperty('requestState') && !item.requestState" class="ms-auto badge badge-danger">{{'Başarısız' | translate}}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <!-- <div class="card mb-6 mb-xl-9 mx-2">
                             
                             <div class="card-body pt-0 pb-5 h-400px scroll">
                                 <div class="row py-4">
@@ -57,74 +133,60 @@
 
                                 </div>    
                             </div>
-                        </div>
+                        </div> -->
                     </ng-container>
                     
                     <ng-container *ngIf="loadingProgress == 0">
 
-                        <!-- <div class="card mb-6 mb-xl-9 mx-2" *ngIf="selectedIndex == 1">
-                            <div class="card-header border-0 bg-danger" style="min-height: 45px;">
-                                <div class="card-title">
-                                    <h3 class="card-label text-white">{{"Genel_Bilgiler" | translate}}</h3>
-                                    <h4 class="card-label text-gray-200 fs-8">{{"Genel_Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+                        <div [ngClass]="{'disabled-link': bulkChangeLoading}">
+                            <app-organization-info 
+                                *ngIf="selectedIndex == 3" 
+                                [operationType]="'t'"
+                                [checkFormController]="checkFormController">
+                            </app-organization-info>
+                            
+                            <app-custom-info
+                                *ngIf="selectedIndex == 4"
+                                [inputValue]="1"
+                                [operationType]="'t'"
+                                [checkFormController]="checkFormController">
+                            </app-custom-info>
+                            
+                            <app-custom-info
+                                *ngIf="selectedIndex == 5"
+                                [inputValue]="2"
+                                [operationType]="'t'"
+                                [checkFormController]="checkFormController">
+                            </app-custom-info>
+                            
+                            <app-shift-info
+                                *ngIf="selectedIndex == 6" 
+                                [operationType]="'t'"
+                                [checkFormController]="checkFormController">
+                            </app-shift-info>
+                            
+                            <app-access-info
+                                *ngIf="selectedIndex == 7"
+                                [fromWhere]="fromWhere"
+                                [operationType]="'t'"
+                                [checkFormController]="checkFormController">
+                            </app-access-info>
+
+                            <app-access-group
+                                *ngIf="selectedIndex == 8"
+                                [operationType]="'t'"
+                                [checkFormController]="checkFormController"
+                                (actionTypeEvent)="onActionType($event)">
+                            </app-access-group>
+                            
+                            <!-- Spinner overlay -->
+                            <div *ngIf="bulkChangeLoading" class="spinner-overlay">
+                                <div class="spinner-border text-danger" role="status">
+                                    <span class="visually-hidden">Yükleniyor...</span>
                                 </div>
                             </div>
+                        </div>
                         
-                            <div class="card-body pt-0 pb-5">
-                                <div class="row">
-                                    <div class="col-6 p-5">
-                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                            <span >{{"Giriş_Tarihi" | translate}}</span>
-                                            <div class="form-check form-check-custom form-check-solid form-check-sm mx-3">
-                                                <input class="form-check-input" type="checkbox" value="true" [(ngModel)]="checkFormController.checkEntryDate" />
-                                            </div>
-                                        </label>
-                        
-                                        <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="entryDate">
-                                    </div>
-                                </div>    
-                            </div>
-                        </div> -->
-                        
-                        <app-organization-info 
-                            *ngIf="selectedIndex == 3" 
-                            [operationType]="'t'"
-                            [checkFormController]="checkFormController">
-                        </app-organization-info>
-                        
-                        <app-custom-info
-                            *ngIf="selectedIndex == 4"
-                            [inputValue]="1"
-                            [operationType]="'t'"
-                            [checkFormController]="checkFormController">
-                        </app-custom-info>
-                        
-                        <app-custom-info
-                            *ngIf="selectedIndex == 5"
-                            [inputValue]="2"
-                            [operationType]="'t'"
-                            [checkFormController]="checkFormController">
-                        </app-custom-info>
-                        
-                        <app-shift-info
-                            *ngIf="selectedIndex == 6" 
-                            [operationType]="'t'"
-                            [checkFormController]="checkFormController">
-                        </app-shift-info>
-                        
-                        <app-access-info
-                            *ngIf="selectedIndex == 7"
-                            [fromWhere]="fromWhere"
-                            [operationType]="'t'"
-                            [checkFormController]="checkFormController">
-                        </app-access-info>
-
-                        <app-access-group
-                            *ngIf="selectedIndex == 8"
-                            [operationType]="'t'"
-                            [checkFormController]="checkFormController"
-                            (actionTypeEvent)="onActionType($event)">
-                        </app-access-group>
                         
                     </ng-container>
                 </div>
@@ -135,13 +197,23 @@
 
 
     <ng-template pTemplate="footer">
-        <a class="btn btn-sm btn-danger mx-1" (click)="close()">
+        <a *ngIf="!bulkChangeLoading" class="btn btn-sm btn-danger mx-1" (click)="close()">
             <i class="fa-solid fa-xmark fs-7"></i>
             {{'Kapat' | translate}}
         </a>
-        <a class="btn btn-sm btn-danger mx-1" (click)="collectAllFormData()">
-            <i class="fa-solid fa-floppy-disk fs-7"></i>
-            {{'Kaydet' | translate}}
+        <a *ngIf="loadingProgress == 0" class="btn btn-sm btn-danger mx-1" (click)="collectAllFormData()" [ngClass]="{'disabled-link': bulkChangeLoading}">
+            <ng-container *ngIf="!bulkChangeLoading">
+                <i class="fa-solid fa-floppy-disk fs-7"></i>
+                {{'Kaydet' | translate}}
+            </ng-container>
+            
+
+            <ng-container *ngIf="bulkChangeLoading">
+                <span class="indicator-progress" [style.display]="'block'">
+                    {{"Lütfen_Bekleyiniz" | translate}}
+                    <span class="spinner-border spinner-border-sm align-middle ms-0"></span>
+                  </span>
+            </ng-container>
         </a>
     </ng-template>
 </p-dialog>

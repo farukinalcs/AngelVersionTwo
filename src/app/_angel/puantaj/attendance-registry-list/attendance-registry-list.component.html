@@ -122,7 +122,7 @@
 
 <ng-container *ngIf="displayAssignPeriod">
     <p-dialog header="{{'Periyot_Atama' | translate }}" [(visible)]="displayAssignPeriod" position="center" [modal]="true"
-        [breakpoints]="{ '2560px': '30vw', '992px': '30vw', '576px': '60vw' }" [baseZIndex]="10000" [draggable]="false"
+        [breakpoints]="{ '2560px': '30vw', '992px': '40vw', '576px': '60vw' }" [baseZIndex]="-40" [draggable]="false"
         [resizable]="false" (onHide)="closeAssignPeriod()" [styleClass]="'lightgray'">
 
         <div class="container">
@@ -130,10 +130,84 @@
                 <div class="col-12 py-5" *ngIf="loadingProgress > 0">
                     <p-progressBar [value]="loadingProgress"></p-progressBar>
                 </div>
+
+                <div class="col-6 d-flex justify-content-center py-5">
+                    <div class="rounded-pill bg-light d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden cursor-pointer">
+                        <div class="position-absolute rounded-pill d-block bg-gray-200 start-0 top-0 h-100 z-index-1" style="width:80%;"></div>
+            
+                        <div class="d-flex align-items-center position-relative z-index-2">
+                            <div class="symbol-group symbol-hover flex-nowrap me-3">
+                                <div class="symbol symbol-circle symbol-25px" *ngFor="let item of successfulAssign | slice:0:5">
+                                    <img alt="" [src]="imageUrl + '?sicilid=' + item.Id" pTooltip="{{item.adsoyad}}">
+                                </div>
+                            </div>
+            
+                            <a class="fw-bold text-gray-800 text-hover-dark">Başarılı</a>
+                        </div>
+            
+                        <div class="d-flex flex-center bg-body rounded-pill fs-7 fw-bolder ms-auto h-100 px-3 position-relative z-index-2">
+                            {{successfulAssign.length}}
+                        </div>
+                    </div>                    
+                </div>
+
+                <div class="col-6 d-flex justify-content-center py-5">
+                    <div class="rounded-pill bg-light d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden cursor-pointer">
+                        <div class="position-absolute rounded-pill d-block bg-gray-200 start-0 top-0 h-100 z-index-1" style="width:80%;"></div>
+            
+                        <div class="d-flex align-items-center position-relative z-index-2">
+                            <div class="symbol-group symbol-hover flex-nowrap me-3">
+                                <div class="symbol symbol-circle symbol-25px" *ngFor="let item of incorrectAssign">
+                                    <img alt="" [src]="imageUrl + '?sicilid=' + item.Id" pTooltip="{{item.adsoyad}}">
+                                </div>
+                            </div>
+            
+                            <a class="fw-bold text-gray-800 text-hover-dark">Başarısız</a>
+                        </div>
+            
+                        <div class="d-flex flex-center bg-body rounded-pill fs-7 fw-bolder ms-auto h-100 px-3 position-relative z-index-2">
+                            {{incorrectAssign.length}}
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="col-12">
+                    <ng-container  *ngFor="let item of successfulAssign.concat(incorrectAssign)">
+                        <div class="col-12 p-1"  *ngIf="item.hasOwnProperty('requestState')">
+                            <div class="border border-1 border-gray-300 rounded pe-7 py-0 mb-2" style="box-shadow: -3px -1px 11px -5px rgba(184,171,184,1);">
+                                <div class="h-90px">
+                                    <div class="d-flex flex-column justify-content-center img-container position-relative me-3 h-90px">
+                                        <img [src]="imageUrl + '?sicilid=' + item.Id" class="position-absolute w-90px h-90px ms-n1 me-1" style="left: -22px; border-radius: 100%;" alt="">
+    
+                                        <span class="fw-bold" style="padding-left: 95px;">
+                                            <span class="text-gray-400">{{'Ad_Soyad' | translate}}:</span>
+                                            <a class="text-gray-800 text-hover-danger fw-bold"> {{item.adsoyad}} </a>
+                                        </span>
+    
+                                        <span class="fw-bold" style="padding-left: 95px;">
+                                            <span class="text-gray-400">{{'Sicil_No' | translate}}:</span>
+                                            <a class="text-gray-800 text-hover-danger fw-bold"> {{item.sicilno}} </a>
+                                        </span>
+    
+                                        <span class="d-flex fw-bold" style="padding-left: 95px; justify-content: space-between;">
+                                            <div>
+                                                <span class="text-gray-400">{{'Bölüm' | translate}}:</span>
+                                                <a class="text-gray-800 text-hover-danger fw-bold"> {{item.bolumad}} </a>
+                                            </div>
+                                            <span *ngIf="item.hasOwnProperty('requestState') && item.requestState" class="ms-auto badge badge-success">{{'Başarılı' |  translate}}</span>
+                                            <span *ngIf="item.hasOwnProperty('requestState') && !item.requestState" class="ms-auto badge badge-danger">{{'Başarısız' | translate}}</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
             </div>
 
 
-            <div class="row" *ngIf="loadingProgress == 0">
+            <div *ngIf="loadingProgress == 0" class="row" [ngClass]="{'disabled-link': bulkAssignLoading}">
                 <div class="col-12 p-3">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                         <span >{{"Mesai_Periyodu" | translate}}</span>
@@ -157,20 +231,37 @@
     
                     <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="periodStartDate">
                 </div>
+
+                <!-- Spinner overlay -->
+                <div *ngIf="bulkAssignLoading" class="spinner-overlay">
+                    <div class="spinner-border text-danger" role="status">
+                        <span class="visually-hidden">Yükleniyor...</span>
+                    </div>
+                </div>
             </div>
 
-            
         </div>
 
         <ng-template pTemplate="footer">
-            <a class="btn btn-sm btn-danger mx-1" (click)="closeAssignPeriod()">
+            <a *ngIf="!bulkAssignLoading" class="btn btn-sm btn-danger mx-1" (click)="closeAssignPeriod()">
                 <i class="fa-solid fa-xmark fs-7"></i>
                 {{'Kapat' | translate}}
             </a>
-            <a class="btn btn-sm btn-danger mx-1" (click)="sendRequest()">
-                <i class="fa-solid fa-floppy-disk fs-7"></i>
-                {{'Kaydet' | translate}}
+
+            <a *ngIf="loadingProgress == 0" class="btn btn-sm btn-danger mx-1" (click)="checkAssignPeriodRequest()" [ngClass]="{'disabled-link': bulkAssignLoading}">
+                <ng-container *ngIf="!bulkAssignLoading">
+                    <i class="fa-solid fa-floppy-disk fs-7"></i>
+                    {{'Kaydet' | translate}}
+                </ng-container>
+            
+                <ng-container *ngIf="bulkAssignLoading">
+                    <span class="indicator-progress" [style.display]="'block'">
+                        {{"Lütfen_Bekleyiniz" | translate}}
+                        <span class="spinner-border spinner-border-sm align-middle ms-0"></span>
+                      </span>
+                </ng-container>
             </a>
+            
         </ng-template>
     </p-dialog>
 </ng-container>
