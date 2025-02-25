@@ -24,6 +24,8 @@ import { CardModule } from 'primeng/card';
 import { PickListModule } from 'primeng/picklist';
 import { CarouselModule } from 'primeng/carousel';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     PickListModule,
     CarouselModule,
     GoogleMapsModule
+    MatTabsModule,
+
   ]
 })
 export class PatrolModule { }

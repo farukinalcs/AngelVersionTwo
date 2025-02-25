@@ -5,14 +5,12 @@
             <div class="table-responsive">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" [(ngModel)]="tourNameInput" (input)="filterItems()">
-                    <button class="btn btn-danger text-white" type="button" id="button-addon2" (click)="setGuardTour()">Ekle</button>
+                    <button class="btn bg-danger text-white" type="button" id="button-addon2" (click)="setGuardTour()">Ekle</button>
                 </div>
-                <!-- <input class="form-control" [(ngModel)]="tourNameInput" type="text"><h3>{{tourNameInput}}</h3>
-                <button class="btn btn-success" (click)="setGuardTour(tourNameInput)">Ekle</button> -->
-                <table class="table table-striped"
-            >
+    
+                <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                 <thead>
-                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-danger rounded text-white">
                         <th class="fw-bolder me-1 cursor-pointer rounded-start text-center" style="width: 80%;">Tur Adı</th>
                         <th class="fw-bolder me-1 cursor-pointer rounded-end" style="width: 20%;"></th>
                     </tr>
@@ -25,7 +23,7 @@
                             </td>
 
                             <td>
-                                <a class="btn btn-danger btn-sm py-1 px-2" (click)="deleteGuardTour(item);">
+                                <a class="btn btn-light-danger btn-sm py-1 px-2" (click)="deleteGuardTour(item);">
                                     <i class="fa-solid fa-minus p-0"></i>
                                 </a>
                             </td>
@@ -40,14 +38,8 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-5">
-                    <!-- <h5>Boş Liste</h5> -->
-                    <!-- <ul class="list-group">
-                      <li 
-                      class="list-group-item" *ngFor="let item of targetList">
-                        {{ item.kaynakad}} 
-                      </li>
-                    </ul> -->
-                    <table class="table table-row-dashed">
+                
+                    <table class="table table-row-dashed table-row-gray-200 align-middle gs-2 gy-4">
                         <thead>
                             <th></th>
                             <th></th>
@@ -56,7 +48,7 @@
                             <tr *ngFor="let item of targetList">
                                 <td> {{ item.kaynakad}} </td>
                                 <td (click)="deleteTourStation(item)">
-                                    <a class="btn btn-danger btn-sm py-1 px-2">
+                                    <a class="btn btn-light-danger btn-sm py-1 px-2">
                                     <i class="fa-solid fa-minus p-0"></i>
                                 </a>
                                 </td>
@@ -73,7 +65,7 @@
                         <table
                         class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                         <thead>
-                            <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                            <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-danger rounded text-white">
                             
                                 <th colspan="2" class=" fw-bolder me-1 cursor-pointer rounded-start" style="width: 80%;">İstasyon Adı</th>
                             </tr>
@@ -81,7 +73,7 @@
                         <tbody>
                             <tr *ngFor="let item of allStation" class="cursor-pointer fs-8">
                                     <td (click)="addTourStation(item)">
-                                        <a class="btn btn-success btn-sm py-1 px-2">
+                                        <a class="btn btn-light-success btn-sm py-1 px-2">
                                             <i class="fa-solid fa-plus p-0"></i>
                                         </a>
                                     </td>

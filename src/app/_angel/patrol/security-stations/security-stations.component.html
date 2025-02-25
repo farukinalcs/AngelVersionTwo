@@ -8,10 +8,10 @@
                     <button class="btn btn-danger text-white" type="button" id="button-addon2" (click)="setGuardStation(stationName)">Ekle</button>
                 </div>
              
-                <table class="table table-striped"
+                <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"
             >
                 <thead>
-                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-dark rounded text-white">
+                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-danger rounded text-white">
                         <th class="fw-bolder me-1 cursor-pointer rounded-start text-center" style="width: 80%;">Station Name</th>
                         <th class="fw-bolder me-1 cursor-pointer rounded-end" style="width: 20%;">Action</th>
                     </tr>
@@ -24,7 +24,7 @@
                             </td>
 
                             <td>
-                                <a class="btn btn-danger btn-sm py-1 px-2" (click)="deleteGuardStation(item.id);">
+                                <a class="btn btn-light-danger btn-sm py-1 px-2" (click)="deleteGuardStation(item.id);">
                                     <i class="fa-solid fa-minus p-0"></i>
                                 </a>
                             </td>
