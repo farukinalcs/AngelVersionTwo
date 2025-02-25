@@ -23,6 +23,7 @@ import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
 import { PickListModule } from 'primeng/picklist';
 import { CarouselModule } from 'primeng/carousel';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { CarouselModule } from 'primeng/carousel';
     TimelineModule,
     CardModule,
     PickListModule,
-    CarouselModule
+    CarouselModule,
+    MatTabsModule,
   ]
 })
 export class PatrolModule { }
