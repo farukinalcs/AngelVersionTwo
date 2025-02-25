@@ -56,6 +56,8 @@ import { AccessRegistryListComponent } from './access-registry-list/access-regis
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TooltipModule } from 'primeng/tooltip';
 
+
+
 @NgModule({
   declarations: [
     DevicesComponent,
@@ -119,7 +121,9 @@ import { TooltipModule } from 'primeng/tooltip';
     MatProgressSpinnerModule,
     MatTabsModule,
     MatTooltipModule,
-    TooltipModule
+    TooltipModule,
+
+    
   ]
 
 })

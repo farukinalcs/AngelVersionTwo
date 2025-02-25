@@ -1,99 +1,92 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { map, startWith } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { ProfileService } from '../../profile/profile.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseXloginDetail } from 'src/app/modules/auth/models/response-Xlogindetail';
+import { Subject, takeUntil } from 'rxjs';
+import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 
 @Component({
   selector: 'app-raporlar',
   templateUrl: './raporlar.component.html',
-  styleUrls: ['./raporlar.component.scss'],
-  animations: [
-    trigger('slideInOut', [
-      state('in', style({
-        width: '25%'
-      })),
-      state('out', style({
-        width: '100%'
-      })),
-      transition('in => out', animate('400ms ease-in-out')),
-      transition('out => in', animate('400ms ease-in-out'))
-    ]),
-
-    trigger('slideInOutReport', [
-      state('in', style({
-        width: '75%'
-      })),
-      state('out', style({
-        width: '25%'
-      })),
-      transition('in => out', animate('400ms ease-in-out')),
-      transition('out => in', animate('400ms ease-in-out'))
-    ])
-  ]
+  styleUrls: ['./raporlar.component.scss']
 })
-export class RaporlarComponent implements OnInit {
-
-  reports: any[] = [
-    { id: 1, name: 'Geçiş Yetkileri Raporu', params: [{ name: '@ad', labelName: 'Ad', type: 'text' }, { name: '@soyad', labelName: 'Soyad', type: 'text' }, { name: '@firma', labelName: 'Firma', type: 'select' }] },
-    { id: 2, name: 'Access Devamsızlar Raporu', params: [{ name: '@sicil_no', labelName: 'Sicil No', type: 'text' }, { name: '@kart_no', labelName: 'Kart No', type: 'text' }, { name: '@terminal', labelName: 'Terminal', type: 'select' }, { name: '@alt_firma', labelName: 'Alt Firma', type: 'select' }] },
-    { id: 3, name: 'Acil Durum Raporu', params: [{ name: '@ad', labelName: 'Ad', type: 'text' }, { name: '@soyad', labelName: 'Soyad', type: 'text' }, { name: '@sicil_no', labelName: 'Sicil No', type: 'text' }] },
-    { id: 4, name: 'Acil Durum Raporu', params: [{ name: '@ad', labelName: 'Ad', type: 'text' }, { name: '@soyad', labelName: 'Soyad', type: 'text' }, { name: '@sicil_no', labelName: 'Sicil No', type: 'text' }] },
-    { id: 5, name: 'Acil Durum Raporu', params: [{ name: '@ad', labelName: 'Ad', type: 'text' }, { name: '@soyad', labelName: 'Soyad', type: 'text' }, { name: '@sicil_no', labelName: 'Sicil No', type: 'text' }] },
-    { id: 6, name: 'Acil Durum Raporu', params: [{ name: '@ad', labelName: 'Ad', type: 'text' }, { name: '@soyad', labelName: 'Soyad', type: 'text' }, { name: '@sicil_no', labelName: 'Sicil No', type: 'text' }] }
-
-  ];
-
-  selectedCities2: any[] = [];
-  cities: any = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' },
-  ];
+export class RaporlarComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject();
   
-
-  selectedItem: any;
-
-  animation: string = 'out';
-  animationReport: string = 'in';
-
-  showTable: boolean = false;
-
-  dynamicReportForm !: FormGroup;
-
-  selectedValue : any[] = []
+  title = 'reportviewerapp';
+  public serviceUrl: string;
+  public reportPath: string;
+  cacheKey: any;
+  public parameters: any;
+  reports: any[] = [];
+  categories: any[] = [];
+  selectedCategory: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private profileService: ProfileService,
-  ) {}
+  ) {
+    
+  }
+  
 
   ngOnInit(): void {
-
+    this.getReports();
   }
 
-  createDynamicForm(item: any) {
-    this.dynamicReportForm = this.formBuilder.group({})
+  getReports(): void {
+    var sp: any[] = [
+      { mkodu: 'yek256', groupid: '1' }
+    ];
 
-    item.params.forEach((param: any) => {
-      this.dynamicReportForm.addControl(param.name, this.formBuilder.control(''));
-    })
-    console.log("Reactiveform : ", this.dynamicReportForm);
+    this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any,ResponseDetailZ>[]) => {
+      const data = response[0].x;
+      const message = response[0].z;
+      console.log("Rapor Response: ", data);
+      if (message.islemsonuc == -1) {
+        return;
+      }
+
+      this.reports = [...data];
+
+      this.categories = this.groupByCategory(this.reports);
+      console.log("Kategoriler: ", this.categories);
+      this.selectedCategory = this.categories[0];
+    });
   }
 
-  toggleDiv(): void {
-    this.animation = 'in';
+  // Kategorilere göre gruplama yapmak için kullanılan metot
+  groupByCategory(data: any[]): any[] {
+    let result: any[] = [];
+
+    // Kategoriler üzerinden geçiyoruz
+    data.map(item => {
+      // Kategori adı null ise, "Unassigned" olarak değiştiriyoruz
+      let categoryName = item.Kategori === null ? "Atanmamış" : item.Kategori;
+
+      // Kategoriyi kontrol et, eğer daha önce eklenmemişse result'a ekle
+      let category = result.find(r => r.category === categoryName);  // 'category' olarak kontrol ediyoruz
+
+      // Eğer kategori bulunmuşsa, count değerini artır
+      if (category) {
+        category.count++;
+      } else {
+        // Yeni kategori ekle
+        result.push({ category: categoryName, count: 1 });  // 'category' olarak ekliyoruz
+      }
+    });
+
+    return result;
+  }
+
+
+
+  changeCategory(category: any): void {
+    this.selectedCategory = category;
   }
 
   toggleReport(): void {
-    this.animationReport = 'out';
 
     var sp: any[] = [
       {
@@ -114,49 +107,27 @@ export class RaporlarComponent implements OnInit {
     this.profileService.requestMethodPost(sp).subscribe((response: ResponseModel<any,ResponseXloginDetail>[]) => {
       console.log("Rapor Response: ", response);
 
-      const cacheKey = response[0].x[0].cacheKey;
-      console.log("Cache Key: ", cacheKey);
+      this.cacheKey = response[0].x[0].cacheKey;
+      console.log("Cache Key: ", this.cacheKey);
 
 
-      this.getReport(cacheKey);
-
+      // this.getReport(cacheKey);
+      this.serviceUrl = 'http://10.20.27.180:5216/api/Report';
+      this.reportPath = 'ACY00009';
+      this.parameters = [{
+        name: 'Parametre Test Ediyorum',
+        labels: ['cacheKey'],
+        values: [this.cacheKey],
+        }];
     });
         
   }
 
-  getReport(cacheKey: any): void {
-    this.profileService.report({ cacheKey: cacheKey, reportPath: "ACY00009" }).subscribe((response: ResponseModel<any,ResponseXloginDetail>[]) => {
-      console.log("Report Response: ", response);
-    });
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
   }
-
-  onSelect(item: any): void {
-    if (this.showTable) {
-      this.showTable = false;
-      this.animationReport = 'in';
-    }
-    this.selectedItem = item;
-    console.log("Selected Item: ", this.selectedItem);
-
-    this.createDynamicForm(item);
-  }
-
-  getFormValue(contorls : any) {
-    // this.selectedValue.push(this.dynamicReportForm.controls[contorls].value);
-    this.dynamicReportForm.controls[contorls].valueChanges.subscribe((v : any) => {
-      this.selectedValue = v;
-    });
-    
-    console.log("Get Value : ", this.selectedValue);
-  }
-
-  remove(param: any): void {
-    const index = this.selectedValue.indexOf(param);
-
-    if (index >= 0) {
-      this.selectedValue.splice(index, 1);
-    }
-  }
+  
 
 }
 

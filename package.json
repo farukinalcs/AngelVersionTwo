@@ -68,6 +68,8 @@
     "@angular-eslint/template-parser": "13.2.1",
     "@angular/cli": "^15.0.0",
     "@angular/compiler-cli": "15.2.10",
+    "@boldreports/angular-reporting-components": "^8.1.1",
+    "@boldreports/types": "^8.1.1",
     "@ngrx/eslint-plugin": "^14.3.3",
     "@types/bootstrap": "5.1.12",
     "@types/crypto-js": "^4.1.1",
