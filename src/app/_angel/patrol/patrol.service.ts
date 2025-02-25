@@ -215,14 +215,14 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
-  setGuardTourCalendar(id:number){
+  setGuardTourCalendar(id:number,gun:string,tur:string,tursaat:string,ozel:string){
     var sp: any[] = [{
       mkodu:'yek253',
-      gun:"",
-      tur:"",
-      tursaat:"",
-      lokasyonid:id.toString(),
-      ozel:""
+      gun:gun.toString(),
+      tur:tur.toString(),
+      tursaat:tursaat.toString(),
+      lokasyon:id.toString(),
+      ozel:ozel.toString()
     }]
     return this.requestMethod(sp);
   }
