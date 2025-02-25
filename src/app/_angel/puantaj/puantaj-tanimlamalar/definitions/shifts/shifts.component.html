@@ -44,12 +44,12 @@
                                 <div class="h-550px scroll">
                                     <ng-container *ngFor="let shift of shifts | searchFilter:filterText: ['ad']">
                                         <div class="d-flex align-items-center my-4 process-item rounded cursor-pointer"
-                                            [ngClass]="{'bg-dark': selectedShift?.ID == shift.ID}"
+                                            [ngClass]="{'bg-dark': selectedShift.ID == shift.ID}"
                                             (click)="selectShift(shift)">
                                             <span class="bullet bullet-vertical h-20px bg-dark me-5"></span>
                                             <div class="d-flex flex-column">
                                                 <a class="fs-9 fw-bolder"
-                                                    [ngClass]="{'text-white': selectedShift?.ID == shift.ID, 'text-gray-900':selectedShift?.ID != shift.ID}">
+                                                    [ngClass]="{'text-white': selectedShift.ID == shift.ID, 'text-gray-900':selectedShift.ID != shift.ID}">
                                                     {{shift.ad}}
                                                 </a>
                                             </div>
@@ -68,7 +68,7 @@
                                                     <span>{{"Açıklama" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="text" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['shiftName']?.active}" formControlName="shiftName">
+                                                <input type="text" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['shiftName'].active}" formControlName="shiftName">
                                             </div>
                                     
                                             <div class="col-6 py-4">
@@ -76,7 +76,7 @@
                                                     <span>{{"Kod" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="text" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['shiftCode']?.active}" formControlName="shiftCode" />
+                                                <input type="text" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['shiftCode'].active}" formControlName="shiftCode" />
                                             </div>
 
                                             <div class="col-6 py-4">
@@ -84,7 +84,7 @@
                                                     <span>{{"Başlangıç_Saati" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['startTime']?.active}" formControlName="startTime" />
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['startTime'].active}" formControlName="startTime" />
                                             </div>
 
                                             <div class="col-3 py-4">
@@ -92,7 +92,7 @@
                                                     <span>{{"Artı" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['plus']?.active}" formControlName="plus" />
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['plus'].active}" formControlName="plus" />
                                             </div>
 
                                             <div class="col-3 py-4">
@@ -100,7 +100,7 @@
                                                     <span>{{"Eksi" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['minus']?.active}" formControlName="minus" />
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['minus'].active}" formControlName="minus" />
                                             </div>
 
                                             <div class="col-6 py-4">
@@ -108,7 +108,7 @@
                                                     <span>{{"Bitiş_Saati" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['endTime']?.active}" formControlName="endTime" />
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['endTime'].active}" formControlName="endTime" />
                                             </div>
 
                                             <div class="col-6 py-4">
@@ -116,7 +116,7 @@
                                                     <span>{{"En_Çok_Çalışma_Süresi" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['maxWorkingTime']?.active}" formControlName="maxWorkingTime" />
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['maxWorkingTime'].active}" formControlName="maxWorkingTime" />
                                             </div>
 
                                             <div class="col-6 py-4">
@@ -124,7 +124,7 @@
                                                     <span>{{"Fazla_Mesai_Yüzdesi" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="number" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['overtimePercentage']?.active}" formControlName="overtimePercentage" />
+                                                <input type="number" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['overtimePercentage'].active}" formControlName="overtimePercentage" />
                                             </div>
 
                                             <div class="col-6 py-4">
@@ -132,7 +132,7 @@
                                                     <span>{{"Eksik_Mesai_Yüzdesi" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="number" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['incompleteTimeZone']?.active}" formControlName="incompleteTimeZone" />
+                                                <input type="number" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['incompleteTimeZone'].active}" formControlName="incompleteTimeZone" />
                                             </div>
 
                                             <div class="col-6 py-4">
@@ -140,7 +140,7 @@
                                                     <span>{{"En_Az_Fazla_Mesai_Süresi" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['minOvertimeTime']?.active}" formControlName="minOvertimeTime" />
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['minOvertimeTime'].active}" formControlName="minOvertimeTime" />
                                             </div>
 
                                             <div class="col-6 py-4">
@@ -148,7 +148,7 @@
                                                     <span>{{"En_Çok_Fazla_Mesai_Süresi" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['maxOvertimeTime']?.active}" formControlName="maxOvertimeTime" />
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['maxOvertimeTime'].active}" formControlName="maxOvertimeTime" />
                                             </div>
 
                                             <div class="col-6 py-4">
@@ -156,7 +156,7 @@
                                                     <span>{{"En_Çok_Erken_Mesai_Süresi" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['mostEarlyDuration']?.active}" formControlName="mostEarlyDuration" />
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['mostEarlyDuration'].active}" formControlName="mostEarlyDuration" />
                                             </div>
 
                                             <div class="col-3 py-4">
@@ -164,7 +164,7 @@
                                                     <span>{{"Giriş_Toleransı" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['inputTolerance']?.active}" formControlName="inputTolerance" />
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['inputTolerance'].active}" formControlName="inputTolerance" />
                                             </div>
 
                                             <div class="col-3 py-4">
@@ -172,7 +172,7 @@
                                                     <span>{{"Çıkış_Toleransı" | translate}}</span>
                                                 </label>
                                     
-                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['outputTolerance']?.active}" formControlName="outputTolerance" />
+                                                <input type="time" class="form-control form-control-sm form-control-solid" [ngClass]="{'fade-in-danger': fadeInDanger['outputTolerance'].active}" formControlName="outputTolerance" />
                                             </div>
 
 

@@ -17,6 +17,9 @@ export class ShiftGroupsComponent implements OnInit, OnDestroy {
   selectedShiftGroup: any;
   filterText: string = "";
   relations: any[];
+  displayAddModal: boolean = false;
+  newShiftGroupName: string = "";
+  displayUpdateModal: boolean = false;
   constructor(
     private profileService: ProfileService,
     private toastrService: ToastrService,
@@ -135,13 +138,80 @@ export class ShiftGroupsComponent implements OnInit, OnDestroy {
       });
   }
 
+  openAddModal() {
+    this.displayAddModal = true;
+  }
+
+  closeAddModal() {
+    this.displayAddModal = false;
+    this.newShiftGroupName = ""
+  }
+
+  openUpdateModal() {
+    this.displayUpdateModal = true;
+    this.newShiftGroupName = this.selectedShiftGroup.ad;
+  }
+
+  closeUpdateModal() {
+    this.displayUpdateModal = false;
+    this.newShiftGroupName = ""
+  }
+  
+  checkAddShiftGroupRequest() {
+    Swal.fire({
+      title: `"${this.newShiftGroupName}" mesai grubu tanımı olarak eklensin mi? `,
+      icon: 'warning',
+      iconColor: '#ed1b24',
+      showCancelButton: true,
+      showDenyButton: false,
+      denyButtonText: 'İptal',
+      denyButtonColor: '#ed1b24',
+      confirmButtonColor: '#ed1b24',
+      cancelButtonColor: '#ed1b24',
+      cancelButtonText: 'Hayır',
+      confirmButtonText: `Evet`,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      heightAuto: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.addShiftGroup();
+
+        Swal.fire({
+          title: `Tanım Eklendi`,
+          icon: 'success',
+          iconColor: '#ed1b24',
+          confirmButtonColor: '#ed1b24',
+          confirmButtonText: 'Kapat',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          heightAuto: false
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        
+
+        Swal.fire({
+          title: 'İşlem Yapmaktan Vazgeçildi!',
+          icon: 'error',
+          iconColor: '#ed1b24',
+          confirmButtonColor: '#ed1b24',
+          confirmButtonText: 'Kapat',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          heightAuto: false
+        });
+      } else if (result.isDenied) {
+      }
+    });
+  }
+  
   addShiftGroup() {
     var sp: any[] = [
       {
         mkodu: 'yek123',
         kaynak: 'mesaigruplari',
         id: '0',
-        ad: this.filterText,
+        ad: this.newShiftGroupName,
       },
     ];
 
@@ -164,6 +234,7 @@ export class ShiftGroupsComponent implements OnInit, OnDestroy {
           );
 
           this.getShiftGroups();
+          this.closeAddModal();
         },
         (err) => {
           this.toastrService.error(
@@ -176,8 +247,7 @@ export class ShiftGroupsComponent implements OnInit, OnDestroy {
 
   updateShiftGroup() {
     Swal.fire({
-      title: `Seçilen mesai grubu adı "${this.selectedShiftGroup.ad}" "${this.filterText}" olarak değiştirilsin mi? `,
-      // text: "You won't be able to revert this!",
+      title: `Seçilen mesai grubu adı "${this.selectedShiftGroup.ad}" "${this.newShiftGroupName}" olarak değiştirilsin mi? `,
       icon: 'warning',
       iconColor: '#ed1b24',
       showCancelButton: true,
@@ -198,7 +268,7 @@ export class ShiftGroupsComponent implements OnInit, OnDestroy {
             mkodu: 'yek124',
             kaynak: 'mesaigruplari',
             id: this.selectedShiftGroup.ID.toString(),
-            ad: this.filterText,
+            ad: this.newShiftGroupName,
           },
         ];
     
@@ -221,6 +291,7 @@ export class ShiftGroupsComponent implements OnInit, OnDestroy {
               );
     
               this.getShiftGroups();
+              this.closeUpdateModal();
             },
             (err) => {
               this.toastrService.error(

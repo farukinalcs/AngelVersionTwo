@@ -111,40 +111,8 @@ export class CustomInfoComponent implements OnInit, OnDestroy, OnChanges {
   }
 
 
-  // editCustomCode() {
-  //   var sp: any[] = [
-  //     { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger: this.selectedFormType },
-  //     { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger: this.selectedFormType },
-  //     { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger: this.selectedFormType },
-  //     { mkodu: 'yek208', ad: this.newName, id: this.selectedItem.ID.toString() }
-  //   ];
-  
-  //   console.log("Form Tipi Güncelle Param :", sp);
-  
-  //   this.profileService.processMultiPost(sp)
-  //     .then(response => {
-  //       const reader = response.body?.getReader();
-  //       const decoder = new TextDecoder();
-  
-  //       return reader?.read().then(function processText({ done, value }): any {
-  //         if (done) {
-  //           console.log("İşlem tamamlandı.");
-  //           return;
-  //         }
-  
-  //         const text = decoder.decode(value, { stream: true });
-  //         console.log("Gelen veri (Stream):", text);
-          
-  //         return reader?.read().then(processText);
-  //       });
-  //     })
-  //     .catch(error => {
-  //       console.error("Hata oluştu:", error);
-  //     });
-  // }
-
   editCustomCode() {
-    const sp: any[] = [
+    var sp: any[] = [
       { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger: this.selectedFormType },
       { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger: this.selectedFormType },
       { mkodu: 'yek204', okod: this.selectedItem.okodtype, deger: this.selectedFormType },
@@ -153,18 +121,54 @@ export class CustomInfoComponent implements OnInit, OnDestroy, OnChanges {
   
     console.log("Form Tipi Güncelle Param :", sp);
   
-    this.profileService.processMultiPost(sp).subscribe({
-      next: (text) => {
-        console.log("Gelen veri (Stream):", text);
-      },
-      error: (error) => {
+    this.profileService.processMultiPost(sp)
+      .then(response => {
+        const reader = response.body?.getReader();
+        const decoder = new TextDecoder();
+  
+        return reader?.read().then(function processText({ done, value }): any {
+          if (done) {
+            console.log("İşlem tamamlandı.");
+            return;
+          }
+  
+          let text = decoder.decode(value, { stream: true });
+          console.log("Gelen veri (Stream):", text);
+
+          if (text.startsWith('[') && text.endsWith(']')) {
+            console.log("Yanıt Boş Geldi :", text);
+            return;
+          }
+          
+          if (text.startsWith('[')) {
+            text = text.replace('[','');
+          }
+
+          if (text.startsWith(',') && !text.endsWith(']')) {
+            text = text.replace(',','');
+          }
+          
+          if (text.startsWith(',') && text.endsWith(']')) {
+            text = text.replace(',','');
+            const lastIndex = text.lastIndexOf("]");
+
+            if (lastIndex !== -1) {
+              const newText = text.substring(0, lastIndex) + text.substring(lastIndex + 1);
+              text = newText;
+            }
+          }
+
+          const formattedText = JSON.parse(text);
+          console.log("Formatted Text :", formattedText);           
+          return reader?.read().then(processText);
+        });
+      })
+      .catch(error => {
         console.error("Hata oluştu:", error);
-      },
-      complete: () => {
-        console.log("İşlem tamamlandı.");
-      }
-    });
+      });
   }
+
+  
   
   
   

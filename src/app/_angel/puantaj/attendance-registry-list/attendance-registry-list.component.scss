@@ -113,3 +113,18 @@
 :host ::ng-deep .lightgray .p-dialog-footer {
     background-color: #fcfcfc;
 }
+
+.img-container {
+    overflow: hidden !important;
+    transition: overflow 0.4s ease-in-out !important; // Yumuşak geçiş
+
+    &:hover {
+        overflow: auto !important; // Hover'da kesilmeye izin ver
+    }
+}
+
+
+/* SweetAlert z-index ayarını artırma */
+.swal2-container {
+    z-index: 99999 !important; /* Primeng Dialog'ından üstte olması için yüksek bir z-index değeri veriyoruz */
+}

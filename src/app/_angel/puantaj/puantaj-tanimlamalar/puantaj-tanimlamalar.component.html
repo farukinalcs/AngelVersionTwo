@@ -5,13 +5,13 @@
                 <div class="card-body pt-3 pb-0">
                     <div class="row">
                         <div class="col-12">
-                            <p-carousel [value]="tabList" [numVisible]="8" [numScroll]="7" [circular]="true" [responsiveOptions]="[
+                            <p-carousel [value]="tabList" [numVisible]="11" [numScroll]="10" [circular]="true" [responsiveOptions]="[
                                                                     { breakpoint: '1024px', numVisible: 7, numScroll: 6 },
                                                                     { breakpoint: '768px', numVisible: 5, numScroll: 4 },
                                                                     { breakpoint: '560px', numVisible: 3, numScroll: 2 }
                                                                 ]">
                                 <ng-template let-tab pTemplate="item">
-                                    <li class="nav-item" style="list-style: none;">
+                                    <li class="nav-item d-flex justify-content-center" style="list-style: none;">
                                         <a class="nav-link btn btn-outline btn-flex btn-color-gray-800 btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2 position-relative"
                                             [attr.id]="tab.id" (click)="changeTab(tab)"
                                             [ngClass]="{'active border-danger': selectedTab.id === tab.id}">

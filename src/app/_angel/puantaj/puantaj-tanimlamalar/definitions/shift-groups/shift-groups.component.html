@@ -43,11 +43,11 @@
                                 </div>
 
                                 <div>
-                                    <a class="btn btn-light btn-sm hover-elevate-up px-2 py-1 mx-1 text-gray-800" (click)="addShiftGroup()">
+                                    <a class="btn btn-light btn-sm hover-elevate-up px-2 py-1 mx-1 text-gray-800" (click)="openAddModal()">
                                         <i class="fa-solid fa-plus fs-9 text-gray-800"></i>
                                         {{"Ekle" | translate}}
                                     </a>
-                                    <a class="btn btn-light btn-sm hover-elevate-up px-2 py-1 mx-1 text-gray-800" (click)="updateShiftGroup()">
+                                    <a class="btn btn-light btn-sm hover-elevate-up px-2 py-1 mx-1 text-gray-800" (click)="openUpdateModal()">
                                         <i class="fa-solid fa-pen-to-square fs-9 text-gray-800"></i>
                                         {{"Değiştir" | translate}}
                                     </a>
@@ -189,3 +189,53 @@
 </div>
 
 
+
+<p-dialog header="{{'Mesai_Grubu_Ekle' | translate}}" [(visible)]="displayAddModal" [position]="'top'" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="-40" [draggable]="false" [resizable]="false"
+    (onHide)="closeAddModal()">
+
+    <div class="fv-row mb-10 fv-plugins-icon-container">
+        <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+            <span class="required">{{"Mesai_Grubu_Adı" | translate}}</span>
+        </label>
+        
+        <input type="text" class="form-control form-control-sm form-control-solid" [(ngModel)]="newShiftGroupName" >
+    </div>
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="closeAddModal()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'İptal' | translate}}
+        </a>
+
+        <a class="btn btn-sm btn-danger mx-1" (click)="checkAddShiftGroupRequest()">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="{{'Mesai_Grubunu_Güncelle' | translate}}" [(visible)]="displayUpdateModal" [position]="'top'" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="-40" [draggable]="false" [resizable]="false"
+    (onHide)="closeUpdateModal()">
+
+    <div class="fv-row mb-10 fv-plugins-icon-container">
+        <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+            <span class="required">{{"Yeni_Mesai_Grubu_Adı" | translate}}</span>
+        </label>
+        
+        <input type="text" class="form-control form-control-sm form-control-solid" [(ngModel)]="newShiftGroupName" >
+    </div>
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="closeUpdateModal()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'İptal' | translate}}
+        </a>
+
+        <a class="btn btn-sm btn-danger mx-1" (click)="updateShiftGroup()">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>

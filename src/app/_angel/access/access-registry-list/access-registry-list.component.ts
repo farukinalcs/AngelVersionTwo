@@ -24,6 +24,8 @@ export class AccessRegistryListComponent implements OnInit, OnDestroy {
   clear: boolean = false;
   displayRegistryCard: boolean = false;
   filterEvent: boolean = false;
+  requestTime: any;
+  refreshEvent: boolean = false;
 
   constructor(
     private profileService: ProfileService,
@@ -61,6 +63,14 @@ export class AccessRegistryListComponent implements OnInit, OnDestroy {
     this.filterEvent = !this.filterEvent;
   }
 
+  getRequestTime(event: any) {
+    this.requestTime = event;
+  }
+
+  refreshList() {
+    this.refreshEvent = !this.refreshEvent;
+  }
+  
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();

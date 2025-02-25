@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { PatrolRoutingModule } from './patrol-routing.module';
 import { AgGridModule } from 'ag-grid-angular';
 import { PatroldashboardComponent } from './patroldashboard/patroldashboard.component';
-import { AgmCoreModule } from '@agm/core';
+// import { AgmCoreModule } from '@agm/core';
 import { SecurityGuardsComponent } from './security-guards/security-guards.component';
 import { SharedModule } from '../shared/shared.module';
 import { TranslationModule } from 'src/app/modules/i18n';
@@ -23,7 +23,9 @@ import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
 import { PickListModule } from 'primeng/picklist';
 import { CarouselModule } from 'primeng/carousel';
+import { GoogleMapsModule } from '@angular/google-maps';
 import { MatTabsModule } from '@angular/material/tabs';
+
 
 @NgModule({
   declarations: [
@@ -38,9 +40,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     CommonModule,
     PatrolRoutingModule,
     FormsModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAdALF-5HPnZFuvYRXmGY8qkv21TGD25ak',
-    }),
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'AIzaSyAdALF-5HPnZFuvYRXmGY8qkv21TGD25ak',
+    // }),
     SharedModule,
     AgGridModule,
     TranslationModule,
@@ -54,7 +56,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     CardModule,
     PickListModule,
     CarouselModule,
+    GoogleMapsModule
     MatTabsModule,
+
   ]
 })
 export class PatrolModule { }

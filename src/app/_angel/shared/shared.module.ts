@@ -50,6 +50,22 @@ import { ApplicationUseComponent } from './registry-list/registry-card/applicati
 import { RegistryFilterComponent } from './registry-list/registry-filter/registry-filter.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { BulkRegistryChangeComponent } from './registry-list/bulk-registry-change/bulk-registry-change.component';
+import { BoldReportComponent } from './bold-report/bold-report.component';
+
+
+
+
+// Bold Reports
+import '../../../globals';
+import { BoldReportViewerModule } from '@boldreports/angular-reporting-components';
+// data-visualization
+import '@boldreports/javascript-reporting-controls/Scripts/v2.0/common/bold.reports.common.min';
+import '@boldreports/javascript-reporting-controls/Scripts/v2.0/common/bold.reports.widgets.min';
+// Report viewer
+import '@boldreports/javascript-reporting-controls/Scripts/v2.0/bold.report-viewer.min';
+// ------------
+
+
 
 @NgModule({
   declarations: [
@@ -81,7 +97,8 @@ import { BulkRegistryChangeComponent } from './registry-list/bulk-registry-chang
     FilesComponent,
     ApplicationUseComponent,
     RegistryFilterComponent,
-    BulkRegistryChangeComponent
+    BulkRegistryChangeComponent,
+    BoldReportComponent
   ],
   imports: [
     CommonModule,
@@ -104,7 +121,8 @@ import { BulkRegistryChangeComponent } from './registry-list/bulk-registry-chang
     ProgressBarModule,
     NgbProgressbarModule,
     InlineSVGModule,
-    MatExpansionModule
+    MatExpansionModule,
+    BoldReportViewerModule // Bold Reports
   ],
   exports: [
     FullScreenDivComponent,

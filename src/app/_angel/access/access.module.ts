@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { GecisgruplariComponent } from './gecisgruplari/gecisgruplari.component';
 import { RaporlarComponent } from './raporlar/raporlar.component';
 import { AccessRoutingModule } from './access-routing.module';
-import { GridsterModule } from 'angular-gridster2';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
@@ -34,7 +33,7 @@ import { CustomizedCellComponent } from './customized-cell/customized-cell.compo
 import { DialogNewDeviceComponent } from './devices/dialog-new-device/dialog-new-device.component';
 import { TranslationModule } from 'src/app/modules/i18n';
 import { DropdownModule } from 'primeng/dropdown';
-import { AgmCoreModule } from '@agm/core';
+// import { AgmCoreModule } from '@agm/core';
 import { AccessDefinitionsComponent } from './access-definitions/access-definitions.component';
 import { OrganizationDefinitionsComponent } from './access-definitions/definitions/organization-definitions/organization-definitions.component';
 import { FingerprintComponent } from './access-definitions/definitions/fingerprint/fingerprint.component';
@@ -55,6 +54,8 @@ import { AccessDashboardComponent } from './access-dashboard/access-dashboard.co
 import { DialogUpdateDeviceComponent } from './devices/dialog-update-device/dialog-update-device.component';
 import { AccessRegistryListComponent } from './access-registry-list/access-registry-list.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TooltipModule } from 'primeng/tooltip';
+
 
 
 @NgModule({
@@ -86,7 +87,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   imports: [
     CommonModule,
     AccessRoutingModule,
-    GridsterModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -120,7 +120,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CustomPipeModule,
     MatProgressSpinnerModule,
     MatTabsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    TooltipModule,
+
+    
   ]
 
 })
