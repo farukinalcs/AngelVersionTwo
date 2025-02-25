@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { map, startWith } from 'rxjs/operators';
+import { ProfileService } from '../../profile/profile.service';
+import { ResponseModel } from 'src/app/modules/auth/models/response-model';
+import { ResponseXloginDetail } from 'src/app/modules/auth/models/response-Xlogindetail';
 
 @Component({
   selector: 'app-raporlar',
@@ -68,7 +71,8 @@ export class RaporlarComponent implements OnInit {
   selectedValue : any[] = []
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private profileService: ProfileService,
   ) {}
 
   ngOnInit(): void {
@@ -90,6 +94,40 @@ export class RaporlarComponent implements OnInit {
 
   toggleReport(): void {
     this.animationReport = 'out';
+
+    var sp: any[] = [
+      {
+        mkodu: 'yek255',
+        ad: '' ,
+        soyad: '',
+        sicilno: '',
+        'firma#cbo_firma': '',
+        'bolum#cbo_bolum': '',
+        'pozisyon#cbo_pozisyon': '',
+        'gorev#cbo_gorev': '',
+        'altfirma#cbo_altfirma': '',
+        'direktorluk#cbo_direktorluk': '',
+        'yaka#cbo_yaka': '',
+      }
+    ];
+
+    this.profileService.requestMethodPost(sp).subscribe((response: ResponseModel<any,ResponseXloginDetail>[]) => {
+      console.log("Rapor Response: ", response);
+
+      const cacheKey = response[0].x[0].cacheKey;
+      console.log("Cache Key: ", cacheKey);
+
+
+      this.getReport(cacheKey);
+
+    });
+        
+  }
+
+  getReport(cacheKey: any): void {
+    this.profileService.report({ cacheKey: cacheKey, reportPath: "ACY00009" }).subscribe((response: ResponseModel<any,ResponseXloginDetail>[]) => {
+      console.log("Report Response: ", response);
+    });
   }
 
   onSelect(item: any): void {

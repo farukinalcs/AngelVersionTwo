@@ -46,7 +46,7 @@ function appInitializer(authService: AuthService) {
     InlineSVGModule.forRoot(),
     NgbModule,
     ToastrModule.forRoot(),
-
+    
 
     // NgRx State Mangement
     StoreModule.forRoot({ 

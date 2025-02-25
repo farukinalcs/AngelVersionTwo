@@ -72,7 +72,7 @@
             <div ngbDropdown class="d-inline-block">
               <button type="button" class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1" id="dropdownBasic1"
                 ngbDropdownToggle>
-                <img class="h-25px w-25px rounded" src="{{ language?.flag }}" alt="language" />
+                <img class="h-25px w-25px rounded" src="{{ language.flag }}" alt="language" />
               </button>
               <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                 <a *ngFor="let language of languages" ngbDropdownItem (click)="setLanguageWithRefresh(language.lang)"

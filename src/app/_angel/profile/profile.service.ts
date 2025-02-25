@@ -736,4 +736,11 @@ export class ProfileService {
     return this.httpClient.post<any>(this.apiUrlService.apiUrl + '/process', data);
   }
 
+
+  report(sp: any) {
+    
+
+    return this.httpClient.post<any>(this.apiUrlService.apiUrl + '/Report/PostReportAction', sp);
+  }
+
 }
