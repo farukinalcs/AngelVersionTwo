@@ -35,62 +35,119 @@
                 <table class="table">
                     <thead>
                       <tr>
-                        <th>Pazartesi</th>
-                        <th>Salı</th>
-                        <th>Çarşamba</th>
-                        <th>Perşembe</th>
-                        <th>Cuma</th>
-                        <th>Cumartesi</th>
-                        <th>Pazar</th>
+                        <th>  
+                            <button class="btn btn-light-danger m-3" (click)="setTourCalendar('1')">Pazartesi</button>
+                        </th>
+                        <th>   
+                            <button class="btn btn-light-danger m-3" (click)="setTourCalendar('2')">Salı</button>
+                        </th>
+                        <th>   
+                            <button class="btn btn-light-danger m-3" (click)="setTourCalendar('3')">Çarşamba</button>
+                        </th>
+                        <th>   
+                            <button class="btn btn-light-danger m-3" (click)="setTourCalendar('4')">Perşembe</button>
+                        </th>
+                        <th>   
+                            <button class="btn btn-light-danger m-3" (click)="setTourCalendar('5')">Cuma</button>
+                        </th>
+                        <th>
+                            <button class="btn btn-light-danger m-3" (click)="setTourCalendar('6')">Cumartesi</button>
+                        </th>
+                        <th>
+                            <button class="btn btn-light-danger m-3" (click)="setTourCalendar('7')">Pazar</button>
+                        </th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <!-- Pazartesi: gun:1 -->
-                        <td>
-                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
-                           
-                            <span *ngIf="item.gun === 1"> {{ item.Aciklama }} </span>
-                            <!-- Diğer özellikler için ekleyebilirsiniz -->
-                          </div>
+
+                    <tbody *ngIf="this._activeTourList.length > 0">
+
+                      <tr >
+                        <td *ngFor="let item of _activeTourList">
+                         
+                            <button *ngIf="item.gun === 1" class="btn btn-light-primary m-3">  {{ item.bassaat }}{{ item.Aciklama }}</button>
+                         
                         </td>
-                        <!-- Salı: gun:2 -->
-                        <td>
-                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
-                            <span *ngIf="item.gun === 2"> {{ item.Aciklama }} </span>
-                          </div>
+                     
+                        <td *ngFor="let item of _activeTourList">
+                   
+                            <button *ngIf="item.gun === 2" class="btn btn-light-primary m-3">{{ item.bassaat }}{{ item.Aciklama }}</button>
+                        
                         </td>
-                        <!-- Çarşamba: gun:3 -->
-                        <td>
-                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
-                            <span *ngIf="item.gun === 3"> {{ item.Aciklama }} </span>
-                          </div>
+                     
+                        <td *ngFor="let item of _activeTourList">
+                        
+                            <button *ngIf="item.gun === 3" class="btn btn-light-primary m-3">{{ item.bassaat }}{{ item.Aciklama }}</button>
+                          
                         </td>
-                        <!-- Perşembe: gun:4 -->
-                        <td>
-                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
-                            <span *ngIf="item.gun === 4"> {{ item.Aciklama }} </span>
-                          </div>
+                   
+                        <td *ngFor="let item of _activeTourList">
+                        
+                            <button *ngIf="item.gun === 4" class="btn btn-light-primary m-3">{{ item.bassaat }}{{ item.Aciklama }}</button>
+                       
                         </td>
-                        <!-- Cuma: gun:5 -->
-                        <td>
-                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
-                            <span *ngIf="item.gun === 5"> {{ item.Aciklama }} </span>
-                          </div>
+                     
+                        <td *ngFor="let item of _activeTourList">
+                   
+                            <button *ngIf="item.gun === 5" class="btn btn-light-primary m-3">{{ item.bassaat }}{{ item.Aciklama }}</button>
+                     
                         </td>
-                        <!-- Cumartesi: gun:6 -->
-                        <td>
-                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
-                            <span *ngIf="item.gun === 6"> {{ item.Aciklama }} </span>
-                          </div>
+                      
+                        <td *ngFor="let item of _activeTourList">
+                        
+                            <button *ngIf="item.gun === 6" class="btn btn-light-primary m-3">{{ item.bassaat }}{{ item.Aciklama }}</button>
+                        
                         </td>
-                        <!-- Pazar: gun:7 -->
-                        <td>
-                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
-                            <span *ngIf="item.gun === 7"> {{ item.Aciklama }} </span>
-                          </div>
+                  
+                        <td *ngFor="let item of _activeTourList">
+                          
+                            <button *ngIf="item.gun === 7" class="btn btn-light-primary m-3">{{ item.bassaat }}{{ item.Aciklama }}</button>
+                       
                         </td>
                       </tr>
+
+                           <!-- <tr *ngFor="let item of _activeTourList">
+                        <td>
+                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
+                            <button *ngIf="item.gun === 1" class="btn btn-light-secondary m-3">{{ item.Aciklama }}</button>
+                          </div>
+                        </td>
+                     
+                        <td>
+                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
+                            <button *ngIf="item.gun === 2" class="btn btn-light-secondary m-3">{{ item.Aciklama }}</button>
+                          </div>
+                        </td>
+                     
+                        <td>
+                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
+                            <button *ngIf="item.gun === 3" class="btn btn-light-secondary m-3">{{ item.Aciklama }}</button>
+                          </div>
+                        </td>
+                   
+                        <td>
+                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
+                            <button *ngIf="item.gun === 4" class="btn btn-light-secondary m-3">{{ item.Aciklama }}</button>
+                          </div>
+                        </td>
+                     
+                        <td>
+                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
+                            <button *ngIf="item.gun === 5" class="btn btn-light-secondary m-3">{{ item.Aciklama }}</button>
+                          </div>
+                        </td>
+                      
+                        <td>
+                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
+                            <button *ngIf="item.gun === 6" class="btn btn-light-secondary m-3">{{ item.Aciklama }}</button>
+                          </div>
+                        </td>
+                  
+                        <td>
+                          <div *ngFor="let item of _activeTourList" class="mb-2 p-1 border">
+                            <button *ngIf="item.gun === 7" class="btn btn-light-secondary m-3">{{ item.Aciklama }}</button>
+                          </div>
+                        </td>
+                      </tr> -->
                     </tbody>
                   </table>
                   
@@ -125,11 +182,11 @@
                     </button>
 
                 </div> -->
-                <div class="col text-center" *ngFor="let day of days">
+                <!-- <div class="col text-center" *ngFor="let day of days">
                     <button class="btn btn-light-danger m-3" (click)="setTourCalendar(day.id)">
                       {{ day.name }}
                     </button>
-                  </div>
+                  </div> -->
             </div>
            
            

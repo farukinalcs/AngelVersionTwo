@@ -1,6 +1,6 @@
 
 {
-    "baseUrl" : "http://10.20.27.180:5216/api"
+    "baseUrl" : "https://yekgateway.mecloud.com.tr/api"
 
     
 }

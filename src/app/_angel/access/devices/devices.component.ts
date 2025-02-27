@@ -24,8 +24,7 @@ import { IHeaderParams, ICellRendererParams, SideBarDef } from 'ag-grid-communit
 export class DevicesComponent implements OnInit {
   public rowData!: Device[];
   public type_device: any[];
-  private gridApi:any;
-  private gridColumnApi:any;
+
   public frameworkComponents:any;
   savedFilterModel: any;
   newDeviceModal:boolean;

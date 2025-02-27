@@ -56,7 +56,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     CardModule,
     PickListModule,
     CarouselModule,
-    GoogleMapsModule
+    GoogleMapsModule,
     MatTabsModule,
 
   ]

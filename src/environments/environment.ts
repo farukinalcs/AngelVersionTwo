@@ -10,7 +10,8 @@ export const environment = {
   
   
   
-  apiUrl:'https://api.meyerangel.com:8086/api',
+  // apiUrl:'https://api.meyerangel.com:8086/api',
+  apiUrl:'https://yekgateway.mecloud.com.tr/api',
   apiUrl2:'https://api.meyerangel.com/api/DynamicPlus',
 
   imageUrl: 'https://yekgateway.mecloud.com.tr/api/Image',
