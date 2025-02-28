@@ -26,6 +26,7 @@ import '@boldreports/javascript-reporting-controls/Scripts/v2.0/common/bold.repo
 import '@boldreports/javascript-reporting-controls/Scripts/v2.0/common/bold.reports.widgets.min';
 // Report viewer
 import '@boldreports/javascript-reporting-controls/Scripts/v2.0/bold.report-viewer.min';
+import { LoadingInterceptor } from './modules/loading/interceptors/loading.interceptor';
 // ------------
 
 
@@ -89,6 +90,11 @@ function appInitializer(authService: AuthService) {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi : true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,  // LoadingInterceptor
+      multi: true,
     }
   ],
   bootstrap: [AppComponent],

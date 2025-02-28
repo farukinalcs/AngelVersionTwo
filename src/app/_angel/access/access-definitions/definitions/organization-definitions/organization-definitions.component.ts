@@ -292,7 +292,7 @@ export class OrganizationDefinitionsComponent implements OnInit, OnDestroy {
         telefon: this.companyPhone,
         adres: this.companyAddress,
         tip: this.companyType,
-        fotoimage: '',
+        // fotoimage: '',
       });
     } else {
       sp.push({

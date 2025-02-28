@@ -63,6 +63,9 @@ import '@boldreports/javascript-reporting-controls/Scripts/v2.0/common/bold.repo
 import '@boldreports/javascript-reporting-controls/Scripts/v2.0/common/bold.reports.widgets.min';
 // Report viewer
 import '@boldreports/javascript-reporting-controls/Scripts/v2.0/bold.report-viewer.min';
+import { ReportCategoryComponent } from './bold-report/report-category/report-category.component';
+import { ReportListComponent } from './bold-report/report-list/report-list.component';
+import { ReportParamsComponent } from './bold-report/report-params/report-params.component';
 // ------------
 
 
@@ -98,7 +101,10 @@ import '@boldreports/javascript-reporting-controls/Scripts/v2.0/bold.report-view
     ApplicationUseComponent,
     RegistryFilterComponent,
     BulkRegistryChangeComponent,
-    BoldReportComponent
+    BoldReportComponent,
+    ReportCategoryComponent,
+    ReportListComponent,
+    ReportParamsComponent
   ],
   imports: [
     CommonModule,
@@ -145,7 +151,11 @@ import '@boldreports/javascript-reporting-controls/Scripts/v2.0/bold.report-view
     InputTextModule,
     DashboardCardComponent,
     RegistryListComponent,
-    RegistryCardComponent
+    RegistryCardComponent,
+    ReportCategoryComponent,
+    ReportListComponent,
+    ReportParamsComponent,
+    BoldReportComponent
   ]
 })
 export class SharedModule { }

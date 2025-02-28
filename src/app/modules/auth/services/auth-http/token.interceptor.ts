@@ -28,8 +28,8 @@ export class TokenInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    // İstek başladığında loading'i göster
-    this.loadingService.show();
+    // // İstek başladığında loading'i göster
+    // this.loadingService.show();
     if (request.headers.has('skipInterceptor')) {
       const headers = request.headers.delete('skipInterceptor'); 
       const clonedRequest = request.clone({ headers });
@@ -39,8 +39,6 @@ export class TokenInterceptor implements HttpInterceptor {
       this.flag = true;
       return next.handle(request).pipe(
         finalize(() => {
-          // İlk istek tamamlandığında loading'i gizle
-          this.loadingService.hide();
         })
       );
     }
@@ -70,9 +68,6 @@ export class TokenInterceptor implements HttpInterceptor {
       tap(
         (event: HttpEvent<any>) => {
           if (event.type === HttpEventType.Response) {
-            // Yanıt geldiğinde loading'i gizle
-            this.loadingService.hide();
-
             if (event.body && event.body instanceof Object) {
               const responseBody = event.body;
               responseBody.forEach((item: any) => {
@@ -96,16 +91,13 @@ export class TokenInterceptor implements HttpInterceptor {
           }
         },
         (error: HttpErrorResponse) => {
-          // Hata aldığında loading'i gizle
-          this.loadingService.hide();
           if (error.status === 500) {
             this.router.navigate(['error/500']);
           }
         }
       ),
       finalize(() => {
-        // Herhangi bir durumda işlem tamamlandığında loading'i gizle
-        this.loadingService.hide();
+
       })
     );
   }

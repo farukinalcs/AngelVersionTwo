@@ -979,14 +979,14 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     const endDate = moment(this.formGroup.get('endDate')?.value);
 
     if (range === '1') {
-      startDate.subtract(1, 'days');
-      endDate.subtract(1, 'days');
+      startDate.subtract('days', 1);
+      endDate.subtract('days', 1);
     } else if (range === '7') {
-      startDate.subtract(1, 'weeks').startOf('isoWeek');
-      endDate.subtract(1, 'weeks').endOf('isoWeek');
+      startDate.subtract('weeks', 1).startOf('isoWeek');
+      endDate.subtract('weeks', 1).endOf('isoWeek');
     } else if (range === '30') {
-      startDate.subtract(1, 'months').startOf('month');
-      endDate.subtract(1, 'months').endOf('month');
+      startDate.subtract('months', 1).startOf('month');
+      endDate.subtract('months', 1).endOf('month');
     }
 
     this.formGroup.get('startDate')?.setValue(startDate.format('YYYY-MM-DD'));

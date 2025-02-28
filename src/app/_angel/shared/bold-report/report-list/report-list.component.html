@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-3 my-2 hover-elevate-up" *ngFor="let item of showReportList()">
+        <div class="report-item bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 h-100 d-flex align-items-center border-hover border border-3 border-gray-600 cursor-pointer"
+            (click)="selectReport(item)">
+            <div class="d-flex m-0">
+                <i class="fa-solid fa-file fs-4 mx-2 d-flex align-items-center"></i>
+                <span class="report-name text-gray-700 fw-bold d-block fs-3 lh-1 ls-n1" style="line-height: 2;">
+                    
+                    {{item.ad}}
+                </span>
+    
+                <!-- <span class="text-gray-500 fw-semibold fs-6">{{item.id}}</span> -->
+            </div>
+        </div>    
+    </div>
+</div>
+
+
+
+

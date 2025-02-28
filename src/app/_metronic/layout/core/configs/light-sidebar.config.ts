@@ -75,7 +75,7 @@ export const LightSidebarConfig: ILayout = {
       componentName: 'toolbar',
       display: true,
       layout: 'classic',
-      class: 'py-3 py-lg-6',
+      class: 'py-1 py-lg-2',
       container: 'fixed',
       containerClass: 'd-flex flex-stack',
       fixed: {
