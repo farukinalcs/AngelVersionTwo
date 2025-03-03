@@ -49,6 +49,7 @@ import { AttendanceDashboardComponent } from './attendance-dashboard/attendance-
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { AttendanceRegistryListComponent } from './attendance-registry-list/attendance-registry-list.component';
 import { CarouselModule } from 'primeng/carousel';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 @NgModule({
@@ -106,7 +107,8 @@ import { CarouselModule } from 'primeng/carousel';
     MatTooltipModule,
     MatTabsModule,
     NgApexchartsModule,
-    CarouselModule
+    CarouselModule,
+    TooltipModule
   ],
   
   exports: [

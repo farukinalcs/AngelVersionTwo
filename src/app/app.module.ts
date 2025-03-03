@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ApplicationConfig } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -29,9 +29,10 @@ import '@boldreports/javascript-reporting-controls/Scripts/v2.0/bold.report-view
 import { LoadingInterceptor } from './modules/loading/interceptors/loading.interceptor';
 // ------------
 
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
 
-
-
+import Lara from '@primeng/themes/lara';
 // #fake-start#
 // import { FakeAPIService } from './_fake/fake-api.service';
 
@@ -45,6 +46,17 @@ function appInitializer(authService: AuthService) {
     // });
   };
 }
+
+const appConfig: ApplicationConfig = {
+  providers: [
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: Lara
+      }
+    })
+  ]
+};
 
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
@@ -95,7 +107,8 @@ function appInitializer(authService: AuthService) {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,  // LoadingInterceptor
       multi: true,
-    }
+    },
+    appConfig.providers
   ],
   bootstrap: [AppComponent],
   exports: [LoadingComponent]
