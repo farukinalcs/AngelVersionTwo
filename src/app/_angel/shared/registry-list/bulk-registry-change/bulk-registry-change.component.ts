@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, take, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { AttendanceService } from 'src/app/_angel/puantaj/attendance.service';
+import { AttendanceService } from 'src/app/_angel/attendance/attendance.service';
 import { AccessGroupState } from 'src/app/store/models/access-group.state';
 import { FormState } from 'src/app/store/models/form.state';
 import { selectAddedGroups } from 'src/app/store/selectors/access-group.selector';

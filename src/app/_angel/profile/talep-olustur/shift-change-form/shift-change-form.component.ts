@@ -7,7 +7,7 @@ import { ProfileService } from '../../profile.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { AttendanceService } from 'src/app/_angel/puantaj/attendance.service';
+import { AttendanceService } from 'src/app/_angel/attendance/attendance.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { OKodFieldsModel } from '../../models/oKodFields';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';

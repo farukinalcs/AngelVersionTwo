@@ -8,7 +8,6 @@ import {HelpDrawerComponent} from "./help-drawer/help-drawer.component";
 import { TranslationModule } from 'src/app/modules/i18n';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { AttendanceModule } from 'src/app/_angel/puantaj/attendance.module';
 
 @NgModule({
   declarations: [

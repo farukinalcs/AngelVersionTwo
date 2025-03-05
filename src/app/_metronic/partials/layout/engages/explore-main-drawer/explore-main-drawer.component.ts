@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { AttendanceService } from 'src/app/_angel/puantaj/attendance.service';
+import { AttendanceService } from 'src/app/_angel/attendance/attendance.service';
 
 @Component({
   selector: 'app-explore-main-drawer',

@@ -4,9 +4,7 @@ import { AttendanceRoutingModule } from './attendance-routing.module';
 import { AttendanceListComponent } from './attendance-list/attendance-list.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MyGridCellComponent } from './my-grid-cell/my-grid-cell.component';
-import { PuantajTanimlamalarComponent } from './puantaj-tanimlamalar/puantaj-tanimlamalar.component';
-import { PuantajRaporlarComponent } from './puantaj-raporlar/puantaj-raporlar.component';
+import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProgressBarModule } from 'primeng/progressbar';
@@ -28,36 +26,36 @@ import { SharedModule } from '../shared/shared.module';
 import { AttendancePivotListComponent } from './attendance-pivot-list/attendance-pivot-list.component';
 import { DrawersModule } from 'src/app/_metronic/partials';
 import { ProcessChangeComponent } from './attendance-pivot-list/process-change/process-change.component';
-import { LevelDefinitionComponent } from './puantaj-tanimlamalar/definitions/level-definition/level-definition.component';
-import { OvertimeCausesComponent } from './puantaj-tanimlamalar/definitions/overtime-causes/overtime-causes.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AttendanceRestrictionComponent } from './puantaj-tanimlamalar/definitions/attendance-restriction/attendance-restriction.component';
-import { FormMailsComponent } from './puantaj-tanimlamalar/definitions/form-mails/form-mails.component';
-import { ExcuseCardPermissionAssignmentComponent } from './puantaj-tanimlamalar/definitions/excuse-card-permission-assignment/excuse-card-permission-assignment.component';
-import { ShiftPlanningComponent } from './puantaj-tanimlamalar/definitions/shift-planning/shift-planning.component';
-import { BreakTimesComponent } from './puantaj-tanimlamalar/definitions/break-times/break-times.component';
-import { SplitTheDayComponent } from './puantaj-tanimlamalar/definitions/split-the-day/split-the-day.component';
-import { AdvertComponent } from './puantaj-tanimlamalar/definitions/advert/advert.component';
-import { PermitTypesComponent } from './puantaj-tanimlamalar/definitions/permit-types/permit-types.component';
-import { HolidayTypesComponent } from './puantaj-tanimlamalar/definitions/holiday-types/holiday-types.component';
-import { ShiftsComponent } from './puantaj-tanimlamalar/definitions/shifts/shifts.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { OverrideComponent } from './puantaj-tanimlamalar/definitions/override/override.component';
-import { ShiftGroupsComponent } from './puantaj-tanimlamalar/definitions/shift-groups/shift-groups.component';
-import { ShiftPeriodsComponent } from './puantaj-tanimlamalar/definitions/shift-periods/shift-periods.component';
 import { AttendanceDashboardComponent } from './attendance-dashboard/attendance-dashboard.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { AttendanceRegistryListComponent } from './attendance-registry-list/attendance-registry-list.component';
 import { CarouselModule } from 'primeng/carousel';
 import { TooltipModule } from 'primeng/tooltip';
+import { AttendanceDefinitionsComponent } from './attendance-definitions/attendance-definitions.component';
+import { LevelDefinitionComponent } from './attendance-definitions/definitions/level-definition/level-definition.component';
+import { OvertimeCausesComponent } from './attendance-definitions/definitions/overtime-causes/overtime-causes.component';
+import { AttendanceRestrictionComponent } from './attendance-definitions/definitions/attendance-restriction/attendance-restriction.component';
+import { FormMailsComponent } from './attendance-definitions/definitions/form-mails/form-mails.component';
+import { ExcuseCardPermissionAssignmentComponent } from './attendance-definitions/definitions/excuse-card-permission-assignment/excuse-card-permission-assignment.component';
+import { ShiftPlanningComponent } from './attendance-definitions/definitions/shift-planning/shift-planning.component';
+import { BreakTimesComponent } from './attendance-definitions/definitions/break-times/break-times.component';
+import { SplitTheDayComponent } from './attendance-definitions/definitions/split-the-day/split-the-day.component';
+import { AdvertComponent } from './attendance-definitions/definitions/advert/advert.component';
+import { PermitTypesComponent } from './attendance-definitions/definitions/permit-types/permit-types.component';
+import { HolidayTypesComponent } from './attendance-definitions/definitions/holiday-types/holiday-types.component';
+import { ShiftsComponent } from './attendance-definitions/definitions/shifts/shifts.component';
+import { OverrideComponent } from './attendance-definitions/definitions/override/override.component';
+import { ShiftGroupsComponent } from './attendance-definitions/definitions/shift-groups/shift-groups.component';
+import { ShiftPeriodsComponent } from './attendance-definitions/definitions/shift-periods/shift-periods.component';
 
 
 @NgModule({
   declarations: [
     AttendanceListComponent,
-    MyGridCellComponent,
-    PuantajTanimlamalarComponent,
-    PuantajRaporlarComponent,
+    AttendanceDefinitionsComponent,
+    AttendanceReportComponent,
     AttendanceManagementSystemComponent,
     OrganizationColumnFilterComponent,
     AttendanceListFilterComponent,

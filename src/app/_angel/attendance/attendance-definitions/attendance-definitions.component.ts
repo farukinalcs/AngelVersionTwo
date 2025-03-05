@@ -4,11 +4,11 @@ import { map, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
 
 @Component({
-  selector: 'app-puantaj-tanimlamalar',
-  templateUrl: './puantaj-tanimlamalar.component.html',
-  styleUrls: ['./puantaj-tanimlamalar.component.scss']
+  selector: 'app-attendance-definitions',
+  templateUrl: './attendance-definitions.component.html',
+  styleUrls: ['./attendance-definitions.component.scss']
 })
-export class PuantajTanimlamalarComponent implements OnInit, OnDestroy {
+export class AttendanceDefinitionsComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
 
   tabList: any[] = [

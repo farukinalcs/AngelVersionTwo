@@ -511,22 +511,34 @@
 
 
 // PrimeNG Carousel İçin Renk Ayarı
-.p-carousel .p-carousel-content .p-carousel-prev, .p-carousel .p-carousel-content .p-carousel-next {
-    color: var(--kt-danger) !important;
+
+.p-carousel {
+    --p-carousel-indicator-active-background: var(--kt-danger) !important;
+    --p-button-text-primary-color: var(--kt-danger) !important;
+    --p-button-primary-hover-border-color: var(--kt-danger-light) !important;
+    --p-primary-hover-color: var(--kt-danger-light) !important;
+    --p-button-text-primary-hover-background: var(--kt-danger-light) !important;
+    --p-button-primary-active-background: var(--kt-danger-active) !important;
+    --p-button-text-primary-active-background: var(--kt-danger-active) !important;
 }
 
-.p-carousel .p-carousel-content .p-carousel-prev:enabled:hover, .p-carousel .p-carousel-content .p-carousel-next:enabled:hover {
-    color: var(--kt-danger) !important;
-    background: var(--kt-danger-light) !important;
-}
 
-.p-carousel .p-carousel-content .p-carousel-prev:focus, .p-carousel .p-carousel-content .p-carousel-next:focus {
-    box-shadow: 0 0 0 0.2rem var(--kt-danger) !important;
-}
+// .p-carousel .p-carousel-content .p-carousel-prev, .p-carousel .p-carousel-content .p-carousel-next {
+//     color: var(--kt-danger) !important;
+// }
 
-.p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
-    background-color: var(--kt-danger) !important;
-}
+// .p-carousel .p-carousel-content .p-carousel-prev:enabled:hover, .p-carousel .p-carousel-content .p-carousel-next:enabled:hover {
+//     color: var(--kt-danger) !important;
+//     background: var(--kt-danger-light) !important;
+// }
+
+// .p-carousel .p-carousel-content .p-carousel-prev:focus, .p-carousel .p-carousel-content .p-carousel-next:focus {
+//     box-shadow: 0 0 0 0.2rem var(--kt-danger) !important;
+// }
+
+// .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+//     background-color: var(--kt-danger) !important;
+// }
 /*--------------------------------------------*/
 
 

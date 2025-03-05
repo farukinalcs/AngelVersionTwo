@@ -15,7 +15,7 @@ import { OKodFieldsModel } from '../../models/oKodFields';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { PostFormModel } from '../../models/postForm';
-import { AttendanceService } from 'src/app/_angel/puantaj/attendance.service';
+import { AttendanceService } from 'src/app/_angel/attendance/attendance.service';
 
 @Component({
   selector: 'app-dialog-fazla-mesai-talebi',

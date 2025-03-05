@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
-import { AttendanceService } from 'src/app/_angel/puantaj/attendance.service';
+import { AttendanceService } from 'src/app/_angel/attendance/attendance.service';
 import { ProfileService } from '../../profile.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';

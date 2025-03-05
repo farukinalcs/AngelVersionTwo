@@ -4,8 +4,8 @@ import { AttendanceDashboardComponent } from './attendance-dashboard/attendance-
 import { AttendanceListComponent } from './attendance-list/attendance-list.component';
 import { AttendancePivotListComponent } from './attendance-pivot-list/attendance-pivot-list.component';
 import { AttendanceRegistryListComponent } from './attendance-registry-list/attendance-registry-list.component';
-import { PuantajRaporlarComponent } from './puantaj-raporlar/puantaj-raporlar.component';
-import { PuantajTanimlamalarComponent } from './puantaj-tanimlamalar/puantaj-tanimlamalar.component';
+import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
+import { AttendanceDefinitionsComponent } from './attendance-definitions/attendance-definitions.component';
 
 const routes: Routes = [
   // {
@@ -30,11 +30,11 @@ const routes: Routes = [
   },
   {
     path: 'definitions',
-    component: PuantajTanimlamalarComponent,
+    component: AttendanceDefinitionsComponent,
   },
   {
     path: 'reports',
-    component: PuantajRaporlarComponent,
+    component: AttendanceReportComponent,
   },
 ];
 

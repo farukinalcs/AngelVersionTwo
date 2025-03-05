@@ -24,7 +24,7 @@ const Routing: Routes = [
   {
     path: 'attendance',
     loadChildren: () =>
-      import('../_angel/puantaj/attendance.module').then((m) => m.AttendanceModule),
+      import('../_angel/attendance/attendance.module').then((m) => m.AttendanceModule),
       data: { layout: 'light-sidebar' },
 
   },

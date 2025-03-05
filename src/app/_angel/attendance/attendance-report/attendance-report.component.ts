@@ -6,11 +6,11 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 
 @Component({
-  selector: 'app-puantaj-raporlar',
-  templateUrl: './puantaj-raporlar.component.html',
-  styleUrls: ['./puantaj-raporlar.component.scss']
+  selector: 'app-attendance-report',
+  templateUrl: './attendance-report.component.html',
+  styleUrls: ['./attendance-report.component.scss']
 })
-export class PuantajRaporlarComponent implements OnInit, OnDestroy {
+export class AttendanceReportComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   
   title = 'reportviewerapp';
