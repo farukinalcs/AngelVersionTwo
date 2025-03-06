@@ -35,24 +35,12 @@ const Routing: Routes = [
       data: { layout: 'light-sidebar' },
 
   },
-  // {
-  //   path:'guvenlik',
-  //   loadChildren:() => 
-  //   import('../_angel/guvenlik/guvenlik.module').then((m) => m.GuvenlikModule),
-  //   data: { layout: 'light-sidebar' },
-  // },
   {
     path:'patrol',
     loadChildren:() => 
     import('../_angel/patrol/patrol.module').then((m) => m.PatrolModule),
     data: { layout: 'light-sidebar' },
   },
-  // {
-  //   path: 'crafted/pages/profile',
-  //   loadChildren: () =>
-  //     import('../modules/profile/profile.module').then((m) => m.ProfileModule),
-  //   data: { layout: 'light-sidebar' },
-  // },
   {
     path: 'crafted/account',
     loadChildren: () =>
@@ -77,6 +65,12 @@ const Routing: Routes = [
     path: 'apps/chat',
     loadChildren: () =>
       import('../modules/apps/chat/chat.module').then((m) => m.ChatModule),
+    data: { layout: 'light-sidebar' },
+  },
+  {
+    path: 'visitor',
+    loadChildren: () =>
+      import('../_angel/visitor/visitor.routes').then((m) => m.visitorRoutes),
     data: { layout: 'light-sidebar' },
   },
   {

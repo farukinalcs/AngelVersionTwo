@@ -97,8 +97,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.parameters = [
       {
         name: 'Parametre Test Ediyorum',
-        labels: ['cacheKey'],
-        values: [this.cacheKey],
+        labels: ['cacheKey', 'lang'],
+        values: [this.cacheKey, 'en'],
       }
     ];
   }
