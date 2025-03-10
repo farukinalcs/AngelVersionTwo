@@ -4,88 +4,104 @@
 
             <div class="table-responsive">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" [(ngModel)]="tourNameInput" (input)="filterItems()">
-                    <button class="btn bg-danger text-white" type="button" id="button-addon2" (click)="setGuardTour()">Ekle</button>
+                    <input type="text" class="form-control" [(ngModel)]="tourNameInput" (input)="filterItems()" style="border-radius: 0 !important;">
+                    <button class="btn text-white" type="button" id="button-addon2" (click)="setGuardTour()" style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);border-radius: 0 !important;">Ekle</button>
                 </div>
-    
-                <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
-                <thead>
-                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-danger rounded text-white">
-                        <th class="fw-bolder me-1 cursor-pointer rounded-start text-center" style="width: 80%;">Tur Adı</th>
-                        <th class="fw-bolder me-1 cursor-pointer rounded-end" style="width: 20%;"></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr *ngFor="let item of filteredItems" class="cursor-pointer fs-8">
-                            <td (click)="getItem(item);">
-                                <span class="mb-1">{{item.ad}}</span>
-                            </td>
-
-                            <td>
-                                <a class="btn btn-light-danger btn-sm py-1 px-2" (click)="deleteGuardTour(item);">
-                                    <i class="fa-solid fa-minus p-0"></i>
+                <table class="table table-hover border table-rounded table-row-solid table-row-gray-400 align-middle gs-3 gy-4"> 
+                    <thead>
+                        <tr  style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;">
+                            <th style="width: 75%;">
+                                Ad
+                            </th>
+                            <th style="width: 25%;text-align:right;color:white">
+                                işlem
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of filteredItems" [ngClass]="{'selected-row': selectedTour?.ad === item.ad}">
+                            <td (click)="getItem(item);"
+                             
+                            style="width: 75%; cursor: pointer;">{{ item?.ad }}</td>
+                            <td style="width: 25%;text-align:right;" (click)="deleteGuardTour(item);">
+                                <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                    <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
                                 </a>
                             </td>
-                    </tr>
-
-                </tbody>
-            </table>
-            </div>    
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             
         </div>
 
         <div class="col-md-8">
             <div class="row">
-                <div class="col-md-5">
-                
-                    <table class="table table-row-dashed table-row-gray-200 align-middle gs-2 gy-4">
+                <div class="col-md-6">
+          
+                    <div *ngIf="this.targetList.length > 0" class="table-responsive">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" [(ngModel)]="tourNameInput" (input)="filterItems()" style="border-radius: 0 !important;">
+                        </div>
+                        <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
+                            <thead>
+                                <tr  style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;">
+                                    <th colspan="2">
+                                        Lütfen Süre Eklemek İstediğiniz İstasyon a Tıklayın
+                                    </th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of targetList">
+                                    <td style="width: 75%; cursor: pointer;">{{item.kaynakad}}</td>
+                                    <td style="width: 25%;text-align:right;" (click)="deleteTourStation(item)">
+                                        <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                            <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- <div class="col-md-1 text-center d-flex align-items-center justify-content-center">
+                    <i class="bi bi-arrow-left-circle fs-2 text-danger"></i>
+                </div> -->
+
+                <div class="col-md-6">
+
+
+                  <div class="table-responsive">
+
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" [(ngModel)]="tourNameInput" (input)="filterItems()" style="border-radius: 0 !important;">
+                    </div>            
+                    <table class="table table-hover border table-rounded table-row-solid table-row-gray-400 align-middle gs-3 gy-4"> 
                         <thead>
-                            <th></th>
-                            <th></th>
+                            <tr style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;">
+                                <th style="width: 25%;">
+                                    işlem
+                                </th>
+                                <th style="width: 75%;text-align: right;color:white">
+                                    İstasyon Adı
+                                </th>
+                            </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of targetList">
-                                <td> {{ item.kaynakad}} </td>
-                                <td (click)="deleteTourStation(item)">
-                                    <a class="btn btn-light-danger btn-sm py-1 px-2">
-                                    <i class="fa-solid fa-minus p-0"></i>
-                                </a>
+                            <tr *ngFor="let item of allStation">
+                                <td style="width: 25%;"  (click)="addTourStation(item)">
+                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                        <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
+                            
+                                    </a>
                                 </td>
+                                <td style="width: 75%;text-align: right;">{{ item?.kaynakad }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-1 text-center d-flex align-items-center justify-content-center">
-                    <i class="bi bi-arrow-left-circle fs-2 text-danger"></i>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="table-responsive">
-                        <table
-                        class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
-                        <thead>
-                            <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-danger rounded text-white">
-                            
-                                <th colspan="2" class=" fw-bolder me-1 cursor-pointer rounded-start" style="width: 80%;">İstasyon Adı</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of allStation" class="cursor-pointer fs-8">
-                                    <td (click)="addTourStation(item)">
-                                        <a class="btn btn-light-success btn-sm py-1 px-2">
-                                            <i class="fa-solid fa-plus p-0"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <span class="mb-1">{{item.kaynakad}}</span>
-                                    </td>
-                            </tr>
-                        </tbody>
-
-                       </table>
-
-                  </div>
 
                 </div>
             </div>
