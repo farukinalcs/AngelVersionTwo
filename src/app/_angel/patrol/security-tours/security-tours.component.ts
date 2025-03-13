@@ -60,7 +60,7 @@ export class SecurityToursComponent {
     this.patrol.getGuardTour('0').subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.tourList = response[0].x;
       this.filteredItems = [...this.tourList]
-      console.log("getGuardTour:", this.tourList);
+      //console.log("getGuardTour:", this.tourList);
       this.tourNameInput = "";
     });
     this.ref.detectChanges();
@@ -69,7 +69,7 @@ export class SecurityToursComponent {
   getGuardStation(): void {
     this.patrol.getGuardStation('-1').subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.allStation = response[0].x;
-      console.log("getGuardStation:", this.allStation);
+     // console.log("getGuardStation:", this.allStation);
     });
     this.ref.detectChanges();
   }
@@ -78,7 +78,7 @@ export class SecurityToursComponent {
     /* Tur a ait olan istasyonlar   */
     this.patrol.getGuardStation(turid).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.targetList = response[0].x;
-      console.log("TARGET LİST GET TOUR", this.targetList);
+     // console.log("TARGET LİST GET TOUR", this.targetList);
     });
     this.ref.detectChanges();
   }
@@ -97,7 +97,7 @@ export class SecurityToursComponent {
     if(!exists){
       this.patrol.relation_i(station.id,this.selectTourId).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         this.targetList = response[0].x;
-        console.log("relation_i TARGET:", this.targetList);
+        //console.log("relation_i TARGET:", this.targetList);
     })}
     else{
       alert("Bu istasyon daha önce eklendi")

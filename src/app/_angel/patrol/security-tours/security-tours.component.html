@@ -22,7 +22,7 @@
                         <tr *ngFor="let item of filteredItems" [ngClass]="{'selected-row': selectedTour?.ad === item.ad}">
                             <td (click)="getItem(item);"
                              
-                            style="width: 75%; cursor: pointer;">{{ item?.ad }}</td>
+                            style="width: 75%; cursor: pointer;font-weight: bold;">{{ item?.ad }}</td>
                             <td style="width: 25%;text-align:right;" (click)="deleteGuardTour(item);">
                                 <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
                                     <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
@@ -43,7 +43,7 @@
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" [(ngModel)]="tourNameInput" (input)="filterItems()" style="border-radius: 0 !important;">
                         </div>
-                        <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
+                        <table class="table table-hover border table-rounded table-row-solid table-row-gray-400 align-middle gs-3 gy-4"> 
                             <thead>
                                 <tr  style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;">
                                     <th colspan="2">
@@ -54,7 +54,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of targetList">
-                                    <td style="width: 75%; cursor: pointer;">{{item.kaynakad}}</td>
+                                    <td style="width: 75%; cursor: pointer;font-weight: bold;">{{item.kaynakad}}</td>
                                     <td style="width: 25%;text-align:right;" (click)="deleteTourStation(item)">
                                         <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
                                             <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
@@ -97,7 +97,7 @@
                             
                                     </a>
                                 </td>
-                                <td style="width: 75%;text-align: right;">{{ item?.kaynakad }}</td>
+                                <td style="width: 75%;text-align: right;font-weight: bold;">{{ item?.kaynakad }}</td>
                             </tr>
                         </tbody>
                     </table>

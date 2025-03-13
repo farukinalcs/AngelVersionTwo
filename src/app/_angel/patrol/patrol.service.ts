@@ -181,12 +181,13 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
-  setGuardLocation(id:number,tip:string,hedefid:string){
+  setGuardLocation(id:number,tip:string,hedefid:number,islemid:number){
     var sp: any[] = [{
       mkodu:'yek243',
       id:id.toString(),
       tip:tip,
-      hedefid:hedefid
+      hedefid:hedefid.toString(),
+      islemid:islemid.toString()
     }]
     return this.requestMethod(sp);
   }

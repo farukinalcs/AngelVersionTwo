@@ -63,6 +63,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   dailyGuardTour:any[]=[];
   dailyGuardTour2:any[]=[];
 
+  tour_s:any[]=[];
   tour_sd:any[]=[];
   atilan:any[]=[];
   atilmayan:any[]=[];
@@ -326,6 +327,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
       this.dailyGuardTour2 = response[0].x;
       this.alarmlar = this.dailyGuardTour2.filter((item:any)=> item.durum === 1)
       this.olaylar = this.dailyGuardTour2.filter((item:any)=>item.durum === 2)
+      this.updateWidgets();
       // console.log("......dailyGuardTourCheck2........",this.dailyGuardTour2);
      })
   }
@@ -343,10 +345,10 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
   dailyGuardTourDetail(date:any)
   {
-    // this.patrol.tour_s(date).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
-    //   const blalba3 = response[0].x;
-    //    console.log("...........................................",blalba3);
-    //  })
+    this.patrol.tour_s(date).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+      this.tour_s = response[0].x;
+       //console.log("...........................................",this.tour_s);
+     })
      this.patrol.tour_sd(date).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
       this.tour_sd = response[0].x;
        //console.log(".........................................sd",this.tour_sd);

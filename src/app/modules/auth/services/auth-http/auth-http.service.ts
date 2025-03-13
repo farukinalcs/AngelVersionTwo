@@ -58,8 +58,9 @@ export class AuthHTTPService {
 
     var data = {
       securedata : encryptedParam.toString()
-    };
     
+    };
+    console.log("MEEEEEEEEEEERT",data)
     let options = {
       // headers : headers,
       params: data

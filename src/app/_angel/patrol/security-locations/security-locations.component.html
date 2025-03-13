@@ -73,7 +73,6 @@
     </div>
 </div> -->
 
-
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -106,7 +105,7 @@
                     
                                     <tbody>
                                         <tr *ngFor="let item of _filteredItems" class="cursor-pointer fs-8">
-                                                <td (click)="getItem(item);">
+                                                <td (click)="selectLocation(item);">
                                                     <span class="mb-1">{{item?.ad}}</span>
                                                 </td>
                                                 <td>
@@ -148,10 +147,11 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locationDevices">
+                                                            <tr *ngFor="let item of _setlocationDevices">
                                                                 <td style="width: 75%;">{{ item?.ad }}</td>
                                                                 <td style="width: 25%;text-align:right;">
-                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,0)">
                                                                         <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
@@ -178,9 +178,10 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locationDevices">
+                                                            <tr *ngFor="let item of _getlocationDevices">
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,1)">
                                                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                             
                                                                     </a>
@@ -213,10 +214,11 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locationTours">
+                                                            <tr *ngFor="let item of _setlocationTours">
                                                                 <td style="width: 75%;">{{ item?.ad }}</td>
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,0)">
                                                                         <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
@@ -241,9 +243,10 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locationTours">
+                                                            <tr *ngFor="let item of _getlocationTours">
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,1)">
                                                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                             
                                                                     </a>
@@ -276,10 +279,11 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locaitonStations">
+                                                            <tr *ngFor="let item of _setlocaitonStations">
                                                                 <td style="width: 75%;">{{ item?.ad }}</td>
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,0)">
                                                                         <i class="fa-solid fa-minus p-0 d-flex align-item-center"></i>
                                                                     </a>
                                                                 </td>
@@ -305,9 +309,10 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locaitonStations">
+                                                            <tr *ngFor="let item of _getlocaitonStations">
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,1)">
                                                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                             
                                                                     </a>
@@ -341,10 +346,11 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locationGuards">
+                                                            <tr *ngFor="let item of _setlocationGuards">
                                                                 <td style="width: 75%;">{{ item?.ad }}</td>
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,0)">
                                                                         <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
@@ -370,9 +376,10 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locationGuards">
+                                                            <tr *ngFor="let item of _getlocationGuards">
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,1)">
                                                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
@@ -410,10 +417,11 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locationEmergencySms">
+                                                            <tr *ngFor="let item of _setlocationEmergencySms">
                                                                 <td style="width: 75%;">{{ item?.ad }}</td>
                                                                 <td style="width: 25%;text-align:right;">
-                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,0)">
                                                                         <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
@@ -439,9 +447,10 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locationEmergencySms">
+                                                            <tr *ngFor="let item of _getlocationEmergencySms">
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,1)">
                                                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
@@ -478,10 +487,11 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locationEmergencyCall">
+                                                            <tr *ngFor="let item of _setlocationEmergencyCall">
                                                                 <td style="width: 75%;">{{ item?.ad }}</td>
                                                                 <td style="width: 25%;text-align:right;">
-                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,0)">
                                                                         <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
@@ -508,9 +518,10 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locationEmergencyCall">
+                                                            <tr *ngFor="let item of _getlocationEmergencyCall">
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,1)">
                                                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
@@ -545,10 +556,11 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locationVehicle">
+                                                            <tr *ngFor="let item of _setlocationVehicle">
                                                                 <td style="width: 75%;">{{ item?.ad }}</td>
                                                                 <td style="width: 25%;text-align:right;">
-                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,0)">
                                                                         <i class="fa-solid fa-minus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
@@ -574,9 +586,10 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let item of _locationVehicle">
+                                                            <tr *ngFor="let item of _getlocationVehicle">
                                                                 <td style="width: 25%;">
-                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
+                                                                    <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2"
+                                                                    (click)="setGuardLocation(item,1)">
                                                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
                                                                     </a>
                                                                 </td>
