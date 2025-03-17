@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { PatrolService } from '../patrol.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
@@ -17,8 +16,12 @@ export class SecurityToursComponent {
   selectTourId:number = 0;
   selectStationId:number = 0;
   allStation:any[];
-  filteredItems:any[]=[];
+  filteredStations:any[]=[];
+  filteredTours:any[]=[];
+  filteredTargets:any[]=[];
   tourNameInput:string='';
+  stationNameInput:string='';
+  targetNameInput:string="";
   tourList:any[]=[];
 
   constructor(
@@ -59,7 +62,7 @@ export class SecurityToursComponent {
   getGuardTour(): void {
     this.patrol.getGuardTour('0').subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.tourList = response[0].x;
-      this.filteredItems = [...this.tourList]
+      this.filteredTours = [...this.tourList];
       //console.log("getGuardTour:", this.tourList);
       this.tourNameInput = "";
     });
@@ -69,6 +72,7 @@ export class SecurityToursComponent {
   getGuardStation(): void {
     this.patrol.getGuardStation('-1').subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.allStation = response[0].x;
+      this.filteredStations = [...this.allStation];
      // console.log("getGuardStation:", this.allStation);
     });
     this.ref.detectChanges();
@@ -78,6 +82,7 @@ export class SecurityToursComponent {
     /* Tur a ait olan istasyonlar   */
     this.patrol.getGuardStation(turid).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.targetList = response[0].x;
+      this.filteredTargets = [...this.targetList];
      // console.log("TARGET LİST GET TOUR", this.targetList);
     });
     this.ref.detectChanges();
@@ -97,6 +102,7 @@ export class SecurityToursComponent {
     if(!exists){
       this.patrol.relation_i(station.id,this.selectTourId).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         this.targetList = response[0].x;
+        this.filteredTargets = [...this.targetList];
         //console.log("relation_i TARGET:", this.targetList);
     })}
     else{
@@ -116,6 +122,7 @@ export class SecurityToursComponent {
       
       this.patrol.relation_d(id,hedefid).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         this.targetList = response[0].x;
+        this.filteredTargets = [...this.targetList];
           console.log("deleteTourStation: TARGET", this.targetList);
       })
       this.getGuardStationForTour(hedefid);
@@ -128,16 +135,31 @@ export class SecurityToursComponent {
         console.log("Station:", item);
         this.patrol.relation_d(kaynakid,hedefid).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
           this.targetList = response[0].x;
+          this.filteredTargets = [...this.targetList];
             console.log("deleteTourStation:", this.targetList);
         })
         this.getGuardStationForTour(hedefid);
     }
   }
 
-  filterItems(){
+  filterTours(){
     const query = this.tourNameInput.toLowerCase();
-    this.filteredItems = this.tourList.filter(item =>
+    this.filteredTours = this.tourList.filter(item =>
       item.ad?.toLowerCase().includes(query)
+    );
+  }
+
+  filterStation(){
+    const query = this.stationNameInput.toLowerCase();
+    this.filteredStations = this.allStation.filter(item =>
+      item.kaynakad?.toLowerCase().includes(query)
+    );
+  }
+
+  filterTargets(){
+    const query = this.targetNameInput.toLowerCase();
+    this.filteredTargets = this.targetList.filter(item =>
+      item.kaynakad?.toLowerCase().includes(query)
     );
   }
 

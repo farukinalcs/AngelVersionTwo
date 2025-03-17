@@ -4,7 +4,7 @@
 
             <div class="table-responsive">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" [(ngModel)]="tourNameInput" (input)="filterItems()" style="border-radius: 0 !important;">
+                    <input type="text" class="form-control" [(ngModel)]="tourNameInput" (input)="filterTours()" style="border-radius: 0 !important;">
                     <button class="btn text-white" type="button" id="button-addon2" (click)="setGuardTour()" style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);border-radius: 0 !important;">Ekle</button>
                 </div>
                 <table class="table table-hover border table-rounded table-row-solid table-row-gray-400 align-middle gs-3 gy-4"> 
@@ -19,7 +19,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of filteredItems" [ngClass]="{'selected-row': selectedTour?.ad === item.ad}">
+                        <tr *ngFor="let item of filteredTours" [ngClass]="{'selected-row': selectedTour?.ad === item.ad}">
                             <td (click)="getItem(item);"
                              
                             style="width: 75%; cursor: pointer;font-weight: bold;">{{ item?.ad }}</td>
@@ -41,7 +41,7 @@
           
                     <div *ngIf="this.targetList.length > 0" class="table-responsive">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" [(ngModel)]="tourNameInput" (input)="filterItems()" style="border-radius: 0 !important;">
+                            <input type="text" class="form-control" [(ngModel)]="targetNameInput" (input)="filterTargets()" style="border-radius: 0 !important;">
                         </div>
                         <table class="table table-hover border table-rounded table-row-solid table-row-gray-400 align-middle gs-3 gy-4"> 
                             <thead>
@@ -53,7 +53,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of targetList">
+                                <tr *ngFor="let item of filteredTargets">
                                     <td style="width: 75%; cursor: pointer;font-weight: bold;">{{item.kaynakad}}</td>
                                     <td style="width: 25%;text-align:right;" (click)="deleteTourStation(item)">
                                         <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
@@ -76,7 +76,7 @@
                   <div class="table-responsive">
 
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" [(ngModel)]="tourNameInput" (input)="filterItems()" style="border-radius: 0 !important;">
+                        <input type="text" class="form-control" [(ngModel)]="stationNameInput" (input)="filterStation()" style="border-radius: 0 !important;">
                     </div>            
                     <table class="table table-hover border table-rounded table-row-solid table-row-gray-400 align-middle gs-3 gy-4"> 
                         <thead>
@@ -90,7 +90,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of allStation">
+                            <tr *ngFor="let item of filteredStations">
                                 <td style="width: 25%;"  (click)="addTourStation(item)">
                                     <a class="btn btn-light-success btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2">
                                         <i class="fa-solid fa-plus p-0 d-flex align-item-center justify-content-center"></i>
