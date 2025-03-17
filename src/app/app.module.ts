@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ApplicationConfig } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -26,15 +26,19 @@ import '@boldreports/javascript-reporting-controls/Scripts/v2.0/common/bold.repo
 import '@boldreports/javascript-reporting-controls/Scripts/v2.0/common/bold.reports.widgets.min';
 // Report viewer
 import '@boldreports/javascript-reporting-controls/Scripts/v2.0/bold.report-viewer.min';
+import { LoadingInterceptor } from './modules/loading/interceptors/loading.interceptor';
 // ------------
 
+// PrimeNG Theme
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import MyPreset from './_primeng/mypreset'
+// -------------
 
 
 
-// #fake-start#
-// import { FakeAPIService } from './_fake/fake-api.service';
 
-// #fake-end#
+
 
 function appInitializer(authService: AuthService) {
   return () => {
@@ -44,6 +48,23 @@ function appInitializer(authService: AuthService) {
     // });
   };
 }
+
+
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: MyPreset,
+        options: {
+          darkModeSelector: '.my-app-dark'
+        }
+      }
+    })
+  ]
+};
+
 
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
@@ -89,7 +110,13 @@ function appInitializer(authService: AuthService) {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi : true
-    }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,  // LoadingInterceptor
+      multi: true,
+    },
+    appConfig.providers
   ],
   bootstrap: [AppComponent],
   exports: [LoadingComponent]

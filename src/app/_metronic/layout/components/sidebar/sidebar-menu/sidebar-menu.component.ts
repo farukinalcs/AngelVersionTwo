@@ -8,6 +8,8 @@ import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { AuthMenuModel } from 'src/app/_metronic/core/auth-menu-model';
 import { AuthMenuService } from 'src/app/_metronic/core/services/auth-menu.service';
+import { sidebar } from './sidebar-config';
+import { SidebarMenu } from './sidebar-menu-model';
 
 @Component({
   selector: 'app-sidebar-menu',
@@ -18,6 +20,8 @@ export class SidebarMenuComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   menuConfig : AuthMenuModel;
   
+  sidebarMenu: SidebarMenu[] = sidebar;
+
   constructor(
     private authMenuService : AuthMenuService,
     private profileService : ProfileService,

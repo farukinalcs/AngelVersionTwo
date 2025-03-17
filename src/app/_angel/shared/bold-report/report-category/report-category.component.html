@@ -1,0 +1,19 @@
+<ul class="nav nav-tabs nav-pills flex-column border-0 gap-2">
+    <li class="nav-item me-0 cursor-pointer" *ngFor="let item of categories">
+        <a class="nav-link d-flex gap-2"
+            [ngClass]="{
+                'bg-danger text-white': selectedCategory.category == item.category,
+                'text-gray-600 border-hover border border-2': selectedCategory.category != item.category
+            }"
+            (click)="changeCategory(item)">
+            <span class="nav-link-logo m-0 d-flex align-items-center">
+                <span class="badge badge-circle badge-danger"
+                    [ngClass]="{'badge-danger': selectedCategory.category != item.category, 'badge-light': selectedCategory.category == item.category}">
+                    {{item.count}}
+                </span>
+            </span>
+
+            <span class="nav-link-title ms-1 fw-bold fs-5"> {{item.category}} </span>
+        </a>
+    </li>
+</ul>

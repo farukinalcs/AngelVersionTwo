@@ -6,8 +6,8 @@ import { ColDef, ColGroupDef, IMultiFilterParams, IRowNode, IsRowSelectable, Sid
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { ProfileService } from '../../profile/profile.service';
-import { AttendanceService } from '../../puantaj/attendance.service';
-import { OrganizationColumnFilterComponent } from '../../puantaj/organization-column-filter/organization-column-filter.component';
+import { AttendanceService } from '../../attendance/attendance.service';
+import { OrganizationColumnFilterComponent } from '../../attendance/organization-column-filter/organization-column-filter.component';
 import { Store } from '@ngrx/store';
 import { loadRegistersFailure, loadRegistersSuccess } from 'src/app/store/actions/register.action';
 import { Register } from 'src/app/store/models/register.state';

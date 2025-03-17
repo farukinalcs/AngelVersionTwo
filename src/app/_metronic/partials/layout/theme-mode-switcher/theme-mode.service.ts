@@ -22,6 +22,7 @@ const getThemeModeFromLocalStorage = (lsKey: string): ThemeModeType => {
   }
 
   const data = localStorage.getItem(lsKey);
+  const primengTheme = localStorage.getItem('primeng-theme');
   if (!data) {
     return 'light';
   }
@@ -30,7 +31,13 @@ const getThemeModeFromLocalStorage = (lsKey: string): ThemeModeType => {
     return 'light';
   }
 
-  if (data === 'dark') {
+  if (data === 'dark' && primengTheme === 'my-app-dark') {
+    const element = document.querySelector('html');
+    if (element !== null) {
+      element.classList.toggle('my-app-dark');
+    } else {
+      console.error("HTML element not found.");
+    }
     return 'dark';
   }
 
@@ -77,17 +84,31 @@ export class ThemeModeService {
   public init() {
     this.updateMode(this.mode.value);
     this.updateMenuMode(this.menuMode.value);
+    
+    // Temayı güncelledikten sonra Primeng temasını değiştirmek için:
+    this.updatePrimeNgTheme();
   }
+  
+  private updatePrimeNgTheme() {
+    const theme = this.mode.value === 'dark' ? 'my-app-dark' : '';
+    const element = document.querySelector('html');
+    if (element !== null) {
+      element.classList.toggle('my-app-dark', theme === 'my-app-dark');
+    }
+  }
+  
 
   public switchMode(_mode: ThemeModeType) {
     if (localStorage) {
       const updatedMode = _mode === 'system' ? systemMode : _mode;
       localStorage.setItem(themeModeLSKey, updatedMode);
       localStorage.setItem(themeMenuModeLSKey, _mode);
+      localStorage.setItem('primeng-theme', _mode === 'dark' ? 'my-app-dark' : '');
     }
     
     document.location.reload()
   }
+  
 
   public getSelectedThemeColor(): string {
     const selectedMode = this.mode.value;

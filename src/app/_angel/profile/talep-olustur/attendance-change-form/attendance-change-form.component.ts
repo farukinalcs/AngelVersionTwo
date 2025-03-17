@@ -5,14 +5,16 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
-import { AttendanceService } from 'src/app/_angel/puantaj/attendance.service';
+import { AttendanceService } from 'src/app/_angel/attendance/attendance.service';
 import { ProfileService } from '../../profile.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { OKodFieldsModel } from '../../models/oKodFields';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { AuthService, UserType } from 'src/app/modules/auth';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+
+
 import { DrawerComponent, MenuComponent, ScrollComponent, ScrollTopComponent, StickyComponent, ToggleComponent } from 'src/app/_metronic/kt/components';
 
 @Component({

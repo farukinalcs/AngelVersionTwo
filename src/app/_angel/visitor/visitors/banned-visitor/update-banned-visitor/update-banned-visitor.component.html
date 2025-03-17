@@ -1,0 +1,108 @@
+<!-- (onHide)="onHideUploadedFiles()" -->
+<p-dialog
+    header="{{ 'Yasak_Ziyaretçi_Kaydet' | translate }}"
+    [(visible)]="visible"
+    (onHide)="onHide()"
+    position="top"
+    [modal]="true"
+    [breakpoints]="{ '2560px': '60vw', '992px': '80vw', '576px': '90vw' }"
+    [baseZIndex]="10000"
+    [draggable]="false"
+    [resizable]="false"
+    [maximizable]="true">
+
+    <div class="container" >
+        <div class="row" [formGroup]="form">
+            
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Ad" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Ad Giriniz' | translate}}" formControlName="name">
+                <ng-container 
+                    [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: translateService.instant('Boş_Geçilemez!'),
+                        control: form.controls['name']
+                    }">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Soyad" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Soyad Giriniz' | translate}}" formControlName="surname">
+                <ng-container 
+                    [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: translateService.instant('Boş_Geçilemez!'),
+                        control: form.controls['surname']
+                    }">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Kimlik Bilgisi" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Kimlik Bilgisi Giriniz' | translate}}" formControlName="identityInfo">
+                <ng-container 
+                    [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: translateService.instant('Boş_Geçilemez!'),
+                        control: form.controls['identityInfo']
+                    }">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Açıklama" | translate}}</span>
+                </label>
+
+                <!-- <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Açıklama Giriniz' | translate}}" formControlName="explanation"> -->
+                <textarea class="form-control form-control-solid" maxlength="500" rows="4" formControlName="explanation" placeholder="{{'Açıklama Giriniz' | translate}}"></textarea>
+                <ng-container 
+                    [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: translateService.instant('Boş_Geçilemez!'),
+                        control: form.controls['explanation']
+                    }">
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <a (click)="onHide()" class="btn btn-danger btn-sm mx-1">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'Kapat' | translate}}
+        </a>
+        <a (click)="update()" class="btn btn-danger btn-sm mx-1">
+            <i class="fa-solid fa-check fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>
+
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+    <ng-container *ngIf="control.hasError(validation)">
+        <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+                <span role="alert">
+                    {{ message }}
+                </span>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

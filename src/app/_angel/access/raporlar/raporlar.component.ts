@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { ProfileService } from '../../profile/profile.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseXloginDetail } from 'src/app/modules/auth/models/response-Xlogindetail';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
+import { ApiUrlService } from 'src/app/_helpers/api-url.service';
 
 @Component({
   selector: 'app-raporlar',
@@ -22,13 +22,12 @@ export class RaporlarComponent implements OnInit, OnDestroy {
   reports: any[] = [];
   categories: any[] = [];
   selectedCategory: any;
+  selectedReport: any;
 
   constructor(
-    private formBuilder: FormBuilder,
     private profileService: ProfileService,
-  ) {
-    
-  }
+    private apiUrlService: ApiUrlService,
+  ) { }
   
 
   ngOnInit(): void {
@@ -80,47 +79,75 @@ export class RaporlarComponent implements OnInit, OnDestroy {
     return result;
   }
 
-
-
   changeCategory(category: any): void {
     this.selectedCategory = category;
   }
 
-  toggleReport(): void {
 
-    var sp: any[] = [
+  selectReport(report: any): void {
+    this.selectedReport = report;
+    console.log("Seçilen Rapor: ", this.selectedReport); 
+  }
+  
+
+  // toggleReport(): void {
+
+  //   var sp: any[] = [
+  //     {
+  //       mkodu: 'yek255',
+  //       ad: '' ,
+  //       soyad: '',
+  //       sicilno: '',
+  //       'firma#cbo_firma': '',
+  //       'bolum#cbo_bolum': '',
+  //       'pozisyon#cbo_pozisyon': '',
+  //       'gorev#cbo_gorev': '',
+  //       'altfirma#cbo_altfirma': '',
+  //       'direktorluk#cbo_direktorluk': '',
+  //       'yaka#cbo_yaka': '',
+  //     }
+  //   ];
+
+  //   this.profileService.requestMethodPost(sp).subscribe((response: ResponseModel<any,ResponseXloginDetail>[]) => {
+  //     console.log("Rapor Response: ", response);
+
+  //     this.cacheKey = response[0].x[0].cacheKey;
+  //     console.log("Cache Key: ", this.cacheKey);
+
+
+  //     // this.getReport(cacheKey);
+  //     this.serviceUrl = 'http://10.20.27.180:5216/api/Report';
+  //     this.reportPath = 'ACY00009';
+  //     this.parameters = [{
+  //       name: 'Parametre Test Ediyorum',
+  //       labels: ['cacheKey'],
+  //       values: [this.cacheKey],
+  //       }];
+  //   });
+        
+  // }
+
+  getCacheKey(cacheKey: string): void {
+    console.log("Cache Key Geldi: ", cacheKey);
+    this.cacheKey = cacheKey;
+    this.serviceUrl = this.getApiUrl() + '/BoldReport';
+    this.reportPath = this.selectedReport.id;
+    this.parameters = [
       {
-        mkodu: 'yek255',
-        ad: '' ,
-        soyad: '',
-        sicilno: '',
-        'firma#cbo_firma': '',
-        'bolum#cbo_bolum': '',
-        'pozisyon#cbo_pozisyon': '',
-        'gorev#cbo_gorev': '',
-        'altfirma#cbo_altfirma': '',
-        'direktorluk#cbo_direktorluk': '',
-        'yaka#cbo_yaka': '',
-      }
-    ];
-
-    this.profileService.requestMethodPost(sp).subscribe((response: ResponseModel<any,ResponseXloginDetail>[]) => {
-      console.log("Rapor Response: ", response);
-
-      this.cacheKey = response[0].x[0].cacheKey;
-      console.log("Cache Key: ", this.cacheKey);
-
-
-      // this.getReport(cacheKey);
-      this.serviceUrl = 'http://10.20.27.180:5216/api/Report';
-      this.reportPath = 'ACY00009';
-      this.parameters = [{
         name: 'Parametre Test Ediyorum',
         labels: ['cacheKey'],
         values: [this.cacheKey],
-        }];
-    });
-        
+      }
+    ];
+  }
+
+  getApiUrl() {
+    return this.apiUrlService.apiUrl;
+  }
+
+  resetReport(): void {
+    this.selectedReport = null;
+    this.cacheKey = null;
   }
 
   ngOnDestroy(): void {

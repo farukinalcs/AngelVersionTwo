@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, take, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { AttendanceService } from 'src/app/_angel/puantaj/attendance.service';
+import { AttendanceService } from 'src/app/_angel/attendance/attendance.service';
 import { AccessGroupState } from 'src/app/store/models/access-group.state';
 import { FormState } from 'src/app/store/models/form.state';
 import { selectAddedGroups } from 'src/app/store/selectors/access-group.selector';
@@ -269,7 +269,7 @@ export class BulkRegistryChangeComponent implements OnInit, OnDestroy {
           pozisyon: this.checkFormController.checkPosition ? value.organizationInfo.position.ID.toString() : null,
           gorev: this.checkFormController.checkJob ? value.organizationInfo.job.ID.toString() : null,
           altfirma: this.checkFormController.checkSubcompany ? value.organizationInfo.subCompany.ID.toString() : null,
-          yaka: this.checkFormController.checkCollor ? value.organizationInfo.collar.ID.toString() : null,
+          yaka: this.checkFormController.checkCollar ? value.organizationInfo.collar.ID.toString() : null,
           direktorluk: this.checkFormController.checkDirectorship ? value.organizationInfo.directorship.ID.toString() : null,
           maastipi: this.checkFormController.checkSalaryType ? value.shiftInfo.salaryType.ID.toString() : null,
           fazlamesai: this.checkFormController.checkOvertime ? value.shiftInfo.overtime ? "1" : "0" : null,
@@ -322,6 +322,11 @@ export class BulkRegistryChangeComponent implements OnInit, OnDestroy {
               self.translateService.instant("Toplu_Değişikliği_İşlemi_Tamamlandı"),
               ""
             );
+
+            if (self.loadingProgress == 100) {
+              console.log("Testoo :", self.selectedRegistry);
+              self.completedEvent.emit();
+            }
             return;
           }
           self.bulkChangeLoading = false;

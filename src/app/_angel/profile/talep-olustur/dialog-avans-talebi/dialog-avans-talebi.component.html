@@ -23,7 +23,8 @@
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                     <span class="required">{{'IBAN' | translate}}</span>
                                                 </label>
-                                            
+
+                                                <!-- <p-inputmask class="form-control form-control-lg form-control-solid" mask="TR99 9999 9999 9999 9999 9999 99" formControlName="iban" placeholder="TR99 9999 9999 9999 9999 9999 99" /> -->
                                                 <input type="text" maxlength="32" class="form-control form-control-lg form-control-solid" max="31" formControlName="iban" [ngClass]="{
                                                                                                 'is-invalid': advanceForm.controls['iban'].invalid,
                                                                                                 'is-valid': advanceForm.controls['iban'].valid

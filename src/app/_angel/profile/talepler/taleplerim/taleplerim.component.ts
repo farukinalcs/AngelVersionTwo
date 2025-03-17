@@ -26,7 +26,7 @@ export class TaleplerimComponent implements OnInit, OnDestroy {
   allComplete: boolean = false;
 
   displayPosition: boolean;
-  position: string;
+  position: 'top' | 'bottom' | 'left' | 'right' | 'center' | 'topleft' | 'topright' | 'bottomleft' | 'bottomright' = 'center';
   displayDemandProcess : boolean;
 
   selectedItem : any;
@@ -194,7 +194,7 @@ export class TaleplerimComponent implements OnInit, OnDestroy {
 
   }
 
-  showPositionDialog(data : {position: string, demand : any}) {
+  showPositionDialog(data : {position: 'top' | 'bottom' | 'left' | 'right' | 'center' | 'topleft' | 'topright' | 'bottomleft' | 'bottomright', demand : any}) {
     this.position = data.position;
     this.displayPosition = true;
 

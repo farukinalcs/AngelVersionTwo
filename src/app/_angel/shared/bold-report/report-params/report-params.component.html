@@ -1,0 +1,43 @@
+<form [formGroup]="form" >
+    <div *ngFor="let param of reportParams" class="p-2">
+        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+            <span>{{param.displayName | translate}}</span>
+        </label>
+        <!-- Text veya Number Input -->
+        <input *ngIf="param.tip == '12'" type="text" class="form-control form-control-sm form-control-solid" [formControlName]="param.ParameterName">
+        
+        <div class="d-flex gap-1">
+            <!-- Date Input -->
+            <input *ngIf="param.tip == '16'" type="datetime-local" class="form-control form-control-sm form-control-solid"
+                [formControlName]="param.ParameterName">
+        
+            <!-- Time Input (Eğer tip 16 ise time input eklenir) -->
+            <!-- <input *ngIf="param.hasTimeField" type="time" class="form-control form-control-sm form-control-solid"
+                [formControlName]="param.displayName + '_time'"> -->
+        </div>
+        
+        
+        <!-- Select Option -->
+        <p-dropdown *ngIf="param.tip == '7'" [options]="selectOptions[param.kaynak]" optionLabel="Ad" [filter]="true" filterBy="Ad" [showClear]="true"
+            [formControlName]="param.ParameterName" class="w-100"
+            emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
+            <ng-template let-item pTemplate="item">
+                <div class="item-item">
+                    <div>{{ getOptionName(item) }}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+    </div>
+</form>
+
+<div class="d-flex flex-column gap-2 align-items-center">
+    <a class="btn btn-sm btn-danger mx-1 w-75" (click)="setReport()">
+        <i class="fa-solid fa-arrow-up-right-from-square fs-7"></i>
+        {{'Raporu_Görüntüle' | translate}}
+    </a>
+    <a class="btn btn-sm btn-danger mx-1 w-75">
+        <i class="fa-solid fa-share-from-square fs-7"></i>
+        {{'Raporu_Rezerve_Gönder' | translate}}
+    </a>
+</div>
+
