@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import Swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-authority-roles',
   templateUrl: './authority-roles.component.html',

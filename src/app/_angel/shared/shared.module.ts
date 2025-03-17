@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FullScreenDivComponent } from './full-screen-div/full-screen-div.component';
 import { SicilListeComponent } from './sicil-liste/sicil-liste.component';
-import { SicilComponent } from './sicil/sicil.component';
-import { DialogContainerComponent } from './dialog-container/dialog-container.component';
 import { DataNotFoundComponent } from './data-not-found/data-not-found.component';
 import { FormStepperComponent } from './form-stepper/form-stepper.component';
 import { DetailSearchComponent } from './detail-search/detail-search.component';
@@ -18,6 +15,8 @@ import { CardModule } from 'primeng/card';
 import { TimelineModule } from 'primeng/timeline';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+//---------------
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslationModule } from 'src/app/modules/i18n';
 import { AgGridModule } from 'ag-grid-angular';
@@ -72,10 +71,7 @@ import { ReportParamsComponent } from './bold-report/report-params/report-params
 
 @NgModule({
   declarations: [
-    FullScreenDivComponent,
     SicilListeComponent,
-    SicilComponent,
-    DialogContainerComponent,
     DataNotFoundComponent,
     FormStepperComponent,
     DetailSearchComponent,
@@ -131,10 +127,7 @@ import { ReportParamsComponent } from './bold-report/report-params/report-params
     BoldReportViewerModule // Bold Reports
   ],
   exports: [
-    FullScreenDivComponent,
     SicilListeComponent,
-    SicilComponent,
-    DialogContainerComponent,
     DataNotFoundComponent,
     FormStepperComponent,
     DetailSearchComponent,

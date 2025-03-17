@@ -46,11 +46,17 @@
           },
           "configurations": {
             "production": {
+              "optimization": true,
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
                   "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumError": "17mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -68,7 +74,7 @@
             },
             "development": {
               "buildOptimizer": false,
-              "optimization": false,
+              "optimization": true,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
@@ -81,10 +87,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "demo1:build:production"
+              "buildTarget": "demo1:build:production"
             },
             "development": {
-              "browserTarget": "demo1:build:development"
+              "buildTarget": "demo1:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -92,7 +98,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "demo1:build"
+            "buildTarget": "demo1:build"
           }
         },
         "test": {
@@ -125,9 +131,7 @@
       }
     }
   },
-  "defaultProject": "demo1",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics",
     "analytics": false
   }
 }

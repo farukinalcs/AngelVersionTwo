@@ -21,6 +21,7 @@ export class OrganizationColumnFilterComponent implements IFilterAngularComp {
   organizationFilterList: OKodFieldsModel[] = [];
   filter: any;
   searchText: string = '';
+  key: string | undefined;
 
   constructor(
     private profileService: ProfileService,
@@ -53,6 +54,11 @@ export class OrganizationColumnFilterComponent implements IFilterAngularComp {
             } else {
               this.organizationFilterList = data;
             }
+
+
+            // İlk objenin anahtarlarını kontrol edip 'ad' key'ini belirliyoruz
+            const firstObj = this.organizationFilterList[0] || {};
+            this.key = Object.keys(firstObj).find(k => k.toLowerCase() === "ad");
             
             console.log("Organizasyon Bilgisi Geldi Custom Filter Comp. :", this.organizationFilterList);
             this.ref.detectChanges();            

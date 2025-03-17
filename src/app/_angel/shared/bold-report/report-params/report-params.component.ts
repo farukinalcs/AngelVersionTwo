@@ -17,6 +17,7 @@ export class ReportParamsComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   @Input() report: any;
   @Output() cacheKeyEvent = new EventEmitter<string>();
+  @Output() formValue = new EventEmitter<any>();
   form!: FormGroup;
   reportParams: ReportParam[] = [];
   selectOptions: { [key: string]: any[] } = {}; // Seçenekleri tutacak obje
@@ -81,7 +82,13 @@ export class ReportParamsComponent implements OnInit, OnDestroy {
   }
 
   extractDisplayName(paramatreName: string): string {
-    return paramatreName.replace('@', '').split('#')[0]; // @ işaretini kaldır ve # ile ayırıp ilk kısmı al
+    if (paramatreName.includes('#')) {
+      return paramatreName.replace('@', '').split('#')[0]; // @ işaretini kaldır ve # ile ayırıp ilk kısmı al
+    } else if (paramatreName.includes('$')) {
+      return paramatreName.replace('@', '').split('$')[0]; // @ işaretini kaldır ve $ ile ayırıp ilk kısmı al 
+    } else {
+      return paramatreName.replace('@', ''); // @ işaretini kaldır 
+    }    
   }
 
   createForm() {
@@ -144,6 +151,7 @@ export class ReportParamsComponent implements OnInit, OnDestroy {
   setReport() {
     var sp: any[] = this.updateSpDynamically(this.form.value);
     console.log('Raporun Parametrelerini Gönderiyoruz (sp):', sp);
+    this.formValue.emit(this.form.value);
     
     this.profileService.requestMethodPost(sp).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
       console.log("Rapor Response: ", response);
@@ -188,6 +196,11 @@ export class ReportParamsComponent implements OnInit, OnDestroy {
     return sp;
   }
   
+  getOptionName(item: any): string {
+    const adKey = Object.keys(item).find(k => k.toLowerCase() === "ad");
+
+    return item[adKey!];
+  }
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

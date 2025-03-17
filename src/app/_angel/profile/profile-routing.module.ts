@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ProfiledashboardComponent } from './profiledashboard/profiledashboard.component';
 import { Routes,RouterModule } from '@angular/router';
 import { GecislerimComponent } from './islemler/gecislerim/gecislerim.component';
@@ -13,7 +12,6 @@ import { TasklistemComponent } from './talepler/tasklistem/tasklistem.component'
 import { TakimimComponent } from './talepler/takimim/takimim.component';
 import { EksikSurelerimComponent } from './islemler/eksik-surelerim/eksik-surelerim.component';
 import { ProfileDataWidgetComponent } from './profile-data-widget/profile-data-widget.component';
-import { ProfilTanimlamalarComponent } from './profil-tanimlamalar/profil-tanimlamalar.component';
 import { VisitorRequestsComponent } from './talepler/visitor-requests/visitor-requests.component';
 import { ProfileDefinitionsComponent } from './profile-definitions/profile-definitions.component';
 
@@ -70,10 +68,6 @@ const routes: Routes = [
         path: 'eksik_surelerim',
         component: EksikSurelerimComponent,
       },
-      // {
-      //   path: 'profil_tanimlamalar',
-      //   component: ProfilTanimlamalarComponent,
-      // },
       {
         path: 'profil_tanimlamalar',
         component: ProfileDefinitionsComponent,

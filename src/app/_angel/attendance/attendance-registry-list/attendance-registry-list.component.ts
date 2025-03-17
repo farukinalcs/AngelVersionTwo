@@ -6,7 +6,9 @@ import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
 import { AttendanceService } from '../attendance.service';
 import { ToastrService } from 'ngx-toastr';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+
+
 
 @Component({
   selector: 'app-attendance-registry-list',

@@ -1,4 +1,4 @@
-import { TanimlamalarService } from './../../profil-tanimlamalar/tanimlamalar.service';
+import { TanimlamalarService } from '../../profile-definitions/tanimlamalar.service';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 

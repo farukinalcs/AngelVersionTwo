@@ -17,10 +17,6 @@ import { AttendanceListFilterComponent } from './attendance-list-filter/attendan
 import { DialogModule } from 'primeng/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DropdownModule } from 'primeng/dropdown';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileModule } from '../profile/profile.module';
 import { SharedModule } from '../shared/shared.module';
 import { AttendancePivotListComponent } from './attendance-pivot-list/attendance-pivot-list.component';
@@ -88,17 +84,12 @@ import { ShiftPeriodsComponent } from './attendance-definitions/definitions/shif
     TranslateModule,
     MatProgressSpinnerModule,
     ProgressBarModule,
-    SpeedDialModule,
     ReactiveFormsModule,
     InlineSVGModule,
     CustomPipeModule,
     DialogModule,
     MatExpansionModule,
     DropdownModule,
-    MatAutocompleteModule,
-    MatFormFieldModule,
-    MatInputModule,
-    NgbTooltipModule,
     ProfileModule,
     SharedModule,
     DrawersModule,

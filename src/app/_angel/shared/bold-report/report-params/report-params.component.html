@@ -19,11 +19,11 @@
         
         <!-- Select Option -->
         <p-dropdown *ngIf="param.tip == '7'" [options]="selectOptions[param.kaynak]" optionLabel="Ad" [filter]="true" filterBy="Ad" [showClear]="true"
-            [formControlName]="param.ParameterName"
+            [formControlName]="param.ParameterName" class="w-100"
             emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" appendTo="body">
             <ng-template let-item pTemplate="item">
                 <div class="item-item">
-                    <div>{{item.Ad}}</div>
+                    <div>{{ getOptionName(item) }}</div>
                 </div>
             </ng-template>
         </p-dropdown>

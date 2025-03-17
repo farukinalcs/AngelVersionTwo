@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { visitorRoutes } from '../_angel/visitor/visitor.routes';
 
 const Routing: Routes = [
   {
@@ -29,37 +30,10 @@ const Routing: Routes = [
 
   },
   {
-    path: 'builder',
-    loadChildren: () =>
-      import('./builder/builder.module').then((m) => m.BuilderModule),
-      data: { layout: 'light-sidebar' },
-
-  },
-  {
     path:'patrol',
     loadChildren:() => 
     import('../_angel/patrol/patrol.module').then((m) => m.PatrolModule),
     data: { layout: 'light-sidebar' },
-  },
-  {
-    path: 'crafted/account',
-    loadChildren: () =>
-      import('../modules/account/account.module').then((m) => m.AccountModule),
-    data: { layout: 'dark-header' },
-  },
-  {
-    path: 'crafted/pages/wizards',
-    loadChildren: () =>
-      import('../modules/wizards/wizards.module').then((m) => m.WizardsModule),
-    data: { layout: 'light-header' },
-  },
-  {
-    path: 'crafted/widgets',
-    loadChildren: () =>
-      import('../modules/widgets-examples/widgets-examples.module').then(
-        (m) => m.WidgetsExamplesModule
-      ),
-    data: { layout: 'light-header' },
   },
   {
     path: 'apps/chat',
@@ -69,8 +43,7 @@ const Routing: Routes = [
   },
   {
     path: 'visitor',
-    loadChildren: () =>
-      import('../_angel/visitor/visitor.routes').then((m) => m.visitorRoutes),
+    children: visitorRoutes,
     data: { layout: 'light-sidebar' },
   },
   {

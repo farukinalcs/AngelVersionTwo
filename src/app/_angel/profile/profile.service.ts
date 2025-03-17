@@ -1,6 +1,6 @@
 import { HttpClient, HttpEventType, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as CryptoJS from "crypto-js";
+import CryptoES from "crypto-es";
 import { catchError, map, Observable, switchMap, tap } from 'rxjs';
 import { ApiUrlService } from 'src/app/_helpers/api-url.service';
 import { HelperService } from 'src/app/_helpers/helper.service';
@@ -664,14 +664,14 @@ export class ProfileService {
   }
 
   requestMethod(sp : any[]){
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var key = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
 
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
+    var encryptedParam = CryptoES.AES.encrypt(CryptoES.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      // keySize : 128 / 8,
       iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
+      mode : CryptoES.mode.CBC,
+      padding : CryptoES.pad.Pkcs7
     });
 
     var data = {
@@ -686,17 +686,17 @@ export class ProfileService {
   }
 
   processMultiPost(sp: any[], signal?: AbortSignal): Promise<Response> {
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var key = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
 
-    var encryptedParam = CryptoJS.AES.encrypt(
-      CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)),
+    var encryptedParam = CryptoES.AES.encrypt(
+      CryptoES.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)),
       key,
       {
-        keySize: 128 / 8,
+        // keySize: 128 / 8,
         iv: iv, 
-        mode: CryptoJS.mode.CBC,
-        padding: CryptoJS.pad.Pkcs7
+        mode: CryptoES.mode.CBC,
+        padding: CryptoES.pad.Pkcs7
       }
     );
 
@@ -719,14 +719,14 @@ export class ProfileService {
 
 
   requestMethodPost(sp : any[]){
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var key = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
 
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
+    var encryptedParam = CryptoES.AES.encrypt(CryptoES.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      // keySize : 128 / 8,
       iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
+      mode : CryptoES.mode.CBC,
+      padding : CryptoES.pad.Pkcs7
     });
 
     var data = {

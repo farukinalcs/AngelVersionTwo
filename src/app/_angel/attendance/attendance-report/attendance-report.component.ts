@@ -22,6 +22,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   categories: any[] = [];
   selectedCategory: any;
   selectedReport: any;
+  reportStartDate: any;
+  reportEndDate: any;
 
   constructor(
     private profileService: ProfileService,
@@ -97,8 +99,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.parameters = [
       {
         name: 'Parametre Test Ediyorum',
-        labels: ['cacheKey', 'lang'],
-        values: [this.cacheKey, 'en'],
+        labels: ['cacheKey', 'reportName', 'reportStartDate', 'reportEndDate'],
+        values: [this.cacheKey, this.selectedReport.ad, this.reportStartDate, this.reportEndDate],
       }
     ];
   }
@@ -110,6 +112,29 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   resetReport(): void {
     this.selectedReport = null;
     this.cacheKey = null;
+  }
+
+  getParameters(event: any): void {
+    console.log("Parametreler: ", event);
+
+    const parameters = event;
+    let reportStartDate = null;
+    let reportEndDate = null;
+    const currentDateTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
+
+    if (parameters.hasOwnProperty('@tarihbas')) {
+        reportStartDate = parameters['@tarihbas'].slice(0, 16).replace('T', ' ') || currentDateTime;
+    }
+
+    if (parameters.hasOwnProperty('@tarihbit')) {
+        reportEndDate = parameters['@tarihbit'].slice(0, 16).replace('T', ' ') || currentDateTime;
+    }
+
+    console.log("Report Start Date: ", reportStartDate);
+    console.log("Report End Date: ", reportEndDate);
+
+    this.reportStartDate = reportStartDate;
+    this.reportEndDate = reportEndDate;
   }
 
   ngOnDestroy(): void {

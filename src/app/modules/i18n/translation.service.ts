@@ -68,7 +68,7 @@ export class TranslationService {
           console.error('Error loading translations:', error);
         }
       );
-    }, 1000);
+    }, 100);
   }
 
   setLanguage(lang: string) {

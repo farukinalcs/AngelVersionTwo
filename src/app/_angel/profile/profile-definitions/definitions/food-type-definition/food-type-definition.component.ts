@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { HelperService } from 'src/app/_helpers/helper.service';
-import { TanimlamalarService } from '../../../profil-tanimlamalar/tanimlamalar.service';
+import { TanimlamalarService } from '../../tanimlamalar.service';
 
 @Component({
   selector: 'app-food-type-definition',

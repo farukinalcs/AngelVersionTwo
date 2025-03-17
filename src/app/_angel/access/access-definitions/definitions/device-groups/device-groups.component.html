@@ -91,7 +91,7 @@
                                             <span>{{"Terminal_Grubu_Amacı" | translate}}</span>
                                         </label>
                         
-                                        <p-dropdown [options]="purposes" [(ngModel)]="selectedPurpose" (ngModelChange)="onChangePurpose()" optionLabel="ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad"
+                                        <!-- <p-dropdown [options]="purposes" [(ngModel)]="selectedPurpose" (ngModelChange)="onChangePurpose()" optionLabel="ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad"
                                             [showClear]="true" placeholder="{{'Terminal_Grubu_Amacı_Seçiniz' | translate}}">
                                             <ng-template pTemplate="selectedItem">
                                                 <div class="item-item item-item-value" *ngIf="selectedPurpose">
@@ -103,7 +103,21 @@
                                                     <div>{{item?.ad}}</div>
                                                 </div>
                                             </ng-template>
-                                        </p-dropdown>
+                                        </p-dropdown> -->
+
+
+                                        <p-select [options]="purposes" [(ngModel)]="selectedPurpose" (ngModelChange)="onChangePurpose()" optionLabel="ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad" [showClear]="true" placeholder="Select a Country" class="w-full md:w-56">
+                                            <ng-template #selectedItem let-selectedPurpose>
+                                                <div class="flex items-center gap-2">
+                                                    <div>{{ selectedPurpose?.ad }}</div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template let-item #item>
+                                                <div class="flex items-center gap-2">
+                                                    <div>{{ item?.ad }}</div>
+                                                </div>
+                                            </ng-template>
+                                        </p-select>
                                     </div>
 
                                     <div class="col-6 ">

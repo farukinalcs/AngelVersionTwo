@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
 import { UserModel } from '../../models/user.model';
 import { environment } from '../../../../../environments/environment';
-import * as CryptoJS from "crypto-js";
+import CryptoES from "crypto-es";
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { environment as prodEnvironment} from 'src/environments/environment.prod';
 import { ApiUrlService } from 'src/app/_helpers/api-url.service';
@@ -43,17 +43,17 @@ export class AuthHTTPService {
 
     this.helperService.loginOptions = loginOptions;
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var key = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
     console.log("Login Options :", loginOptions);
     
     console.log("this.helperService.loginOptions:", this.helperService.loginOptions);
     
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(loginOptions)), key, {
-      keySize : 128 / 8,
+    var encryptedParam = CryptoES.AES.encrypt(CryptoES.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(loginOptions)), key, {
+      // keySize : 128 / 8,
       iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
+      mode : CryptoES.mode.CBC,
+      padding : CryptoES.pad.Pkcs7
     });
 
     var data = {

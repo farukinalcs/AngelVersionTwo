@@ -12,7 +12,9 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { OKodFieldsModel } from '../../models/oKodFields';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { AuthService, UserType } from 'src/app/modules/auth';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+
+
 import { DrawerComponent, MenuComponent, ScrollComponent, ScrollTopComponent, StickyComponent, ToggleComponent } from 'src/app/_metronic/kt/components';
 
 @Component({

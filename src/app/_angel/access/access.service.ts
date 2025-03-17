@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { environment } from 'src/environments/environment';
-import * as CryptoJS from "crypto-js";
+import CryptoES from "crypto-es";
 import { Subject } from 'rxjs';
 import { ApiUrlService } from 'src/app/_helpers/api-url.service';
 
@@ -29,14 +29,14 @@ export class AccessService {
 
   requestMethod(sp : any[]){
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var key = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
     console.log("SP",sp);
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
+    var encryptedParam = CryptoES.AES.encrypt(CryptoES.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      // keySize : 128 / 8,
       iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
+      mode : CryptoES.mode.CBC,
+      padding : CryptoES.pad.Pkcs7
     });
 
     var data = {
@@ -61,14 +61,14 @@ export class AccessService {
       }
     })
 
-    var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
+    var key = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
 
-    var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
-      keySize : 128 / 8,
+    var encryptedParam = CryptoES.AES.encrypt(CryptoES.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      // keySize : 128 / 8,
       iv : iv,
-      mode : CryptoJS.mode.CBC,
-      padding : CryptoJS.pad.Pkcs7
+      mode : CryptoES.mode.CBC,
+      padding : CryptoES.pad.Pkcs7
     });
 
     var data = {

@@ -29,14 +29,16 @@ import '@boldreports/javascript-reporting-controls/Scripts/v2.0/bold.report-view
 import { LoadingInterceptor } from './modules/loading/interceptors/loading.interceptor';
 // ------------
 
+// PrimeNG Theme
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
+import MyPreset from './_primeng/mypreset'
+// -------------
 
-import Lara from '@primeng/themes/lara';
-// #fake-start#
-// import { FakeAPIService } from './_fake/fake-api.service';
 
-// #fake-end#
+
+
+
 
 function appInitializer(authService: AuthService) {
   return () => {
@@ -47,16 +49,22 @@ function appInitializer(authService: AuthService) {
   };
 }
 
-const appConfig: ApplicationConfig = {
+
+
+export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: Lara
+        preset: MyPreset,
+        options: {
+          darkModeSelector: '.my-app-dark'
+        }
       }
     })
   ]
 };
+
 
 @NgModule({
   declarations: [AppComponent, LoadingComponent],

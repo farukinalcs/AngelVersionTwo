@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { meal } from '../../../models/meal';
-import { TanimlamalarService } from '../../../profil-tanimlamalar/tanimlamalar.service';
+import { TanimlamalarService } from '../../tanimlamalar.service';
 
 @Component({
   selector: 'app-menu-definition',

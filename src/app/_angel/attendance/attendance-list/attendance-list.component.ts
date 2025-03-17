@@ -22,7 +22,6 @@ import {
 import { AgGridAngular } from 'ag-grid-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import * as moment from 'moment';
 import { AttendanceService } from '../attendance.service';
 import { FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, GridApi } from 'ag-grid-community';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
@@ -736,286 +735,159 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     this.getAttendanceInfo();
   }
 
-  // createForm() {
-  //   this.formGroup = this.formBuilder.group({
-  //     dateRange: ['1'],
-  //     startDate: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en')],
-  //     endDate: [formatDate(this.currentDate, 'yyyy-MM-dd', 'en')],
-  //   });
-  // }
 
   createForm() {
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD formatında bugünün tarihi
+  
     this.formGroup = this.formBuilder.group({
       dateRange: ['1'], // Günlük seçili olarak başlıyor
-      startDate: [moment().format('YYYY-MM-DD')],
-      endDate: [moment().format('YYYY-MM-DD')],
+      startDate: [today],
+      endDate: [today],
     });
   }
+  
 
   setInitialDates() {
-    const today = moment();
-    this.formGroup.get('startDate')?.setValue(today.format('YYYY-MM-DD'));
-    this.formGroup.get('endDate')?.setValue(today.format('YYYY-MM-DD'));
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD formatı
+  
+    this.formGroup.patchValue({
+      startDate: today,
+      endDate: today
+    });
   }
-
-  // changeStartDate() {
-  //   this.formGroup
-  //     .get('startDate')
-  //     ?.valueChanges.pipe(takeUntil(this.ngUnsubscribe))
-  //     .subscribe((item) => {
-  //       const endDateValue = new Date(this.formGroup.get('endDate')?.value);
-
-  //       if (new Date(item) > endDateValue) {
-  //         console.log('Başlangıç Değeri, Bitiş Tarihinden Büyük Olamaz!!');
-  //         this.formGroup
-  //           .get('startDate')
-  //           ?.setValue(formatDate(endDateValue, 'yyyy-MM-dd', 'en'));
-
-  //         return;
-  //       }
-
-  //       if (this.formGroup.get('dateRange')?.value == '-1') {
-  //         this.getAttendanceInfo();
-  //       }
-  //     });
-  // }
-
-  // changeEndDate() {
-  //   this.formGroup
-  //     .get('endDate')
-  //     ?.valueChanges.pipe(takeUntil(this.ngUnsubscribe))
-  //     .subscribe((item) => {
-  //       const startDateValue = new Date(this.formGroup.get('startDate')?.value);
-
-  //       if (new Date(item) < startDateValue) {
-  //         console.log('Bitiş Tarihi, Başlangıç Değerinden Küçük Olamaz!!');
-  //         this.formGroup
-  //           .get('endDate')
-  //           ?.setValue(formatDate(startDateValue, 'yyyy-MM-dd', 'en'));
-
-  //         return;
-  //       }
-
-  //       if (this.formGroup.get('dateRange')?.value == '-1') {
-  //         this.getAttendanceInfo();
-  //       }
-  //     });
-  // }
-
+  
   subscribeToDateChanges() {
     const startDate$ = this.formGroup.get('startDate')?.valueChanges;
     const endDate$ = this.formGroup.get('endDate')?.valueChanges;
-
+  
     if (startDate$ && endDate$) {
       combineLatest([startDate$, endDate$])
-        .pipe(
-          filter(([startDate, endDate]) => startDate && endDate) // Ensure both dates are defined
-        )
+        .pipe(filter(([startDate, endDate]) => startDate && endDate)) // Ensure both dates are defined
         .subscribe(([startDate, endDate]) => {
-          const start = moment(startDate);
-          const end = moment(endDate);
-
-          if (start.isAfter(end)) {
+          const start = new Date(startDate);
+          const end = new Date(endDate);
+  
+          if (start.getTime() > end.getTime()) {
             this.formGroup
               .get('endDate')
-              ?.setValue(start.format('YYYY-MM-DD'), { emitEvent: false });
-          } else if (end.isBefore(start)) {
+              ?.setValue(start.toISOString().split('T')[0], { emitEvent: false });
+          } else if (end.getTime() < start.getTime()) {
             this.formGroup
               .get('startDate')
-              ?.setValue(end.format('YYYY-MM-DD'), { emitEvent: false });
+              ?.setValue(end.toISOString().split('T')[0], { emitEvent: false });
           }
-
+  
           if (this.formGroup.get('dateRange')?.value == '-1') {
             this.getAttendanceInfo();
           }
         });
     }
   }
-
-  // changeDateRange() {
-  //   this.formGroup
-  //     .get('dateRange')
-  //     ?.valueChanges.pipe(takeUntil(this.ngUnsubscribe))
-  //     .subscribe((item) => {
-  //       console.log('item : ', item);
-
-  //       const startDateValue = new Date(this.formGroup.get('startDate')?.value);
-  //       const endDateValue = new Date(this.formGroup.get('endDate')?.value);
-
-  //       if (item == '1') {
-  //         this.formGroup
-  //           .get('startDate')
-  //           ?.setValue(formatDate(startDateValue, 'yyyy-MM-dd', 'en'));
-  //         this.formGroup
-  //           .get('endDate')
-  //           ?.setValue(formatDate(startDateValue, 'yyyy-MM-dd', 'en'));
-  //       } else if (item == '7') {
-  //         const today = new Date();
-  //         const startOfWeek = new Date(
-  //           startDateValue.getFullYear(),
-  //           startDateValue.getMonth(),
-  //           startDateValue.getDate() - startDateValue.getDay() + 1
-  //         );
-  //         const endOfWeek = new Date(
-  //           startDateValue.getFullYear(),
-  //           startDateValue.getMonth(),
-  //           startDateValue.getDate() - startDateValue.getDay() + 7
-  //         );
-  //         this.formGroup
-  //           .get('startDate')
-  //           ?.setValue(formatDate(startOfWeek, 'yyyy-MM-dd', 'en'));
-  //         this.formGroup
-  //           .get('endDate')
-  //           ?.setValue(formatDate(endOfWeek, 'yyyy-MM-dd', 'en'));
-  //       } else if (item == '30') {
-  //         const today = new Date();
-  //         const startOfMonth = new Date(
-  //           startDateValue.getFullYear(),
-  //           startDateValue.getMonth(),
-  //           1
-  //         );
-  //         const endOfMonth = new Date(
-  //           startDateValue.getFullYear(),
-  //           startDateValue.getMonth() + 1,
-  //           0
-  //         );
-  //         this.formGroup
-  //           .get('startDate')
-  //           ?.setValue(formatDate(startOfMonth, 'yyyy-MM-dd', 'en'));
-  //         this.formGroup
-  //           .get('endDate')
-  //           ?.setValue(formatDate(endOfMonth, 'yyyy-MM-dd', 'en'));
-  //       }
-
-  //       if (item != '-1') {
-  //         this.getAttendanceInfo();
-  //       }
-  //     });
-  // }
+  
   subscribeToDateRangeChanges() {
     this.formGroup.get('dateRange')?.valueChanges.subscribe((range) => {
-      const start = moment(this.formGroup.get('startDate')?.value);
-
+      const start = new Date(this.formGroup.get('startDate')?.value);
+  
       if (range == '1') {
         // Günlük
-        this.formGroup.get('endDate')?.setValue(start.format('YYYY-MM-DD'));
+        this.formGroup.get('endDate')?.setValue(
+          start.toISOString().split('T')[0]
+        );
       } else if (range == '7') {
-        // Haftalık
-        const startOfWeek = start.clone().startOf('isoWeek');
-        const endOfWeek = start.clone().endOf('isoWeek');
+        // Haftalık (ISO haftası hesaplaması)
+        const dayOfWeek = start.getDay(); // Pazar: 0, Pazartesi: 1, ..., Cumartesi: 6
+        const diff = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // ISO haftası için Pazartesi'yi başlangıç al
+  
+        const startOfWeek = new Date(start);
+        startOfWeek.setDate(start.getDate() + diff);
+  
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+  
         this.formGroup
           .get('startDate')
-          ?.setValue(startOfWeek.format('YYYY-MM-DD'));
-        this.formGroup.get('endDate')?.setValue(endOfWeek.format('YYYY-MM-DD'));
-      } else if (range == '30') {
-        // Aylık
-        const startOfMonth = start.clone().startOf('month');
-        const endOfMonth = start.clone().endOf('month');
-        this.formGroup
-          .get('startDate')
-          ?.setValue(startOfMonth.format('YYYY-MM-DD'));
+          ?.setValue(startOfWeek.toISOString().split('T')[0]);
         this.formGroup
           .get('endDate')
-          ?.setValue(endOfMonth.format('YYYY-MM-DD'));
+          ?.setValue(endOfWeek.toISOString().split('T')[0]);
+      } else if (range == '30') {
+        // Aylık
+        const startOfMonth = new Date(start.getFullYear(), start.getMonth(), 1);
+        const endOfMonth = new Date(start.getFullYear(), start.getMonth() + 1, 0);
+  
+        this.formGroup
+          .get('startDate')
+          ?.setValue(startOfMonth.toISOString().split('T')[0]);
+        this.formGroup
+          .get('endDate')
+          ?.setValue(endOfMonth.toISOString().split('T')[0]);
       }
-
+  
       if (range != '-1') {
         this.getAttendanceInfo();
       }
     });
   }
-
-  // previousDate() {
-  //   const range = this.formGroup.get('dateRange')?.value;
-  //   const startDateValue = moment(this.formGroup.get('startDate')?.value);
-  //   const endDateValue = moment(this.formGroup.get('endDate')?.value);
-
-  //   if (range === '1') {
-  //     startDateValue.subtract(1, 'days');
-  //     endDateValue.subtract(1, 'days');
-  //   } else if (range === '7') {
-  //     startDateValue.subtract(1, 'weeks').startOf('isoWeek');
-  //     endDateValue.subtract(1, 'weeks').endOf('isoWeek');
-  //   } else if (range === '30') {
-  //     startDateValue.subtract(1, 'months').startOf('month');
-  //     endDateValue.subtract(1, 'months').endOf('month');
-  //   }
-
-  //   this.formGroup
-  //     .get('startDate')
-  //     ?.setValue(startDateValue.format('YYYY-MM-DD'));
-  //   this.formGroup.get('endDate')?.setValue(endDateValue.format('YYYY-MM-DD'));
-
-  //   this.getAttendanceInfo();
-  // }
-
-  // nextDate() {
-  //   const range = this.formGroup.get('dateRange')?.value;
-  //   const startDateValue = moment(this.formGroup.get('startDate')?.value);
-  //   const endDateValue = moment(this.formGroup.get('endDate')?.value);
-
-  //   if (range === '1') {
-  //     startDateValue.add(1, 'days');
-  //     endDateValue.add(1, 'days');
-  //   } else if (range === '7') {
-  //     startDateValue.add(1, 'weeks').startOf('isoWeek');
-  //     endDateValue.add(1, 'weeks').endOf('isoWeek');
-  //   } else if (range === '30') {
-  //     startDateValue.add(1, 'months').startOf('month');
-  //     endDateValue.add(1, 'months').endOf('month');
-  //   }
-
-  //   this.formGroup.get('endDate')?.setValue(endDateValue.format('YYYY-MM-DD'));
-  //   this.formGroup
-  //     .get('startDate')
-  //     ?.setValue(startDateValue.format('YYYY-MM-DD'));
-
-  //   this.getAttendanceInfo();
-  // }
+  
 
   previousDate() {
     const range = this.formGroup.get('dateRange')?.value;
-    const startDate = moment(this.formGroup.get('startDate')?.value);
-    const endDate = moment(this.formGroup.get('endDate')?.value);
-
+    const startDate = new Date(this.formGroup.get('startDate')?.value);
+    const endDate = new Date(this.formGroup.get('endDate')?.value);
+  
     if (range === '1') {
-      startDate.subtract('days', 1);
-      endDate.subtract('days', 1);
+      // Günlük: 1 gün geri al
+      startDate.setDate(startDate.getDate() - 1);
+      endDate.setDate(endDate.getDate() - 1);
     } else if (range === '7') {
-      startDate.subtract('weeks', 1).startOf('isoWeek');
-      endDate.subtract('weeks', 1).endOf('isoWeek');
+      // Haftalık: 1 hafta geri al, haftanın başlangıç ve bitişini belirle
+      startDate.setDate(startDate.getDate() - 7);
+      endDate.setDate(endDate.getDate() - 7);
+  
+      const diff = startDate.getDay() === 0 ? -6 : 1 - startDate.getDay(); // ISO hafta başlangıcı (Pazartesi)
+      startDate.setDate(startDate.getDate() + diff);
+      endDate.setDate(startDate.getDate() + 6);
     } else if (range === '30') {
-      startDate.subtract('months', 1).startOf('month');
-      endDate.subtract('months', 1).endOf('month');
+      // Aylık: 1 ay geri al, ayın ilk ve son gününü belirle
+      startDate.setMonth(startDate.getMonth() - 1, 1);
+      endDate.setMonth(startDate.getMonth() + 1, 0);
     }
-
-    this.formGroup.get('startDate')?.setValue(startDate.format('YYYY-MM-DD'));
-    this.formGroup.get('endDate')?.setValue(endDate.format('YYYY-MM-DD'));
-
+  
+    this.formGroup.get('startDate')?.setValue(startDate.toISOString().split('T')[0]);
+    this.formGroup.get('endDate')?.setValue(endDate.toISOString().split('T')[0]);
+  
     this.getAttendanceInfo();
   }
-
+  
   nextDate() {
     const range = this.formGroup.get('dateRange')?.value;
-    const startDate = moment(this.formGroup.get('startDate')?.value);
-    const endDate = moment(this.formGroup.get('endDate')?.value);
-
+    const startDate = new Date(this.formGroup.get('startDate')?.value);
+    const endDate = new Date(this.formGroup.get('endDate')?.value);
+  
     if (range === '1') {
-      startDate.add(1, 'days');
-      endDate.add(1, 'days');
+      // Günlük: 1 gün ileri al
+      startDate.setDate(startDate.getDate() + 1);
+      endDate.setDate(endDate.getDate() + 1);
     } else if (range === '7') {
-      startDate.add(1, 'weeks').startOf('isoWeek');
-      endDate.add(1, 'weeks').endOf('isoWeek');
+      // Haftalık: 1 hafta ileri al, haftanın başlangıç ve bitişini belirle
+      startDate.setDate(startDate.getDate() + 7);
+      endDate.setDate(endDate.getDate() + 7);
+  
+      const diff = startDate.getDay() === 0 ? -6 : 1 - startDate.getDay(); // ISO hafta başlangıcı (Pazartesi)
+      startDate.setDate(startDate.getDate() + diff);
+      endDate.setDate(startDate.getDate() + 6);
     } else if (range === '30') {
-      startDate.add(1, 'months').startOf('month');
-      endDate.add(1, 'months').endOf('month');
+      // Aylık: 1 ay ileri al, ayın ilk ve son gününü belirle
+      startDate.setMonth(startDate.getMonth() + 1, 1);
+      endDate.setMonth(startDate.getMonth() + 1, 0);
     }
-
-    this.formGroup.get('startDate')?.setValue(startDate.format('YYYY-MM-DD'));
-    this.formGroup.get('endDate')?.setValue(endDate.format('YYYY-MM-DD'));
-
+  
+    this.formGroup.get('startDate')?.setValue(startDate.toISOString().split('T')[0]);
+    this.formGroup.get('endDate')?.setValue(endDate.toISOString().split('T')[0]);
+  
     this.getAttendanceInfo();
   }
+  
 
   getContextMenuItems(params: any) {
     return [
@@ -1277,20 +1149,30 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
   }
 
   convertFromMinuteToHour(params: ValueFormatterParams) {
-    // Dakikayı moment nesnesine dönüştür
-    const time = moment.duration(params.value, 'minutes');
-    // Saat cinsine dönüştürülen zamanı formatla
-    const formattedTime = moment.utc(time.asMilliseconds()).format('HH:mm');
-    return formattedTime;
+    const minutes = params.value;
+    if (isNaN(minutes) || minutes === null || minutes === undefined) {
+      return '00:00';
+    }
+  
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+  
+    return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
   }
-
+  
   parseEntryExit(params: ValueFormatterParams) {
     if (!params.value) {
       return '__:__';
-    } else {
-      return moment(params.value).format('HH:mm:ss');
     }
+  
+    const date = new Date(params.value);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+  
+    return `${hours}:${minutes}:${seconds}`;
   }
+  
 
   timeClassChange(params: any) {
     // Giriş
