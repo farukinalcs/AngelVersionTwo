@@ -15,14 +15,22 @@ export class SecurityLocationsComponent {
   _filteredItems:any[] = [];
 
 
-
-  _locationEmergencyCall:any[] = [];
-  _locationEmergencySms:any[] = [];
-  _locationGuards:any[] = [];
-  _locaitonStations:any[] = [];
-  _locationTours:any[] = [];
-  _locationDevices:any[] = [];
-  _locationVehicle:any[] = [];
+  selectLocationId:number;
+  _setlocationEmergencyCall:any[] = [];
+  _setlocationEmergencySms:any[] = [];
+  _setlocationGuards:any[] = [];
+  _setlocaitonStations:any[] = [];
+  _setlocationTours:any[] = [];
+  _setlocationDevices:any[] = [];
+  _setlocationVehicle:any[] = [];
+  
+  _getlocationEmergencyCall:any[] = [];
+  _getlocationEmergencySms:any[] = [];
+  _getlocationGuards:any[] = [];
+  _getlocaitonStations:any[] = [];
+  _getlocationTours:any[] = [];
+  _getlocationDevices:any[] = [];
+  _getlocationVehicle:any[] = [];
 
 
   selectedIndex: 0;
@@ -86,11 +94,13 @@ export class SecurityLocationsComponent {
     }
 
 
-    getItem(item:any){
+    selectLocation(item:any){
+      this.selectLocationId = item.id;
       console.log("lokasyon item",item);
-      this.allLocationDetails(item.id);
+      console.log("this.selectLocationId item",this.selectLocationId);
+      this.allLocationDetails(this.selectLocationId);
       //this.getGuardTourCalendar(item.id);
-      this.locationDetails(item.id);
+      this.locationDetails(this.selectLocationId);
       this.ref.detectChanges();
       this.ref.markForCheck();
     }
@@ -100,29 +110,54 @@ export class SecurityLocationsComponent {
       this.patrol.allLocationDetails(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         this._allLocationDetails = response[0].x;
   
-        this._locationEmergencySms = this._allLocationDetails?.filter((x:any)=>x.tip === 'X');
-        this._locationEmergencyCall = this._allLocationDetails?.filter((x:any)=>x.tip === 'Y');
-        this._locationGuards = this._allLocationDetails?.filter((x:any)=>x.tip === 'G');
-        this._locaitonStations = this._allLocationDetails?.filter((x:any)=>x.tip === 'I');
-        this._locationTours = this._allLocationDetails?.filter((x:any)=>x.tip === 'T');
-        this._locationDevices = this._allLocationDetails?.filter((x:any)=>x.tip === 'TE');
-        this._locationVehicle = this._allLocationDetails?.filter((x:any)=>x.tip === 'C');
-        console.log("allLocationDetails:", this._allLocationDetails);
-        console.log("_locationEmergencyCall:", this._locationEmergencyCall);
-        console.log("_locationEmergencySms:", this._locationEmergencySms);
-        console.log("_locationGuards:", this._locationGuards);
-        console.log("_locaitonStations:", this._locaitonStations);
-        console.log("_locationTours:", this._locationTours);
-        console.log("_locationDevices:", this._locationDevices);
-        console.log("_locationVehicle:", this._locationVehicle);
+        this._getlocationEmergencySms = this._allLocationDetails?.filter((x:any)=>x.tip === 'X');
+        this._getlocationEmergencyCall = this._allLocationDetails?.filter((x:any)=>x.tip === 'Y');
+        this._getlocationGuards = this._allLocationDetails?.filter((x:any)=>x.tip === 'G');
+        this._getlocaitonStations = this._allLocationDetails?.filter((x:any)=>x.tip === 'I');
+        this._getlocationTours = this._allLocationDetails?.filter((x:any)=>x.tip === 'T');
+        this._getlocationDevices = this._allLocationDetails?.filter((x:any)=>x.tip === 'TE');
+        this._getlocationVehicle = this._allLocationDetails?.filter((x:any)=>x.tip === 'C');
+        // console.log("allLocationDetails:", this._allLocationDetails);
+        // console.log("_locationEmergencyCall:", this._getlocationEmergencyCall);
+        // console.log("_locationEmergencySms:", this._getlocationEmergencySms);
+        // console.log("_locationGuards:", this._getlocationGuards);
+        // console.log("_locaitonStations:", this._getlocaitonStations);
+        // console.log("_locationTours:", this._getlocationTours);
+        // console.log("_locationDevices:", this._getlocationDevices);
+        // console.log("_locationVehicle:", this._getlocationVehicle);
       });
       this.ref.detectChanges();
     }
 
     locationDetails(id:number){
       this.patrol.locationDetails(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-        const locationDetails = response[0].x;
-        console.log("locationDetails:", locationDetails);
+        this._locationDetails = response[0].x;
+        console.log("locationDetails yek248:", this._locationDetails);
+        this._setlocationEmergencySms = this._locationDetails?.filter((x:any)=>x.tip === 'X');
+        this._setlocationEmergencyCall = this._locationDetails?.filter((x:any)=>x.tip === 'Y');
+        this._setlocationGuards = this._locationDetails?.filter((x:any)=>x.tip === 'G');
+        this._setlocaitonStations = this._locationDetails?.filter((x:any)=>x.tip === 'I');
+        this._setlocationTours = this._locationDetails?.filter((x:any)=>x.tip === 'T');
+        this._setlocationDevices = this._locationDetails?.filter((x:any)=>x.tip === 'TE');
+        this._setlocationVehicle = this._locationDetails?.filter((x:any)=>x.tip === 'C');
+      });
+      this.ref.detectChanges();
+    }
+
+    setGuardLocation(item:any,islem:number){
+      console.log("setGuardLocation",item)
+      this.patrol.setGuardLocation(item.id,item.tip,this.selectLocationId,islem).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+        this._locationDetails = response[0].x;
+        this._setlocationEmergencySms = this._locationDetails?.filter((x:any)=>x.tip === 'X');
+        this._setlocationEmergencyCall = this._locationDetails?.filter((x:any)=>x.tip === 'Y');
+        this._setlocationGuards = this._locationDetails?.filter((x:any)=>x.tip === 'G');
+        this._setlocaitonStations = this._locationDetails?.filter((x:any)=>x.tip === 'I');
+        this._setlocationTours = this._locationDetails?.filter((x:any)=>x.tip === 'T');
+        this._setlocationDevices = this._locationDetails?.filter((x:any)=>x.tip === 'TE');
+        this._setlocationVehicle = this._locationDetails?.filter((x:any)=>x.tip === 'C');
+        console.log("ATAMADAN SONRA DÖNEN yek243:", this._locationDetails);
+        this.locationDetails(item.id);
+        this.allLocationDetails(item.id);
       });
       this.ref.detectChanges();
     }
@@ -147,7 +182,6 @@ export class SecurityLocationsComponent {
     if (event.tab) {
       if (event.index == 0) {
         this.selectedIndex = event.index;
-        // this.getShifts();
       } else if (event.index == 1) {
         this.selectedIndex = event.index;
       } else if (event.index == 2) {
@@ -159,39 +193,39 @@ export class SecurityLocationsComponent {
   }
 
     
-    relationStateChange(item:any, process:any) {
-      var mkodu;
-      if (process == "i") {
-        mkodu = "yek156"
-      } else if (process == "d") {
-        mkodu = "yek157"
-      }
+    // relationStateChange(item:any, process:any) {
+    //   var mkodu;
+    //   if (process == "i") {
+    //     mkodu = "yek156"
+    //   } else if (process == "d") {
+    //     mkodu = "yek157"
+    //   }
   
-      var sp: any[] = [
-        {
-          mkodu: mkodu,
-          kaynakid: item.kaynakId.toString(),
-          hedefid: item.hedefId.toString(),
-          hedeftablo: 'mesaigruplari',
-          extra: ""
+    //   var sp: any[] = [
+    //     {
+    //       mkodu: mkodu,
+    //       kaynakid: item.kaynakId.toString(),
+    //       hedefid: item.hedefId.toString(),
+    //       hedeftablo: 'mesaigruplari',
+    //       extra: ""
           
-        },
-      ];
+    //     },
+    //   ];
   
-      // this.patrol
-      //   .requestMethod(sp)
-      //   .pipe(takeUntil(this.ngUnsubscribe))
-      //   .subscribe((response: any) => {
-      //     const data = response[0].x;
-      //     const message = response[0].z;
+    //   // this.patrol
+    //   //   .requestMethod(sp)
+    //   //   .pipe(takeUntil(this.ngUnsubscribe))
+    //   //   .subscribe((response: any) => {
+    //   //     const data = response[0].x;
+    //   //     const message = response[0].z;
   
-      //     if (message.islemsonuc != 1) {
-      //       return;
-      //     }
-      //     console.log('relations durum değişti: ', data);
+    //   //     if (message.islemsonuc != 1) {
+    //   //       return;
+    //   //     }
+    //   //     console.log('relations durum değişti: ', data);
   
-      //     this.relations = [...data];        
+    //   //     this.relations = [...data];        
                   
-      //   });
-    }
+    //   //   });
+    // }
 }

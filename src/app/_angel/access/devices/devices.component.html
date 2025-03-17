@@ -15,19 +15,6 @@
                         <!-- <h3 class="card-label">{{"Puantaj Listesi" | translate}} </h3> -->
                          <h3 class="card-label">Terminaller</h3>
                     </div>
-                    <!-- 
-                    <div class="card-toolbar">
-                        <div class="card-toolbar">
-                            <div class="example-tools justify-content-center">
-                                <div class="row">
-
-                                    <div class="d-flex btn btn-icon btn-clean btn-icon-danger mr-3 my-2 my-lg-0">
-                                        <a><i style="color: #ff0000;" class="fas fa-undo-alt"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
 
                 <div class="card-body pt-3 pb-0">
@@ -54,15 +41,6 @@
                                 <div class="fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
                             
                                     <div class="btn-group w-100">
-                                    <!--begin::Radio-->
-                                    <!-- <label *ngFor="let item of rangeList" class="btn btn-sm btn-outline btn-active-dark btn-color-muted fs-8" [ngClass]="{'active': this.formGroup.get('dateRange')?.value == item.range}">
-                                     
-                                        <input class="btn-check" type="radio" [value]="item.range" formControlName="dateRange" [checked]="formGroup.get('dateRange')?.value == item.range">
-                                 
-                                        {{item.name}}
-                                    </label> -->
-
-                                    <!--end::Radio-->
                              
                                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                                     </div>
@@ -91,16 +69,12 @@
                     </div>
 
                     </div>
-
-
                 </div>
             </div>
         </div>
     </div>
 </div>
- <!-- <ng-container *ngIf="newDeviceModal">
-    <app-dialog-new-device></app-dialog-new-device>
- </ng-container> -->
+
     <p-dialog
      header="New Devices"
      [modal]="true"
@@ -112,16 +86,6 @@
             <app-dialog-new-device></app-dialog-new-device>
     </p-dialog>
 
-    <!-- <p-dialog
-    header="Update Devices"
-    [modal]="true"
-    [(visible)]="updateDeviceModal" 
-    [style]="{ width: '75vw' }" 
-    [breakpoints]="{'2560px': '70vw', '992px': '90vw', '576px': '99vw' }"
-    [maximizable]="true" 
-    [baseZIndex]="10000">
-           
-   </p-dialog> -->
 
    <ng-container *ngIf="displayUpdateDevice">
          <app-dialog-update-device

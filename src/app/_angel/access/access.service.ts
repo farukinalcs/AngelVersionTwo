@@ -165,7 +165,7 @@ export class AccessService {
 
   UpdateDevice(name:string,kind:number,model:number,io:number,
     sourcename:string,cardformat:string,ping:boolean,debug:boolean,timesend:boolean,
-    doortype:string,door:string,ip:string,port:number,controllerno:string,securitycode:string,
+    doortype:number,door:string,ip:string,port:number,controllerno:string,securitycode:string,
     latitude:string,longtitude:string){
     let a = 0;
     var sp : any[] = [{
@@ -189,6 +189,7 @@ export class AccessService {
       port:port.toString(),
       controllerno:controllerno.toString(),
       securitycode:securitycode.toString(),
+
       latitude:latitude.toString(),
       longtitude:longtitude.toString(),
       adres:'',
@@ -220,6 +221,7 @@ export class AccessService {
       pingcheck:this.convertToNumber(ping).toString(),
       debug:this.convertToNumber(debug).toString(),
       timesend:this.convertToNumber(timesend).toString(),
+
       doortype:doortype.toString(),
       door:"bla bla",
       firmaid:a.toString(),

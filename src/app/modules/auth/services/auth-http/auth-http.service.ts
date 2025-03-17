@@ -43,6 +43,7 @@ export class AuthHTTPService {
 
     this.helperService.loginOptions = loginOptions;
 
+
     var key = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
     var iv = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
     console.log("Login Options :", loginOptions);
@@ -50,7 +51,6 @@ export class AuthHTTPService {
     console.log("this.helperService.loginOptions:", this.helperService.loginOptions);
     
     var encryptedParam = CryptoES.AES.encrypt(CryptoES.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(loginOptions)), key, {
-      // keySize : 128 / 8,
       iv : iv,
       mode : CryptoES.mode.CBC,
       padding : CryptoES.pad.Pkcs7
@@ -58,8 +58,9 @@ export class AuthHTTPService {
 
     var data = {
       securedata : encryptedParam.toString()
-    };
     
+    };
+
     let options = {
       // headers : headers,
       params: data

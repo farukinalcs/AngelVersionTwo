@@ -188,7 +188,8 @@ export class SecurityGuardsComponent implements OnInit {
       okod5: '',
       okod6: '',
       okod7: '',
-      mesaiperiyodu:'0'
+      mesaiperiyodu:'0',
+      tumveri: '1'
     }];
 
     this.patrol.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response:any) => {

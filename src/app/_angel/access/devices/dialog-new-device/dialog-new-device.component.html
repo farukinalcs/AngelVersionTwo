@@ -349,7 +349,7 @@
                                             <div>
                                                 <div class="col-12 d-flex justify-content-center">
                                                     <span
-                                                        class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover"> Cihaz Modeli : {{selectModelDevice?.Ad}}</span>
+                                                        class="fs-5 fw-bolder me-1 cursor-pointer text-dark opacity-74-hover"> Cihaz Modeli : {{selectModelDevice?.Ad}}</span>
                                                 </div>
                                                 <div class="separator mb-2"></div>
                                                 <div class="col-12">
@@ -357,7 +357,7 @@
                                                         <div class="col-12 d-flex justify-content-center p-2">
                                                             <span
                                                                 class="text-gray-800  fs-6 fw-bolder">Cihaz port : {{portOfDevice}}</span>
-                                                            <span class="text-muted fw-bold d-block fs-7">
+                                                            <span class="text-gray-800 fw-bold d-block fs-7">
                                                                 Cihaz Ip : {{ipOfDevice}} </span>
                                                             <span class="text-gray-800  fs-6 fw-bolder">Cihaz moduleId : {{moduleIdOfDevice}}</span>
                                                         </div>
@@ -387,21 +387,22 @@
                                                         <div class="col-12 d-flex justify-content-center p-2">
                                                             
                                                         
-                                                            <span class="text-gray-800  fs-6 fw-bolder"> 
-                                                                Ping Test : </span>
-                                                            <input type="checkbox" [checked]="pingTest" [disabled]="true">
-                                                           
-                                                            <span class="text-gray-800  fs-6 fw-bolder">
-                                                               Bypass : </span>
-                                                            <input type="checkbox" [checked]="byPass" [disabled]="true">
+                                                            <p><span class="text-gray-800  fs-6 fw-bolder"> 
+                                                            Ping Test : </span>
+                                                            <input type="checkbox" [checked]="pingTest" [disabled]="true"></p>
 
-                                                            <span class="text-gray-800  fs-6 fw-bolder">
-                                                                Cihaz Pasif Durumda Mı? : </span>
-                                                            <input type="checkbox" [checked]="IsDevicePassive" [disabled]="true">
+                                                            <p><span class="text-gray-800  fs-6 fw-bolder">
+                                                            Bypass : </span>
+                                                             <input type="checkbox" [checked]="byPass" [disabled]="true"></p>
 
-                                                            <span class="text-gray-800  fs-6 fw-bolder">
+                                                            <p><span class="text-gray-800  fs-6 fw-bolder">
+                                                            Cihaz Pasif Durumda Mı? : </span>
+                                                            <input type="checkbox" [checked]="IsDevicePassive" [disabled]="true"></p>
+
+                                                           <p><span class="text-gray-800  fs-6 fw-bolder">
                                                                 Cihaz Zaman Gönderilsin Mi? : </span>
-                                                            <input type="checkbox" [checked]="IsShowTimeOfDevice" [disabled]="true">
+                                                            <input type="checkbox" [checked]="IsShowTimeOfDevice" [disabled]="true"></p>
+                                    
                                                         </div>
 
                                                     </div>
