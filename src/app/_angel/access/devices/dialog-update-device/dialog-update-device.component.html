@@ -1,204 +1,155 @@
     <p-dialog
     header="{{this.nameOfDevice}}"
+    (onHide)="kapat()"
     [modal]="true"
     [(visible)]="displayUpdateDevice" 
     [style]="{ width: '75vw' }" 
     [breakpoints]="{'2560px': '70vw', '992px': '90vw', '576px': '99vw' }"
     [maximizable]="true" 
     [baseZIndex]="10000">
-    <!-- <nav>
-
-        <div class="btn-group btn-group-sm d-flex justify-content-center" role="group" aria-label="Small button group">
-            <button type="button" 
-             class="btn btn-outline-danger"
-             (click)="showSection(1)"
-             [ngClass]="{ 'btn-danger': selectedSection === 1 }">Step 1</button>
-
-            <button type="button" 
-            class="btn btn-outline-danger" 
-            (click)="showSection(2)"
-            [ngClass]="{ 'btn-danger': selectedSection === 2 }">Step 2</button>
-
-            <button type="button" 
-            class="btn btn-outline-danger" 
-            (click)="showSection(3)"
-            [ngClass]="{ 'btn-danger': selectedSection === 3 }">Step 3</button>
-
-            <button type="button" 
-            class="btn btn-outline-danger" 
-            (click)="showSection(4)"
-            [ngClass]="{ 'btn-danger': selectedSection === 4 }">Step 4</button>
-
-            <button type="button" 
-            class="btn btn-outline-danger" 
-            (click)="showSection(5)"
-            [ngClass]="{ 'btn-danger': selectedSection === 5 }">Step 5</button>
-
-            <button type="button" 
-            class="btn btn-outline-danger" 
-            (click)="showSection(6)"
-            [ngClass]="{ 'btn-danger': selectedSection === 6 }">Step 6</button>
-        </div>
-      
-    </nav> -->
+   
 
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2">
-            <nav>
-                <!-- <div class="btn-group-vertical d-flex justify-content-start" role="group" aria-label="Vertical button group">
-                    <button type="button" 
-                        class="btn btn-outline-danger"
-                        (click)="showSection(1)"
-                        [ngClass]="{ 'btn-danger': selectedSection === 1 }">Step 1</button>
-
-                    <button type="button" 
-                        class="btn btn-outline-danger" 
-                        (click)="showSection(2)"
-                        [ngClass]="{ 'btn-danger': selectedSection === 2 }">Step 2</button>
-
-                    <button type="button" 
-                        class="btn btn-outline-danger" 
-                        (click)="showSection(3)"
-                        [ngClass]="{ 'btn-danger': selectedSection === 3 }">Step 3</button>
-
-                    <button type="button" 
-                        class="btn btn-outline-danger" 
-                        (click)="showSection(4)"
-                        [ngClass]="{ 'btn-danger': selectedSection === 4 }">Step 4</button>
-
-                    <button type="button" 
-                        class="btn btn-outline-danger" 
-                        (click)="showSection(5)"
-                        [ngClass]="{ 'btn-danger': selectedSection === 5 }">Step 5</button>
-
-                    <button type="button" 
-                        class="btn btn-outline-danger" 
-                        (click)="showSection(6)"
-                        [ngClass]="{ 'btn-danger': selectedSection === 6 }">Step 6</button>
-                </div> -->
-
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <button type="button" 
-                            class="btn btn-outline-danger"
-                            (click)="showSection(1)"
-                            [ngClass]="{ 'btn-danger': selectedSection === 1 }">Cihaz Ad ve Modeli</button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" 
-                            class="btn btn-outline-danger" 
-                            (click)="showSection(2)"
-                            [ngClass]="{ 'btn-danger': selectedSection === 2 }">Cihaz Port/Ip/ModuleId</button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" 
-                            class="btn btn-outline-danger" 
-                            (click)="showSection(3)"
-                            [ngClass]="{ 'btn-danger': selectedSection === 3 }">Cihaz Yön/Tanım</button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" 
-                            class="btn btn-outline-danger" 
-                            (click)="showSection(4)"
-                            [ngClass]="{ 'btn-danger': selectedSection === 4 }">Pc/Kart/Kapı</button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" 
-                            class="btn btn-outline-danger" 
-                            (click)="showSection(5)"
-                            [ngClass]="{ 'btn-danger': selectedSection === 5 }">Ping/ByPass/Pasif?</button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" 
-                            class="btn btn-outline-danger" 
-                            (click)="showSection(6)"
-                            [ngClass]="{ 'btn-danger': selectedSection === 6 }">Lokasyon</button>
-                    </li>
-                </ul>
+        
+            <!-- <nav class="d-grid gap-2">
+                <button type="button" class="btn btn-light-danger" (click)="showSection(1)"
+                    [ngClass]="{ 'btn-danger': selectedSection === 1 }">
+                    Cihaz Ad ve Modeli
+                </button>
+                <button type="button" class="btn btn-light-danger" (click)="showSection(2)"
+                    [ngClass]="{ 'btn-danger': selectedSection === 2 }">
+                    Cihaz Port/Ip/ModuleId
+                </button>
+                <button type="button" class="btn btn-light-danger" (click)="showSection(3)"
+                    [ngClass]="{ 'btn-danger': selectedSection === 3 }">
+                    Cihaz Yön/Tanım
+                </button>
+                <button type="button" class="btn btn-light-danger" (click)="showSection(4)"
+                    [ngClass]="{ 'btn-danger': selectedSection === 4 }">
+                    Pc/Kart/Kapı
+                </button>
+                <button type="button" class="btn btn-light-danger" (click)="showSection(5)"
+                    [ngClass]="{ 'btn-danger': selectedSection === 5 }">
+                    Ping/ByPass/Pasif?
+                </button>
+                <button type="button" class="btn btn-light-danger" (click)="showSection(6)"
+                    [ngClass]="{ 'btn-danger': selectedSection === 6 }">
+                    Lokasyon
+                </button>
+            </nav> -->
+            <nav class="d-flex flex-column align-items-start gap-2">
+                <button type="button" class="btn btn-light-danger w-100" (click)="showSection(1)"
+                    [ngClass]="{ 'btn-danger': selectedSection === 1 }">Cihaz Ad ve Modeli</button>
+                <button type="button" class="btn btn-light-danger w-100" (click)="showSection(2)"
+                    [ngClass]="{ 'btn-danger': selectedSection === 2 }">Cihaz Port/Ip/ModuleId</button>
+                <button type="button" class="btn btn-light-danger w-100" (click)="showSection(3)"
+                    [ngClass]="{ 'btn-danger': selectedSection === 3 }">Cihaz Yön/Tanım</button>
+                <button type="button" class="btn btn-light-danger w-100" (click)="showSection(4)"
+                    [ngClass]="{ 'btn-danger': selectedSection === 4 }">Pc/Kart/Kapı</button>
+                <button type="button" class="btn btn-light-danger w-100" (click)="showSection(5)"
+                    [ngClass]="{ 'btn-danger': selectedSection === 5 }">Ping/ByPass/Pasif?</button>
+                <button type="button" class="btn btn-light-danger w-100" (click)="showSection(6)"
+                    [ngClass]="{ 'btn-danger': selectedSection === 6 }">Lokasyon</button>
             </nav>
+            
         </div>
         
         <div class="col-md-10">
             <div [ngSwitch]="selectedSection">
-                <div *ngSwitchCase="1"> <!-- Step 1 İçeriği -->
-                    <div class="col-6 my-2">
-                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span class="required">Cihaz Adı</span>
-                        </label>
-            
-                        <input class="form-control form-control-solid" type="text" [(ngModel)]="nameOfDevice">
-            
-                      
-                    </div>
-            
-                    <div class="col-6 my-2">
-                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                            <span class="required">Cihaz Modeli</span>
-                        </label>
-                        <p-dropdown [options]="model_device" [(ngModel)]="selectModelDevice"
-                            optionLabel="Ad" [filter]="true" filterBy="Ad" 
+
+                <div *ngSwitchCase="1"> 
+
+                    <div class="row py-2 px-4">
+
+                        <div class="col-12 m-3">
+
+                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                <span class="required">Cihaz Adı</span>
+                            </label>
+                
+                            <input class="form-control form-control-solid mb-5" type="text" [(ngModel)]="nameOfDevice">
+                
+                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                <span class="required">Cihaz Modeli</span>
+                            </label>
+
+                            <p-dropdown [options]="model_device" [(ngModel)]="selectModelDevice"
+                                optionLabel="Ad" optionValue="ID" [filter]="true" filterBy="Ad" 
+                               
+                                placeholder="Cihaz Modelini Seçiniz">
+                          
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+
+                            <p>Seçilen Cihaz Modeli  selectModelDevice  : {{ selectModelDevice }}</p>
                            
-                            placeholder="Cihaz Modelini Seçiniz">
-                      
-                            <ng-template let-item pTemplate="item">
-                                <div class="item-item">
-                                    <div>{{item.Ad}}</div>
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
-                        <p>Seçilen Cihaz Modeli: {{ selectModelDevice }}</p>
-                        <button type="button" (click)="submitForm()"
-                        class="btn btn-success">Güncelle</button>
-                   
+                            <button type="button" (click)="submitForm()"
+                            class="btn btn-success w-100 mt-5">Güncelle</button>
+
+                        </div>
+
+                     
+
+
                     </div>
-                 
                    
                 </div>
+
                 <div *ngSwitchCase="2"> <!-- Step 2 İçeriği -->
-                    <div class="row">
-                        <div class="col-6 my-5">
+                    <div class="row py-2 px-4">
+                        <div class="col-12 m-3">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Cihaz Port</span>
                             </label>
             
-                            <input class="form-control form-control-solid" type="number" [(ngModel)]="portOfDevice">
-                        </div>
-            
-                        <div class="col-6 my-5">
+                            <input class="form-control form-control-solid mb-5" type="number" [(ngModel)]="portOfDevice">
+                            <p>  portOfDevice  : {{ portOfDevice }}</p>
+
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Cihaz Ip</span>
                             </label>
             
-                            <input class="form-control form-control-solid" type="text" [(ngModel)]="ipOfDevice">
-                        </div>
-                        <div class="col-6 my-5">
+                            <input class="form-control form-control-solid mb-5" type="text" [(ngModel)]="ipOfDevice">
+
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Cihaz ModuleId</span>
                             </label>
             
-                            <input  class="form-control form-control-solid" type="number" [(ngModel)]="moduleIdOfDevice">
-                        </div>
-                        <div class="col-6 my-5">
+                            <input  class="form-control form-control-solid mb-5" type="number" [(ngModel)]="moduleIdOfDevice">
+
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Güvenlik Anahtarı</span> 
                                 <span class="badge text-bg-danger text-light sck ml-4" (click)="olustur()">Oluştur</span>
                             </label>
     
-                            <input class="form-control form-control-solid" type="text" [(ngModel)]="secureKey">
+                            <input class="form-control form-control-solid mb-5" type="text" [(ngModel)]="secureKey">
+                            
+                            <button type="button" (click)="submitForm()"
+                            class="btn btn-success w-100 mt-5">Güncelle</button>
                         </div>
-                        <button type="button" (click)="submitForm()"
-                        class="btn btn-success">Güncelle</button>
+                    
+                      
+
                     </div>
                 </div>
+
                 <div *ngSwitchCase="3"> <!-- Step 3 İçeriği -->
-                    <div class="row">
-                        <div class="col-6 my-2">
+                    <div class="row py-2 px-4">
+                        <div class="col-12 m-3">
+
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Giriş/Çıkış</span>
                             </label>
-                            <p-dropdown [options]="IO" [(ngModel)]="selectIO" 
+
+                            <p-dropdown [options]="IO" [(ngModel)]="selectIO"  styleClass="custom-dropdown"
+
                                 optionLabel="Ad" optionValue="ID"
                                
                                 placeholder="Cihaz Yönünü Seçiniz">
@@ -209,16 +160,15 @@
                                     </div>
                                 </ng-template>
                             </p-dropdown>
-                          
-                        
-                        </div>
-            
-                        <div class="col-6 my-2">
+
+                            selectIO : {{selectIO}}
+
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Cihaz Tanımı</span>
                             </label>
+
                             <p-dropdown [options]="type_device" [(ngModel)]="selectTypeOfDevice"
-                                optionLabel="Ad" optionValue="ID"
+                                optionLabel="Ad" optionValue="ID" styleClass="custom-dropdown"
                                
                                 placeholder="Cihaz Tanımını Seçiniz">
                            
@@ -228,19 +178,23 @@
                                     </div>
                                 </ng-template>
                             </p-dropdown>
-                    
-                       
+                            selectTypeOfDevice : {{selectTypeOfDevice}}
+                            <button type="button" (click)="submitForm()"
+                            class="btn btn-success w-100 mt-5">Güncelle</button>
                         </div>
             
+                     
+                    
+            
                     </div>
-                    <button type="button" (click)="submitForm()"
-                    class="btn btn-success">Güncelle</button>
+                 
                 </div>
+
                 <div *ngSwitchCase="4"> <!-- Step 4 İçeriği -->
                     <div class="row py-2 px-4">
 
                             
-                        <div class="col-12 my-2">
+                        <div class="col-12 m-3">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span>PC Adı</span>
                             </label>
@@ -250,13 +204,13 @@
                           
                         </div>
             
-                        <div class="col-12 my-2">
+                        <div class="col-12 m-3">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Cihaz Kart Formatı</span>
                             </label>
                             <p-dropdown [options]="type_card" [(ngModel)]="selectFormatOfCardName"
                                 optionLabel="Ad" [filter]="true" filterBy="Ad"  optionValue="Ad"
-                               
+                                styleClass="custom-dropdown"
                                 placeholder="Cihaz Modelini Seçiniz">
                               
                                 <ng-template let-item pTemplate="item">
@@ -265,139 +219,120 @@
                                     </div>
                                 </ng-template>
                             </p-dropdown>
-                            <p>Seçilen Cihaz Modelini: {{ selectFormatOfCardName}}</p>
+                            <p>Seçilen Cihaz Modelini  selectFormatOfCardName : {{ selectFormatOfCardName}}</p>
                         </div>
             
             
-                        <div class="col-12 my-2">
+                        <div class="col-12 m-3">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Cihaz Kapı Tipi</span>
                             </label>
                             <p-dropdown [options]="type_door" [(ngModel)]="selectDoorType"
-                                placeholder="Cihaz Kapı Tipini Seçiniz"
+                                placeholder="Cihaz Kapı Tipini Seçiniz" styleClass="custom-dropdown"
                                optionLabel="GateTypeName" optionValue="Id">
                           
                                 <ng-template let-item pTemplate="item">
                                     <div class="item-item">
-                                        <div>{{item.GateTypeName}}</div>
+                                        <div>{{item?.GateTypeName}}</div>
                                     </div>
                                 </ng-template>
                             </p-dropdown>
-                            <p>Seçilen Kapı Tipini: {{ selectDoorType.GateTypeName}}</p>
+                            <p>Seçilen Kapı Tipini   selectDoorType : {{ selectDoorType}}</p>
                        
                         </div>
             
-                        <div class="col-12 my-2">
+                        <div class="col-12 m-3">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Cihaz Kapı Bilgisi</span>
                             </label>
+             
+                            <input class="form-control form-control-solid mb-5" type="text" [(ngModel)]="infoOfDeviceDoor">
             
-                            <input class="form-control form-control-solid" type="text" [(ngModel)]="infoOfDeviceDoor">
-            
-                          
+                            <button type="button" (click)="submitForm()"
+                            class="btn btn-success w-100 mt-5">Güncelle</button>
                         </div>
             
                 
-            
                     </div>
-                    <button type="button" (click)="submitForm()"
-                    class="btn btn-success">Güncelle</button>
+
+
                 </div>
                 <div *ngSwitchCase="5"> <!-- Step 5 İçeriği -->
-                    <div class="current h-xl-500px scroll">
-                        <div class="w-100">
+                    <div class="current h-xl-500px scroll d-flex justify-content-center align-items-center">
+                        <p class="w-100">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span>Ping Test Yapılsın mı?</span>
                             </label>
             
                             <input type="checkbox" [(ngModel)]="pingTest">
-                        </div>
-                        <div class="w-100">
+                        </p>
+                        <p class="w-100">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span>Cihaz ByPass</span>
                             </label>
             
                             <input type="checkbox" [(ngModel)]="byPass">
-                        </div>
-                        <div class="w-100">
+                        </p>
+                        <p class="w-100">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Cihaz Pasif Durumda Mı?</span>
                             </label>
             
                             <input type="checkbox" [(ngModel)]="IsDevicePassive">
-                        </div>
-                        <div class="w-100">
+                        </p>
+                        <p class="w-100">
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span>Cihaz Zaman Gönderilsin Mi?</span>
                             </label>
             
                             <input type="checkbox" [(ngModel)]="IsShowTimeOfDevice">
-                        </div>
+                        </p>
                     </div>
                     <button type="button" (click)="submitForm()"
-                    class="btn btn-success">Güncelle</button>
+                    class="btn btn-success w-100 mt-5">Güncelle</button>
                 </div>
                 <div *ngSwitchCase="6"> <!-- Step 6 İçeriği -->
                     <div class="row py-2 px-4">
 
                             
-                        <div class="col-8 my-2">
+                        <div class="col-12 my-2">
+
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span>Adres</span>
                             </label>
             
-                            <input class="form-control form-control-solid" type="text" [(ngModel)]="address">
-            
-                          
-                        </div>
-                        <div class="col-8 my-2">
+                            <input class="form-control form-control-solid mb-5" type="text" [(ngModel)]="address">
+
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span>Kat No</span>
                             </label>
             
-                            <input class="form-control form-control-solid" type="text" [(ngModel)]="numberOfFloor">
-            
-                          
-                        </div>
-                        <div class="col-8 my-2">
+                            <input class="form-control form-control-solid mb-5" type="text" [(ngModel)]="numberOfFloor">
+
+
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span>Oda No</span>
                             </label>
             
-                            <input class="form-control form-control-solid" type="text" [(ngModel)]="numberOfRoom">
-            
-                          
-                        </div>
-            
-            
-                        <div class="col-8 my-2">
+                            <input class="form-control form-control-solid mb-5" type="text" [(ngModel)]="numberOfRoom">
+
+
                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                 <span class="required">Lokasyon</span>
                             </label>
-            
-                
-                            <!-- <input 
-                                   class="form-control form-control-solid" 
-                                   type="text" [(ngModel)]="lokasyon" 
-                                   [readonly]="true" 
-                                   (click)="openKoordinatModal()" 
-                                   value="Tıklayın"/>  -->
                                    <input 
-                                   class="form-control form-control-solid" 
+                                   class="form-control form-control-solid mb-5" 
                                    type="text" [(ngModel)]="lokasyon"  (click)="openKoordinatModal()" 
                                    [readonly]="true" value="Tıklayın" /> 
-            
-                                  
+
+                                   <button type="button" (click)="submitForm()"
+                                   class="btn btn-success w-100 mt-5">Güncelle</button>
                         </div>
-                       <div class="col-8 my-2">
-                        <button type="button" (click)="submitForm()"
-                        class="btn btn-success">Güncelle</button> 
-                       </div>
+                   
                       
                        <!-- <div class="col-12 my-2">
                         <div id="map" style="height: 500px; width: 100%;"></div>
                         </div>  -->
-                   
                     </div>
                 </div>
                 <div *ngSwitchDefault>

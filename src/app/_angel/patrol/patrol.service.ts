@@ -181,12 +181,13 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
-  setGuardLocation(id:number,tip:string,hedefid:string){
+  setGuardLocation(id:number,tip:string,hedefid:number,islemid:number){
     var sp: any[] = [{
       mkodu:'yek243',
       id:id.toString(),
       tip:tip,
-      hedefid:hedefid
+      hedefid:hedefid.toString(),
+      islemid:islemid.toString()
     }]
     return this.requestMethod(sp);
   }
@@ -236,4 +237,59 @@ export class PatrolService {
     }]
     return this.requestMethod(sp);
   }
+
+  dailyGuardTourCheck(date:string){
+
+    var sp: any[] = [{
+      mkodu:'yek258',
+      tarih: date.toString(),
+      lokasyon:'0',
+    
+    }]
+    return this.requestMethod(sp);
+  }
+
+  dailyGuardTourCheck2(date:string){
+
+    var sp: any[] = [{
+      mkodu:'yek259',
+      tarih: date.toString(),
+      lokasyon:'0',
+    
+    }]
+    return this.requestMethod(sp);
+  }
+
+  // dailyGuardTourDetail(date:string){
+  //   console.log("DATEEEEEdetail",date);
+  //   var sp: any[] = [{
+  //     mkodu:'yek260',
+  //     tarih: date.toString(),
+  //   }]
+  //   return this.requestMethod(sp);
+  // }
+
+  tour_s(date:string){
+    var sp: any[] = [{
+      mkodu:'yek265',
+      tarih: date.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
+  tour_sd(date:string){
+    var sp: any[] = [{
+      mkodu:'yek266',
+      tarih: date.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
+
+
+   
+
+
+
+
 }

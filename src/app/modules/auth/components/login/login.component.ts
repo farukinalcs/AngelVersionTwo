@@ -113,6 +113,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
 
         if (data) {
+          console.log("Yönlendirme",data)
           this.router.navigate(['profile/dashboard']);
           this.helperService.gateResponseX = '';
         } else {

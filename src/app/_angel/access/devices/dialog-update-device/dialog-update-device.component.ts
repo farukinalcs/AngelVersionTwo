@@ -6,13 +6,13 @@ import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { Device } from '../../models/device';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-dialog-update-device',
-  // standalone: true,
-  // imports: [CommonModule],
   templateUrl: './dialog-update-device.component.html',
   styleUrls: ['./dialog-update-device.component.scss']
 })
+
 export class DialogUpdateDeviceComponent {
   selectedSection: number = 1;
   @Input() data: Device;
@@ -29,12 +29,13 @@ export class DialogUpdateDeviceComponent {
   public type_door:any[] = [];
     //form değişkenler
     nameOfDevice:string = ""; //cihaz Adık  ++
-    selectModelDevice: any = { ID: 0, Ad: ''}; // cihaz modeli +++
-    //selectModelDeviceID:number;
+    //selectModelDevice: any = { ID: 0, Ad: ''}; // cihaz modeli +++
+    selectModelDevice:number;
     portOfDevice:number; // Cihaz port 
     ipOfDevice:string = ""; // cihaz Ip ++
     moduleIdOfDevice:any = 546096986; //Cihaz module id (ControllerNo) ++
-    selectIO:any = { ID: 0, Ad: ''} // giriş çıkıs +++
+    //selectIO:any = { ID: 0, Ad: ''} // giriş çıkıs +++
+    selectIO:number;
     //selectIOID:number;
     selectTypeOfDevice:any = { ID: 0, Ad: ''}; // cihaz tanımı +++
     //selectTypeOfDeviceID:number;
@@ -126,6 +127,8 @@ export class DialogUpdateDeviceComponent {
     this.infoOfDeviceDoor = values.Door;
     this.findObject()
 
+    console.log("DEVİCE", values);
+
 
     console.log("selectDoorType", this.selectDoorType);
     console.log("selectModelDevice", this.selectModelDevice);
@@ -145,15 +148,20 @@ export class DialogUpdateDeviceComponent {
   }
 
   submitForm(){
-    const enlem = this.latitude.toString();
-    const boylam = this.longitude.toString();
-    this.access.UpdateDevice(this.nameOfDevice,this.selectTypeOfDevice,this.selectModelDevice.ID,this.selectIO.ID,
-      this.nameOfPc, this.selectFormatOfCardName,this.pingTest,this.IsDevicePassive,this.IsShowTimeOfDevice,
-      this.selectDoorType.Id,this.infoOfDeviceDoor,this.ipOfDevice,this.portOfDevice,this.moduleIdOfDevice,this.secureKey,this.latitude,this.longitude).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
-      const REsult = response[0];
-      this.ref.detectChanges();
-      console.log("SUBMİT UPDATEEEE ",REsult);
-    })
+    // const enlem = this.latitude.toString();
+    // const boylam = this.longitude.toString();
+    // this.access.UpdateDevice(this.nameOfDevice,this.selectTypeOfDevice,this.selectModelDevice,this.selectIO,
+    //   this.nameOfPc, this.selectFormatOfCardName,this.pingTest,this.IsDevicePassive,this.IsShowTimeOfDevice,
+    //   this.selectDoorType.Id,this.infoOfDeviceDoor,this.ipOfDevice,this.portOfDevice,this.moduleIdOfDevice,this.secureKey,this.latitude,this.longitude).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+    //   const REsult = response[0];
+    //   this.ref.detectChanges();
+    //   console.log("SUBMİT UPDATEEEE ",REsult);
+    // })
+    console.log("selectDoorType +", this.selectDoorType);
+    console.log("selectModelDevice", this.selectModelDevice);
+    console.log("selectTypeOfDevice +", this.selectTypeOfDevice);
+    console.log("selectFormatOfCardName", this.selectFormatOfCardName);
+    console.log("selectIO", this.selectIO);
   }
 
 
@@ -214,13 +222,17 @@ export class DialogUpdateDeviceComponent {
     this.typeOfDevice('sys_terminalkind');
     this.typeOfCard('sys_cardformat');
     this.typeOfDoor('doortype');
+    this.showSection(1);
   }
 
   modelOfDevice(source:string){
     this.access.getType_S(source).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
       this.model_device = response[0].x;
       this.ref.detectChanges();
-      console.log("model_device ",this.model_device );
+    //  const alooo =  this.model_device.filter(model =>model.Ad === this.selectModelDevice)
+    //   console.log("model_device ",this.model_device );
+    //   console.log("alooo ",alooo );
+    console.log("model_device ",this.model_device );
     })
   }
 

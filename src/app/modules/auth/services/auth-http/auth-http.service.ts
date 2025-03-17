@@ -45,10 +45,7 @@ export class AuthHTTPService {
 
     var key = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
     var iv = CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY);
-    console.log("Login Options :", loginOptions);
-    
-    console.log("this.helperService.loginOptions:", this.helperService.loginOptions);
-    
+
     var encryptedParam = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(loginOptions)), key, {
       keySize : 128 / 8,
       iv : iv,
@@ -58,8 +55,9 @@ export class AuthHTTPService {
 
     var data = {
       securedata : encryptedParam.toString()
-    };
     
+    };
+
     let options = {
       // headers : headers,
       params: data

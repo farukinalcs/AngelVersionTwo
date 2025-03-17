@@ -14,28 +14,26 @@
   
 
     <div class="row mt-4">
+
+      <div  class="card custom-card h-100">
+
+        <div *ngIf="activeWidget == 1">
+          <app-security-tours></app-security-tours>
+         </div>
    
-      <div *ngIf="activeWidget == 1">
-        <!-- <h3>Güvenlik Tur Tanımları</h3> -->
-       <app-security-tours></app-security-tours>
-      </div>
+         <div *ngIf="activeWidget == 2">
+           <app-security-locations></app-security-locations>
+         </div>
+   
+         <div *ngIf="activeWidget == 3">
+           <app-security-stations></app-security-stations>
+         </div>
+   
+         <div *ngIf="activeWidget == 4">
+           <app-security-tour-calendar></app-security-tour-calendar>
+         </div>
 
-      <div *ngIf="activeWidget == 2">
-        <app-security-locations></app-security-locations>
-        
       </div>
-
-      <div *ngIf="activeWidget == 3">
-        <!-- <h3>İstasyon Tanımları</h3> -->
-        <app-security-stations></app-security-stations>
-      </div>
-
-      <div *ngIf="activeWidget == 4">
-        <!-- <h3>Lokasyon Turları Takvimi</h3> -->
-        <app-security-tour-calendar></app-security-tour-calendar>
-      
-      </div>
-
     
     </div>
 
