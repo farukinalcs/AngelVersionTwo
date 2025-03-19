@@ -6,23 +6,47 @@ import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { AlarmModel } from '../models/alarm';
 import { Incident } from '../models/incident';
 import { TranslateService } from '@ngx-translate/core';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatDateFormats, MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatDateFormats} from '@angular/material/core';
 import { DatePipe } from '@angular/common';
 import { FormControl } from '@angular/forms';
-
+import { NativeDateAdapter } from '@angular/material/core';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 
 export const MY_DATE_FORMATS: MatDateFormats = {
   parse: { dateInput: 'yyyy-MM-dd' },
   display: {
-    dateInput: 'yyyy-MM-dd',
-    monthYearLabel: 'yyyy MMM',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'yyyy MMMM',
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'DD/MM/YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+export class CustomDateAdapter extends NativeDateAdapter {
+  override  parse(value: any): Date | null {
+    if (!value) return null;
+    const parts = value.split('/');
+    if (parts.length === 3) {
+      const day = +parts[0];
+      const month = +parts[1] - 1;
+      const year = +parts[2];
+      return new Date(year, month, day);
+    }
+    return null;
+  }
 
+  override format(date: Date, displayFormat: Object): string {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    return `${this._to2digit(day)}/${this._to2digit(month)}/${year}`;
+  }
+
+  private _to2digit(n: number) {
+    return ('0' + n).slice(-2);
+  }
+}
 @Component({
   selector: 'app-patroldashboard',
   templateUrl: './patroldashboard.component.html',
@@ -30,6 +54,7 @@ export const MY_DATE_FORMATS: MatDateFormats = {
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
   ],
+  changeDetection: ChangeDetectionStrategy.Default 
 })
 
 export class PatroldashboardComponent implements OnInit, OnDestroy {
@@ -55,7 +80,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   IncidentTime:any;
 
 
-  
+  selectedCar:any;
 
   guardEventList:any[]=[];
   eventDetails:any[]=[];
@@ -83,7 +108,11 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     console.log("destroyyy")
   }
   
-
+  cars: any[] = [
+    {value: 'volvo', viewValue: 'Volvo'},
+    {value: 'saab', viewValue: 'Saab'},
+    {value: 'mercedes', viewValue: 'Mercedes'},
+  ];
   ngOnInit(): void {
 
     const today = new Date();
@@ -100,7 +129,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     this.dailyGuardTourCheck(this.formattedDate);
     this.dailyGuardTourCheck2(this.formattedDate);
     this.dailyGuardTourDetail(this.formattedDate);
-    this.ref.detectChanges();
+ 
     }, 3000);
 
   }
@@ -116,9 +145,9 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
  getPatrolInfo(): void {
   this.patrol.getPatrolInfo().subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-    this.patrolInfo = response[0].x;
+    this.patrolInfo = response[0]?.x;
     //console.log("Patrol Info:", this.patrolInfo);
-
+    this.ref.detectChanges();
     this.patrolInfo?.forEach((patrol) => {
       if (+patrol?.olay > 0) {
       // this.lastIncidentModal = true;
@@ -132,8 +161,8 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     if (this.patrolInfo?.[0]?.lat != null && this.patrolInfo?.[0]?.lng != null &&
         !isNaN(+this.patrolInfo[0]?.lat) && !isNaN(+this.patrolInfo[0]?.lng)) {
       this.map?.setCenter({
-        lat: +this.patrolInfo[0].lat,
-        lng: +this.patrolInfo[0].lng,
+        lat: +this.patrolInfo[0]?.lat,
+        lng: +this.patrolInfo[0]?.lng,
       });
     } else {
       console.warn('Geçersiz koordinatlar:', this.patrolInfo?.[0]);
@@ -141,12 +170,12 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
     if (this.patrolInfo?.length > 0) {
       this.patrolInfo.forEach((patrol: any) => {
-        if (!isNaN(+patrol.lat) && !isNaN(+patrol.lng) && this.map) {
+        if (!isNaN(+patrol?.lat) && !isNaN(+patrol?.lng) && this.map) {
           new google.maps.Marker({
-            position: { lat: +patrol.lat, lng: +patrol.lng },
+            position: { lat: +patrol?.lat, lng: +patrol?.lng },
             map: this.map,
-            title: patrol.name,
-            icon: patrol.durum === 'offline'
+            title: patrol?.name,
+            icon: patrol?.durum === 'offline'
               ? 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
               : 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
           });
@@ -264,7 +293,8 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     //console.log("guard_device",item?.imei);
 
     this.patrol.getGuardEvents(0,imei).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
-     this.guardEventList = response[0].x;
+     this.guardEventList = response[0]?.x;
+     this.ref.detectChanges();
      this.guardEventList = this.guardEventList?.map(olay => {
       olay.link = JSON.parse(olay.link);
       return olay;  });
@@ -274,18 +304,18 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
   getEventDetail(item:Incident){
     console.log(":::DETAİLS::::",item);
-    if (!this.validateCoordinates(item.latitude, item.longitude)) {
+    if (!this.validateCoordinates(item?.latitude, item?.longitude)) {
       console.error("Geçersiz koordinatlar:",item.latitude, item.longitude);
       return;
     }
-    this.loadMap(parseFloat(item.latitude || "0"), parseFloat(item.longitude || "0"), item.olaybaslik);
+    this.loadMap(parseFloat(item.latitude || "0"), parseFloat(item?.longitude || "0"), item?.olaybaslik);
     this.eventDetailsModal = true;
     this.IncidentDesc = item?.olayaciklama || '';
     this.IncidentHeader = item?.olaybaslik || '';
     this.IncidentTime = item?.zaman;
 
-    const lat = parseFloat(item.latitude || "0");
-    const lng = parseFloat(item.longitude || "0");
+    const lat = parseFloat(item?.latitude || "0");
+    const lng = parseFloat(item?.longitude || "0");
 
     if (isNaN(lat) || isNaN(lng)) {
       console.error("Geçersiz koordinatlar:", item.latitude, item.longitude);
@@ -296,27 +326,34 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   openAlarmModal(patrol:any){
     this.lastAlarmModal = true;
     console.log("ALARMMMM",patrol);
-    if (!this.validateCoordinates(patrol.lat, patrol.lng)) {
+    if (!this.validateCoordinates(patrol?.lat, patrol?.lng)) {
       console.error("Geçersiz koordinatlar:",patrol.lat, patrol.lng);
       return;
     }
-    this.loadMap(parseFloat(patrol.lat || "0"), parseFloat(patrol.lng || "0"), patrol.securityname);
+    this.loadMap(parseFloat(patrol?.lat || "0"), parseFloat(patrol?.lng || "0"), patrol?.securityname);
   }
 
   changeContent(widgetValue: number) {
     this.activeWidget = widgetValue;
   }
 
+  items = [
+    { value: 'option1', viewValue: 'Seçenek 1' },
+    { value: 'option2', viewValue: 'Seçenek 2' },
+    { value: 'option3', viewValue: 'Seçenek 3' }
+  ];
+
   dailyGuardTourCheck(date:any){
     this.patrol.dailyGuardTourCheck(date).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
-       this.dailyGuardTour = response[0].x;
+       this.dailyGuardTour = response[0]?.x;
        //console.log("......dailyGuardTourCheck........",this.dailyGuardTour);
        this.atilmayan = this.dailyGuardTour.filter((item:any)=> item.durum === 0)
        this.atilan = this.dailyGuardTour.filter((item:any)=> item.durum === 1)
        this.atilacak = this.dailyGuardTour.filter((item:any)=> item.durum === 2)
-       //console.log("......atilmayan........",this.atilmayan);
+       console.log("......atilmayan........",this.atilmayan);
+       console.log("......atilan........",this.atilan);
+       console.log("......atilacak........",this.atilacak);
        this.updateWidgets();
-       this.ref.markForCheck();
        this.ref.detectChanges();
      })
 
@@ -324,34 +361,35 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
   dailyGuardTourCheck2(date:any){
     this.patrol.dailyGuardTourCheck2(date).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
-      this.dailyGuardTour2 = response[0].x;
+      this.dailyGuardTour2 = response[0]?.x;
       this.alarmlar = this.dailyGuardTour2.filter((item:any)=> item.durum === 1)
       this.olaylar = this.dailyGuardTour2.filter((item:any)=>item.durum === 2)
       this.updateWidgets();
-      // console.log("......dailyGuardTourCheck2........",this.dailyGuardTour2);
+      console.log("olaylar",this.olaylar);
+      console.log("alarmlar",this.alarmlar);
      })
   }
 
   updateWidgets() {
     this.widgets = [
-      { title: 'Planlanan Turlar', value: this.dailyGuardTour.length, index:0},
-      { title: 'Atılan Turlar', value: this.atilan.length,index:1},
-      { title: 'Atılmayan Turlar', value: this.atilmayan.length,index:2},
-      { title: 'Atılacak Turlar', value: this.atilacak.length,index:3},
-      { title: 'Alarmlar', value: this.alarmlar.length,index:4},
-      { title: 'Olaylar', value:this.olaylar.length,index:5},
+      { title: 'Planlanan Turlar', value: this.dailyGuardTour?.length, index:0},
+      { title: 'Atılan Turlar', value: this.atilan?.length,index:1},
+      { title: 'Atılmayan Turlar', value: this.atilmayan?.length,index:2},
+      { title: 'Atılacak Turlar', value: this.atilacak?.length,index:3},
+      { title: 'Alarmlar', value: this.alarmlar?.length,index:4},
+      { title: 'Olaylar', value:this.olaylar?.length,index:5},
     ];
   }
 
   dailyGuardTourDetail(date:any)
   {
-    this.patrol.tour_s(date).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
-      this.tour_s = response[0].x;
-       //console.log("...........................................",this.tour_s);
+    this.patrol.tour_s(date)?.subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+      this.tour_s = response[0]?.x;
+       console.log("this.tour_s",this.tour_s);
      })
-     this.patrol.tour_sd(date).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
-      this.tour_sd = response[0].x;
-       //console.log(".........................................sd",this.tour_sd);
+     this.patrol.tour_sd(date)?.subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+      this.tour_sd = response[0]?.x;
+       console.log("this.tour_sd........sd",this.tour_sd);
      })
   }
 

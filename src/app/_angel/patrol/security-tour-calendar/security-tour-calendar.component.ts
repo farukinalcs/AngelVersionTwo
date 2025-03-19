@@ -1,13 +1,14 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { PatrolService } from '../patrol.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-security-tour-calendar',
   templateUrl: './security-tour-calendar.component.html',
-  styleUrls: ['./security-tour-calendar.component.scss']
+  styleUrls: ['./security-tour-calendar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default 
 })
 export class SecurityTourCalendarComponent {
   locationName:string = "";
@@ -40,7 +41,11 @@ export class SecurityTourCalendarComponent {
       ngOnInit(): void {
         this.getLocation();
       }
-
+      ngAfterViewInit() {
+        setTimeout(() => {
+          this.ref.detectChanges();
+        });
+      }
       days = [
         { id: '1', name: 'Pazartesi' },
         { id: '2', name: 'Salı' },
@@ -59,9 +64,9 @@ export class SecurityTourCalendarComponent {
           this.patrol.getGuardTour(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
             this.tourList = response[0].x;
             console.log("getGuardTour:", this.tourList);
-            
+            this.ref.detectChanges();
           });
-          this.ref.detectChanges();
+         
         }
 
         getLocation(){
@@ -69,10 +74,11 @@ export class SecurityTourCalendarComponent {
             this._locations = response[0].x;
             this._filteredItems = [...this._locations];
             console.log("getLocation takvimm:", this._locations); 
-            
+            this.ref.detectChanges();
             this.locationName = '';
           });
-          this.ref.detectChanges();
+      
+     
         }
     
 
@@ -113,9 +119,9 @@ export class SecurityTourCalendarComponent {
           // this.locationName = '';
           this._activeTourList = response[0].x
           console.log("RESULT", this._activeTourList);
+          this.ref.detectChanges();
         })
         this.getItemsByGun(this.dayIndex);
-        this.ref.detectChanges();
       }
 
       getTourId(item:any){

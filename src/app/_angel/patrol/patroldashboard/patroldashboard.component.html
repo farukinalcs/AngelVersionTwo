@@ -1,40 +1,58 @@
   <div class="container py-4">
 
+    <mat-tab-group>
+      <mat-tab label="Cihazlar Ve Harita">
+        <div class="tab-content">
+   
+        </div>
+      </mat-tab>
+    
+      <mat-tab label="Turlar">
+        <div class="tab-content">
+     
+        </div>
+      </mat-tab>
+      
+    </mat-tab-group>
+
     <div class="row g-3 widget-section">
       <ng-container *ngFor="let widget of widgets">
         <div class="col-md-2">
-          <div class="widget-card cursor-pointer">
+          <div class="widget-card cursor-pointer" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">
             <h6 class="widget-title">{{ widget.title }}</h6>
             <p class="widget-value">{{ widget.value }}</p>
           </div>
         </div>
       </ng-container>
-      <!-- <app-dashboard-card [cards]="dashboardOptions"></app-dashboard-card> -->
     </div>
   
-    <div class="row mt-8">
-      <!-- <div class="col-md-12">
-  
-      </div> -->
-      <mat-form-field appearance="outline">
-        <!-- <mat-label>Tarih Seç</mat-label> -->
-        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" [formControl]="dateControl">
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <p>Seçilen Tarih: {{ selectedDate | date: 'yyyy-MM-dd' }}</p>
-      <!-- <div class="col-md-2">
-        <button type="button" class="btn btn-outline-danger">Listele</button>
-      </div> -->
-  
-    </div>
+<div class="row align-items-center justify-content-center mt-3 custom-container">
+  <div class="col-md-5">
+    <mat-form-field appearance="outline" class="full-width">
+      <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" [formControl]="dateControl">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
 
+  <div class="col-md-5">
+    <mat-form-field class="full-width">
+      <mat-label>Lokasyon</mat-label>
+      <mat-select [(ngModel)]="selectedCar" name="car">
+        @for (car of cars; track car) {
+          <mat-option [value]="car.value">{{car.viewValue}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+</div>
     <div class="row mt-4">
       <div class="row col-md-12" *ngIf="activeWidget == 0">
         <div class="col-md-3">    
       
           <div class="card custom-card h-100">
-            <div class="card-header" style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;">
+            <div class="card-header" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">
               <h5 class="text-white mb-0">Cihaz Tablosu</h5>
             </div>
             <div class="card-body">
@@ -80,7 +98,7 @@
     
         <div class="col-md-9">
           <div class="card custom-card h-100">
-            <div class="card-header" style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;">
+            <div class="card-header" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">
               <h5 class="text-white mb-0">Cihaz Haritası</h5>
             </div>
             <div class="card-body">
@@ -96,7 +114,7 @@
 
         <div class="col-md-3 mb-3" *ngFor="let item of this.tour_s">
           <div class="card custom-card">
-            <div class="card-header" style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;">
+            <div class="card-header" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700)) 100%;font-weight: bold;">
               <h5 class="text-white mb-0">{{item.tur}}</h5>
             </div>
             <div class="card-body">

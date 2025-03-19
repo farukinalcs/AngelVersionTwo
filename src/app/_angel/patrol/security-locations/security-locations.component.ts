@@ -3,11 +3,13 @@ import { PatrolService } from '../patrol.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { TranslateService } from '@ngx-translate/core';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-security-locations',
   templateUrl: './security-locations.component.html',
-  styleUrls: ['./security-locations.component.scss']
+  styleUrls: ['./security-locations.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default 
 })
 export class SecurityLocationsComponent {
 
@@ -50,6 +52,11 @@ export class SecurityLocationsComponent {
     ngOnInit(): void {
       this.getLocation()
     }
+    ngAfterViewInit() {
+      setTimeout(() => {
+        this.ref.detectChanges();
+      });
+    }
 
     setLocation(name:string){
       if(name !== '')
@@ -58,8 +65,9 @@ export class SecurityLocationsComponent {
           const setLocation = response[0].x;
           console.log("setLocation:", setLocation);
           this.getLocation();
+          this.ref.detectChanges();
         });
-        this.ref.detectChanges();
+        
         this.locationName = '';
       }else
       alert("LÜTFEN LOKASYON ADINI BOŞ GEÇMEYİNİZ")
@@ -70,27 +78,27 @@ export class SecurityLocationsComponent {
         this._locations = response[0].x;
         this._filteredItems = [...this._locations];
         console.log("getLocation:", this._locations); 
-        
+        this.ref.detectChanges();
         this.locationName = '';
       });
-      this.ref.detectChanges();
     }
 
     deleteLocation(id:number){
       this.patrol.deletelocation(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         const deleteLocation = response[0].x;
         console.log("deleteLocation:", deleteLocation);
+        this.ref.detectChanges();
         this.getLocation();
       });
-      this.ref.detectChanges();
     }
 
     updateLocation(name:string,id:number){
       this.patrol.updateLocation(name,id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         const updateLocation = response[0].x;
         console.log("updateLocation:", updateLocation);
+        this.ref.detectChanges();
       });
-      this.ref.detectChanges();
+  
     }
 
 
@@ -102,7 +110,6 @@ export class SecurityLocationsComponent {
       //this.getGuardTourCalendar(item.id);
       this.locationDetails(this.selectLocationId);
       this.ref.detectChanges();
-      this.ref.markForCheck();
     }
 
 
@@ -125,8 +132,9 @@ export class SecurityLocationsComponent {
         // console.log("_locationTours:", this._getlocationTours);
         // console.log("_locationDevices:", this._getlocationDevices);
         // console.log("_locationVehicle:", this._getlocationVehicle);
+        this.ref.detectChanges();
       });
-      this.ref.detectChanges();
+
     }
 
     locationDetails(id:number){
@@ -140,8 +148,9 @@ export class SecurityLocationsComponent {
         this._setlocationTours = this._locationDetails?.filter((x:any)=>x.tip === 'T');
         this._setlocationDevices = this._locationDetails?.filter((x:any)=>x.tip === 'TE');
         this._setlocationVehicle = this._locationDetails?.filter((x:any)=>x.tip === 'C');
+        this.ref.detectChanges();
       });
-      this.ref.detectChanges();
+    
     }
 
     setGuardLocation(item:any,islem:number){
@@ -156,10 +165,11 @@ export class SecurityLocationsComponent {
         this._setlocationDevices = this._locationDetails?.filter((x:any)=>x.tip === 'TE');
         this._setlocationVehicle = this._locationDetails?.filter((x:any)=>x.tip === 'C');
         console.log("ATAMADAN SONRA DÖNEN yek243:", this._locationDetails);
+        this.ref.detectChanges();
         this.locationDetails(item.id);
         this.allLocationDetails(item.id);
       });
-      this.ref.detectChanges();
+
     }
   
     // getGuardTourCalendar(id:number){

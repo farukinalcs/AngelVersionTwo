@@ -172,8 +172,23 @@
   color: #000; /* İsteğe bağlı olarak yazı rengi */
 }
 
-::ng-deep mat-datepicker mat-datepicker-toggle {
+:host ::ng-deep mat-datepicker mat-datepicker-toggle {
   background-color: #ed0e0e; /* Açık gri */
   border-radius: 5px; /* Köşeleri yumuşatma */
   padding: 5px; /* İç boşluk ekleme */
+}
+.custom-container {
+  display: flex;
+  gap: 15px;  // Elemanlar arasındaki boşluk
+  justify-content: center; 
+}
+
+.full-width {
+  width: 100%; // Input ve select elementlerinin tam genişlik almasını sağlar
+}
+
+.selected-date {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
 }
