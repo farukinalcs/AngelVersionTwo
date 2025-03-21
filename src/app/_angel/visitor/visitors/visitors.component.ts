@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TooltipModule } from 'primeng/tooltip';
@@ -10,6 +10,7 @@ import { AddBannedVisitorComponent } from './banned-visitor/add-banned-visitor/a
 import { UpdateBannedVisitorComponent } from './banned-visitor/update-banned-visitor/update-banned-visitor.component';
 import { TempCardComponent } from './temp-card/temp-card.component';
 import { AddTempCardComponent } from './temp-card/add-temp-card/add-temp-card.component';
+import { AddVisitorComponent } from './visitor-grid/add-visitor/add-visitor.component';
 
 @Component({
   selector: 'app-visitors',
@@ -24,7 +25,8 @@ import { AddTempCardComponent } from './temp-card/add-temp-card/add-temp-card.co
     AddBannedVisitorComponent,
     UpdateBannedVisitorComponent,
     TempCardComponent,
-    AddTempCardComponent
+    AddTempCardComponent,
+    AddVisitorComponent
   ],
   templateUrl: './visitors.component.html',
   styleUrl: './visitors.component.scss'
@@ -44,6 +46,7 @@ export class VisitorsComponent implements OnInit, OnDestroy {
   displayUpdateBanned: boolean = false;
   refresh: boolean = false;
   displayAddCard: boolean = false;
+  displayAddVisitor: boolean = false;
 
   constructor(
     private translateService: TranslateService
@@ -80,6 +83,26 @@ export class VisitorsComponent implements OnInit, OnDestroy {
 
   visibleAddCard() {
     this.displayAddCard = !this.displayAddCard;
+    
+  }
+
+  visibleAddVisitor() {
+    this.displayAddVisitor = !this.displayAddVisitor;
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'F2':
+        this.visibleAddVisitor();
+        break;
+      case 'F8':
+        this.visibleAddCard();
+        break;
+      case 'F9':
+        this.visibleAddBanned();
+        break;
+    }
   }
   
   ngOnDestroy(): void {

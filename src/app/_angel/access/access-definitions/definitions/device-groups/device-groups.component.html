@@ -106,7 +106,7 @@
                                         </p-dropdown> -->
 
 
-                                        <p-select [options]="purposes" [(ngModel)]="selectedPurpose" (ngModelChange)="onChangePurpose()" optionLabel="ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad" [showClear]="true" placeholder="Select a Country" class="w-full md:w-56">
+                                        <p-select [options]="purposes" [(ngModel)]="selectedPurpose" (ngModelChange)="onChangePurpose()" optionLabel="ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad" [showClear]="true" placeholder="Select a Country" class="w-100 md:w-56">
                                             <ng-template #selectedItem let-selectedPurpose>
                                                 <div class="flex items-center gap-2">
                                                     <div>{{ selectedPurpose?.ad }}</div>

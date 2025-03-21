@@ -1,0 +1,132 @@
+<p-dialog
+    header="{{ 'Yeni_Ziyaretçi_Ekle' | translate }}"
+    [(visible)]="visible"
+    (onHide)="onHide()"
+    position="top"
+    [modal]="true"
+    [breakpoints]="{ '2560px': '60vw', '992px': '80vw', '576px': '90vw' }"
+    [baseZIndex]="10000"
+    [draggable]="false"
+    [resizable]="false"
+    [maximizable]="true">
+
+    <div class="container" >
+        <div class="row" [formGroup]="form">
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Personeller" | translate}}</span>
+                </label>
+
+                <p-select 
+                    [options]="registries"
+                    formControlName="registry"
+                    optionLabel="adsoyad"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                    [filter]="true"
+                    filterBy="adsoyad"
+                    [showClear]="true"
+                    placeholder="{{'Personel_Seçiniz' | translate}}"
+                    class="w-100 md:w-56">
+                    <ng-template #selectedItem let-selected>
+                        <div class="flex items-center gap-2">
+                            <div>{{ form.get('registry')?.value?.adsoyad }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item #item>
+                        <div class="flex items-center gap-2">
+                            <div>{{ item?.adsoyad }}</div>
+                        </div>
+                    </ng-template>
+                </p-select>
+                <ng-container 
+                    [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: translateService.instant('Boş_Geçilemez!'),
+                        control: form.controls['registry']
+                    }">
+                </ng-container>
+            </div>
+
+            <div class="col-6 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Ziyaretçi Kartları" | translate}}</span>
+                </label>
+
+                <p-select 
+                    [options]="cards"
+                    formControlName="card"
+                    optionLabel="AdSoyad"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                    [filter]="true"
+                    filterBy="AdSoyad"
+                    [showClear]="true"
+                    placeholder="{{'Ziyaretçi_Kartı_Seçiniz' | translate}}"
+                    class="w-100 md:w-56">
+                    <ng-template #selectedItem let-selected>
+                        <div class="flex items-center gap-2">
+                            <div>{{ form.get('card')?.value?.AdSoyad }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item #item>
+                        <div class="flex items-center gap-2">
+                            <div>{{ item?.AdSoyad }}</div>
+                        </div>
+                    </ng-template>
+                </p-select>
+                <ng-container 
+                    [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: translateService.instant('Boş_Geçilemez!'),
+                        control: form.controls['card']
+                    }">
+                </ng-container>
+            </div>
+
+            
+
+            <div class="col-12 p-5">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Açıklama" | translate}}</span>
+                </label>
+
+                <!-- <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Açıklama Giriniz' | translate}}" formControlName="explanation"> -->
+                <textarea class="form-control form-control-solid" maxlength="500" rows="4" formControlName="explanation" placeholder="{{'Açıklama Giriniz' | translate}}"></textarea>
+                <ng-container 
+                    [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: translateService.instant('Boş_Geçilemez!'),
+                        control: form.controls['explanation']
+                    }">
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <a (click)="onHide()" class="btn btn-danger btn-sm mx-1">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'Kapat' | translate}}
+        </a>
+        <a (click)="add()"  class="btn btn-danger btn-sm mx-1">
+            <i class="fa-solid fa-check fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>
+
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+    <ng-container *ngIf="control.hasError(validation)">
+        <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+                <span role="alert">
+                    {{ message }}
+                </span>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

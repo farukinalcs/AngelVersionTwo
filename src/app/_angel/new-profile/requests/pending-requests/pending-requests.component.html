@@ -1,0 +1,82 @@
+<!-- <div class="container"> -->
+<div class="container-xxl">
+    <div class="card p-5">
+        <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="resetArr()" style='min-height:300px'>
+            <mat-tab label="{{'Onayınızı_Bekleyen_Formlar' | translate}}">
+                <app-pending [pendingRequests]="onayBeklenenFormlar" [selectedNavItem]="kaynak"
+                    [menuItems]="menuItems" (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
+                    (getDemandsEvent)="getDemanded($event)"
+                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)"
+                    (showUploadedFilesEvent)="showUploadedFiles($event)"
+                    (cancelMultipleDialogEvent)="showCancelDemandDialog($event)">
+                </app-pending>
+            </mat-tab>
+
+            <mat-tab label="{{'Onaylananlar' | translate}}">
+                <app-approved-requests [approvedRequests]="onaylananFormlar" [selectedNavItem]="kaynak"
+                    [menuItems]="menuItems" (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
+                    (getMyDemandsEvent)="getDemanded($event)"
+                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
+                </app-approved-requests>
+            </mat-tab>
+
+            <mat-tab label="{{'Reddedilenler' | translate}}">
+                <app-denied-requests [deniedRequests]="reddedilenFormlar" [selectedNavItem]="kaynak"
+                    [menuItems]="menuItems" (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
+                    (getMyDemandsEvent)="getDemanded($event)"
+                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
+                </app-denied-requests>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
+<ng-container *ngIf="displayDemandProcess">
+    <app-request-process [demandId]="demandIdForProcess" [demandTypeName]="demandTypeNameForProcess"
+        [displayRequestProcess]="displayDemandProcess" (displayRequestProcessEvent)="displayDemandProcess = false">
+    </app-request-process>
+</ng-container>
+
+
+<ng-container *ngIf="displayDetailSearch">
+    <app-detail-search [selectedNavItem]="kaynak" (formValuesEvent)="getFormValues($event)"
+        (displayDetailSearchEvent)="displayDetailSearch = false" [displayDetailSearch]="displayDetailSearch">
+    </app-detail-search>
+</ng-container>
+
+<ng-container *ngIf="displayUploadedFiles">
+    <app-uploaded-files [displayUploadedFiles]="displayUploadedFiles" [selectedDemand]="selectedDemand"
+        [selectedNavItem]="kaynak" (onHideUploadedFilesEvent)="onHideUploadedFiles()"
+        (selectedDemandEvent)="setSelectedDemandEmptyFile($event)">
+    </app-uploaded-files>
+</ng-container>
+
+
+<ng-container *ngIf="displayCancelDemand">
+    <p-dialog header="{{'Talep_Reddet' | translate}}" [(visible)]="displayCancelDemand" position="top" [modal]="true"
+        [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+
+        <div class="fv-row mb-10 fv-plugins-icon-container">
+
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                <span>{{"Açıklama" | translate}}</span>
+            </label>
+
+            <textarea [(ngModel)]="descriptionText" class="form-control form-control-solid" rows="3"
+                placeholder="İptal açıklaması giriniz" style="height: 12px;"></textarea>
+            <div class="fv-plugins-message-container invalid-feedback"></div>
+        </div>
+
+        <ng-template pTemplate="footer">
+            <a class="btn btn-sm btn-danger mx-1" (click)="displayCancelDemand=false; descriptionText = ''">
+                <i class="fa-solid fa-xmark fs-7"></i>
+                {{'Kapat' | translate}}
+            </a>
+
+            <a class="btn btn-sm btn-danger mx-1" (click)="isSingleOrMultiple(kaynak, descriptionText)">
+                <i class="fa-solid fa-check fs-7"></i>
+                {{'Gönder' | translate}}
+            </a>
+        </ng-template>
+    </p-dialog>
+</ng-container>

@@ -134,6 +134,7 @@ export class BannedVisitorComponent implements OnInit, OnDestroy, OnChanges {
             hide: false
           },
           {
+            colId: 'ad',
             headerName: this.translateService.instant('Ad'),
             field: 'Ad',
             headerTooltip: this.translateService.instant('Ad'),
@@ -153,6 +154,7 @@ export class BannedVisitorComponent implements OnInit, OnDestroy, OnChanges {
             onCellDoubleClicked: (params) => this.clickedVisitor(params)
           },
           {
+            colId: 'soyad',
             headerName: this.translateService.instant('Soyad'),
             field: 'Soyad',
             headerTooltip: this.translateService.instant('Soyad'),
@@ -249,6 +251,7 @@ export class BannedVisitorComponent implements OnInit, OnDestroy, OnChanges {
             hide: false
           },
           {
+            colId: 'islemler',
             headerName: this.translateService.instant('İşlemler'),
             field: '',
             headerTooltip: this.translateService.instant('İşlemler'),            
@@ -371,7 +374,7 @@ export class BannedVisitorComponent implements OnInit, OnDestroy, OnChanges {
   
   autoSizeAllColumns() {
     if (this.columnApi) {
-      const allColumnIds: string[] = ['ID', 'KimEkledi', 'giris'];
+      const allColumnIds: string[] = ['ID', 'KimEkledi', 'giris', 'islemler', 'ad', 'soyad'];
       // this.columnApi.getColumns()?.forEach((column) => {
       //   allColumnIds.push(column.getId());
       // });

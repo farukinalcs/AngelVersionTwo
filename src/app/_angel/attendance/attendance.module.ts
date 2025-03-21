@@ -8,7 +8,6 @@ import { AttendanceReportComponent } from './attendance-report/attendance-report
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProgressBarModule } from 'primeng/progressbar';
-import { SpeedDialModule } from 'primeng/speeddial';
 import { AttendanceManagementSystemComponent } from './attendance-management-system/attendance-management-system.component';
 import { InlineSVGModule } from 'ng-inline-svg-2';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
@@ -17,7 +16,6 @@ import { AttendanceListFilterComponent } from './attendance-list-filter/attendan
 import { DialogModule } from 'primeng/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DropdownModule } from 'primeng/dropdown';
-import { ProfileModule } from '../profile/profile.module';
 import { SharedModule } from '../shared/shared.module';
 import { AttendancePivotListComponent } from './attendance-pivot-list/attendance-pivot-list.component';
 import { DrawersModule } from 'src/app/_metronic/partials';
@@ -45,6 +43,10 @@ import { ShiftsComponent } from './attendance-definitions/definitions/shifts/shi
 import { OverrideComponent } from './attendance-definitions/definitions/override/override.component';
 import { ShiftGroupsComponent } from './attendance-definitions/definitions/shift-groups/shift-groups.component';
 import { ShiftPeriodsComponent } from './attendance-definitions/definitions/shift-periods/shift-periods.component';
+import { OvertimeComponent } from '../new-profile/request-forms/overtime/overtime.component';
+import { AttendanceChangeComponent } from '../new-profile/request-forms/attendance-change/attendance-change.component';
+import { ShiftChangeComponent } from '../new-profile/request-forms/shift-change/shift-change.component';
+import { LeaveComponent } from '../new-profile/request-forms/leave/leave.component';
 
 
 @NgModule({
@@ -90,14 +92,18 @@ import { ShiftPeriodsComponent } from './attendance-definitions/definitions/shif
     DialogModule,
     MatExpansionModule,
     DropdownModule,
-    ProfileModule,
+    // ProfileModule,
     SharedModule,
     DrawersModule,
     MatTooltipModule,
     MatTabsModule,
     NgApexchartsModule,
     CarouselModule,
-    TooltipModule
+    TooltipModule,
+    OvertimeComponent,
+    AttendanceChangeComponent,
+    ShiftChangeComponent,
+    LeaveComponent
   ],
   
   exports: [

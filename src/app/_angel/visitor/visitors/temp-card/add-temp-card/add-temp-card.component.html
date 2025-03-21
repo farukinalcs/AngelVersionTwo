@@ -1,5 +1,5 @@
 <p-dialog
-    header="{{ 'Yasak_Ziyaretçi_Kaydet' | translate }}"
+    header="{{ 'Geçici_Kart_Kaydet' | translate }}"
     [(visible)]="visible"
     (onHide)="onHide()"
     position="top"
@@ -21,21 +21,21 @@
                 <p-select 
                     [options]="registries"
                     formControlName="registry"
-                    optionLabel="ad"
+                    optionLabel="adsoyad"
                     emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
                     [filter]="true"
-                    filterBy="ad"
+                    filterBy="adsoyad"
                     [showClear]="true"
                     placeholder="{{'Personel_Seçiniz' | translate}}"
-                    class="w-full md:w-56">
+                    class="w-100 md:w-56">
                     <ng-template #selectedItem let-selected>
                         <div class="flex items-center gap-2">
-                            <div>{{ form.get('registry')?.value?.ad }}</div>
+                            <div>{{ form.get('registry')?.value?.adsoyad }}</div>
                         </div>
                     </ng-template>
                     <ng-template let-item #item>
                         <div class="flex items-center gap-2">
-                            <div>{{ item?.ad }}</div>
+                            <div>{{ item?.adsoyad }}</div>
                         </div>
                     </ng-template>
                 </p-select>
@@ -44,7 +44,7 @@
                     [ngTemplateOutletContext]="{
                         validation: 'required',
                         message: translateService.instant('Boş_Geçilemez!'),
-                        control: form.controls['registy']
+                        control: form.controls['registry']
                     }">
                 </ng-container>
             </div>
@@ -57,21 +57,21 @@
                 <p-select 
                     [options]="cards"
                     formControlName="card"
-                    optionLabel="ad"
+                    optionLabel="AdSoyad"
                     emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
                     [filter]="true"
-                    filterBy="ad"
+                    filterBy="AdSoyad"
                     [showClear]="true"
                     placeholder="{{'Ziyaretçi_Kartı_Seçiniz' | translate}}"
-                    class="w-full md:w-56">
+                    class="w-100 md:w-56">
                     <ng-template #selectedItem let-selected>
                         <div class="flex items-center gap-2">
-                            <div>{{ form.get('card')?.value?.ad }}</div>
+                            <div>{{ form.get('card')?.value?.AdSoyad }}</div>
                         </div>
                     </ng-template>
                     <ng-template let-item #item>
                         <div class="flex items-center gap-2">
-                            <div>{{ item?.ad }}</div>
+                            <div>{{ item?.AdSoyad }}</div>
                         </div>
                     </ng-template>
                 </p-select>
@@ -85,23 +85,9 @@
                 </ng-container>
             </div>
 
-            <div class="col-6 p-5">
-                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                    <span >{{"Plaka" | translate}}</span>
-                </label>
+            
 
-                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Plaka Giriniz' | translate}}" formControlName="carPlate">
-                <ng-container 
-                    [ngTemplateOutlet]="formError" 
-                    [ngTemplateOutletContext]="{
-                        validation: 'required',
-                        message: translateService.instant('Boş_Geçilemez!'),
-                        control: form.controls['carPlate']
-                    }">
-                </ng-container>
-            </div>
-
-            <div class="col-6 p-5">
+            <div class="col-12 p-5">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                     <span >{{"Açıklama" | translate}}</span>
                 </label>

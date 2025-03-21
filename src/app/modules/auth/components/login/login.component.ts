@@ -114,7 +114,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         if (data) {
           console.log("Yönlendirme",data)
-          this.router.navigate(['profile/dashboard']);
+          this.router.navigate(['profile']);
           this.helperService.gateResponseX = '';
         } else {
           this.hasError = true;

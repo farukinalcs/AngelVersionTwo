@@ -23,19 +23,19 @@
                 <div class="card-body pt-3 pb-0">
                     <div class="row d-flex justify-content-end">
                         <div class="col-12 d-flex align-items-end gap-2">
-                            <a class="btn btn-dark btn-sm hover-elevate-up" >
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="visibleAddVisitor()">
                                 <i class="fa-solid fa-file-circle-plus"></i>
-                                {{"Yeni_Ziyaretçi" | translate}}
+                                {{"Yeni_Ziyaretçi_F2" | translate}}
                             </a>
 
                             <a class="btn btn-dark btn-sm hover-elevate-up" (click)="visibleAddCard()">
                                 <i class="fa-solid fa-file-excel"></i>
-                                {{"Geçici_Kart" | translate}}
+                                {{"Geçici_Kart_F8" | translate}}
                             </a>
 
                             <a class="btn btn-dark btn-sm hover-elevate-up" (click)="visibleAddBanned()">
                                 <i class="fa-solid fa-file-excel"></i>
-                                {{"Yasak_Ziyaretçi_Kaydet" | translate}}
+                                {{"Yasak_Ziyaretçi_Kaydet_F9" | translate}}
                             </a>
                         </div>
 
@@ -108,6 +108,14 @@
         (hideEvent)="visibleAddCard()"
         (refreshEvent)="refreshToggle()">
     </app-add-temp-card>
+</ng-container>
+
+<ng-container *ngIf="displayAddVisitor">
+    <app-add-visitor
+        [visible]="displayAddVisitor"
+        (hideEvent)="visibleAddVisitor()"
+        (refreshEvent)="refreshToggle()">
+    </app-add-visitor>
 </ng-container>
 
 

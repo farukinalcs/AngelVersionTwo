@@ -8,6 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { FilterChangedEvent, GridReadyEvent } from 'ag-grid-community';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
+import { ExitDateRenderer } from '../visitor-grid/exit-date-renderer/exit-date-renderer.component';
 
 @Component({
   selector: 'app-temp-card',
@@ -71,7 +72,7 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
   };
   gridOptions: GridOptions = {
     context: {
-      handleDeleteButtonClick: this.handleDeleteButtonClick.bind(this)
+      handleExitButtonClick: this.handleExitButtonClick.bind(this)
     }
   };
   public columnDefs: (ColDef | ColGroupDef)[];
@@ -121,18 +122,18 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
         hide: false,
         children: [
           {
-            colId: 'ID',
+            colId: 'SicilId',
             headerName: this.translateService.instant('SID'),
-            field: 'ID',
+            field: 'SicilId',
             headerTooltip: this.translateService.instant('Sicil_Id'),
             type: 'numericColumn',
             filter: false,
             hide: false
           },
           {
-            headerName: this.translateService.instant('Ad'),
-            field: 'Ad',
-            headerTooltip: this.translateService.instant('Ad'),
+            headerName: this.translateService.instant('Ad_Soyad'),
+            field: 'Sicilidadsoyad',
+            headerTooltip: this.translateService.instant('Ad_Soyad'),
             filter: 'agTextColumnFilter',
             filterParams: {
               buttons: ['reset', 'apply'],
@@ -148,10 +149,22 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
             hide: false,
             // onCellDoubleClicked: (params) => this.clickedVisitor(params)
           },
+          
+        ],
+      },
+
+      //Ziyaret Bilgileri
+      {
+        headerName: this.translateService.instant('Kaydeden_Bilgileri'),
+        headerClass: 'organization-group',
+        marryChildren: true,
+        groupId: 'organizationGroup',
+        hide: false,
+        children: [
           {
-            headerName: this.translateService.instant('Soyad'),
-            field: 'Soyad',
-            headerTooltip: this.translateService.instant('Soyad'),
+            headerName: this.translateService.instant('Kart'),
+            field: 'kart',
+            headerTooltip: this.translateService.instant('Kart'),
             filter: 'agTextColumnFilter',
             filterParams: {
               buttons: ['reset', 'apply'],
@@ -163,39 +176,55 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
                 return true;
               },
             },
-            hide: false
+            hide: false,
+            minWidth: 60
           },
           {
-            colId: 'KimlikNo',
-            headerName: this.translateService.instant('Kimlik No'),
-            field: 'KimlikNo',
-            headerTooltip: this.translateService.instant('Kimlik No'),
-            rowGroup: false,
-            enableRowGroup: true,
+            headerName: this.translateService.instant('Son Geçiş Noktası'),
+            field: 'songecisnoktasi',
+            headerTooltip: this.translateService.instant('Son Geçiş Noktası'),
+            filter: false,
             hide: false,
-            filter: 'agTextColumnFilter',
+            minWidth: 60
           },
-        ],
-      },
-
-      //Ziyaret Bilgileri
-      {
-        headerName: this.translateService.instant('Ziyaret_Bilgileri'),
-        headerClass: 'organization-group',
-        marryChildren: true,
-        groupId: 'organizationGroup',
-        hide: false,
-        children: [
           {
-            colId: 'KimEkledi',
-            headerName: this.translateService.instant('Kime Ekledi'),
-            field: 'KimEkledi',
-            headerTooltip: this.translateService.instant('Kime Ekledi'),
-            rowGroup: false,
-            enableRowGroup: true,
+            headerName: this.translateService.instant('Giriş Tarihi'),
+            field: 'Giris',
+            headerTooltip: this.translateService.instant('Giriş Tarihi'),
+            filter: false,
             hide: false,
-            filter: false
-          }
+            valueFormatter: (params) => {
+              if (params.value) {
+                const date = new Date(params.value);
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                const hours = String(date.getHours()).padStart(2, '0');
+                const minutes = String(date.getMinutes()).padStart(2, '0');
+                const seconds = String(date.getSeconds()).padStart(2, '0');
+                return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+              }
+              return '';
+            },
+            minWidth: 60
+          },
+          {
+            headerName: this.translateService.instant('Çıkış Tarihi'),
+            field: 'Cikis',
+            headerTooltip: this.translateService.instant('Çıkış Tarihi'),
+            filter: false,
+            hide: false,
+            cellRendererSelector: (params: ICellRendererParams<any>) => {
+              const exitSystem = {
+                component: ExitDateRenderer,
+                params: {
+                  data: params.data,
+                },
+              };
+              return exitSystem
+            },
+            minWidth: 60
+          },
         ],
       },
 
@@ -208,28 +237,8 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
         hide: false,
         children: [
           {
-            headerName: this.translateService.instant('Kaydetme Tarihi'),
-            field: 'giris',
-            headerTooltip: this.translateService.instant('Kaydetme Tarihi'),
-            filter: false,
-            hide: false,
-            valueFormatter: (params) => {
-              if (params.value) {
-                  const date = new Date(params.value);
-                  const day = String(date.getDate()).padStart(2, '0');
-                  const month = String(date.getMonth() + 1).padStart(2, '0');
-                  const year = date.getFullYear();
-                  const hours = String(date.getHours()).padStart(2, '0');
-                  const minutes = String(date.getMinutes()).padStart(2, '0');
-                  const seconds = String(date.getSeconds()).padStart(2, '0');
-                  return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
-              }
-              return '';
-            }
-          },
-          {
             headerName: this.translateService.instant('Açıklama'),
-            field: 'bilgi',
+            field: 'Bilgi',
             headerTooltip: this.translateService.instant('Açıklama'),
             filter: 'agTextColumnFilter',
             filterParams: {
@@ -243,23 +252,7 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
               },
             },
             hide: false
-          },
-          {
-            headerName: this.translateService.instant('İşlemler'),
-            field: '',
-            headerTooltip: this.translateService.instant('İşlemler'),            
-            hide: false,
-            filter: false,
-            // cellRendererSelector: (params: ICellRendererParams<any>) => {
-            //   const deleteSystem = {
-            //     component: DeleteVisitor,
-            //     params: {
-            //       data: params.data,
-            //     },
-            //   };
-            //   return deleteSystem
-            // },
-          },
+          }
         ],
       },
     ];
@@ -325,13 +318,12 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
     return params?.data?.rowHeight;
   }
 
-  handleDeleteButtonClick(data: any) {
-    // "Sil" butonuna tıklanınca yapılacak işlemler burada olacak
-    console.log('Sil butonuna tıklandı', data);
+  handleExitButtonClick(data: any) {
+    // Çıkış Ver butonuna tıklanınca yapılacak işlemler burada olacak
+    console.log('Çıkış Ver butonuna tıklandı', data);
     // Burada gerekli işlemleri yapabilirsiniz
-
     var sp: any[] = [
-      { mkodu: 'yek269', id: data.ID.toString() }
+      { mkodu: 'yek274', id: data.Id.toString() }
     ];
 
     this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
@@ -342,7 +334,7 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
         return;
       }
 
-      console.log("Yasaklı ziyaretçi silindi :", data);
+      console.log("Geçici Karta Çıkışı Verildi :", data);
       this.getList();
     });
   }
@@ -354,7 +346,7 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
   
   autoSizeAllColumns() {
     if (this.columnApi) {
-      const allColumnIds: string[] = ['ID', 'KimEkledi', 'giris'];
+      const allColumnIds: string[] = ['SicilId', 'Sicilidadsoyad', 'Giris', 'Cikis'];
       // this.columnApi.getColumns()?.forEach((column) => {
       //   allColumnIds.push(column.getId());
       // });

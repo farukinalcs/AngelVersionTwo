@@ -1,0 +1,88 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-custom gutter-b py-3">
+                <div class="card-body pt-3 pb-0">
+                    <div class="row">
+                        <div class="col-1 d-flex justify-content-center align-items-center">
+
+                            <a (click)="moveLeft()"
+                                class="btn btn-sm btn-icon btn-bg-light btn-active-color-danger w-30px h-30px">
+                                <i class="fa-solid fa-arrow-left fs-5"></i>
+                            </a>
+                        </div>
+
+                        <div class="col-10 d-flex justify-content-center align-items-center">
+                            <ul class="nav nav-pills nav-pills-custom justify-content-center mb-3 tab-list"
+                                role="tablist" [ngClass]="{
+                                                    'animate-slide-left': slideDirection === 'left',
+                                                    'animate-slide-right': slideDirection === 'right'
+                                                  }">
+                                <li *ngFor="let item of visibleTabs" class="nav-item mb-3 me-3 me-lg-6">
+                                    <a class="nav-link btn btn-outline btn-flex btn-color-gray-800 btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
+                                        data-bs-toggle="pill" [attr.id]="item.id" (click)="changeTab(item)"
+                                        [ngClass]="{'active': selectedTab.id === item.id}">
+                                        <div class="nav-icon mb-3">
+                                            <i class="{{ item.icon }} fs-2 p-0"></i>
+                                        </div>
+                                        <span class="fw-bold fs-8 lh-1"> {{ item.label }} </span>
+                                        <span
+                                            class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-danger"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-1 d-flex justify-content-center align-items-center">
+                            <a (click)="moveRight()"
+                                class="btn btn-sm btn-icon btn-bg-light btn-active-color-danger w-30px h-30px">
+                                <i class="fa-solid fa-arrow-right fs-5"></i>
+                            </a>
+                        </div>
+                        <!-- Sayfa numaraları -->
+                        <div class="d-flex justify-content-center mt-1">
+                            <ng-container *ngFor="let page of pages; let i = index">
+                                <button class="page-btn" [ngClass]="{'active-page': i === currentPage}"
+                                    (click)="goToPage(i)"></button>
+                            </ng-container>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <ng-container *ngIf="selectedTab?.id == '1'">
+                <app-file-type [selectedItem]="selectedTab"></app-file-type>
+            </ng-container>
+
+            <ng-container *ngIf="selectedTab?.id == '2'">
+                <app-file-type [selectedItem]="selectedTab"></app-file-type>
+            </ng-container>
+
+            <ng-container *ngIf="selectedTab?.id == '3'">
+                <app-file-type [selectedItem]="selectedTab"></app-file-type>
+            </ng-container>
+
+            <ng-container *ngIf="selectedTab?.id == '4'">
+                <app-file-type [selectedItem]="selectedTab"></app-file-type>
+            </ng-container>
+
+            <ng-container *ngIf="selectedTab?.id == '5' ">
+                <app-file-type [selectedItem]="selectedTab"></app-file-type>
+            </ng-container>
+    
+            <ng-container  *ngIf="selectedTab?.id == '6'">
+                <app-food-type [selectedItem]="selectedTab"></app-food-type>
+            </ng-container>
+            
+            <ng-container  *ngIf="selectedTab?.id == '7'">
+                <app-menu [selectedItem]="selectedTab"></app-menu>
+            </ng-container>
+
+            
+
+
+        </div>
+    </div>
+</div>

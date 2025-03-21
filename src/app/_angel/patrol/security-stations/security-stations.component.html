@@ -5,13 +5,13 @@
             <div class="table-responsive">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" [(ngModel)]="stationName" (input)="filterItems()">
-                    <button class="btn btn-danger text-white" type="button" id="button-addon2" (click)="setGuardStation(stationName)">Ekle</button>
+                    <button class="btn btn-sm" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;" type="button" id="button-addon2" (click)="setGuardStation(stationName)">Ekle</button>
                 </div>
              
                 <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"
             >
                 <thead> 
-                    <tr style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;">
+                    <tr style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">
                         <th class="fw-bolder me-1 cursor-pointer rounded-start text-center" style="width: 80%;">Station Name</th>
                         <th class="fw-bolder me-1 cursor-pointer rounded-end" style="width: 20%;">Action</th>
                     </tr>
@@ -24,7 +24,7 @@
                             </td>
 
                             <td>
-                                <a class="btn btn-light-danger btn-sm py-1 px-2" (click)="deleteGuardStation(item.id);">
+                                <a class="btn btn-light-danger btn-sm py-1 px-2 my-1 d-flex justify-content-center align-items-center gap-2" (click)="deleteGuardStation(item.id);">
                                     <i class="fa-solid fa-minus p-0"></i>
                                 </a>
                             </td>
@@ -38,4 +38,3 @@
 
     </div>
 </div>
-

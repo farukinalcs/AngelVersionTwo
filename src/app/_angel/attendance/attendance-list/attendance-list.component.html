@@ -279,7 +279,7 @@
 
 
 
-<ng-container *ngIf="displayVacationForm">
+<!-- <ng-container *ngIf="displayVacationForm">
     <app-dialog-izin-talebi
         [isFromAttendance]="true"
         [displayVacationForm]="displayVacationForm"
@@ -307,12 +307,45 @@
         (onHideAttendanceForm)="onHideAttendanceForm()" (isCompletedFromAttendance)="getAttendanceInfo()"
         [gridStartDate]="formGroup.get('startDate')?.value" [gridEndDate]="formGroup.get('endDate')?.value">
     </app-attendance-change-form>
+</ng-container> -->
+
+<ng-container *ngIf="displayAttendanceForm">
+    <app-attendance-change [isFromAttendance]="true" [displayAttendanceForm]="displayAttendanceForm" 
+        (onHideAttendanceForm)="onHideAttendanceForm()" (isCompletedFromAttendance)="getAttendanceInfo()"
+        [gridStartDate]="formGroup.get('startDate')?.value" [gridEndDate]="formGroup.get('endDate')?.value">
+    </app-attendance-change>
 </ng-container>
 
-
+<ng-container *ngIf="displayOvertimeForm">
+    <app-overtime
+        [isFromAttendance]="true"
+        [displayOvertimeForm]="displayOvertimeForm"
+        (onHideOvertimeForm)="onHideOvertimeForm()"
+        [isFromRegistryList]="false">
+    </app-overtime>
+</ng-container>
 
 <ng-container *ngIf="displayAnnualCalendar">
     <app-annual-calendar [displayAnnualCalendar]="displayAnnualCalendar" [personInfo]="personInfoForAnnualCalendar" (annualCalendarHideEvent)="onHideAnnualCalendar()"></app-annual-calendar>
 </ng-container>
 
+
+<ng-container *ngIf="displayShiftForm">
+    <app-shift-change
+        [isFromAttendance]="true"
+        [displayShiftForm]="displayShiftForm"
+        (onHideShiftForm)="onHideShiftForm()"
+        (isCompletedFromAttendance)="getAttendanceInfo()">
+    </app-shift-change>
+</ng-container>
+
+<ng-container *ngIf="displayVacationForm">
+    <app-leave
+        [isFromAttendance]="true"
+        [displayVacationForm]="displayVacationForm"
+        (onHideVacationForm)="onHideVacationForm()"
+        (isCompletedFromAttendance)="getAttendanceInfo()"
+        [isFromRegistryList]="false">
+    </app-leave>
+</ng-container>
 

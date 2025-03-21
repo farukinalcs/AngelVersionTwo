@@ -266,7 +266,7 @@
     </p-dialog>
 </ng-container>
 
-
+<!-- 
 <ng-container *ngIf="displayOvertimeForm">
     <app-dialog-fazla-mesai-talebi
       [isFromAttendance]="false"
@@ -283,4 +283,22 @@
         (onHideVacationForm)="onHideVacationForm()"
         [isFromRegistryList]="true">
     </app-dialog-izin-talebi>
+</ng-container> -->
+
+<ng-container *ngIf="displayOvertimeForm">
+    <app-overtime
+      [isFromAttendance]="false"
+      [displayOvertimeForm]="displayOvertimeForm"
+      (onHideOvertimeForm)="onHideOvertimeForm()"
+      [isFromRegistryList]="true">
+    </app-overtime>
+</ng-container>
+
+<ng-container *ngIf="displayVacationForm">
+    <app-leave
+        [isFromAttendance]="false"
+        [displayVacationForm]="displayVacationForm"
+        (onHideVacationForm)="onHideVacationForm()"
+        [isFromRegistryList]="true">
+    </app-leave>
 </ng-container>
