@@ -6,13 +6,13 @@ import { ColDef, ColGroupDef, IMultiFilterParams, IRowNode, IsRowSelectable, Sid
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { ProfileService } from '../../profile/profile.service';
-import { AttendanceService } from '../../attendance/attendance.service';
-import { OrganizationColumnFilterComponent } from '../../attendance/organization-column-filter/organization-column-filter.component';
 import { Store } from '@ngrx/store';
 import { loadRegistersFailure, loadRegistersSuccess } from 'src/app/store/actions/register.action';
 import { Register } from 'src/app/store/models/register.state';
 import { selectAllRegisters } from 'src/app/store/selectors/register.selector';
 import { resetAccessGroups } from 'src/app/store/actions/access-group.action';
+import { AttendanceService } from '../../attendance/attendance.service';
+import { OrganizationColumnFilterComponent } from '../../attendance/organization-column-filter/organization-column-filter.component';
 
 @Component({
   selector: 'app-registry-list',

@@ -44,78 +44,63 @@
 
                 <div class="card-body pt-3 pb-0">
                     <div class="row mb-10 d-flex justify-content-end" [formGroup]="formGroup">
-                        <!-- <div class="col-6">
-                            <div style="position: relative;" class="speeddial-linear-demo">
-                                <p-speedDial [model]="items" direction="right"></p-speedDial>
-                            </div>
-                        </div> -->
-
-                        <div class="col-4 d-flex align-items-end gap-2">
+                        <!-- Filtreleme ve Temizleme Butonları -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 d-flex align-items-end gap-2 justify-content-md-start justify-content-lg-start justify-content-center mb-3 mb-md-0">
                             <a class="btn btn-dark btn-sm hover-elevate-up" (click)="showFilterModal()">
                                 <i class="fa-solid fa-filter"></i>
                                 {{"Filtrele" | translate}}
                             </a>
-
+                    
                             <a class="btn btn-dark btn-sm hover-elevate-up" (click)="clearFilters()">
                                 <i class="fa-solid fa-eraser"></i>
                                 {{"Temizle" | translate}}
                             </a>
                         </div>
-
-                        <div class="col-8 d-flex align-items-end justify-content-end gap-5">
+                    
+                        <!-- Tarih Aralığı ve Navigasyon -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-8 d-flex align-items-end justify-content-center justify-content-lg-end gap-3">
                             <div class="fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
                                 <!--begin::Radio group-->
                                 <div class="btn-group w-100">
-                                    <!--begin::Radio-->
-                                    <label *ngFor="let item of rangeList" class="btn btn-sm btn-outline btn-active-dark btn-color-muted fs-8" [ngClass]="{'active': this.formGroup.get('dateRange')?.value == item.range}">
-                                        <!--begin::Input-->
+                                    <label *ngFor="let item of rangeList" class="btn btn-sm btn-outline btn-active-dark btn-color-muted fs-8" 
+                                        [ngClass]="{'active': this.formGroup.get('dateRange')?.value == item.range}">
                                         <input class="btn-check" type="radio" [value]="item.range" formControlName="dateRange" [checked]="formGroup.get('dateRange')?.value == item.range">
-                                        <!--end::Input-->
                                         {{item.name}}
                                     </label>
-
-                                    <!--end::Radio-->
                                 </div>
-                                <!--end::Radio group-->
-                                <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                             </div>
-
-                            <div class="row">
-                                <ng-container *ngIf="this.formGroup.value.dateRange != '-1' ">
-                                    <div class="col d-flex align-items-end">
+                    
+                            <!-- Tarih Seçimi -->
+                            <div class="row w-100">
+                                <ng-container *ngIf="this.formGroup.value.dateRange != '-1'">
+                                    <div class="col-auto d-flex align-items-end">
                                         <i class="fa-solid fa-caret-left fs-3x text-dark cursor-pointer text-hover-gray-600" (click)="previousDate()"></i>
                                     </div>
                                 </ng-container>
-
-
+                    
                                 <div class="col">
                                     <label class="d-flex align-items-center fs-9 fw-semibold mb-2">
                                         <span>{{"Başlangıç_Tarihi" | translate}}</span>
                                     </label>
-
                                     <input type="date" class="form-control form-control-sm form-control-solid" formControlName="startDate" (click)="openDatePicker()">
                                 </div>
-
+                    
                                 <div class="col">
                                     <label class="d-flex align-items-center fs-9 fw-semibold mb-2">
                                         <span>{{"Bitiş_Tarihi" | translate}}</span>
                                     </label>
-
                                     <input type="date" class="form-control form-control-sm form-control-solid" formControlName="endDate" (click)="openDatePicker()">
                                 </div>
-
-                                <ng-container *ngIf="this.formGroup.value.dateRange != '-1' ">
-                                    <div class="col d-flex align-items-end">
+                    
+                                <ng-container *ngIf="this.formGroup.value.dateRange != '-1'">
+                                    <div class="col-auto d-flex align-items-end">
                                         <i class="fa-solid fa-caret-right fs-3x text-dark cursor-pointer text-hover-gray-600" (click)="nextDate()"></i>
                                     </div>
                                 </ng-container>
-
-
                             </div>
                         </div>
-
-
                     </div>
+                    
 
 
                     <div class="">
@@ -279,7 +264,7 @@
 
 
 
-<ng-container *ngIf="displayVacationForm">
+<!-- <ng-container *ngIf="displayVacationForm">
     <app-dialog-izin-talebi
         [isFromAttendance]="true"
         [displayVacationForm]="displayVacationForm"
@@ -307,12 +292,45 @@
         (onHideAttendanceForm)="onHideAttendanceForm()" (isCompletedFromAttendance)="getAttendanceInfo()"
         [gridStartDate]="formGroup.get('startDate')?.value" [gridEndDate]="formGroup.get('endDate')?.value">
     </app-attendance-change-form>
+</ng-container> -->
+
+<ng-container *ngIf="displayAttendanceForm">
+    <app-attendance-change [isFromAttendance]="true" [displayAttendanceForm]="displayAttendanceForm" 
+        (onHideAttendanceForm)="onHideAttendanceForm()" (isCompletedFromAttendance)="getAttendanceInfo()"
+        [gridStartDate]="formGroup.get('startDate')?.value" [gridEndDate]="formGroup.get('endDate')?.value">
+    </app-attendance-change>
 </ng-container>
 
-
+<ng-container *ngIf="displayOvertimeForm">
+    <app-overtime
+        [isFromAttendance]="true"
+        [displayOvertimeForm]="displayOvertimeForm"
+        (onHideOvertimeForm)="onHideOvertimeForm()"
+        [isFromRegistryList]="false">
+    </app-overtime>
+</ng-container>
 
 <ng-container *ngIf="displayAnnualCalendar">
     <app-annual-calendar [displayAnnualCalendar]="displayAnnualCalendar" [personInfo]="personInfoForAnnualCalendar" (annualCalendarHideEvent)="onHideAnnualCalendar()"></app-annual-calendar>
 </ng-container>
 
+
+<ng-container *ngIf="displayShiftForm">
+    <app-shift-change
+        [isFromAttendance]="true"
+        [displayShiftForm]="displayShiftForm"
+        (onHideShiftForm)="onHideShiftForm()"
+        (isCompletedFromAttendance)="getAttendanceInfo()">
+    </app-shift-change>
+</ng-container>
+
+<ng-container *ngIf="displayVacationForm">
+    <app-leave
+        [isFromAttendance]="true"
+        [displayVacationForm]="displayVacationForm"
+        (onHideVacationForm)="onHideVacationForm()"
+        (isCompletedFromAttendance)="getAttendanceInfo()"
+        [isFromRegistryList]="false">
+    </app-leave>
+</ng-container>
 

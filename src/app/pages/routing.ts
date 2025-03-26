@@ -9,11 +9,17 @@ const Routing: Routes = [
       data: { layout: 'light-sidebar' },
 
   },
+  // {
+  //   path: 'profile',
+  //   loadChildren: () =>
+  //     import('../_angel/profile/profile.module').then((m) => m.ProfileModule),
+  //     data: { layout: 'light-sidebar' },
+  // },
   {
     path: 'profile',
     loadChildren: () =>
-      import('../_angel/profile/profile.module').then((m) => m.ProfileModule),
-      data: { layout: 'light-sidebar' },
+      import('../_angel/new-profile/new-profile.routes').then(m => m.profileRoutes),
+    data: { layout: 'light-sidebar' },
   },
   {
     path: 'access',

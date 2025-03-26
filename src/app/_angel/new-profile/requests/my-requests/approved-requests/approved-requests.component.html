@@ -1,0 +1,468 @@
+<div class="row mt-5 m-0">
+    <div class="col-12 d-flex justify-content-center">
+        <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3">
+            <li *ngFor="let menuItem of menuItems" class="nav-item mb-3 me-3 me-lg-6">
+                <a class="nav-link btn btn-outline btn-flex btn-color-gray-800 btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
+                    data-bs-toggle="pill" (click)="getMyDemands(menuItem.key)" [attr.id]="'onaylanan-' +menuItem.id">
+                    <div class="nav-icon mb-3">
+                        <i class="fa-solid {{ menuItem.icon }} fs-2"></i>
+                    </div>
+                    <span class="fw-bold fs-6 lh-1">{{ menuItem.label | translate }}</span>
+                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-danger"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<ng-container *ngIf="!selectedNavItem && approvedRequests.length == 0">
+    <div class="row mt-5 m-0">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-100 w-md-50">
+                <i class="fa-solid fa-arrow-pointer fs-2x text-danger ms-5"></i>
+                <div class="flex-grow-1 me-2">
+                    <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"Talep_Türü_Seçmelisiniz" | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="selectedNavItem && approvedRequests.length == 0">
+    <div class="row pt-10 m-0">
+        <app-data-not-found [imgWidth]=" '30%' "></app-data-not-found>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="approvedRequests.length > 0">
+    <div class="row mt-5 m-0 d-flex justify-content-center">
+        <div class="card bg-light-secondary p-4">
+
+            <div class="row d-flex justify-content-center justify-content-sm-start gy-4 gy-sm-0 justify-content-between">
+                <div class="col-12 col-sm-4 d-flex justify-content-start">
+                    <div class="input-group h-100 ">
+                        <input class="form-control form-control-solid h-30px p-2 border-1 border-dark rounded-lg font-size-h6"
+                            [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}">
+                        <button class="search-icon">
+                            <div class="svg">
+                                <i class="fa-solid fa-magnifying-glass text-white fs-4"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-10 col-sm-7 d-flex justify-content-end">
+                    <a class="btn btn-sm btn-dark btn-shadow-hover font-weight-bold w-100 w-sm-auto"  (click)="showDetailSearchDialog()">
+                        {{"Detaylı_Arama" | translate}}
+                        <i class="fa fa-search"></i>
+                    </a>
+                </div>
+
+                <div class="col-1 col-sm-1">
+                    <a class="btn btn-icon btn-dark btn-sm me-3" (click)="checkGrid = !checkGrid">
+                        <i class="fa-solid fa-list fs-4" [ngClass]="{'fa-grip': checkGrid, 'fa-list' : !checkGrid}"></i>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="row mt-5 m-0">
+        <ng-container *ngIf="checkGrid">
+            <ng-container
+                *ngIf="selectedNavItem == 'izin' || selectedNavItem == 'fazlamesai' || selectedNavItem == 'sureliyetki' ">
+                <div class="mb-9 col-xxl-3 col-xl-4 col-md-6"
+                    *ngFor="let item of approvedRequests | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis', 'firma', 'bolum', 'pozisyon']; trackBy: trackBy">
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="isCardOpen(item)" (closed)="item.panelOpenState = false">
+        
+                            <mat-expansion-panel-header #panelB class="p-0 h-60px">
+                                <div class="row w-100">
+                                    <ng-container *ngIf="item.bosBelgeSayisi > 0">
+                                        <div class="col-2 d-flex justify-content-center align-items-center">
+                                            <span class="badge badge-circle badge-danger">
+                                                <i class="fa-solid fa-exclamation text-white"></i>
+                                            </span>
+                                        </div>
+                                    </ng-container>
+                                    <div class="col-6 d-flex justify-content-center align-items-center">
+                                        <div class="text-center">
+                                            <div class="fs-7 theme-dark-show text-white">
+                                                {{item.Personel}}
+                                            </div>
+        
+                                            <div class="fs-7 theme-light-show text-dark">
+                                                {{item.Personel}}
+                                            </div>
+        
+                                            <ng-container *ngIf="!item.panelOpenState">
+                                                <span class="badge badge-light-danger ml-4">{{item.sicilno}}</span>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-6 d-flex justify-content-center align-items-center">
+                                        <div class="fw-bolder text-dark">
+                                            <div class="text-center">
+                                                <div class="fs-7 short-text" pTooltip="{{ item.neden }}">
+                                                    <ng-container *ngIf="item.panelOpenState">
+                                                        {{ (item.neden.length>14)? (item.neden | slice:0:14)+'...':(item.neden)
+                                                        }}
+                                                    </ng-container>
+        
+                                                    <ng-container *ngIf="!item.panelOpenState">
+                                                        {{ (item.neden.length>12)? (item.neden | slice:0:12)+'...':(item.neden)
+                                                        }}
+                                                    </ng-container>
+                                                </div>
+        
+                                                <ng-container *ngIf="!item.panelOpenState">
+                                                    <div class="text-gray-400 fs-8">
+                                                        {{item.Baslangic | date : 'yyyy-MM-dd'}}
+                                                        <span>({{item.Baslangic | date : 'HH:mm'}})</span>
+                                                    </div>
+        
+                                                    <div class="text-gray-400 fs-8">
+                                                        {{item.Bitis | date : 'yyyy-MM-dd'}}
+                                                        <span>({{item.Bitis | date : 'HH:mm'}})</span>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel-header>
+        
+                            <div class="">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <img class="w-25" style="border-radius: 5px;"
+                                            src="{{imageUrl}}?sicilid={{item.SicilId}}"
+                                            alt="Personel Foto" />
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-center mt-4">
+                                    </div>
+                                </div>
+                                <div class="row card-body p-1">
+                                    <div class="col-12 mt-3 text-center">
+                                        <h5>{{"Nedeni" | translate}}</h5>
+                                        <span class="text-gray-600">{{item.neden}}</span>
+                                    </div>
+        
+                                    <div class="col-6 mt-3 text-center">
+                                        <h5>{{"Başlangıç" | translate}}</h5>
+                                        <span class="text-gray-600">{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}} </span>
+                                    </div>
+        
+                                    <div class="col-6 mt-3 text-center">
+                                        <h5>{{"Bitiş_İş_Başı" | translate}}</h5>
+                                        <span class="text-gray-600">{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
+                                    </div>
+        
+                                    <ng-container *ngIf="item.bolum">
+                                        <div class="col-6 mt-3 text-center">
+                                            <h5>{{"Bölüm" | translate}}</h5>
+                                            <span class="text-gray-600 scroll h-45px">{{item.bolum}}</span>
+                                        </div>
+                                    </ng-container>
+        
+                                    <ng-container *ngIf="item.pozisyon">
+                                        <div class="col-6 mt-3 text-center">
+                                            <h5>{{"Pozisyon" | translate}}</h5>
+                                            <span class="text-gray-600 scroll h-45px">{{item.pozisyon}}</span>
+                                        </div>
+                                    </ng-container>
+        
+                                    <ng-container *ngIf="item.nedenx">
+                                        <div class="col-12 mt-3 text-center">
+                                            <h5>{{"Açıklama" | translate}}</h5>
+                                            <span class="text-gray-600 scroll h-45px">{{item.nedenx}}</span>
+                                        </div>
+                                    </ng-container>
+        
+                                    <ng-container *ngIf="item.Onaylayan">
+                                        <div class="col-12 mt-3 text-center">
+                                            <h5>{{"Son" | translate}}</h5>
+                                            <span class="text-gray-600">{{item.Onaylayan}}</span>
+                                            <p>{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
+                                        </div>
+                                    </ng-container>
+        
+                                    <div class="col-12 text-center">
+                                        <div class="row mt-8">
+                                            <div class="col-3">
+                                                <button class="btn btn-icon btn-success btn-circle"
+                                                    pTooltip="{{'Onaylandı' | translate}}" disabled>
+                                                    <i class="fa-solid fa-check"></i>
+                                                </button>
+                                            </div>
+        
+                                            <div class="col-3">
+                                                <button class="btn btn-icon btn-light-info btn-circle"
+                                                    pTooltip="{{'Süreç' | translate}}"
+                                                    (click)="showDemandProcessDialog(item.Id, item.tipad)">
+                                                    <i class="fa-solid fa-question"></i>
+                                                </button>
+                                            </div>
+        
+                                            <div class="col-3">
+                                                <button class="btn btn-icon btn-light-primary btn-circle"
+                                                    pTooltip="{{'Form' | translate}}">
+                                                    <i class="fa-solid fa-print"></i>
+                                                </button>
+                                            </div>
+        
+                                            <div class="col-3">
+                                                <button class="btn btn-icon btn-light-info btn-circle"
+                                                    pTooltip="{{'Dosyalar' | translate}}">
+                                                    <i class="fa-solid fa-paperclip"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </ng-container>
+        
+        
+            <ng-container *ngIf="selectedNavItem == 'avans' ">
+                <div class="mb-9 col-xxl-3 col-xl-4 col-lg-6 col-sm-7"
+                    *ngFor="let item of approvedRequests | searchFilter:filterText: ['tipad', 'Personel', 'parabirimi', 'nedenx', 'Baslangic', 'tutar']">
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="isCardOpen(item)" (closed)="item.panelOpenState = false">
+        
+                            <mat-expansion-panel-header #panelB class="p-0 h-60px">
+                                <div class="row">
+                                    <ng-container *ngIf="item?.bosBelgeSayisi > 0">
+                                        <div class="col-2 d-flex justify-content-center align-items-center">
+                                            <span class="badge badge-circle badge-danger">
+                                                <i class="fa-solid fa-exclamation text-white"></i>
+                                            </span>
+                                        </div>
+                                    </ng-container>
+        
+        
+                                    <div class="col-4 d-flex justify-content-center align-items-center">
+                                        <div class="text-center">
+                                            <div class="fs-7 theme-dark-show text-white" pTooltip="{{ item.Personel }}">
+                                                {{ (item.Personel.length>14)? (item.Personel |
+                                                slice:0:14)+'...':(item.Personel) }}
+                                            </div>
+        
+                                            <div class="fs-7 theme-light-show text-dark" pTooltip="{{ item.Personel }}">
+                                                {{ (item.Personel.length>14)? (item.Personel |
+                                                slice:0:14)+'...':(item.Personel) }}
+                                            </div>
+        
+                                            <ng-container *ngIf="!item.panelOpenState">
+                                                <span class="badge badge-light-danger ml-4">{{item.sicilno}}</span>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-5 d-flex justify-content-center align-items-center">
+                                        <div class="fw-bolder text-dark">
+                                            <div class="text-center">
+                                                <div class="fs-7 short-text" pTooltip="{{ item.neden }}">
+                                                    {{item?.tutar | currency: item?.parabirimi:"symbol-narrow":"1.2-2"}} / {{
+                                                    item?.taksit }}
+                                                </div>
+        
+                                                <ng-container *ngIf="item.tarih">
+                                                    <div class="text-gray-400 fs-8">
+                                                        {{item.tarih | date : 'yyyy-MM-dd'}}
+                                                    </div>
+                                                </ng-container>
+        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel-header>
+        
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-12 d-flex justify-content-center">
+                                    <img width="25%" style="border-radius: 5px;"
+                                        src="{{imageUrl}}?sicilid={{item.sicilid}}" alt="Personel Foto" />
+                                </div>
+                            </div>
+        
+                            <div class="row card-body p-1">
+                                <div class="col-12 mt-3 text-center">
+                                    <h5>{{"Tutar" | translate}}</h5>
+                                    <span class="text-gray-600">
+                                        {{item?.tutar | currency: item?.parabirimi:"symbol-narrow":"1.2-2"}}
+                                        / {{ item?.taksit }}
+                                    </span>
+                                </div>
+        
+                                <div class="col-12 mt-3 text-center">
+                                    <h5>{{"IBAN" | translate}}</h5>
+                                    <span class="text-gray-600">
+                                        {{ item.iban | ibanMask }}
+                                    </span>
+                                </div>
+        
+                                <ng-container *ngIf="item.tarih">
+                                    <div class="col-6 mt-3 text-center">
+                                        <h5>{{"Tarih" | translate}}</h5>
+                                        <span class="text-gray-600">{{ item.tarih | date: 'yyyy-MM-dd' }}</span>
+                                    </div>
+                                </ng-container>
+        
+                                <ng-container *ngIf="item.taksit">
+                                    <div class="col-6 mt-3 text-center">
+                                        <h5>{{"Taksit" | translate}}</h5>
+                                        <span class="text-gray-600">{{ item.taksit }}</span>
+                                    </div>
+                                </ng-container>
+        
+                                <div class="col-6 mt-3 text-center">
+                                    <h5>{{"Bölüm" | translate}}</h5>
+                                    <div class="text-gray-600 scroll h-45px">{{item?.bolum}}</div>
+                                </div>
+        
+                                <div class="col-6 mt-3 text-center">
+                                    <h5>{{"Pozisyon" | translate}}</h5>
+                                    <div class="text-gray-600 scroll h-45px">{{item.pozisyon}}</div>
+                                </div>
+        
+                                <ng-container *ngIf="item.nedenx">
+                                    <div class="col-12 mt-3 text-center">
+                                        <h5>{{"Açıklama" | translate}}</h5>
+                                        <div class="text-gray-600 scroll h-45px">{{item.nedenx}}</div>
+                                    </div>
+                                </ng-container>
+        
+                                <ng-container *ngIf="item.Onaylayan">
+                                    <div class="col-12 mt-3 text-center">
+                                        <h5>{{"Son" | translate}}</h5>
+                                        <span class="text-gray-600">{{item.Onaylayan}}</span>
+                                        <p class="text-gray-600">{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
+                                    </div>
+                                </ng-container>
+        
+                                <div class="col-12 text-center">
+                                    <div class="row mt-8">
+                                        <div class="col-3">
+                                            <button class="btn btn-icon btn-success btn-circle"
+                                                pTooltip="{{'Onaylandı' | translate}}" disabled>
+                                                <i class="fa-solid fa-check"></i>
+                                            </button>
+                                        </div>
+    
+                                        <div class="col-3">
+                                            <button class="btn btn-icon btn-light-info btn-circle"
+                                                pTooltip="{{'Süreç' | translate}}"
+                                                (click)="showDemandProcessDialog(item.Id, item.tipad)">
+                                                <i class="fa-solid fa-question"></i>
+                                            </button>
+                                        </div>
+    
+                                        <div class="col-3">
+                                            <button class="btn btn-icon btn-light-primary btn-circle"
+                                                pTooltip="{{'Form' | translate}}">
+                                                <i class="fa-solid fa-print"></i>
+                                            </button>
+                                        </div>
+    
+                                        <div class="col-3">
+                                            <button class="btn btn-icon btn-light-info btn-circle"
+                                                pTooltip="{{'Dosyalar' | translate}}">
+                                                <i class="fa-solid fa-paperclip"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="!checkGrid">
+            <div class="col-12 mb-9">
+                <div class="table-responsive">
+                    <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                        <thead>
+                            <tr class="rounded fs-7 fw-bold text-white border-bottom-0 text-uppercase bg-danger">
+                                <th class="text-center rounded-start"></th>
+                                <th class="text-center">{{ "Personel" | translate }}</th>
+                                <th class="text-center">{{ "Talep_Tipi" | translate }}</th>
+                                <th class="text-center">{{ "Başlangıç_Tarihi" | translate }}</th>
+                                <th class="text-center">{{ "Bitiş_Tarihi" | translate }}</th>
+                                <th class="text-center w-150px">{{ "Açıklama" | translate }}</th>
+                                <th class="text-center rounded-end"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr
+                                *ngFor="let item of approvedRequests | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis', 'firma', 'bolum', 'pozisyon']">
+                                <td class="text-center">
+                                    <div class="symbol symbol-50px me-2">
+                                        <img src="{{imageUrl}}?sicilid={{item.SicilId}}"
+                                            alt="Personel Foto">
+                                    </div>
+                                </td>
+
+                                <td class="text-center text-muted fw-bold fs-4">
+                                    <span class="text-dark fw-bold text-hover-danger mb-1 fs-6">
+                                        {{item.Personel}}
+                                    </span>
+                                </td>
+
+                                <td class="text-center">
+                                    <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.tipad}}</p>
+                                    <span class="text-muted fw-semibold d-block" pTooltip="{{item.neden}}" tooltipPosition="top">{{item.neden|truncate:20}}</span>
+                                </td>
+
+                                <td class="text-center">
+                                    <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Baslangic | date:
+                                        'yyyy-MM-dd'}}</p>
+                                    <span class="text-muted fw-semibold d-block">{{item.Baslangic | date:
+                                        'HH:mm'}}</span>
+                                </td>
+
+                                <td class="text-center">
+                                    <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Bitis | date:
+                                        'yyyy-MM-dd'}}</p>
+                                    <span class="text-muted fw-semibold d-block">{{item.Bitis | date: 'HH:mm'}}</span>
+                                </td>
+
+                                <td class="text-center">
+                                    <p class="text-dark fw-bold text-hover-danger mb-1 fs-6" pTooltip="{{item.nedenx}}" tooltipPosition="top">
+                                        {{item.nedenx | truncate: 20 }}</p>
+                                </td>
+
+                                <td class="text-center text-muted fw-bold fs-4">
+                                    <a pTooltip="{{'Süreç' | translate}}"
+                                        class="btn btn-icon btn-light-info btn-sm me-3"
+                                        (click)="showDemandProcessDialog(item.Id, item.tipad)">
+                                        <i class="fa-solid fa-question fs-4"></i>
+                                    </a>
+
+                                    <a pTooltip="{{'Form' | translate}}"
+                                        class="btn btn-icon btn-light-primary btn-sm me-3">
+                                        <i class="fa-solid fa-print fs-4"></i>
+                                    </a>
+
+                                    <a pTooltip="{{'Dosyalar' | translate}}"
+                                        class="btn btn-icon btn-light-info btn-sm me-3">
+                                        <i class="fa-solid fa-paperclip fs-4"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>

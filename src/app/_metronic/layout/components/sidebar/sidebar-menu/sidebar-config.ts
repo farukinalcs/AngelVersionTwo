@@ -5,13 +5,13 @@ import { SidebarMenu } from './sidebar-menu-model';
 export let sidebar: SidebarMenu[] = [
     {
         title: 'Profil',
-        rootLink: 'profile/dashboard',
+        rootLink: 'profile',
         icon: 'fa-solid fa-user-tie text-danger',
         auth: true,
         subMenu: [
             {
                 title: 'Genel_Bakış',
-                rootLink: 'profile/dashboard',
+                rootLink: 'profile/widgets',
                 auth: true,
             },
             {
@@ -21,7 +21,7 @@ export let sidebar: SidebarMenu[] = [
             },
             {
                 title: 'Sürelerim',
-                rootLink: 'profile/surelerim',
+                rootLink: 'profile/operations/durations',
                 auth: true,
             },
             {
@@ -46,27 +46,27 @@ export let sidebar: SidebarMenu[] = [
             },
             {
                 title: 'Mobil_Lokasyon',
-                rootLink: 'profile/mobil_lokasyon',
+                rootLink: 'profile/others/mobile-location',
                 auth: true,
             },
             {
                 title: 'Task_Listem',
-                rootLink: 'profile/task_listem',
+                rootLink: 'profile/others/my-task-list',
                 auth: true,
             },
             {
                 title: 'Takımım',
-                rootLink: 'profile/takimim',
+                rootLink: 'profile/others/my-team',
                 auth: true,
             },
             {
                 title: 'Eksik_Sürelerim',
-                rootLink: 'profile/eksik_surelerim',
+                rootLink: 'profile/operations/missing-durations',
                 auth: true,
             },
             {
                 title: 'Profil_Tanımlamalar',
-                rootLink: 'profile/profil_tanimlamalar',
+                rootLink: 'profile/definitions',
                 auth: true,
             },
         ]

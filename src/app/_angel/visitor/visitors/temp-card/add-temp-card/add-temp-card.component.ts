@@ -1,18 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { DialogModule } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { TranslationModule } from 'src/app/modules/i18n';
 
 @Component({
   selector: 'app-add-temp-card',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, DialogModule, TranslationModule, SelectModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, DialogModule, TranslateModule, SelectModule],
   templateUrl: './add-temp-card.component.html',
   styleUrl: './add-temp-card.component.scss'
 })
@@ -46,7 +45,6 @@ export class AddTempCardComponent implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       registry: ['', Validators.required],
       card: ['', Validators.required],
-      carPlate: ['', Validators.required],
       explanation: ['', Validators.required]
     });
   }
@@ -57,14 +55,19 @@ export class AddTempCardComponent implements OnInit, OnDestroy {
 
     var sp: any[] = [
       {
-        mkodu: 'yek268',
-        ad: formValues.explanation,
-        soyad: formValues.registry,
-        kimlikno: formValues.carPlate,
-        aciklama: formValues.explanation,
+        mkodu: 'yek273',
+        bilgi: formValues.explanation,
+        giris: '',
+        cikis: '',
+        userid: formValues.card.userId,
+        sicilid: formValues.registry.id.toString()
       }
     ];
 
+
+    console.log("Geçici kart params: ", sp);
+    
+    
     this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
       const data = response[0].x;
       const message = response[0].z;
@@ -73,9 +76,9 @@ export class AddTempCardComponent implements OnInit, OnDestroy {
         return;
       }
 
-      console.log("Yasaklı eklendi : ", data);
+      console.log("Geçici Kard Eklendi : ", data);
       this.toastrService.success(
-        this.translateService.instant("Yasaklı_Ziyaretçi_Eklendi"),
+        this.translateService.instant("Geçici_Kart_Eklendi"),
         this.translateService.instant("Başarılı")
       );
 
@@ -156,6 +159,5 @@ export class AddTempCardComponent implements OnInit, OnDestroy {
 export interface FormModel {
   registry: any,
   card: any,
-  carPlate: string,
   explanation: string
 }

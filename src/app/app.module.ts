@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER, ApplicationConfig } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ApplicationConfig, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -18,16 +18,8 @@ import { accessGroupReducer } from './store/reducers/access-group.reducer';
 import { ApiUrlService } from './_helpers/api-url.service';
 import { registerReducer } from './store/reducers/register.reducer';
 
-// Bold Reports
-import './../globals';
-import { BoldReportViewerModule } from '@boldreports/angular-reporting-components';
-// data-visualization
-import '@boldreports/javascript-reporting-controls/Scripts/v2.0/common/bold.reports.common.min';
-import '@boldreports/javascript-reporting-controls/Scripts/v2.0/common/bold.reports.widgets.min';
-// Report viewer
-import '@boldreports/javascript-reporting-controls/Scripts/v2.0/bold.report-viewer.min';
+
 import { LoadingInterceptor } from './modules/loading/interceptors/loading.interceptor';
-// ------------
 
 // PrimeNG Theme
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -35,9 +27,16 @@ import { providePrimeNG } from 'primeng/config';
 import MyPreset from './_primeng/mypreset'
 // -------------
 
+import 'ag-grid-enterprise'
+import { LicenseManager } from 'ag-grid-enterprise';
 
 
+import { registerLocaleData } from '@angular/common';
+import localeTr from '@angular/common/locales/tr';
 
+LicenseManager.setLicenseKey(
+  "BOARD4ALL_NDEwMjM1MTIwMDAwMA==8f4481b5cc626ad79fe91bc5f4e52e3d"
+);
 
 
 function appInitializer(authService: AuthService) {
@@ -65,6 +64,7 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 
+registerLocaleData(localeTr, 'tr');
 
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
@@ -86,9 +86,6 @@ export const appConfig: ApplicationConfig = {
       registers: registerReducer
     }),
     StoreModule.forFeature('accessGroup', accessGroupReducer),
-
-    // Bold Reports
-    BoldReportViewerModule
     
     
   ],
@@ -116,6 +113,7 @@ export const appConfig: ApplicationConfig = {
       useClass: LoadingInterceptor,  // LoadingInterceptor
       multi: true,
     },
+    { provide: LOCALE_ID, useValue: 'tr-TR' },
     appConfig.providers
   ],
   bootstrap: [AppComponent],

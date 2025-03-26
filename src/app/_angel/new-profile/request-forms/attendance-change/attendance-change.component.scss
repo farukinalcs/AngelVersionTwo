@@ -1,0 +1,90 @@
+.pagination .page-link {
+    color: var(--kt-danger);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--kt-danger);
+    border-color: var(--kt-danger);
+    color: white;
+}
+
+.pagination .page-link:hover {
+    background-color: var(--kt-danger-light);
+    border-color: var(--kt-danger-light);
+    color: white;
+}
+
+.page-item:hover:not(.active):not(.offset):not(.disabled) .page-link {
+    color: var(--kt-danger);
+}
+
+
+.form-check-input:checked {
+    border-color: var(--kt-danger);
+}
+
+.expandable {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+
+    &.expanded {
+        max-height: 500px; // İçeriğin tam yüksekliğini bilmediğimizden, tahmini bir yükseklik belirledik.
+        transition: max-height 0.5s ease-in;
+    }
+}
+
+
+.rot-btn {
+    position: relative;
+    top: 0px;
+    width: 75px;
+    left: -7px;
+    height: 119px;
+    //   writing-mode: vertical-lr;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //   transform: rotate(180deg);
+    transition: height 0.5s ease-out, width 0.5s ease-out;
+
+    &.rot-btn-expanded {
+        transition: height 0.5s ease-in, width 0.5s ease-out;
+
+        &:hover {
+            width: 90px;
+        }
+    }
+
+    &:hover {
+        width: 54px;
+    }
+}
+
+.time-line-border {
+    transition: height 0.5s ease-out;
+
+    &.line-border-expanded {
+        transition: height 0.5s ease-in;
+    }
+}
+
+
+@keyframes flip {
+    0% {
+        transform: rotateY(0);
+    }
+
+    50% {
+        transform: rotateY(180deg);
+    }
+
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+.flip {
+    animation: flip 1s ease-in-out;
+    transform-style: preserve-3d;
+}

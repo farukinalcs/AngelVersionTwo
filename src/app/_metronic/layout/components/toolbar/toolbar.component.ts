@@ -170,7 +170,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       pageTitle == 'My Team' ||
       pageTitle == 'Incomplete Time'
     ) {
-      this.router.navigate(['profile/profil_tanimlamalar']);
+      this.router.navigate(['profile/definitions']);
     } else if (
       pageTitle == 'Pdks' ||
       pageTitle == 'Pdks Pivot'
