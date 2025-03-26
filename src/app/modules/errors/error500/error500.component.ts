@@ -32,7 +32,7 @@ export class Error500Component implements OnInit, OnDestroy {
   }
 
   routeToDashboard() {
-    this.router.navigate(['profile/dashboard']);
+    this.router.navigate(['auth/login']);
     setTimeout(() => {
       ToggleComponent.reinitialization();
       ScrollTopComponent.reinitialization();

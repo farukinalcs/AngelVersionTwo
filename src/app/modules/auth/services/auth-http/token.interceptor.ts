@@ -76,6 +76,11 @@ export class TokenInterceptor implements HttpInterceptor {
                 }
                 if (item.z) {
                   item.z = JSON.parse(item.z);
+
+                  if (item.z.islemsonuc === -1) {
+                    console.error(item.z);
+                    this.router.navigate(['error/500']);
+                  }
                 }
                 if (item.m) {
                   item.m = JSON.parse(item.m);

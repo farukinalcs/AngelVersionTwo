@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER, ApplicationConfig } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ApplicationConfig, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -30,6 +30,10 @@ import MyPreset from './_primeng/mypreset'
 import 'ag-grid-enterprise'
 import { LicenseManager } from 'ag-grid-enterprise';
 
+
+import { registerLocaleData } from '@angular/common';
+import localeTr from '@angular/common/locales/tr';
+
 LicenseManager.setLicenseKey(
   "BOARD4ALL_NDEwMjM1MTIwMDAwMA==8f4481b5cc626ad79fe91bc5f4e52e3d"
 );
@@ -60,6 +64,7 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 
+registerLocaleData(localeTr, 'tr');
 
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
@@ -108,6 +113,7 @@ export const appConfig: ApplicationConfig = {
       useClass: LoadingInterceptor,  // LoadingInterceptor
       multi: true,
     },
+    { provide: LOCALE_ID, useValue: 'tr-TR' },
     appConfig.providers
   ],
   bootstrap: [AppComponent],

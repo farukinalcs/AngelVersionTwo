@@ -2,20 +2,250 @@
     header="{{ 'Yeni_Ziyaretçi_Ekle' | translate }}"
     [(visible)]="visible"
     (onHide)="onHide()"
-    position="top"
+    position="center"
     [modal]="true"
     [breakpoints]="{ '2560px': '60vw', '992px': '80vw', '576px': '90vw' }"
     [baseZIndex]="10000"
-    [draggable]="false"
+    [draggable]="true"
     [resizable]="false"
     [maximizable]="true">
 
     <div class="container" >
         <div class="row" [formGroup]="form">
 
-            <div class="col-6 p-5">
+            <div class="col-sm-6 p-3">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                    <span >{{"Personeller" | translate}}</span>
+                    <span class="required">{{"Kimlik_Tipi" | translate}}</span>
+                </label>
+
+                <p-select 
+                    [options]="idTypes"
+                    formControlName="idType"
+                    optionLabel="Ad"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                    [filter]="true"
+                    filterBy="Ad"
+                    [showClear]="true"
+                    placeholder="{{'Kimlik_Tipi_Seçiniz' | translate}}"
+                    class="w-100 md:w-56">
+                    <ng-template #selectedItem let-selected>
+                        <div class="flex items-center gap-2">
+                            <div>{{ form.get('idType')?.value?.Ad }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item #item>
+                        <div class="flex items-center gap-2">
+                            <div>{{ item?.Ad }}</div>
+                        </div>
+                    </ng-template>
+                </p-select>
+                <ng-container 
+                    [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: translateService.instant('Boş_Geçilemez!'),
+                        control: form.controls['idType']
+                    }">
+                </ng-container>
+            </div>
+            
+            <div class="col-sm-6 p-3">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"Kimlik_Bilgisi" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" formControlName="credential" placeholder="{{'Kimlik_Bilgisi_Giriniz' | translate}}">
+                <ng-container 
+                    [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: translateService.instant('Boş_Geçilemez!'),
+                        control: form.controls['credential']
+                    }">
+                </ng-container>
+                <ng-container
+                    [ngTemplateOutlet]="formError"
+                    [ngTemplateOutletContext]="{
+                        validation: 'apiError',
+                        message: form.controls['credential'].errors?.apiError,
+                        control: form.controls['credential']
+                    }">
+                </ng-container>
+            </div>
+
+            <div class="col-sm-6 p-3">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"Ad" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" formControlName="name" placeholder="{{'Ziyaretçi Adı Giriniz' | translate}}">
+                <ng-container 
+                    [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: translateService.instant('Boş_Geçilemez!'),
+                        control: form.controls['name']
+                    }">
+                </ng-container>
+                <ng-container *ngIf="infoMessage">
+                    <div class="fv-plugins-message-container">
+                        <div class="fv-help-block fs-8" [ngClass]="{'text-danger text-decoration-underline': !infoMessageStatus, 'text-success': infoMessageStatus}">
+                            <span role="alert" [ngClass]="{ 'cursor-pointer': !infoMessageStatus }" (click)="onClickBanned()">
+                                {{ infoMessage }}
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="col-sm-6 p-3">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{"Soyad" | translate}}</span>
+                </label>
+
+                <input type="text" class="form-control form-control-sm form-control-solid" formControlName="surname" placeholder="{{'Ziyaretçi Soyadı Giriniz' | translate}}">
+                <ng-container 
+                    [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: translateService.instant('Boş_Geçilemez!'),
+                        control: form.controls['surname']
+                    }">
+                </ng-container>
+                <ng-container *ngIf="infoMessage">
+                    <div class="fv-plugins-message-container">
+                        <div class="fv-help-block fs-8" [ngClass]="{'text-danger text-decoration-underline': !infoMessageStatus, 'text-success': infoMessageStatus}">
+                            <span role="alert" [ngClass]="{ 'cursor-pointer': !infoMessageStatus }" (click)="onClickBanned()">
+                                {{ infoMessage }}
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="col-12 p-3">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span >{{"Açıklama" | translate}}</span>
+                </label>
+
+                <!-- <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Açıklama Giriniz' | translate}}" formControlName="explanation"> -->
+                <textarea class="form-control form-control-solid" maxlength="500" rows="2" formControlName="explanation" placeholder="{{'Açıklama Giriniz' | translate}}"></textarea>
+            </div>
+
+            <div class="col-sm-6 p-3">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span class="required">{{"Kimlik_Tipi" | translate}}</span>
+                </label>
+
+                <p-select 
+                    [options]="companies"
+                    formControlName="company"
+                    optionLabel="Ad"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                    [filter]="true"
+                    filterBy="Ad"
+                    [showClear]="true"
+                    placeholder="{{'Firma_Seçiniz' | translate}}"
+                    class="w-100 md:w-56">
+                    <ng-template #selectedItem let-selected>
+                        <div class="flex items-center gap-2">
+                            <div>{{ form.get('company')?.value?.Ad }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item #item>
+                        <div class="flex items-center gap-2">
+                            <div>{{ item?.Ad }}</div>
+                        </div>
+                    </ng-template>
+                </p-select>
+                <ng-container 
+                    [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: translateService.instant('Boş_Geçilemez!'),
+                        control: form.controls['company']
+                    }">
+                </ng-container>
+            </div>
+
+            <div class="col-sm-6 p-3">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span class="required">{{"Ziyaret_Tipi" | translate}}</span>
+                </label>
+
+                <p-select 
+                    [options]="visitTypes"
+                    formControlName="visitType"
+                    optionLabel="ad"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                    [filter]="true"
+                    filterBy="ad"
+                    [showClear]="false"
+                    placeholder="{{'Ziyaret_Tipi_Seçiniz' | translate}}"
+                    tooltipPosition="top"
+                    class="w-100 md:w-56">
+                    <ng-template #selectedItem let-selected>
+                        <div class="flex items-center gap-2">
+                            <div>{{ form.get('visitType')?.value?.ad }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item #item>
+                        <div class="flex items-center gap-2">
+                            <div>{{ item?.ad }}</div>
+                        </div>
+                    </ng-template>
+                </p-select>
+                <ng-container 
+                    [ngTemplateOutlet]="formError" 
+                    [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: translateService.instant('Boş_Geçilemez!'),
+                        control: form.controls['visitType']
+                    }">
+                </ng-container>
+            </div>
+
+
+            <ng-container *ngIf="visitCodes.length > 0">
+                <div class="col-sm-6 p-3" *ngFor="let item of visitCodes">
+                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                        <span>{{item.baslik}}</span>
+                    </label>
+    
+                    <input type="text" class="form-control form-control-sm form-control-solid" [formControlName]="item.ad" placeholder="{{item.baslik}} Giriniz">
+                    <ng-container *ngIf="item.belge == 1">
+                        <div class="fv-plugins-message-container">
+                            <div class="fv-help-block fs-8 text-danger text-decoration-underline">
+                                <span role="alert" class="cursor-pointer" (click)="visibleUploadDialog(item)">
+                                    <i class="fa-solid fa-upload text-danger mx-1"></i>
+                                    "{{item.belgetip}}" {{'Yükle' | translate}}
+                                </span>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+            
+            
+            <div class="col-sm-6 p-3">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span>{{"İSG_Eğitim_Tarihi" | translate}}</span>
+                </label>
+
+                <input type="date" class="form-control form-control-sm form-control-solid" formControlName="oshTrainingDate">
+            </div>
+
+            <div class="col-sm-6 p-3">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span>{{"Gizlilik_Sözleşmesi_Tarihi" | translate}}</span>
+                </label>
+
+                <input type="date" class="form-control form-control-sm form-control-solid" formControlName="confidentialityDate">
+            </div>
+
+            <div class="col-sm-6 p-3">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span class="required">{{"Kime_Geldi" | translate}}</span>
                 </label>
 
                 <p-select 
@@ -26,7 +256,7 @@
                     [filter]="true"
                     filterBy="adsoyad"
                     [showClear]="true"
-                    placeholder="{{'Personel_Seçiniz' | translate}}"
+                    placeholder="{{'Kime_Geldi_Seçiniz' | translate}}"
                     class="w-100 md:w-56">
                     <ng-template #selectedItem let-selected>
                         <div class="flex items-center gap-2">
@@ -49,9 +279,9 @@
                 </ng-container>
             </div>
 
-            <div class="col-6 p-5">
+            <div class="col-sm-6 p-3">
                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                    <span >{{"Ziyaretçi Kartları" | translate}}</span>
+                    <span class="required">{{"Ziyaretçi Kartları" | translate}}</span>
                 </label>
 
                 <p-select 
@@ -85,24 +315,50 @@
                 </ng-container>
             </div>
 
-            
-
-            <div class="col-12 p-5">
-                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                    <span >{{"Açıklama" | translate}}</span>
+            <div class="col-sm-6 p-3">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span>{{"Plaka" | translate}}</span>
                 </label>
 
-                <!-- <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Açıklama Giriniz' | translate}}" formControlName="explanation"> -->
-                <textarea class="form-control form-control-solid" maxlength="500" rows="4" formControlName="explanation" placeholder="{{'Açıklama Giriniz' | translate}}"></textarea>
+                <input type="text" class="form-control form-control-sm form-control-solid" formControlName="carPlate" placeholder="34 ABC 34">
+            </div>
+            
+            <div class="col-sm-6 p-3" *ngIf="passGroup">
+                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <span class="required">{{"Geçiş Grupları" | translate}}</span>
+                </label>
+
+                <p-select 
+                    [options]="passGroups"
+                    formControlName="passGroup"
+                    optionLabel="Ad"
+                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                    [filter]="true"
+                    filterBy="Ad"
+                    [showClear]="true"
+                    placeholder="{{'Geçiş_Grubu_Seçiniz' | translate}}"
+                    class="w-100 md:w-56">
+                    <ng-template #selectedItem let-selected>
+                        <div class="flex items-center gap-2">
+                            <div>{{ form.get('passGroup')?.value?.Ad }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item #item>
+                        <div class="flex items-center gap-2">
+                            <div>{{ item?.Ad }}</div>
+                        </div>
+                    </ng-template>
+                </p-select>
                 <ng-container 
                     [ngTemplateOutlet]="formError" 
                     [ngTemplateOutletContext]="{
                         validation: 'required',
                         message: translateService.instant('Boş_Geçilemez!'),
-                        control: form.controls['explanation']
+                        control: form.controls['passGroup']
                     }">
                 </ng-container>
             </div>
+            
         </div>
     </div>
 
@@ -119,10 +375,156 @@
 </p-dialog>
 
 
+<ng-container *ngIf="visibleBanned">
+    <p-dialog
+    header="{{ 'Yasaklı_Kontrol' | translate }}"
+    [(visible)]="visibleBanned"
+    (onHide)="visibleBannedList()"
+    position="top"
+    [modal]="true"
+    [breakpoints]="{ '2560px': '30vw', '992px': '40vw', '576px': '60vw' }"
+    [baseZIndex]="10000"
+    [draggable]="false"
+    [resizable]="false"
+    [maximizable]="false">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table
+                        class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                        <thead class="sticky-top">
+                            <tr
+                                class="fs-8 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
+                                <th class="rounded-start">{{"Ad" | translate}}</th>
+                                <th class="fw-bolder me-1 cursor-pointer">{{"Soyad" | translate}}</th>
+                                <th class="fw-bolder me-1 cursor-pointer">{{"Kimlik_No" | translate}}</th>
+                                <th class="fw-bolder me-1 cursor-pointer">{{"Açıklama" | translate}}</th>
+                                <th class="rounded-end text-center">{{"Ekleyen" | translate}}</th>
+                            </tr>
+                        </thead>
+    
+                        <tbody>
+                            <ng-container *ngFor="let item of bannedList">
+                                <tr class="cursor-pointer fs-8">
+                                    <td>
+                                        <span class="mb-1 fw-semibold">{{item.Ad}}</span>
+                                    </td>
+    
+                                    <td>
+                                        <span class="mb-1 fw-semibold">{{item.Soyad}}</span>
+                                    </td>
+    
+                                    <td>
+                                        <span class="mb-1 fw-semibold">{{item.KimlikNo}}</span>
+                                    </td>
+    
+                                    <td>
+                                        <span class="mb-1 fw-semibold">{{item.Aciklama}}</span>
+                                    </td>
+    
+                                    <td>
+                                        <span class="mb-1 fw-semibold">{{item.KimEkledi}}</span>
+                                    </td>
+    
+                                </tr>
+                            </ng-container>
+    
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template pTemplate="footer">
+        <a (click)="visibleBannedList()" class="btn btn-danger btn-sm mx-1">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'Kapat' | translate}}
+        </a>
+    </ng-template>
+    </p-dialog>
+</ng-container>
+
+
+<ng-container *ngIf="visibleUpload">
+    <p-dialog
+    header="{{selectedVisitCode.baslik}} {{ 'Dosya_Yükle' | translate }}"
+    [(visible)]="visibleUpload"
+    (onHide)="visibleUploadDialog()"
+    position="top"
+    [modal]="true"
+    [breakpoints]="{ '2560px': '40vw', '992px': '50vw', '576px': '65vw' }"
+    [baseZIndex]="10000"
+    [draggable]="false"
+    [resizable]="false"
+    [maximizable]="false">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12 p-3" [formGroup]="form">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span>{{"Belge" | translate}}</span>
+                    </label>
+    
+                    <input #fileInput type="file" class="form-control form-control-sm form-control-solid" formControlName="file" multiple="true" (change)="getFile($event)">
+                    <div class="fv-plugins-message-container">
+                        <div class="fv-help-block fs-8 text-gray-500">
+                            <span role="alert">
+                                {{ "Dosya_Başına_En_Fazla_1MB_Olmalı" }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-12" *ngIf="uploadedFile.length > 0">
+                    <div class="alert alert-dismissible bg-light-secondary bg-hover-light-dark d-flex flex-column flex-sm-row px-10 py-2 mb-2 align-items-center" *ngFor="let item of uploadedFile">
+                        <div class="row w-100">
+                            <div class="col-7 d-flex align-items-center">
+                                <i class="fa-solid fa-circle-dot fs-4 text-dark me-4 mb-5 mb-sm-0"></i>
+                                <div class="d-flex flex-column pe-0 pe-sm-10">
+                                    <h4 class="upload-text fw-semibold fs-5 mb-0">{{ item.files.name }} ({{ item.files.fileSize}}{{item.files.fileSizeType}})</h4>
+                                </div>
+                            </div>
+
+                            <div class="col-3 d-flex align-items-center">
+                                <p-progressBar class="w-100" [value]="item.progressValue || 0"></p-progressBar>
+                            </div>
+
+                            <div class="col-2 d-flex align-items-center">
+                                <button
+                                    type="button"
+                                    class="position-absolute position-sm-relative mx-1 m-sm-0 top-0 end-0 btn btn-light-danger btn-sm btn-icon btn-light-dark ms-sm-auto"
+                                    (click)="uploadFile(item)">
+                                    <i class="fa-solid fa-play fs-4"></i>
+                                    <span class="pulse-ring"></span>
+                                </button>    
+
+                                <button type="button" class="position-absolute position-sm-relative mx-1 m-sm-0 top-0 end-0 btn btn-sm btn-icon btn-light-dark ms-sm-auto" (click)="removeUploadedFile(item)">
+                                    <i class="fa-solid fa-xmark fs-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <ng-template pTemplate="footer">
+            <a (click)="visibleUploadDialog()" class="btn btn-danger btn-sm mx-1">
+                <i class="fa-solid fa-xmark fs-7"></i>
+                {{'Kapat' | translate}}
+            </a>
+        </ng-template>
+    </p-dialog>
+</ng-container>
+
 <ng-template #formError let-control="control" let-message="message" let-validation="validation">
     <ng-container *ngIf="control.hasError(validation)">
         <div class="fv-plugins-message-container">
-            <div class="fv-help-block">
+            <div class="fv-help-block fs-8">
                 <span role="alert">
                     {{ message }}
                 </span>
