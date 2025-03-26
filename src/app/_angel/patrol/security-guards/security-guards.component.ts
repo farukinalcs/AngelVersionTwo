@@ -8,12 +8,13 @@ import { Subject, takeUntil } from 'rxjs';
 import { ColDef, IRowNode, IsRowSelectable, RowHeightParams, SideBarDef, StatusPanelDef } from 'ag-grid-enterprise';
 import { FirstDataRenderedEvent } from 'ag-grid-community';
 import { ProfileService } from '../../profile/profile.service';
+import { ChangeDetectionStrategy } from '@angular/core';
+
 @Component({
   selector: 'app-security-guards',
-  // standalone: true,
-  // imports: [CommonModule],
   templateUrl: './security-guards.component.html',
-  styleUrls: ['./security-guards.component.scss']
+  styleUrls: ['./security-guards.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default 
 })
 
 export class SecurityGuardsComponent implements OnInit {
@@ -116,6 +117,11 @@ export class SecurityGuardsComponent implements OnInit {
   ngOnInit(): void {
   this.getPersonsList();
   }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.ref.detectChanges();
+    });
+  }
   getContextMenuItems(params:any) {
     return [
       'copy',
@@ -205,6 +211,7 @@ export class SecurityGuardsComponent implements OnInit {
       this.rowData.forEach((row: any) => {
         row.rowHeight = 55;
       });
+      this.ref.detectChanges();
     });
   }
 

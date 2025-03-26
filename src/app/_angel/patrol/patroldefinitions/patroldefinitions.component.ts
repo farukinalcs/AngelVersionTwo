@@ -1,10 +1,12 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { PatrolService } from '../patrol.service';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-patroldefinitions',
   templateUrl: './patroldefinitions.component.html',
-  styleUrls: ['./patroldefinitions.component.scss']
+  styleUrls: ['./patroldefinitions.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default 
 })
 export class PatroldefinitionsComponent implements OnInit, OnDestroy{
   activeWidget: number = 1;
@@ -16,10 +18,16 @@ export class PatroldefinitionsComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
 
-    this.ref.detectChanges();
  
+    this.ref.markForCheck();
+    this.changeContent(1);
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.ref.detectChanges();
+    });
+  }
   
   changeContent(widgetValue: number) {
     this.activeWidget = widgetValue;

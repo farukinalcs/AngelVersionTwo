@@ -1,4 +1,4 @@
-<div class="container py-4">
+<div class="container-fluid py-4">
 
   <div>
 
@@ -11,15 +11,15 @@
                   <!-- <button class="btn btn-danger text-white" type="button" id="button-addon2" (click)="setLocation(locationName)">Ekle</button> -->
               </div>
 
-              <table class="table table-hover border table-rounded table-row-solid table-row-gray-400 align-middle gs-3 gy-4">
+              <table class="table border table-rounded table-row-solid align-middle gs-3 gy-4">
               <thead>
-                  <tr style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;">
-                      <th class="fw-bolder me-1 rounded-start rounded-end text-center">Lokasyonlar</th>
+                  <tr style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">
+                      <th class="fw-bolder me-1 rounded-start rounded-end text-center text-white">Lokasyonlar</th>
                   </tr>
               </thead>
 
               <tbody>
-                  <tr *ngFor="let item of _filteredItems" class="cursor-pointer fs-8">
+                  <tr *ngFor="let item of _filteredItems" class="cursor-pointer fs-6">
                           <td (click)="getItem(item);">
                               <span class="mb-1 fw-bold">{{item?.ad}}</span>
                           </td>
@@ -35,27 +35,27 @@
               <table class="table">
                   <thead>
                     <tr>
-                      <th>  
-                          <button  class="btn btn-sm" style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;" (click)="setTourCalendar('1')">Pazartesi</button>
+                      <th class="equal-width">  
+                          <button  class="btn btn-sm custom-btn" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;color: white;" (click)="setTourCalendar('1')">Pazartesi</button>
                       </th>
-                      <th>   
-                          <button  class="btn btn-sm" style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;"  (click)="setTourCalendar('2')">Salı</button>
+                      <th class="equal-width">   
+                          <button  class="btn btn-sm custom-btn"  (click)="setTourCalendar('2')">Salı</button>
                           <!-- <button class="btn btn-light-danger m-3" (click)="setTourCalendar('2')">Salı</button> -->
                       </th>
-                      <th>   
-                          <button class="btn btn-sm" style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;"  (click)="setTourCalendar('3')">Çarşamba</button>
+                      <th class="equal-width">   
+                          <button class="btn btn-sm custom-btn" (click)="setTourCalendar('3')">Çarşamba</button>
                       </th>
-                      <th>   
-                          <button class="btn btn-sm" style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;"  (click)="setTourCalendar('4')">Perşembe</button>
+                      <th class="equal-width">   
+                          <button class="btn btn-sm custom-btn" (click)="setTourCalendar('4')">Perşembe</button>
                       </th>
-                      <th>   
-                          <button class="btn btn-sm" style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;"  (click)="setTourCalendar('5')">Cuma</button>
+                      <th class="equal-width">   
+                          <button class="btn btn-sm custom-btn" (click)="setTourCalendar('5')">Cuma</button>
                       </th>
-                      <th>
-                          <button class="btn btn-sm" style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;"  (click)="setTourCalendar('6')">Cumartesi</button>
+                      <th class="equal-width">
+                          <button class="btn btn-sm custom-btn" (click)="setTourCalendar('6')">Cumartesi</button>
                       </th>
-                      <th>
-                          <button class="btn btn-sm" style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);font-weight: bold;"  (click)="setTourCalendar('7')">Pazar</button>
+                      <th class="equal-width">
+                          <button class="btn btn-sm custom-btn" (click)="setTourCalendar('7')">Pazar</button>
                       </th>
                     </tr>
                   </thead>
@@ -68,8 +68,8 @@
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 1">
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
                               </td>
                             </tr>
                           </tbody>
@@ -85,8 +85,8 @@
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 2">
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
                               </td>
                             </tr>
                           </tbody>
@@ -100,8 +100,8 @@
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 3">
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1"style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
                               </td>
                             </tr>
                           </tbody>
@@ -115,8 +115,8 @@
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 4">
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
                               </td>
                             </tr>
                           </tbody>
@@ -130,8 +130,8 @@
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 5">
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
                               </td>
                             </tr>
                           </tbody>
@@ -145,8 +145,8 @@
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 6">
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
                               </td>
                             </tr>
                           </tbody>
@@ -159,9 +159,9 @@
                         <table>
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
-                              <td *ngIf="item.gun === 7">
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                              <td *ngIf="item.gun === 7"> 
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
                               </td>
                             </tr>
                           </tbody>
@@ -186,7 +186,7 @@
         [(visible)]="_setTourCalendarModal"
         [modal]="true"
         [style]="{ width: '25vw'}"
-        [breakpoints]="{ '2560px': '25vw', '992px': '70vw', '576px': '90vw' }"
+        [breakpoints]="{'2560px': '25vw', '992px': '70vw', '576px': '90vw'}"
         [maximizable]="true"
         [baseZIndex]="10000">
 
