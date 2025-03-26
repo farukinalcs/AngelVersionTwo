@@ -1,4 +1,4 @@
-<div class="container py-4">
+<div class="container-fluid py-4">
     <div class="row">
         <div class="col-md-4">
 
@@ -6,13 +6,13 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" [(ngModel)]="tourNameInput" (input)="filterTours()" style="border-radius: 0 !important;">
 
-                    <button type="button" id="button-addon2" (click)="setGuardTour()" class="btn btn-sm" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">Ekle</button>
+                    <button type="button" id="button-addon2" (click)="setGuardTour()" class="btn btn-sm" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;color:white">Ekle</button>
                 </div>
-                <table class="table table-hover border table-rounded table-row-solid table-row-gray-400 align-middle gs-3 gy-4"> 
+                <table class="table table-hover border table-rounded table-row-solid table-striped table-row-black-400 align-middle gs-3 gy-4"> 
                     <thead>
                         <tr  style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">
 
-                            <th style="width: 75%;">
+                            <th style="width: 75%;color:white">
                                 Ad
                             </th>
                             <th style="width: 25%;text-align:right;color:white">
@@ -47,9 +47,9 @@
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" [(ngModel)]="targetNameInput" (input)="filterTargets()" style="border-radius: 0 !important;">
                         </div>
-                        <table class="table table-hover border table-rounded table-row-solid table-row-gray-400 align-middle gs-3 gy-4"> 
+                        <table class="table table-hover border table-rounded table-row-solid table-striped table-row-red-400 align-middle gs-3 gy-4"> 
                             <thead>
-                                <tr  style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">
+                                <tr  style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;color:white">
                                     <th colspan="2">
                                         Lütfen Süre Eklemek İstediğiniz İstasyon a Tıklayın
                                     </th>
@@ -82,10 +82,10 @@
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" [(ngModel)]="stationNameInput" (input)="filterStation()" style="border-radius: 0 !important;">
                     </div>            
-                    <table class="table table-hover border table-rounded table-row-solid table-row-gray-400 align-middle gs-3 gy-4"> 
+                    <table class="table table-hover border table-rounded table-row-solid table-striped table-row-red-400 align-middle gs-3 gy-4"> 
                         <thead>
                             <tr style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">
-                                <th style="width: 25%;">
+                                <th style="width: 25%; color:white">
                                     işlem
                                 </th>
                                 <th style="width: 75%;text-align: right;color:white">

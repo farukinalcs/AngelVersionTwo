@@ -3,7 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PatrolRoutingModule } from './patrol-routing.module';
 import { AgGridModule } from 'ag-grid-angular';
-import { PatroldashboardComponent } from './patroldashboard/patroldashboard.component';
+import { CustomDateAdapter, MY_DATE_FORMATS, PatroldashboardComponent } from './patroldashboard/patroldashboard.component';
 // import { AgmCoreModule } from '@agm/core';
 import { SecurityGuardsComponent } from './security-guards/security-guards.component';
 import { SharedModule } from '../shared/shared.module';
@@ -28,7 +28,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule,MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -64,9 +65,16 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatOptionModule,
+    MatSelectModule
 
   ],
-  providers: [DatePipe] 
+  providers: [
+    { provide: DateAdapter, useClass: CustomDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+    { provide: MAT_DATE_LOCALE, useValue: 'tr-TR' },
+    { provide : DatePipe}
+  ] 
 })
 export class PatrolModule { }

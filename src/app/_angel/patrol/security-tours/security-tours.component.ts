@@ -2,11 +2,14 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { PatrolService } from '../patrol.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
+import { ChangeDetectionStrategy } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-security-tours',
   templateUrl: './security-tours.component.html',
-  styleUrls: ['./security-tours.component.scss']
+  styleUrls: ['./security-tours.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default 
 })
 
 export class SecurityToursComponent {
@@ -26,13 +29,20 @@ export class SecurityToursComponent {
 
   constructor(
       private patrol : PatrolService,
-      private ref : ChangeDetectorRef
+      private ref : ChangeDetectorRef,
+      private toastrService: ToastrService
     ) { }
 
 
   ngOnInit(): void {
     this.getGuardTour();
     this.getGuardStation();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.ref.detectChanges();
+    });
   }
 
   setGuardTour(): void {
@@ -63,10 +73,11 @@ export class SecurityToursComponent {
     this.patrol.getGuardTour('0').subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.tourList = response[0].x;
       this.filteredTours = [...this.tourList];
-      //console.log("getGuardTour:", this.tourList);
+      console.log("getGuardTour:", this.tourList);
       this.tourNameInput = "";
+      this.ref.detectChanges();
     });
-    this.ref.detectChanges();
+
   }
 
   getGuardStation(): void {
@@ -74,8 +85,9 @@ export class SecurityToursComponent {
       this.allStation = response[0].x;
       this.filteredStations = [...this.allStation];
      // console.log("getGuardStation:", this.allStation);
+     this.ref.detectChanges();
     });
-    this.ref.detectChanges();
+  
   }
 
   getGuardStationForTour(turid:string){
@@ -83,9 +95,10 @@ export class SecurityToursComponent {
     this.patrol.getGuardStation(turid).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.targetList = response[0].x;
       this.filteredTargets = [...this.targetList];
+      this.ref.detectChanges();
      // console.log("TARGET LİST GET TOUR", this.targetList);
     });
-    this.ref.detectChanges();
+
   }
 
   getItem(tour:any){
@@ -103,6 +116,7 @@ export class SecurityToursComponent {
       this.patrol.relation_i(station.id,this.selectTourId).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         this.targetList = response[0].x;
         this.filteredTargets = [...this.targetList];
+        this.ref.detectChanges();
         //console.log("relation_i TARGET:", this.targetList);
     })}
     else{
@@ -124,6 +138,7 @@ export class SecurityToursComponent {
         this.targetList = response[0].x;
         this.filteredTargets = [...this.targetList];
           console.log("deleteTourStation: TARGET", this.targetList);
+          this.ref.detectChanges();
       })
       this.getGuardStationForTour(hedefid);
     }else
@@ -137,6 +152,7 @@ export class SecurityToursComponent {
           this.targetList = response[0].x;
           this.filteredTargets = [...this.targetList];
             console.log("deleteTourStation:", this.targetList);
+            this.ref.detectChanges();
         })
         this.getGuardStationForTour(hedefid);
     }
