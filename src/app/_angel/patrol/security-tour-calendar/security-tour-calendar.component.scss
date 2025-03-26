@@ -1,0 +1,17 @@
+.equal-width {
+    width: 14.28%; /* Haftanın 7 günü için eşit bölme */
+  }
+
+  .custom-btn {
+    width: 100%; /* Butonların genişliği hücreyle aynı olacak */
+    background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);
+    font-weight: bold;
+    color: white;
+    padding: 8px 0; /* Yükseklik için padding ayarlaması */
+    text-align: center;
+  }
+
+  .table-hover > tbody > tr:hover {
+    background-color: red !important; 
+    color: white !important; 
+  }

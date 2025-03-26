@@ -1,4 +1,4 @@
-<div class="container py-4">
+<div class="container-fluid py-4">
 
     <div class="row g-3 widget-section">
       <ng-container *ngFor="let widget of widgets">
@@ -6,7 +6,7 @@
           <div class="widget-card cursor-pointer" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;" 
                 (click)="changeContent(widget.value)">
             <h6 class="widget-title">{{ widget.title }}</h6>
-            <p class="widget-value">{{ widget.value }}</p>
+            <!-- <p class="widget-value">{{ widget.value }}</p> -->
           </div>
         </div>
       </ng-container>

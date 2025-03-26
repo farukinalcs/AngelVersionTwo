@@ -50,10 +50,12 @@ export class SecurityStationsComponent {
       this.ref.detectChanges();
     });
   
+    this.stationName = '';
   
   }
 
   deleteGuardStation(id:number): void {
+    console.log("id:", id);
     this.patrol.deleteGuardStation(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       const delStation = response[0].x;
       console.log("delStation:", delStation);

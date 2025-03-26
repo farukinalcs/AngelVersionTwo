@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input,OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input,OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PatrolService } from '../patrol.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
@@ -54,7 +54,8 @@ export class CustomDateAdapter extends NativeDateAdapter {
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
   ],
-  changeDetection: ChangeDetectionStrategy.Default 
+  changeDetection: ChangeDetectionStrategy.Default,
+  encapsulation: ViewEncapsulation.None
 })
 
 export class PatroldashboardComponent implements OnInit, OnDestroy {
@@ -87,7 +88,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
   dailyGuardTour:any[]=[];
   dailyGuardTour2:any[]=[];
-
+  _locations:any[]=[];
   tour_s:any[]=[];
   tour_sd:any[]=[];
   atilan:any[]=[];
@@ -148,7 +149,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     this.patrolInfo = response[0]?.x;
     //console.log("Patrol Info:", this.patrolInfo);
     this.ref.detectChanges();
-    this.patrolInfo?.forEach((patrol) => {
+    (this.patrolInfo ?? []).forEach((patrol) => {
       if (+patrol?.olay > 0) {
       // this.lastIncidentModal = true;
       // this.openAlarmModal(patrol);
@@ -169,7 +170,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     }
 
     if (this.patrolInfo?.length > 0) {
-      this.patrolInfo.forEach((patrol: any) => {
+      (this.patrolInfo ?? []).forEach((patrol: any) => {
         if (!isNaN(+patrol?.lat) && !isNaN(+patrol?.lng) && this.map) {
           new google.maps.Marker({
             position: { lat: +patrol?.lat, lng: +patrol?.lng },
@@ -185,11 +186,11 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
       });
     }
   });
+  this.getLocation();
 }
 
 
   initializeMap() {
-    this.activeWidget = 0;
   
     const mapElement = document.getElementById('map') as HTMLElement;
     if (!mapElement) {
@@ -204,8 +205,8 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
       zoom: 10,
     });
 
-      console.log('Harita yüklendi:', this.map);
-  this.getPatrolInfo();
+    console.log('Harita yüklendi:', this.map);
+    this.getPatrolInfo();
   }
 
   // LastEventModal(item:AlarmModel){
@@ -227,7 +228,14 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   //     return;
   //   }
   // }
+  getLocation(){
+    this.patrol.getLocation().subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      this._locations = response[0].x;
+      console.log("getLocation:", this._locations); 
+      this.ref.detectChanges();
 
+    });
+  }
   incidentMedia = {
     photos: [
       // "assets/images/photo1.jpg",
@@ -333,23 +341,24 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     this.loadMap(parseFloat(patrol?.lat || "0"), parseFloat(patrol?.lng || "0"), patrol?.securityname);
   }
 
-  changeContent(widgetValue: number) {
-    this.activeWidget = widgetValue;
-  }
+  // changeContent(widgetValue: number) {
+  //   this.activeWidget = widgetValue;
+  // }
 
-  items = [
-    { value: 'option1', viewValue: 'Seçenek 1' },
-    { value: 'option2', viewValue: 'Seçenek 2' },
-    { value: 'option3', viewValue: 'Seçenek 3' }
-  ];
+  // items = [
+  //   { value: 'option1', viewValue: 'Seçenek 1' },
+  //   { value: 'option2', viewValue: 'Seçenek 2' },
+  //   { value: 'option3', viewValue: 'Seçenek 3' }
+  // ];
 
   dailyGuardTourCheck(date:any){
     this.patrol.dailyGuardTourCheck(date).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
        this.dailyGuardTour = response[0]?.x;
        //console.log("......dailyGuardTourCheck........",this.dailyGuardTour);
-       this.atilmayan = this.dailyGuardTour.filter((item:any)=> item.durum === 0)
-       this.atilan = this.dailyGuardTour.filter((item:any)=> item.durum === 1)
-       this.atilacak = this.dailyGuardTour.filter((item:any)=> item.durum === 2)
+       this.atilmayan = (this.dailyGuardTour?? []).filter((item:any)=> item.durum === 0)
+       this.atilan = (this.dailyGuardTour?? []).filter((item:any)=> item.durum === 1)
+       this.atilacak = (this.dailyGuardTour?? []).filter((item:any)=> item.durum === 2)
+       console.log("......dailyGuardTour........",this.dailyGuardTour);
        console.log("......atilmayan........",this.atilmayan);
        console.log("......atilan........",this.atilan);
        console.log("......atilacak........",this.atilacak);
@@ -362,8 +371,8 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   dailyGuardTourCheck2(date:any){
     this.patrol.dailyGuardTourCheck2(date).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
       this.dailyGuardTour2 = response[0]?.x;
-      this.alarmlar = this.dailyGuardTour2.filter((item:any)=> item.durum === 1)
-      this.olaylar = this.dailyGuardTour2.filter((item:any)=>item.durum === 2)
+      this.alarmlar = (this.dailyGuardTour2?? []).filter((item:any)=> item.durum === 1)
+      this.olaylar = (this.dailyGuardTour2?? []).filter((item:any)=>item.durum === 2)
       this.updateWidgets();
       console.log("olaylar",this.olaylar);
       console.log("alarmlar",this.alarmlar);
