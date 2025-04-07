@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
@@ -10,6 +10,8 @@ import { ExitDateRenderer } from './exit-date-renderer/exit-date-renderer.compon
 import { FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, GridReadyEvent } from 'ag-grid-community';
 import { OrganizationColumnFilterComponent } from 'src/app/_angel/attendance/organization-column-filter/organization-column-filter.component';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
+import { ToastrService } from 'ngx-toastr';
+import { RepeatRenderer } from './repeat-renderer/repeat-renderer.component';
 
 @Component({
   selector: 'app-visitor-grid',
@@ -18,9 +20,12 @@ import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-s
   templateUrl: './visitor-grid.component.html',
   styleUrl: './visitor-grid.component.scss'
 })
-export class VisitorGridComponent implements OnInit, OnDestroy {
+export class VisitorGridComponent implements OnInit, OnDestroy, OnChanges {
   private ngUnsubscribe = new Subject();
   @Input() selectedTab: any = {};
+  @Input() refresh: boolean;
+  @Output() updateEmit = new EventEmitter<any>();
+  @Output() selectedVisitor = new EventEmitter<any>();
   @ViewChild('agGridLight', { static: false }) agGridLight: AgGridAngular;
   @ViewChild('agGridDark', { static: false }) agGridDark: AgGridAngular;
   gridHeight = '80vh';
@@ -72,7 +77,8 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
   };
   gridOptions: GridOptions = {
     context: {
-      handleExitButtonClick: this.handleExitButtonClick.bind(this)
+      handleExitButtonClick: this.handleExitButtonClick.bind(this),
+      handleRepeatButtonClick: this.handleRepeatButtonClick.bind(this),
     }
   };
   public columnDefs: (ColDef | ColGroupDef)[];
@@ -88,9 +94,19 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
   constructor(
     private profileService: ProfileService,
     private translateService: TranslateService,
-    private themeModeService: ThemeModeService
+    private themeModeService: ThemeModeService,
+    private ref: ChangeDetectorRef,
+    private toastrService: ToastrService
   ) { }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['refresh']) {
+      if (this.selectedTab.type == '1') {
+        this.getList();
+      }
+    }
+  }
+  
   ngOnInit(): void {
     this.columnDefs = [
       {
@@ -120,7 +136,6 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
             type: 'numericColumn',
             filter: false,
             hide: false,
-            minWidth: 40
           },
           {
             headerName: this.translateService.instant('Ad'),
@@ -137,10 +152,9 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
                 return true;
               },
             },
-            // cellClass: (params) => this.applyLinkClass(),
+            cellClass: (params) => this.applyLinkClass(),
             hide: false,
-            // onCellDoubleClicked: (params) => this.clickedRegistry(params)
-            minWidth: 60
+            onCellDoubleClicked: (params) => this.clickedVisitor(params),
           },
           {
             headerName: this.translateService.instant('Soyad'),
@@ -158,7 +172,6 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
               },
             },
             hide: false,
-            minWidth: 60
           }
         ],
       },
@@ -180,7 +193,6 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
             enableRowGroup: true,
             hide: false,
             filter: 'agTextColumnFilter',
-            minWidth: 60
           },
           {
             colId: 'Kimlikno',
@@ -191,7 +203,6 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
             enableRowGroup: true,
             hide: false,
             filter: 'agTextColumnFilter',
-            minWidth: 60
           },
           {
             colId: 'cbo_ziyaretnedeni',
@@ -202,29 +213,26 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
             enableRowGroup: true,
             hide: false,
             filter: OrganizationColumnFilterComponent,
-            minWidth: 60
           },
           {
-            colId: 'Sicilid1adsoyad',
+            colId: 'Sicilidadsoyad',
             headerName: this.translateService.instant('Kime Geldi'),
-            field: 'Sicilid1adsoyad',
+            field: 'Sicilidadsoyad',
             headerTooltip: this.translateService.instant('Kime Geldi'),
             rowGroup: false,
             enableRowGroup: true,
             hide: false,
             filter: 'agTextColumnFilter',
-            minWidth: 60
           },
           {
-            colId: 'sicilid3adsoyad',
-            headerName: this.translateService.instant('Personel'),
-            field: 'sicilid3adsoyad',
-            headerTooltip: this.translateService.instant('Personel'),
+            colId: 'KimlikTipiAd',
+            headerName: this.translateService.instant('Kimlik Tipi'),
+            field: 'KimlikTipiAd',
+            headerTooltip: this.translateService.instant('Kimlik Tipi'),
             rowGroup: false,
             enableRowGroup: true,
             hide: false,
             filter: 'agTextColumnFilter',
-            minWidth: 60
           },
 
         ],
@@ -254,7 +262,6 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
               },
             },
             hide: false,
-            minWidth: 60
           },
           {
             headerName: this.translateService.instant('Son Geçiş Noktası'),
@@ -262,7 +269,6 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
             headerTooltip: this.translateService.instant('Son Geçiş Noktası'),
             filter: false,
             hide: false,
-            minWidth: 60
           },
           {
             headerName: this.translateService.instant('Plaka'),
@@ -280,7 +286,6 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
               },
             },
             hide: false,
-            minWidth: 60
           },
           {
             headerName: this.translateService.instant('Giriş Tarihi'),
@@ -301,7 +306,6 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
               }
               return '';
             },
-            minWidth: 60
           },
           {
             headerName: this.translateService.instant('Çıkış Tarihi'),
@@ -318,15 +322,26 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
               };
               return exitSystem
             },
-            minWidth: 60
+            minWidth: 160,
+            maxWidth: 160,
           },
           {
             headerName: this.translateService.instant('Yinele'),
-            field: 'cikis',
+            field: 'yinele',
             headerTooltip: this.translateService.instant('Yinele'),
             filter: false,
             hide: false,
-            minWidth: 60
+            cellRendererSelector: (params: ICellRendererParams<any>) => {
+              const repeatSystem = {
+                component: RepeatRenderer,
+                params: {
+                  data: params.data,
+                },
+              };
+              return repeatSystem
+            },
+            minWidth: 160,
+            maxWidth: 160,
           },
           {
             headerName: this.translateService.instant('Kaydeden'),
@@ -344,7 +359,6 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
               },
             },
             hide: false,
-            minWidth: 60
           },
           {
             headerName: this.translateService.instant('Açıklama'),
@@ -362,14 +376,13 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
               },
             },
             hide: false,
-            minWidth: 60
           },
         ],
       },
     ];
 
     this.getTheme(); // Tema moduna subscribe olunup dinlemeye başlanıyor
-    this.getList();
+    // this.getList();
   }
 
 
@@ -396,12 +409,13 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
     var sp: any[] = [
       {
         mkodu: 'yek262',
+        id: '0',
         ziyarettipi: savedFilterModel?.cbo_ziyaretnedeni?.toString() || '0',
         ziyaretbaslik: savedFilterModel?.Ad?.filter || '',
         ziyaretplaka: savedFilterModel?.Plaka?.filter || '',
         ziyaretsoyad: savedFilterModel?.Soyad?.filter || '',
-        kime: savedFilterModel?.Sicilid1adsoyad?.filter || '',
-        personel: savedFilterModel?.sicilid3adsoyad?.filter || '',
+        kime: savedFilterModel?.Sicilidadsoyad?.filter || '',
+        personel: savedFilterModel?.KimlikTipiAd?.filter || '',
         bilgi: savedFilterModel?.Bilgi?.filter || '',
         firma: savedFilterModel?.Firma?.filter || '',
         tarih: formatDate(today),
@@ -429,6 +443,8 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
       });
 
       this.loading = false;
+
+      this.ref.detectChanges();
       // this.loadingEvent.emit(false); 
     }, (error: any) => {
       console.log("Ziyaretçi Listesi Hatası: ", error);
@@ -465,6 +481,29 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
       }
 
       console.log("Ziyaretçi Çıkışı Verildi :", data);
+      this.toastrService.success(this.translateService.instant('Ziyaretçi Çıkışı Verildi'), this.translateService.instant('Başarılı'));
+      this.getList();
+    });
+  }
+
+  handleRepeatButtonClick (data: any) {
+    // Yinele butonuna tıklanınca yapılacak işlemler burada olacak
+    console.log('Yinele butonuna tıklandı', data);
+    // Burada gerekli işlemleri yapabilirsiniz
+    var sp: any[] = [
+      { mkodu: 'yek271', id: data.Id.toString() }
+    ];
+
+    this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+      const data = response[0].x;
+      const message = response[0].z;
+
+      if (message == -1) {
+        return;
+      }
+
+      console.log("Ziyaretçi Çıkışı Verildi :", data);
+      this.toastrService.success(this.translateService.instant('Ziyaretçi Çıkışı Verildi'), this.translateService.instant('Başarılı'));
       this.getList();
     });
   }
@@ -473,19 +512,10 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
     return this.activeTheme === 'light' ? this.agGridLight : this.agGridDark;
   }
 
-  // onGridReady(params: GridReadyEvent) {
-  //   this.gridApi = params.api;
-  //   this.columnApi = params.columnApi;
-  
-  //   // Tüm kolonları içeriğe göre otomatik ayarla
-  //   setTimeout(() => {
-  //     this.autoSizeAllColumns();
-  //   }, 100);
-  // }
   
   autoSizeAllColumns() {
     if (this.columnApi) {
-      const allColumnIds: string[] = [];
+      const allColumnIds: string[] = ['kaydeden', 'Bilgi', 'Plaka', 'Giris', 'kart', 'Sicilidadsoyad', 'KimlikTipiAd', 'ZiyaretNedeni', 'Kimlikno', 'Firma', 'Ad', 'Soyad', 'Id'];
       this.columnApi.getColumns()?.forEach((column) => {
         allColumnIds.push(column.getId());
       });
@@ -493,18 +523,6 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
     }
   }
   
-  
-  
-  // autoSizeAllColumns() {
-  //   const grid = this.getActiveGrid();
-  //   if (grid) {
-  //     const allColumnIds: string[] = [];
-  //     grid.columnApi.getColumns()?.forEach((column: any) => {
-  //       allColumnIds.push(column.getId());
-  //     });
-  //     grid.columnApi.autoSizeColumns(allColumnIds, false);
-  //   }
-  // }
 
   onGridReadyLight(params: GridReadyEvent) {
     if (this.activeTheme === 'light') {
@@ -559,6 +577,17 @@ export class VisitorGridComponent implements OnInit, OnDestroy {
       this.changeTheme(mode);
     });
   }
+
+  applyLinkClass() {
+    return "text-danger fw-bolder text-decoration-underline link-style"
+  }
+
+  clickedVisitor(params: any) {
+    this.selectedVisitor.emit(params.data);
+    this.updateEmit.emit();
+  }
+  
+
   
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

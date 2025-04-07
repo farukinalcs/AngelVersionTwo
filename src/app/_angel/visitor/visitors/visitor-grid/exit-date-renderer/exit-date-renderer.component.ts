@@ -13,7 +13,7 @@ import { ICellRendererParams } from 'ag-grid-enterprise';
             {{ value() | date: 'dd-MM-yyyy HH:mm:ss' }}
         </div>
         <ng-template #noExit>
-            <a class="btn btn-danger btn-sm p-0 px-3 py-1 w-100" (click)="handleExit()">
+            <a class="btn btn-secondary fw-bolder btn-sm p-0 px-3 py-1 w-100" (click)="handleExit()">
                 <i class="fa-solid fa-door-open"></i>
                 {{"Çıkış Ver" | translate}}
             </a>

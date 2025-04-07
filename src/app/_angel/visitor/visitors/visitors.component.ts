@@ -11,6 +11,7 @@ import { UpdateBannedVisitorComponent } from './banned-visitor/update-banned-vis
 import { TempCardComponent } from './temp-card/temp-card.component';
 import { AddTempCardComponent } from './temp-card/add-temp-card/add-temp-card.component';
 import { AddVisitorComponent } from './visitor-grid/add-visitor/add-visitor.component';
+import { UpdateVisitorComponent } from './visitor-grid/update-visitor/update-visitor.component';
 
 @Component({
   selector: 'app-visitors',
@@ -26,7 +27,8 @@ import { AddVisitorComponent } from './visitor-grid/add-visitor/add-visitor.comp
     UpdateBannedVisitorComponent,
     TempCardComponent,
     AddTempCardComponent,
-    AddVisitorComponent
+    AddVisitorComponent,
+    UpdateVisitorComponent
   ],
   templateUrl: './visitors.component.html',
   styleUrl: './visitors.component.scss'
@@ -47,6 +49,8 @@ export class VisitorsComponent implements OnInit, OnDestroy {
   refresh: boolean = false;
   displayAddCard: boolean = false;
   displayAddVisitor: boolean = false;
+  displayUpdateVisitor: boolean = false;
+  selectedVisitor: any;
 
   constructor(
     private translateService: TranslateService
@@ -103,6 +107,14 @@ export class VisitorsComponent implements OnInit, OnDestroy {
         this.visibleAddBanned();
         break;
     }
+  }
+
+  visibleUpdateVisitor() {
+    this.displayUpdateVisitor = !this.displayUpdateVisitor;
+  }
+  
+  getSelectedVisitor(event: any) {
+    this.selectedVisitor = event;
   }
   
   ngOnDestroy(): void {

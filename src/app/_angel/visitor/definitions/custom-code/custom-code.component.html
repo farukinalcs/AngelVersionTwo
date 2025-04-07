@@ -1,0 +1,56 @@
+<div class="container">
+	<div class="row">
+        <div class="col-12">
+        
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Ziyaretçi Özel Kodları" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">
+                            {{"Ziyaretçi Özel Kodlarını Buradan Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+        
+                <div class="card-body">
+                    <div class="row" [formGroup]="form">
+                        <ng-container *ngIf="visitCodes.length > 0">
+                            <div class="col-sm-6 p-3" *ngFor="let item of visitCodes">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span>{{item.Zokodad}}</span>
+                                        </label>
+                
+                                        <input type="text" class="form-control form-control-sm form-control-solid w-75"
+                                            [formControlName]="item.Zokodad" placeholder="Değer Giriniz">        
+                                    </div>
+
+                                    <div class="col-12 d-flex gap-3 py-1" *ngIf="item.Zokoddeger.toLowerCase().indexOf('tarih') > 0">
+                                        <label class="d-flex align-items-center fs-7 mb-2">
+                                            <span>Geçerlilik Süresi (Gün)</span>
+                                        </label>
+                
+                                        <input type="text" class="form-control form-control-sm form-control-solid h-10px w-25"
+                                            [formControlName]="item.Zokodad + 'lim'" placeholder="Gün Değeri Giriniz">
+                                    </div>
+
+                                </div>
+                                
+        
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-end">
+                            <a class="btn btn-sm btn-danger mx-1" (click)="save()">
+                                <i class="fa-solid fa-floppy-disk fs-7"></i>
+                                {{'Kaydet' | translate}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+</div>

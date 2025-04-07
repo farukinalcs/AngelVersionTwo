@@ -837,7 +837,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   applyLinkClass() {
-    return "text-primary link-style"
+    return "text-danger fw-bolder text-decoration-underline link-style"
   }
 
   openFilterModal() {

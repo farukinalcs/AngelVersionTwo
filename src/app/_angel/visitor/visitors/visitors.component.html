@@ -61,7 +61,10 @@
 
                     
                     <app-visitor-grid *ngIf="selectedTab.type == 1"
-                        [selectedTab]="selectedTab">
+                        [selectedTab]="selectedTab"
+                        (updateEmit)="visibleUpdateVisitor()"
+                        (selectedVisitor)="getSelectedVisitor($event)"
+                        [refresh]="refresh">
                     </app-visitor-grid>
 
                     <app-banned-visitor *ngIf="selectedTab.type == 2"
@@ -116,6 +119,15 @@
         (hideEvent)="visibleAddVisitor()"
         (refreshEvent)="refreshToggle()">
     </app-add-visitor>
+</ng-container>
+
+<ng-container *ngIf="displayUpdateVisitor">
+    <app-update-visitor
+        [visible]="displayUpdateVisitor"
+        (hideEvent)="visibleUpdateVisitor()"
+        [selectedVisitor]="selectedVisitor"
+        (refreshEvent)="refreshToggle()">
+    </app-update-visitor>
 </ng-container>
 
 

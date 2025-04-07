@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
@@ -91,7 +91,8 @@ export class BannedVisitorComponent implements OnInit, OnDestroy, OnChanges {
   constructor(
     private profileService: ProfileService,
     private translateService: TranslateService,
-    private themeModeService: ThemeModeService
+    private themeModeService: ThemeModeService,
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -326,6 +327,8 @@ export class BannedVisitorComponent implements OnInit, OnDestroy, OnChanges {
       });
 
       this.loading = false;
+
+      this.ref.detectChanges();
       // this.loadingEvent.emit(false); 
     }, (error: any) => {
       console.log("Ziyaretçi Listesi Hatası: ", error);
@@ -444,7 +447,7 @@ export class BannedVisitorComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   applyLinkClass() {
-    return "text-primary link-style"
+    return "text-danger fw-bolder text-decoration-underline link-style"
   }
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

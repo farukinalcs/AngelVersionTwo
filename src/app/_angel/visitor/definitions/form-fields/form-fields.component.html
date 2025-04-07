@@ -1,0 +1,157 @@
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+
+			<div class="card card-custom gutter-b my-5 pb-5">
+				<div class="card-header border-0 bg-danger" style="min-height: 45px;">
+					<div class="card-title">
+						<h3 class="card-label text-white">{{"Ziyaretçi Form" | translate}}</h3>
+						<h4 class="card-label text-gray-200 fs-8">
+							{{"Ziyaretçi formundanki zorunlu alanları buradan güncelleyebilirsiniz..(Bu işlem Geçici kart harici uygulanmaktadır)" | translate}}</h4>
+					</div>
+				</div>
+
+				<!-- <ng-container *ngIf="!loading">
+					<div class="card-body">
+						<div class="col-12 pt-10">
+							<div class="loader-container">
+								<div id="splash-screen" class="splash-screen"
+									style="position: inherit; color:transparent; background-color: transparent;">
+									<img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+										style="margin-visitorOSHA: 0; height: 0;" />
+									<mat-spinner></mat-spinner>
+								</div>
+							</div>
+						</div>
+					</div>
+				</ng-container> -->
+
+				<ng-container *ngIf="loading">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-4 my-5">
+								<div class="d-flex flex-column">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Ad" | translate}}</label>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input h-20px w-30px" type="checkbox" [(ngModel)]="name" (ngModelChange)="save('ziyaretciad', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ name ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+                            
+							<div class="col-4 my-5">
+								<div class="d-flex flex-column">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Soyad" | translate}}</label>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input h-20px w-30px" type="checkbox" [(ngModel)]="surname" (ngModelChange)="save('ziyaretcisoyad', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ surname ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+							
+							<div class="col-4 my-5">
+								<div class="d-flex flex-column">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Kimlik Bilgisi" | translate}}</label>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input h-20px w-30px" type="checkbox" [(ngModel)]="credential" (ngModelChange)="save('ziyaretcikimlikbilgisi', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ credential ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-4 my-5">
+								<div class="d-flex flex-column">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Açıklama" | translate}}</label>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input h-20px w-30px" type="checkbox" [(ngModel)]="explanation" (ngModelChange)="save('ziyaretciaciklama', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ explanation ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-4 my-5">
+								<div class="d-flex flex-column">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Firma" | translate}}</label>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input h-20px w-30px" type="checkbox" [(ngModel)]="company" (ngModelChange)="save('ziyaretcifirma', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ company ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-4 my-5">
+								<div class="d-flex flex-column">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Plaka" | translate}}</label>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input h-20px w-30px" type="checkbox" [(ngModel)]="plate" (ngModelChange)="save('ziyaretciplaka', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ plate ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-4 my-5">
+								<div class="d-flex flex-column">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Kime Geldi" | translate}}</label>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input h-20px w-30px" type="checkbox" [(ngModel)]="registry" (ngModelChange)="save('ziyaretcikimegeldi', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ registry ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+                            <div class="col-4 my-5">
+								<div class="d-flex flex-column">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Ziyaretçi Kartları" | translate}}</label>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input h-20px w-30px" type="checkbox" [(ngModel)]="card" (ngModelChange)="save('ziyaretcikartlari', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ card ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>

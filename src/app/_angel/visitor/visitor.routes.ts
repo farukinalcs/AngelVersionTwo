@@ -15,7 +15,8 @@ export const visitorRoutes: Routes = [
   },
   {
     path: 'definitions',
-    loadComponent: () => import('./definitions/definitions.component').then(m => m.DefinitionsComponent),
+    loadChildren: () =>
+      import('./definitions/definitions.routes').then(m => m.definitionsRoutes),
   },
   {
     path: 'reports',

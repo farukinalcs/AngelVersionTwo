@@ -523,7 +523,7 @@ export class VisitorComponent implements OnInit, OnDestroy {
       visitor.fileTypes.forEach((fileType: any) => {
         if (fileType.sendFile) {
           hasSendFile = true;
-          this.postVisitorFile(fileType.sendFile, visitor.Id, 'ziyaretci', fileType.BelgeId);
+          this.postVisitorFile(fileType.sendFile, visitor.Id, 'BeklenenZiyaretci', fileType.BelgeId);
         }
       });
   

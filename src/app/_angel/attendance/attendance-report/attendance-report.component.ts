@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ProfileService } from '../../profile/profile.service';
 import { ApiUrlService } from 'src/app/_helpers/api-url.service';
 import { Subject, takeUntil } from 'rxjs';
@@ -28,6 +28,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   constructor(
     private profileService: ProfileService,
     private apiUrlService: ApiUrlService,
+    private ref: ChangeDetectorRef
   ) { }
   
 
@@ -53,6 +54,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
       this.categories = this.groupByCategory(this.reports);
       console.log("Kategoriler: ", this.categories);
       this.selectedCategory = this.categories[0];
+
+      this.ref.detectChanges(); // Değişiklikleri algıla ve güncelle
     });
   }
 
@@ -101,8 +104,10 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
         name: 'Parametre Test Ediyorum',
         labels: ['cacheKey', 'reportName', 'reportStartDate', 'reportEndDate'],
         values: [this.cacheKey, this.selectedReport.ad, this.reportStartDate, this.reportEndDate],
+        
       }
     ];
+    console.log("Parametre Test Ediyor : ", this.selectedReport.ad +" "+ this.reportStartDate + " "+ this.reportEndDate );
   }
 
   getApiUrl() {

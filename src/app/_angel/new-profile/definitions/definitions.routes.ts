@@ -12,7 +12,7 @@ export const definitionsRoutes: Routes = [
       { path: 'file-type', component:  FileTypeComponent},
       { path: 'food-type', component: FoodTypeComponent },
       { path: 'menu', component:  MenuComponent},
-      { path: '', pathMatch: 'full' },
+      // { path: '', pathMatch: 'full' },
     ],
   },
 ];
