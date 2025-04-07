@@ -3,13 +3,13 @@
     <div class="col-md-12 m-3">
       <mat-form-field class="full-width">
         <mat-label>Lokasyon</mat-label>
-        <mat-select [(ngModel)]="selectedCar" name="location">
+        <mat-select [(ngModel)]="selectLocationId" name="location">
           @for (location of _locations; track location) {
             <mat-option [value]="location.id">{{location.ad}}</mat-option>
           }
         </mat-select>
       </mat-form-field>
-  
+      {{selectLocationId}}
     </div>
 
 
@@ -90,7 +90,9 @@
           <div class="row g-3 widget-section mt-3">
             <ng-container *ngFor="let widget of widgets">
               <div class="col-md-2">
-                <div class="widget-card cursor-pointer" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">
+                <div class="widget-card cursor-pointer" 
+                    style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;"
+                    (click)="openWidget(widget)">
                   <h6 class="widget-title">{{ widget.title }}</h6>
                   <p class="widget-value">{{ widget.value }}</p>
                 </div>
@@ -324,6 +326,31 @@
   </div>
 </p-dialog>
 
+<p-dialog
+  header={{widgetTitle}}
+  [(visible)]="widgetDetailModal"
+  [modal]="true"
+  [style]="{ width: '40vw'}"
+  [breakpoints]="{ '2560px': '40vw', '992px': '40vw', '576px': '50vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">İşlem Zamanı</th>
+        <th scope="col">Tur Adı</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of widgetData  || []; let i = index"  class="cursor-pointer">
+        <td>
+          {{ item.tarih | date: 'dd-MM-yyyy hh:mm' }}
+        </td>
+        <td>{{ item.turadi }}</td>
+      </tr>
+    </tbody>
+  </table>
+</p-dialog>
 
   <router-outlet></router-outlet>
 
