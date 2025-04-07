@@ -44,9 +44,10 @@ export class PatrolService {
     return this.httpClient.get<any>(this.apiUrlService.apiUrl + '/process', options);
   }
 
-  getPatrolInfo(){
+  getPatrolInfo(locationid:number){
     var sp : any[] = [{
       mkodu : 'yek189',
+      lokasyon:locationid.toString()
     }]
     return this.requestMethod(sp);
   }
@@ -269,18 +270,20 @@ export class PatrolService {
   //   return this.requestMethod(sp);
   // }
 
-  tour_s(date:string){
+  tour_s(date:string,locationid:number){
     var sp: any[] = [{
       mkodu:'yek265',
       tarih: date.toString(),
+      lokasyon:locationid.toString()
     }]
     return this.requestMethod(sp);
   }
 
-  tour_sd(date:string){
+  tour_sd(date:string,locationid:number){
     var sp: any[] = [{
       mkodu:'yek266',
       tarih: date.toString(),
+      lokasyon:locationid.toString()
     }]
     return this.requestMethod(sp);
   }

@@ -54,7 +54,9 @@ export class SecurityToursComponent {
         this.getGuardTour();
       });
     }else{
-      alert("Tur adı boş geçilemez")
+      this.toastrService.error(
+       "Tur Adı Boş Geçilemez"
+      );
     }
   }
 
@@ -120,9 +122,14 @@ export class SecurityToursComponent {
         //console.log("relation_i TARGET:", this.targetList);
     })}
     else{
-      alert("Bu istasyon daha önce eklendi")
+      this.toastrService.error(
+        "Bu istasyon daha önce eklendi"
+       );
     }}else{
-      alert("İstasyon eklemek istediğiniz turu seçin")
+      this.toastrService.error(
+        "İstasyon eklemek istediğiniz turu seçin"
+       );
+      
     }
   }
   
