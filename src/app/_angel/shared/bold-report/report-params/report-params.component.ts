@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
@@ -26,7 +26,8 @@ export class ReportParamsComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private fb: FormBuilder,
     private translateService: TranslateService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private ref : ChangeDetectorRef
   ) { }
   
   ngOnInit(): void {
@@ -70,7 +71,7 @@ export class ReportParamsComponent implements OnInit, OnDestroy {
           
           this.createForm();
           this.loadAllSelectOptions(); // Seçenekleri çekme işlemi
-
+          this.ref.detectChanges(); // Değişiklikleri algılat
         },
         (err) => {
           this.toastrService.error(

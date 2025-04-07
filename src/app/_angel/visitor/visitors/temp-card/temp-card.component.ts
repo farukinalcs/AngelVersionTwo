@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
@@ -88,7 +88,8 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
   constructor(
     private profileService: ProfileService,
     private translateService: TranslateService,
-    private themeModeService: ThemeModeService
+    private themeModeService: ThemeModeService,
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -299,6 +300,7 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
       });
 
       this.loading = false;
+      this.ref.detectChanges();
       // this.loadingEvent.emit(false); 
     }, (error: any) => {
       console.log("Geçici Kart Hatası: ", error);
@@ -347,9 +349,9 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
   autoSizeAllColumns() {
     if (this.columnApi) {
       const allColumnIds: string[] = ['SicilId', 'Sicilidadsoyad', 'Giris', 'Cikis'];
-      // this.columnApi.getColumns()?.forEach((column) => {
-      //   allColumnIds.push(column.getId());
-      // });
+      this.columnApi.getColumns()?.forEach((column) => {
+        allColumnIds.push(column.getId());
+      });
       this.columnApi.autoSizeColumns(allColumnIds, false); // False: İçeriğe göre en küçük hale getir
     }
   }

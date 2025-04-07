@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ProfileService } from '../../profile/profile.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseXloginDetail } from 'src/app/modules/auth/models/response-Xlogindetail';
@@ -23,10 +23,13 @@ export class RaporlarComponent implements OnInit, OnDestroy {
   categories: any[] = [];
   selectedCategory: any;
   selectedReport: any;
+  reportEndDate: any;
+  reportStartDate: any;
 
   constructor(
     private profileService: ProfileService,
     private apiUrlService: ApiUrlService,
+    private ref: ChangeDetectorRef
   ) { }
   
 
@@ -52,6 +55,7 @@ export class RaporlarComponent implements OnInit, OnDestroy {
       this.categories = this.groupByCategory(this.reports);
       console.log("Kategoriler: ", this.categories);
       this.selectedCategory = this.categories[0];
+      this.ref.detectChanges(); // Değişiklikleri algıla ve güncelle
     });
   }
 
@@ -135,8 +139,8 @@ export class RaporlarComponent implements OnInit, OnDestroy {
     this.parameters = [
       {
         name: 'Parametre Test Ediyorum',
-        labels: ['cacheKey'],
-        values: [this.cacheKey],
+        labels: ['cacheKey', 'reportName', 'reportStartDate', 'reportEndDate'],
+        values: [this.cacheKey, this.selectedReport.ad, this.reportStartDate, this.reportEndDate],
       }
     ];
   }
@@ -149,6 +153,30 @@ export class RaporlarComponent implements OnInit, OnDestroy {
     this.selectedReport = null;
     this.cacheKey = null;
   }
+  getParameters(event: any): void {
+    console.log("Parametreler: ", event);
+
+    const parameters = event;
+    let reportStartDate = null;
+    let reportEndDate = null;
+    const currentDateTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
+
+    if (parameters.hasOwnProperty('@tarihbas')) {
+        reportStartDate = parameters['@tarihbas'].slice(0, 16).replace('T', ' ') || currentDateTime;
+    }
+
+    if (parameters.hasOwnProperty('@tarihbit')) {
+        reportEndDate = parameters['@tarihbit'].slice(0, 16).replace('T', ' ') || currentDateTime;
+    }
+
+    console.log("Report Start Date: ", reportStartDate);
+    console.log("Report End Date: ", reportEndDate);
+
+    this.reportStartDate = reportStartDate;
+    this.reportEndDate = reportEndDate;
+  }
+
+
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

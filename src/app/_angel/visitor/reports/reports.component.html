@@ -1,1 +1,56 @@
-<p>reports works!</p>
+<div class="container-fluid">
+    <div class="card py-5 px-3" *ngIf="!selectedReport">
+        <div class="row">
+            <div class="col-2 pe-10 border-end border-3 my-2">
+                <app-report-category
+                    [categories]="categories"
+                    [selectedCategory]="selectedCategory"
+                    (selectCategory)="changeCategory($event)">
+                </app-report-category>
+            </div>
+    
+            <div class="col-10">
+                <app-report-list
+                    [selectedCategory]="selectedCategory"
+                    [reports]="reports"
+                    (selectReportEvent)="selectReport($event)">
+                </app-report-list>
+            </div>
+        </div>   
+    </div>
+
+    <div class="card py-5 px-3" *ngIf="selectedReport">
+        <div class="card-header">
+            <h3 class="card-title align-items-start flex-column">
+                <span class="card-label fw-bold text-gray-800">{{selectedReport.ad}}</span>
+                <!-- <span class="text-gray-500 mt-1 fw-semibold fs-6">-</span> -->
+            </h3>
+    
+            <div class="card-toolbar">           
+                <div class="btn btn-sm btn-light d-flex align-items-center px-4" (click)="resetReport()">           
+                    <div class="text-gray-600 fw-bold">{{'Geri_Dön' | translate}}</div>
+    
+                    <i class="fa-solid fa-arrow-left text-gray-500 lh-0 fs-2 ms-2 me-0"></i>       
+                </div>  
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <app-report-params
+                    [report]="selectedReport"
+                    (cacheKeyEvent)="getCacheKey($event)"
+                    (formValue)="getParameters($event)">
+                </app-report-params>
+            </div>            
+
+            <div class="col-9" *ngIf="cacheKey">
+                <app-bold-report
+                    [serviceUrl]="serviceUrl"
+                    [reportPath]="reportPath"
+                    [cacheKey]="cacheKey"
+                    [parameters]="parameters"
+                ></app-bold-report>
+            </div>
+        </div>   
+    </div>
+</div>

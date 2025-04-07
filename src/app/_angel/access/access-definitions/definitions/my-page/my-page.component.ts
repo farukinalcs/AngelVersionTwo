@@ -77,7 +77,8 @@ export class MyPageComponent implements OnInit, OnDestroy {
       {
         mkodu: "yek174",
         deger: value ? "1" : "0",
-        param: key
+        param: key,
+        kaynak: "ben"
       }
     ];
 

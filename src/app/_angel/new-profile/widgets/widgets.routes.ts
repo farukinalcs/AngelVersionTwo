@@ -26,7 +26,7 @@ export const widgetsRoutes: Routes = [
       { path: 'meal-menu', component: MealMenuComponent },
       { path: 'my-files', component: MyFilesComponent },
       { path: 'new-joiners', component: NewJoinersComponent },
-      { path: '', pathMatch: 'full' },
+      // { path: '', pathMatch: 'full' },
     ],
   },
 ];

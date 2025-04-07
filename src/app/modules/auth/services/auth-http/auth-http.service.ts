@@ -28,16 +28,32 @@ export class AuthHTTPService {
     return this.http.get(this.apiUrlService.apiUrl + '/gate');
   }
 
+  generateRandomKey(): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let key = '';
+  
+    for (let i = 0; i < 8; i++) {
+      key += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+  
+    const seconds = new Date().getSeconds().toString().padStart(2, '0');
+  
+    return key + seconds;
+  }
+
   cryptoLogin(email : string, password : string, lang : any, appList : any) : Observable<any> {
     // let headers = new HttpHeaders({
     //   Authorization: this.helperService.gateResponseX,
     // });
-
+    const randomKey = this.generateRandomKey();
+    console.log("Random Key :", randomKey);
+    
     var loginOptions = {
       loginName : email,
       password : password,
       langcode : lang,
       appcode : appList,
+      // key
       mkodu : 'sysLogin'
     };
 

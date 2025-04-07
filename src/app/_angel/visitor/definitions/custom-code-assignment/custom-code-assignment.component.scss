@@ -1,0 +1,33 @@
+.process-item {
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        background: var(--kt-dark);
+        // transition: width 0.1s ease-in;
+        z-index: 0;
+    }
+
+    &:hover::before {
+        width: 100%;
+    }
+
+    &:hover a {
+        color: var(--kt-white) !important;
+    }
+
+    a {
+        transition: color 0.1s ease-in;
+    }
+
+    .d-flex {
+        position: relative;
+        z-index: 1;
+    }
+}

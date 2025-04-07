@@ -14,7 +14,7 @@ export const OperationsRoutes: Routes = [
             { path: 'leaves', component: LeavesComponent },
             { path: 'passages', component: PassagesComponent },
             { path: 'missing-durations', component: MissingDurationsComponent },
-            { path: '', pathMatch: 'full' },
+            // { path: '', pathMatch: 'full' },
         ],
     },
 ]

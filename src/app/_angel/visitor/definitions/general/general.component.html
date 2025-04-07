@@ -1,0 +1,200 @@
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+
+			<div class="card card-custom gutter-b my-5 pb-5">
+				<div class="card-header border-0 bg-danger" style="min-height: 45px;">
+					<div class="card-title">
+						<h3 class="card-label text-white">{{"Genel" | translate}}</h3>
+						<h4 class="card-label text-gray-200 fs-8">
+							{{"Ziyaretçi Parametrelerini Buradan Belirleyebilirsiniz" | translate}}</h4>
+					</div>
+				</div>
+
+				<!-- <ng-container *ngIf="!loading">
+					<div class="card-body">
+						<div class="col-12 pt-10">
+							<div class="loader-container">
+								<div id="splash-screen" class="splash-screen"
+									style="position: inherit; color:transparent; background-color: transparent;">
+									<img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
+										style="margin-visitorOSHA: 0; height: 0;" />
+									<mat-spinner></mat-spinner>
+								</div>
+							</div>
+						</div>
+					</div>
+				</ng-container> -->
+
+				<ng-container *ngIf="loading">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-12 my-5 pe-20">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Ziyaretçi Kartları" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ziyaretçi kayıt edilirken aktif çıkınca pasif olsun" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="onlineVisitor" (ngModelChange)="save('onlineziyaretci', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ onlineVisitor ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-12 my-5 pe-20">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Webcam1" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted"></div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="webcam1" (ngModelChange)="save('ziyaretcikamera1', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ webcam1 ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+							
+							<div class="col-12 my-5 pe-20">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Webcam2" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted"></div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="webcam2" (ngModelChange)="save('ziyaretcikamera2', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ webcam2 ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-12 my-5 pe-20">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Çıkış Turnikeden Alınsın" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ben_Ekranında_İzin_Hakkı_İstiyorsanız_Bu_Seçenek_Aktif_Olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="exitTurnstile" (ngModelChange)="save('cikisturnikeden', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ exitTurnstile ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-12 my-5 pe-20">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Ziyaret Sahibine Mail Atılsın" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ziyaretçi eklendiğinde, ziyaret sahibine mail gönderilmesini istiyorsanız bu seçenek aktif olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="visitorMail" (ngModelChange)="save('ziyaretmail', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ visitorMail ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-12 my-5 pe-20">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Ad-Soyad Kontrolü" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ziyaretçi eklendiğinde ad soyadın kontrol edilmesini istiyorsanız bu seçenek aktif olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="visitorFullNameCheck" (ngModelChange)="save('ziyaretciadsoyadkontrol', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ visitorFullNameCheck ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-12 my-5 pe-20">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Geçiş Grubu" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ziyaretçiyi eklerken geçiş grubunu belirlemek istiyorsanız bu şeçenek aktif olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="visitorAccessGroup" (ngModelChange)="save('ziyaretcigecisgrubu', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ visitorAccessGroup ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+                            <div class="col-12 my-5 pe-20">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"İSG Tarihi" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ziyaretçiyi eklerken İSG tarihini gizlemek istiyorsanız bu şeçenek aktif olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="visitorOSHA" (ngModelChange)="save('ziyaretciisg', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ visitorOSHA ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+                            <div class="col-12 my-5 pe-20">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Gizlilik Tarihi" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ziyaretçiyi eklerken gizlilik tarihini gizlemek istiyorsanız bu şeçenek aktif olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="confidentialityDate" (ngModelChange)="save('ziyaretcigiz', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ confidentialityDate ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+                            <div class="col-12 my-5 pe-20">
+								<div class="d-flex flex-stack">
+									<div class="me-5">
+										<label class="fs-6 fw-semibold form-label">{{"Form Yazdırma Desteği" | translate}}</label>
+										<div class="fs-7 fw-semibold text-muted">{{"Ziyaretçi formunu yazdırmak istiyorsanız bu şeçenek aktif olmalı" | translate}}</div>
+									</div>
+	
+									<label class="form-check form-switch form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" [(ngModel)]="formPrint" (ngModelChange)="save('ziyaretciformprint', $event)">
+										<span class="form-check-label fw-semibold text-muted">
+											{{ formPrint ? ("Aktif" | translate) : ("Pasif" | translate) }}
+										</span>
+									</label>
+								</div>
+							</div>
+
+							
+							
+						</div>
+					</div>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>

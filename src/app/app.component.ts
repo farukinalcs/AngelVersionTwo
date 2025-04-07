@@ -6,7 +6,6 @@ import { LoadingService } from './_helpers/loading.service';
   selector: 'body[root]',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class AppComponent implements OnInit {
