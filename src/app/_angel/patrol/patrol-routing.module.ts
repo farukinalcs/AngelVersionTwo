@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PatroldashboardComponent } from './patroldashboard/patroldashboard.component';
 import { PatroldefinitionsComponent } from './patroldefinitions/patroldefinitions.component';
+import { PatrolreportComponent } from './patrolreport/patrolreport.component';
 
 
 
@@ -26,7 +27,11 @@ const routes: Routes = [
   {
     path:'tanimlamalar',
     component:PatroldefinitionsComponent
-  }
+  },
+  {
+    path:'raporlar',
+    component:PatrolreportComponent
+  },
 ];
 
 @NgModule({

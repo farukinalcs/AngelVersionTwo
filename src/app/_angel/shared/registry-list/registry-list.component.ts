@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, RowHeightParams } from 'ag-grid-community';
+import { _, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, RowHeightParams } from 'ag-grid-community';
 import { ColDef, ColGroupDef, IMultiFilterParams, IRowNode, IsRowSelectable, SideBarDef, StatusPanelDef, ValueFormatterParams } from 'ag-grid-enterprise';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
@@ -29,6 +29,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
   @Input() refreshEvent:boolean;
   @Input() filterEvent:boolean;
   @Input() bulkChangeEvent:boolean;
+  @Input() userdef:string;
   @ViewChild('agGridLight', { static: false }) agGridLight: AgGridAngular;
   @ViewChild('agGridDark', { static: false }) agGridDark: AgGridAngular;
   gridHeight = '80vh';
@@ -435,7 +436,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
           direktorluk: savedFilterModel?.cbo_direktorluk?.toString() || '0',
           mesaiperiyodu: savedFilterModel?.cbo_mesaiperiyodlari?.toString() || '0',
           sicilgroup: '0',
-          userdef: savedFilterModel?.sys_userdef?.toString() || '1',
+          userdef:this.userdef == "PATROL" ? '9' : savedFilterModel?.sys_userdef?.toString() || '1',
           yetki: savedFilterModel?.Yetki?.toString() || '-1',
           cardid: savedFilterModel?.cardID?.filter || '',
           aktif: this.selectedTab.type,
@@ -465,7 +466,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
           direktorluk: this.filterValueFromModal.formValues.directorship,
           mesaiperiyodu: savedFilterModel?.cbo_mesaiperiyodlari?.toString() || '0',
           sicilgroup: '0',
-          userdef: savedFilterModel?.sys_userdef?.toString() || '1',
+          userdef:this.userdef == "PATROL" ? '9' :  savedFilterModel?.sys_userdef?.toString() || '1',
           yetki: savedFilterModel?.Yetki?.toString() || '-1',
           cardid: savedFilterModel?.cardID?.filter || '',
           aktif: this.selectedTab.type,

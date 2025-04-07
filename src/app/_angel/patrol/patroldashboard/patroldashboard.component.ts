@@ -80,8 +80,10 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   IncidentHeader:string;
   IncidentTime:any;
 
-
-  selectedCar:any;
+  widgetTitle:string="";
+  widgetData:any[] = [];
+  widgetDetailModal:boolean = false;
+  selectLocationId:number;
 
   guardEventList:any[]=[];
   eventDetails:any[]=[];
@@ -109,11 +111,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     console.log("destroyyy")
   }
   
-  cars: any[] = [
-    {value: 'volvo', viewValue: 'Volvo'},
-    {value: 'saab', viewValue: 'Saab'},
-    {value: 'mercedes', viewValue: 'Mercedes'},
-  ];
+
   ngOnInit(): void {
 
     const today = new Date();
@@ -126,13 +124,13 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     
  
    window.setInterval(() => {
-    this.getPatrolInfo();
+    this.getPatrolInfo(this.selectLocationId);
     this.dailyGuardTourCheck(this.formattedDate);
     this.dailyGuardTourCheck2(this.formattedDate);
-    this.dailyGuardTourDetail(this.formattedDate);
+    this.dailyGuardTourDetail(this.formattedDate,this.selectLocationId);
  
     }, 3000);
-
+    this.getLocation();
   }
 
   ngAfterViewInit(): void {
@@ -144,10 +142,9 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     return this.selectedDate ? this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd')! : '';
   }
 
- getPatrolInfo(): void {
-  this.patrol.getPatrolInfo().subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+ getPatrolInfo(locationid:number): void {
+  this.patrol.getPatrolInfo(locationid).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
     this.patrolInfo = response[0]?.x;
-    //console.log("Patrol Info:", this.patrolInfo);
     this.ref.detectChanges();
     (this.patrolInfo ?? []).forEach((patrol) => {
       if (+patrol?.olay > 0) {
@@ -186,7 +183,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
       });
     }
   });
-  this.getLocation();
+
 }
 
 
@@ -206,7 +203,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     });
 
     console.log('Harita yüklendi:', this.map);
-    this.getPatrolInfo();
+    this.getPatrolInfo(this.selectLocationId);
   }
 
   // LastEventModal(item:AlarmModel){
@@ -228,14 +225,17 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   //     return;
   //   }
   // }
+
   getLocation(){
     this.patrol.getLocation().subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this._locations = response[0].x;
       console.log("getLocation:", this._locations); 
+      this.selectLocationId = this._locations[0].id;
       this.ref.detectChanges();
 
     });
   }
+
   incidentMedia = {
     photos: [
       // "assets/images/photo1.jpg",
@@ -298,15 +298,12 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
     this.deviceIncidentList = true;
     const imei = item?.imei;
-    //console.log("guard_device",item?.imei);
-
     this.patrol.getGuardEvents(0,imei).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
      this.guardEventList = response[0]?.x;
      this.ref.detectChanges();
      this.guardEventList = this.guardEventList?.map(olay => {
       olay.link = JSON.parse(olay.link);
       return olay;  });
-    //  console.log("......GuardEventList........",this.guardEventList);
     })
   }
 
@@ -345,11 +342,6 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   //   this.activeWidget = widgetValue;
   // }
 
-  // items = [
-  //   { value: 'option1', viewValue: 'Seçenek 1' },
-  //   { value: 'option2', viewValue: 'Seçenek 2' },
-  //   { value: 'option3', viewValue: 'Seçenek 3' }
-  // ];
 
   dailyGuardTourCheck(date:any){
     this.patrol.dailyGuardTourCheck(date).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
@@ -390,13 +382,29 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     ];
   }
 
-  dailyGuardTourDetail(date:any)
+  openWidget(widget:any){
+
+    switch (widget.index) {
+      case 0: this.widgetData = this.dailyGuardTour; break; // Planlanan Turlar
+      case 1: this.widgetData = this.atilan; break; // Atılan Turlar
+      case 2: this.widgetData = this.atilmayan; break; // Atılmayan Turlar
+      case 3: this.widgetData = this.atilacak; break; // Atılacak Turlar
+      case 4: this.widgetData = this.alarmlar; break; // Alarmlar
+      case 5: this.widgetData = this.olaylar; break; // Olaylar
+      default: this.widgetData = [];
+    }
+    console.log("openWidget",widget);
+    this.widgetTitle = widget.title;
+    this.widgetDetailModal = true;
+  }
+
+  dailyGuardTourDetail(date:any,locationid:number)
   {
-    this.patrol.tour_s(date)?.subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+    this.patrol.tour_s(date,locationid)?.subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
       this.tour_s = response[0]?.x;
        console.log("this.tour_s",this.tour_s);
      })
-     this.patrol.tour_sd(date)?.subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+     this.patrol.tour_sd(date,locationid)?.subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
       this.tour_sd = response[0]?.x;
        console.log("this.tour_sd........sd",this.tour_sd);
      })
