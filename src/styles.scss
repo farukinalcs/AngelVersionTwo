@@ -24,3 +24,12 @@
 
 
 
+// sweetalert2
+.swal-on-top {
+    z-index: 12005 !important; // PrimeNG baseZIndex + 1
+}
+
+.swal-popup-zfix {
+    z-index: 12006 !important; // İyice üstte olsun
+}
+  

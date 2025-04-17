@@ -663,7 +663,7 @@ export class ProfileService {
     return this.requestMethod(sp);
   }
 
-  requestMethod(sp : any[]){
+  requestMethod(sp : any[], headers?:any){
     var key = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
     var iv = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
 
@@ -678,9 +678,20 @@ export class ProfileService {
       securedata : encryptedParam.toString()
     };
 
-    let options = {
-      params : data
-    };
+    let options;
+    
+    if (headers) {
+      options = {
+        headers : headers,
+        params : data
+      };
+    } else {
+      options = {
+        params : data
+      };
+    }
+    
+    
 
     return this.httpClient.get<any>(this.apiUrlService.apiUrl + '/process', options);
   }
@@ -741,6 +752,29 @@ export class ProfileService {
     
 
     return this.httpClient.post<any>(this.apiUrlService.apiUrl + '/Report/PostReportAction', sp);
+  }
+
+
+  logout(sp : any){
+    var key = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
+    var iv = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
+
+    var encryptedParam = CryptoES.AES.encrypt(CryptoES.enc.Utf8.parse(this.helperService.gateResponseY + JSON.stringify(sp)), key, {
+      // keySize : 128 / 8,
+      iv : iv,
+      mode : CryptoES.mode.CBC,
+      padding : CryptoES.pad.Pkcs7
+    });
+
+    var data = {
+      securedata : encryptedParam.toString()
+    };
+
+    let options = {
+      params : data
+    };
+
+    return this.httpClient.get<any>(this.apiUrlService.apiUrl + '/logout', options);
   }
 
 }

@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthHTTPService } from '../../services/auth-http';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { TranslationService } from 'src/app/modules/i18n';
+import { SessionService } from 'src/app/_helpers/session.service';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +17,8 @@ import { TranslationService } from 'src/app/modules/i18n';
 export class LoginComponent implements OnInit, OnDestroy {
   // KeenThemes mock, change it to:
   defaultAuth: any = {
-    userName: 'meyer',
-    password: '1878',
+    userName: '',
+    password: '',
   };
   loginForm: FormGroup;
   hasError: boolean;
@@ -60,7 +61,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private helperService : HelperService,
     private translationService : TranslationService,
-    private ref : ChangeDetectorRef
+    private ref : ChangeDetectorRef,
+    private sessionService: SessionService,
   ) {
     this.isLoading$ = this.authService.isLoading$;
     // redirect to home if already logged in
@@ -70,6 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.sessionService.stopMonitoring();
     this.setSelectedLanguage();
     this.gate();
     this.initForm();

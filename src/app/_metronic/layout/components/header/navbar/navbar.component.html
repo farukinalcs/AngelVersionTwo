@@ -25,7 +25,7 @@
 <!--begin::User menu-->
 <div class="app-navbar-item" [ngClass]="itemClass" *ngIf="user$ | async as _user">
   <!--begin::Menu wrapper-->
-  <div class="cursor-pointer symbol" [ngClass]="userAvatarClass" data-kt-menu-trigger="{default: 'click'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+  <div class="cursor-pointer symbol" [ngClass]="userAvatarClass" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
     <img alt="user-foto" src="{{imageUrl}}?sicilid={{_user.xSicilID}}" />
   </div>
   <app-user-inner data-kt-menu='true'></app-user-inner>

@@ -4,6 +4,8 @@ import { TranslationService } from '../../../../../../modules/i18n';
 import { AuthService, UserType } from '../../../../../../modules/auth';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
+import { AuthHTTPService } from 'src/app/modules/auth/services/auth-http';
+import { SessionService } from 'src/app/_helpers/session.service';
 
 @Component({
   selector: 'app-user-inner',
@@ -24,7 +26,9 @@ export class UserInnerComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private translationService: TranslationService,
     private helperService : HelperService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    // private authHttpService: AuthHTTPService,
+    private sessionService: SessionService
   ) {
     this.imageUrl = this.profileService.getImageUrl();
   }
@@ -40,8 +44,10 @@ export class UserInnerComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.auth.logout();
-    document.location.reload();
+    // this.auth.logout();
+    // document.location.reload();
+
+    this.sessionService.logoutUser();
   }
 
   selectLanguage(lang: string) {

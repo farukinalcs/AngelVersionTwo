@@ -11,7 +11,9 @@ import { finalize, Observable, tap } from 'rxjs';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { LoadingService } from 'src/app/_helpers/loading.service';
+import { SessionService } from 'src/app/_helpers/session.service';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -21,22 +23,19 @@ export class TokenInterceptor implements HttpInterceptor {
     private helperService: HelperService,
     private authService: AuthService,
     private router: Router,
-    private loadingService: LoadingService // LoadingServic
+    private sessionService: SessionService
   ) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    // // İstek başladığında loading'i göster
-    // this.loadingService.show();
     if (request.headers.has('skipInterceptor')) {
       const headers = request.headers.delete('skipInterceptor'); 
       const clonedRequest = request.clone({ headers });
       return next.handle(clonedRequest);
     }
-    if (!this.flag) {
-      this.flag = true;
+    if (request.headers.has('gate')) {
       return next.handle(request).pipe(
         finalize(() => {
         })
@@ -62,12 +61,15 @@ export class TokenInterceptor implements HttpInterceptor {
 
     request = request.clone({
       setHeaders: headers,
+      // withCredentials: true
     });
 
     return next.handle(request).pipe(
       tap(
         (event: HttpEvent<any>) => {
           if (event.type === HttpEventType.Response) {
+            this.sessionService.updateActivity(); // Her response’ta zamanı güncelle
+            
             if (event.body && event.body instanceof Object) {
               const responseBody = event.body;
               responseBody.forEach((item: any) => {
@@ -77,13 +79,34 @@ export class TokenInterceptor implements HttpInterceptor {
                 if (item.z) {
                   item.z = JSON.parse(item.z);
 
-                  if (item.z.islemsonuc === -1) {
+                  if (item.z.islemsonuc === -58) {
                     console.error(item.z);
-                    this.router.navigate(['error/500']);
+                    
+                    Swal.fire({
+                      title: 'Oturum Sona Erdi!',
+                      html: `Oturumunuz başka bir tarayıcıda açıldığı için veya sunucuya erişim sağlanamadığı için kapatılmıştır.<br>Giriş ekranına dönmek için lütfen <b>"Giriş Ekranına Dön"</b> butonuna tıklayınız.`,
+                      icon: 'warning',
+                      showCancelButton: false,
+                      confirmButtonText: 'Giriş Ekranına Dön',
+                      allowOutsideClick: false,
+                      didOpen: () => {
+                        this.sessionService.stopMonitoring();
+                      },
+                      willClose: () => {
+
+                      }
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        this.sessionService.stopMonitoring();
+                        localStorage.removeItem('token');
+                        this.router.navigate(['/auth/login']);
+                        // document.location.reload();
+                      }
+                    });
                   }
                 }
                 if (item.m) {
-                  item.m = JSON.parse(item.m);
+                  // item.m = JSON.parse(item.m);
                 }
               });
 

@@ -115,6 +115,44 @@
         <input type="text" class="form-control form-control-sm form-control-solid" [(ngModel)]="organizationName" >
     </div>
 
+    <div class="fv-row my-5 fv-plugins-icon-container">
+        <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+            <span>{{"İkon" | translate}}</span>
+            <div class="fv-plugins-message-container mt-0 mx-2">
+                <div class="fv-help-block fs-8 text-muted text-decoration-underline">
+                    <span role="alert">
+                        (Genel bakış ekranında gösterilecek olan ikonunuzu seçiniz)
+                    </span>
+                </div>
+            </div>
+        </label>
+        
+    
+        <div class="row d-flex justify-content-between gap-2">
+            
+            <div class="col-2" *ngFor="let item of iconList">
+                <input
+                    type="radio"
+                    class="btn-check"
+                    name="iconGroup"
+                    [value]="item.id"
+                    [id]="'icon-' + item.id"
+                    [(ngModel)]="icon"
+                />
+                <label
+                    class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center"
+                    [for]="'icon-' + item.id"
+                >
+                    <i [class]="item.icon" class="fs-2x"></i>
+                </label>
+            </div>
+            
+            
+        </div>
+        
+    </div>
+    
+
     <ng-template pTemplate="footer">
         <a class="btn btn-sm btn-danger mx-1" (click)="closeAction()">
             <i class="fa-solid fa-xmark fs-7"></i>

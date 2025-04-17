@@ -2,14 +2,20 @@
     <!--begin::Col-->
     <div class="col-sm-6 col-xl-2 mb-xl-10" *ngFor="let item of cards">
         <!--begin::Card widget 1-->
-        <div class="card bgi-no-repeat bgi-size-contain bgi-position-x-end h-lg-100"
-            style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);">
+        <div class="card bgi-no-repeat bgi-size-contain bgi-position-x-end h-lg-100" [ngClass]="{'card-edit-mode': editMode}" *ngIf="item.visible"
+            style="background-color: var(--p-primary-500);">
             <!--begin::Body-->
             <div class="card-body d-flex justify-content-end" style="padding: 1rem .5rem;">
                 <!--begin::Icon-->
                 <div class="icon-container">
                     <i class="opacity-50" [class]="item.icon" style="color: var(--red-200);font-size: 5rem;"></i>
                 </div>
+                <!--end::Icon-->
+
+                <!--begin::Icon-->
+                <!-- <div class="close-icon">
+                    <i class="fa-solid fa-circle-xmark text-white text-hover-dark"></i>
+                </div> -->
                 <!--end::Icon-->
 
                 <!--begin::Section-->
@@ -27,17 +33,34 @@
                 <!--end::Section-->
             </div>
             <!--end::Body-->
-            <div class="card-footer py-1 px-4"
-                style="border-top: 1px solid rgba(255, 255, 255, 0.3);background: rgba(0, 0, 0, 0.15);">
-                <!--begin::Progress-->
-                <div class="d-flex justify-content-between fw-bold text-white text-hover-dark py-2 cursor-pointer" (click)="openMore(item)">
-                    <span class="opacity-50">{{'Daha_Fazla' | translate}}</span>
-                    <span>
-                        <i class="fa-solid fa-circle-arrow-right opacity-50 text-white"></i>
-                    </span>
+            @if (editMode) {
+                <div class="card-footer py-1 px-4"
+                    style="border-top: 1px solid rgba(255, 255, 255, 0.3);background: rgba(0, 0, 0, 0.15);">
+                    <!--begin::Progress-->
+                    <div class="d-flex justify-content-center fw-bold text-white text-hover-dark py-2 cursor-pointer gap-2"
+                        (click)="removeCard(item)">
+                        <span class="">{{'Kaldır' | translate}}</span>
+                        <span>
+                            <i class="fa-solid fa-circle-xmark text-white"></i>
+                        </span>
+                    </div>
+                    <!--end::Progress-->
                 </div>
-                <!--end::Progress-->
-            </div>
+            } @else {
+                <div class="card-footer py-1 px-4"
+                    style="border-top: 1px solid rgba(255, 255, 255, 0.3);background: rgba(0, 0, 0, 0.15);">
+                    <!--begin::Progress-->
+                    <div class="d-flex justify-content-between fw-bold text-white text-hover-dark py-2 cursor-pointer"
+                        (click)="openMore(item)">
+                        <span class="opacity-50">{{'Daha_Fazla' | translate}}</span>
+                        <span>
+                            <i class="fa-solid fa-circle-arrow-right opacity-50 text-white"></i>
+                        </span>
+                    </div>
+                    <!--end::Progress-->
+                </div>
+            }
+            
         </div>
         <!--end::Card widget 1-->
     </div>

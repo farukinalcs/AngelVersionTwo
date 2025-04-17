@@ -436,7 +436,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges {
           direktorluk: savedFilterModel?.cbo_direktorluk?.toString() || '0',
           mesaiperiyodu: savedFilterModel?.cbo_mesaiperiyodlari?.toString() || '0',
           sicilgroup: '0',
-          userdef:this.userdef == "PATROL" ? '9' : savedFilterModel?.sys_userdef?.toString() || '1',
+          userdef:savedFilterModel?.sys_userdef?.toString() || this.userdef,
           yetki: savedFilterModel?.Yetki?.toString() || '-1',
           cardid: savedFilterModel?.cardID?.filter || '',
           aktif: this.selectedTab.type,

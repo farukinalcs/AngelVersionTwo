@@ -44,5 +44,6 @@ export class ResponseXloginDetail{
     firmaad : string;
     gorevad : string;
     pozisyonad : string;
+    Timeout: number;
 }
 

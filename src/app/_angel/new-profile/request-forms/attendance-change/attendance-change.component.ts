@@ -714,6 +714,9 @@ export class AttendanceChangeComponent implements OnInit, OnDestroy {
       console.error('Filtered array is empty.');
     }
 
+    console.log("Hareketler params : ", sp);
+    
+
     this.profileService
       .requestMethod(sp)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -796,15 +799,24 @@ export class AttendanceChangeComponent implements OnInit, OnDestroy {
   parseTerminalData(response: any[], sid: any): any[] {
     return response.map((item) => {
       const { terminal } = item;
-      const terminalParts = terminal.split('(i):');
+  
+      // Eğer terminal undefined/null ise boş string yap
+      const safeTerminal = terminal || '';
+  
+      // '(i):' ifadesine göre parçala
+      const terminalParts = safeTerminal.split('(i):');
+  
+      // Eğer terminalParts[1] yoksa, insert ve update boş olur
       const terminalAdi = terminalParts[0].trim();
-      const insertAndUpdateParts = terminalParts[1].split('(u):');
-
-      const insert = this.parseInsertOrUpdate(insertAndUpdateParts[0]);
+      const insertAndUpdateRaw = terminalParts[1] || ''; // güvenli kullanım
+  
+      const insertAndUpdateParts = insertAndUpdateRaw.split('(u):');
+  
+      const insert = this.parseInsertOrUpdate(insertAndUpdateParts[0] || '');
       const update = insertAndUpdateParts
         .slice(1)
-        .map((part: any) => this.parseInsertOrUpdate(part));
-
+        .map((part: any) => this.parseInsertOrUpdate(part || ''));
+  
       return {
         ...item,
         terminalAdi,
@@ -817,6 +829,31 @@ export class AttendanceChangeComponent implements OnInit, OnDestroy {
       };
     });
   }
+
+  // parseTerminalData(response: any[], sid: any): any[] {
+  //   return response.map((item) => {
+  //     const { terminal } = item;
+  //     const terminalParts = terminal.split('(i):');
+  //     const terminalAdi = terminalParts[0].trim();
+  //     const insertAndUpdateParts = terminalParts[1].split('(u):');
+
+  //     const insert = this.parseInsertOrUpdate(insertAndUpdateParts[0]);
+  //     const update = insertAndUpdateParts
+  //       .slice(1)
+  //       .map((part: any) => this.parseInsertOrUpdate(part));
+
+  //     return {
+  //       ...item,
+  //       terminalAdi,
+  //       insert: [insert],
+  //       update: update.filter(Boolean),
+  //       isShow: false,
+  //       isDelete: false,
+  //       isFlipping: false,
+  //       sid: sid,
+  //     };
+  //   });
+  // }
 
   parseInsertOrUpdate(part: string) {
     const [userPart, datePart] = part.split('@');

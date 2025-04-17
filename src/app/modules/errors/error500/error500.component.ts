@@ -10,6 +10,7 @@ import {
   ToggleComponent,
 } from '../../../_metronic/kt/components';
 import { ThemeModeService } from '../../../_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
+import { SessionService } from 'src/app/_helpers/session.service';
 
 @Component({
   selector: 'app-error500',
@@ -19,9 +20,14 @@ import { ThemeModeService } from '../../../_metronic/partials/layout/theme-mode-
 export class Error500Component implements OnInit, OnDestroy {
   private unsubscribe: Subscription[] = [];
 
-  constructor(private router: Router, private modeService: ThemeModeService) {}
+  constructor(
+    private router: Router,
+    private modeService: ThemeModeService,
+    private sessionService: SessionService
+  ) {}
 
   ngOnInit(): void {
+    this.sessionService.stopMonitoring();
     const subscr = this.modeService.mode.asObservable().subscribe((mode) => {
       document.body.style.backgroundImage =
         mode === 'dark'
