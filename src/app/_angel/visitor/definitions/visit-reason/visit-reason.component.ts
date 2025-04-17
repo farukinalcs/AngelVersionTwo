@@ -35,6 +35,34 @@ export class VisitReasonComponent implements OnInit, OnDestroy {
   organizationName: string = '';
   header: any;
   type: any;
+  icon: any;
+  iconList: any[] = [
+    { id: 1, icon: 'fa-solid fa-image' },
+    { id: 2, icon: 'fa-solid fa-calendar'},
+    { id: 3, icon: 'fa-solid fa-truck'},  
+    { id: 4, icon: 'fa-solid fa-bell'},
+    { id: 5, icon: 'fa-solid fa-envelope'},
+    { id: 6, icon: 'fa-solid fa-user'},
+    { id: 7, icon: 'fa-solid fa-people-carry-box'},  
+    { id: 8, icon: 'fa-solid fa-clipboard-check'},
+    { id: 9, icon: 'fa-solid fa-users'},  
+    { id: 10, icon: 'fa-solid fa-user-tie'},
+    { id: 11, icon: 'fa-solid fa-handshake'},
+    { id: 12, icon: 'fa-solid fa-cake-candles'},
+    { id: 13, icon: 'fa-solid fa-address-card'},
+    { id: 14, icon: 'fa-solid fa-car'},
+    { id: 15, icon: 'fa-solid fa-tag'},
+    { id: 16, icon: 'fa-solid fa-book'},
+    { id: 17, icon: 'fa-solid fa-barcode'},
+    { id: 18, icon: 'fa-solid fa-inbox'},
+    { id: 19, icon: 'fa-solid fa-film'},
+    { id: 20, icon: 'fa-solid fa-gift'},
+    { id: 21, icon: 'fa-solid fa-trailer'},
+    { id: 22, icon: 'fa-solid fa-stethoscope'},
+    { id: 23, icon: 'fa-solid fa-brush'},
+    { id: 24, icon: 'fa-solid fa-spray-can'},
+    { id: 25, icon: 'fa-solid fa-hammer'}
+  ];
 
   tabList = [
     {id: 1, label: this.translateService.instant("Ziyaret_Nedeni"), source: "cbo_ziyaretnedeni"}

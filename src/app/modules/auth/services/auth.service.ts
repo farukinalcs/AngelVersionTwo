@@ -9,6 +9,7 @@ import { HelperService } from 'src/app/_helpers/helper.service';
 import { ResponseModel } from '../models/response-model';
 import { ResponseXloginDetail } from '../models/response-Xlogindetail';
 import { ResponseDetailZ } from '../models/response-detail-z';
+import { SessionService } from 'src/app/_helpers/session.service';
 
 export type UserType = ResponseXloginDetail | undefined;
 
@@ -34,7 +35,8 @@ export class AuthService implements OnDestroy {
   constructor(
     private authHttpService: AuthHTTPService,
     private router: Router,
-    private helper: HelperService
+    private helper: HelperService,
+    private sessionService: SessionService
   ) {
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
     this.currentUserSubject = new BehaviorSubject<UserType>(undefined);
@@ -62,6 +64,9 @@ export class AuthService implements OnDestroy {
             this.helper.userLoginModel = response[0];
             this.currentUserSubject = new BehaviorSubject<any>(user);
             this.isLoadingSubject.next(false)
+
+            const timeout = user.Timeout || 90000; // ms cinsinden
+            this.sessionService.startMonitoring(timeout);
 
             return this.currentUserSubject;
         }

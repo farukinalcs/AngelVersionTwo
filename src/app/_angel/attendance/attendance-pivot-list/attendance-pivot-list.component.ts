@@ -1060,9 +1060,9 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
   }
 
   pivotSetValueForPerson(params: any): string {
-    let parts = params?.data?.personel.split('<br>');
-    let firstValue = parts[0] || '';
-    let secondValue = parts[1] || '';
+    let parts = params?.data?.personel?.split('<br>');
+    let firstValue = (parts && parts[0]) || '';
+    let secondValue = (parts && parts[1]) || '';
     return `
             <div class="fw-bolder" style="line-height: 18px;">
               <span>

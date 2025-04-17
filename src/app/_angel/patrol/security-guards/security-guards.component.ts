@@ -35,7 +35,7 @@ export class SecurityGuardsComponent implements OnInit {
   filterEvent: boolean = false;
   requestTime: any;
   refreshEvent: boolean = false;
-  userdef:string = "PATROL";
+  userdef:string = "9";
   constructor(
     private patrol: PatrolService,
     private translateService: TranslateService,

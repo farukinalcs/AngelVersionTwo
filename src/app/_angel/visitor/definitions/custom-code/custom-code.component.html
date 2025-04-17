@@ -16,7 +16,7 @@
                         <ng-container *ngIf="visitCodes.length > 0">
                             <div class="col-sm-6 p-3" *ngFor="let item of visitCodes">
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="" [ngClass]="{'col-12': item.Zokoddeger.toLowerCase().indexOf('tarih') < 0, 'col-6': item.Zokoddeger.toLowerCase().indexOf('tarih') > 0}">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span>{{item.Zokodad}}</span>
                                         </label>
@@ -25,12 +25,12 @@
                                             [formControlName]="item.Zokodad" placeholder="Değer Giriniz">        
                                     </div>
 
-                                    <div class="col-12 d-flex gap-3 py-1" *ngIf="item.Zokoddeger.toLowerCase().indexOf('tarih') > 0">
-                                        <label class="d-flex align-items-center fs-7 mb-2">
+                                    <div class="col-6" *ngIf="item.Zokoddeger.toLowerCase().indexOf('tarih') > 0">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span>Geçerlilik Süresi (Gün)</span>
                                         </label>
                 
-                                        <input type="text" class="form-control form-control-sm form-control-solid h-10px w-25"
+                                        <input type="text" class="form-control form-control-sm form-control-solid h-10px w-50"
                                             [formControlName]="item.Zokodad + 'lim'" placeholder="Gün Değeri Giriniz">
                                     </div>
 

@@ -5,7 +5,7 @@
 	[draggable]="false" [resizable]="false" (onHide)="hideProcessChange()">
 
     <div class="container">
-        <ng-container *ngIf="!processLoading">
+        <!-- <ng-container *ngIf="!processLoading">
             <div class="row">
                 <div class="col-12 pt-10">
                     <div class="loader-container">
@@ -17,7 +17,7 @@
                     </div>
                 </div>
             </div>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container *ngIf="processLoading">
             <ng-container *ngIf="!processChangeList.length">

@@ -1,1 +1,251 @@
-<p>cards works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-custom gutter-b" [ngClass]="{'disabled': loading}"
+                [ngStyle]="{ 'opacity': loading ? 0.5 : 1, 'cursor': loading ? 'not-allowed' : 'auto' }">
+
+                <div class="card-header border-0">
+                    <div class="card-title">
+                        <h3 class="card-label">{{"Puantaj_Sicil_Listesi" | translate}} </h3>
+                    </div>
+
+                    <div class="card-toolbar">
+                        <!-- <div class="card-toolbar">
+                            <div class="example-tools justify-content-center">
+                                <div class="row">
+                                    <div class="d-flex btn btn-icon btn-clean btn-icon-danger mr-3 my-2 my-lg-0">
+                                        <a (click)="refreshList()">
+                                            <i style="color: #ff0000;" class="fas fa-undo-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div> -->
+
+                        <div class="symbol symbol-40px cursor-pointer me-2" (click)="refreshList()" pTooltip="{{'Listeyi_Güncelle' | translate}}" tooltipPosition="top">
+                            <span class="symbol-label symbol-label bg-hover-secondary">
+                              <i class="fas fa-undo-alt fs-3 text-danger"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body pt-3 pb-0">
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-6 d-flex align-sm-items-end gap-2 flex-column flex-sm-row">
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="showRegistryCard()">
+                                <i class="fa-solid fa-file-circle-plus"></i>
+                                {{"Yeni_Sicil" | translate}}
+                            </a>
+
+                            <a class="btn btn-dark btn-sm hover-elevate-up">
+                                <i class="fa-solid fa-file-excel"></i>
+                                {{"Toplu_Sicil" | translate}}
+                            </a>
+                        </div>
+
+                        <div class="col-6 d-flex align-sm-items-end justify-content-end gap-2  flex-column flex-sm-row">
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="onFilter()">
+                                <i class="fa-solid fa-filter"></i>
+                                {{"Filtrele" | translate}}
+                            </a>
+
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="clearFilters()">
+                                <i class="fa-solid fa-eraser"></i>
+                                {{"Temizle" | translate}}
+                            </a>
+                        </div>
+                    </div>
+
+                    <ul class="nav nav-pills nav-pills-custom item position-relative mx-1 mb-1">
+                        <li class="nav-item col mx-0 p-0" *ngFor="let item of tabList">
+                            <a class="nav-link d-flex justify-content-center w-100 border-0 h-100 cursor-pointer"
+                                [ngClass]="{'active': selectedTab.type == item.type}" (click)="changeTabMenu(item)">
+                                <span class="nav-text text-gray-800 fw-bold fs-6 mb-3">
+                                    {{item.name}}
+                                </span>
+
+                                <span class="bullet-custom position-absolute z-index-2 bottom-0 w-100 h-4px bg-dark rounded"></span>
+                            </a>
+                        </li>
+
+                        <span class="position-absolute z-index-1 bottom-0 w-100 h-4px bg-light rounded"></span>
+                    </ul>
+                    
+
+                    <app-registry-list
+                        [selectedTab]="selectedTab"
+                        [clear]="clear"
+                        [fromWhere]="[2]"
+                        (loadingEvent)="loadingEvent($event)"
+                        (requestTimeEvent)="getRequestTime($event)"
+                        [refreshEvent]="refreshEvent"
+                        [filterEvent]="filterEvent"
+                        [bulkChangeEvent]="bulkChangeEvent"
+                        [userdef]="'2'">
+                    </app-registry-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-container *ngIf="displayRegistryCard">
+    <app-registry-card 
+        [operationType]="'i'"
+        [fromWhere]="[1]"
+        [display]="displayRegistryCard"
+        (closeEvent)="closeRegistryCard($event)"
+        [requestTime]="requestTime"
+        >
+    </app-registry-card>
+</ng-container>
+
+
+<ng-container *ngIf="displayAssignPeriod">
+    <p-dialog header="{{'Periyot_Atama' | translate }}" [(visible)]="displayAssignPeriod" position="center" [modal]="true"
+        [breakpoints]="{ '2560px': '30vw', '992px': '40vw', '576px': '60vw' }" [baseZIndex]="-40" [draggable]="false"
+        [resizable]="false" (onHide)="closeAssignPeriod()" [styleClass]="'lightgray'">
+
+        <div class="container">
+            <div class="row" *ngIf="loadingProgress > 0">
+                <div class="col-12 py-5" *ngIf="loadingProgress > 0">
+                    <p-progressBar [value]="loadingProgress"></p-progressBar>
+                </div>
+
+                <div class="col-6 d-flex justify-content-center py-5">
+                    <div class="rounded-pill bg-light d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden cursor-pointer">
+                        <div class="position-absolute rounded-pill d-block bg-gray-200 start-0 top-0 h-100 z-index-1" style="width:80%;"></div>
+            
+                        <div class="d-flex align-items-center position-relative z-index-2">
+                            <div class="symbol-group symbol-hover flex-nowrap me-3">
+                                <div class="symbol symbol-circle symbol-25px" *ngFor="let item of successfulAssign | slice:0:5">
+                                    <img alt="" [src]="imageUrl + '?sicilid=' + item.Id" pTooltip="{{item.adsoyad}}">
+                                </div>
+                            </div>
+            
+                            <a class="fw-bold text-gray-800 text-hover-dark">Başarılı</a>
+                        </div>
+            
+                        <div class="d-flex flex-center bg-body rounded-pill fs-7 fw-bolder ms-auto h-100 px-3 position-relative z-index-2">
+                            {{successfulAssign.length}}
+                        </div>
+                    </div>                    
+                </div>
+
+                <div class="col-6 d-flex justify-content-center py-5">
+                    <div class="rounded-pill bg-light d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden cursor-pointer">
+                        <div class="position-absolute rounded-pill d-block bg-gray-200 start-0 top-0 h-100 z-index-1" style="width:80%;"></div>
+            
+                        <div class="d-flex align-items-center position-relative z-index-2">
+                            <div class="symbol-group symbol-hover flex-nowrap me-3">
+                                <div class="symbol symbol-circle symbol-25px" *ngFor="let item of incorrectAssign">
+                                    <img alt="" [src]="imageUrl + '?sicilid=' + item.Id" pTooltip="{{item.adsoyad}}">
+                                </div>
+                            </div>
+            
+                            <a class="fw-bold text-gray-800 text-hover-dark">Başarısız</a>
+                        </div>
+            
+                        <div class="d-flex flex-center bg-body rounded-pill fs-7 fw-bolder ms-auto h-100 px-3 position-relative z-index-2">
+                            {{incorrectAssign.length}}
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="col-12">
+                    <ng-container  *ngFor="let item of successfulAssign.concat(incorrectAssign)">
+                        <div class="col-12 p-1"  *ngIf="item.hasOwnProperty('requestState')">
+                            <div class="border border-1 border-gray-300 rounded pe-7 py-0 mb-2" style="box-shadow: -3px -1px 11px -5px rgba(184,171,184,1);">
+                                <div class="h-90px">
+                                    <div class="d-flex flex-column justify-content-center img-container position-relative me-3 h-90px">
+                                        <img [src]="imageUrl + '?sicilid=' + item.Id" class="position-absolute w-90px h-90px ms-n1 me-1" style="left: -22px; border-radius: 100%;" alt="">
+    
+                                        <span class="fw-bold" style="padding-left: 95px;">
+                                            <span class="text-gray-400">{{'Ad_Soyad' | translate}}:</span>
+                                            <a class="text-gray-800 text-hover-danger fw-bold"> {{item.adsoyad}} </a>
+                                        </span>
+    
+                                        <span class="fw-bold" style="padding-left: 95px;">
+                                            <span class="text-gray-400">{{'Sicil_No' | translate}}:</span>
+                                            <a class="text-gray-800 text-hover-danger fw-bold"> {{item.sicilno}} </a>
+                                        </span>
+    
+                                        <span class="d-flex fw-bold" style="padding-left: 95px; justify-content: space-between;">
+                                            <div>
+                                                <span class="text-gray-400">{{'Bölüm' | translate}}:</span>
+                                                <a class="text-gray-800 text-hover-danger fw-bold"> {{item.bolumad}} </a>
+                                            </div>
+                                            <span *ngIf="item.hasOwnProperty('requestState') && item.requestState" class="ms-auto badge badge-success">{{'Başarılı' |  translate}}</span>
+                                            <span *ngIf="item.hasOwnProperty('requestState') && !item.requestState" class="ms-auto badge badge-danger">{{'Başarısız' | translate}}</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+
+
+            <div *ngIf="loadingProgress == 0" class="row" [ngClass]="{'disabled-link': bulkAssignLoading}">
+                <div class="col-12 p-3">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span >{{"Mesai_Periyodu" | translate}}</span>
+                    </label>
+    
+                    <p-dropdown [options]="periods" optionLabel="Ad"
+                        emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="false" [showClear]="true"
+                        placeholder="{{'Mesai_Periyodu_Seçiniz' | translate}}"  appendTo="body" [(ngModel)]="selectedPeriod">
+                        <ng-template let-item pTemplate="item">
+                            <div class="item-item">
+                                <div>{{item.Ad}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+
+                <div class="col-12 p-3">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span >{{"Mesai_Periyodu_Başlangıç_Tarihi" | translate}}</span>
+                    </label>
+    
+                    <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="periodStartDate">
+                </div>
+
+                <!-- Spinner overlay -->
+                <div *ngIf="bulkAssignLoading" class="spinner-overlay">
+                    <div class="spinner-border text-danger" role="status">
+                        <span class="visually-hidden">Yükleniyor...</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <ng-template pTemplate="footer">
+            <a *ngIf="!bulkAssignLoading" class="btn btn-sm btn-danger mx-1" (click)="closeAssignPeriod()">
+                <i class="fa-solid fa-xmark fs-7"></i>
+                {{'Kapat' | translate}}
+            </a>
+
+            <a *ngIf="loadingProgress == 0" class="btn btn-sm btn-danger mx-1" (click)="checkAssignPeriodRequest()" [ngClass]="{'disabled-link': bulkAssignLoading}">
+                <ng-container *ngIf="!bulkAssignLoading">
+                    <i class="fa-solid fa-floppy-disk fs-7"></i>
+                    {{'Kaydet' | translate}}
+                </ng-container>
+            
+                <ng-container *ngIf="bulkAssignLoading">
+                    <span class="indicator-progress" [style.display]="'block'">
+                        {{"Lütfen_Bekleyiniz" | translate}}
+                        <span class="spinner-border spinner-border-sm align-middle ms-0"></span>
+                      </span>
+                </ng-container>
+            </a>
+            
+        </ng-template>
+    </p-dialog>
+</ng-container>

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -9,6 +9,8 @@ import { Subject } from 'rxjs';
 export class DashboardCardComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   @Input() cards: any[]; 
+  @Input() editMode: boolean = true;
+  @Output() removeEvent: any = new EventEmitter<any>();
   displayDetail: boolean = false;
   selected: any;
   
@@ -27,6 +29,14 @@ export class DashboardCardComponent implements OnInit, OnDestroy {
     this.displayDetail = false;
   }
 
+  removeCard(item:any) {
+    item.visible = false;
+    const index = this.cards.indexOf(item);
+    if (index > -1) {
+      this.cards.splice(index, 1);
+    }
+    this.removeEvent.emit(item);
+  }
   
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

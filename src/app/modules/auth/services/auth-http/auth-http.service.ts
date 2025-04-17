@@ -15,6 +15,7 @@ const API_URL = environment.newApiUrl;
   providedIn: 'root',
 })
 export class AuthHTTPService {
+  userkey: string = '';
 
   constructor(
     private http: HttpClient,
@@ -24,9 +25,22 @@ export class AuthHTTPService {
 
   gate() {
     console.log("TESTO :", this.apiUrlService.apiUrl + '/gate');
-    
-    return this.http.get(this.apiUrlService.apiUrl + '/gate');
+    const headers = new HttpHeaders({ 'gate': 'true' });
+    return this.http.get(this.apiUrlService.apiUrl + '/gate',{headers});
   }
+
+  // generateRandomKey(): string {
+  //   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  //   let key = '';
+  
+  //   for (let i = 0; i < 8; i++) {
+  //     key += chars.charAt(Math.floor(Math.random() * chars.length));
+  //   }
+  
+  //   const seconds = new Date().getSeconds().toString().padStart(2, '0');
+  
+  //   return key + seconds;
+  // }
 
   generateRandomKey(): string {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -36,29 +50,49 @@ export class AuthHTTPService {
       key += chars.charAt(Math.floor(Math.random() * chars.length));
     }
   
-    const seconds = new Date().getSeconds().toString().padStart(2, '0');
+    const now = new Date();
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const milliseconds = now.getMilliseconds().toString().padStart(3, '0'); // 3 haneli salise
   
-    return key + seconds;
+    return key +  milliseconds;
   }
+
+  // generateRandomKey(): string {
+  //   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  //   let key = '';
+  
+  //   for (let i = 0; i < 8; i++) {
+  //     key += chars.charAt(Math.floor(Math.random() * chars.length));
+  //   }
+  
+  //   const milliseconds = new Date().getMilliseconds().toString().padStart(3, '0');
+  
+  //   // Random bir pozisyon seçip saliseyi oraya yerleştirdim
+  //   const insertPosition = Math.floor(Math.random() * key.length);
+  //   const newKey = key.slice(0, insertPosition) + milliseconds + key.slice(insertPosition);
+  
+  //   return newKey;
+  // }
+  
+  
 
   cryptoLogin(email : string, password : string, lang : any, appList : any) : Observable<any> {
     // let headers = new HttpHeaders({
     //   Authorization: this.helperService.gateResponseX,
     // });
-    const randomKey = this.generateRandomKey();
-    console.log("Random Key :", randomKey);
+    this.userkey = this.generateRandomKey();
+    console.log("Random Key :", this.userkey);
     
     var loginOptions = {
       loginName : email,
       password : password,
       langcode : lang,
       appcode : appList,
-      // key
+      userkey: this.userkey,
       mkodu : 'sysLogin'
     };
 
     this.helperService.loginOptions = loginOptions;
-
 
     var key = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);
     var iv = CryptoES.enc.Utf8.parse(this.helperService.gateResponseY);

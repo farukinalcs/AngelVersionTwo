@@ -14,13 +14,21 @@ export class LoadingInterceptor implements HttpInterceptor {
   constructor(private loadingService: LoadingService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Loading başlat
-    this.loadingService.show();
+    const skipLoading = req.headers.has('noloading');
 
-    return next.handle(req).pipe(
+    // Header'dan noloading'i kaldır (isteğe temiz olarak gitmesi için)
+    const headers = req.headers.delete('noloading');
+    const modifiedReq = req.clone({ headers });
+
+    if (!skipLoading) {
+      this.loadingService.show();
+    }
+
+    return next.handle(modifiedReq).pipe(
       finalize(() => {
-        // HTTP isteği bittiğinde loading'ı kapat
-        this.loadingService.hide();
+        if (!skipLoading) {
+          this.loadingService.hide();
+        }
       })
     );
   }

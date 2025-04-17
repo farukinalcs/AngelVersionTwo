@@ -27,7 +27,6 @@ import { FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, GridApi } f
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { OrganizationColumnFilterComponent } from '../organization-column-filter/organization-column-filter.component';
 import { ToastrService } from 'ngx-toastr';
-import { LoadingService } from 'src/app/_helpers/loading.service';
 
 @Component({
   selector: 'app-attendance-list',
@@ -675,7 +674,6 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     private themeModeService: ThemeModeService,
     private ref: ChangeDetectorRef,
     private toastrService: ToastrService,
-    private loadingService: LoadingService
   ) {
     this.imageUrl = this.profileService.getImageUrl();
   }

@@ -1,20 +1,19 @@
-<ng-container *ngIf="isLoading | async">
+<!-- <ng-container *ngIf="isLoading | async">
   <div class="row">
     <div class="col-12 pt-10">
       <div class="loader-container">
         <div id="splash-screen" class="splash-screen"
           style="position: inherit; color:transparent; background-color: transparent;">
-          <!-- <div class="meyer-text">meyer</div> -->
           <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo" style="margin-left: 0; height: 0;" />
           <mat-spinner></mat-spinner>
         </div>
       </div>
     </div>
   </div>
-</ng-container>
+</ng-container> -->
 
 
-<ng-container *ngIf="!(isLoading | async)">
+<!-- <ng-container *ngIf="!(isLoading | async)"> -->
   <div class="row">
     <div class="col-12">
       <div class="text-center mb-2">
@@ -38,22 +37,24 @@
       <form class="form w-100" [formGroup]="loginForm" novalidate="novalidate" id="kt_login_signin_form">
         <div class="row d-flex justify-content-center">
 
-          <div class="col-sm-12 col-md-8 col-lg-7 d-flex justify-content-center flex-column">
-            <label class="form-label fs-6 fw-bolder text-dark">{{"Uygulamalar" | translate}}</label>
-            <label *ngFor="let item of appList"
-              class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex text-start px-6 py-3 m-1 active"
-              data-kt-button="true">
-              <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                <input class="form-check-input bg-danger" type="radio" formControlName="appList" value="{{item.appId}}"
-                  checked="checked">
-              </span>
-              <i class="fa-solid fa-cloud fs-4 me-4 ms-10 align-items-center"></i>
-              <span class="ms-5">
-                <span class="fs-4 fw-bold mb-1 d-block">{{item.appName}}</span>
+          <ng-container *ngIf="!(isLoading | async)">
+            <div class="col-sm-12 col-md-8 col-lg-7 d-flex justify-content-center flex-column">
+              <label class="form-label fs-6 fw-bolder text-dark">{{"Uygulamalar" | translate}}</label>
+              <label *ngFor="let item of appList"
+                class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex text-start px-6 py-3 m-1 active"
+                data-kt-button="true">
+                <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                  <input class="form-check-input bg-danger" type="radio" formControlName="appList" value="{{item.appId}}"
+                    checked="checked">
+                </span>
+                <i class="fa-solid fa-cloud fs-4 me-4 ms-10 align-items-center"></i>
+                <span class="ms-5">
+                  <span class="fs-4 fw-bold mb-1 d-block">{{item.appName}}</span>
 
-              </span>
-            </label>
-          </div>
+                </span>
+              </label>
+            </div>
+          </ng-container>
 
 
           <div class="col-sm-12 col-md-8 col-lg-7 d-flex justify-content-center flex-column">
@@ -108,7 +109,7 @@
       </form>
     </div>
   </div>
-</ng-container>
+<!-- </ng-container> -->
 
 
 
