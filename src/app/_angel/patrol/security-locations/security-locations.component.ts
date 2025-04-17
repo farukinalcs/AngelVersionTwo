@@ -4,6 +4,7 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { TranslateService } from '@ngx-translate/core';
 import { ChangeDetectionStrategy } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-security-locations',
@@ -47,6 +48,7 @@ export class SecurityLocationsComponent {
       private patrol : PatrolService,
       private ref : ChangeDetectorRef,
         private translateService: TranslateService,
+        private toastrService : ToastrService
     ) { }
 
     ngOnInit(): void {
@@ -70,7 +72,9 @@ export class SecurityLocationsComponent {
         
         this.locationName = '';
       }else
-      alert("LÜTFEN LOKASYON ADINI BOŞ GEÇMEYİNİZ")
+      this.toastrService.error(
+        "LÜTFEN LOKASYON ADINI BOŞ GEÇMEYİNİZ"
+       );
     }
 
     getLocation(){
@@ -124,17 +128,8 @@ export class SecurityLocationsComponent {
         this._getlocationTours = this._allLocationDetails?.filter((x:any)=>x.tip === 'T');
         this._getlocationDevices = this._allLocationDetails?.filter((x:any)=>x.tip === 'TE');
         this._getlocationVehicle = this._allLocationDetails?.filter((x:any)=>x.tip === 'C');
-        // console.log("allLocationDetails:", this._allLocationDetails);
-        // console.log("_locationEmergencyCall:", this._getlocationEmergencyCall);
-        // console.log("_locationEmergencySms:", this._getlocationEmergencySms);
-        // console.log("_locationGuards:", this._getlocationGuards);
-        // console.log("_locaitonStations:", this._getlocaitonStations);
-        // console.log("_locationTours:", this._getlocationTours);
-        // console.log("_locationDevices:", this._getlocationDevices);
-        // console.log("_locationVehicle:", this._getlocationVehicle);
         this.ref.detectChanges();
       });
-
     }
 
     locationDetails(id:number){

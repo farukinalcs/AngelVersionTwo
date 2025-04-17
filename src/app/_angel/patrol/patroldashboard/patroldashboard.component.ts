@@ -145,6 +145,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
  getPatrolInfo(locationid:number): void {
   this.patrol.getPatrolInfo(locationid).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
     this.patrolInfo = response[0]?.x;
+    console.log(' this.patrolInfo:',  this.patrolInfo);
     this.ref.detectChanges();
     (this.patrolInfo ?? []).forEach((patrol) => {
       if (+patrol?.olay > 0) {
@@ -158,14 +159,18 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
     if (this.patrolInfo?.[0]?.lat != null && this.patrolInfo?.[0]?.lng != null &&
         !isNaN(+this.patrolInfo[0]?.lat) && !isNaN(+this.patrolInfo[0]?.lng)) {
+
       this.map?.setCenter({
         lat: +this.patrolInfo[0]?.lat,
-        lng: +this.patrolInfo[0]?.lng,
+        lng: +this.patrolInfo[0]?.lng,     
       });
+
+      console.log('lat:', this.patrolInfo[0]?.lat);
+      console.log('lng:', this.patrolInfo[0]?.lng); 
     } else {
       console.warn('Geçersiz koordinatlar:', this.patrolInfo?.[0]);
     }
-
+    
     if (this.patrolInfo?.length > 0) {
       (this.patrolInfo ?? []).forEach((patrol: any) => {
         if (!isNaN(+patrol?.lat) && !isNaN(+patrol?.lng) && this.map) {
@@ -230,7 +235,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     this.patrol.getLocation().subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this._locations = response[0].x;
       console.log("getLocation:", this._locations); 
-      this.selectLocationId = this._locations[0].id;
+      this.selectLocationId = this._locations[0]?.id;
       this.ref.detectChanges();
 
     });
@@ -350,10 +355,10 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
        this.atilmayan = (this.dailyGuardTour?? []).filter((item:any)=> item.durum === 0)
        this.atilan = (this.dailyGuardTour?? []).filter((item:any)=> item.durum === 1)
        this.atilacak = (this.dailyGuardTour?? []).filter((item:any)=> item.durum === 2)
-       console.log("......dailyGuardTour........",this.dailyGuardTour);
-       console.log("......atilmayan........",this.atilmayan);
-       console.log("......atilan........",this.atilan);
-       console.log("......atilacak........",this.atilacak);
+      //  console.log("......dailyGuardTour........",this.dailyGuardTour);
+      //  console.log("......atilmayan........",this.atilmayan);
+      //  console.log("......atilan........",this.atilan);
+      //  console.log("......atilacak........",this.atilacak);
        this.updateWidgets();
        this.ref.detectChanges();
      })
@@ -366,8 +371,6 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
       this.alarmlar = (this.dailyGuardTour2?? []).filter((item:any)=> item.durum === 1)
       this.olaylar = (this.dailyGuardTour2?? []).filter((item:any)=>item.durum === 2)
       this.updateWidgets();
-      console.log("olaylar",this.olaylar);
-      console.log("alarmlar",this.alarmlar);
      })
   }
 
@@ -421,12 +424,5 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   pad(num: number): string {
     return num.toString().padStart(2, '0');
   }
-  // widgets = [
-  //   { title: 'Planlanan Turlar', value: 1},
-  //   { title: 'Atılan Turlar', value: this.atilan.length},
-  //   { title: 'Atılmayan Turlar', value: this.atilmayan.length},
-  //   { title: 'Atılacak Turlar', value: this.atilacak.length},
-  //   { title: 'Alarmlar', value: 5},
-  //   { title: 'Olaylar', value: 6},
-  // ];
+
 }
