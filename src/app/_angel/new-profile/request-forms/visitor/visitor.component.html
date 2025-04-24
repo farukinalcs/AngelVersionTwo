@@ -69,120 +69,122 @@
                         </ng-container>
 
                         <ng-container *ngIf="currentStep$.value == 2">
-                            <div [ngSwitch]="visitType">
-                                <div *ngSwitchCase="0">
-                                    <div class="current">
-                                        <div class="w-100">
-                                            <div class="row">
-                                                <div class="col-12 d-flex justify-content-center">
-                                                    <label class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
-                                                        <div class="d-flex align-items-center me-2">
-                                                            <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
-                                                                <input class="form-check-input" type="radio" formControlName="personInformation" value="1" />
-                                                            </div>
-            
-                                                            <div class="flex-grow-1">
-                                                                <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
-                                                                    {{ "Toplu_Ziyaret" | translate }}
-                                                                </h2>
-                                                                <div class="fw-semibold opacity-50">
-                                                                    Birden fazla kişi ziyarete gelecek onlar için talep oluşturuyorsunuz
-                                                                </div>
+                            <div *ngIf="visitType == 0">
+                                <div class="current">
+                                    <div class="w-100">
+                                        <div class="row">
+                                            <div class="col-12 d-flex justify-content-center">
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
+                                                    <div class="d-flex align-items-center me-2">
+                                                        <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
+                                                            <input class="form-check-input" type="radio" formControlName="personInformation"
+                                                                value="1" />
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
+                                                                {{ "Toplu_Ziyaret" | translate }}
+                                                            </h2>
+                                                            <div class="fw-semibold opacity-50">
+                                                                Birden fazla kişi ziyarete gelecek onlar için talep oluşturuyorsunuz
                                                             </div>
                                                         </div>
-                                                    </label>
-                                                </div>
-
-                                                <div class="col-12 d-flex justify-content-center">
-                                                    <label class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
-                                                        <div class="d-flex align-items-center me-2">
-                                                            <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
-                                                                <input class="form-check-input" type="radio" formControlName="personInformation" value="2" />
-                                                            </div>
-            
-                                                            <div class="flex-grow-1">
-                                                                <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
-                                                                    {{ "Tek_Ziyaret" | translate }}
-                                                                </h2>
-                                                                <div class="fw-semibold opacity-50">
-                                                                    Bir kişi ziyarete gelecek onun için talep oluşturuyorsunuz
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </label>
-                                                    
-                                                </div>
+                                                    </div>
+                                                </label>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div *ngSwitchCase="1">
-                                    <div class="current">
-                                        <div class="w-100">
-                                            <div class="row">
-                                                <div class="col-12 d-flex justify-content-center">
-                                                    <label class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
-                                                        <div class="d-flex align-items-center me-2">
-                                                            <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
-                                                                <input class="form-check-input" type="radio" formControlName="personInformation" value="3" />
-                                                            </div>
-            
-                                                            <div class="flex-grow-1">
-                                                                <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
-                                                                    {{ "Kendim_İçin_Talep_Oluşturuyorum" | translate }}
-                                                                </h2>
-                                                                <div class="fw-semibold opacity-50">
-                                                                    Sadece kendiniz için ziyaret talep oluşturuyorsunuz
-                                                                </div>
+                            
+                                            <div class="col-12 d-flex justify-content-center">
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
+                                                    <div class="d-flex align-items-center me-2">
+                                                        <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
+                                                            <input class="form-check-input" type="radio" formControlName="personInformation"
+                                                                value="2" />
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
+                                                                {{ "Tek_Ziyaret" | translate }}
+                                                            </h2>
+                                                            <div class="fw-semibold opacity-50">
+                                                                Bir kişi ziyarete gelecek onun için talep oluşturuyorsunuz
                                                             </div>
                                                         </div>
-                                                    </label>
-                                                    
-                                                </div>
-
-                                                <div class="col-12 d-flex justify-content-center">
-                                                    <label class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
-                                                        <div class="d-flex align-items-center me-2">
-                                                            <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
-                                                                <input class="form-check-input" type="radio" formControlName="personInformation" value="4" />
-                                                            </div>
-            
-                                                            <div class="flex-grow-1">
-                                                                <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
-                                                                    {{ "Ekibim_İçin_Talep_Oluşturuyorum" | translate }}
-                                                                </h2>
-                                                                <div class="fw-semibold opacity-50">
-                                                                    Sizin ekleyeceğiniz ekibinizin üyeleri için ziyaret talep oluşturuyorsunuz
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </label>
-                                                </div>
-
-                                                <div class="col-12 d-flex justify-content-center">
-                                                    <label class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
-                                                        <div class="d-flex align-items-center me-2">
-                                                            <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
-                                                                <input class="form-check-input" type="radio" formControlName="personInformation" value="5" />
-                                                            </div>
-            
-                                                            <div class="flex-grow-1">
-                                                                <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
-                                                                    {{ "Ekibim_Ve_Kendim_İçin_Talep_Oluşturuyorum" | translate }}
-                                                                </h2>
-                                                                <div class="fw-semibold opacity-50">
-                                                                    Ekibiniz ve kendiniz için ziyaret talep oluşturuyorsunuz
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </label>
-                                                </div>
+                                                    </div>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div *ngIf="visitType == 1">
+                                <div class="current">
+                                    <div class="w-100">
+                                        <div class="row">
+                                            <div class="col-12 d-flex justify-content-center">
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
+                                                    <div class="d-flex align-items-center me-2">
+                                                        <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
+                                                            <input class="form-check-input" type="radio" formControlName="personInformation"
+                                                                value="3" />
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
+                                                                {{ "Kendim_İçin_Talep_Oluşturuyorum" | translate }}
+                                                            </h2>
+                                                            <div class="fw-semibold opacity-50">
+                                                                Sadece kendiniz için ziyaret talep oluşturuyorsunuz
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                            
+                                            <div class="col-12 d-flex justify-content-center">
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
+                                                    <div class="d-flex align-items-center me-2">
+                                                        <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
+                                                            <input class="form-check-input" type="radio" formControlName="personInformation"
+                                                                value="4" />
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
+                                                                {{ "Ekibim_İçin_Talep_Oluşturuyorum" | translate }}
+                                                            </h2>
+                                                            <div class="fw-semibold opacity-50">
+                                                                Sizin ekleyeceğiniz ekibinizin üyeleri için ziyaret talep oluşturuyorsunuz
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                            
+                                            <div class="col-12 d-flex justify-content-center">
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
+                                                    <div class="d-flex align-items-center me-2">
+                                                        <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
+                                                            <input class="form-check-input" type="radio" formControlName="personInformation"
+                                                                value="5" />
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
+                                                                {{ "Ekibim_Ve_Kendim_İçin_Talep_Oluşturuyorum" | translate }}
+                                                            </h2>
+                                                            <div class="fw-semibold opacity-50">
+                                                                Ekibiniz ve kendiniz için ziyaret talep oluşturuyorsunuz
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                              
                         </ng-container>
 
                         <ng-container *ngIf="currentStep$.value == 3">
@@ -222,61 +224,52 @@
                                                     <div class="tab-content">
                                                         <div class="tab-pane fade active show">
                                                             <div class="table-responsive">
-                                                                <table class="table table-row-dashed table-row-gray-200 align-middle gs-2 gy-4">
-                                                                    <thead>
-                                                                        <tr class="fs-7 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-light rounded">
+                                                                <table class="table table-hover table-borderless align-middle shadow-sm rounded overflow-hidden">
+                                                                    <thead class="bg-light">
+                                                                        <tr class="text-uppercase text-gray-700 fw-bold fs-7 border-bottom border-2">
                                                                             <th class="text-center rounded-start"></th>
                                                                             <th class="text-center">{{ "Ad" | translate }}</th>
                                                                             <th class="text-center">{{ "Soyad" | translate }}</th>
                                                                             <th class="text-center rounded-end"></th>
                                                                         </tr>
                                                                     </thead>
-
+                                                            
                                                                     <tbody>
-                                                                        <tr *ngFor="let item of visitors; index as i">
-                                                                            <!-- [ngClass]="{'bg-warning': isFirstVisitor(i)}" -->
+                                                                        <tr *ngFor="let item of visitors; index as i" class="bg-white border-bottom border-light"
+                                                                            [ngClass]="{'bg-light-danger': isFirstVisitor(i)}">
                                                                             <td class="text-center">
                                                                                 <div class="symbol symbol-50px">
                                                                                     <ng-container *ngIf="isFirstVisitor(i)">
-                                                                                        <div
-                                                                                            class="symbol-label fs-2 fw-semibold bg-light-danger">
-                                                                                            <i
-                                                                                                class="fa-solid fa-sitemap fs-2x text-danger"></i>
+                                                                                        <div class="symbol-label bg-light-danger">
+                                                                                            <i class="fa-solid fa-sitemap fs-2x text-danger"></i>
                                                                                         </div>
                                                                                     </ng-container>
-
-                                                                                    <ng-container
-                                                                                        *ngIf="!isFirstVisitor(i)">
-                                                                                        <div
-                                                                                            class="symbol-label fs-2 fw-semibold bg-light-danger text-danger">
-                                                                                            {{i + 1}}</div>
+                                                                                    <ng-container *ngIf="!isFirstVisitor(i)">
+                                                                                        <div class="symbol-label bg-light text-danger fw-bold">
+                                                                                            {{ i + 1 }}
+                                                                                        </div>
                                                                                     </ng-container>
                                                                                 </div>
                                                                             </td>
-
-                                                                            <td class="text-center text-muted fw-bold fs-4">
-                                                                                <span class="fs-5 text-dark">
-                                                                                    {{item.name }}
-                                                                                </span>
-                                                                            </td>
-
-                                                                            <td class="text-center text-muted fw-bold fs-4">
-                                                                                <span class="fs-5 text-dark">
-                                                                                    {{item.surname }}
-                                                                                </span>
-                                                                            </td>
-
+                                                            
                                                                             <td class="text-center">
-                                                                                <button
-                                                                                    class="btn btn-icon btn-light-danger btn-circle"
-                                                                                    (click)="removeVisitor(item)">
-                                                                                    <i class="fa-solid fa-trash"></i>
+                                                                                <span class="fw-semibold text-gray-800 fs-6">{{ item.name }}</span>
+                                                                            </td>
+                                                            
+                                                                            <td class="text-center">
+                                                                                <span class="fw-semibold text-gray-800 fs-6">{{ item.surname }}</span>
+                                                                            </td>
+                                                            
+                                                                            <td class="text-center">
+                                                                                <button class="btn btn-icon btn-sm btn-light-danger" (click)="removeVisitor(item)" title="Sil">
+                                                                                    <i class="fa-solid fa-trash text-danger"></i>
                                                                                 </button>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
                                                             </div>
+                                                              
                                                         </div>
                                                     </div>
                                                 </div>
@@ -383,7 +376,7 @@
 
                                             <p-select [options]="company" formControlName="company" optionLabel="Ad" [editable]="true"
                                                 emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="true" filterBy="Ad" [showClear]="true"
-                                                placeholder="{{'Firma_Seçiniz' | translate}}" class="p-2 w-100 md:w-56">
+                                                placeholder="{{'Firma_Seçiniz' | translate}}" class="w-100 md:w-56">
                                                 <ng-template #selectedItem let-selected>
                                                     <div class="flex items-center gap-2">
                                                         <div>{{ visitTypeForm.get('company')?.value?.Ad }}</div>
@@ -462,33 +455,33 @@
                                                         <div [ngSwitch]="item.ad">
 
                                                             <div *ngSwitchCase="'Misafir'">
-                                                                <span class="symbol-label bg-light-danger">
-                                                                    <i class="fa-solid fa-users text-danger fs-3"></i>
+                                                                <span class="symbol-label bg-light-secondary">
+                                                                    <i class="fa-solid fa-users text-gray-900 fs-3"></i>
                                                                 </span>
                                                             </div>
 
                                                             <div *ngSwitchCase="'Etkinlik'">
-                                                                <span class="symbol-label bg-light-danger  ">
-                                                                    <i class="fa-solid fa-cake-candles text-danger fs-3"></i>
+                                                                <span class="symbol-label bg-light-secondary  ">
+                                                                    <i class="fa-solid fa-cake-candles text-gray-900 fs-3"></i>
                                                                 </span>
                                                             </div>
 
                                                             <div *ngSwitchCase="'İnsan Kaynakları Görüşmesi'">
-                                                                <span class="symbol-label bg-light-danger">
-                                                                    <i class="fa-solid fa-handshake text-danger fs-3"></i>
+                                                                <span class="symbol-label bg-light-secondary">
+                                                                    <i class="fa-solid fa-handshake text-gray-900 fs-3"></i>
                                                                 </span>
                                                             </div>
 
                                                             <div *ngSwitchCase="'Ürün Girişi'">
-                                                                <span class="symbol-label bg-light-danger">
-                                                                    <i class="fa-solid fa-truck-ramp-box text-danger fs-3"></i>
+                                                                <span class="symbol-label bg-light-secondary">
+                                                                    <i class="fa-solid fa-truck-ramp-box text-gray-900 fs-3"></i>
                                                                 </span>
                                                             </div>
 
 
                                                             <div *ngSwitchDefault>
-                                                                <span class="symbol-label bg-light-danger">
-                                                                    <i class="fa-solid fa-thumbtack text-danger fs-3"></i>
+                                                                <span class="symbol-label bg-light-secondary">
+                                                                    <i class="fa-solid fa-thumbtack text-gray-900 fs-3"></i>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -742,15 +735,6 @@
 
                         <ng-container *ngIf="currentStep$.value == 7">
                             <div class="row">
-
-
-
-
-
-
-
-
-
                                 <ng-container *ngIf="visitors.length > 0">
                                     <div class="col-12 scroll h-4000px">
                                         <div class="tab-content">
@@ -829,7 +813,7 @@
                     <div class="d-flex flex-stack pt-0">
                         <div class="mr-2">
                             <ng-container *ngIf=" 7 > currentStep$.value && currentStep$.value > 1">
-                                <button type="button" class="btn btn-lg btn-light-danger me-3" (click)="prevStep()">
+                                <button type="button" class="btn btn-sm btn-light-danger me-3" (click)="prevStep()">
                                     <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                         class="svg-icon svg-icon-4 me-1"></span>
                                     {{ "Geri" | translate }}
@@ -837,7 +821,7 @@
                             </ng-container>
 
                             <ng-container *ngIf="currentStep$.value == formsCount">
-                                <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
+                                <button mat-dialog-close type="button" class="btn btn-sm btn-light-danger me-3">
                                     <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                         class="svg-icon svg-icon-4 me-1"></span>
                                     {{ "Kapat" | translate }}
@@ -848,7 +832,7 @@
                         <ng-container *ngIf="currentStep$.value !== formsCount">
                             <div>
                                 <ng-container *ngIf="currentStep$.value < formsCount - 1">
-                                    <button type="button" class="btn btn-lg btn-danger me-3" (click)="nextStep()">
+                                    <button type="button" class="btn btn-sm btn-danger me-3" (click)="nextStep()">
                                         <span class="indicator-label">
                                             {{ "İleri" | translate }} {{ " " }}
                                             <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
@@ -860,13 +844,13 @@
                                     </button>
                                 </ng-container>
                                 <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                    <button type="button" class="btn btn-lg btn-danger me-3" (click)="closedFormDialog()">
+                                    <button type="button" class="btn btn-sm btn-danger me-3" (click)="closedFormDialog()">
                                         <span class="indicator-label">
                                             {{ "Kapat" | translate }}
                                         </span>
                                     </button>
 
-                                    <button type="button" class="btn btn-lg btn-danger me-3"
+                                    <button type="button" class="btn btn-sm btn-danger me-3"
                                         (click)="postUploadedFilesForVisitors()">
                                         <span class="indicator-label">
                                             {{ "Gönder" | translate }}

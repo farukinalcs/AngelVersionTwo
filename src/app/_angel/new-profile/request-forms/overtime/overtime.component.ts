@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
@@ -71,7 +71,6 @@ export class OvertimeComponent implements OnInit, OnDestroy {
   uploadedFiles: any[] = [];
   uploadedFile: any;
 
-  currentDate = new Date(Date.now());
   currentSicilId: any;
   selectedType  : any;
   dropdownEmptyMessage : any = this.translateService.instant('Kayıt_Bulunamadı');
@@ -252,13 +251,21 @@ export class OvertimeComponent implements OnInit, OnDestroy {
       tip: ['', Validators.required],
       ulasim: ['', Validators.required],
       yemek: ['', Validators.required],
-      bastarih: ['', Validators.required],
-      bassaat: ['', Validators.required],
-      bittarih: ['', Validators.required],
-      bitsaat: ['', Validators.required],
+      bastarih: [this.getDefaultDate('date'), Validators.required],
+      bassaat: [this.getDefaultDate('datetime'), Validators.required],
+      bittarih: [this.getDefaultDate('date'), Validators.required],
+      bitsaat: [this.getDefaultDate('datetime'), Validators.required],
       file: [null] 
     });
   }
+
+  getDefaultDate(format: 'date' | 'datetime' = 'date'): string | Date {
+    const now = new Date();
+    return format === 'date'
+      ? formatDate(now, 'yyyy-MM-dd', 'en')
+      : now;
+  }
+  
 
 
   // Stepper'ı yataydan dikeye çevir

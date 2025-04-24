@@ -1,0 +1,19 @@
+.table {
+    th {
+        background-color: #f8f9fa;
+    }
+
+    tr:hover {
+        background-color: #fff5f5;
+        transition: background-color 0.3s ease;
+    }
+}
+
+.bg-light-danger {
+    background-color: #ffe5e7 !important;
+}
+
+.btn-light-danger:hover {
+    background-color: #ed1b24 !important;
+    color: #fff !important;
+}
