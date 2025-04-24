@@ -126,3 +126,11 @@
     <a (click)="logout()" class="menu-link px-5 cursor-pointer"> {{"Çıkış_Yap" | translate}} </a>
   </div>
 </ng-container>
+
+
+<ng-container *ngIf="clickLogout">
+  <app-session-logout-dialog
+    (dialogClosed)="dialogClosed()">
+
+  </app-session-logout-dialog>
+</ng-container>

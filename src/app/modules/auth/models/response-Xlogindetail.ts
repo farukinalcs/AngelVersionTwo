@@ -45,5 +45,6 @@ export class ResponseXloginDetail{
     gorevad : string;
     pozisyonad : string;
     Timeout: number;
+    issecure: string;
 }
 

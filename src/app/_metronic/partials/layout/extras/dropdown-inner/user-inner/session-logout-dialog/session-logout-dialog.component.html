@@ -1,0 +1,80 @@
+<p-dialog [(visible)]="display" [appendTo]="'body'" modal header="Oturum Bilgileri"
+    [style]="{ width: '100%', 'max-width': '750px' }" [closable]="true" (onHide)="closeDialog()" [draggable]="false">
+    
+    <div class="session-list row g-3">
+        <div *ngFor="let session of sessions"
+            class="session-item col-12 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center border rounded p-3 shadow-sm">
+            <div class="d-flex align-items-start gap-3 w-100 mb-3 mb-md-0">
+                <i [ngClass]="getBrowserIconClass(session.browser)" class="browser-icon"></i>
+                <div class="flex-grow-1">
+                    <div class="fw-semibold text-break">
+                        {{ session.ip }} - {{ session.location || 'Konum alınıyor...' }}
+                        <!-- <span *ngIf="session.current" class="badge bg-primary ms-2" pTooltip="Bu oturum şu anda kullandığınız cihaz.">
+                            <i class="fa-solid fa-laptop me-1 text-white"></i> Bu Cihaz
+                        </span> -->
+                         
+                        <span *ngIf="session.current" class="badge bg-primary ms-2"
+                            [pTooltip]="deviceType === 'mobile' ? 'Bu oturum şu anda kullandığınız mobil cihaz.' : 'Bu oturum şu anda kullandığınız masaüstü cihaz.'">
+                            <i [ngClass]="deviceType === 'mobile' ? 'fa-solid fa-mobile-screen' : 'fa-solid fa-laptop'" class="text-white mx-2"></i>
+                            Bu Cihaz
+                        </span>
+                    </div>
+                    <div class="text-muted small">
+                        {{ session.isletimsistemi }} · {{ session.logintime | date: 'short' }}
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex gap-2 flex-wrap justify-content-end w-100 w-md-auto">
+                <p-button severity="secondary" icon="pi pi-map-marker" pTooltip="{{'Haritada Gör' | translate}}" (click)="showLocationOnMap(session.latitude, session.longitude, session.location)"/>
+                <p-button severity="danger" icon="pi pi-times" pTooltip="{{'Sonlandır' | translate}}" (click)="logoutSession(session)"/>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="mapUrl" class="my-4">
+        <div class="location-summary mb-3">
+            <strong>Konum:</strong> {{ selectedLocation || 'Konum alınıyor...' }}
+        </div>
+        <div class="map-container">
+            <iframe width="100%" height="250" style="border: 0"
+                [src]="mapUrl"
+                loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <!-- <div class="form-check my-3">
+        <input type="checkbox" id="dontAskAgain" class="form-check-input" [(ngModel)]="dontAskAgain" />
+        <label class="form-check-label" for="dontAskAgain">
+            Bu uyarıyı bir daha gösterme. <br />
+            <small class="text-muted">
+                İşaretlerseniz yalnızca mevcut oturumdan çıkış yapılacaktır. Diğer oturum bilgilerini görmek için
+                kullanıcı menüsündeki <strong>“Tüm oturumları gör”</strong> seçeneği aktif olmalıdır.
+            </small>
+        </label>
+    </div> -->
+
+    <ng-template pTemplate="footer">
+        <div class="d-flex flex-column gap-3 w-100">
+          
+          <!-- Checkbox alanı -->
+          <div class="form-check">
+            <input type="checkbox" id="dontAskAgain" class="form-check-input" [(ngModel)]="dontAskAgain" />
+            <label class="form-check-label" for="dontAskAgain">
+              Bu uyarıyı bir daha gösterme. <br />
+              <small class="text-muted">
+                İşaretlerseniz yalnızca mevcut oturumdan çıkış yapılacaktır. Diğer oturum bilgilerini görmek için
+                kullanıcı menüsündeki <strong>“Tüm oturumları gör”</strong> seçeneği aktif olmalıdır.
+              </small>
+            </label>
+          </div>
+      
+          <!-- Buton alanı -->
+          <div class="d-flex flex-column flex-md-row gap-2 justify-content-end">
+            <p-button label="{{'Mevcut Oturumu Sonlandır' | translate}}" severity="primary" (click)="logoutCurrent()" />
+            <p-button label="{{'Tüm Oturumlardan Çık' | translate}}" severity="secondary" (click)="logoutAll()" />
+          </div>
+      
+        </div>
+      </ng-template>
+      
+</p-dialog>

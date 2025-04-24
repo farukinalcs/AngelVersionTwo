@@ -1,0 +1,55 @@
+.session-item {
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: #f8f9fa;
+    }
+}
+
+.browser-icon {
+    font-size: 24px;
+
+    &.chrome {
+        color: #4285f4;
+    }
+
+    &.firefox {
+        color: #ff7139;
+    }
+
+    &.edge {
+        color: #0078d7;
+    }
+
+    &.safari {
+        color: #1e90ff;
+    }
+
+    &.other {
+        color: gray;
+    }
+}
+
+.map-container {
+    width: 100%;
+    height: 250px;
+    margin-top: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.location-summary {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.form-check-label small {
+    font-size: 13px;
+}
+
+.form-check-input {
+    width: 20px;
+    height: 20px;
+}

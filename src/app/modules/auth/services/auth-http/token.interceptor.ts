@@ -12,7 +12,6 @@ import { HelperService } from 'src/app/_helpers/helper.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { SessionService } from 'src/app/_helpers/session.service';
-import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
 @Injectable()
@@ -43,18 +42,27 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     let headers = {};
-
+    console.log("Token interceptor : ", this.helperService.gateResponseY);
     if (this.helperService.gateResponseX) {
       // İlk istekten sonra yapılacak istekler
+      const latitude = localStorage.getItem('lat') || 'izin vermedi';
+      const longitude = localStorage.getItem('lng') || 'izin vermedi';
       headers = {
         Authorization: this.helperService.gateResponseX,
+        'X-User-Latitude': latitude.toString(),
+        'X-User-Longitude': longitude.toString()
       };
     } else {
       // İlk iki istekten sonra yapılacak istekler
+      
       const token = JSON.parse(localStorage.getItem('token') || '{}');
+      const latitude = localStorage.getItem('lat') || 'izin vermedi';
+      const longitude = localStorage.getItem('lng') || 'izin vermedi';
       if (token) {
         headers = {
           Authorization: token,
+          'X-User-Latitude': latitude.toString(),
+          'X-User-Longitude': longitude.toString()
         };
       }
     }
@@ -99,6 +107,7 @@ export class TokenInterceptor implements HttpInterceptor {
                       if (result.isConfirmed) {
                         this.sessionService.stopMonitoring();
                         localStorage.removeItem('token');
+                        localStorage.removeItem('is-secure');
                         this.router.navigate(['/auth/login']);
                         // document.location.reload();
                       }

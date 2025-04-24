@@ -14,112 +14,116 @@
 
 
 <!-- <ng-container *ngIf="!(isLoading | async)"> -->
-  <div class="row">
+<div class="row">
     <div class="col-12">
-      <div class="text-center mb-2">
-        <img src="../../../../../assets/media/logos/MECLOUD (13).png" alt="meyerLogo" class="meyer-logo">
-      </div>
+        <div class="text-center mb-2">
+            <img src="../../../../../assets/media/logos/MECLOUD (13).png" alt="meyerLogo" class="meyer-logo">
+        </div>
     </div>
 
     <div class="col-sm-12 col-md-8 col-lg-7 m-auto">
-      <ng-container *ngIf="hasError">
-        <div class="my-5 alert alert-danger text-center w-100">
-          <div class="alert-text font-weight-bold">
-            {{"Giriş_Bilgileri_Yanlış" | translate}}
-          </div>
-        </div>
-      </ng-container>
+        <ng-container *ngIf="hasError">
+            <div class="my-5 alert alert-danger text-center w-100">
+                <div class="alert-text font-weight-bold">
+                    {{"Giriş_Bilgileri_Yanlış" | translate}}
+                </div>
+            </div>
+        </ng-container>
     </div>
-  </div>
+</div>
 
-  <div class="row">
+<div class="row">
     <div class="col-12">
-      <form class="form w-100" [formGroup]="loginForm" novalidate="novalidate" id="kt_login_signin_form">
-        <div class="row d-flex justify-content-center">
+        <form class="form w-100" [formGroup]="loginForm" novalidate="novalidate" id="kt_login_signin_form">
+            <div class="row d-flex justify-content-center">
 
-          <ng-container *ngIf="!(isLoading | async)">
-            <div class="col-sm-12 col-md-8 col-lg-7 d-flex justify-content-center flex-column">
-              <label class="form-label fs-6 fw-bolder text-dark">{{"Uygulamalar" | translate}}</label>
-              <label *ngFor="let item of appList"
-                class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex text-start px-6 py-3 m-1 active"
-                data-kt-button="true">
-                <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                  <input class="form-check-input bg-danger" type="radio" formControlName="appList" value="{{item.appId}}"
-                    checked="checked">
-                </span>
-                <i class="fa-solid fa-cloud fs-4 me-4 ms-10 align-items-center"></i>
-                <span class="ms-5">
-                  <span class="fs-4 fw-bold mb-1 d-block">{{item.appName}}</span>
+                <ng-container *ngIf="!(isLoading | async)">
 
-                </span>
-              </label>
+                    <div class="col-sm-12 col-md-8 col-lg-7 d-flex justify-content-center flex-column">
+                        <label class="form-label fs-6 fw-bolder text-dark mb-2">{{"Uygulamalar" | translate}}</label>
+
+                        <div class="app-grid border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+                            <div class="row g-2">
+                                <div class="col-12 col-md-6" *ngFor="let item of appList">
+                                    <label
+                                        class="app-option border rounded px-3 py-2 d-flex align-items-center cursor-pointer w-100"
+                                        [class.active]="loginForm.value.appList === item.appId">
+                                        <input type="radio" class="form-check-input me-3" formControlName="appList"
+                                            [value]="item.appId" hidden />
+                                        <i [ngClass]="getIconClass(item.appId)" class="fs-4 me-2 text-danger"></i>
+                                        <span class="fw-semibold">{{ item.appName }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-container>
+
+
+                <div class="col-sm-12 col-md-8 col-lg-7 d-flex justify-content-center flex-column">
+                    <label class="form-label fs-6 fw-bolder text-dark">{{"Kullanıcı_Adı" | translate}}</label>
+                    <input class="form-control form-control-solid border border-4 ng-touched bg-light-dark" type="text"
+                        name="userName" formControlName="userName" autocomplete="off" />
+                </div>
+
+                <div class="col-sm-12 col-md-8 col-lg-7 d-flex justify-content-center flex-column">
+                    <label class="form-label fw-bolder text-dark fs-6 mb-0">{{"Şifre" |translate}}</label>
+                    <input class="form-control form-control-solid border border-4 ng-touched bg-light-dark"
+                        type="password" name="password" autocomplete="off" formControlName="password" />
+                </div>
+
+                <div class="col-sm-12 col-md-8 col-lg-7 d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+                    <div ngbDropdown class="d-inline-block">
+                        <button type="button" class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1"
+                            id="dropdownBasic1" ngbDropdownToggle>
+                            <img class="h-25px w-25px rounded" src="{{ language.flag }}" alt="language" />
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <a *ngFor="let language of languages" ngbDropdownItem
+                                (click)="setLanguageWithRefresh(language.lang)" [ngClass]="{ active: language.active }">
+                                <span class="symbol symbol-20 mr-3">
+                                    <img src="{{ language.flag }}" style="width: 20%;" />
+                                    <span class="navi-text" style="margin-left: 20px;">{{ language.name }}</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <a routerLink="/auth/forgot-password" class="link-danger">
+                        {{"Şifremi_Unuttum" |translate}}
+                    </a>
+
+                </div>
+
+                <div class="col-sm-12 col-md-8 col-lg-7 d-grid d-flex justify-content-center mb-10">
+                    <button type="submit" (click)="submit()" id="kt_sign_in_submit"
+                        class="btn btn-danger w-100 w-md-50 w-lg-75 ">
+                        <ng-container *ngIf="isLoading$ | async">
+                            <span class="indicator-progress" [style.display]="'block'">
+                                {{"Lütfen_Bekleyiniz" | translate}}
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </ng-container>
+                        <ng-container *ngIf="(isLoading$ | async) === false">
+                            <span class="indicator-label">{{"Giriş_Yap" |translate}}</span>
+                        </ng-container>
+                    </button>
+                </div>
             </div>
-          </ng-container>
-
-
-          <div class="col-sm-12 col-md-8 col-lg-7 d-flex justify-content-center flex-column">
-            <label class="form-label fs-6 fw-bolder text-dark">{{"Kullanıcı_Adı" | translate}}</label>
-            <input class="form-control form-control-solid border border-4 ng-touched bg-light-dark" type="text"
-              name="userName" formControlName="userName" autocomplete="off" />
-          </div>
-
-          <div class="col-sm-12 col-md-8 col-lg-7 d-flex justify-content-center flex-column">
-            <label class="form-label fw-bolder text-dark fs-6 mb-0">{{"Şifre" |translate}}</label>
-            <input class="form-control form-control-solid border border-4 ng-touched bg-light-dark" type="password"
-              name="password" autocomplete="off" formControlName="password" />
-          </div>
-
-          <div class="col-sm-12 col-md-8 col-lg-7 d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
-            <div ngbDropdown class="d-inline-block">
-              <button type="button" class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1" id="dropdownBasic1"
-                ngbDropdownToggle>
-                <img class="h-25px w-25px rounded" src="{{ language.flag }}" alt="language" />
-              </button>
-              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <a *ngFor="let language of languages" ngbDropdownItem (click)="setLanguageWithRefresh(language.lang)"
-                  [ngClass]="{ active: language.active }">
-                  <span class="symbol symbol-20 mr-3">
-                    <img src="{{ language.flag }}" style="width: 20%;" />
-                    <span class="navi-text" style="margin-left: 20px;">{{ language.name }}</span>
-                  </span>
-                </a>
-              </div>
-            </div>
-            <a routerLink="/auth/forgot-password" class="link-danger">
-              {{"Şifremi_Unuttum" |translate}}
-            </a>
-
-          </div>
-
-          <div class="col-sm-12 col-md-8 col-lg-7 d-grid d-flex justify-content-center mb-10">
-            <button type="submit" (click)="submit()" id="kt_sign_in_submit"
-              class="btn btn-danger w-100 w-md-50 w-lg-75 " [disabled]="loginForm.invalid">
-              <ng-container *ngIf="isLoading$ | async">
-                <span class="indicator-progress" [style.display]="'block'">
-                  {{"Lütfen_Bekleyiniz" | translate}}
-                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                </span>
-              </ng-container>
-              <ng-container *ngIf="(isLoading$ | async) === false">
-                <span class="indicator-label">{{"Giriş_Yap" |translate}}</span>
-              </ng-container>
-            </button>
-          </div>
-        </div>
-      </form>
+        </form>
     </div>
-  </div>
+</div>
 <!-- </ng-container> -->
 
 
 
 <ng-template #formError let-control="control" let-message="message" let-validation="validation">
-  <ng-container *ngIf="control.hasError(validation)">
+    <ng-container *ngIf="control.hasError(validation)">
 
-    <div class="fv-plugins-message-container">
-      <span role="alert">
-        {{message | translate}}
-      </span>
-    </div>
-  </ng-container>
+        <div class="fv-plugins-message-container">
+            <span role="alert">
+                {{message | translate}}
+            </span>
+        </div>
+    </ng-container>
 </ng-template>

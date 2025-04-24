@@ -33,6 +33,10 @@ const routes: Routes = [
         path: 'logout',
         component: LogoutComponent,
       },
+      {
+        path: 'two-factor',
+        loadComponent: () => import('./components/two-factor/two-factor.component').then(m => m.TwoFactorComponent)
+      },      
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '**', redirectTo: 'login', pathMatch: 'full' },
     ],
