@@ -14,12 +14,18 @@
 
 
 
-
-<ng-container *ngIf="this.helperService.loginOptions.appcode == '2'">
+<!-- <ng-container *ngIf="this.helperService.loginOptions.appcode == '2'">
   <app-sidebar-menu-patrol class="app-sidebar-menu overflow-hidden flex-column-fluid"></app-sidebar-menu-patrol>
 </ng-container>
 <ng-container *ngIf="this.helperService.loginOptions.appcode == '1'">
   <app-sidebar-menu class="app-sidebar-menu overflow-hidden flex-column-fluid"></app-sidebar-menu> 
+</ng-container> -->
+
+
+<ng-container [ngSwitch]="helperService.loginOptions.appcode">
+  <app-sidebar-menu *ngSwitchCase="'1'"></app-sidebar-menu>
+  <app-sidebar-menu-patrol *ngSwitchCase="'2'"></app-sidebar-menu-patrol>
+  <app-sidebar-menu-performance *ngSwitchCase="'3'"></app-sidebar-menu-performance>
 </ng-container>
 
 <!--end::sidebar menu-->

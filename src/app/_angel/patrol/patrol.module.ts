@@ -30,9 +30,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule,MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { TooltipModule } from 'primeng/tooltip';
-
 
 @NgModule({
   declarations: [
@@ -71,7 +69,6 @@ import { TooltipModule } from 'primeng/tooltip';
     MatNativeDateModule,
     MatOptionModule,
     MatSelectModule,
-    MatTooltipModule,
     TooltipModule
 
   ],

@@ -20,6 +20,13 @@ export const routes: Routes = [
       import('./_metronic/layout/layout.module').then((m) => m.LayoutModule),
       
   },
+  // {
+  //   path: 'patrol',
+  //   canActivate: [AuthGuard],
+  //   loadChildren: () =>
+  //     import('./_angel/patrol/patrol.module').then((m) => m.PatrolModule),
+      
+  // },
   { path: '**', redirectTo: 'error/404' },
 ];
 
