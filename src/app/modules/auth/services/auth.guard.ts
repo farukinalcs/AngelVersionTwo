@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     const token = localStorage.getItem('token');
     const isSecure = localStorage.getItem('is-secure'); 
     const triggered = localStorage.getItem('manualLogoutTriggered');
-    if (isSecure == '1' && !triggered) {
+    if (isSecure == '1') {
       // logged in so return true
       return true;
     }
