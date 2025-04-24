@@ -43,6 +43,7 @@ import { SaasComponent } from './components/toolbar/saas/saas.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SidebarMenuPatrolComponent } from './components/sidebar/sidebar-menu-patrol/sidebar-menu-patrol.component';
+import { SidebarMenuPerformanceComponent } from './components/sidebar/sidebar-menu-performance/sidebar-menu-performance.component';
 
 const routes: Routes = [
   {
@@ -77,6 +78,7 @@ const routes: Routes = [
     ExtendedComponent,
     ReportsComponent,
     SaasComponent,
+    SidebarMenuPerformanceComponent
   ],
   imports: [
     CommonModule,
