@@ -222,7 +222,7 @@ export class VisitorComponent implements OnInit, OnDestroy {
 
   visitTypeLearn() { // 1. Adımın Form Değerini Alıyor
     this.visitTypeForm.get('visitType')?.valueChanges.subscribe((value) => {
-      console.log(value);
+      console.log(value + " " +  this.currentStep$.value);
       this.visitType = value;
     });
   }

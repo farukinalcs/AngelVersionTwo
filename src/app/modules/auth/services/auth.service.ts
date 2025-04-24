@@ -14,179 +14,205 @@ import { SessionService } from 'src/app/_helpers/session.service';
 export type UserType = ResponseXloginDetail | undefined;
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class AuthService implements OnDestroy {
-  // private fields
-  private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
-  private isLoadingSubject: BehaviorSubject<boolean>;
-  // public authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
-  public authLocalStorageToken = "token";
+    // private fields
+    private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+    private isLoadingSubject: BehaviorSubject<boolean>;
+    // public authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
+    public authLocalStorageToken = "token";
 
-  // public fields
-  currentUser$: Observable<UserType>;
-  isLoading$: Observable<boolean>;
-  currentUserSubject: BehaviorSubject<UserType>;
+    // public fields
+    currentUser$: Observable<UserType>;
+    isLoading$: Observable<boolean>;
+    currentUserSubject: BehaviorSubject<UserType>;
 
-  get currentUserValue(): UserType {
-    return this.currentUserSubject.value;
-  }
+    get currentUserValue(): UserType {
+        return this.currentUserSubject.value;
+    }
 
-  constructor(
-    private authHttpService: AuthHTTPService,
-    private router: Router,
-    private helper: HelperService,
-    private sessionService: SessionService
-  ) {
-    this.isLoadingSubject = new BehaviorSubject<boolean>(false);
-    this.currentUserSubject = new BehaviorSubject<UserType>(undefined);
-    this.currentUser$ = this.currentUserSubject.asObservable();
-    this.isLoading$ = this.isLoadingSubject.asObservable();
-    // const subscr = this.getUserByToken().subscribe();
-    // this.unsubscribe.push(subscr);
-    console.log("Auth Service Çalıştı");
+    constructor(
+        private authHttpService: AuthHTTPService,
+        private router: Router,
+        private helper: HelperService,
+        private sessionService: SessionService,
+        private helperService: HelperService
+    ) {
+        this.isLoadingSubject = new BehaviorSubject<boolean>(false);
+        this.currentUserSubject = new BehaviorSubject<UserType>(undefined);
+        this.currentUser$ = this.currentUserSubject.asObservable();
+        this.isLoading$ = this.isLoadingSubject.asObservable();
+        // const subscr = this.getUserByToken().subscribe();
+        // this.unsubscribe.push(subscr);
+        console.log("Auth Service Çalıştı");
 
-  }
+    }
 
-  login(email: string, password: string, lang: any, appList : any): Observable<any> {
-    this.isLoadingSubject.next(true);
+    login(loginOptions: any): Observable<any> {
+        this.isLoadingSubject.next(true);
 
-    return this.authHttpService.cryptoLogin(email, password, lang, appList)
-      .pipe(map((auth : ResponseModel<ResponseXloginDetail, ResponseDetailZ>[]) => {
-        console.log("AUTH :", auth);
-        let response : ResponseXloginDetail[] = auth[0].x;
-        console.log("response :", response[0]);
-        let response_z : ResponseDetailZ = auth[0].z;        
-        this.helper.customerCode = response[0]?.CustomerCode;
-        if (response_z.islemsonuc == 1) {
-            var user = response[0];
+        return this.authHttpService.cryptoLogin(loginOptions).pipe(map((auth: ResponseModel<ResponseXloginDetail, ResponseDetailZ>[]) => {
+            const data = auth[0].x;
+            var message = auth[0].z;
+
+            localStorage.setItem('is-secure', data[0].issecure);
             
-            this.helper.userLoginModel = response[0];
-            this.currentUserSubject = new BehaviorSubject<any>(user);
-            this.isLoadingSubject.next(false)
 
-            const timeout = user.Timeout || 90000; // ms cinsinden
-            this.sessionService.startMonitoring(timeout);
+            if (message.islemsonuc == -13) {
+                return -13;                
+            }
+            
+            console.log("Auth :", data);
+            this.helper.customerCode = data[0]?.CustomerCode;
+            if (message.islemsonuc == 1) {
+                var user = data[0];
 
-            return this.currentUserSubject;
-        }
-      }),
+                this.helper.userLoginModel = data[0];
+                this.currentUserSubject = new BehaviorSubject<any>(user);
+                this.isLoadingSubject.next(false);
 
-        catchError((err) => {
-          console.error('err', err);
-          return of(undefined);
+                const timeout = user.Timeout || 90000; // ms cinsinden
+                this.sessionService.startMonitoring(timeout);
+
+                return this.currentUserSubject.value;
+            } else if (message.islemsonuc == -13) {
+                const res = new BehaviorSubject<any>(auth);
+                return res.value;
+            }
         }),
-        finalize(() => this.isLoadingSubject.next(false))
-      );
-  }
 
-  logout() {
-    localStorage.removeItem(this.authLocalStorageToken);
-    this.router.navigate(['/auth/login'], {
-      queryParams: {},
-    });
-  }
-
-  getUserByToken(): Observable<any> {
-    var token = this.getAuthFromLocalStorage();
-    if (token == null) {
-      return of(undefined);
-    }
-    var user:any;
-    
-    const auth = this.getAuthFromLocalStorage();
-
-    if (!auth || !auth.tokenid) {
-      return of(undefined);
+            catchError((err) => {
+                console.error('err', err);
+                return of(undefined);
+            }),
+            finalize(() => this.isLoadingSubject.next(false))
+        );
     }
 
-    this.isLoadingSubject.next(true);
-    return this.authHttpService.getUserByToken(auth.tokenid).pipe(
-      map((result: any) => {
-        if (result) {
-          this.currentUserSubject.next(user);
-        } else {
-          this.logout();
+    logout() {
+        localStorage.removeItem(this.authLocalStorageToken);
+        this.router.navigate(['/auth/login'], {
+            queryParams: {},
+        });
+    }
+
+    getUserByToken(): Observable<any> {
+        var token = this.getAuthFromLocalStorage();
+        if (token == null) {
+            return of(undefined);
         }
-        return result;
-      }),
-      finalize(() => this.isLoadingSubject.next(false))
-    );
-  }
+        var user: any;
 
-  // need create new user then login
-  registration(user: UserModel): Observable<any> {
-    this.isLoadingSubject.next(true);
-    return this.authHttpService.createUser(user).pipe(
-      map(() => {
-        this.isLoadingSubject.next(false);
-      }),
-      // switchMap(() => this.login(user.email, user.password)),
-      catchError((err) => {
-        console.error('err', err);
-        return of(undefined);
-      }),
-      finalize(() => this.isLoadingSubject.next(false))
-    );
-  }
+        const auth = this.getAuthFromLocalStorage();
 
-  forgotPassword(email: string): Observable<boolean> {
-    this.isLoadingSubject.next(true);
-    return this.authHttpService
-      .forgotPassword(email)
-      .pipe(finalize(() => this.isLoadingSubject.next(false)));
-  }
+        if (!auth || !auth.tokenid) {
+            return of(undefined);
+        }
 
-  // private methods
-  setAuthFromLocalStorage2(token:any): boolean {
-    // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
-
-    const storageToken = JSON.parse(localStorage.getItem('token') || '{}');
-    // console.log("....STORAGE TOKEN",storageToken);
-    // console.log("....REfRESH TOKEN",token);
-    if (storageToken != token) {
-      localStorage.setItem(this.authLocalStorageToken, JSON.stringify(token));
-      return true;
+        this.isLoadingSubject.next(true);
+        return this.authHttpService.getUserByToken(auth.tokenid).pipe(
+            map((result: any) => {
+                if (result) {
+                    this.currentUserSubject.next(user);
+                } else {
+                    this.logout();
+                }
+                return result;
+            }),
+            finalize(() => this.isLoadingSubject.next(false))
+        );
     }
-    return false;
-  }
 
-  setAuthFromLocalStorage(token:any): boolean {
-    const storageTokenStr = localStorage.getItem('token');
-  
-    let storageToken;
-    try {
-      storageToken = storageTokenStr ? JSON.parse(storageTokenStr) : {};
-    } catch (error) {
-      console.error("Geçersiz JSON formatı:", error);
-      storageToken = {}; 
+    // need create new user then login
+    registration(user: UserModel): Observable<any> {
+        this.isLoadingSubject.next(true);
+        return this.authHttpService.createUser(user).pipe(
+            map(() => {
+                this.isLoadingSubject.next(false);
+            }),
+            // switchMap(() => this.login(user.email, user.password)),
+            catchError((err) => {
+                console.error('err', err);
+                return of(undefined);
+            }),
+            finalize(() => this.isLoadingSubject.next(false))
+        );
     }
-    if (storageToken !== token) {
-      localStorage.setItem(this.authLocalStorageToken, JSON.stringify(token));
-      return true;
-    }
-    return false;
-  }
 
-  // 
-  // if (storageToken != responseToken) {
-  //   this.authService.setAuthFromLocalStorage(responseToken);
-  // }
-  
-  private getAuthFromLocalStorage(): any{
-    try {
-      const authData = JSON.parse(
-        localStorage.getItem(this.authLocalStorageToken) || '{}'
-      );
-      return authData;
-    } catch (error) {
-      var hata:any = "undifend"
-      console.error(error);
-      return hata;
+    forgotPassword(email: string): Observable<boolean> {
+        this.isLoadingSubject.next(true);
+        return this.authHttpService
+            .forgotPassword(email)
+            .pipe(finalize(() => this.isLoadingSubject.next(false)));
     }
-  }
 
-  ngOnDestroy() {
-    this.unsubscribe.forEach((sb) => sb.unsubscribe());
-  }
+    // private methods
+    setAuthFromLocalStorage2(token: any): boolean {
+        // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
+
+        const storageToken = JSON.parse(localStorage.getItem('token') || '{}');
+        // console.log("....STORAGE TOKEN",storageToken);
+        // console.log("....REfRESH TOKEN",token);
+        if (storageToken != token) {
+            localStorage.setItem(this.authLocalStorageToken, JSON.stringify(token));
+            return true;
+        }
+        return false;
+    }
+
+    setAuthFromLocalStorage(token: any): boolean {
+        const storageTokenStr = localStorage.getItem('token');
+
+        let storageToken;
+        try {
+            storageToken = storageTokenStr ? JSON.parse(storageTokenStr) : {};
+        } catch (error) {
+            console.error("Geçersiz JSON formatı:", error);
+            storageToken = {};
+        }
+        if (storageToken !== token) {
+            localStorage.setItem(this.authLocalStorageToken, JSON.stringify(token));
+            return true;
+        }
+        return false;
+    }
+
+    // 
+    // if (storageToken != responseToken) {
+    //   this.authService.setAuthFromLocalStorage(responseToken);
+    // }
+
+    private getAuthFromLocalStorage(): any {
+        try {
+            const authData = JSON.parse(
+                localStorage.getItem(this.authLocalStorageToken) || '{}'
+            );
+            return authData;
+        } catch (error) {
+            var hata: any = "undifend"
+            console.error(error);
+            return hata;
+        }
+    }
+
+    // refreshSecureKey(code: string) {
+    //   const reversed = code.split('').reverse().join('');       // 4312
+    //   const reversedReordered = reversed.slice(1) + reversed[0]; // 3124 (manuel istenen düzende değilse bu düzenleme yapılabilir)
+    //   const reversedPart = reversedReordered.slice(0, 3);       // 312
+    //   const lastThree = code.slice(-3);                         // 134
+    //   this.helperService.gateResponseY = `${code}*${reversedReordered}${reversedPart}!${lastThree}`;
+    // }
+
+    refreshSecureKey(code: string) {
+        const reversed = code.split('').reverse().join('');
+        const reversedReordered = reversed.slice(1) + reversed[0];
+        const reversedPart = reversedReordered.slice(0, 3);
+        const lastThree = code.slice(-3);
+        this.helperService.gateResponseY = `${code}*${reversedReordered}${reversedPart}!${lastThree}`;
+    }
+
+    ngOnDestroy() {
+        this.unsubscribe.forEach((sb) => sb.unsubscribe());
+    }
 }

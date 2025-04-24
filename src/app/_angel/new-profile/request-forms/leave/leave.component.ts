@@ -167,10 +167,10 @@ export class LeaveComponent implements OnInit, OnDestroy {
       }
       return true;
     } else if(this.currentStep$.value === 6) {
-      if (this.fileTypes.length == 0) {
-        this.closedFormDialog();
-      }
-      return true;
+      // if (this.fileTypes.length == 0) {
+      //   this.closedFormDialog();
+      // }
+      // return true;
     }
 
     return true;
@@ -385,11 +385,13 @@ export class LeaveComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(([bastarih, bittarih, bassaat, bitsaat]:any) => {
         let formValue = Object.assign({}, this.vacationForm.value);
+        const startTime = this.vacationForm.get('bassaat')?.value;
+        const endTime = this.vacationForm.get('bitsaat')?.value;
         formValue.siciller = this.currentSicilId;
   
         if (!formValue.tip) {
           this.calcTimeDesc = 'İzin Tipi Seçmelisiniz!';
-        } else if (formValue.gunluksaatlik == 'saatlik' && (!formValue.bassaat || !formValue.bitsaat)) {
+        } else if (formValue.gunluksaatlik == 'saatlik' && (!startTime || !endTime)) {
           this.calcTimeDesc = 'Saat Bilgisi Girimelisiniz!';
         } else {
           this.calcTimeDesc = '';
@@ -559,6 +561,7 @@ export class LeaveComponent implements OnInit, OnDestroy {
             this.translateService.instant('Hata')
           );
           this.prevStep();
+          return;
         }
       } else {
         let data: any[] = [];
@@ -611,6 +614,9 @@ export class LeaveComponent implements OnInit, OnDestroy {
         this.isCompleted = true;
       }
 
+      if (this.fileTypes.length == 0) {
+        this.closedFormDialog();
+      }
       this.ref.detectChanges();
     })
   }
@@ -639,13 +645,19 @@ export class LeaveComponent implements OnInit, OnDestroy {
 
       if (message.islemsonuc == -1) {
         this.toastrService.error(
-          this.translateService.instant('Zorunlu_Yüklenmesi_Gereken_Belge_Bulunamadı!'),
+          this.translateService.instant('Zorunlu_Belgeler_Getirilirken_Hata_Oluştu'),
           this.translateService.instant('Hata')
+        );
+        return;
+      } else if (message.islemsonuc == 9) {
+        this.toastrService.warning(
+          this.translateService.instant('Bu_İzin_Tipi_İçin_Zorunlu_Belge_Bulunmamaktadır!'),
+          this.translateService.instant('Uyarı')
         );
         return;
       }
 
-      console.log("Tipi geldi", data);
+      console.log("Zorunlu belgeler geldi", data);
       this.fileTypes = [...data];
     });
   }
@@ -714,7 +726,8 @@ export class LeaveComponent implements OnInit, OnDestroy {
           this.translateService.instant("İzin_Talep_Formu_Gönderilirken_Hata_Oluştu"),
           this.translateService.instant("Hata")
         );
-        this.nextStep();
+        this.closedFormDialog();
+        // this.nextStep();
         return;
       }
 
@@ -723,7 +736,12 @@ export class LeaveComponent implements OnInit, OnDestroy {
         this.translateService.instant("İzin_Talep_Formu_Gönderildi"),
         this.translateService.instant("Başarılı")
       );
-      this.nextStep();
+
+      if (this.fileTypes.length == 0) {
+        this.closedFormDialog();
+      } else {
+        this.nextStep();
+      }
     });
   }
   

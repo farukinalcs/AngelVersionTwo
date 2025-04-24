@@ -44,24 +44,23 @@
   }
 }
 
-.meyer-text {
-  color: var(--kt-danger);
-  font-size: x-large;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  
+.app-grid {
+  background-color: #f9f9f9;
 }
 
+.app-option {
+  transition: background-color 0.3s ease, border 0.3s ease;
+  border: 1px solid #ccc;
+  background-color: white;
+}
 
-// ::ng-deep .btn.btn-outline.btn-outline-dashed.active {
-//   border-color: #ed1c24;
-// }
+.app-option:hover {
+  background-color: #ffe6e7; // hover efekti için açık pembe tonu
+  border-color: #ed1b24;
+}
 
-// ::ng-deep .btn.btn-outline.btn-outline-dashed.active:focus {
-//   border-color: #ed1c24;
-// }
-
-// ::ng-deep .btn.btn-outline.btn-outline-dashed.active:hover {
-//   border-color: #263238;
-// }
+.app-option.active {
+  border: 2px solid #ed1b24;
+  background-color: #fff0f1; // seçili arka plan rengi
+  box-shadow: 0 0 5px rgba(237, 27, 36, 0.3); // hafif parlama efekti
+}

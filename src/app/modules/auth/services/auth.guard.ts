@@ -16,14 +16,16 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const token = localStorage.getItem('token');
+    const isSecure = localStorage.getItem('is-secure'); 
     const triggered = localStorage.getItem('manualLogoutTriggered');
-    if (token && !triggered) {
+    if (isSecure == '1') {
       // logged in so return true
       return true;
     }
 
     // not logged in so redirect to login page with the return url
     localStorage.removeItem('token');
+    localStorage.removeItem('is-secure'); 
     localStorage.removeItem('manualLogoutTriggered');
     this.router.navigate(['/auth/login']);
     return false;

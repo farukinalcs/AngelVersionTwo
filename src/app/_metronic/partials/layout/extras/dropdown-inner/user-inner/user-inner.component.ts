@@ -21,6 +21,7 @@ export class UserInnerComponent implements OnInit, OnDestroy {
   langs = languages;
   private unsubscribe: Subscription[] = [];
   imageUrl: string;
+  clickLogout: boolean = false;
 
   constructor(
     private auth: AuthService,
@@ -47,7 +48,8 @@ export class UserInnerComponent implements OnInit, OnDestroy {
     // this.auth.logout();
     // document.location.reload();
 
-    this.sessionService.logoutUser();
+    this.clickLogout = true;
+    // this.sessionService.logoutUser();
   }
 
   selectLanguage(lang: string) {
@@ -67,6 +69,10 @@ export class UserInnerComponent implements OnInit, OnDestroy {
     });
     this.helperService.lang.next(lang);
 
+  }
+
+  dialogClosed() {
+    this.clickLogout = !this.clickLogout;
   }
 
   ngOnDestroy() {

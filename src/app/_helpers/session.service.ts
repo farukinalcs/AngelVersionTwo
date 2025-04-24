@@ -56,7 +56,7 @@ export class SessionService {
     clearInterval(this.intervalRef);
   }
 
-  logoutUser(userkey?: string) {
+  logoutUser(userkey?: string, session?: any) {
     var sp: any =
     {
       userkey: this.authHttpService.userkey || userkey,
@@ -68,10 +68,14 @@ export class SessionService {
       console.log("Logout Res : ", res);
       
       
-      this.stopMonitoring();
-      localStorage.removeItem('token');
-      localStorage.removeItem('manualLogoutTriggered');
-      this.router.navigate(['/auth/login']);
+      if (session && session.current) {
+        this.stopMonitoring();
+        localStorage.removeItem('token');
+        localStorage.removeItem('is-secure');
+        localStorage.removeItem('manualLogoutTriggered');
+        this.router.navigate(['/auth/login']);  
+      }
+      
       // document.location.reload();
     });
   }

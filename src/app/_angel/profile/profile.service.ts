@@ -777,4 +777,25 @@ export class ProfileService {
     return this.httpClient.get<any>(this.apiUrlService.apiUrl + '/logout', options);
   }
 
+  reverseGeocode(lat: number, lng: number) {
+    const key = "AIzaSyDXtjkQ56Mi1TtWXAsAEOTVqo_Gx9nMruE";
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key}&language=tr`;
+    return this.httpClient.get<any>(url).pipe(
+      map(res => {
+        const result = res.results[0];
+        if (result) {
+          // return result.formatted_address; 
+          return this.extractCityDistrict(result.address_components);
+        }
+        return 'Konum Bilinmiyor';
+      })
+    );
+  }
+
+  private extractCityDistrict(components: any[]): string {
+    const district = components.find(c => c.types.includes('administrative_area_level_2'))?.long_name;
+    const city = components.find(c => c.types.includes('administrative_area_level_1'))?.long_name;
+    return `${district}/${city}`;
+  }
+
 }
