@@ -1,0 +1,55 @@
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="table-responsive">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" [(ngModel)]="categoryName">
+                    <button class="btn btn-sm" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold; color: white;" type="button" id="button-addon2" (click)="setCategory(categoryName)">Ekle</button>
+                </div>
+             
+                <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"
+            >
+                <thead> 
+                    <tr style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">
+                        <th class="fw-bolder me-1 cursor-pointer rounded-start text-center text-white" style="width: 80%;">Station Name</th>
+                        <th class="fw-bolder me-1 cursor-pointer rounded-end text-white" colspan="2" style="width: 20%;">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let item of filteredItems" class="cursor-pointer fs-12">
+                            <td>
+                                <span class="mb-1 fw-bold">{{item.Ad}}</span>
+                            </td>
+
+                            <td (click)="updateCategoryModal(item)"><p-button label="Update" icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger"/></td>
+                           
+
+                           
+                            <td (click)="deleteCategory(item)"><p-button label="Delete" icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger"/></td>
+                           
+                    </tr>
+
+                </tbody>
+            </table>
+            </div>    
+            
+        </div>
+
+    </div>
+</div>
+
+<p-dialog
+  header="Update Category"
+  [(visible)]="_updateCategoryModal"
+  [modal]="true"
+  [style]="{ width: '40vw'}"
+  [breakpoints]="{ '2560px': '40vw', '992px': '40vw', '576px': '50vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000">
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" [(ngModel)]="updateName">
+    <button class="btn btn-sm" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold; color: white;" type="button" id="button-addon2" (click)="updateCategory()">Güncelle</button>
+</div>
+</p-dialog>

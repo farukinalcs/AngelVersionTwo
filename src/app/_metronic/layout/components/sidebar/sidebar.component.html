@@ -23,9 +23,9 @@
 
 
 <ng-container [ngSwitch]="helperService.loginOptions.appcode">
-  <app-sidebar-menu *ngSwitchCase="'1'"></app-sidebar-menu>
-  <app-sidebar-menu-patrol *ngSwitchCase="'2'"></app-sidebar-menu-patrol>
-  <app-sidebar-menu-performance *ngSwitchCase="'3'"></app-sidebar-menu-performance>
+  <app-sidebar-menu class="app-sidebar-menu overflow-hidden flex-column-fluid" *ngSwitchCase="'1'"></app-sidebar-menu>
+  <app-sidebar-menu-patrol class="app-sidebar-menu overflow-hidden flex-column-fluid" *ngSwitchCase="'2'"></app-sidebar-menu-patrol>
+  <app-sidebar-menu-performance class="app-sidebar-menu overflow-hidden flex-column-fluid" *ngSwitchCase="'3'"></app-sidebar-menu-performance>
 </ng-container>
 
 <!--end::sidebar menu-->

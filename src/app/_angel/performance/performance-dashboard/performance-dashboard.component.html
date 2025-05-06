@@ -1,0 +1,56 @@
+<!-- <p-card header="Performans Değerlendirme Formu" styleClass="p-mb-3">
+
+    <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields"
+    [isFromAttendance]="isFromAttendance"></app-form-stepper>
+    
+    <form (ngSubmit)="submitForm()" #performanceForm="ngForm" class="p-fluid">
+  
+    
+      <div class="p-field">
+        <label class="p-d-block p-mb-2">Değerlendirme Türü:</label>
+        <div class="radio-group">
+          <div class="radio-item">
+            <p-radioButton name="evaluationType" value="yetkinlik" [(ngModel)]="formData.evaluationType" inputId="yetkinlik"></p-radioButton>
+            <label for="yetkinlik">Yetkinlik</label>
+          </div>
+  
+          <div class="radio-item">
+            <p-radioButton name="evaluationType" value="hedef" [(ngModel)]="formData.evaluationType" inputId="hedef"></p-radioButton>
+            <label for="hedef">Hedef</label>
+          </div>
+  
+          <div class="radio-item">
+            <p-radioButton name="evaluationType" value="hedef_yetkinlik" [(ngModel)]="formData.evaluationType" inputId="hedef_yetkinlik"></p-radioButton>
+            <label for="hedef_yetkinlik">Hedef + Yetkinlik</label>
+          </div>
+        </div>
+      </div>
+  
+      <div class="p-field">
+        <label class="p-d-block p-mb-2">Değerlendirme Dönemi:</label>
+        <div class="radio-group">
+          <div class="radio-item">
+            <p-radioButton name="evaluationPeriod" value="3" [(ngModel)]="formData.evaluationPeriod" inputId="threeMonths"></p-radioButton>
+            <label for="threeMonths">3 Aylık</label>
+          </div>
+  
+          <div class="radio-item">
+            <p-radioButton name="evaluationPeriod" value="6" [(ngModel)]="formData.evaluationPeriod" inputId="sixMonths"></p-radioButton>
+            <label for="sixMonths">6 Aylık</label>
+          </div>
+  
+          <div class="radio-item">
+            <p-radioButton name="evaluationPeriod" value="12" [(ngModel)]="formData.evaluationPeriod" inputId="twelveMonths"></p-radioButton>
+            <label for="twelveMonths">12 Aylık</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-field">
+        <button type="submit" pButton label="Formu Oluştur" [disabled]="!performanceForm.valid" class="p-mt-3"></button>
+      </div>
+  
+    </form>
+  </p-card>
+   -->
+   <app-performanceform-steps></app-performanceform-steps>
