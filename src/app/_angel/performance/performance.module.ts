@@ -20,6 +20,7 @@ import { IftaLabelModule } from 'primeng/iftalabel';
 import { SliderModule } from 'primeng/slider';
 import { SelectModule } from 'primeng/select';
 import { DropdownModule } from 'primeng/dropdown';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { DropdownModule } from 'primeng/dropdown';
     IftaLabelModule,
     SliderModule,
     SelectModule,
-    DropdownModule
+    DropdownModule,
+    MatTabsModule
   ]
 })
 export class PerformanceModule { }
