@@ -32,7 +32,7 @@ export class PerformanceDefinitionsComponent {
   widgets = [
     { title: 'Yetkinlik Kategorileri', value: 1},
     { title: 'Cevap Ölçekleri', value: 2},
-    { title: 'Hedef Soruları', value: 3},
+    { title: 'Yetkinlik Soruları', value: 3},
     { title: 'Güvenlil Tur Takvim', value: 4},
 
   ];

@@ -99,7 +99,6 @@ export class PerformanceService {
 
   
   updateScale(scale: Scale) {
-
     console.log("updateSCALEEEE", scale)
     const sp = [{
       mkodu: 'yek300',
@@ -113,6 +112,14 @@ export class PerformanceService {
       cevapn: scale.count.toString(),
       yon: scale.direction.toString(),
     }];
+    return this.requestMethod(sp);
+  }
+
+  deleteScale(id:number){
+    var sp: any[] = [{
+      mkodu: 'yek302',
+      id: id.toString(),
+    }]
     return this.requestMethod(sp);
   }
 }

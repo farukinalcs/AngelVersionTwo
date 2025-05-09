@@ -4,6 +4,7 @@ import { HelperService } from 'src/app/_helpers/helper.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { Scale } from '../models/scale';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-scale',
@@ -20,6 +21,9 @@ export class ScaleComponent {
 
   scaleList: any[] = [];
 
+  selectedScale: Scale | null = null;
+  selectedScaleId: number | null = null;
+
   allowedCounts = Array.from({ length: 10 }, (_, i) => ({
     label: `${i + 1}`, value: i + 1
   }));
@@ -28,7 +32,8 @@ export class ScaleComponent {
   constructor(
     private perform: PerformanceService,
     private ref: ChangeDetectorRef,
-    private helper: HelperService
+    private helper: HelperService,
+    private toastrService : ToastrService
   ) { }
 
 
@@ -40,6 +45,37 @@ export class ScaleComponent {
     this.getScale(0);
   }
 
+  // onScaleChange(scaleId: number) {
+  //   const found = this.scaleList.find(s => s.id === scaleId);
+  //   if (found) {
+  //     console.log("FOUND",found);
+  //     this.selectedScale = found;
+  //     this.scaleName = found.scaleName;
+  //     this.answers = [...found.answers]; // kopyasını al
+  //     this.selectedCount = found.answers.length;
+  //   }
+  // }
+
+  onScaleChange(scaleId: number) {
+ 
+    const found = this.scaleList.find(s => s.id === scaleId);
+    if (found) {
+      this.selectedScale = found;
+      this.selectedScaleId = scaleId;
+      console.log("FOUND",found);
+      // Eğer veride 'answers' array olarak yoksa, cevaplardaki değerleri elle topla:
+      this.scaleName = (found as any).ad || '';  // 'ad' alanı varsa name yerine
+      this.selectedCount = (found as any).cevapn || 0;
+      this.direction = (found as any).yon || 0;
+  
+      this.answers = [];
+      for (let i = 1; i <= 5; i++) {
+        const key = `cevap${i}`;
+        this.answers.push((found as any)[key]?.trim() || '');
+      }
+    }
+  }
+  
   setScale(): void {
     const scale: Scale = {
       name: this.scaleName,
@@ -48,9 +84,17 @@ export class ScaleComponent {
       direction: this.direction
     };
 
-    this.perform.setScale(scale).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-      const result = response[0].x;
+    this.perform.setScale(scale).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+      const result = response[0].x[0].islemsonuc;
       console.log("setScale:", result);
+      if(result == 1){
+        this.toastrService.success(
+          "Ölçek Ekleme İşlemi Başarılı");
+      }else{
+        this.toastrService.error(
+          "Ölçek Ekleme İşlemi Başarısız");
+      }
+     
       this.getScale(0);
       this.ref.detectChanges();
     });
@@ -70,26 +114,36 @@ export class ScaleComponent {
     });
   }
 
-  // updateScale(): void {
-  //   const scale: Scale = {
-  //     name: this.scaleName,
-  //     answers: this.answers.slice(0, this.selectedCount),
-  //     count: this.selectedCount,
-  //     direction: this.direction
-  //   };
+  updateScale(): void {
+    const scale: Scale = {
+      id: this.selectedScaleId ?? undefined,
+      name: this.scaleName,
+      answers: this.answers.slice(0, this.selectedCount),
+      count: this.selectedCount,
+      direction: this.direction
+    };
 
-  //   this.perform.setScale(scale).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-  //     const result = response[0].x;
-  //     console.log("setScale:", result);
-  //     this.ref.detectChanges();
-  //   });
-  //   this.getScale(0);
-  //   // Form temizle
-  //   this.scaleName = '';
-  //   this.selectedCount = 0;
-  //   this.answers = [null, null, null, null, null];
-  //   this.direction = 0;
-  // }
+    this.perform.updateScale(scale).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+      const result = response[0].x[0].islemsonuc;
+      console.log("updateScale:", result);
+      if(result == 1){
+        this.toastrService.success(
+          "Ölçek Güncelleme İşlemi Başarılı");
+      }else{
+        this.toastrService.error(
+          "Ölçek Güncelleme İşlemi Başarısız");
+      }
+      this.getScale(0);
+      this.ref.detectChanges();
+    });
+   
+    // Form temizle
+    this.selectedScaleId  = 0;
+    this.scaleName = '';
+    this.selectedCount = 0;
+    this.answers = [null, null, null, null, null];
+    this.direction = 0;
+  }
 
   // Seçilen ölçek verisini forma doldur
   // editScale(scale: Scale): void {
@@ -98,6 +152,19 @@ export class ScaleComponent {
   //   this.answers = [...scale.answers, null, null, null, null].slice(0, 5); // 5 elemanlı sabit diziye yay
   //   this.direction = scale.direction;
   // }
-
+  deleteScale(){
+    this.perform.deleteScale(this.selectedScaleId ?? 0).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+      const result = response[0].x[0].islemsonuc;
+      if(result == 1){
+        this.toastrService.success(
+          "Ölçek Silme İşlemi Başarılı");
+      }else{
+        this.toastrService.error(
+          "Ölçek Silme İşlemi Başarısız");
+      }
+      console.log("deleteScale:", result);
+      this.ref.detectChanges();
+    });
+  }
 
 }

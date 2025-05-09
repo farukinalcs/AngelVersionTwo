@@ -21,6 +21,7 @@ import { SliderModule } from 'primeng/slider';
 import { SelectModule } from 'primeng/select';
 import { DropdownModule } from 'primeng/dropdown';
 import { MatTabsModule } from '@angular/material/tabs';
+import { CompetenceQuestionsComponent } from './competence-questions/competence-questions.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     PerformanceformStepsComponent,
     PerformanceDefinitionsComponent,
     PerformanceQuestionCategoryComponent,
-    ScaleComponent],
+    ScaleComponent,
+    CompetenceQuestionsComponent],
 
   imports: [
     CommonModule,

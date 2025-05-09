@@ -151,7 +151,7 @@
   
     </div>
   </div> -->
-<div class="container-fluid m-5">
+<div class="container-fluid m-5 scale">
 
     <mat-tab-group>
 
@@ -235,15 +235,140 @@
 
         <mat-tab label="UPDATE AND DELETE">
 
-            <div *ngFor="let item of scaleList">
+            <div>
                 <div class="p-card my-3 p-3">
-                    <h4>{{ item.ad }}</h4>
+                    <!-- <h4>{{ item.ad }}</h4>
     
                     <p>Yön: {{ item.direction === 0 ? 'Soldan Sağa' : 'Sağdan Sola' }}</p>
     
                     <button pButton type="button" icon="pi pi-pencil" class="p-button-sm p-button-text"> Güncelle</button>
                     <button pButton type="button" icon="pi pi-trash"
-                        class="p-button-sm p-button-danger p-button-text">Sil</button>
+                        class="p-button-sm p-button-danger p-button-text">Sil</button> -->
+                        <!-- <table class="table table-row-dashed"> 
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Ölçek Adı
+                                    </th>
+                                    <th>
+                                        Seçim Sayısı
+                                    </th>
+                                    <th>
+                                        Seçim 1
+                                    </th>
+                                    <th>
+                                        Seçim 2
+                                    </th>
+                                    <th>
+                                        Seçim 3
+                                    </th>
+                                    <th>
+                                        Seçim 4
+                                    </th>
+                                    <th>
+                                        Seçim 5
+                                    </th>
+
+                                  
+                                </tr>
+                            </thead>
+                           <tbody>
+                            <tr *ngFor="let item of scaleList">
+                                <td>
+                                    {{ item.ad }}
+                                </td>
+                                <td>{{item.cevapn}}</td>
+                                <td>{{item.cevap1}}</td>
+                                <td>{{item.cevap2}}</td>
+                                <td>{{item.cevap3}}</td>
+                                <td>{{item.cevap4}}</td>
+                                <td>{{item.cevap5}}</td>
+                               
+
+                            </tr>
+                           </tbody>
+
+                        </table> -->
+                        <div class="scale-form-box">
+
+
+                            <div class="p-field">
+                                <label for="countSelect">Scale seçimi</label>
+                                <p-dropdown [options]="scaleList" [(ngModel)]="selectedScaleId" optionLabel="ad"
+                                    optionValue="id" placeholder="Seçiniz"  (onChange)="onScaleChange($event.value)" class="full-width-input">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="p-field">
+                                <p-iftalabel style="margin-top: 3px;">
+                                    <input pInputText id="scaleName" [(ngModel)]="scaleName" class="full-width-input" />
+                                    <label for="scaleName">Scale İsmi:</label>
+                                </p-iftalabel>
+                            </div>
+                
+                            <div class="p-field">
+                                <label for="countSelect">Kaç seçenek olsun?</label>
+                                <p-dropdown [options]="allowedCounts" [(ngModel)]="selectedCount" optionLabel="label"
+                                    optionValue="value" placeholder="Seçiniz" class="full-width-input">
+                                </p-dropdown>
+                            </div>
+                
+                            <!-- Dinamik cevap inputları -->
+                            <div *ngIf="selectedCount > 0 && selectedCount <= 5">
+                                <div class="p-field" *ngIf="selectedCount >= 1">
+                                    <p-iftalabel style="margin-bottom: 5px;">
+                                        <input pInputText id="cevap1" [(ngModel)]="answers[0]" class="full-width-input" />
+                                        <label for="cevap1">Cevap 1</label>
+                                    </p-iftalabel>
+                                </div>
+                                <div class="p-field" *ngIf="selectedCount >= 2">
+                                    <p-iftalabel style="margin-bottom: 5px;">
+                                        <input pInputText id="cevap2" [(ngModel)]="answers[1]" class="full-width-input" />
+                                        <label for="cevap2">Cevap 2</label>
+                                    </p-iftalabel>
+                                </div>
+                                <div class="p-field" *ngIf="selectedCount >= 3">
+                                    <p-iftalabel style="margin-bottom: 5px;">
+                                        <input pInputText id="cevap3" [(ngModel)]="answers[2]" class="full-width-input" />
+                                        <label for="cevap3">Cevap 3</label>
+                                    </p-iftalabel>
+                                </div>
+                                <div class="p-field" *ngIf="selectedCount >= 4">
+                                    <p-iftalabel style="margin-bottom: 5px;">
+                                        <input pInputText id="cevap4" [(ngModel)]="answers[3]" class="full-width-input" />
+                                        <label for="cevap4">Cevap 4</label>
+                                    </p-iftalabel>
+                                </div>
+                                <div class="p-field" *ngIf="selectedCount >= 5">
+                                    <p-iftalabel style="margin-bottom: 5px;">
+                                        <input pInputText id="cevap5" [(ngModel)]="answers[4]" class="full-width-input" />
+                                        <label for="cevap5">Cevap 5</label>
+                                    </p-iftalabel>
+                                </div>
+                            </div>
+                
+                            <div class="my-3">
+                                <label>Yön Seçimi:</label>
+                                <div class="flex gap-3 mt-2 align-items-center">
+                                    <p-radioButton name="direction" value="0" [(ngModel)]="direction" inputId="dir1" />
+                                    <label for="dir1" class="mx-5">Soldan Sağa</label>
+                                    <p-radioButton name="direction" value="1" [(ngModel)]="direction" inputId="dir2" />
+                                    <label for="dir2" class="mx-5">Sağdan Sola</label>
+                                </div>
+                            </div>
+                
+                            <!-- Slider için -->
+                            <div class="p-field" *ngIf="selectedCount > 5">
+                                <label>Skala: 1 - {{ selectedCount }}</label>
+                                <p-slider [(ngModel)]="sliderValue" [min]="1" [max]="selectedCount" class="full-width-slider"
+                                    styleClass="w-56">
+                                </p-slider>
+                                <div class="mt-2">Seçilen Değer: {{ sliderValue }}</div>
+                            </div>
+                
+                            <button *ngIf="selectedScaleId != 0" pButton type="button" label="Güncelle" (click)="updateScale()" class="full-width-button"></button>
+                            <button *ngIf="selectedScaleId != 0" pButton type="button" label="Sil" (click)="deleteScale()" class="full-width-button"></button>
+                        </div>
                 </div>
             </div>
             
