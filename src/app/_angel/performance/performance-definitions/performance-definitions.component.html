@@ -1,0 +1,50 @@
+<div class="container-fluid py-4">
+
+    <div class="row g-3 widget-section">
+      <ng-container *ngFor="let widget of widgets">
+        <div class="col-md-2">
+          <div class="widget-card cursor-pointer" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;" 
+                (click)="changeContent(widget.value)">
+            <h6 class="widget-title">{{ widget.title }}</h6>
+            <!-- <p class="widget-value">{{ widget.value }}</p> -->
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  
+
+    <div class="row m-4">
+
+      <div  class="card custom-card h-100">
+
+        <div *ngIf="activeWidget == 1">
+
+           <app-performance-question-category></app-performance-question-category>
+      
+         </div>
+   
+         <div *ngIf="activeWidget == 2">
+
+            <app-scale></app-scale>
+
+         </div>
+   
+         <div *ngIf="activeWidget == 3">
+
+            <app-competence-questions></app-competence-questions>
+            
+         </div>
+   
+         <div *ngIf="activeWidget == 4">
+            <h1>Yetkinlik Kategorileri</h1>
+      
+         </div>
+
+      </div>
+    
+    </div>
+
+    
+  </div>
+  
+  

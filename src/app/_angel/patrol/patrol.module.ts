@@ -70,7 +70,6 @@ import { TooltipModule } from 'primeng/tooltip';
     MatOptionModule,
     MatSelectModule,
     TooltipModule
-
   ],
   providers: [
     { provide: DateAdapter, useClass: CustomDateAdapter },
