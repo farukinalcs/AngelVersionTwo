@@ -483,6 +483,10 @@ export class VisitorComponent implements OnInit, OnDestroy {
         timeOut: 5000
       });
 
+      if (this.fileTypes.length == 0) {
+        this.closedFormDialog();
+      }
+
       this.ref.detectChanges()
     }, (error: any) => {
       

@@ -27,6 +27,7 @@ export class AuthService implements OnDestroy {
     currentUser$: Observable<UserType>;
     isLoading$: Observable<boolean>;
     currentUserSubject: BehaviorSubject<UserType>;
+    selectedApp: any;
 
     get currentUserValue(): UserType {
         return this.currentUserSubject.value;

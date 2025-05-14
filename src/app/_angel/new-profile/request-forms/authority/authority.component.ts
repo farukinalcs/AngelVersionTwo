@@ -59,7 +59,7 @@ export class AuthorityComponent implements OnInit, OnDestroy {
   user$: Observable<UserType>;
   displayPersonsList: boolean = false;
   persons: any[] = [];
-
+  maxLength: number = 250;
   constructor(
     private profileService: ProfileService,
     private ref: ChangeDetectorRef,
@@ -164,7 +164,7 @@ export class AuthorityComponent implements OnInit, OnDestroy {
       startTime: ['', Validators.required],
       endDate: ['', Validators.required ],
       endTime: ['', Validators.required],
-      description: ['', Validators.required],
+      description: ['', Validators.required, Validators.maxLength(this.maxLength)],
     });
   }
 

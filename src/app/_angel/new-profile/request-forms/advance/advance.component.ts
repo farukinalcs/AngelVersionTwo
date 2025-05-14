@@ -63,6 +63,7 @@ export class AdvanceComponent implements OnInit, OnDestroy {
   displayUploadedFile: boolean;
   currentUploadedFile: any;
   ibanList: any[] = [] ;
+  maxLength: number = 250;
 
   constructor(
     private profileService: ProfileService,
@@ -181,7 +182,7 @@ export class AdvanceComponent implements OnInit, OnDestroy {
   // Formların oluşması
   createFormGroup() {
     this.advanceForm = this.formBuilder.group({
-      aciklama: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
+      aciklama: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(this.maxLength)])],
       iban: ['TR', [Validators.required, Validators.pattern(/^TR\d{2}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{2}$/)]],
       ibanKaydet: [true],
       kayitliIbanlar: [''],

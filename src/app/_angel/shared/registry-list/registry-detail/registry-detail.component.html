@@ -1,0 +1,217 @@
+<div class="container-fluid">
+    <div class="card mb-5 mb-xl-10">
+        <div class="card-body pt-9 pb-0">
+            <div class="row">
+
+                <ng-container>
+                    <div class="row">
+                        <div class="col-xl-2 d-flex justify-content-center">
+                            <div class="me-7 mb-4">
+                                <div class="symbol symbol-100px symbol-xl-160px symbol-fixed position-relative">
+                                    <img alt="Logo"
+                                        [src]="imageUrl + '?sicilid=' + selectedRegisterId + '&t=' + timestamp" />
+                                    <div
+                                        class="theme-light-show position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
+                                    </div>
+                                    <div
+                                        class="theme-dark-show position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-dark h-20px w-20px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-10">
+                            <div class="row">
+                                <div
+                                    class="col-xl-8 pt-xl-4 d-flex justify-content-center d-xl-flex justify-content-xl-start">
+                                    <div class="d-flex align-items-center mb-2">
+
+                                        <a class="text-gray-800 text-hover-danger fs-2 fw-bolder me-1 cursor-pointer">
+                                            {{ registerDetail[0]?.ad }} {{ registerDetail[0]?.soyad }}
+                                        </a>
+
+                                        <ng-container *ngIf="registerDetail[0]?.giristarih">
+                                            <a
+                                                class="btn btn-sm btn-light-danger fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
+                                                {{"Giriş_Tarihi" | translate}} : {{ registerDetail[0]?.giristarih | date
+                                                :'yyyy-MM-dd'}}
+                                            </a>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="!registerDetail[0].giristarih">
+                                            <a
+                                                class="btn btn-sm btn-light-danger fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
+                                                YYYY-MM-DD
+                                            </a>
+                                        </ng-container>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row pt-4">
+                                <div class="col-12 d-flex justify-content-center d-xl-flex justify-content-xl-start">
+                                    <div class="d-flex  fw-bold fs-6 mb-4 pe-2">
+
+                                        <a
+                                            class="d-flex align-items-center text-gray-400 text-hover-danger me-5 mb-2 cursor-pointer ">
+                                            <span [inlineSVG]="'./assets/media/icons/duotune/general/gen001.svg'"
+                                                class="svg-icon svg-icon-4 me-1"></span>
+                                            {{ registerDetail[0]?.firmaad }}
+                                        </a>
+
+                                        <a
+                                            class="d-flex align-items-center text-gray-400 text-hover-danger me-5 mb-2 cursor-pointer">
+                                            <span [inlineSVG]="'./assets/media/icons/duotune/communication/com009.svg'"
+                                                class="svg-icon svg-icon-4 me-1"></span>
+                                            {{ registerDetail[0]?.gorevad }}
+                                        </a>
+
+                                        <a
+                                            class="d-flex align-items-center text-gray-400 text-hover-danger mb-2 cursor-pointer">
+                                            <span [inlineSVG]="'./assets/media/icons/duotune/communication/com008.svg'"
+                                                class="svg-icon svg-icon-4 me-1"></span>
+                                            {{ registerDetail[0]?.bolumad }}
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="d-flex flex-wrap flex-stack">
+                                        <div class="d-flex flex-column flex-grow-1">
+                                            <div
+                                                class="d-flex justify-content-center d-xl-flex justify-content-xl-start flex-wrap">
+
+                                                <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <ng-container *ngIf="vacationDetail[0]?.Kidem">
+                                                            <div class="fs-2 fw-bolder">{{ vacationDetail[0]?.Kidem }}
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="!vacationDetail[0]?.Kidem">
+                                                            <div class="fs-2 fw-bolder">-</div>
+                                                        </ng-container>
+                                                    </div>
+
+                                                    <div class="fw-bold fs-6 text-gray-400">{{"Kıdem" | translate}}
+                                                    </div>
+                                                </div>
+
+                                                <!-- <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <ng-container *ngIf="userInformation">
+                                                            <div class="fs-2 fw-bolder">{{ userInformation.Hak }}</div>
+
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="!userInformation">
+                                                            <div class="fs-2 fw-bolder">-</div>
+                                                        </ng-container>
+                                                    </div>
+
+                                                    <div class="fw-bold fs-6 text-gray-400">{{"İzin_Hakkı" | translate}}
+                                                    </div>
+                                                </div> -->
+
+
+                                                <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <ng-container *ngIf="vacationDetail[0]?.KullanilanYillikIzin">
+                                                            <div class="fs-2 fw-bolder"> {{
+                                                                vacationDetail[0]?.KullanilanYillikIzin }} </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="!vacationDetail[0]?.KullanilanYillikIzin">
+                                                            <div class="fs-2 fw-bolder"> - </div>
+
+                                                        </ng-container>
+
+                                                    </div>
+
+                                                    <div class="fw-bold fs-6 text-gray-400">{{"Kullanılan_İzin" |
+                                                        translate}}
+                                                    </div>
+                                                </div>
+
+                                                <!-- <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <ng-container *ngIf="userInformation">
+                                                            <div class="fs-2 fw-bolder">{{ userInformation.IzinDevir }}
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="!userInformation">
+                                                            <div class="fs-2 fw-bolder">-</div>
+                                                        </ng-container>
+                                                    </div>
+
+                                                    <div class="fw-bold fs-6 text-gray-400">{{"Devir" | translate}}
+                                                    </div>
+                                                </div> -->
+
+
+                                                <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <ng-container *ngIf="vacationDetail[0]?.Kalan">
+                                                            <div class="fs-2 fw-bolder">{{ vacationDetail[0]?.Kalan }}
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="!vacationDetail[0]?.Kalan">
+                                                            <div class="fs-2 fw-bolder">-</div>
+                                                        </ng-container>
+                                                    </div>
+                                                    <div class="fw-bold fs-6 text-gray-400">{{"Kalan" | translate}}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-12">
+                            <div class="d-flex overflow-auto h-55px">
+                                <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fw-bolder flex-nowrap">
+                                    <ng-container *ngFor="let tab of tabList">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-center me-6"
+                                                [ngClass]="{ 'active text-danger': selectedTab === tab.label, 'text-active-danger': selectedTab !== tab.label }"
+                                                (click)="selectTab(tab.label)">
+                                                {{ tab.label | translate }}
+                                                <span *ngIf="tab.badge" class="badge badge-circle badge-danger ms-2">{{ tab.badge }}</span>
+                                            </a>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                            </div>
+                              
+                        </div>
+
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="selectedTab == 'Kişisel Bilgiler'">
+        <app-personal-info
+            (formEvent)="formEvent($event)"
+            [operationType]="operationType"
+            [selectedRegister]="selectedRegisterId">
+        </app-personal-info>
+    </ng-container>
+
+</div>

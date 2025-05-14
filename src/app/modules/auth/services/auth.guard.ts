@@ -6,6 +6,8 @@ import {
   Router,
 } from '@angular/router';
 import { SessionService } from 'src/app/_helpers/session.service';
+import { Observable, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -18,7 +20,7 @@ export class AuthGuard implements CanActivate {
     const token = localStorage.getItem('token');
     const isSecure = localStorage.getItem('is-secure'); 
     const triggered = localStorage.getItem('manualLogoutTriggered');
-    if (isSecure == '1') {
+    if (isSecure == '1' && !triggered) {
       // logged in so return true
       return true;
     }
@@ -45,26 +47,3 @@ export class AuthGuard implements CanActivate {
   //   return false;
   // }
 }
-
-
-
-// canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-//   const token = localStorage.getItem('token');
-//   const triggered = localStorage.getItem('manualLogoutTriggered');
-
-//   if (token && !triggered) {
-//     return of(true);
-//   }
-
-//   return this.sessionService.logoutUser().pipe(
-//     tap(() => {
-//       localStorage.removeItem('manualLogoutTriggered');
-//       this.router.navigate(['/auth/login']);
-//     }),
-//     map(() => false),
-//     catchError((err) => {
-//       this.router.navigate(['/auth/login']);
-//       return of(false);
-//     })
-//   );
-// }

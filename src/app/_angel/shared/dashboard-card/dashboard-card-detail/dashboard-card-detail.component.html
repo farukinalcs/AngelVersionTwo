@@ -17,19 +17,19 @@
                 </div>
             </div>
             <div class="col-7 d-flex justify-content-end align-items-center">
-                <a class="btn btn-dark btn-sm mx-1">
+                <a class="btn btn-secondary btn-sm mx-1">
                     <i class="fa-solid fa-cloud-arrow-down fs-5"></i>
                     {{'Excele_Aktar' | translate}}
                 </a>
             </div>
         </div>
         
-        <div class="row w-100">
+        <div class="row w-100" *ngIf="fromWhere == 'access'">
             <div class="col-12 py-5" *ngIf="selectedDetail.id == 1">
                 <div class="table-responsive">
                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                         <thead>
-                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase rounded text-white" style="background: linear-gradient(192deg, var(--p-red-400) 0%, var(--p-red-700) 100%);">
+                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase rounded text-white" >
                                 <th class=" rounded-start" style="width: 40%;">{{"Ad_Soyad" | translate}}</th>
                                 <th class=" fw-bolder me-1 cursor-pointer" style="width: 15%;">{{"Mesai" | translate}}</th>
                                 <th class=" fw-bolder me-1 cursor-pointer" style="width: 15%;">{{"Giriş_Tarihi" | translate}}</th>
@@ -71,7 +71,7 @@
                 <div class="table-responsive">
                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                         <thead>
-                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase rounded text-white" style="background: linear-gradient(192deg, var(--p-red-400) 0%, var(--p-red-700) 100%);">
+                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase rounded text-white" >
                                 <th class=" rounded-start" style="width: 40%;">{{"Ad_Soyad" | translate}}</th>
                                 <th class=" fw-bolder me-1 cursor-pointer" style="width: 20%;">{{"Mesai" | translate}}</th>
                                 <th class=" fw-bolder me-1 cursor-pointer" style="width: 20%;">{{"Giriş_Tarihi" | translate}}</th>
@@ -108,7 +108,7 @@
                 <div class="table-responsive">
                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                         <thead>
-                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase rounded text-white" style="background: linear-gradient(192deg, var(--p-red-400) 0%, var(--p-red-700) 100%);">
+                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase rounded text-white" >
                                 <th class=" rounded-start" style="width: 40%;">{{"Ad_Soyad" | translate}}</th>
                                 <th class=" fw-bolder me-1 cursor-pointer" style="width: 40%;">{{"İzin_Açıklaması" | translate}}</th>
                                 <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 20%;">{{"İzin_Süresi" | translate}}</th>
@@ -140,7 +140,7 @@
                 <div class="table-responsive">
                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                         <thead>
-                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase rounded text-white" style="background: linear-gradient(192deg, var(--p-red-400) 0%, var(--p-red-700) 100%);">
+                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase rounded text-white" >
                                 <th class=" rounded-start" style="width: 40%;">{{"Ad_Soyad" | translate}}</th>
                                 <th class=" fw-bolder me-1 cursor-pointer" style="width: 20%;">{{"Mesai" | translate}}</th>
                                 <th class=" fw-bolder me-1 cursor-pointer" style="width: 20%;">{{"Tarih" | translate}}</th>
@@ -177,7 +177,7 @@
                 <div class="table-responsive">
                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                         <thead>
-                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase rounded text-white" style="background: linear-gradient(192deg, var(--p-red-400) 0%, var(--p-red-700) 100%);">
+                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase rounded text-white" >
                                 <th class=" rounded-start" style="width: 40%;">{{"Ad_Soyad" | translate}}</th>
                                 <th class=" fw-bolder me-1 cursor-pointer" style="width: 20%;">{{"Mesai" | translate}}</th>
                                 <th class=" fw-bolder me-1 cursor-pointer" style="width: 20%;">{{"Tarih" | translate}}</th>
@@ -214,7 +214,7 @@
                 <div class="table-responsive">
                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                         <thead>
-                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase rounded text-white" style="background: linear-gradient(192deg, var(--p-red-400) 0%, var(--p-red-700) 100%);">
+                            <tr class="fs-7 fw-bold text-white border-bottom-0 text-uppercase rounded text-white" >
                                 <th class=" rounded-start" style="width: 40%;">{{"Ad_Soyad" | translate}}</th>
                                 <th class=" fw-bolder me-1 cursor-pointer" style="width: 15%;">{{"Mesai" | translate}}</th>
                                 <th class=" fw-bolder me-1 cursor-pointer" style="width: 15%;">{{"Giriş_Tarihi" | translate}}</th>
@@ -244,6 +244,45 @@
 
                                     <td>
                                         <span class="mb-1">{{ item.eksikmesai | timeFormat }}</span>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row w-100" *ngIf="fromWhere == 'visitor'">
+            <div class="col-12 py-5">
+                <div class="table-responsive">
+                    <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                        <thead>
+                            <tr class="fs-7 fw-bold text-gray-500 border-bottom-0 rounded" >
+                                <th class=" rounded-start" style="width: 30%;">{{"Ad Soyad" | translate}}</th>
+                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 20%;">{{"Kart Bilgisi" | translate}}</th>
+                                <th class=" fw-bolder me-1 cursor-pointer" style="width: 20%;">{{"Kime Geldi" | translate}}</th>
+                                <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 30%;">{{"Giriş Tarihi" | translate}}</th>
+                            </tr>
+                        </thead>
+        
+                        <tbody>
+                            <ng-container >
+                                <tr *ngFor="let item of selectedDetail.items | searchFilter:filterText: ['Ad', 'Soyad', 'kart', 'Sicilidadsoyad', 'Giris']" class="cursor-pointer text-gray-800 fw-bold fs-6">
+                                    <td>
+                                        <span class="mb-1">{{ item.Ad }} {{item.Soyad}}</span>
+                                    </td>
+        
+                                    <td>
+                                        <span class="mb-1">{{ item.kart }}</span>
+                                    </td>
+        
+                                    <td>
+                                        <span class="fw-bolder mb-1">{{ item.Sicilidadsoyad }}</span>
+                                    </td>
+        
+                                    <td>
+                                        <span class="fw-bolder mb-1">{{ item.Giris | date:'dd-MM-yyyy HH:mm:ss' }}</span>
                                     </td>
                                 </tr>
                             </ng-container>

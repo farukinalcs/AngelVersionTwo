@@ -9,6 +9,7 @@ export class DashboardCardDetailComponent implements OnInit, OnDestroy {
   @Input() display: boolean = false;
   @Input() selectedDetail: any;
   @Output() hide = new EventEmitter<any>();
+  @Input() fromWhere: string;
   filterText: string = "";
   constructor() {}
   
