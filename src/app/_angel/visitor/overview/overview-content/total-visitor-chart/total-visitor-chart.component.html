@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-end mb-3">
+    <div class="btn-group btn-group-sm" role="group">
+        <button type="button" class="btn"
+            [ngClass]="{ 'btn-dark': selectedPeriod === '1D', 'btn-outline-secondary': selectedPeriod !== '1D' }"
+            (click)="setPeriod('1D')">
+            1G
+        </button>
+        <button type="button" class="btn"
+            [ngClass]="{ 'btn-dark': selectedPeriod === '1W', 'btn-outline-secondary': selectedPeriod !== '1W' }"
+            (click)="setPeriod('1W')">
+            1H
+        </button>
+        <button type="button" class="btn"
+            [ngClass]="{ 'btn-dark': selectedPeriod === '1M', 'btn-outline-secondary': selectedPeriod !== '1M' }"
+            (click)="setPeriod('1M')">
+            1A
+        </button>
+    </div>
+</div>
+  
+<div id="chart" class="py-3 m-0 w-100">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [stroke]="chartOptions.stroke"
+      [dataLabels]="chartOptions.dataLabels"
+      [yaxis]="chartOptions.yaxis"
+      [labels]="chartOptions.labels"
+      [legend]="chartOptions.legend"
+      [fill]="chartOptions.fill"
+      [colors]="chartOptions.colors"
+      
+      [grid]="chartOptions.grid"
+    ></apx-chart>
+</div>

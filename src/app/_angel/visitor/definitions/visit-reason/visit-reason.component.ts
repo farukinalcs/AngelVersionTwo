@@ -91,8 +91,7 @@ export class VisitReasonComponent implements OnInit, OnDestroy {
 
     var sp: any[] = [
       {
-        mkodu: 'yek041',
-        kaynak: this.crud.source,
+        mkodu: 'yek292',
         id: '0',
       },
     ];
@@ -129,10 +128,10 @@ export class VisitReasonComponent implements OnInit, OnDestroy {
       this.header =
         this.crud.label + ' ' + this.translateService.instant('Ekle');
     } else {
-      this.header =
-        this.crud.label + ' ' + this.translateService.instant('Güncelle');
-      this.organizationName = item.ad;
+      this.header = this.crud.label + ' ' + this.translateService.instant('Güncelle');
+      this.organizationName = item.Ad;
       this.selectedItem = item;
+      this.icon = item.Simge;
     }
 
     this.display = true;
@@ -147,9 +146,8 @@ export class VisitReasonComponent implements OnInit, OnDestroy {
     let sp: any[] = [];
   
     sp.push({
-      mkodu: 'yek123',
-      kaynak: this.crud.source,
-      id: '0',
+      mkodu: 'yek290',
+      simge: this.icon,
       ad: this.organizationName,
     });
     
@@ -190,10 +188,10 @@ export class VisitReasonComponent implements OnInit, OnDestroy {
     let sp: any[] = [];
     
     sp.push({
-      mkodu: 'yek124',
-      kaynak: this.crud.source,
+      mkodu: 'yek291',
       ad: this.organizationName,
       id: this.selectedItem.ID.toString(),
+      simge: this.icon,
     });
     
 

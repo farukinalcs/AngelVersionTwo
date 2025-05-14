@@ -116,7 +116,7 @@ export class SessionLogoutDialogComponent implements OnInit, OnDestroy {
         }));
   
         // Konumları getir
-        this.setLocationsForSessions();
+        // this.setLocationsForSessions();
 
         console.log("Sessions: ", this.sessions);
         

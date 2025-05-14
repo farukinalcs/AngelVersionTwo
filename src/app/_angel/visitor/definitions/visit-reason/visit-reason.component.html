@@ -67,14 +67,14 @@
                                         </thead>
 
                                         <tbody>
-                                            <ng-container *ngFor="let item of organizationList | searchFilter:filterText: ['ID', 'ad']">
+                                            <ng-container *ngFor="let item of organizationList | searchFilter:filterText: ['ID', 'Ad']">
                                                 <tr class="cursor-pointer fs-7">
                                                     <td>
                                                         <span class="mb-1">{{item.ID}}</span>
                                                     </td>
 
                                                     <td>
-                                                        <span class="mb-1 fw-bolder">{{item.ad}}</span>
+                                                        <span class="mb-1 fw-bolder">{{item.Ad}}</span>
                                                     </td>
 
                                                     <td>
@@ -135,7 +135,7 @@
                     type="radio"
                     class="btn-check"
                     name="iconGroup"
-                    [value]="item.id"
+                    [value]="item.icon"
                     [id]="'icon-' + item.id"
                     [(ngModel)]="icon"
                 />

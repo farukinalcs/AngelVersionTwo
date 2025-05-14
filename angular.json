@@ -37,6 +37,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/primeicons/primeicons.css",
               "src/styles.scss",
               "./node_modules/@boldreports/javascript-reporting-controls/Content/v2.0/tailwind-light/bold.report-viewer.min.css"
             ],

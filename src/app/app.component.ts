@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
 import { ThemeModeService } from './_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { LoadingService } from './_helpers/loading.service';
 import { Router } from '@angular/router';
@@ -21,16 +21,16 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-    const isReloaded = navigation?.type === 'reload';
-    const isLoginPage = this.router.url.includes('/auth/login');
+    // const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+    // const isReloaded = navigation?.type === 'reload';
+    // const isLoginPage = this.router.url.includes('/auth/login');
 
-    if (isReloaded && !isLoginPage) {
-      // this.sessionService.logoutUser();
-      localStorage.setItem('manualLogoutTriggered', 'true');
+    // if (isReloaded && !isLoginPage) {
+    //   // this.sessionService.logoutUser();
+    //   localStorage.setItem('manualLogoutTriggered', 'true');
 
-      // this.router.navigate(['/auth/login']);
-    }
+    //   // this.router.navigate(['/auth/login']);
+    // }
 
 
     
@@ -42,14 +42,15 @@ export class AppComponent implements OnInit {
     // }
     
     // window.addEventListener('beforeunload', this.handleBeforeUnload);
-
     this.modeService.init();
   }
 
-  // handleBeforeUnload = (event: BeforeUnloadEvent) => {
-  //   localStorage.setItem('manualLogoutTriggered', 'true');
-  //   event.preventDefault();
-  //   event.returnValue = '';
-  // }
+  @HostListener('window:beforeunload', ['$event'])
+  clearLocalStorageOnRefresh(event: BeforeUnloadEvent) {
+    event.preventDefault();  
+    event.returnValue = '';
+    
+    localStorage.setItem('manualLogoutTriggered', 'true');
+  }
   
 }

@@ -65,6 +65,8 @@ import '@boldreports/javascript-reporting-controls/Scripts/v2.0/bold.report-view
 import { ReportCategoryComponent } from './bold-report/report-category/report-category.component';
 import { ReportListComponent } from './bold-report/report-list/report-list.component';
 import { ReportParamsComponent } from './bold-report/report-params/report-params.component';
+import { HasPermissionAnyDirective } from 'src/app/core/permission/has-permission-any.directive';
+import { HasPermissionDirective } from 'src/app/core/permission/has-permission.directive';
 // ------------
 
 
@@ -100,7 +102,9 @@ import { ReportParamsComponent } from './bold-report/report-params/report-params
     BoldReportComponent,
     ReportCategoryComponent,
     ReportListComponent,
-    ReportParamsComponent
+    ReportParamsComponent,
+    HasPermissionDirective,
+    HasPermissionAnyDirective
   ],
   imports: [
     CommonModule,
@@ -148,7 +152,10 @@ import { ReportParamsComponent } from './bold-report/report-params/report-params
     ReportCategoryComponent,
     ReportListComponent,
     ReportParamsComponent,
-    BoldReportComponent
+    BoldReportComponent,
+    PersonalInfoComponent,
+    HasPermissionDirective,
+    HasPermissionAnyDirective
   ]
 })
 export class SharedModule { }

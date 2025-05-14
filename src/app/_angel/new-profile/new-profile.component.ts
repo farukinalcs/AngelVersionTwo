@@ -23,6 +23,7 @@ import { ShiftChangeComponent } from './request-forms/shift-change/shift-change.
 import { ExpenseComponent } from './request-forms/expense/expense.component';
 import { LeaveComponent } from './request-forms/leave/leave.component';
 import { VisitorComponent } from './request-forms/visitor/visitor.component';
+import { SharedModule } from '../shared/shared.module';
 
 @Component({
   selector: 'app-new-profile',
@@ -43,7 +44,8 @@ import { VisitorComponent } from './request-forms/visitor/visitor.component';
     ShiftChangeComponent,
     ExpenseComponent,
     LeaveComponent,
-    VisitorComponent
+    VisitorComponent,
+    SharedModule
   ],
   templateUrl: './new-profile.component.html',
   styleUrl: './new-profile.component.scss'

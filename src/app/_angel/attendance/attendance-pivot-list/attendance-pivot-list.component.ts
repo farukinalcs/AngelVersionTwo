@@ -18,6 +18,8 @@ import {
   FilterModifiedEvent,
   FilterOpenedEvent,
   GridApi,
+  GridOptions,
+  GridReadyEvent,
   IProvidedFilter,
   ISetFilterParams,
   RangeSelectionChangedEvent,
@@ -34,6 +36,7 @@ import {
   SideBarDef,
   StatusPanelDef,
   ValueFormatterParams,
+  ColumnApi
 } from 'ag-grid-enterprise';
 import { AgGridAngular } from 'ag-grid-angular';
 import { OrganizationColumnFilterComponent } from '../organization-column-filter/organization-column-filter.component';
@@ -50,8 +53,7 @@ import { SearchFilterPipe } from 'src/app/_helpers/pipes/search-filter.pipe';
 })
 export class AttendancePivotListComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
-  @ViewChild('agGridLight', { static: false }) agGridLight: AgGridAngular;
-  @ViewChild('agGridDark', { static: false }) agGridDark: AgGridAngular;
+
   selectedTab: string = '0';
   tabList = [
     { name: this.translateService.instant('Planlanan_Gerçekleşen'), type: '2' },
@@ -86,11 +88,8 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
   rangeList = [
     { name: this.translateService.instant('Aylık'), range: '30' },
     { name: this.translateService.instant('Haftalık'), range: '7' },
-    { name: this.translateService.instant('Günlük'), range: '1' },
-    { name: this.translateService.instant('Özel'), range: '-1' },
+    { name: this.translateService.instant('Günlük'), range: '1' }
   ];
-
-  private gridApi!: GridApi<any>;
 
   gridHeight = '80vh';
   gridStyle: any = {
@@ -341,20 +340,15 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
   public statusBar: {
     statusPanels: StatusPanelDef[];
   } = {
-    statusPanels: [
-      { statusPanel: 'agTotalAndFilteredRowCountComponent', align: 'left' },
-      { statusPanel: 'agTotalRowCountComponent', align: 'center' },
-      { statusPanel: 'agFilteredRowCountComponent' },
-      { statusPanel: 'agSelectedRowCountComponent' },
-      { statusPanel: 'agAggregationComponent' },
-    ],
-  };
-  // gridApi: any;
-  gridOptionsLight = {
-    // onCellClicked: this.onCellClicked.bind(this),
-  };
+      statusPanels: [
+        { statusPanel: 'agTotalAndFilteredRowCountComponent', align: 'left' },
+        { statusPanel: 'agTotalRowCountComponent', align: 'center' },
+        { statusPanel: 'agFilteredRowCountComponent' },
+        { statusPanel: 'agSelectedRowCountComponent' },
+        { statusPanel: 'agAggregationComponent' },
+      ],
+    };
 
-  gridOptionsDark = {};
 
   loading: boolean = false;
   value: number = 0;
@@ -415,6 +409,18 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
   selectedCellsData: any[] = []; // Seçilen hücrelerin verilerini saklayacağınız dizi
   processChangeList: any[] = [];
   imageUrl: string;
+
+  rangeDates: Date[] = [];
+
+
+  // ---------
+  activeTheme: 'light' | 'dark' = 'light'; // Varsayılan tema
+  gridApi!: GridApi;
+  columnApi!: ColumnApi;
+  gridOptions: GridOptions = {};
+  // ----------
+
+
   constructor(
     private formBuilder: FormBuilder,
     private profileService: ProfileService,
@@ -432,45 +438,98 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
     this.setInitialDates();
     this.subscribeToDateRangeChanges();
     this.subscribeToDateChanges();
-    this.getAttendancePivotData();
+    // this.getAttendancePivotData();
     this.getShiftList();
+
+    // ----------
+    this.getTheme(); // Tema moduna subscribe ol
+    // ----------
   }
+
+  // ----------
+  getTheme() {
+    this.themeModeService.mode.pipe(takeUntil(this.ngUnsubscribe)).subscribe((mode: any) => {
+      this.changeTheme(mode);
+    });
+  }
+
+  changeTheme(theme: 'light' | 'dark') {
+    this.activeTheme = theme;
+  }
+
+  onGridReadyLight(params: GridReadyEvent) {
+    if (this.activeTheme === 'light') {
+      this.gridApi = params.api;
+      this.columnApi = params.columnApi;
+
+      // Tüm kolonları içeriğe göre otomatik ayarla
+      setTimeout(() => {
+        this.autoSizeAllColumns();
+      }, 100);
+    }
+  }
+
+  onGridReadyDark(params: GridReadyEvent) {
+    if (this.activeTheme === 'dark') {
+      this.gridApi = params.api;
+      this.columnApi = params.columnApi;
+
+      // Tüm kolonları içeriğe göre otomatik ayarla
+      setTimeout(() => {
+        this.autoSizeAllColumns();
+      }, 100);
+    }
+  }
+
+  autoSizeAllColumns() {
+    if (this.columnApi) {
+      const allColumnIds: string[] = ['sicilid', 'sicilno', 'ad', 'soyad', 'mesaitarih', 'ggiris', 'gcikis'];
+      this.columnApi.getColumns()?.forEach((column) => {
+        allColumnIds.push(column.getId());
+      });
+      this.columnApi.autoSizeColumns(allColumnIds, false); // False: İçeriğe göre en küçük hale getir
+    }
+  }
+
+  onFilterChanged(e: FilterChangedEvent) {
+    if (this.gridApi) {
+      savedFilterModel = this.gridApi.getFilterModel();
+      console.log('SavedFilterModel: ', savedFilterModel);
+
+      this.savedFilterModel = savedFilterModel;
+      this.getAttendancePivotData();
+    }
+  }
+
+
+
+  onSelectionChanged() {
+    // Seçim değiştiğinde çağrılır
+    if (this.gridApi) {
+      const selectedRows = this.gridApi.getSelectedRows();
+      console.log('Seçilenler:', selectedRows);
+      this.attendanceService.setSelectedItems(selectedRows);
+    }
+  }
+  // ----------
 
   onFilterOpened(e: FilterOpenedEvent) {
     console.log('onFilterOpened', e);
   }
 
-  onFilterChanged(e: FilterChangedEvent) {
-    this.saveFilterModel();
-  }
 
-  onFilterModified(e: FilterModifiedEvent) {}
+  onFilterModified(e: FilterModifiedEvent) { }
 
-  saveFilterModel() {
-    const subscr = this.themeModeService.mode
-      .asObservable()
-      .subscribe((mode) => {
-        savedFilterModel =
-          mode === 'light'
-            ? this.agGridLight.api.getFilterModel()
-            : this.agGridDark.api.getFilterModel();
-      });
-
-    console.log('SavedFilterModel: ', savedFilterModel);
-
-    this.savedFilterModel = savedFilterModel;
-    this.getAttendancePivotData();
-  }
 
   createForm() {
     const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD formatına getir
 
     this.formGroup = this.formBuilder.group({
-      dateRange: ['1'], // Günlük seçili olarak başlıyor
-      startDate: [formattedDate],
-      endDate: [formattedDate],
+      dateRange: ['1'], // Günlük
+      rangeDates: [[today, today]],
     });
+
+    this.rangeDates = [today, today];
   }
 
 
@@ -484,125 +543,100 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
 
 
   subscribeToDateChanges() {
-    const startDate$ = this.formGroup.get('startDate')?.valueChanges;
-    const endDate$ = this.formGroup.get('endDate')?.valueChanges;
+    const rangeDates$ = this.formGroup.get('rangeDates')?.valueChanges;
 
-    if (startDate$ && endDate$) {
-      combineLatest([startDate$, endDate$])
-        .pipe(filter(([startDate, endDate]) => startDate && endDate))
-        .subscribe(([startDate, endDate]) => {
-          const start = new Date(startDate);
-          const end = new Date(endDate);
+    if (rangeDates$) {
+      rangeDates$
+        .pipe(
+          filter((range: Date[]) => Array.isArray(range) && range.length === 2 && !!range[0] && !!range[1])
+        )
+        .subscribe((range: Date[]) => {
+          let [start, end] = range;
 
-          if (start > end) {
-            this.formGroup
-              .get('endDate')
-              ?.setValue(start.toISOString().split('T')[0], { emitEvent: false });
-          } else if (end < start) {
-            this.formGroup
-              .get('startDate')
-              ?.setValue(end.toISOString().split('T')[0], { emitEvent: false });
+          // Tarih sırası yanlışsa düzelt
+          if (start.getTime() > end.getTime()) {
+            this.formGroup.get('rangeDates')?.setValue([start, start], { emitEvent: false });
           }
 
-          if (this.formGroup.get('dateRange')?.value == '-1') {
-            this.getAttendancePivotData();
-          }
+          // if (this.formGroup.get('dateRange')?.value === '-1') {
+          this.getAttendancePivotData();
+          // }
         });
     }
   }
 
-
   subscribeToDateRangeChanges() {
     this.formGroup.get('dateRange')?.valueChanges.subscribe((range) => {
-      const start = new Date(this.formGroup.get('startDate')?.value);
+      const today = new Date();
 
       if (range == '1') {
-        // Günlük
-        this.formGroup.get('endDate')?.setValue(start.toISOString().split('T')[0]);
+        this.rangeDates = [today, today];
       } else if (range == '7') {
-        // Haftalık
-        const startOfWeek = new Date(start);
-        startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // Start of the week (Sunday)
+        const startOfWeek = new Date(today);
+        const day = startOfWeek.getDay();
+        const diff = day === 0 ? -6 : 1 - day;
+        startOfWeek.setDate(startOfWeek.getDate() + diff);
         const endOfWeek = new Date(startOfWeek);
-        endOfWeek.setDate(endOfWeek.getDate() + 6); // End of the week (Saturday)
-
-        this.formGroup
-          .get('startDate')
-          ?.setValue(startOfWeek.toISOString().split('T')[0]);
-        this.formGroup.get('endDate')?.setValue(endOfWeek.toISOString().split('T')[0]);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+        this.rangeDates = [startOfWeek, endOfWeek];
       } else if (range == '30') {
-        // Aylık
-        const startOfMonth = new Date(start);
-        startOfMonth.setDate(1); // First day of the month
-        const endOfMonth = new Date(startOfMonth);
-        endOfMonth.setMonth(endOfMonth.getMonth() + 1); // Next month
-        endOfMonth.setDate(0); // Last day of the current month
-
-        this.formGroup
-          .get('startDate')
-          ?.setValue(startOfMonth.toISOString().split('T')[0]);
-        this.formGroup.get('endDate')?.setValue(endOfMonth.toISOString().split('T')[0]);
+        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        this.rangeDates = [startOfMonth, endOfMonth];
       }
 
-      if (range != '-1') {
-        this.getAttendancePivotData();
-      }
+      this.formGroup.get('rangeDates')?.setValue(this.rangeDates);
+      // if (range != '-1') this.getAttendancePivotData();
     });
   }
 
-
   previousDate() {
     const range = this.formGroup.get('dateRange')?.value;
-    const startDate = new Date(this.formGroup.get('startDate')?.value);
-    const endDate = new Date(this.formGroup.get('endDate')?.value);
+    let [startDate, endDate] = this.rangeDates;
 
     if (range === '1') {
-      // Günlük
       startDate.setDate(startDate.getDate() - 1);
-      endDate.setDate(endDate.getDate() - 1);
+      endDate = new Date(startDate);
     } else if (range === '7') {
-      // Haftalık
-      startDate.setDate(startDate.getDate() - startDate.getDay()); // Start of the week (Sunday)
-      endDate.setDate(endDate.getDate() - endDate.getDay() + 6); // End of the week (Saturday)
+      startDate.setDate(startDate.getDate() - 7);
+      const day = startDate.getDay();
+      const diff = day === 0 ? -6 : 1 - day;
+      startDate.setDate(startDate.getDate() + diff);
+      endDate = new Date(startDate);
+      endDate.setDate(startDate.getDate() + 6);
     } else if (range === '30') {
-      // Aylık
-      startDate.setMonth(startDate.getMonth() - 1);
-      startDate.setDate(1); // First day of the previous month
-      endDate.setMonth(endDate.getMonth() - 1);
-      endDate.setDate(0); // Last day of the previous month
+      startDate.setMonth(startDate.getMonth() - 1, 1);
+      endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
     }
 
-    this.formGroup.get('startDate')?.setValue(startDate.toISOString().split('T')[0]);
-    this.formGroup.get('endDate')?.setValue(endDate.toISOString().split('T')[0]);
-
-    this.getAttendancePivotData();
+    this.rangeDates = [startDate, endDate];
+    this.formGroup.get('rangeDates')?.setValue(this.rangeDates);
+    // this.getAttendancePivotData();
   }
 
   nextDate() {
+
     const range = this.formGroup.get('dateRange')?.value;
-    const startDate = new Date(this.formGroup.get('startDate')?.value);
-    const endDate = new Date(this.formGroup.get('endDate')?.value);
+    let [startDate, endDate] = this.rangeDates;
 
     if (range === '1') {
-      // Günlük
       startDate.setDate(startDate.getDate() + 1);
-      endDate.setDate(endDate.getDate() + 1);
+      endDate = new Date(startDate);
     } else if (range === '7') {
-      // Haftalık
-      startDate.setDate(startDate.getDate() + 7 - startDate.getDay()); // Start of the next week (Sunday)
-      endDate.setDate(endDate.getDate() + 7 - endDate.getDay() + 6); // End of the next week (Saturday)
+      startDate.setDate(startDate.getDate() + 7);
+      const day = startDate.getDay();
+      const diff = day === 0 ? -6 : 1 - day;
+      startDate.setDate(startDate.getDate() + diff);
+      endDate = new Date(startDate);
+      endDate.setDate(startDate.getDate() + 6);
     } else if (range === '30') {
-      // Aylık
-      startDate.setMonth(startDate.getMonth() + 1);
-      startDate.setDate(1); // First day of the next month
-      endDate.setMonth(endDate.getMonth() + 1);
-      endDate.setDate(0); // Last day of the next month
+      startDate.setMonth(startDate.getMonth() + 1, 1);
+      endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
     }
 
-    this.formGroup.get('startDate')?.setValue(startDate.toISOString().split('T')[0]);
-    this.formGroup.get('endDate')?.setValue(endDate.toISOString().split('T')[0]);
-
-    this.getAttendancePivotData();
+    this.rangeDates = [startDate, endDate];
+    this.formGroup.get('rangeDates')?.setValue(this.rangeDates);
+    // this.getAttendancePivotData();
   }
 
 
@@ -653,13 +687,13 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
   }
 
   onSelectionChangedLight() {
-    const selectedRows = this.agGridLight.api.getSelectedRows();
+    const selectedRows = this.gridApi.getSelectedRows();
     console.log('Seçilenler : ', selectedRows);
     this.attendanceService.setSelectedItems(selectedRows);
   }
 
   onSelectionChangedDark() {
-    const selectedRows = this.agGridDark.api.getSelectedRows();
+    const selectedRows = this.gridApi.getSelectedRows();
     console.log('Seçilenler : ', selectedRows);
     this.attendanceService.setSelectedItems(selectedRows);
   }
@@ -702,163 +736,168 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
     this.value = 30;
     this.loading = true;
 
+    let [startDate, endDate] = this.formGroup.get('rangeDates')?.value || [new Date(), new Date()];
+
+    const formattedStart = this.formatDate(startDate);
+    const formattedEnd = this.formatDate(endDate);
+
     var sp: any[] = [];
     if (this.selectedTab == '0') {
       sp = !this.filterFromModal
         ? [
-            {
-              mkodu: 'yek112',
-              tarih: this.formGroup.get('startDate')?.value,
-              tarihbit: this.formGroup.get('endDate')?.value,
-              ad: savedFilterModel?.personel?.filter || '',
-              soyad: savedFilterModel?.soyad?.filter || '',
-              sicilno: savedFilterModel?.sicilno?.filter || '',
-              firma: savedFilterModel?.cbo_firma?.toString() || '0',
-              bolum: savedFilterModel?.cbo_bolum?.toString() || '0',
-              pozisyon: savedFilterModel?.cbo_pozisyon?.toString() || '0',
-              gorev: savedFilterModel?.cbo_gorev?.toString() || '0',
-              altfirma: savedFilterModel?.cbo_altfirma?.toString() || '0',
-              yaka: savedFilterModel?.cbo_yaka?.toString() || '0',
-              direktorluk: savedFilterModel?.cbo_direktorluk?.toString() || '0',
-              okod1: '',
-              okod2: '',
-              okod3: '',
-              okod4: '',
-              okod5: '',
-              okod6: '',
-              okod7: '',
-              sicilid: '',
-            },
-          ]
+          {
+            mkodu: 'yek112',
+            tarih: formattedStart,
+            tarihbit: formattedEnd,
+            ad: savedFilterModel?.personel?.filter || '',
+            soyad: savedFilterModel?.soyad?.filter || '',
+            sicilno: savedFilterModel?.sicilno?.filter || '',
+            firma: savedFilterModel?.cbo_firma?.toString() || '0',
+            bolum: savedFilterModel?.cbo_bolum?.toString() || '0',
+            pozisyon: savedFilterModel?.cbo_pozisyon?.toString() || '0',
+            gorev: savedFilterModel?.cbo_gorev?.toString() || '0',
+            altfirma: savedFilterModel?.cbo_altfirma?.toString() || '0',
+            yaka: savedFilterModel?.cbo_yaka?.toString() || '0',
+            direktorluk: savedFilterModel?.cbo_direktorluk?.toString() || '0',
+            okod1: '',
+            okod2: '',
+            okod3: '',
+            okod4: '',
+            okod5: '',
+            okod6: '',
+            okod7: '',
+            sicilid: '',
+          },
+        ]
         : [
-            {
-              mkodu: 'yek112',
-              tarih: this.formGroup.get('startDate')?.value, //Burası düzenlenecek
-              tarihbit: this.formGroup.get('endDate')?.value, //Burası düzenlenecek
-              ad: this.filterValueFromModal.formValues.name,
-              soyad: this.filterValueFromModal.formValues.surname,
-              sicilno: this.filterValueFromModal.formValues.registrationNumber,
-              firma: this.filterValueFromModal.formValues.company,
-              bolum: this.filterValueFromModal.formValues.department,
-              pozisyon: this.filterValueFromModal.formValues.position,
-              gorev: this.filterValueFromModal.formValues.job,
-              altfirma: this.filterValueFromModal.formValues.subcompany,
-              yaka: this.filterValueFromModal.formValues.collar,
-              direktorluk: this.filterValueFromModal.formValues.directorship,
-              okod1: this.filterValueFromModal.formValues.code1,
-              okod2: this.filterValueFromModal.formValues.code2,
-              okod3: this.filterValueFromModal.formValues.code3,
-              okod4: this.filterValueFromModal.formValues.code4,
-              okod5: this.filterValueFromModal.formValues.code5,
-              okod6: this.filterValueFromModal.formValues.code6,
-              okod7: this.filterValueFromModal.formValues.code7,
-              sicilid: '',
-            },
-          ];
+          {
+            mkodu: 'yek112',
+            tarih: formattedStart,
+            tarihbit: formattedEnd,
+            ad: this.filterValueFromModal.formValues.name,
+            soyad: this.filterValueFromModal.formValues.surname,
+            sicilno: this.filterValueFromModal.formValues.registrationNumber,
+            firma: this.filterValueFromModal.formValues.company,
+            bolum: this.filterValueFromModal.formValues.department,
+            pozisyon: this.filterValueFromModal.formValues.position,
+            gorev: this.filterValueFromModal.formValues.job,
+            altfirma: this.filterValueFromModal.formValues.subcompany,
+            yaka: this.filterValueFromModal.formValues.collar,
+            direktorluk: this.filterValueFromModal.formValues.directorship,
+            okod1: this.filterValueFromModal.formValues.code1,
+            okod2: this.filterValueFromModal.formValues.code2,
+            okod3: this.filterValueFromModal.formValues.code3,
+            okod4: this.filterValueFromModal.formValues.code4,
+            okod5: this.filterValueFromModal.formValues.code5,
+            okod6: this.filterValueFromModal.formValues.code6,
+            okod7: this.filterValueFromModal.formValues.code7,
+            sicilid: '',
+          },
+        ];
     } else if (this.selectedTab == '2') {
       sp = !this.filterFromModal
         ? [
-            {
-              mkodu: 'yek115',
-              tarih: this.formGroup.get('startDate')?.value,
-              tarihbit: this.formGroup.get('endDate')?.value,
-              ad: savedFilterModel?.personel?.filter || '',
-              soyad: savedFilterModel?.soyad?.filter || '',
-              sicilno: savedFilterModel?.sicilno?.filter || '',
-              firma: savedFilterModel?.cbo_firma?.toString() || '0',
-              bolum: savedFilterModel?.cbo_bolum?.toString() || '0',
-              pozisyon: savedFilterModel?.cbo_pozisyon?.toString() || '0',
-              gorev: savedFilterModel?.cbo_gorev?.toString() || '0',
-              altfirma: savedFilterModel?.cbo_altfirma?.toString() || '0',
-              yaka: savedFilterModel?.cbo_yaka?.toString() || '0',
-              direktorluk: savedFilterModel?.cbo_direktorluk?.toString() || '0',
-              okod1: '',
-              okod2: '',
-              okod3: '',
-              okod4: '',
-              okod5: '',
-              okod6: '',
-              okod7: '',
-              sicilid: '',
-            },
-          ]
+          {
+            mkodu: 'yek115',
+            tarih: formattedStart,
+            tarihbit: formattedEnd,
+            ad: savedFilterModel?.personel?.filter || '',
+            soyad: savedFilterModel?.soyad?.filter || '',
+            sicilno: savedFilterModel?.sicilno?.filter || '',
+            firma: savedFilterModel?.cbo_firma?.toString() || '0',
+            bolum: savedFilterModel?.cbo_bolum?.toString() || '0',
+            pozisyon: savedFilterModel?.cbo_pozisyon?.toString() || '0',
+            gorev: savedFilterModel?.cbo_gorev?.toString() || '0',
+            altfirma: savedFilterModel?.cbo_altfirma?.toString() || '0',
+            yaka: savedFilterModel?.cbo_yaka?.toString() || '0',
+            direktorluk: savedFilterModel?.cbo_direktorluk?.toString() || '0',
+            okod1: '',
+            okod2: '',
+            okod3: '',
+            okod4: '',
+            okod5: '',
+            okod6: '',
+            okod7: '',
+            sicilid: '',
+          },
+        ]
         : [
-            {
-              mkodu: 'yek115',
-              tarih: this.formGroup.get('startDate')?.value, //Burası düzenlenecek
-              tarihbit: this.formGroup.get('endDate')?.value, //Burası düzenlenecek
-              ad: this.filterValueFromModal.formValues.name,
-              soyad: this.filterValueFromModal.formValues.surname,
-              sicilno: this.filterValueFromModal.formValues.registrationNumber,
-              firma: this.filterValueFromModal.formValues.company,
-              bolum: this.filterValueFromModal.formValues.department,
-              pozisyon: this.filterValueFromModal.formValues.position,
-              gorev: this.filterValueFromModal.formValues.job,
-              altfirma: this.filterValueFromModal.formValues.subcompany,
-              yaka: this.filterValueFromModal.formValues.collar,
-              direktorluk: this.filterValueFromModal.formValues.directorship,
-              okod1: this.filterValueFromModal.formValues.code1,
-              okod2: this.filterValueFromModal.formValues.code2,
-              okod3: this.filterValueFromModal.formValues.code3,
-              okod4: this.filterValueFromModal.formValues.code4,
-              okod5: this.filterValueFromModal.formValues.code5,
-              okod6: this.filterValueFromModal.formValues.code6,
-              okod7: this.filterValueFromModal.formValues.code7,
-              sicilid: '',
-            },
-          ];
+          {
+            mkodu: 'yek115',
+            tarih: formattedStart,
+            tarihbit: formattedEnd,
+            ad: this.filterValueFromModal.formValues.name,
+            soyad: this.filterValueFromModal.formValues.surname,
+            sicilno: this.filterValueFromModal.formValues.registrationNumber,
+            firma: this.filterValueFromModal.formValues.company,
+            bolum: this.filterValueFromModal.formValues.department,
+            pozisyon: this.filterValueFromModal.formValues.position,
+            gorev: this.filterValueFromModal.formValues.job,
+            altfirma: this.filterValueFromModal.formValues.subcompany,
+            yaka: this.filterValueFromModal.formValues.collar,
+            direktorluk: this.filterValueFromModal.formValues.directorship,
+            okod1: this.filterValueFromModal.formValues.code1,
+            okod2: this.filterValueFromModal.formValues.code2,
+            okod3: this.filterValueFromModal.formValues.code3,
+            okod4: this.filterValueFromModal.formValues.code4,
+            okod5: this.filterValueFromModal.formValues.code5,
+            okod6: this.filterValueFromModal.formValues.code6,
+            okod7: this.filterValueFromModal.formValues.code7,
+            sicilid: '',
+          },
+        ];
     } else if (this.selectedTab == '1') {
       sp = !this.filterFromModal
         ? [
-            {
-              mkodu: 'yek117',
-              tarih: this.formGroup.get('startDate')?.value,
-              tarihbit: this.formGroup.get('endDate')?.value,
-              ad: savedFilterModel?.personel?.filter || '',
-              soyad: savedFilterModel?.soyad?.filter || '',
-              sicilno: savedFilterModel?.sicilno?.filter || '',
-              firma: savedFilterModel?.cbo_firma?.toString() || '0',
-              bolum: savedFilterModel?.cbo_bolum?.toString() || '0',
-              pozisyon: savedFilterModel?.cbo_pozisyon?.toString() || '0',
-              gorev: savedFilterModel?.cbo_gorev?.toString() || '0',
-              altfirma: savedFilterModel?.cbo_altfirma?.toString() || '0',
-              yaka: savedFilterModel?.cbo_yaka?.toString() || '0',
-              direktorluk: savedFilterModel?.cbo_direktorluk?.toString() || '0',
-              okod1: '',
-              okod2: '',
-              okod3: '',
-              okod4: '',
-              okod5: '',
-              okod6: '',
-              okod7: '',
-              sicilid: '',
-            },
-          ]
+          {
+            mkodu: 'yek117',
+            tarih: formattedStart,
+            tarihbit: formattedEnd,
+            ad: savedFilterModel?.personel?.filter || '',
+            soyad: savedFilterModel?.soyad?.filter || '',
+            sicilno: savedFilterModel?.sicilno?.filter || '',
+            firma: savedFilterModel?.cbo_firma?.toString() || '0',
+            bolum: savedFilterModel?.cbo_bolum?.toString() || '0',
+            pozisyon: savedFilterModel?.cbo_pozisyon?.toString() || '0',
+            gorev: savedFilterModel?.cbo_gorev?.toString() || '0',
+            altfirma: savedFilterModel?.cbo_altfirma?.toString() || '0',
+            yaka: savedFilterModel?.cbo_yaka?.toString() || '0',
+            direktorluk: savedFilterModel?.cbo_direktorluk?.toString() || '0',
+            okod1: '',
+            okod2: '',
+            okod3: '',
+            okod4: '',
+            okod5: '',
+            okod6: '',
+            okod7: '',
+            sicilid: '',
+          },
+        ]
         : [
-            {
-              mkodu: 'yek117',
-              tarih: this.formGroup.get('startDate')?.value, //Burası düzenlenecek
-              tarihbit: this.formGroup.get('endDate')?.value, //Burası düzenlenecek
-              ad: this.filterValueFromModal.formValues.name,
-              soyad: this.filterValueFromModal.formValues.surname,
-              sicilno: this.filterValueFromModal.formValues.registrationNumber,
-              firma: this.filterValueFromModal.formValues.company,
-              bolum: this.filterValueFromModal.formValues.department,
-              pozisyon: this.filterValueFromModal.formValues.position,
-              gorev: this.filterValueFromModal.formValues.job,
-              altfirma: this.filterValueFromModal.formValues.subcompany,
-              yaka: this.filterValueFromModal.formValues.collar,
-              direktorluk: this.filterValueFromModal.formValues.directorship,
-              okod1: this.filterValueFromModal.formValues.code1,
-              okod2: this.filterValueFromModal.formValues.code2,
-              okod3: this.filterValueFromModal.formValues.code3,
-              okod4: this.filterValueFromModal.formValues.code4,
-              okod5: this.filterValueFromModal.formValues.code5,
-              okod6: this.filterValueFromModal.formValues.code6,
-              okod7: this.filterValueFromModal.formValues.code7,
-              sicilid: '',
-            },
-          ];
+          {
+            mkodu: 'yek117',
+            tarih: formattedStart,
+            tarihbit: formattedEnd,
+            ad: this.filterValueFromModal.formValues.name,
+            soyad: this.filterValueFromModal.formValues.surname,
+            sicilno: this.filterValueFromModal.formValues.registrationNumber,
+            firma: this.filterValueFromModal.formValues.company,
+            bolum: this.filterValueFromModal.formValues.department,
+            pozisyon: this.filterValueFromModal.formValues.position,
+            gorev: this.filterValueFromModal.formValues.job,
+            altfirma: this.filterValueFromModal.formValues.subcompany,
+            yaka: this.filterValueFromModal.formValues.collar,
+            direktorluk: this.filterValueFromModal.formValues.directorship,
+            okod1: this.filterValueFromModal.formValues.code1,
+            okod2: this.filterValueFromModal.formValues.code2,
+            okod3: this.filterValueFromModal.formValues.code3,
+            okod4: this.filterValueFromModal.formValues.code4,
+            okod5: this.filterValueFromModal.formValues.code5,
+            okod6: this.filterValueFromModal.formValues.code6,
+            okod7: this.filterValueFromModal.formValues.code7,
+            sicilid: '',
+          },
+        ];
     }
 
     console.log('PDKS Guid Parametreler:', sp);
@@ -897,11 +936,8 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
 
           this.rowData = [...this.rowData, ...processedData];
 
-          this.agGridLight.api.setColumnDefs(this.columnDefs);
-          this.agGridLight.api.setRowData(this.rowData);
-
-          this.agGridDark.api.setColumnDefs(this.columnDefs);
-          this.agGridDark.api.setRowData(this.rowData);
+          this.gridApi.setColumnDefs(this.columnDefs);
+          this.gridApi.setRowData(this.rowData);
 
           // this.gridOptionsLight = {
           //   localeTextFunc: (key: string, defaultValue: string) => {
@@ -910,12 +946,12 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
           //   },
           // };
 
-          this.gridOptionsDark = {
-            localeTextFunc: (key: string, defaultValue: string) => {
-              const data = this.translateService.instant(key);
-              return data === key ? defaultValue : data;
-            },
-          };
+          // this.gridOptionsDark = {
+          //   localeTextFunc: (key: string, defaultValue: string) => {
+          //     const data = this.translateService.instant(key);
+          //     return data === key ? defaultValue : data;
+          //   },
+          // };
           this.value = 100;
 
           if (this.value >= 100) {
@@ -924,8 +960,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
           }
 
           // Hücreleri yeniden render et
-          this.agGridLight.api.refreshCells();
-          this.agGridDark.api.refreshCells();
+          this.gridApi.refreshCells();
 
           if (this.selectedProcess?.type == '3') {
             this.getOvertimeSubtotal();
@@ -1147,15 +1182,15 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
   convertFromMinuteToHour(params: ValueFormatterParams) {
     // Dakikayı milisaniye cinsinden dönüştür
     const timeInMilliseconds = params.value * 60 * 1000;
-  
+
     // Zamanı 'HH:mm' formatında bir string'e dönüştür
     const date = new Date(timeInMilliseconds);
     const hours = date.getUTCHours().toString().padStart(2, '0');
     const minutes = date.getUTCMinutes().toString().padStart(2, '0');
-  
+
     return `${hours}:${minutes}`;
   }
-  
+
 
   parseEntryExit(params: ValueFormatterParams) {
     if (!params.value) {
@@ -1166,11 +1201,11 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
       const hours = date.getUTCHours().toString().padStart(2, '0');
       const minutes = date.getUTCMinutes().toString().padStart(2, '0');
       const seconds = date.getUTCSeconds().toString().padStart(2, '0');
-      
+
       return `${hours}:${minutes}:${seconds}`;
     }
   }
-  
+
 
   applyWeekendClass(params: any) {
     if (
@@ -1242,8 +1277,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
   }
 
   clearFilters() {
-    this.agGridLight.api.setFilterModel(null);
-    this.agGridDark.api.setFilterModel(null);
+    this.gridApi.setFilterModel(null);
   }
 
   setFilterFormFromModal(value: { formValues: any }) {
@@ -1276,7 +1310,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
         'New width:',
         event.column.getActualWidth(),
         '   asdasd: ',
-        this.agGridLight.columnApi.getAllGridColumns()
+        this.columnApi.getAllGridColumns()
       );
       this.sendColumnStateToApi();
     }
@@ -1337,19 +1371,17 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
 
     this.columnDefs.forEach(updateColumnWidths);
 
-    if (this.agGridLight) {
-      this.agGridLight.api.setColumnDefs(this.columnDefs);
-      this.agGridLight.api.sizeColumnsToFit();
+    if (this.gridApi) {
+      this.gridApi.setColumnDefs(this.columnDefs);
+      this.gridApi.sizeColumnsToFit();
       console.log('ColumnDef: ', this.columnDefs);
-    } else if (this.agGridDark) {
-      this.agGridDark.api.setColumnDefs(this.columnDefs);
     } else {
       console.error('Sanırım bir problem var!');
     }
   }
 
   sendColumnStateToApi() {
-    const allColumns = this.agGridLight.columnApi.getAllColumns();
+    const allColumns = this.columnApi.getAllColumns();
     if (!allColumns) {
       console.error('No columns found.');
       return;
@@ -1540,49 +1572,49 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
 
     var sp: any[] = !this.filterFromModal
       ? [
-          {
-            mkodu: 'yek113',
-            ad: savedFilterModel?.personel?.filter || '',
-            soyad: savedFilterModel?.soyad?.filter || '',
-            sicilno: savedFilterModel?.sicilno?.filter || '',
-            firma: savedFilterModel?.cbo_firma?.toString() || '0',
-            bolum: savedFilterModel?.cbo_bolum?.toString() || '0',
-            pozisyon: savedFilterModel?.cbo_pozisyon?.toString() || '0',
-            gorev: savedFilterModel?.cbo_gorev?.toString() || '0',
-            altfirma: savedFilterModel?.cbo_altfirma?.toString() || '0',
-            yaka: savedFilterModel?.cbo_yaka?.toString() || '0',
-            direktorluk: savedFilterModel?.cbo_direktorluk?.toString() || '0',
-            okod1: '',
-            okod2: '',
-            okod3: '',
-            okod4: '',
-            okod5: '',
-            okod6: '',
-            okod7: '',
-          },
-        ]
+        {
+          mkodu: 'yek113',
+          ad: savedFilterModel?.personel?.filter || '',
+          soyad: savedFilterModel?.soyad?.filter || '',
+          sicilno: savedFilterModel?.sicilno?.filter || '',
+          firma: savedFilterModel?.cbo_firma?.toString() || '0',
+          bolum: savedFilterModel?.cbo_bolum?.toString() || '0',
+          pozisyon: savedFilterModel?.cbo_pozisyon?.toString() || '0',
+          gorev: savedFilterModel?.cbo_gorev?.toString() || '0',
+          altfirma: savedFilterModel?.cbo_altfirma?.toString() || '0',
+          yaka: savedFilterModel?.cbo_yaka?.toString() || '0',
+          direktorluk: savedFilterModel?.cbo_direktorluk?.toString() || '0',
+          okod1: '',
+          okod2: '',
+          okod3: '',
+          okod4: '',
+          okod5: '',
+          okod6: '',
+          okod7: '',
+        },
+      ]
       : [
-          {
-            mkodu: 'yek112',
-            ad: this.filterValueFromModal.formValues.name,
-            soyad: this.filterValueFromModal.formValues.surname,
-            sicilno: this.filterValueFromModal.formValues.registrationNumber,
-            firma: this.filterValueFromModal.formValues.company,
-            bolum: this.filterValueFromModal.formValues.department,
-            pozisyon: this.filterValueFromModal.formValues.position,
-            gorev: this.filterValueFromModal.formValues.job,
-            altfirma: this.filterValueFromModal.formValues.subcompany,
-            yaka: this.filterValueFromModal.formValues.collar,
-            direktorluk: this.filterValueFromModal.formValues.directorship,
-            okod1: this.filterValueFromModal.formValues.code1,
-            okod2: this.filterValueFromModal.formValues.code2,
-            okod3: this.filterValueFromModal.formValues.code3,
-            okod4: this.filterValueFromModal.formValues.code4,
-            okod5: this.filterValueFromModal.formValues.code5,
-            okod6: this.filterValueFromModal.formValues.code6,
-            okod7: this.filterValueFromModal.formValues.code7,
-          },
-        ];
+        {
+          mkodu: 'yek112',
+          ad: this.filterValueFromModal.formValues.name,
+          soyad: this.filterValueFromModal.formValues.surname,
+          sicilno: this.filterValueFromModal.formValues.registrationNumber,
+          firma: this.filterValueFromModal.formValues.company,
+          bolum: this.filterValueFromModal.formValues.department,
+          pozisyon: this.filterValueFromModal.formValues.position,
+          gorev: this.filterValueFromModal.formValues.job,
+          altfirma: this.filterValueFromModal.formValues.subcompany,
+          yaka: this.filterValueFromModal.formValues.collar,
+          direktorluk: this.filterValueFromModal.formValues.directorship,
+          okod1: this.filterValueFromModal.formValues.code1,
+          okod2: this.filterValueFromModal.formValues.code2,
+          okod3: this.filterValueFromModal.formValues.code3,
+          okod4: this.filterValueFromModal.formValues.code4,
+          okod5: this.filterValueFromModal.formValues.code5,
+          okod6: this.filterValueFromModal.formValues.code6,
+          okod7: this.filterValueFromModal.formValues.code7,
+        },
+      ];
 
     console.log('FM Sıra Parametreler:', sp);
 
@@ -1699,7 +1731,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
   }
 
   onRangeSelectionChanged(event: RangeSelectionChangedEvent) {
-    const selectedRanges = this.agGridLight.api.getCellRanges();
+    const selectedRanges = this.gridApi.getCellRanges();
 
     selectedRanges?.forEach((range) => {
       if (range.startRow == range.endRow) {
@@ -1718,7 +1750,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
   }
 
   getSelectedCellsData(isMultiple: boolean) {
-    const selectedRanges = this.agGridLight.api.getCellRanges();
+    const selectedRanges = this.gridApi.getCellRanges();
     this.selectedCellsData = [];
 
     const uniqueCells = new Set<string>();
@@ -1737,11 +1769,11 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
 
           for (let rowIndex = startRow; rowIndex <= endRow; rowIndex++) {
             const rowNode =
-              this.agGridLight.api.getDisplayedRowAtIndex(rowIndex);
+              this.gridApi.getDisplayedRowAtIndex(rowIndex);
 
             if (rowNode) {
               range.columns.forEach((column) => {
-                const cellValue = this.agGridLight.api.getValue(
+                const cellValue = this.gridApi.getValue(
                   column.getColId(),
                   rowNode
                 );
@@ -1818,6 +1850,17 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
 
         this.processLoading = true;
       });
+  }
+
+  formatDate(date: Date): string {
+    const correctedDate = new Date(date); // Orijinal tarihi klonla
+    correctedDate.setHours(0, 0, 0, 0);   // Saat, dakika, saniye sıfırlanır
+
+    const year = correctedDate.getFullYear();
+    const month = String(correctedDate.getMonth() + 1).padStart(2, '0'); // Ay 0-11 arası
+    const day = String(correctedDate.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
 
   ngOnDestroy(): void {

@@ -107,11 +107,17 @@
                                                         <span class="required">{{"Açıklama" | translate}}</span>
                                                     </label>
 
-                                                    <textarea class="form-control form-control-solid" rows="3"
+                                                    <textarea class="form-control form-control-solid" rows="3" [maxLength]="maxLength"
                                                         formControlName="aciklama"
                                                         placeholder="{{'Açıklama_Giriniz' | translate}}"
                                                         style="height: 12px;">
                                                     </textarea>
+                                                    <ng-container *ngIf="advanceForm.controls['aciklama']?.value">
+                                                        <div class="text-end">
+                                                            <span class="badge badge-light-danger">{{
+                                                                advanceForm.controls['aciklama'].value.length }} / {{maxLength}}</span>
+                                                        </div>
+                                                    </ng-container>
                                                 </div>
 
                                                 
