@@ -99,11 +99,6 @@ export class ScaleComponent {
       this.ref.detectChanges();
     });
    
-    // Form temizle
-    this.scaleName = '';
-    this.selectedCount = 0;
-    this.answers = [null, null, null, null, null];
-    this.direction = 0;
   }
 
   getScale(id: number) {
@@ -112,6 +107,11 @@ export class ScaleComponent {
       console.log("getScale:", this.scaleList);
       this.ref.detectChanges();
     });
+       // Form temizle
+       this.scaleName = '';
+       this.selectedCount = 0;
+       this.answers = [null, null, null, null, null];
+       this.direction = 0;
   }
 
   updateScale(): void {
@@ -139,10 +139,6 @@ export class ScaleComponent {
    
     // Form temizle
     this.selectedScaleId  = 0;
-    this.scaleName = '';
-    this.selectedCount = 0;
-    this.answers = [null, null, null, null, null];
-    this.direction = 0;
   }
 
   // Seçilen ölçek verisini forma doldur
@@ -158,6 +154,7 @@ export class ScaleComponent {
       if(result == 1){
         this.toastrService.success(
           "Ölçek Silme İşlemi Başarılı");
+          this.getScale(0);
       }else{
         this.toastrService.error(
           "Ölçek Silme İşlemi Başarısız");

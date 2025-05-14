@@ -1,1 +1,96 @@
-<p>competence-questions works!</p>
+
+  <div class="container-fluid m-5 scale">
+
+    <mat-tab-group>
+
+        <mat-tab label="INSERT">
+
+            <div class="scale-form-box">
+
+                <div class="p-field">
+                    <p-iftalabel style="margin-top: 3px;">
+                        <input pInputText id="questionName" [(ngModel)]="questionName" class="full-width-input" />
+                        <label for="questionName">Soru:</label>
+                    </p-iftalabel>
+                </div>
+    
+                <div class="p-field">
+                    <label for="countSelect">Hangi Kategori</label>
+                    <p-dropdown [options]="categoryList" [(ngModel)]="selectedCategoryId" optionLabel="Ad"
+                        optionValue="Id" placeholder="Seçiniz" (onChange)="onCategoryChange($event.value)" class="full-width-input">
+                    </p-dropdown>
+                </div>
+    
+                <div class="p-field">
+                    <label for="countSelect">Scale seçimi</label>
+                    <p-dropdown [options]="scaleList" [(ngModel)]="selectedScaleId" optionLabel="ad"
+                        optionValue="id" placeholder="Seçiniz"  (onChange)="onScaleChange($event.value)" class="full-width-input">
+                    </p-dropdown>
+                </div>
+         
+                <button pButton type="button" label="Kaydet" (click)="setQuestion()" class="full-width-button"></button>
+    
+            </div>
+
+        </mat-tab>
+
+
+        <mat-tab label="UPDATE AND DELETE">
+
+            <div>
+                <div class="p-card my-3 p-3">
+       
+                        <div class="scale-form-box">
+
+
+                            <div class="p-field">
+                                <label for="countSelect">Soru seçimi</label>
+                                <p-dropdown [options]="questionList" [(ngModel)]="selectedQuestionId" optionLabel="aciklama"
+                                    optionValue="id" placeholder="Seçiniz" (onChange)="onQuestionChange($event.value)" class="full-width-input">
+                                </p-dropdown>
+                            </div>
+
+                            <ng-container *ngIf="selectedQuestionId != 0">
+
+                                <div class="p-field">
+                                    <p-iftalabel style="margin-top: 3px;">
+                                        <input pInputText id="questionName" [(ngModel)]="questionName" class="full-width-input" />
+                                        <label for="questionName">Soru</label>
+                                    </p-iftalabel>
+                                </div>
+                                <div class="p-field">
+                                    <label for="countSelect">Hangi Kategori</label>
+                                    <p-dropdown [options]="categoryList" [(ngModel)]="selectedCategoryId" optionLabel="Ad"
+                                        optionValue="Id" placeholder="Seçiniz" (onChange)="onCategoryChange($event.value)" class="full-width-input">
+                                    </p-dropdown>
+                                </div>
+                    
+                                <div class="p-field">
+                                    <label for="countSelect">Hangi Ölçek</label>
+                                    <p-dropdown [options]="scaleList" [(ngModel)]="selectedScaleId" optionLabel="ad"
+                                        optionValue="id" placeholder="Seçiniz"  (onChange)="onScaleChange($event.value)" class="full-width-input">
+                                    </p-dropdown>
+                                </div>
+
+                                
+                
+                            <button pButton type="button" label="Güncelle" (click)="updateQuestion()" class="full-width-button"></button>
+                            <button pButton type="button" label="Sil" (click)="deleteQuestion()" class="full-width-button"></button>
+
+                            </ng-container>
+                  
+                
+
+                        </div>
+                </div>
+            </div>
+            
+        </mat-tab>
+
+    
+
+
+
+    </mat-tab-group>
+
+</div>

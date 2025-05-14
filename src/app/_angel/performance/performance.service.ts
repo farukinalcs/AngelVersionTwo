@@ -122,4 +122,42 @@ export class PerformanceService {
     }]
     return this.requestMethod(sp);
   }
+
+  setQuestion(question:string,categoryId:number,scaleId:number){
+    var sp: any[] = [{
+      mkodu: 'yek305',
+      aciklama:question,
+      kategori: categoryId.toString(),
+      olcek:scaleId.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
+  getQuestion(questionId:number){
+    var sp: any[] = [{
+      mkodu: 'yek306',
+      id:questionId.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  updateQuestion(questionId:number,question:string,categoryId:number,scaleId:number){
+    var sp: any[] = [{
+      mkodu: 'yek307',
+      id:questionId.toString(),
+      aciklama:question,
+      kategori: categoryId.toString(),
+      olcek:scaleId.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
+
+ deleteQuestion(questionId:number){
+    var sp: any[] = [{
+      mkodu: 'yek308',
+      id:questionId.toString()
+    }]
+    return this.requestMethod(sp);
+  }
 }
