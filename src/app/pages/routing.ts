@@ -9,12 +9,12 @@ const Routing: Routes = [
       data: { layout: 'light-sidebar' },
 
   },
-  // {
-  //   path: 'profile',
-  //   loadChildren: () =>
-  //     import('../_angel/profile/profile.module').then((m) => m.ProfileModule),
-  //     data: { layout: 'light-sidebar' },
-  // },
+  {
+    path: 'performance',
+    loadChildren: () =>
+      import('../_angel/performance/performance.module').then((m) => m.PerformanceModule),
+      data: { layout: 'light-sidebar' },
+  },
   {
     path: 'profile',
     loadChildren: () =>

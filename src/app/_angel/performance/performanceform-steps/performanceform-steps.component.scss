@@ -1,0 +1,49 @@
+.step-content h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .step {
+    padding: 10px 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .step.active {
+    background-color: #007bff;
+    color: white;
+  }
+  .step:not(.active) {
+    background-color: #f4f4f4;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    font-weight: bold;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .radio-group {
+    display: flex;
+    gap: 2rem; /* butonlar arası boşluk */
+    align-items: center;
+    flex-wrap: wrap; /* mobilde alta geçsin */
+  }
+  
+  .radio-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .radio-item label {
+    margin-left: 0.5rem;
+  }
+  
