@@ -30,10 +30,10 @@ export class PerformanceDefinitionsComponent {
   }
 
   widgets = [
-    { title: 'Yetkinlik Kategorileri', value: 1},
+    { title: 'Değerlendirme Kategorileri', value: 1},
     { title: 'Cevap Ölçekleri', value: 2},
-    { title: 'Yetkinlik Soruları', value: 3},
-    { title: 'Hedef Soruları', value: 4},
+    { title: 'Değerlendirme Soruları', value: 3},
+    { title: 'Değerlendirme Şablonları', value: 4},
 
   ];
 

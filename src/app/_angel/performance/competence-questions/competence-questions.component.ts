@@ -23,6 +23,8 @@ export class CompetenceQuestionsComponent {
   questionList:any[] = [];
 
 
+
+
   selectedQuestionId: any | null = 0;
   selectedScaleId: number | null = null;
   selectedCategoryId: number | null = null;
@@ -47,7 +49,7 @@ export class CompetenceQuestionsComponent {
   ngAfterViewInit() {
     this.getScale(0);
     this.getCategory(0);
-    this.getQuestion(0);
+    this.getQuestion(0,0);
   }
 
   onQuestionChange(questionId:number){
@@ -87,7 +89,7 @@ export class CompetenceQuestionsComponent {
       if(result == 1){
         this.toastrService.success(
           "Soru Ekleme İşlemi Başarılı");
-          this.getQuestion(0);
+          this.getQuestion(0,0);
       }else{
         this.toastrService.error(
           "Soru Ekleme İşlemi Başarısız");
@@ -101,11 +103,11 @@ export class CompetenceQuestionsComponent {
   updateQuestion(): void {
     this.perform.updateQuestion(this.selectedQuestionId,this.questionName,this.selectedCategoryId ?? 0,this.selectedScaleId ?? 0).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
       const result = response[0].x[0].islemsonuc;
-      console.log("setScale:", result);
+      console.log("updateQuestion:", result);
       if(result == 1){
         this.toastrService.success(
           "Soru Ekleme İşlemi Başarılı");
-          this.getQuestion(0);
+          this.getQuestion(0,0);
       }else{
         this.toastrService.error(
           "Soru Ekleme İşlemi Başarısız");
@@ -116,16 +118,24 @@ export class CompetenceQuestionsComponent {
   }
 
   deleteQuestion(){
-    this.perform.deleteQuestion(this.selectedQuestionId).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-      const result = response[0]?.x ?? [];
+    this.perform.deleteQuestion(this.selectedQuestionId).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+      const result = response[0].x[0].islemsonuc;
       console.log("deleteQuestion:", result);
+      if(result == 1){
+        this.toastrService.success(
+          "Soru Silme İşlemi Başarılı");
+          this.getQuestion(0,0);
+      }else{
+        this.toastrService.error(
+          "Soru Silme İşlemi Başarısız");
+      }
       this.ref.detectChanges();
     });
-    this.getQuestion(0);
+    this.getQuestion(0,0);
   }
 
-  getQuestion(id: number) {
-    this.perform.getQuestion(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+  getQuestion(id: number,categoryId:number) {
+    this.perform.getQuestion(id,categoryId).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.questionList = response[0]?.x ?? [];
       console.log("questionList:", this.questionList);
       this.ref.detectChanges();

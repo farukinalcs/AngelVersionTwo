@@ -63,8 +63,8 @@ export class ScaleComponent {
       this.selectedScale = found;
       this.selectedScaleId = scaleId;
       console.log("FOUND",found);
-      // Eğer veride 'answers' array olarak yoksa, cevaplardaki değerleri elle topla:
-      this.scaleName = (found as any).ad || '';  // 'ad' alanı varsa name yerine
+    
+      this.scaleName = (found as any).ad || ''; 
       this.selectedCount = (found as any).cevapn || 0;
       this.direction = (found as any).yon || 0;
   

@@ -133,10 +133,11 @@ export class PerformanceService {
     return this.requestMethod(sp);
   }
 
-  getQuestion(questionId:number){
+  getQuestion(questionId:number,categoryId:number){
     var sp: any[] = [{
       mkodu: 'yek306',
-      id:questionId.toString()
+      id:questionId.toString(),
+      kategoriid:categoryId.toString()
     }]
     return this.requestMethod(sp);
   }
@@ -157,6 +158,53 @@ export class PerformanceService {
     var sp: any[] = [{
       mkodu: 'yek308',
       id:questionId.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  form_i(title:string,explanation:string){
+    var sp: any[] = [{
+      mkodu: 'yek313',
+      baslik:title.toString(),
+      aciklama:explanation.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  form_s(id:number){
+    var sp: any[] = [{
+      mkodu: 'yek314',
+      id:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  form_question(formId:number,questionId:number,catId:number,){
+    var sp: any[] = [{
+      mkodu: 'yek318',
+      formid:formId.toString(),
+      soruid:questionId.toString(),
+      kategoriid:catId.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  edit_Category(formId:number,catId:number,puan:any){
+    var sp: any[] = [{
+      mkodu: 'yek320',
+      formid:formId.toString(),
+      kategoriid:catId.toString(),
+      puan:puan.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+  edit_Question(formId:number,catId:number,questionId:number,puan:any){
+    var sp: any[] = [{
+      mkodu: 'yek321',
+      formid:formId.toString(),
+      kategoriid:catId.toString(),
+      soruid:questionId.toString(),
+      puan:puan.toString()
     }]
     return this.requestMethod(sp);
   }
