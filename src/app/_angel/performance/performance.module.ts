@@ -22,6 +22,10 @@ import { SelectModule } from 'primeng/select';
 import { DropdownModule } from 'primeng/dropdown';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CompetenceQuestionsComponent } from './competence-questions/competence-questions.component';
+import { DraftComponent } from './draft/draft.component';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { ChipModule } from 'primeng/chip';
 
 
 @NgModule({
@@ -31,7 +35,7 @@ import { CompetenceQuestionsComponent } from './competence-questions/competence-
     PerformanceDefinitionsComponent,
     PerformanceQuestionCategoryComponent,
     ScaleComponent,
-    CompetenceQuestionsComponent],
+    CompetenceQuestionsComponent,DraftComponent],
 
   imports: [
     CommonModule,
@@ -48,7 +52,10 @@ import { CompetenceQuestionsComponent } from './competence-questions/competence-
     SliderModule,
     SelectModule,
     DropdownModule,
-    MatTabsModule
+    MatTabsModule,
+    TableModule,
+    InputTextModule,
+    ChipModule
   ]
 })
 export class PerformanceModule { }

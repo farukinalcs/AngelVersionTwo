@@ -1,0 +1,57 @@
+// .definitions{
+  
+//     background: url(https://www.meyer.com.tr/cdn/img/briefly2.png) right 0;
+//     height: 100vh;
+// }
+
+  
+  .category-row {
+    background-color: #e0e0e0;
+    font-weight: bold;
+  }
+  
+  .question-row {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .question-row:hover {
+    background-color: #f1f1f1;
+  }
+  .puan-input {
+    width: 60px !important;
+    padding: 2px 6px;
+    text-align: center;
+  }
+
+  .custom-chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 16px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+  }
+  
+  .custom-icon {
+    background-color: #ffc0cb;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .custom-label {
+    margin-left: 10px;
+    font-weight: bolder;
+  }
+  .my-blue-btn .p-button {
+    background-color: #1976d2 !important;
+    border-color: #1976d2 !important;
+    color: white !important;
+  }
+  
