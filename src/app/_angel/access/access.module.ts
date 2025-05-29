@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GecisgruplariComponent } from './gecisgruplari/gecisgruplari.component';
 import { RaporlarComponent } from './raporlar/raporlar.component';
 import { AccessRoutingModule } from './access-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -42,7 +41,6 @@ import { SelectModule } from 'primeng/select';
 @NgModule({
   declarations: [
     DevicesComponent,
-    GecisgruplariComponent,
     RaporlarComponent,
     CustomizedCellComponent,
     DialogNewDeviceComponent,

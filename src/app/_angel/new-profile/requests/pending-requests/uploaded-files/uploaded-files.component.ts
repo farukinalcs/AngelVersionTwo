@@ -113,7 +113,7 @@ export class UploadedFilesComponent implements OnInit {
     this.base64Data = null;
     this.contentType = null;
     this.profileService
-    .getFileForDemand(id, uzanti)
+    .getFileForDemand(id, uzanti, this.selectedDemand.atananlar[0].FMNeden ? 'fm' : 'izin')
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response: any) => {
       const data = response[0].x;
@@ -292,7 +292,7 @@ export class UploadedFilesComponent implements OnInit {
 
   downloadFile(item : any) {
     this.profileService
-      .getFileForDemand(item.uploadedFile.UniqueId, item.uploadedFile.DosyaTipi)
+      .getFileForDemand(item.uploadedFile.UniqueId, item.uploadedFile.DosyaTipi, this.selectedDemand.atananlar[0].FMNeden ? 'fm' : 'izin')
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((response: any) => {
         const data = response[0].x;

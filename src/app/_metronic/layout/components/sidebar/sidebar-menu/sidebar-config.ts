@@ -40,7 +40,7 @@ export const MENU: MenuItem[] = [
             { title: 'Genel Bakış', routerLink: 'access/dashboard' },
             { title: 'Sicil Liste', routerLink: 'access/registry-list' },
             { title: 'Terminal', routerLink: 'access/terminal' },
-            { title: 'Geçiş Grupları', routerLink: 'access/gecis_gruplari' },
+            { title: 'Geçiş Grupları', routerLink: 'access/access-groups' },
             { title: 'Tanımlamalar', routerLink: 'access/definitions' },
             { title: 'Raporlar', routerLink: 'access/raporlar' }
         ],

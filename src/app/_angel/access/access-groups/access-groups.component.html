@@ -1,0 +1,445 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-custom gutter-b">
+
+                <div class="card-body pt-3 pb-0">
+                    <div class="row d-flex justify-content-end align-items-center">
+                        <div [formGroup]="form" class="col-6 d-flex align-sm-items-end gap-2 flex-column flex-sm-row">
+                            <div class="col-sm-6 p-3">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>{{"Geçiş_Grupları" | translate}}</span>
+                                </label>
+
+                                <p-select [options]="accessGroups" formControlName="accessGroup" optionLabel="Ad"
+                                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="true"
+                                    filterBy="Ad" [showClear]="true" placeholder="{{'Geçiş_Grubu_Seçiniz' | translate}}"
+                                    class="w-100 md:w-56">
+                                    <ng-template #selectedItem let-selected>
+                                        <div class="flex items-center gap-2">
+                                            <div>{{ form.get('accessGroup')?.value?.Ad }}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-item #item>
+                                        <div class="flex items-center gap-2">
+                                            <div>{{ item?.Ad }}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-select>
+                            </div>
+
+                            @if (form.get('accessGroup')?.value) {
+                            <div class="col-sm-6 p-3">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>{{"Terminal_Grupları" | translate}}</span>
+                                </label>
+
+                                <p-select [options]="deviceGroups" formControlName="deviceGroup" optionLabel="ad"
+                                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="true"
+                                    filterBy="ad" [showClear]="true"
+                                    placeholder="{{'Terminal_Grubu_Seçiniz' | translate}}" class="w-100 md:w-56">
+                                    <ng-template #selectedItem let-selected>
+                                        <div class="flex items-center gap-2">
+                                            <div>{{ form.get('deviceGroup')?.value?.ad }}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-item #item>
+                                        <div class="flex items-center gap-2">
+                                            <div>{{ item?.ad }}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-select>
+                            </div>
+                            }
+
+                        </div>
+
+                        <div
+                            class="col-6 d-flex align-sm-items-end justify-content-end gap-2 flex-column flex-sm-row h-100">
+
+                            @if (form.get('accessGroup')?.value) {
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="checkDeleteAccessGroup()">
+                                <i class="fa-solid fa-trash"></i>
+                                {{"Seçili_Grubu_Sil" | translate}}
+                            </a>
+
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="showEditDialog('edit')">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                {{"Seçili_Grubu_Güncelle" | translate}}
+                            </a>
+                            }
+
+
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="showEditDialog('add')">
+                                <i class="fa-solid fa-plus"></i>
+                                {{"Yeni_Geçiş_Grubu_Ekle" | translate}}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2 mb-6">
+                        <div class="col-12">
+                            <span class="text-gray-500 mt-1 fw-semibold fs-8">Bir
+                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Geçiş Grubu</a>
+                                Seçtikten Sonra
+                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Terminal Grupları</a>
+                                İle Filtreleme Yapmalısınız!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 my-5">
+            <div class="card card-custom gutter-b">
+                @if (form.get('accessGroup')?.value && form.get('deviceGroup')?.value) {
+                <div class="card-header border-0">
+                    <div class="card-title">
+                        <h3 class="card-label">
+                            {{"Listelenen Geçiş Grubu" | translate}}:
+                            <span class="text-gray-600">{{ form.get('accessGroup')?.value.Ad }}</span>
+                            &
+                            {{"Terminal Grubu" | translate}}:
+                            <span class="text-gray-600">{{ form.get('deviceGroup')?.value.ad }}</span>
+                        </h3>
+                    </div>
+
+
+                    <div class="card-toolbar gap-2">
+                        <a class="btn btn-dark btn-sm hover-elevate-up" (click)="checkSelected()">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            {{"Kaydet" | translate}}
+                        </a>
+                        <a class="btn btn-dark btn-sm hover-elevate-up" (click)="applySummary()">
+                            <i class="fa-solid fa-hand-pointer"></i>
+                            {{"Uygula" | translate}}
+                        </a>
+                    </div>
+                </div>
+                }
+
+
+                <div class="card-body pt-3 pb-3">
+                    @if(relations.length > 0) {
+                    <div class="row py-sm-2">
+                        <div class="col-12 py-2">
+                            <p-floatlabel variant="on">
+                                <p-iconfield>
+                                    <p-inputicon class="pi pi-search" />
+                                    <input pInputText id="on_label" [(ngModel)]="filterText" autocomplete="off" />
+                                </p-iconfield>
+                                <label for="on_label">Arama</label>
+                            </p-floatlabel>
+                        </div>
+
+                        <div class="col-12 pb-5">
+                            <span class="text-gray-500 mt-1 fw-semibold fs-8">
+                                Birden fazla 
+                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Terminal</a> 
+                                seçtiğinizde, ilk 
+                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Yetki Seçimi</a>
+                                tüm seçili terminallere otomatik olarak uygulanır. Sonraki değişiklikler ise yalnızca seçilen terminal için geçerli olur.
+                            </span>
+                        </div>
+                        
+
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <div class="table-responsive h-550px scroll">
+                                <table
+                                    class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                    <thead class="sticky-top" style="z-index: 991;">
+                                        <tr
+                                            class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-light rounded text-gray-600">
+                                            <th class=" fw-bolder me-1 cursor-pointer rounded-start"
+                                                style="width: 10%;">
+                                                <p-checkbox [(ngModel)]="selectAllMap['-1']"
+                                                    [indeterminate]="indeterminateMap['-1']" binary="true"
+                                                    (onChange)="toggleAll('-1')"></p-checkbox>
+                                            </th>
+                                            <th class=" fw-bolder me-1 cursor-pointer" style="width: 70%;">{{"Terminal"
+                                                | translate}}</th>
+                                            <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 20%;">
+                                                {{"Durum" | translate}}</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let item of terminalsWithAuthMinusOne | searchFilter:filterText: ['kaynakad', 'kaynakid']"
+                                            class="cursor-pointer fs-8">
+                                            <ng-container *ngIf="item.yetki == -1">
+                                                <td>
+                                                    <p-checkbox [(ngModel)]="item.checked" [inputId]="item.kaynakid"
+                                                        name="size" binary="true"
+                                                        (onChange)="updateSelectAllState(item)">
+                                                    </p-checkbox>
+                                                </td>
+
+                                                <td>
+                                                    <span class="mb-1">{{ item?.kaynakad }} / Id:
+                                                        {{item?.kaynakid}}</span>
+                                                </td>
+
+                                                <td
+                                                    [ngClass]="{'d-flex align-items-center justify-content-between gap-2': item.edit, 'text-center': !item.edit}">
+                                                    @if (item.edit) {
+
+                                                    <p-select [options]="timeZone" optionLabel="ad"
+                                                        [(ngModel)]="item.newAuthorization"
+                                                        (onChange)="onAuthorizationChange($event, item)"
+                                                        emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                                                        [filter]="true" filterBy="ad" [showClear]="true"
+                                                        placeholder="{{'Durumunu_Seçiniz' | translate}}"
+                                                        class="w-100 md:w-56">
+                                                        <ng-template #selectedItem let-selected>
+                                                            <div class="flex items-center gap-2">
+                                                                <div>{{ item?.newAuthorization?.ad }}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template let-opt #opt>
+                                                            <div class="flex items-center gap-2">
+                                                                <div>{{ opt?.ad }}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </p-select>
+
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- <button class="btn btn-sm btn-success" (click)="saveNode(item)">
+                                                                    <i class="fa-solid fa-check"></i>
+                                                                </button> -->
+                                                        <button class="btn btn-sm btn-danger p-0 px-2 py-1"
+                                                            (click)="cancelEdit(item)">
+                                                            <i class="fa-solid fa-xmark p-0"></i>
+                                                        </button>
+                                                    </div>
+
+                                                    } @else {
+                                                    <span class="badge badge-light-danger"
+                                                        (click)="editNode(item)">{{item.yetkiad}}</span>
+                                                    }
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <div class="table-responsive h-550px scroll">
+                                <table
+                                    class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                    <thead class="sticky-top" style="z-index: 991;">
+                                        <tr
+                                            class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-light rounded text-gray-600">
+                                            <th class=" fw-bolder me-1 cursor-pointer rounded-start"
+                                                style="width: 10%;">
+                                                <p-checkbox [(ngModel)]="selectAllMap['255']"
+                                                    [indeterminate]="indeterminateMap['255']" binary="true"
+                                                    (onChange)="toggleAll('255')"></p-checkbox>
+                                            </th>
+                                            <th class=" fw-bolder me-1 cursor-pointer" style="width: 70%;">{{"Terminal"
+                                                | translate}}</th>
+                                            <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 20%;">
+                                                {{"Durum" | translate}}</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let item of terminalsWithAuth255 | searchFilter:filterText: ['kaynakad', 'kaynakid']"
+                                            class="cursor-pointer fs-8">
+                                            <ng-container>
+                                                <td>
+                                                    <p-checkbox [(ngModel)]="item.checked" [inputId]="item.kaynakid"
+                                                        name="size" binary="true"
+                                                        (onChange)="updateSelectAllState(item)">
+                                                    </p-checkbox>
+                                                </td>
+
+                                                <td>
+                                                    <span class="mb-1">{{ item?.kaynakad }} / Id:
+                                                        {{item?.kaynakid}}</span>
+                                                </td>
+
+                                                <td
+                                                    [ngClass]="{'d-flex align-items-center justify-content-between gap-2': item.edit, 'text-center': !item.edit}">
+                                                    @if (item.edit) {
+
+                                                    <p-select [options]="timeZone" optionLabel="ad"
+                                                        [(ngModel)]="item.newAuthorization"
+                                                        (onChange)="onAuthorizationChange($event, item)"
+                                                        emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                                                        [filter]="true" filterBy="ad" [showClear]="true"
+                                                        placeholder="{{'Durumunu_Seçiniz' | translate}}"
+                                                        class="w-100 md:w-56">
+                                                        <ng-template #selectedItem let-selected>
+                                                            <div class="flex items-center gap-2">
+                                                                <div>{{ item?.newAuthorization?.ad }}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template let-opt #opt>
+                                                            <div class="flex items-center gap-2">
+                                                                <div>{{ opt?.ad }}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </p-select>
+
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- <button class="btn btn-sm btn-success" (click)="saveNode(item)">
+                                                                    <i class="fa-solid fa-check"></i>
+                                                                </button> -->
+                                                        <button class="btn btn-sm btn-danger p-0 px-2 py-1"
+                                                            (click)="cancelEdit(item)">
+                                                            <i class="fa-solid fa-xmark p-0"></i>
+                                                        </button>
+                                                    </div>
+
+                                                    } @else {
+                                                    <span class="badge badge-light-primary"
+                                                        (click)="editNode(item)">{{item?.yetkiad}}</span>
+                                                    }
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <div class="table-responsive h-550px scroll">
+                                <table
+                                    class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                    <thead class="sticky-top" style="z-index: 991;">
+                                        <tr
+                                            class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-light rounded text-gray-600">
+                                            <th class=" fw-bolder me-1 cursor-pointer rounded-start"
+                                                style="width: 10%;">
+                                                <p-checkbox [(ngModel)]="selectAllMap['999999999']"
+                                                    [indeterminate]="indeterminateMap['999999999']" binary="true"
+                                                    (onChange)="toggleAll('999999999')"></p-checkbox>
+                                            </th>
+                                            <th class=" fw-bolder me-1 cursor-pointer" style="width: 70%;">{{"Terminal"
+                                                | translate}}</th>
+                                            <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 20%;">
+                                                {{"Durum" | translate}}</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let item of terminalsWithAuth999999 | searchFilter:filterText: ['kaynakad', 'kaynakid']"
+                                            class="cursor-pointer fs-8">
+                                            <ng-container *ngIf="item.yetki == 999999999">
+                                                <td>
+                                                    <p-checkbox [(ngModel)]="item.checked" [inputId]="item.kaynakid"
+                                                        name="size" binary="true"
+                                                        (onChange)="updateSelectAllState(item)">
+                                                    </p-checkbox>
+                                                </td>
+
+                                                <td>
+                                                    <span class="mb-1">{{ item?.kaynakad }} / Id:
+                                                        {{item?.kaynakid}}</span>
+                                                </td>
+
+                                                <td
+                                                    [ngClass]="{'d-flex align-items-center justify-content-between gap-2': item.edit, 'text-center': !item.edit}">
+                                                    @if (item.edit) {
+
+                                                    <p-select [options]="timeZone" optionLabel="ad"
+                                                        [(ngModel)]="item.newAuthorization"
+                                                        (onChange)="onAuthorizationChange($event, item)"
+                                                        emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                                                        [filter]="true" filterBy="ad" [showClear]="true"
+                                                        placeholder="{{'Durumunu_Seçiniz' | translate}}"
+                                                        class="w-100 md:w-56">
+                                                        <ng-template #selectedItem let-selected>
+                                                            <div class="flex items-center gap-2">
+                                                                <div>{{ item?.newAuthorization?.ad }}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template let-opt #opt>
+                                                            <div class="flex items-center gap-2">
+                                                                <div>{{ opt?.ad }}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </p-select>
+
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- <button class="btn btn-sm btn-success" (click)="saveNode(item)">
+                                                                    <i class="fa-solid fa-check"></i>
+                                                                </button> -->
+                                                        <button class="btn btn-sm btn-danger p-0 px-2 py-1"
+                                                            (click)="cancelEdit(item)">
+                                                            <i class="fa-solid fa-xmark p-0"></i>
+                                                        </button>
+                                                    </div>
+
+                                                    } @else {
+                                                    <span class="badge badge-light-warning"
+                                                        (click)="editNode(item)">{{"Yetkisiz" | translate}}</span>
+                                                    }
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    } @else {
+                    <div class="row mt-5 m-0">
+                        @if(form.get('accessGroup')?.value && form.get('deviceGroup')?.value) {
+                        <div class="col-12">
+                            <app-data-not-found [imgWidth]=" '30%' "></app-data-not-found>
+                        </div>
+                        } @else {
+                        <div class="col-12 d-flex justify-content-center">
+                            <div
+                                class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-100 w-md-50">
+                                <i class="fa-solid fa-arrow-pointer fs-2x text-danger ms-5"></i>
+                                <div class="flex-grow-1 me-2">
+                                    <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"Geçiş Grubu Ve Terminal
+                                        Grubu Seçmelisiniz!" | translate}}</a>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<p-dialog [header]="editTitle" [(visible)]="displayEditDialog" [position]="'top'" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="-40" [draggable]="false" [resizable]="false" (onHide)="hideEditDialog()">
+
+    <form #accessForm="ngForm">
+        <div class="fv-row my-5 fv-plugins-icon-container">
+            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                <span class="required">{{"Geçiş_Grubu_Adı" | translate}}</span>
+            </label>
+
+            <input type="text" class="form-control form-control-sm form-control-solid"
+                placeholder="{{'Yeni Geçiş Grubu Adını Giriniz..' | translate}}" name="name" ngModel>
+            <input type="hidden" name="action" ngModel>
+        </div>
+    </form>
+
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="hideEditDialog()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'İptal' | translate}}
+        </a>
+
+        <a class="btn btn-sm btn-danger mx-1" (click)="editAccessGroup(accessForm.value)">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>

@@ -95,7 +95,7 @@ export class FilesComponent implements OnInit, OnDestroy {
 
   showFile(item: any) {
     this.profileService
-      .getFileForDemand(item.UniqueId, item.DosyaTipi)
+      .getFileForDemand(item.UniqueId, item.DosyaTipi, 'Sicil')
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((response: any) => {
         const base64Data = response[0].x; // Base64 string
