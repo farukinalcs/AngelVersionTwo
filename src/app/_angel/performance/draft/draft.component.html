@@ -1,0 +1,81 @@
+<div class="container-fluid m-5">
+
+    <mat-tab-group>
+
+        <mat-tab label="INSERT">
+
+            <div class="scale-form-box">
+                <label for="formTitle" class="border">Yeni Form Kaydı</label>
+                <div class="p-field">
+                    <p-iftalabel style="margin-top: 3px;">
+                        <input pInputText id="formTitle" [(ngModel)]="formTitle" class="full-width-input" />
+                        <label for="formTitle">Değerlendirme Form Başlığı:</label>
+                    </p-iftalabel>
+                </div>
+
+                <div class="p-field">
+                    <p-iftalabel style="margin-top: 3px;">
+                        <input pInputText id="explanation" [(ngModel)]="explanation" class="full-width-input" />
+                        <label for="explanation">Form Açıklaması:</label>
+                    </p-iftalabel>
+                </div>
+
+                <button pButton type="button" label="Kaydet" (click)="form_i()" class="full-width-button"></button>
+
+                <div class="p-field">
+                    <label for="formList">Form seçimi</label>
+                    <p-dropdown [options]="formList" [(ngModel)]="selectedFormId" optionLabel="baslik"
+                        optionValue="id" placeholder="Seçiniz"  (onChange)="onFormChange($event.value)" class="full-width-input">
+                    </p-dropdown>
+                </div>
+                <div class="p-field">
+                    <label for="countSelect">Hangi Kategori</label>
+                    <p-dropdown [options]="categoryList" [(ngModel)]="selectedCategoryId" optionLabel="Ad"
+                        optionValue="Id" placeholder="Seçiniz" (onChange)="onCategoryChange($event.value)" class="full-width-input">
+                    </p-dropdown>
+                </div> 
+                <div class="p-field">
+                    <label for="countSelect">Soru seçimi</label>
+                    <p-dropdown [options]="questionList" [(ngModel)]="selectedQuestionId" optionLabel="aciklama"
+                        optionValue="id" placeholder="Seçiniz" (onChange)="onQuestionChange($event.value)" class="full-width-input">
+                    </p-dropdown>
+                </div>
+                 <button pButton type="button" label="Soru Ekle" (click)="form_question()" class="full-width-button"></button>
+            </div>
+           
+        </mat-tab>
+
+        <mat-tab label="UPDATE AND DELETE">
+
+            <div>
+                <div class="p-card my-3 p-3">
+
+                    <div class="scale-form-box">
+
+
+                        <div class="p-field">
+                            <p-iftalabel style="margin-top: 3px;">
+                                <input pInputText id="formTitle" [(ngModel)]="formTitle" class="full-width-input" />
+                                <label for="formTitle">Değerlendirme Form Adı:</label>
+                            </p-iftalabel>
+                        </div>
+
+                        <div class="p-field">
+                            <p-iftalabel style="margin-top: 3px;">
+                                <input pInputText id="formTitle" [(ngModel)]="formTitle" class="full-width-input" />
+                                <label for="formTitle">Form Açıklaması:</label>
+                            </p-iftalabel>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </mat-tab>
+
+
+
+
+
+    </mat-tab-group>
+
+</div>
