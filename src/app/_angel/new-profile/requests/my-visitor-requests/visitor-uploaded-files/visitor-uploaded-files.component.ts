@@ -56,7 +56,7 @@ export class VisitorUploadedFilesComponent implements OnInit, OnDestroy {
     this.base64Data = null;
     this.contentType = null;
     this.profileService
-      .getFileForDemand(id, uzanti)
+      .getFileForDemand(id, uzanti, 'ziyaretci')
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((response: any) => {
         const data = response[0].x;
@@ -111,7 +111,7 @@ export class VisitorUploadedFilesComponent implements OnInit, OnDestroy {
 
   downloadFile(item: any) {
     this.profileService
-      .getFileForDemand(item.uploadedFile.UniqueId, item.uploadedFile.DosyaTipi)
+      .getFileForDemand(item.uploadedFile.UniqueId, item.uploadedFile.DosyaTipi, 'ziyaretci')
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((response: any) => {
         const data = response[0].x;

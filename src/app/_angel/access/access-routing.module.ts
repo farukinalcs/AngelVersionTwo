@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes,RouterModule } from '@angular/router';
 
-import { GecisgruplariComponent } from './gecisgruplari/gecisgruplari.component';
 import { RaporlarComponent } from './raporlar/raporlar.component';
 import { DevicesComponent } from './devices/devices.component';
 import { AccessDefinitionsComponent } from './access-definitions/access-definitions.component';
@@ -19,6 +18,7 @@ import { LedPanelsComponent } from './access-definitions/definitions/led-panels/
 import { PrintersComponent } from './access-definitions/definitions/printers/printers.component';
 import { AccessDashboardComponent } from './access-dashboard/access-dashboard.component';
 import { AccessRegistryListComponent } from './access-registry-list/access-registry-list.component';
+import { AccessGroupsComponent } from './access-groups/access-groups.component';
 
 
 const routes: Routes = [
@@ -35,8 +35,8 @@ const routes: Routes = [
     component: DevicesComponent,
   },
   {
-    path: 'gecis_gruplari',
-    component: GecisgruplariComponent,
+    path: 'access-groups',
+    loadComponent: () => import('./access-groups/access-groups.component').then(m => m.AccessGroupsComponent),
   },
   {
     path: 'definitions',

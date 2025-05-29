@@ -59,7 +59,7 @@
                     
                         <!-- Tarih Aralığı ve Navigasyon -->
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-end gap-3">
-                            <div class="fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
+                            <div class="row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
                                 <!--begin::Radio group-->
                                 <div class="btn-group w-100">
                                     <label *ngFor="let item of rangeList" class="btn btn-sm btn-outline btn-active-dark btn-color-muted fs-8" 
@@ -71,7 +71,7 @@
                             </div>
                     
                             <!-- Tarih Seçimi -->
-                            <div class="row w-100">
+                            <div class="row">
                                 <ng-container *ngIf="this.formGroup.value.dateRange != '-1'">
                                     <div class="col-auto d-flex align-items-end">
                                         <i class="fa-solid fa-caret-left fs-3x text-dark cursor-pointer text-hover-gray-600" (click)="previousDate()"></i>

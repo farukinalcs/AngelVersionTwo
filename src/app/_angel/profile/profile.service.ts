@@ -523,8 +523,8 @@ export class ProfileService {
     return this.requestMethod(sp);
   }
 
-  getFileForDemand(id : any, uzanti : any) {
-    return this.httpClient.post<any>(this.apiUrlService.apiUrl + '/File/GetFile?uniqueid=' + id + '&filetype=' + uzanti, {});
+  getFileForDemand(id : any, uzanti : any, kaynak: any) {
+    return this.httpClient.post<any>(this.apiUrlService.apiUrl + '/File/GetFile?uniqueid=' + id + '&filetype=' + uzanti + '&kaynak=' + kaynak, {});
   }
 
   deleteFileForDemand(id : any, uzanti : any, kaynak: any) {

@@ -138,7 +138,7 @@ export class AccessDashboardComponent implements OnInit, OnDestroy {
     getDisconnectedDevices() {
         var sp: any[] = [
             {
-                mkodu: 'yek308',
+                mkodu: 'yek315',
                 terminalgroup: this.selectedArea.id.toString()
             }
         ];
@@ -168,8 +168,7 @@ export class AccessDashboardComponent implements OnInit, OnDestroy {
     getAlarmCount() {
         var sp: any[] = [
             {
-                mkodu: 'yek307',
-                terminalgroup: this.selectedArea.id.toString()
+                mkodu: 'yek316'
             }
         ];
         console.log('Params :', sp);
@@ -198,8 +197,7 @@ export class AccessDashboardComponent implements OnInit, OnDestroy {
     getOvertimePersonel() {
         var sp: any[] = [
             {
-                mkodu: 'yek306',
-                terminalgroup: this.selectedArea.id.toString()
+                mkodu: 'yek317'
             }
         ];
         console.log('Params :', sp);
