@@ -132,6 +132,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             return;
         }
 
+        this.authService.selectedApp = this.loginForm.value.appList; 
         const userkey = this.generateRandomKey();
         this.authHttpService.userkey = userkey;
         var loginOptions = {
@@ -164,7 +165,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                 }
 
                 this.helperService.gateResponseX = '';
-                // this.helperService.gateResponseY = 'YSNSVSYSNSVSYSNN';
 
             } else {
                 this.hasError = true;
@@ -172,6 +172,18 @@ export class LoginComponent implements OnInit, OnDestroy {
         });
 
         this.unsubscribe.push(loginSubscr);
+    }
+
+    routeToDashboard() {
+        const appId = this.f.appList.value;
+        
+        if (appId == '1') {
+            this.router.navigate(['profile']);
+        } else if (appId == '2') {
+            this.router.navigate(['']);
+        } else if (appId == '3') {
+            this.router.navigate(['']);
+        }
     }
 
 

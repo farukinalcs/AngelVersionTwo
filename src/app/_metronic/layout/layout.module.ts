@@ -44,6 +44,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SidebarMenuPatrolComponent } from './components/sidebar/sidebar-menu-patrol/sidebar-menu-patrol.component';
 import { SidebarMenuPerformanceComponent } from './components/sidebar/sidebar-menu-performance/sidebar-menu-performance.component';
+import { SharedModule } from 'src/app/_angel/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -96,7 +97,8 @@ const routes: Routes = [
     TranslateModule,
     ThemeModeModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    SharedModule
   ],
   exports: [RouterModule],
 })

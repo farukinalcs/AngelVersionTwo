@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { CardMenuComponent } from '../../shared/dashboard-card/card-menu/card-menu.component';
+import { OverviewContentComponent } from './overview-content/overview-content.component';
 
 @Component({
   selector: 'app-overview',
@@ -15,7 +16,8 @@ import { CardMenuComponent } from '../../shared/dashboard-card/card-menu/card-me
     FormsModule,
     TranslateModule,
     SharedModule,
-    CardMenuComponent
+    CardMenuComponent,
+    OverviewContentComponent
   ],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
@@ -25,7 +27,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
   date = new Date();
   dashboardOptions: any[] = [
     {
-      id: -1,
+      id: -5,
       label: this.translateService.instant('Geçici Kart'),
       menu: 'visitor',
       items: [],
@@ -61,7 +63,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     //   visible: true
     // },
     {
-      id: -5,
+      id: -1,
       label: this.translateService.instant('Çıkış Yapmayan Ziyaretçiler'),
       menu: 'visitor',
       items: [],
@@ -90,14 +92,15 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getVisitTypes();
-
+    this.getValues('all', '0');
+    this.getValues('gecicikart', '0');
+    this.getValues('ck', '0');
   }
 
   getVisitTypes() {
     var sp: any[] = [
       {
-        mkodu: 'yek041',
-        kaynak: 'cbo_ziyaretnedeni',
+        mkodu: 'yek292',
         id: '0',
       }
     ];
@@ -115,29 +118,22 @@ export class OverviewComponent implements OnInit, OnDestroy {
       
       this.visitTypes = data.map((item: any) => ({ ...item, visible: false }));
       this.visitTypes.shift(); // İlk elemanı çıkarıyoruz (ID: 0 olanı)
-      console.log('Ziyaretçi Türleri Geldi :', this.visitTypes);
+      console.log('Ziyaret Nedenleri Geldi :', this.visitTypes);
       this.getMenuVisible();
     });
   }
 
-  getValues() {
-    const today = "";
+  getValues(type: string, id: string) {
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD formatında tarih alıyoruz
 
     var sp: any[] = [
       {
-        mkodu: 'yek202',
+        mkodu: 'yek289',
         tarih: today,
         tarihbit: today,
-        ad: 'undefined',
-        soyad: 'undefined',
-        sicilno: 'undefined',
-        firma: '0',
-        bolum: '0',
-        pozisyon: '0',
-        gorev: '0',
-        altfirma: '0',
-        yaka: '0',
-      },
+        tip: type,
+        ziyaretnedeniid: id
+      }
     ];
 
     console.log('Params :', sp);
@@ -154,75 +150,58 @@ export class OverviewComponent implements OnInit, OnDestroy {
         }
 
         console.log('Data Geldi :', data);
+
+        this.matchValues(data);
       });
   }
 
   matchValues(data: any[]) {
-    const result = data.reduce(
-      (acc, item) => {
-        const amount = Number(item.fazlamesai || item.OnaylananFazlaMesai || item.eksikmesai || 0);
-
-        switch (item.type) {
-          case "1": // Fazla mesai
-            acc.overtimeTotal += amount;
-            acc.approvodOvertimeTotal += Number(item.OnaylananFazlaMesai || 0);
-            acc.overtime.push(item);
-            break;
-          case "2": // Eksik mesai
-            acc.missingWorkTotal += amount;
-            acc.missingWork.push(item);
-            break;
-          case "4": // Geç gelenler
-            acc.latePeople.push(item);
-            break;
-          case "5": // Erken çıkanlar
-            acc.earlyExits.push(item);
-            break;
-          case "6": // İzinliler
-            acc.peopleAllowed.push(item);
-            break;
-        }
-
-        return acc;
-      },
-      {
-        earlyExits: [],
-        latePeople: [],
-        peopleAllowed: [],
-        overtime: [],
-        missingWork: [],
-        overtimeTotal: 0,
-        approvodOvertimeTotal: 0,
-        missingWorkTotal: 0,
-      }
-    );
-  
-  const formatTime = (totalMinutes: number) => {
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-  };
-  
-
-  this.dashboardOptions = this.dashboardOptions.map((option, index) => {
-    switch (index) {
-      case 0:
-      return { ...option, value: result.earlyExits.length, items: result.earlyExits };
-      case 1:
-      return { ...option, value: result.latePeople.length, items: result.latePeople };
-      case 2:
-      return { ...option, value: result.peopleAllowed.length, items: result.peopleAllowed };
-      case 3:
-      return { ...option, value: formatTime(result.overtimeTotal), items: result.overtime };
-      case 4:
-      return { ...option, value: formatTime(result.approvodOvertimeTotal), items: result.overtime };
-      case 5:
-      return { ...option, value: formatTime(result.missingWorkTotal), items: result.missingWork };
-      default:
-      return option;
+    if (!data || data.length === 0) {
+      return;
     }
+  
+    data.forEach((item) => {
+      switch (item.type?.toString()) {
+        case "-2": // Geçici Kart
+          const tempCard = this.dashboardOptions.find(option => option.id == -5);
+          if (tempCard) {
+            tempCard.value = Number(tempCard.value || 0) + 1;
+            tempCard.items = tempCard.items || [];
+            tempCard.items.push(item);
+          }
+          break;
+  
+        case "-1": // Çıkış Yapmayan Ziyaretçiler
+          const exitVisitor = this.dashboardOptions.find(option => option.id == -1);
+          if (exitVisitor) {
+            exitVisitor.value = Number(exitVisitor.value || 0) + 1;
+            exitVisitor.items = exitVisitor.items || [];
+            exitVisitor.items.push(item);
+          }
+          break;
+  
+        case "1": // Ziyaret Nedenleri
+          const visitType = this.visitTypes.find(type => type.ID == item.ZiyaretNedeniId);
+          const dashboardOption = this.dashboardOptions.find(option => option.id == visitType?.ID);
+          if (dashboardOption) {
+            dashboardOption.value = Number(dashboardOption.value || 0) + 1;
+            dashboardOption.items = dashboardOption.items || [];
+            dashboardOption.items.push(item);
+          }
+          break;
+  
+        case "0": // Toplam Ziyaretçi
+          const totalVisitor = this.dashboardOptions.find(option => option.id == -6);
+          if (totalVisitor) {
+            totalVisitor.value = Number(totalVisitor.value || 0) + 1;
+            totalVisitor.items = totalVisitor.items || [];
+            totalVisitor.items.push(item);
+          }
+          break;
+      }
     });
   }
+  
   
 
   setMenuVisible(value:any) {
@@ -287,13 +266,15 @@ export class OverviewComponent implements OnInit, OnDestroy {
         // Eğer item görünürse ve dashboardOptions içinde yoksa ekle
         this.dashboardOptions.push({
           id: item.ID,
-          label: item.ad,
+          label: item.Ad,
           menu: 'visitor',
           items: [],
           value: '0',
-          icon: item?.icon,
+          icon: item?.Simge,
           visible: true
         });  
+
+        this.getValues('s', item.ID.toString());
       }
     });
   }

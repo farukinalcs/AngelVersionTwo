@@ -29,7 +29,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     if (url.includes('/two-factor')) {
       this.imagePath = '../../../assets/media/svg/illustrations/login-custom-3.svg';
     } else if (url.includes('/forgot-password')) {
-      this.imagePath = '../../../assets/media/svg/illustrations/login-custom-4.svg';
+      this.imagePath = '../../../assets/media/svg/illustrations/login-custom-2.svg';
     } else {
       this.imagePath = '../../../assets/media/svg/illustrations/login-custom-2.svg';
     }

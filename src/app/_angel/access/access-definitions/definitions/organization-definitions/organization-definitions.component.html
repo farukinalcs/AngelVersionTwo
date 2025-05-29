@@ -94,33 +94,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <nav>
-                                    <ul class="pagination">
-                                        <li class="page-item cursor-pointer" [class.disabled]="pageNumber === 1">
-                                            <a class="page-link" (click)="goToFirstPage()" aria-label="First">
-                                                &laquo;
-                                            </a>
-                                        </li>
-                                
-                                        <li class="page-item cursor-pointer" *ngFor="let page of getPageNumbers()" [class.active]="page === pageNumber"
-                                            [class.disabled]="page === '...'">
-                                            <a class="page-link" *ngIf="isNumber(page); else ellipsis" (click)="pageNumber = page">
-                                                {{ page }}
-                                            </a>
-                                            <ng-template #ellipsis>
-                                                <span class="page-link">...</span>
-                                            </ng-template>
-                                        </li>
-                                
-                                        <li class="page-item cursor-pointer" [class.disabled]="pageNumber === totalPages">
-                                            <a class="page-link" (click)="goToLastPage()" aria-label="Last">
-                                                &raquo;
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
+                            
                         </div>
                     </div>
                 </ng-container>

@@ -31,6 +31,11 @@
         [cards]="dashboardOptions"
         (removeEvent)="removeCard($event)"
         [editMode]="editMode"
+        [fromWhere]="'visitor'"
         >
     </app-dashboard-card>
+
+    <app-overview-content
+        [editMode]="editMode">
+    </app-overview-content>
 </div>

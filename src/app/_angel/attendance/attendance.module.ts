@@ -47,7 +47,7 @@ import { OvertimeComponent } from '../new-profile/request-forms/overtime/overtim
 import { AttendanceChangeComponent } from '../new-profile/request-forms/attendance-change/attendance-change.component';
 import { ShiftChangeComponent } from '../new-profile/request-forms/shift-change/shift-change.component';
 import { LeaveComponent } from '../new-profile/request-forms/leave/leave.component';
-
+import { DatePickerModule } from 'primeng/datepicker';
 
 @NgModule({
   declarations: [
@@ -103,7 +103,8 @@ import { LeaveComponent } from '../new-profile/request-forms/leave/leave.compone
     OvertimeComponent,
     AttendanceChangeComponent,
     ShiftChangeComponent,
-    LeaveComponent
+    LeaveComponent,
+    DatePickerModule
   ],
   
   exports: [

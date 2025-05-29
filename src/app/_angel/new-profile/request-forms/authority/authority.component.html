@@ -242,16 +242,14 @@
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                     <span class="required">{{"Açıklama" | translate}}</span>
                                                 </label>
-
-                                                <textarea class="form-control form-control-solid" rows="3"
-                                                    maxlength="500" formControlName="description"
+                                    
+                                                <textarea class="form-control form-control-solid" rows="3" [maxlength]="maxLength" formControlName="description"
                                                     placeholder="{{'Açıklama_Giriniz' | translate}}">
-                                            </textarea>
+                                                                                </textarea>
                                                 <ng-container *ngIf="authorityForm.controls['description']?.value">
                                                     <div class="text-end">
                                                         <span class="badge badge-light-danger">{{
-                                                            authorityForm.controls['description'].value.length }} /
-                                                            500</span>
+                                                            authorityForm.controls['description'].value.length }} / {{maxLength}}</span>
                                                     </div>
                                                 </ng-container>
                                                 <div class="fv-plugins-message-container invalid-feedback"></div>

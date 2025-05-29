@@ -3,415 +3,52 @@
     data-kt-scroll-activate="true" data-kt-scroll-height="auto"
     data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer"
     data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
+
     <!--begin::Menu-->
-    <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-        <!-- PROFİL -->
-        <ng-container *ngIf="menuConfig.auth.asideMenu.profil.main">
-            <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-                <span class="menu-link">
-                <span class="menu-icon">
-                <span class="svg-icon svg-icon-2"><i class="fa-solid fa-user-tie text-danger"></i>
-                </span>
-                </span>
-                <span class="menu-title" translate="Profil"></span>
-                <span class="menu-arrow">
-                </span>
-                </span>
-                <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-                    <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.gecislerim">
-                        <div class="menu-item">
-                            <a class="menu-link without-sub" routerLinkActive="active"
-                                routerLink="profile"><span class="menu-bullet"><span
-                                class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                                translate="Genel_Bakış"></span>
-                            </a>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.gecislerim">
-                        <div class="menu-item">
-                            <a class="menu-link without-sub" routerLinkActive="active"
-                                routerLink="profile/gecislerim"><span class="menu-bullet"><span
-                                class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                                translate="Geçişlerim"></span></a>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.surelerim">
-                        <div class="menu-item">
-                            <a class="menu-link without-sub" routerLinkActive="active"
-                                routerLink="profile/operations/durations"><span class="menu-bullet"><span
-                                class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                                translate="Sürelerim"></span></a>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.izinlerim">
-                        <div class="menu-item">
-                            <a class="menu-link without-sub" routerLinkActive="active"
-                                routerLink="profile/izinlerim"><span class="menu-bullet"><span
-                                class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                                translate="İzinlerim"></span></a>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.talepEdilenler">
-                        <div class="menu-item">
-                            <a class="menu-link without-sub" routerLinkActive="active"
-                                routerLink="profile/talep_edilenler"><span class="menu-bullet"><span
-                                class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                                translate="Talep_Edilenler"></span></a>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.taleplerim">
-                        <div class="menu-item">
-                            <a class="menu-link without-sub" routerLinkActive="active"
-                                routerLink="profile/taleplerim"><span class="menu-bullet"><span
-                                class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                                translate="Taleplerim"></span></a>
-                        </div>
-                    </ng-container>
-                    <!-- <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.ziyaretciTaleplerim"> -->
-                    <div class="menu-item">
-                        <a class="menu-link without-sub" routerLinkActive="active"
-                            routerLink="profile/ziyaretci_talepleri"><span class="menu-bullet"><span
-                            class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                            translate="Ziyaretçi_Talepleri"></span></a>
-                    </div>
-                    <!-- </ng-container> -->
-                    <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.ziyaretciTaleplerim">
-                        <div class="menu-item">
-                            <a class="menu-link without-sub" routerLinkActive="active"
-                                routerLink="profile/ziyaretci_taleplerim"><span class="menu-bullet"><span
-                                class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                                translate="Ziyaretçi_Taleplerim"></span></a>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.mobilLokasyon">
-                        <div class="menu-item">
-                            <a class="menu-link without-sub" routerLinkActive="active"
-                                routerLink="profile/others/mobile-location"><span class="menu-bullet"><span
-                                class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                                translate="Mobil_Lokasyon"></span></a>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.taskListem">
-                        <div class="menu-item">
-                            <a class="menu-link without-sub" routerLinkActive="active"
-                                routerLink="profile/others/my-task-list"><span class="menu-bullet"><span
-                                class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                                translate="Task_Listem"></span></a>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="menuConfig.auth.asideMenu.profil.subMenu.takimim">
-                        <div class="menu-item">
-                            <a class="menu-link without-sub" routerLinkActive="active"
-                                routerLink="profile/others/my-team"><span class="menu-bullet"><span
-                                class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                                translate="Takımım"></span></a>
-                        </div>
-                    </ng-container>
-                    <ng-container>
-                        <div class="menu-item">
-                            <a class="menu-link without-sub" routerLinkActive="active"
-                                routerLink="profile/operations/missing-durations"><span class="menu-bullet"><span
-                                class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                                translate="Eksik_Sürelerim"></span></a>
-                        </div>
-                    </ng-container>
-                    <ng-container>
-                        <div class="menu-item">
-                            <a class="menu-link without-sub" routerLinkActive="active"
-                                routerLink="profile/definitions"><span class="menu-bullet"><span
-                                class="bullet bullet-dot bg-danger"></span></span><span class="menu-title"
-                                translate="Profil_Tanımlamalar"></span></a>
-                        </div>
-                    </ng-container>
-                </div>
-            </div>
-        </ng-container>
-        <!-- ACCESS -->
-        <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-            <span class="menu-link">
-                <span class="menu-icon">
-                    <span class="svg-icon svg-icon-2">
-                        <i class="fa-solid fa-right-to-bracket text-danger"></i>
-                    </span>
-                </span>
-                <span class="menu-title">ACCESS</span>
-                <span class="menu-arrow"></span>
-            </span>
-            <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="access/dashboard">
-                    <span class="menu-bullet">
-                    <span class="bullet bullet-dot bg-danger"></span>
-                    </span>
-                    <span class="menu-title">Genel Bakış</span>
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="access/registry-list">
-                    <span class="menu-bullet">
-                    <span class="bullet bullet-dot bg-danger"></span>
-                    </span>
-                    <span class="menu-title">Sicil Liste</span>
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="access/terminal"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Terminal</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="access/gecis_gruplari"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Geçiş
-                    Grupları</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="access/definitions"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Tanımlamalar</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="access/raporlar"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Raporlar</span></a>
-                </div>
-            </div>
-        </div>
-        <!-- PUANTAJ -->
-        <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-            <span class="menu-link">
-                <span class="menu-icon">
-                    <span class="svg-icon svg-icon-2">
-                        <i class="fa-solid fa-business-time text-danger"></i>
-                    </span>
-                </span>
-                <span class="menu-title">PUANTAJ</span>
-                <span class="menu-arrow"></span>
-            </span>
-            <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="attendance/dashboard"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Genel
-                    Bakış</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="attendance/registry-list">
-                    <span class="menu-bullet">
-                    <span class="bullet bullet-dot bg-danger"></span>
-                    </span>
-                    <span class="menu-title">Sicil Liste</span>
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="attendance/attendance-list"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Pdks</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="attendance/attendance-pivot"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Pdks
-                    Pivot</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="attendance/definitions"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Tanımlamalar</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="attendance/reports"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Raporlar</span></a>
-                </div>
-            </div>
-        </div>
-        <!-- ZİYARETÇİ -->
-        <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-            <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"><i
-                class="fa-solid fa-users text-danger"></i></span></span><span
-                class="menu-title">Ziyaretçi</span><span class="menu-arrow"></span></span>
-            <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="visitor/overview"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Genel
-                    Bakış</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active"
-                        routerLink="visitor/cards"><span class="menu-bullet"><span
-                        class="bullet bullet-dot bg-danger"></span></span><span class="menu-title">Ziyaretçi
-                    Kartları</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="visitor/visitors"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Ziyaretçiler</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="visitor/definitions"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Tanımlamalar</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="visitor/reports"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Raporlar</span></a>
-                </div>
-            </div>
-        </div>
-        <!-- YEMEKHANE -->
-        <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-            <span class="menu-link">
-            <span class="menu-icon">
-            <span class="svg-icon svg-icon-2"><i class="fa-solid fa-utensils text-danger"></i>
-            </span>
-            </span>
-            <span class="menu-title">Yemekhane</span>
-            <span class="menu-arrow"></span>
-            </span>
-            <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="yemekhane/dashboard"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Genel
-                    Bakış</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="yemekhane/tanimlamalar"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Tanımlamalar</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="yemekhane/raporlar"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Raporlar</span></a>
-                </div>
-            </div>
-        </div>
-        <!-- KANTİN -->
-        <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-            <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"><i
-                class="fa-solid fa-credit-card text-danger"></i></span></span><span
-                class="menu-title">Kantin</span><span class="menu-arrow"></span></span>
-            <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="kantin/dashboard"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Genel
-                    Bakış</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="kantin/tanimlamalar"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Tanımlamalar</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="kantin/krediler"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Krediler</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="kantin/raporlar"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Raporlar</span></a>
-                </div>
-            </div>
-        </div>
-        <!-- SİSTEM -->
-        <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-            <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"><i
-                class="fa-solid fa-gear text-danger"></i></span></span><span
-                class="menu-title">Sistem</span><span class="menu-arrow"></span></span>
-            <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="sistem/sistem_yedek"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Sistem
-                    Yedek</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active"
-                        routerLink="sistem/veritabani_guncelle"><span class="menu-bullet"><span
-                        class="bullet bullet-dot bg-danger"></span></span><span class="menu-title">Veritabanı
-                    Güncelle</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="sistem/mail_servis"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Mail
-                    Servis</span></a>
-                </div>
-            </div>
-        </div>
-        <!-- GÜvenlik tur -->
-        <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-            <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"><i
-                class="fa-solid fa-walkie-talkie text-danger"></i></span></span><span
-                class="menu-title">Güvenlik
-            Tur</span><span class="menu-arrow"></span></span>
-            <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="guvenlik/dashboard"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Genel
-                    Bakış</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="guvenlik/guvenlikciler"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Güvenlikçiler</span></a>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active" routerLink="guvenlik/tanimlamalar"><span
-                        class="menu-bullet"><span class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Tanımlamalar</span></a>
-                </div>
-            </div>
-        </div>
-        <!-- Müsteri Hizmetleri -->
-        <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-            <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"><i
-                class="fa-solid fa-phone-volume text-danger"></i></span></span><span
-                class="menu-title">Müşteri
-            Hizmetleri</span><span class="menu-arrow"></span></span>
-            <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-                <div class="menu-item">
-                    <a class="menu-link without-sub" routerLinkActive="active"
-                        routerLink="musteri_hizmetleri/destek"><span class="menu-bullet"><span
-                        class="bullet bullet-dot bg-danger"></span></span><span
-                        class="menu-title">Destek</span></a>
-                </div>
-            </div>
-        </div>
+    <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true"
+        data-kt-menu-expand="false">
 
+        <ng-container *ngFor="let item of menu">
+            <ng-container *ngIf="hasAccess(item) && !item.permissionCode">
+                <ng-container *appPermission="item.permissionCode">
+                    <div class="menu-item menu-accordion" *ngIf="item.children?.length" data-kt-menu-trigger="click" routerLinkActive="here show">
 
-
-        <!-- <div *ngFor="let item of sidebarMenu">
-            <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-                <span class="menu-link">
-                    <span class="menu-icon">
-                        <span class="svg-icon svg-icon-2">
-                            <i [class]="item.icon"></i>
-                        </span>
-                    </span>
-                    <span class="menu-title">{{item.title}}</span>
-                    <span class="menu-arrow"></span>
-                </span>
-                <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg" *ngFor="let subItem of item.subMenu">
-                    <div class="menu-item">
-                        <a class="menu-link without-sub" routerLinkActive="active" [routerLink]="subItem.rootLink">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot bg-danger"></span>
+                        <span class="menu-link">
+                            <span class="menu-icon" *ngIf="item.icon">
+                                <span class="svg-icon svg-icon-2">
+                                    <i [class]="item.icon"></i>
+                                </span>
                             </span>
-                            <span class="menu-title">{{subItem.title}}</span>
-                        </a>
+                            <span class="menu-title" *ngIf="item.translate" [translate]="item.title"></span>
+                            <span class="menu-title" *ngIf="!item.translate">{{ item.title }}</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+
+                        <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+                            <ng-container *ngFor="let child of item.children">
+                                <ng-container *ngIf="!child.permissionCode">
+                                    <ng-container *appPermission="child.permissionCode">
+                                        <div class="menu-item">
+                                            <a class="menu-link without-sub" routerLinkActive="active" [routerLink]="child.routerLink">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot bg-danger"></span>
+                                                </span>
+    
+                                                <span class="menu-title" *ngIf="child.translate" [translate]="child.title"></span>
+                                                <span class="menu-title" *ngIf="!child.translate">{{ child.title }}</span>
+                                            </a>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div> -->
+                </ng-container>
+
+            </ng-container>
+        </ng-container>
     </div>
     <!--end::Menu-->
+
 </div>
 <!--end::Menu wrapper-->

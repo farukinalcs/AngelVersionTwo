@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   OnDestroy,
@@ -18,12 +19,13 @@ import {
   SideBarDef,
   StatusPanelDef,
   ValueFormatterParams,
+  ColumnApi
 } from 'ag-grid-enterprise';
 import { AgGridAngular } from 'ag-grid-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AttendanceService } from '../attendance.service';
-import { FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, GridApi } from 'ag-grid-community';
+import { FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, GridApi, GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { OrganizationColumnFilterComponent } from '../organization-column-filter/organization-column-filter.component';
 import { ToastrService } from 'ngx-toastr';
@@ -33,10 +35,8 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './attendance-list.component.html',
   styleUrls: ['./attendance-list.component.scss'],
 })
-export class AttendanceListComponent implements OnInit, OnDestroy {
+export class AttendanceListComponent implements OnInit, OnDestroy, AfterViewInit {
   private ngUnsubscribe = new Subject();
-  @ViewChild('agGridLight', { static: false }) agGridLight: AgGridAngular;
-  @ViewChild('agGridDark', { static: false }) agGridDark: AgGridAngular;
 
   rowClass = 'text-dark';
   selectedTab = '0';
@@ -56,10 +56,10 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     { name: 'Aylık', range: '30' },
     { name: 'Haftalık', range: '7' },
     { name: 'Günlük', range: '1' },
-    { name: 'Özel', range: '-1' },
+    // { name: 'Özel', range: '-1' },
   ];
 
-  private gridApi!: GridApi<any>;
+  // private gridApi!: GridApi<any>;
 
   gridHeight = '80vh';
   gridStyle: any = {
@@ -606,8 +606,8 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     ],
   };
   // gridApi: any;
-  gridOptionsLight = {};
-  gridOptionsDark = {};
+  // gridOptionsLight = {};
+  // gridOptionsDark = {};
 
   loading: boolean = false;
   value: number = 0;
@@ -666,6 +666,15 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
   displayShiftForm: boolean = false;
   displayAttendanceForm: boolean = false;
   imageUrl: string;
+  rangeDates: Date[] = [];
+
+  // ---------
+  activeTheme: 'light' | 'dark' = 'light'; // Varsayılan tema
+  gridApi!: GridApi;
+  columnApi!: ColumnApi;
+  gridOptions: GridOptions = {};
+  // ----------
+
   constructor(
     private formBuilder: FormBuilder,
     private profileService: ProfileService,
@@ -678,73 +687,105 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     this.imageUrl = this.profileService.getImageUrl();
   }
 
-  // ngOnInit(): void {
-  //   this.createForm();
-  //   this.changeStartDate();
-  //   this.changeEndDate();
-  //   this.changeDateRange();
-  //   this.getAttendanceInfo();
-  // }
+  ngAfterViewInit(): void {
+    this.setGridSetting();
+  }
 
   ngOnInit(): void {
     this.createForm();
     this.setInitialDates();
     this.subscribeToDateRangeChanges();
     this.subscribeToDateChanges();
-    this.getAttendanceInfo();
-
-    this.setGridSetting();
+    // ----------
+    this.getTheme(); // Tema moduna subscribe ol
+    // ----------
   }
 
-  onFilterOpened(e: FilterOpenedEvent) {
-    console.log('onFilterOpened', e);
+  // ----------
+  getTheme() {
+    this.themeModeService.mode.pipe(takeUntil(this.ngUnsubscribe)).subscribe((mode: any) => {
+      this.changeTheme(mode);
+    });
+  }
+
+  changeTheme(theme: 'light' | 'dark') {
+    this.activeTheme = theme;
+  }
+
+  onGridReadyLight(params: GridReadyEvent) {
+    if (this.activeTheme === 'light') {
+      this.gridApi = params.api;
+      this.columnApi = params.columnApi;
+
+      // Tüm kolonları içeriğe göre otomatik ayarla
+      setTimeout(() => {
+        this.autoSizeAllColumns();
+      }, 100);
+    }
+  }
+
+  onGridReadyDark(params: GridReadyEvent) {
+    if (this.activeTheme === 'dark') {
+      this.gridApi = params.api;
+      this.columnApi = params.columnApi;
+
+      // Tüm kolonları içeriğe göre otomatik ayarla
+      setTimeout(() => {
+        this.autoSizeAllColumns();
+      }, 100);
+    }
+  }
+
+  autoSizeAllColumns() {
+    if (this.columnApi) {
+      const allColumnIds: string[] = ['sicilid', 'sicilno', 'ad', 'soyad', 'mesaitarih', 'ggiris', 'gcikis'];
+      this.columnApi.getColumns()?.forEach((column) => {
+        allColumnIds.push(column.getId());
+      });
+      this.columnApi.autoSizeColumns(allColumnIds, false); // False: İçeriğe göre en küçük hale getir
+    }
   }
 
   onFilterChanged(e: FilterChangedEvent) {
-    // console.log("onFilterChanged", e);
-    // // console.log("onFilterChanged", e.columns[0].getColId());
-    // let t = e.api.getFilterModel();
-    // console.log("onFilterChanged", t);
-    this.saveFilterModel();
+    if (this.gridApi) {
+      savedFilterModel = this.gridApi.getFilterModel();
+      console.log('SavedFilterModel: ', savedFilterModel);
+
+      this.savedFilterModel = savedFilterModel;
+      this.getAttendanceInfo();
+    }
+  }
+
+  onSelectionChanged() {
+    // Seçim değiştiğinde çağrılır
+    if (this.gridApi) {
+      const selectedRows = this.gridApi.getSelectedRows();
+      console.log('Seçilenler:', selectedRows);
+      this.attendanceService.setSelectedItems(selectedRows);
+    }
+  }
+  // ----------
+
+
+  onFilterOpened(e: FilterOpenedEvent) {
+    // filter açıldığında çağrılır
   }
 
   onFilterModified(e: FilterModifiedEvent) {
-    // console.log("onFilterModified", e);
-    // console.log("filterInstance.getModel() =>", e.filterInstance.getModel());
-    // console.log(
-    //   "filterInstance.getModelFromUi() =>",
-    //   (e.filterInstance as unknown as IProvidedFilter).getModelFromUi(),
-    // );
+    // filter değiştiğinde çağrılır
   }
-
-  saveFilterModel() {
-    const subscr = this.themeModeService.mode
-      .asObservable()
-      .subscribe((mode) => {
-        savedFilterModel =
-          mode === 'light'
-            ? this.agGridLight.api.getFilterModel()
-            : this.agGridDark.api.getFilterModel();
-      });
-
-    console.log('SavedFilterModel: ', savedFilterModel);
-
-    this.savedFilterModel = savedFilterModel;
-    this.getAttendanceInfo();
-  }
-
 
   createForm() {
-    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD formatında bugünün tarihi
+    const today = new Date();
   
     this.formGroup = this.formBuilder.group({
-      dateRange: ['1'], // Günlük seçili olarak başlıyor
-      startDate: [today],
-      endDate: [today],
+      dateRange: ['1'], // Günlük
+      rangeDates: [[today, today]],
     });
+  
+    this.rangeDates = [today, today];
   }
   
-
   setInitialDates() {
     const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD formatı
   
@@ -755,138 +796,101 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
   }
   
   subscribeToDateChanges() {
-    const startDate$ = this.formGroup.get('startDate')?.valueChanges;
-    const endDate$ = this.formGroup.get('endDate')?.valueChanges;
+    const rangeDates$ = this.formGroup.get('rangeDates')?.valueChanges;
   
-    if (startDate$ && endDate$) {
-      combineLatest([startDate$, endDate$])
-        .pipe(filter(([startDate, endDate]) => startDate && endDate)) // Ensure both dates are defined
-        .subscribe(([startDate, endDate]) => {
-          const start = new Date(startDate);
-          const end = new Date(endDate);
+    if (rangeDates$) {
+      rangeDates$
+        .pipe(
+          filter((range: Date[]) => Array.isArray(range) && range.length === 2 && !!range[0] && !!range[1])
+        )
+        .subscribe((range: Date[]) => {
+          let [start, end] = range;
   
+          // Tarih sırası yanlışsa düzelt
           if (start.getTime() > end.getTime()) {
-            this.formGroup
-              .get('endDate')
-              ?.setValue(start.toISOString().split('T')[0], { emitEvent: false });
-          } else if (end.getTime() < start.getTime()) {
-            this.formGroup
-              .get('startDate')
-              ?.setValue(end.toISOString().split('T')[0], { emitEvent: false });
+            this.formGroup.get('rangeDates')?.setValue([start, start], { emitEvent: false });
           }
   
-          if (this.formGroup.get('dateRange')?.value == '-1') {
+          // if (this.formGroup.get('dateRange')?.value === '-1') {
             this.getAttendanceInfo();
-          }
+          // }
         });
     }
   }
-  
+ 
   subscribeToDateRangeChanges() {
     this.formGroup.get('dateRange')?.valueChanges.subscribe((range) => {
-      const start = new Date(this.formGroup.get('startDate')?.value);
+      const today = new Date();
   
       if (range == '1') {
-        // Günlük
-        this.formGroup.get('endDate')?.setValue(
-          start.toISOString().split('T')[0]
-        );
+        this.rangeDates = [today, today];
       } else if (range == '7') {
-        // Haftalık (ISO haftası hesaplaması)
-        const dayOfWeek = start.getDay(); // Pazar: 0, Pazartesi: 1, ..., Cumartesi: 6
-        const diff = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // ISO haftası için Pazartesi'yi başlangıç al
-  
-        const startOfWeek = new Date(start);
-        startOfWeek.setDate(start.getDate() + diff);
-  
+        const startOfWeek = new Date(today);
+        const day = startOfWeek.getDay();
+        const diff = day === 0 ? -6 : 1 - day;
+        startOfWeek.setDate(startOfWeek.getDate() + diff);
         const endOfWeek = new Date(startOfWeek);
         endOfWeek.setDate(startOfWeek.getDate() + 6);
-  
-        this.formGroup
-          .get('startDate')
-          ?.setValue(startOfWeek.toISOString().split('T')[0]);
-        this.formGroup
-          .get('endDate')
-          ?.setValue(endOfWeek.toISOString().split('T')[0]);
+        this.rangeDates = [startOfWeek, endOfWeek];
       } else if (range == '30') {
-        // Aylık
-        const startOfMonth = new Date(start.getFullYear(), start.getMonth(), 1);
-        const endOfMonth = new Date(start.getFullYear(), start.getMonth() + 1, 0);
-  
-        this.formGroup
-          .get('startDate')
-          ?.setValue(startOfMonth.toISOString().split('T')[0]);
-        this.formGroup
-          .get('endDate')
-          ?.setValue(endOfMonth.toISOString().split('T')[0]);
+        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        this.rangeDates = [startOfMonth, endOfMonth];
       }
   
-      if (range != '-1') {
-        this.getAttendanceInfo();
-      }
+      this.formGroup.get('rangeDates')?.setValue(this.rangeDates);
+      // if (range != '-1') this.getAttendanceInfo();
     });
   }
   
-
   previousDate() {
     const range = this.formGroup.get('dateRange')?.value;
-    const startDate = new Date(this.formGroup.get('startDate')?.value);
-    const endDate = new Date(this.formGroup.get('endDate')?.value);
+    let [startDate, endDate] = this.rangeDates;
   
     if (range === '1') {
-      // Günlük: 1 gün geri al
       startDate.setDate(startDate.getDate() - 1);
-      endDate.setDate(endDate.getDate() - 1);
+      endDate = new Date(startDate);
     } else if (range === '7') {
-      // Haftalık: 1 hafta geri al, haftanın başlangıç ve bitişini belirle
       startDate.setDate(startDate.getDate() - 7);
-      endDate.setDate(endDate.getDate() - 7);
-  
-      const diff = startDate.getDay() === 0 ? -6 : 1 - startDate.getDay(); // ISO hafta başlangıcı (Pazartesi)
+      const day = startDate.getDay();
+      const diff = day === 0 ? -6 : 1 - day;
       startDate.setDate(startDate.getDate() + diff);
+      endDate = new Date(startDate);
       endDate.setDate(startDate.getDate() + 6);
     } else if (range === '30') {
-      // Aylık: 1 ay geri al, ayın ilk ve son gününü belirle
       startDate.setMonth(startDate.getMonth() - 1, 1);
-      endDate.setMonth(startDate.getMonth() + 1, 0);
+      endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
     }
   
-    this.formGroup.get('startDate')?.setValue(startDate.toISOString().split('T')[0]);
-    this.formGroup.get('endDate')?.setValue(endDate.toISOString().split('T')[0]);
-  
-    this.getAttendanceInfo();
+    this.rangeDates = [startDate, endDate];
+    this.formGroup.get('rangeDates')?.setValue(this.rangeDates);
+    // this.getAttendanceInfo();
   }
   
   nextDate() {
     const range = this.formGroup.get('dateRange')?.value;
-    const startDate = new Date(this.formGroup.get('startDate')?.value);
-    const endDate = new Date(this.formGroup.get('endDate')?.value);
+    let [startDate, endDate] = this.rangeDates;
   
     if (range === '1') {
-      // Günlük: 1 gün ileri al
       startDate.setDate(startDate.getDate() + 1);
-      endDate.setDate(endDate.getDate() + 1);
+      endDate = new Date(startDate);
     } else if (range === '7') {
-      // Haftalık: 1 hafta ileri al, haftanın başlangıç ve bitişini belirle
       startDate.setDate(startDate.getDate() + 7);
-      endDate.setDate(endDate.getDate() + 7);
-  
-      const diff = startDate.getDay() === 0 ? -6 : 1 - startDate.getDay(); // ISO hafta başlangıcı (Pazartesi)
+      const day = startDate.getDay();
+      const diff = day === 0 ? -6 : 1 - day;
       startDate.setDate(startDate.getDate() + diff);
+      endDate = new Date(startDate);
       endDate.setDate(startDate.getDate() + 6);
     } else if (range === '30') {
-      // Aylık: 1 ay ileri al, ayın ilk ve son gününü belirle
       startDate.setMonth(startDate.getMonth() + 1, 1);
-      endDate.setMonth(startDate.getMonth() + 1, 0);
+      endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
     }
   
-    this.formGroup.get('startDate')?.setValue(startDate.toISOString().split('T')[0]);
-    this.formGroup.get('endDate')?.setValue(endDate.toISOString().split('T')[0]);
-  
-    this.getAttendanceInfo();
+    this.rangeDates = [startDate, endDate];
+    this.formGroup.get('rangeDates')?.setValue(this.rangeDates);
+    // this.getAttendanceInfo();
   }
   
-
   getContextMenuItems(params: any) {
     return [
       'copy',
@@ -909,10 +913,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           {
             name: 'Excel Export (.xlsx)',
             action: () => {
-              console.log(
-                'params.context this.gridApi',
-                params.context.component.gridApi
-              );
+              
               params.context.component.helper.exportData(
                 params.context.component,
                 { exportMode: 'xlsx' }
@@ -933,17 +934,6 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     ];
   }
 
-  onSelectionChangedLight() {
-    const selectedRows = this.agGridLight.api.getSelectedRows();
-    console.log('Seçilenler : ', selectedRows);
-    this.attendanceService.setSelectedItems(selectedRows);
-  }
-
-  onSelectionChangedDark() {
-    const selectedRows = this.agGridDark.api.getSelectedRows();
-    console.log('Seçilenler : ', selectedRows);
-    this.attendanceService.setSelectedItems(selectedRows);
-  }
 
   getImageGrid(params: any, imageSize = '10') {
     if (params?.data?.sicilid == undefined) {
@@ -974,13 +964,20 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     this.cancelRequest.complete();
     this.cancelRequest = new Subject<void>();
 
+
+    let [startDate, endDate] = this.formGroup.get('rangeDates')?.value || [new Date(), new Date()];
+
+    const formattedStart = this.formatDate(startDate);
+    const formattedEnd = this.formatDate(endDate);
+    
+    
     var sp: any[] = !this.filterFromModal
       ? [
           {
             mkodu: 'yek102',
             tip: this.selectedTab,
-            tarih: this.formGroup.get('startDate')?.value,
-            tarihbit: this.formGroup.get('endDate')?.value,
+            tarih: formattedStart,
+            tarihbit: formattedEnd,
             ad: savedFilterModel?.ad?.filter || '',
             soyad: savedFilterModel?.soyad?.filter || '',
             sicilno: savedFilterModel?.sicilno?.filter || '',
@@ -1005,8 +1002,8 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
           {
             mkodu: 'yek102',
             tip: this.selectedTab,
-            tarih: this.formGroup.get('startDate')?.value, //Burası düzenlenecek
-            tarihbit: this.formGroup.get('endDate')?.value, //Burası düzenlenecek
+            tarih: formattedStart, //Burası düzenlenecek
+            tarihbit: formattedEnd, //Burası düzenlenecek
             ad: this.filterValueFromModal.formValues.name,
             soyad: this.filterValueFromModal.formValues.surname,
             sicilno: this.filterValueFromModal.formValues.registrationNumber,
@@ -1106,19 +1103,19 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
               row.rowHeight = 30;
             });
 
-            this.gridOptionsLight = {
-              localeTextFunc: (key: string, defaultValue: string) => {
-                const data = this.translateService.instant(key);
-                return data === key ? defaultValue : data;
-              },
-            };
+            // this.gridOptionsLight = {
+            //   localeTextFunc: (key: string, defaultValue: string) => {
+            //     const data = this.translateService.instant(key);
+            //     return data === key ? defaultValue : data;
+            //   },
+            // };
 
-            this.gridOptionsDark = {
-              localeTextFunc: (key: string, defaultValue: string) => {
-                const data = this.translateService.instant(key);
-                return data === key ? defaultValue : data;
-              },
-            };
+            // this.gridOptionsDark = {
+            //   localeTextFunc: (key: string, defaultValue: string) => {
+            //     const data = this.translateService.instant(key);
+            //     return data === key ? defaultValue : data;
+            //   },
+            // };
 
             if (
               this.value >= 100 ||
@@ -1433,111 +1430,6 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     }
   }
 
-  // timeClassChange(params: any): string {
-  //   const { colId } = params.column;
-  //   const {
-  //     ellegiris,
-  //     geckalma,
-  //     erkencikma,
-  //     mesaibas,
-  //     mesaibit,
-  //     izinaciklama,
-  //     eksikmesai,
-  //     resmitatilsuresi,
-  //     onaylananfazlamesai,
-  //     resmitatilmesai,
-  //     rtonaylananfazlamesai,
-  //     gecevardiya,
-  //     gecezammi,
-  //     izinsuresi,
-  //     yillikizinsuresi,
-  //     sgkizinsuresi,
-  //     ucretsizizinsuresi,
-  //     farasure,
-  //     arasure
-  //   } = params.data;
-  //   const value = params.value;
-
-  //   const isZeroOrNull = (val: any): boolean => val == 0 || val == null;
-  //   const isNonZeroTime = (val: any): boolean => val !== '00:00' && val !== '0' && val !== '' && val !== undefined;
-
-  //   const handleTimeActive = (isGiris: boolean, isLateness: boolean): string => {
-  //     const classPrefix = 'cell-time-active';
-  //     const manuelSuffix = '-manuel-entry';
-
-  //     if (ellegiris > 1) {
-  //       return isLateness ? `cell-lateness${manuelSuffix}` : `${classPrefix}${manuelSuffix}`;
-  //     } else {
-  //       return isLateness ? 'cell-lateness' : classPrefix;
-  //     }
-  //   };
-
-  //   switch (colId) {
-  //     case 'ggiris':
-  //       return handleTimeActive(true, geckalma > 0);
-
-  //     case 'gcikis':
-  //       return handleTimeActive(false, erkencikma > 0);
-
-  //     case 'normalmesai':
-  //       if (mesaibas === mesaibit) return 'cell-weekend';
-  //       if (izinaciklama && izinaciklama !== '#__#') return 'cell-green';
-  //       if (isNonZeroTime(eksikmesai) && eksikmesai > 0) return 'cell-time-passive';
-  //       if (resmitatilsuresi) return '';
-  //       if (isZeroOrNull(value)) return 'cell-time-passive';
-  //       break;
-
-  //     case 'fazlamesai':
-  //       if (mesaibas === mesaibit) return 'cell-weekend';
-  //       if (isNonZeroTime(onaylananfazlamesai)) return 'cell-green';
-  //       return isNonZeroTime(value) ? 'cell-time-passive' : '';
-
-  //     case 'resmitatilsuresi':
-  //       return isZeroOrNull(value) ? 'cell-time-zero' : 'cell-warning';
-
-  //     case 'resmitatilaciklama':
-  //       return value ? 'cell-warning' : '';
-
-  //     case 'onaylananfazlamesai':
-  //       if (isZeroOrNull(value)) return 'cell-time-zero';
-  //       if (isNonZeroTime(value)) return 'cell-blue';
-  //       break;
-
-  //     case 'resmitatilmesai':
-  //       if (isZeroOrNull(value)) return 'cell-time-zero';
-  //       return isNonZeroTime(value) ? 'cell-warning' : 'cell-time-passive';
-
-  //     case 'rtonaylananfazlamesai':
-  //       if (isZeroOrNull(value)) return 'cell-time-zero';
-  //       if (isNonZeroTime(value)) return 'cell-blue';
-  //       break;
-
-  //     case 'eksikmesai':
-  //       return isZeroOrNull(value) ? 'cell-time-zero' : 'cell-time-passive';
-
-  //     case 'gecevardiya':
-  //     case 'gecezammi':
-  //       return isZeroOrNull(value) ? 'cell-time-zero' : '';
-
-  //     case 'izinsuresi':
-  //     case 'yillikizinsuresi':
-  //     case 'sgkizinsuresi':
-  //     case 'ucretsizizinsuresi':
-  //       if (isZeroOrNull(value)) return 'cell-time-zero';
-  //       if (isNonZeroTime(value)) return 'cell-green';
-  //       break;
-
-  //     case 'farasure':
-  //       return isZeroOrNull(value) ? 'cell-time-zero' : 'text-danger';
-
-  //     case 'arasure':
-  //       return isZeroOrNull(value) ? 'cell-time-zero' : '';
-
-  //     default:
-  //       return '';
-  //   }
-  // }
-
   applyWeekendClass(params: any) {
     if (params?.data?.mesaibas == params?.data?.mesaibit) {
       return 'cell-weekend';
@@ -1562,8 +1454,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
   }
 
   clearFilters() {
-    this.agGridLight.api.setFilterModel(null);
-    this.agGridDark.api.setFilterModel(null);
+    this.gridApi.setFilterModel(null);
   }
 
   setFilterFormFromModal(value: { formValues: any }) {
@@ -1596,7 +1487,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
         'New width:',
         event.column.getActualWidth(),
         '   asdasd: ',
-        this.agGridLight.columnApi.getAllGridColumns()
+        this.columnApi.getAllGridColumns()
       );
       this.sendColumnStateToApi();
     }
@@ -1615,7 +1506,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     ];
 
     this.profileService
-      .requestMethod(sp)
+      .requestMethod(sp, { 'noloading': 'true'})
       .pipe(
         takeUntil(this.ngUnsubscribe),
         map((response) => this.parseValue(response[0].x[0]?.deger))
@@ -1657,19 +1548,17 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     this.columnDefs.forEach(updateColumnWidths);
     // this.gridApi.setColumnDefs(this.columnDefs);
 
-    if (this.agGridLight) {
-      this.agGridLight.api.setColumnDefs(this.columnDefs);
-      this.agGridLight.api.sizeColumnsToFit();
+    if (this.gridApi) {
+      this.gridApi.setColumnDefs(this.columnDefs);
+      this.gridApi.sizeColumnsToFit();
       console.log('ColumnDef: ', this.columnDefs);
-    } else if (this.agGridDark) {
-      this.agGridDark.api.setColumnDefs(this.columnDefs);
     } else {
       console.error('Sanırım bir problem var!');
     }
   }
 
   sendColumnStateToApi() {
-    const allColumns = this.agGridLight.columnApi.getAllColumns();
+    const allColumns = this.columnApi.getAllColumns();
     if (!allColumns) {
       console.error('No columns found.');
       return;
@@ -1695,7 +1584,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     ];
 
     this.profileService
-      .requestMethod(sp)
+      .requestMethod(sp, { 'noloading': 'true'})
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((response: any) => {
         console.log('Grid Settings Are Send: ', response);
@@ -1792,6 +1681,19 @@ export class AttendanceListComponent implements OnInit, OnDestroy {
     this.displayAnnualCalendar = false;
   }
 
+
+  formatDate(date: Date): string {
+    const correctedDate = new Date(date); // Orijinal tarihi klonla
+    correctedDate.setHours(0, 0, 0, 0);   // Saat, dakika, saniye sıfırlanır
+  
+    const year = correctedDate.getFullYear();
+    const month = String(correctedDate.getMonth() + 1).padStart(2, '0'); // Ay 0-11 arası
+    const day = String(correctedDate.getDate()).padStart(2, '0');
+  
+    return `${year}-${month}-${day}`;
+  }
+  
+  
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();

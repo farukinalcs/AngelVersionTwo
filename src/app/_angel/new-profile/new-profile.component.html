@@ -264,13 +264,12 @@
 
                                     <ng-container>
                                         <li class="nav-item">
-                                            <a class="nav-link text-active-danger text-center me-6"
-                                                routerLink="widgets" routerLinkActive="active"
-                                                translate="Genel_Bakış"></a>
+                                            <a class="nav-link text-active-danger text-center me-6" routerLink="widgets"
+                                                routerLinkActive="active" translate="Genel_Bakış"></a>
                                         </li>
                                     </ng-container>
 
-                                    <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.gecislerim">
+                                    <ng-container *appPermission="'m926'">
                                         <li class="nav-item">
                                             <a class="nav-link text-active-danger text-center me-6"
                                                 routerLink="operations/passages" routerLinkActive="active"
@@ -278,15 +277,15 @@
                                         </li>
                                     </ng-container>
 
-                                    <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.surelerim">
+                                    <ng-container *appPermission="'m927'">
                                         <li class="nav-item">
                                             <a class="nav-link text-active-danger text-center me-6"
-                                                [routerLink]="['/profile/operations/durations']" routerLinkActive="active"
-                                                translate="Sürelerim"></a>
+                                                [routerLink]="['/profile/operations/durations']"
+                                                routerLinkActive="active" translate="Sürelerim"></a>
                                         </li>
                                     </ng-container>
 
-                                    <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.izinlerim">
+                                    <ng-container *appPermission="'m928'">
                                         <li class="nav-item">
                                             <a class="nav-link text-active-danger text-center me-6"
                                                 routerLink="operations/leaves" routerLinkActive="active"
@@ -294,7 +293,7 @@
                                         </li>
                                     </ng-container>
 
-                                    <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.talepEdilenler">
+                                    <ng-container *appPermission="'m917'">
                                         <li class="nav-item">
                                             <a class="nav-link text-active-danger text-center me-6"
                                                 routerLink="requests/pending-requests" routerLinkActive="active"
@@ -304,26 +303,33 @@
                                         </li>
                                     </ng-container>
 
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-danger text-center me-6"
-                                            routerLink="requests/my-requests" routerLinkActive="active"
-                                            translate="Taleplerim"></a>
-                                    </li>
+                                    <ng-container *appPermission="'m961'">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-active-danger text-center me-6"
+                                                routerLink="requests/my-requests" routerLinkActive="active"
+                                                translate="Taleplerim"></a>
+                                        </li>
+                                    </ng-container>
 
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-danger text-center me-6"
-                                            routerLink="requests/visitor-requests" routerLinkActive="active"
-                                            translate="Ziyaretçi_Talepleri"></a>
-                                    </li>
+                                    <ng-container>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-active-danger text-center me-6"
+                                                routerLink="requests/visitor-requests" routerLinkActive="active"
+                                                translate="Ziyaretçi_Talepleri"></a>
+                                        </li>
+                                    </ng-container>
 
 
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-danger text-center me-6"
-                                            routerLink="requests/my-visitor-requests" routerLinkActive="active"
-                                            translate="Ziyaretçi_Taleplerim"></a>
-                                    </li>
+                                    <ng-container *appPermission="'m962'">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-active-danger text-center me-6"
+                                                routerLink="requests/my-visitor-requests" routerLinkActive="active"
+                                                translate="Ziyaretçi_Taleplerim"></a>
+                                        </li>
+                                    </ng-container>
 
-                                    <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.mobilLokasyon">
+
+                                    <ng-container *appPermission="'m918'">
                                         <li class="nav-item">
                                             <a class="nav-link text-active-danger text-center me-6"
                                                 routerLink="others/mobile-location" routerLinkActive="active"
@@ -331,7 +337,7 @@
                                         </li>
                                     </ng-container>
 
-                                    <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.taskListem">
+                                    <ng-container *appPermission="'m34'">
                                         <li class="nav-item">
                                             <a class="nav-link text-active-danger text-center me-6"
                                                 routerLink="others/my-task-list" routerLinkActive="active"
@@ -339,10 +345,11 @@
                                         </li>
                                     </ng-container>
 
-                                    <ng-container *ngIf="menuConfig.auth.pages.profil.tabMenu.takimim">
+                                    <ng-container *appPermission="'m944'">
                                         <li class="nav-item">
-                                            <a class="nav-link text-active-danger text-center me-6" routerLink="others/my-team"
-                                                routerLinkActive="active" translate="Takımım"></a>
+                                            <a class="nav-link text-active-danger text-center me-6"
+                                                routerLink="others/my-team" routerLinkActive="active"
+                                                translate="Takımım"></a>
                                         </li>
                                     </ng-container>
 
@@ -455,72 +462,52 @@
 
 
 <ng-container *ngIf="displayAttendanceForm">
-    <app-attendance-change
-        [isFromAttendance]="false"
-        [displayAttendanceForm]="displayAttendanceForm"
+    <app-attendance-change [isFromAttendance]="false" [displayAttendanceForm]="displayAttendanceForm"
         (onHideAttendanceForm)="onHideAttendanceForm()">
     </app-attendance-change>
 </ng-container>
 
 <ng-container *ngIf="displayAuthorityRequestForm">
-    <app-authority
-        [displayAuthorityRequestForm]="displayAuthorityRequestForm"
-        (onHide)="displayAuthority()">
+    <app-authority [displayAuthorityRequestForm]="displayAuthorityRequestForm" (onHide)="displayAuthority()">
     </app-authority>
 </ng-container>
 
 <ng-container *ngIf="displayVehicleRequestForm">
-    <app-vehicle
-        [display]="displayVehicleRequestForm"
-        (onHide)="displayVehicle()">
+    <app-vehicle [display]="displayVehicleRequestForm" (onHide)="displayVehicle()">
     </app-vehicle>
 </ng-container>
 
 <ng-container *ngIf="displayAdvancePaymentForm">
-    <app-advance
-        [display]="displayAdvancePaymentForm"
-        (onHide)="displayAdvance()">
+    <app-advance [display]="displayAdvancePaymentForm" (onHide)="displayAdvance()">
     </app-advance>
 </ng-container>
 
 
 <ng-container *ngIf="displayOvertimeForm">
-    <app-overtime
-        [isFromAttendance]="false"
-        [displayOvertimeForm]="displayOvertimeForm"
-        (onHideOvertimeForm)="onHideOvertimeForm()"
-        [isFromRegistryList]="false">
+    <app-overtime [isFromAttendance]="false" [displayOvertimeForm]="displayOvertimeForm"
+        (onHideOvertimeForm)="onHideOvertimeForm()" [isFromRegistryList]="false">
     </app-overtime>
 </ng-container>
 
 <ng-container *ngIf="displayShiftForm">
-    <app-shift-change
-        [isFromAttendance]="false"
-        [displayShiftForm]="displayShiftForm"
+    <app-shift-change [isFromAttendance]="false" [displayShiftForm]="displayShiftForm"
         (onHideShiftForm)="onHideShiftForm()">
     </app-shift-change>
 </ng-container>
 
 
 <ng-container *ngIf="displayExpenseRequestForm">
-    <app-expense
-        [display]="displayExpenseRequestForm"
-        (onHide)="displayExpense()">
+    <app-expense [display]="displayExpenseRequestForm" (onHide)="displayExpense()">
     </app-expense>
 </ng-container>
 
 <ng-container *ngIf="displayVacationForm">
-    <app-leave
-        [isFromAttendance]="false"
-        [displayVacationForm]="displayVacationForm"
-        (onHideVacationForm)="onHideVacationForm()"
-        [isFromRegistryList]="false">
+    <app-leave [isFromAttendance]="false" [displayVacationForm]="displayVacationForm"
+        (onHideVacationForm)="onHideVacationForm()" [isFromRegistryList]="false">
     </app-leave>
 </ng-container>
 
 <ng-container *ngIf="displayVisitRequestForm">
-    <app-visitor
-        [display]="displayVisitRequestForm"
-        (onHide)="visitRequestFormIsSend()">
+    <app-visitor [display]="displayVisitRequestForm" (onHide)="visitRequestFormIsSend()">
     </app-visitor>
 </ng-container>

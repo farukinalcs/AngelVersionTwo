@@ -33,7 +33,7 @@
                 <!--end::Section-->
             </div>
             <!--end::Body-->
-            @if (editMode) {
+            @if (editMode && item.id > 0) {
                 <div class="card-footer py-1 px-4"
                     style="border-top: 1px solid rgba(255, 255, 255, 0.3);background: rgba(0, 0, 0, 0.15);">
                     <!--begin::Progress-->
@@ -69,5 +69,5 @@
 
 
 <ng-container *ngIf="displayDetail">
-    <app-dashboard-card-detail [display]="displayDetail" [selectedDetail]="selected" (hide)="onHideMore()"></app-dashboard-card-detail>
+    <app-dashboard-card-detail [display]="displayDetail" [selectedDetail]="selected" (hide)="onHideMore()" [fromWhere]="fromWhere"></app-dashboard-card-detail>
 </ng-container>

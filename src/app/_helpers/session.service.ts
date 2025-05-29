@@ -59,7 +59,7 @@ export class SessionService {
   logoutUser(userkey?: string, session?: any) {
     var sp: any =
     {
-      userkey: this.authHttpService.userkey || userkey,
+      userkey: session ? userkey : this.authHttpService.userkey,
       source: 'weblogin',
       loginid: this.helperService.userLoginModel?.Id.toString(),
     };
@@ -78,6 +78,17 @@ export class SessionService {
       
       // document.location.reload();
     });
+  }
+
+  logout(): Observable<any> {
+    var sp: any[] = [
+      {
+        userkey: this.authHttpService.userkey,
+        source: 'weblogin',
+        loginid: this.helperService.userLoginModel?.Id.toString()
+      }
+    ];
+    return this.profileService.logout(sp);
   }
   
 

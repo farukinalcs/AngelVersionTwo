@@ -542,50 +542,60 @@
         z-index: 1;
     }
 }
+
 .grid {
     max-height: 50vw;
-    width: 94%;
-    transition: width 0.5s ease;
+    width: 97%;
+    transition: width 0.3s ease;
 }
+
 .process {
-    max-height: 50vw;
-    width: 6%;
-    transition: width 0.5s ease;
+    max-height: 100%;
+    transition: width 0.3s ease;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    position: relative;
+
     &.expanded {
-        width: 31%;
+        width: 25%;
+
+        .rotate-text {
+            display: none !important;
+        }
+
         + .grid {
-            width: 69%;
+            width: 75%;
         }
     }
+
+    &:not(.expanded) {
+        width: 3%;
+
+        .nav-item,
+        .nav-link,
+        .fa,
+        .bullet-custom {
+            display: none !important;
+        }
+
+        .rotate-text {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        + .grid {
+            width: 97%;
+        }
+    }
+
     .nav-text {
         transition: opacity 0.5s ease;
     }
 }
-@media (min-width: 1550px) {
-    .grid {
-        max-height: 50vw;
-        width: 94%;
-        transition: width 0.5s ease;
-    }
-    .process {
-        max-height: 50vw;
-        width: 6%;
-        transition: width 0.5s ease;
-        display: flex;
-        align-items: center;
-        &.expanded {
-            width: 25%;
-            + .grid {
-                width: 75%;
-            }
-        }
-        .nav-text {
-            transition: opacity 0.5s ease;
-        }
-    }
-}
+
+
 #lbRangeCount:active {
     background-color: #adff2f;
 }

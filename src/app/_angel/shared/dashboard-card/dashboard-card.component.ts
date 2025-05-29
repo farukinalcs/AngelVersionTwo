@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -10,17 +11,24 @@ export class DashboardCardComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   @Input() cards: any[]; 
   @Input() editMode: boolean = true;
+  @Input() fromWhere: string = '';
   @Output() removeEvent: any = new EventEmitter<any>();
   displayDetail: boolean = false;
   selected: any;
   
   constructor(
+    private toastrService: ToastrService
   ) {}
   
   ngOnInit(): void {
   }
 
   openMore(detail: any) {
+    if (detail.items.length === 0) {
+      this.toastrService.warning('Bu kartta gösterilecek detay yok.', 'Uyarı');
+      return;
+    }
+    
     this.selected = detail;
     this.displayDetail = true;
   }
