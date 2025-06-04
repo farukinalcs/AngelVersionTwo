@@ -41,6 +41,7 @@ export const MENU: MenuItem[] = [
             { title: 'Sicil Liste', routerLink: 'access/registry-list' },
             { title: 'Terminal', routerLink: 'access/terminal' },
             { title: 'Geçiş Grupları', routerLink: 'access/access-groups' },
+            { title: 'Sicil Grupları', routerLink: 'access/registry-groups'},
             { title: 'Tanımlamalar', routerLink: 'access/definitions' },
             { title: 'Raporlar', routerLink: 'access/raporlar' }
         ],

@@ -1,0 +1,450 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-custom gutter-b">
+
+                <div class="card-body pt-3 pb-0">
+                    <div class="row d-flex justify-content-end align-items-center">
+                        <div [formGroup]="form" class="col-6 d-flex align-sm-items-end gap-2 flex-column flex-sm-row">
+                            <div class="col-sm-6 p-3">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>{{"Sicil_Grupları" | translate}}</span>
+                                </label>
+
+                                <p-select [options]="registryGroups" formControlName="registryGroup" optionLabel="ad"
+                                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="true"
+                                    filterBy="ad" [showClear]="true" placeholder="{{'Sicil_Grubu_Seçiniz' | translate}}"
+                                    class="w-100 md:w-56">
+                                    <ng-template #selectedItem let-selected>
+                                        <div class="flex items-center gap-2">
+                                            <div>{{ form.get('registryGroup')?.value?.ad }}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-item #item>
+                                        <div class="flex items-center gap-2">
+                                            <div>{{ item?.ad }}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-select>
+                            </div>
+                        </div>
+
+                        <div
+                            class="col-6 d-flex align-sm-items-end justify-content-end gap-2 flex-column flex-sm-row h-100">
+
+                            @if (form.get('registryGroup')?.value) {
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="deleteRegistryGroup()">
+                                <i class="fa-solid fa-trash"></i>
+                                {{"Seçili_Grubu_Sil" | translate}}
+                            </a>
+
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="showEditDialog('edit')">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                {{"Seçili_Grubu_Güncelle" | translate}}
+                            </a>
+                            }
+
+
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="showEditDialog('add')">
+                                <i class="fa-solid fa-plus"></i>
+                                {{"Yeni_Sicil_Grubu_Ekle" | translate}}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2 mb-6">
+                        <div class="col-12">
+                            <span class="text-gray-500 mt-1 fw-semibold fs-8">Bir
+                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Geçiş Grubu</a>
+                                Seçtikten Sonra
+                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Terminal Grupları</a>
+                                İle Filtreleme Yapmalısınız!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 my-5">
+            <div class="flip-card">
+                <div class="flip-card-inner" [class.flipped]="isFlipped">
+                    <!-- Ön Yüz - Data Ekranı -->
+                    <div class="flip-card-front">
+                        <div class="card mb-6 mb-xl-9 mx-2">
+                            @if(form.get('registryGroup')?.value) {
+                            <div class="card-header border-0">
+                                <div class="card-title">
+                                    <h3 class="card-label">
+                                        {{"Listelenen Sicil Grubu" | translate}}:
+                                        <span class="text-gray-600">{{ form.get('registryGroup')?.value.ad }}</span>
+                                    </h3>
+                                </div>
+
+
+                                <div class="card-toolbar gap-2">
+                                    <a class="btn btn-secondary py-3 px-4" (click)="toggleFlip('new')">
+                                        <i class="fa-solid fa-arrows-turn-to-dots fs-5 p-0"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            }
+
+
+                            <div class="card-body pt-0 pb-5">
+                                @if(form.get('registryGroup')?.value) {
+                                <div class="row">
+                                    @if(groupDetails.length > 0) {
+                                    <div class="col-md-6 col-xl-4 pb-7"
+                                        *ngFor="let item of groupDetails; let i = index">
+
+                                        <!--begin::Card-->
+                                        <a class="card border border-hover-dark shadow" (click)="toggleFlip(item)">
+                                            <!--begin::Card header-->
+                                            <div class="card-header border-0 pt-5">
+                                                <!--begin::Card Title-->
+                                                <div class="card-title m-0">
+
+                                                    <!--begin::Underline-->
+                                                    <span class="d-inline-block position-relative ms-2">
+                                                        <!--begin::Label-->
+                                                        <span class="d-inline-block mb-0 fs-3 fw-bold text-gray-900">
+                                                            {{item.statik == 0 ? 'Organizasyon' : 'Sicil' | translate}}
+                                                        </span>
+                                                        <!--end::Label-->
+
+                                                        <!--begin::Line-->
+                                                        <span
+                                                            class="d-inline-block position-absolute h-2px bottom-0 end-0 start-0 bg-black translate rounded"></span>
+                                                        <!--end::Line-->
+                                                    </span>
+                                                    <!--end::Underline-->
+                                                </div>
+                                                <!--end::Car Title-->
+
+                                                <!--begin::Card toolbar-->
+                                                <div class="card-toolbar gap-1">
+                                                    <span class="btn badge fw-bold me-auto px-4 py-3"
+                                                        [ngClass]="{'btn-light-success badge-light-success': item.aktif == 1, 'btn-light-danger badge-light-danger': item.aktif == 0}"
+                                                        pTooltip="{{'Durumunu Değiştir' | translate}}"
+                                                        tooltipPosition="top" (click)="changeStateDetail($event, item)">
+                                                        {{item.aktif == 1 ? 'Aktif' : 'Pasif' | translate}}
+                                                    </span>
+                                                    <span
+                                                        class="btn btn-light-danger badge badge-light-danger fw-bold px-4 py-3"
+                                                        pTooltip="{{'Kalıcı Olarak Sil' | translate}}"
+                                                        tooltipPosition="top"
+                                                        (click)="deleteRegistryDetail($event, item)">
+                                                        <i class="fa-solid fa-trash fs-6 cursor-pointer p-0"></i>
+                                                    </span>
+                                                </div>
+                                                <!--end::Card toolbar-->
+                                            </div>
+                                            <!--end:: Card header-->
+
+                                            <!--begin:: Card body-->
+                                            <div class="card-body px-11 py-4">
+
+                                                <!--begin::Description-->
+                                                <p class="text-gray-600 fw-semibold fs-5 mt-1 mb-7">
+                                                    {{item.aciklama || 'Açıklama Bulunamadı' | translate}}
+                                                </p>
+                                                <!--end::Description-->
+
+                                                <!--begin::Info-->
+                                                <div class="d-flex flex-wrap mb-5">
+                                                    @if(item.statik == 1) {
+                                                    <!--begin::Users-->
+
+
+                                                    <div class="symbol-group symbol-hover">
+                                                        <!-- İlk 5 kullanıcıyı göster -->
+                                                        <div class="symbol symbol-35px symbol-circle"
+                                                            *ngFor="let user of item.siciller.slice(0, 5)"
+                                                            data-bs-toggle="tooltip" [attr.aria-label]="user.adsoyad"
+                                                            [attr.data-bs-original-title]="user.adsoyad"
+                                                            data-kt-initialized="1" pTooltip="{{user.adsoyad}}">
+                                                            <img alt="Sicil"
+                                                                [src]="imageUrl + '?sicilid=' + user.sicilid" />
+                                                        </div>
+
+                                                        <!-- Eğer 5'ten fazla kullanıcı varsa, kalan kişi sayısını göster -->
+                                                        <div *ngIf="item.siciller.length > 5"
+                                                            class="symbol symbol-35px symbol-circle bg-light text-dark fs-5 fw-bold p-2"
+                                                            style="display: flex; align-items: center; justify-content: center;">
+                                                            +{{ item.siciller.length - 5 }}
+                                                        </div>
+                                                    </div>
+
+                                                    <!--end::Users-->
+                                                    } @else {
+                                                    <div class="d-flex flex-column gap-3">
+                                                        <div *ngFor="let organization of item.organizations"
+                                                            class="d-flex align-items-center">
+                                                            <div class="symbol symbol-10px bg-secondary px-2 me-2">
+                                                                <i
+                                                                    class="fa-solid fa-angle-right fs-6 text-gray-600"></i>
+                                                            </div>
+                                                            <span class="text-gray-500 fw-bold fs-7">{{
+                                                                organization.name }}</span>
+                                                        </div>
+                                                    </div>
+
+
+                                                    }
+
+
+
+                                                </div>
+                                                <!--end::Info-->
+
+                                                <!--begin::Progress-->
+                                                <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
+                                                    aria-label="This project 100% completed"
+                                                    data-bs-original-title="This project 100% completed"
+                                                    data-kt-initialized="1">
+                                                    <div class="bg-gray-200 rounded h-4px" role="progressbar"
+                                                        style="width: 100%" aria-valuenow=" 100" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                                <!--end::Progress-->
+
+                                                <div class="d-flex flex-direction">
+                                                    <!--begin::Users-->
+                                                    <div class="symbol-group symbol-hover">
+                                                        <!--begin::User-->
+                                                        <div class="symbol symbol-25px symbol-circle"
+                                                            data-bs-toggle="tooltip" aria-label="Mad Macy"
+                                                            data-bs-original-title="Mad Macy" data-kt-initialized="1">
+                                                            <img alt="Düzenleyen"
+                                                                [src]="imageUrl + '?sicilid=' + item.xsicilid"
+                                                                pTooltip="{{item.duzenleyen}}">
+                                                        </div>
+                                                        <!--end::User-->
+                                                        <div class="d-flex flex-column ms-2">
+                                                            <span class="text-gray-800 fw-bold fs-6">
+                                                                {{"Düzenleyen" | translate}}:
+                                                            </span>
+                                                            <span class="text-gray-600 fw-semibold fs-7">
+                                                                {{item.duzenleyen | truncate:15 || 'Düzenleyen
+                                                                Bulunamadı!' | translate}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <!--end::Users-->
+
+                                                    <!--begin::Budget-->
+                                                    <div
+                                                        class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 ms-3">
+                                                        <div class="fs-7 text-gray-800 fw-bold">{{item.zaman |
+                                                            date:'medium'}}</div>
+                                                        <div class="fw-semibold text-gray-500">{{'Son Değişiklik Tarihi'
+                                                            | translate}}</div>
+                                                    </div>
+                                                    <!--end::Budget-->
+                                                </div>
+
+                                            </div>
+                                            <!--end:: Card body-->
+                                        </a>
+                                        <!--end::Card-->
+                                    </div>
+                                    } @else {
+                                    <div class="col-12">
+                                        <app-data-not-found [imgWidth]=" '30%' "></app-data-not-found>
+                                    </div>
+                                    }
+
+                                </div>
+                                } @else {
+                                <div class="row mt-5 m-0">
+                                    @if(form.get('registryGroup')?.value) {
+                                    <div class="col-12">
+                                        <app-data-not-found [imgWidth]=" '30%' "></app-data-not-found>
+                                    </div>
+                                    } @else {
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div
+                                            class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-100 w-md-50">
+                                            <i class="fa-solid fa-arrow-pointer fs-2x text-danger ms-5"></i>
+                                            <div class="flex-grow-1 me-2">
+                                                <a class="fw-bold text-gray-800 text-hover-danger fs-6">{{"Bir Sicil
+                                                    Grubu
+                                                    Seçmelisiniz!" | translate}}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Arka Yüz - Form Ekranı -->
+                    <div class="flip-card-back">
+                        <div class="card mb-6 mb-xl-9 mx-2">
+                            @if(form.get('registryGroup')?.value) {
+                            <div class="card-header border-0">
+                                <div class="card-title">
+                                    <h3 class="card-label">
+                                        {{"Listelenen Sicil Grubu" | translate}}:
+                                        <span class="text-gray-600">{{ form.get('registryGroup')?.value.ad }}</span>
+                                    </h3>
+                                </div>
+
+
+                                <div class="card-toolbar gap-2">
+                                    <a class="btn btn-secondary py-3 px-4" (click)="toggleFlip()">
+                                        <i class="fa-solid fa-arrows-turn-to-dots fs-5 p-0"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="card-body pt-3 pb-3">
+                                @if(!selectedDetail || selectedDetail?.statik !== 0) {
+                                <div class="row">
+                                    <div class="col-12 d-flex justify-content-between align-items-center">
+
+                                        <!-- Sol blok: Input + Dahil-Hariç -->
+                                        <div class="d-flex align-items-center gap-5">
+
+                                            <!-- Açıklama Input (sadece statik === 1 ise gösterilsin) -->
+                                            @if(selectedDetail?.statik === 1 && selectedDetail.aciklama) {
+                                            <div class="fv-row fv-plugins-icon-container">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span class="">{{"Açıklama" | translate}}</span>
+                                                </label>
+                                                <input type="text"
+                                                    class="form-control form-control-sm form-control-solid"
+                                                    [(ngModel)]="selectedDetail.aciklama">
+                                            </div>
+                                            }
+
+                                            <!-- Dahil-Hariç Checkbox (sadece statik === 1 ise gösterilsin) -->
+                                            @if(selectedDetail?.statik === 1 && selectedDetail.islem !== undefined) {
+                                            <div class="fv-row fv-plugins-icon-container d-flex flex-column gap-3">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span class="me-2">Dahil-Hariç</span>
+                                                    <i class="fa-solid fa-circle-info text-info"
+                                                        pTooltip="Seçilen siciller, gruba dahil mi edilsin yoksa hariç mi tutulsun"
+                                                        tooltipPosition="right"></i>
+                                                </label>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="islemCheck"
+                                                        [(ngModel)]="selectedDetail.islem">
+                                                    <label class="form-check-label" for="islemCheck">
+                                                        {{ selectedDetail.islem ? 'Dahil' : 'Hariç' }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            }
+
+                                        </div>
+
+                                        <!-- Sağ blok: Buton (statik === 0 değilse gösterilsin) -->
+                                        <a class="btn btn-dark btn-sm hover-elevate-up"
+                                            (click)="selectedDetail?.statik === 1 ? onEditTriggered() : displayAssignDialog()">
+                                            <i class="fa-solid fa-floppy-disk"></i>
+                                            {{
+                                            selectedDetail?.statik === 1
+                                            ? ("Güncelle" | translate)
+                                            : ("Kaydet" | translate)
+                                            }}
+                                        </a>
+
+
+                                    </div>
+                                </div>
+                                }
+
+
+
+                                <div class="row py-sm-2">
+                                    <div class="col-12 py-3">
+                                        <app-registries (filterEvent)="onFilterEvent($event)" [filter]="filter"
+                                            [triggered]="triggered"
+                                            [groupId]="form.get('registryGroup')?.value?.id || 0"
+                                            [selectedDetail]="selectedDetail"
+                                            [editTriggered]="editTriggered"
+                                            (editEvent)="onEditEvent($event)">
+
+                                        </app-registries>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+<p-dialog [header]="editTitle" [(visible)]="displayEditDialog" [position]="'top'" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="-40" [draggable]="false" [resizable]="false" (onHide)="hideEditDialog()">
+
+    <form #editForm="ngForm">
+        <div class="fv-row my-5 fv-plugins-icon-container">
+            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                <span class="required">{{"Sicil_Grubu_Adı" | translate}}</span>
+            </label>
+
+            <input type="text" class="form-control form-control-sm form-control-solid"
+                placeholder="{{'Yeni Sicil Grubu Adını Giriniz..' | translate}}" name="name" ngModel>
+            <input type="hidden" name="action" ngModel>
+        </div>
+    </form>
+
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="hideEditDialog()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'İptal' | translate}}
+        </a>
+
+        <a class="btn btn-sm btn-danger mx-1" (click)="editRegistryGroup(editForm.value)">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>
+
+
+<p-dialog header="{{'Atama İşlemi'}}" [(visible)]="displayAssign" [position]="'top'" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="-40" [draggable]="false" [resizable]="false"
+    (onHide)="onHideAssignDialog()">
+
+    <form #assignForm="ngForm">
+        <div class="fv-row my-5 fv-plugins-icon-container">
+            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                <span class="required">{{"Açıklma" | translate}}</span>
+            </label>
+
+            <textarea class="form-control form-control-solid" rows="3" maxlength="500" name="explanation" ngModel
+                placeholder="{{'Açıklama_Giriniz' | translate}}">
+            </textarea>
+        </div>
+    </form>
+
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="onHideAssignDialog()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'İptal' | translate}}
+        </a>
+
+        <a class="btn btn-sm btn-danger mx-1" (click)="saveAssign()">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+    </ng-template>
+</p-dialog>

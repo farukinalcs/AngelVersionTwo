@@ -37,6 +37,7 @@
     "ag-grid-angular": "^30.2.0",
     "ag-grid-community": "^30.2.0",
     "ag-grid-enterprise": "^30.2.0",
+    "@ag-grid-community/locale": "^32.3.7",
     "angular-in-memory-web-api": "0.18.0",
     "animate.css": "^4.1.1",
     "apexcharts": "3.35.3",

@@ -14,6 +14,7 @@ import { resetAccessGroups } from 'src/app/store/actions/access-group.action';
 import { AttendanceService } from '../../attendance/attendance.service';
 import { OrganizationColumnFilterComponent } from '../../attendance/organization-column-filter/organization-column-filter.component';
 import { Router } from '@angular/router';
+import { AG_GRID_LOCALE_TR } from '@ag-grid-community/locale';
 
 @Component({
   selector: 'app-registry-list',
@@ -98,7 +99,9 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges, Afte
   activeTheme: 'light' | 'dark' = 'light'; // Varsayılan tema
   gridApi!: GridApi;
   columnApi!: ColumnApi;
-  gridOptions: GridOptions = {};
+  gridOptions: GridOptions = {
+    localeText:  AG_GRID_LOCALE_TR, // Türkçe dil desteği
+  };
   // ----------
 
   constructor(

@@ -45,6 +45,7 @@ import { OKodFieldsModel } from '../../profile/models/oKodFields';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { SearchFilterPipe } from 'src/app/_helpers/pipes/search-filter.pipe';
+import { AG_GRID_LOCALE_TR } from '@ag-grid-community/locale';
 
 @Component({
   selector: 'app-attendance-pivot-list',
@@ -417,7 +418,9 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
   activeTheme: 'light' | 'dark' = 'light'; // Varsayılan tema
   gridApi!: GridApi;
   columnApi!: ColumnApi;
-  gridOptions: GridOptions = {};
+  gridOptions: GridOptions = {
+    localeText:  AG_GRID_LOCALE_TR, // Türkçe dil desteği
+  };
   // ----------
 
 

@@ -39,6 +39,10 @@ const routes: Routes = [
     loadComponent: () => import('./access-groups/access-groups.component').then(m => m.AccessGroupsComponent),
   },
   {
+    path: 'registry-groups',
+    loadComponent: () => import('./registry-groups/registry-groups.component').then(m => m.RegistryGroupsComponent),
+  },
+  {
     path: 'definitions',
     component: AccessDefinitionsComponent,
     children: [

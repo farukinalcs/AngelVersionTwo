@@ -9,6 +9,7 @@ import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { FilterChangedEvent, GridReadyEvent } from 'ag-grid-community';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { ExitDateRenderer } from '../visitor-grid/exit-date-renderer/exit-date-renderer.component';
+import { AG_GRID_LOCALE_TR } from '@ag-grid-community/locale';
 
 @Component({
   selector: 'app-temp-card',
@@ -71,6 +72,7 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
     ],
   };
   gridOptions: GridOptions = {
+    localeText:  AG_GRID_LOCALE_TR, // Türkçe dil desteği
     context: {
       handleExitButtonClick: this.handleExitButtonClick.bind(this)
     }

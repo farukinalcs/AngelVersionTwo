@@ -12,6 +12,7 @@ import { OrganizationColumnFilterComponent } from 'src/app/_angel/attendance/org
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { ToastrService } from 'ngx-toastr';
 import { RepeatRenderer } from './repeat-renderer/repeat-renderer.component';
+import { AG_GRID_LOCALE_TR } from '@ag-grid-community/locale';
 
 @Component({
   selector: 'app-visitor-grid',
@@ -76,6 +77,7 @@ export class VisitorGridComponent implements OnInit, OnDestroy, OnChanges {
     ],
   };
   gridOptions: GridOptions = {
+    localeText:  AG_GRID_LOCALE_TR, // Türkçe dil desteği
     context: {
       handleExitButtonClick: this.handleExitButtonClick.bind(this),
       handleRepeatButtonClick: this.handleRepeatButtonClick.bind(this),
