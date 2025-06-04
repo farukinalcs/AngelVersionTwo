@@ -358,7 +358,7 @@ export class AccessGroupsComponent implements OnInit, OnDestroy {
         console.log('ilişkiler güncellenecek: ', sp);
 
         this.profileService
-            .requestMethod(sp)
+            .requestMethodPost(sp)
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe((response: any) => {
                 response.forEach((res: any) => {

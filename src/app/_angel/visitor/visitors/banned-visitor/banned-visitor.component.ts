@@ -9,6 +9,7 @@ import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { FilterChangedEvent, GridReadyEvent } from 'ag-grid-community';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { DeleteVisitor } from './delete-visitor/delete-visitor.component';
+import { AG_GRID_LOCALE_TR } from '@ag-grid-community/locale';
 
 
 @Component({
@@ -74,6 +75,7 @@ export class BannedVisitorComponent implements OnInit, OnDestroy, OnChanges {
     ],
   };
   gridOptions: GridOptions = {
+    localeText:  AG_GRID_LOCALE_TR, // Türkçe dil desteği
     context: {
       handleDeleteButtonClick: this.handleDeleteButtonClick.bind(this)
     }

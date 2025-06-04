@@ -1,0 +1,32 @@
+
+
+<div class="ag-theme-material" [ngStyle]="gridStyle" #gridContainer>
+    <ag-grid-angular 
+        #agGrid
+        style="width: 100%; height: 100%;"
+        [ngClass]="activeTheme == 'dark' ? 'ag-theme-alpine-dark' : 'ag-theme-alpine'"
+        (gridReady)="activeTheme == 'dark' ? onGridReadyDark($event) : onGridReadyLight($event)"
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        [rowData]="rowData$ | async"
+        [rowSelection]="rowSelection"
+        [suppressRowClickSelection]="true"
+        (selectionChanged)="onSelectionChangedLight()"
+        [sideBar]="sideBar"
+        [rowGroupPanelShow]="rowGroupPanelShow"
+        [getContextMenuItems]="getContextMenuItems"
+        [animateRows]="true"
+        [statusBar]="statusBar"
+        [getRowHeight]="getRowHeight"
+        [groupSelectsChildren]="true"
+        [pagination]="false"
+        [paginationAutoPageSize]="false"
+        [paginateChildRows]="false"
+        [enableRangeSelection]="true"
+        [enableRangeHandle]="true"
+        [gridOptions]="gridOptions"
+        (filterOpened)="onFilterOpened($event)"
+        (filterChanged)="onFilterChanged($event)"
+        (filterModified)="onFilterModified($event)">
+    </ag-grid-angular>
+</div>

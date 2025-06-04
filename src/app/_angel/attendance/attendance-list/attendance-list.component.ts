@@ -29,6 +29,7 @@ import { FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, GridApi, Gr
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { OrganizationColumnFilterComponent } from '../organization-column-filter/organization-column-filter.component';
 import { ToastrService } from 'ngx-toastr';
+import { AG_GRID_LOCALE_TR } from '@ag-grid-community/locale';
 
 @Component({
   selector: 'app-attendance-list',
@@ -672,7 +673,9 @@ export class AttendanceListComponent implements OnInit, OnDestroy, AfterViewInit
   activeTheme: 'light' | 'dark' = 'light'; // Varsayılan tema
   gridApi!: GridApi;
   columnApi!: ColumnApi;
-  gridOptions: GridOptions = {};
+  gridOptions: GridOptions = {
+    localeText:  AG_GRID_LOCALE_TR, // Türkçe dil desteği
+  };
   // ----------
 
   constructor(

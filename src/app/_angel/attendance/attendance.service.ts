@@ -17,4 +17,8 @@ export class AttendanceService {
   getSelectedItems(): Observable<any[]> {
     return this.selectedItems$;
   }
+
+  getSelectedItemsValue(): any[] {
+    return this.selectedItemsSubject.getValue();
+  }
 }
