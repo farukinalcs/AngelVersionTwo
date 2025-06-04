@@ -22,7 +22,7 @@
     <ng-template #footer>
       <div class="d-flex justify-content-center gap-2 mt-2 w-100">
         <p-button label="Sil" severity="secondary" styleClass="px-3 mr-2" [outlined]="true" />
-        <p-button label="Ata" styleClass="my-blue-btn mr-2" (click)="getItem(item)" />
+        <p-button label="Ata" styleClass="my-blue-btn mr-2" (click)="formMatch(item)" />
         <p-button label="Düzenle" styleClass="px-3" (click)="getItem(item)" />
         
       </div>
@@ -33,78 +33,49 @@
 
 
 
-<!-- <p-dialog
-  [header]="_formTitle"
-  [(visible)]="_formDetailModal"
-  [modal]="true"
-  [style]="{ width: '70vw' }"
-  [breakpoints]="{ '2560px': '80vw', '992px': '60vw', '576px': '50vw' }"
-  [maximizable]="true"
-  [baseZIndex]="10000">
-
+<p-dialog [header]="_formTitle" [(visible)]="_formMatchModal" [modal]="true" [style]="{ width: '70vw' }"
+  [breakpoints]="{ '2560px': '80vw', '992px': '60vw', '576px': '50vw' }" [maximizable]="true" [baseZIndex]="10000">
+  <!-- <div style="background-color: #eef5ff; border-left: 5px solid #2196F3; padding: 10px; margin-bottom: 10px; color: #0d47a1;">
+    <strong>Bilgi:</strong> Puanları güncellemek için üzerine tıklayıp kutucuklara yeni değeri girin ve ardından<em>Güncelle</em> butonuna tıklayın.
+  </div> -->
+  <!-- <div class="p-field">
+    <label for="countSelect">Kaç seçenek olsun?</label>
+    <p-dropdown [options]="allowedCounts" [(ngModel)]="selectedCount" optionLabel="label"
+        optionValue="value" placeholder="Seçiniz" class="full-width-input">
+    </p-dropdown>
+ </div> -->
   <p-table #table [value]="categoryS" [tableStyle]="{ 'min-width': '60rem' }" dataKey="id">
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 10%">Puan</th>
         <th style="width: 60%">Kategori / Soru</th>
-        <th style="width: 30%">İşlem</th>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-cat>
-     
-      <tr class="font-bold bg-gray-100">
-        <td pEditableColumn>
-          <p-cellEditor>
-            <ng-template pTemplate="input">
-              <input type="number" [(ngModel)]="cat.kategoripuan" pInputText />
-            </ng-template>
-            <ng-template pTemplate="output">
-              {{ cat.kategoripuan }}
-            </ng-template>
-          </p-cellEditor>
-        </td>
-     
-        <td class="pl-4 font-bold" style="color: red;">{{ cat.Ad }}</td>
-        <td>
-          <button pButton type="button" icon="pi pi-save" label="Güncelle" (click)="editCategory(cat)"></button>
-        </td>
 
-        <td>
-          <input type="number" pInputText [(ngModel)]="cat.kategoripuan" />
-        </td>
-        <td class="pl-4" style="color: red;">
+      <tr style="background-color: #e0e0e0; font-weight: bold;">
+  
+        <td style="color:#ed1b24; padding-left: 10px;">
           {{ cat.Ad }}
         </td>
+      </tr>
+
+      <!-- Soru Satırları -->
+      <tr *ngFor="let question of getQuestionsByCategory(cat.Ad)" style="background-color: #f9f9f9;">
+
         <td>
-          <button pButton type="button" icon="pi pi-save" label="Güncelle" 
-                  class="p-button-sm p-button-info"
-                  (click)="editCategory(cat)"></button>
+          <!-- Sol üst köşede küçük kategori adı -->
+          <div style="font-size: 0.75rem; color: #ffc0cb; margin-bottom: 4px;">
+            {{ cat.Ad }}
+          </div>
+          <div style="font-weight: bold; color:#0d47a1">{{ question.aciklama }}</div>
+          <div class="text-muted" style="font-size: 0.85rem;"><span>a) Adana   b) Bursa   c) Ceyhan   d) Denizli</span></div>
         </td>
       </tr>
-      <tr *ngFor="let question of getQuestionsByCategory(cat.Ad)" class="question-row">
-        <td>
-          <input type="number" pInputText [(ngModel)]="question.sorupuan" />
-        </td>
-        <td>
-          <div class="pl-4"><strong>{{ question.aciklama }}</strong></div>
-          <div class="text-muted" style="font-size: 0.85rem;">{{ question.cevap }}</div>
-        </td>
-        <td>
-          <button pButton type="button" icon="pi pi-save" label="Güncelle" 
-                  class="p-button-sm p-button-warning"
-                  (click)="editQuestion(question)"></button>
-        </td>
-      </tr>
-   
-      
-  
-
-
 
     </ng-template>
   </p-table>
-</p-dialog> -->
+</p-dialog>
 
 
 <p-dialog [header]="_formTitle" [(visible)]="_formDetailModal" [modal]="true" [style]="{ width: '70vw' }"
@@ -124,7 +95,6 @@
 
     <ng-template pTemplate="body" let-cat>
 
-      <!-- Kategori Satırı -->
       <tr style="background-color: #e0e0e0; font-weight: bold;">
         <!-- <td>
           <input type="number" pInputText [(ngModel)]="cat.kategoripuan" class="puan-input"/>
@@ -192,39 +162,3 @@
     </ng-template>
   </p-table>
 </p-dialog>
-
-
-
-
-
-
-
-
-
-
-<!-- <ng-container *ngFor="let question of getQuestionsByCategory(cat.Ad)">
-        <tr>
-       
-          <td pEditableColumn>
-            <p-cellEditor>
-              <ng-template pTemplate="input">
-                <input type="number" [(ngModel)]="question.sorupuan" pInputText />
-              </ng-template>
-              <ng-template pTemplate="output">
-                {{ question.sorupuan }}
-              </ng-template>
-            </p-cellEditor>
-          </td>
-
-          
-          <td>
-            <div class="pl-4"><strong>{{ question.aciklama }}</strong></div>
-            <div class="text-muted" style="font-size: 0.85rem;">Cevap: {{ question.cevap }}</div>
-          </td>
-
-         
-          <td>
-            <button pButton type="button" icon="pi pi-save" label="Güncelle" (click)="editQuestion(question)"></button>
-          </td>
-        </tr>
-      </ng-container> -->
