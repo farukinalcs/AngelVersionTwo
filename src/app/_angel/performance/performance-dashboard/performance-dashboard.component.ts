@@ -11,9 +11,13 @@ import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
   styleUrl: './performance-dashboard.component.scss'
 })
 export class PerformanceDashboardComponent {
+
   @Input() isFromAttendance: boolean;
 
+  _formMatchModal:boolean = false;
+
   _formDetailModal: boolean = false;
+
   _formTitle: string = "";
   formList: any[] = [];
   formDetail: any[] = [];
@@ -59,7 +63,15 @@ export class PerformanceDashboardComponent {
     this._formTitle = item?.baslik;
     this._formDetailModal = true;
     console.log("getItem:", item);
-    this.form_sDetail(this.selectedFormId ?? 0);
+    this.forms_Detail(this.selectedFormId ?? 0);
+  }
+
+  formMatch(item: any) {
+    this.selectedFormId = item?.id;
+    this._formTitle = item?.baslik;
+    this._formMatchModal = true;
+    console.log("getItem:", item);
+    this.forms_Detail(this.selectedFormId ?? 0);
   }
 
 
@@ -71,23 +83,15 @@ export class PerformanceDashboardComponent {
     });
   }
 
-  form_sDetail(id: number) {
+  forms_Detail(id: number) {
     this.perform.form_s(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.formDetail = response[0]?.x ?? [];
       console.log("formDetail:", this.formDetail);
 
-      // this.parsedForms = this.formDetail.map(form => ({
-      //   ...form,
-      //   sorular: JSON.parse(form.sorular || '[]'),
-      //   kategoriler: JSON.parse(form.kategoriler || '[]'),
-      // }));
       this.parsedForms = this.formDetail.map(form => {
         const parsedSorular = JSON.parse(form.sorular || '[]');
         const parsedKategoriler = JSON.parse(form.kategoriler || '[]');
 
-        // Toplam listeye ekle
-        // this.categoryS.push(...parsedKategoriler);
-        // this.questionS.push(...parsedSorular);
         this.categoryS = [...parsedKategoriler];
         this.questionS = [...parsedSorular];
         return {
@@ -96,7 +100,6 @@ export class PerformanceDashboardComponent {
           kategoriler: parsedKategoriler
         };
       });
-
 
       console.log('parsedForms:', this.parsedForms);
       console.log('Tüm Kategoriler:', this.categoryS);
@@ -113,7 +116,7 @@ export class PerformanceDashboardComponent {
 
   submitForm() {
     console.log('Form Verileri:', this.formData);
-    // Burada ileride yetkinlik ve hedef ayar ekranlarına yönlendirebiliriz
+  
   }
 
   editCategory2(item: any) {
