@@ -26,12 +26,20 @@ export class PerformanceDashboardComponent {
   categoryS: any[] = [];
   questionS: any[] = [];
 
+  sicilGroup:any[] = [];
+
   quesPuan: any;
   catPuan: any
 
   selectedQuestionId: any | null = 0;
   selectedCategoryId: number | null = null;
   selectedFormId: number | null = null;
+  selectedSicilGroupId: number | null = null;
+
+  asChecked:boolean = false;
+  usChecked:boolean = false;
+  myselfChecked:boolean = false;
+  isValid: boolean = true;
 
   constructor(
     private perform: PerformanceService,
@@ -46,6 +54,7 @@ export class PerformanceDashboardComponent {
 
   ngAfterViewInit() {
     this.form_s(0);
+    this.getSicilGroups();
   }
 
   stepperFields: any[] = [
@@ -161,6 +170,26 @@ export class PerformanceDashboardComponent {
   // Kategoriye ait soruları filtreleyen fonksiyon
   getQuestionsByCategory(kategoriad: string) {
     return this.questionS.filter(q => q.kategoriad === kategoriad);
+  }
+
+  onCheckboxChange() {
+
+    const val1 = this.asChecked ? 1 : 0;
+    const val2 = this.usChecked ? 1 : 0;
+    const val3 = this.myselfChecked ? 1 : 0;
+     
+    this.isValid = this.asChecked || this.usChecked || this.myselfChecked;
+    console.log('asChecked:', val1, 'usChecked:', val2, 'myselfChecked:', val3);
+
+
+  }
+
+  getSicilGroups(){
+    this.perform.getSicilGroups().subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+      this.sicilGroup = response[0].x;
+      console.log("getSicilGroups:", this.sicilGroup );
+      this.ref.detectChanges();
+    });
   }
 
 

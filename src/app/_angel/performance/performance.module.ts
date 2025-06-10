@@ -26,7 +26,7 @@ import { DraftComponent } from './draft/draft.component';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ChipModule } from 'primeng/chip';
-
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -55,7 +55,8 @@ import { ChipModule } from 'primeng/chip';
     MatTabsModule,
     TableModule,
     InputTextModule,
-    ChipModule
+    ChipModule,
+    CheckboxModule
   ]
 })
 export class PerformanceModule { }

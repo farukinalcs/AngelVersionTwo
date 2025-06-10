@@ -198,6 +198,7 @@ export class PerformanceService {
     }]
     return this.requestMethod(sp);
   }
+  
   edit_Question(formId:number,catId:number,questionId:number,puan:any){
     var sp: any[] = [{
       mkodu: 'yek321',
@@ -205,6 +206,13 @@ export class PerformanceService {
       kategoriid:catId.toString(),
       soruid:questionId.toString(),
       puan:puan.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  getSicilGroups(){
+    var sp: any[] = [{
+      mkodu: 'yek326',
     }]
     return this.requestMethod(sp);
   }
