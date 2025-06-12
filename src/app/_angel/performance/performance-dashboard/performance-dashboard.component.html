@@ -35,16 +35,47 @@
 
 <p-dialog [header]="_formTitle" [(visible)]="_formMatchModal" [modal]="true" [style]="{ width: '70vw' }"
   [breakpoints]="{ '2560px': '80vw', '992px': '60vw', '576px': '50vw' }" [maximizable]="true" [baseZIndex]="10000">
-  <!-- <div style="background-color: #eef5ff; border-left: 5px solid #2196F3; padding: 10px; margin-bottom: 10px; color: #0d47a1;">
-    <strong>Bilgi:</strong> Puanları güncellemek için üzerine tıklayıp kutucuklara yeni değeri girin ve ardından<em>Güncelle</em> butonuna tıklayın.
-  </div> -->
-  <!-- <div class="p-field">
-    <label for="countSelect">Kaç seçenek olsun?</label>
-    <p-dropdown [options]="allowedCounts" [(ngModel)]="selectedCount" optionLabel="label"
-        optionValue="value" placeholder="Seçiniz" class="full-width-input">
+  <div class="sicil">
+    <label for="sicilGroup">Sicil Grupları</label>
+    <p-dropdown [options]="sicilGroup" [(ngModel)]="selectedSicilGroupId" optionLabel="ad"
+        optionValue="id" placeholder="Seçiniz" class="full-width-input"
+        (onChange)="onSicilGroupChange($event)">
     </p-dropdown>
- </div> -->
+ </div>
+
+ <p-checkbox 
+  [(ngModel)]="asChecked" 
+  [binary]="true" 
+  inputId="as"
+  (ngModelChange)="onCheckboxChange()">
+</p-checkbox>
+<label for="as" class="ml-2">As</label>
+
+<p-checkbox 
+  [(ngModel)]="usChecked" 
+  [binary]="true" 
+  inputId="us"
+  (ngModelChange)="onCheckboxChange()">
+</p-checkbox>
+<label for="us" class="ml-2">ÜS</label>
+
+<p-checkbox 
+  [(ngModel)]="myselfChecked" 
+  [binary]="true" 
+  inputId="myself"
+  (ngModelChange)="onCheckboxChange()">
+</p-checkbox>
+<label for="myself" class="ml-2">Kendisi</label>
+
+<div *ngIf="!isValid" style="color:red; margin-top:10px;">
+  En az bir seçenek seçilmelidir.
+</div>
+
+<p-datepicker [(ngModel)]="startDate" [iconDisplay]="'input'" (onSelect)="getDate('start', $event)" [showIcon]="true" inputId="startDate" />
+<p-datepicker [(ngModel)]="endDate" [iconDisplay]="'input'" (onSelect)="getDate('end', $event)" [showIcon]="true" inputId="endDate" />
+
   <p-table #table [value]="categoryS" [tableStyle]="{ 'min-width': '60rem' }" dataKey="id">
+ 
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 60%">Kategori / Soru</th>
@@ -75,6 +106,10 @@
 
     </ng-template>
   </p-table>
+  <button pButton type="button" icon="pi pi-save" label="Kaydet" class="p-button-sm p-button-warning"
+            (click)="formMatchSicil()">
+          </button>
+
 </p-dialog>
 
 
