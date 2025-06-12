@@ -27,7 +27,7 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ChipModule } from 'primeng/chip';
 import { CheckboxModule } from 'primeng/checkbox';
-
+import { DatePickerModule } from 'primeng/datepicker';
 @NgModule({
   declarations: [
     PerformanceDashboardComponent,
@@ -56,7 +56,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     TableModule,
     InputTextModule,
     ChipModule,
-    CheckboxModule
+    CheckboxModule,
+    DatePickerModule
   ]
 })
 export class PerformanceModule { }

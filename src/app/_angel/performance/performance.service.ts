@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { asNativeElements, Injectable } from '@angular/core';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { environment } from 'src/environments/environment';
 import CryptoES from "crypto-es";
 import { HttpClient } from '@angular/common/http';
 import { ApiUrlService } from 'src/app/_helpers/api-url.service';
 import { Scale } from './models/scale';
+import { useTheme } from '@primeng/themes';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Injectable({
   providedIn: 'root'
@@ -198,7 +200,7 @@ export class PerformanceService {
     }]
     return this.requestMethod(sp);
   }
-  
+
   edit_Question(formId:number,catId:number,questionId:number,puan:any){
     var sp: any[] = [{
       mkodu: 'yek321',
@@ -215,5 +217,20 @@ export class PerformanceService {
       mkodu: 'yek326',
     }]
     return this.requestMethod(sp);
+  }
+
+  formMatchSicil(formid:number,sicilgrupid:number,as:number,us:number,myself:number,startDate:string,endDate:string){
+    var sp: any[] = [{
+      mkodu: 'yek333',
+      formid:formid.toString(),
+      sicilgrupid:sicilgrupid.toString(),
+      ast:as.toString(),
+      ust:us.toString(),
+      kendi:myself.toString(),
+      baslangic:startDate.toString(),
+      bitis:endDate.toString()
+    }]
+    return this.requestMethod(sp);
+
   }
 }
