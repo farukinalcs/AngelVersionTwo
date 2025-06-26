@@ -28,6 +28,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ChipModule } from 'primeng/chip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DatePickerModule } from 'primeng/datepicker';
+import { TestsurveyComponent } from './testsurvey/testsurvey.component';
+import { AccordionModule } from 'primeng/accordion';
 @NgModule({
   declarations: [
     PerformanceDashboardComponent,
@@ -35,7 +37,9 @@ import { DatePickerModule } from 'primeng/datepicker';
     PerformanceDefinitionsComponent,
     PerformanceQuestionCategoryComponent,
     ScaleComponent,
-    CompetenceQuestionsComponent,DraftComponent],
+    CompetenceQuestionsComponent,
+    DraftComponent,
+    TestsurveyComponent],
 
   imports: [
     CommonModule,
@@ -57,7 +61,8 @@ import { DatePickerModule } from 'primeng/datepicker';
     InputTextModule,
     ChipModule,
     CheckboxModule,
-    DatePickerModule
+    DatePickerModule,
+    AccordionModule
   ]
 })
 export class PerformanceModule { }

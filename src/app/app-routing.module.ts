@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './modules/auth/services/auth.guard';
+import { OutServeyComponent } from './out-servey/out-servey.component';
+
+
 
 export const routes: Routes = [
   {
@@ -19,6 +22,10 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./_metronic/layout/layout.module').then((m) => m.LayoutModule),
       
+  },
+  {
+    path:"survey",
+    component:OutServeyComponent
   },
   // {
   //   path: 'patrol',
