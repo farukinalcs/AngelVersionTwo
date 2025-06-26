@@ -1,0 +1,52 @@
+<div class="container-fluid card">
+    <!-- <div *ngFor="let cat of categoryS" class="category-block mb-4">
+        <h3 class="category-title">{{ cat.Ad }}</h3>
+      
+        <div *ngFor="let question of getQuestionsByCategory(cat.Ad)" class="question-card">
+          <div class="question-text">{{ question.aciklama }}</div>
+      
+          <div class="answers text-muted text-sm mt-2">
+            <ng-container *ngIf="getScaleByQuestion(question) as scale">
+              <span *ngIf="scale.cevap1">a) {{ scale.cevap1 }}&nbsp;&nbsp;</span>
+              <span *ngIf="scale.cevap2">b) {{ scale.cevap2 }}&nbsp;&nbsp;</span>
+              <span *ngIf="scale.cevap3">c) {{ scale.cevap3 }}&nbsp;&nbsp;</span>
+              <span *ngIf="scale.cevap4">d) {{ scale.cevap4 }}&nbsp;&nbsp;</span>
+              <span *ngIf="scale.cevap5">e) {{ scale.cevap5 }}</span>
+            </ng-container>
+          </div>
+      
+         
+           <p-dropdown 
+            [options]="getDropdownOptionsForQuestion(question)"
+            [(ngModel)]="question.selectedAnswer"
+            placeholder="Cevap seçin"
+            class="mt-2 w-full">
+          </p-dropdown> 
+        </div>
+      </div> -->
+      <div *ngFor="let cat of categorys" class="category-block mb-4">
+        <h3 class="category-title">{{ cat.Ad }}</h3>
+      
+        <div *ngFor="let question of getQuestionsByCategory(cat.Ad)" class="question-card">
+          <div class="question-text">{{ question.aciklama }}</div>
+      
+          <p-dropdown 
+            [options]="getDropdownOptionsForQuestion(question)"
+            [(ngModel)]="question.selectedAnswer"
+            placeholder="Cevap seçin"
+            class="mt-2 w-full">
+          </p-dropdown>
+        </div>
+      </div>
+      
+      <div class="mt-4 text-right">
+        <button pButton type="button" label="Kaydet" icon="pi pi-save" class="p-button-sm p-button-success"
+          (click)="saveForm()">
+        </button>
+      </div>
+      
+</div>
+
+
+
+  

@@ -798,4 +798,12 @@ export class ProfileService {
     return `${district}/${city}`;
   }
 
+  getMySurvey() {
+    var sp : any[] = [{
+      mkodu : 'yek334'
+    }];
+
+    return this.requestMethod(sp);
+  }
+
 }

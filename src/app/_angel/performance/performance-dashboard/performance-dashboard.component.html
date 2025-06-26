@@ -100,7 +100,16 @@
             {{ cat.Ad }}
           </div>
           <div style="font-weight: bold; color:#0d47a1">{{ question.aciklama }}</div>
-          <div class="text-muted" style="font-size: 0.85rem;"><span>a) Adana   b) Bursa   c) Ceyhan   d) Denizli</span></div>
+          <!-- <div class="text-muted" style="font-size: 0.85rem;"><span>a) Adana   b) Bursa   c) Ceyhan   d) Denizli</span></div> -->
+          <div class="text-muted" style="font-size: 0.85rem;">
+            <ng-container *ngIf="getScaleByQuestion(question) as scale">
+              <span *ngIf="scale.cevap1">a) {{ scale.cevap1 }}&nbsp;&nbsp;</span>
+              <span *ngIf="scale.cevap2">b) {{ scale.cevap2 }}&nbsp;&nbsp;</span>
+              <span *ngIf="scale.cevap3">c) {{ scale.cevap3 }}&nbsp;&nbsp;</span>
+              <span *ngIf="scale.cevap4">d) {{ scale.cevap4 }}&nbsp;&nbsp;</span>
+              <span *ngIf="scale.cevap5">e) {{ scale.cevap5 }}</span>
+            </ng-container>
+          </div>
         </td>
       </tr>
 
