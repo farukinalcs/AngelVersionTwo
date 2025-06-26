@@ -26,6 +26,7 @@ export class AccessRegistryListComponent implements OnInit, OnDestroy {
   filterEvent: boolean = false;
   requestTime: any;
   refreshEvent: boolean = false;
+    detail: boolean = false;
 
   constructor(
     private profileService: ProfileService,
@@ -45,6 +46,7 @@ export class AccessRegistryListComponent implements OnInit, OnDestroy {
   loadingEvent(event: any) {
     console.log("Event Geldi : ", event);
     this.loading = event;
+    this.ref.detectChanges();
   }
 
   clearFilters() {
@@ -69,6 +71,10 @@ export class AccessRegistryListComponent implements OnInit, OnDestroy {
 
   refreshList() {
     this.refreshEvent = !this.refreshEvent;
+  }
+
+  onRegistry(event: any) {
+    this.detail = !this.detail;
   }
   
   ngOnDestroy(): void {

@@ -213,7 +213,8 @@
                         <span >{{"Mesai_Periyodu_Başlangıç_Tarihi" | translate}}</span>
                     </label>
     
-                    <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="periodStartDate">
+                    <!-- <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="periodStartDate"> -->
+                    <p-datepicker [(ngModel)]="periodStartDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                 </div>
 
                 <!-- Spinner overlay -->

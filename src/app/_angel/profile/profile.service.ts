@@ -433,8 +433,7 @@ export class ProfileService {
       bastarih : formValues.startDate,
       bittarih : formValues.endDate,
       yayinlayan : formValues.owner,
-      resimtip : formValues.image,
-      filepath : formValues.file
+      imagepath : formValues.image
     }
     ];
 
@@ -448,7 +447,7 @@ export class ProfileService {
     formData.append('file', file);
     formData.append('formid', formId);
     formData.append('kaynak', kaynak);
-    formData.append('tip', tip.toString());
+    formData.append('tip', tip?.toString());
 
     return this.httpClient.post<any>(this.apiUrlService.apiUrl + '/File/SetFile', formData);
   }

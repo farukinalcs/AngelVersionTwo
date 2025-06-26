@@ -6,15 +6,20 @@
             <div class="row">
                 <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
 
-                    <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-                        <div class="stepper-nav d-flex justify-content-center">
-                            <img src="../../../../../assets/media/illustrations/storyset-1/11.svg" width="100%" alt="">
+                    <ng-container *ngIf="currentStep$.value != 5">
+                        <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                            <div class="stepper-nav d-flex justify-content-center">
+                                <img src="../../../../../assets/media/illustrations/storyset-1/11.svg" width="100%" alt="">
+                            </div>
                         </div>
-                    </div>
+                    </ng-container>
+                    
 
-                    <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields" [isFromAttendance]="false"></app-form-stepper>
+                    <ng-container *ngIf="currentStep$.value != 5">
+                        <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields" [isFromAttendance]="false"></app-form-stepper>
+                    </ng-container>
 
-                    <div class="row w-xl-700px">
+                    <div class="row gap-5" [ngClass]="{'w-xl-700px': currentStep$.value != 5, 'w-100': currentStep$.value == 5 }">
                         <div class="col-12">
                             <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10" [formGroup]="advanceForm">
 
@@ -99,7 +104,8 @@
                                                         <span class="required">{{"Tarih" | translate}}</span>
                                                     </label>
 
-                                                    <input type="date" class="form-control form-control-lg form-control-solid" formControlName="tarih">
+                                                    <!-- <input type="date" class="form-control form-control-lg form-control-solid" formControlName="tarih"> -->
+                                                    <p-datepicker formControlName="tarih" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                                                 </div>
 
                                                 <div class="col-6 p-5">
@@ -201,7 +207,7 @@
                                                         <span class="required">{{"Taksit" | translate}}</span>
                                                     </label>
 
-                                                    <input type="number" min="1" max="12" class="form-control form-control-lg form-control-solid" formControlName="taksit">
+                                                    <input type="number" min="1" class="form-control form-control-lg form-control-solid" formControlName="taksit">
                                                 </div>
                                             </div>
                                         </div>
@@ -273,7 +279,7 @@
                                 </ng-container>
 
                                 <ng-container *ngIf="currentStep$.value == 5">
-                                    <div class="current h-100 scroll">
+                                    <!-- <div class="current h-100 scroll">
                                         <div class="w-100">
 
                                             <div class="row" *ngIf="fileTypes.length == 0">
@@ -305,7 +311,6 @@
                                                                     <div
                                                                         class="row d-flex justify-content-center align-items-center">
     
-                                                                        <!-- <ng-container *ngIf="!item.files.type.startsWith('image')"> -->
                                                                         <div class="col-3 text-center">
                                                                             <div [ngSwitch]="item.files.type">
                                                                                 <div *ngSwitchCase="['image/jpeg', 'image/png', 'image/svg'].includes(item.files.type) ? item.files.type : !item.files.type">
@@ -329,7 +334,6 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <!-- </ng-container> -->
     
     
                                                                         <div class="col-7">
@@ -348,15 +352,6 @@
                                                                                 <i class="fa-solid fa-xmark fs-4"></i>
                                                                             </a>
                                                                         </div>
-    
-                                                                        <!-- <ng-container *ngIf="item.files.type.startsWith('image')">
-                                                                            <div class="col-12 d-flex justify-content-center">
-                                                                                <div class="symbol symbol-75px">
-                                                                                    <img alt="Uploaded File" src="{{item.files.url}}">
-                                                                                    <iframe [src]="item.files.url" iframeborder="0"></iframe>
-                                                                                </div>
-                                                                            </div>    
-                                                                        </ng-container> -->
                                                                     </div>
                                                                 </div>
     
@@ -364,43 +359,21 @@
                                                         </ng-container>
                                                     </div>
     
-                                                    <!-- <ng-container *ngIf="uploadedFile">
-                                                        <div [@fileUploaded]="'uploaded'" class="card bg-light-dark m-3">
-                                                            <div class="card-body">
-                                                                <div class="row d-flex justify-content-center align-items-center">
-                                                
-                                                                    <div class="col-12 d-flex justify-content-end mb-3">
-                                                                        <a (click)="uploadedFile = null" class="btn btn-icon btn-danger btn-sm me-3">
-                                                                            <i class="fa-solid fa-xmark fs-4"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                    
-                                                                    <div class="col-12">
-                                                                        <iframe [src]="uploadedFile.url" width="100%" height="300px"></iframe>
-                                                                    </div>
-                                                
-                                                                    <div class="col-4">
-                                                                        <div class="fs-6 fw-bold text-gray-800 text-center">
-                                                                            {{uploadedFile.name}}
-                                                                        </div>
-                                                                    </div>
-    
-                                                                    <div class="col-4">
-                                                                        <div class="fs-6 fw-bold text-gray-800 text-center">
-                                                                            {{uploadedFile.fileSize}} {{uploadedFile.fileSizeType}}
-                                                                        </div>
-                                                                    </div>
-                                                
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container> -->
-    
     
                                                 </div>
                                             </ng-container>
                                             
                                         </div>
+                                    </div> -->
+
+                                    <div class="row">
+                                        <app-file-upload
+                                            [types]="fileTypes"
+                                            (uploadEvent)="onUploaded($event)"
+                                            [formId]="formId"
+                                            [source]="'fm'">
+
+                                        </app-file-upload>
                                     </div>
                                 </ng-container>
 
@@ -428,38 +401,41 @@
                                     </ng-container>
                                 </div>
 
-                                <ng-container *ngIf="currentStep$.value !== formsCount">
-                                    <div>
-                                        <ng-container *ngIf="currentStep$.value < formsCount - 1">
-                                            <button type="button" class="btn btn-sm btn-danger me-3" (click)="nextStep()">
-                                                <span class="indicator-label">
-                                                    {{"İleri" | translate}} {{ " " }}
-                                                    <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
-                                                        class="svg-icon svg-icon-3 ms-2 me-0"></span>
-                                                    <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                <ng-container *ngIf="currentStep$.value != 5">
+                                    <ng-container *ngIf="currentStep$.value !== formsCount">
+                                        <div>
+                                            <ng-container *ngIf="currentStep$.value < formsCount - 1">
+                                                <button type="button" class="btn btn-sm btn-danger me-3" (click)="nextStep()">
+                                                    <span class="indicator-label">
+                                                        {{"İleri" | translate}} {{ " " }}
+                                                        <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
+                                                            class="svg-icon svg-icon-3 ms-2 me-0"></span>
+                                                        <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                            {{"Gönder" | translate}}
+                                                        </ng-container>
+                                                    </span>
+                                                </button>
+                                            </ng-container>
+                                            <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                <button type="button" class="btn btn-sm btn-danger me-3" (click)="closedFormDialog()">
+                                                    <span class="indicator-label">
+                                                        {{"Kapat" | translate}}
+                                                    </span>
+                                                </button>
+                                                
+                                                <button type="button" class="btn btn-sm btn-danger me-3"
+                                                    (click)="getFormValues()">
+                                                    <span class="indicator-label">
                                                         {{"Gönder" | translate}}
-                                                    </ng-container>
-                                                </span>
-                                            </button>
-                                        </ng-container>
-                                        <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                            <button type="button" class="btn btn-sm btn-danger me-3" (click)="closedFormDialog()">
-                                                <span class="indicator-label">
-                                                    {{"Kapat" | translate}}
-                                                </span>
-                                            </button>
-                                            
-                                            <button type="button" class="btn btn-sm btn-danger me-3"
-                                                (click)="getFormValues()">
-                                                <span class="indicator-label">
-                                                    {{"Gönder" | translate}}
-                                                </span>
-                                            </button>
-
-                                        </ng-container>
-
-                                    </div>
+                                                    </span>
+                                                </button>
+    
+                                            </ng-container>
+    
+                                        </div>
+                                    </ng-container>
                                 </ng-container>
+                                
                             </div>
                         </div>
                     </div>

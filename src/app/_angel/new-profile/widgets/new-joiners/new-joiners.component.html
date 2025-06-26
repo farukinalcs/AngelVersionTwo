@@ -22,44 +22,12 @@
         </div>
     </div>
     <div class="card-body p-4">
-        <!-- <div class="mb-5">
-            <div class="row">
-                <div class="col-2 d-flex align-items-center">
-                    <i class="fa-solid fa-chevron-left text-hover-danger fs-2" (click)="previousItem()"></i>
-                </div>
 
-                <div class="col-8 d-flex justify-content-center">
-                    <div class="symbol symbol-75px"><img alt="Logo"
-                        src="{{currentItem.img}}">
-                    </div>
-                </div>
-
-                <div class="col-2 d-flex align-items-center justify-content-end">
-                    <i class="fa-solid fa-chevron-right text-hover-danger fs-2" (click)="nextItem()"></i>
-                </div>
-            </div>
-
-            <div class="row mt-10">
-                <div class="col-12">
-                    <div class="fs-1 fw-bold text-gray-800 text-center mb-13">
-                        <div>Hoşgeldin</div>
-                        <div>{{currentItem.isim}} {{currentItem.soyisim}}</div>
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <div class="fs-6 fw-bold text-gray-800 text-center">
-                        <div>Aramıza hoşgeldin</div>
-                        <div>{{currentItem.isim}}</div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
 
 
         <ng-container *ngIf="todayNewPerson.length > 0">
             <p-carousel [value]="todayNewPerson" [numVisible]="1" [numScroll]="1" [circular]="true"
-                [autoplayInterval]="55000" [showIndicators]="false">
+                [autoplayInterval]="55000" [showIndicators]="false" [showNavigators]="todayNewPerson.length > 1">
                 <ng-template let-item pTemplate="item">
                     <div class="tanimlar-item">
                         <div class="tanimlar-item-content">

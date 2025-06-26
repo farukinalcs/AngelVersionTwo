@@ -1,8 +1,8 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
+import { HelperService } from 'src/app/_helpers/helper.service';
 
 @Component({
     selector: 'app-access-dashboard',
@@ -71,10 +71,12 @@ export class AccessDashboardComponent implements OnInit, OnDestroy {
     selectedAreaIndex = 0;
     selectedArea: any = null;
     areas: any[] = [];
+    editMode: boolean = false;
 
     constructor(
         private profileService: ProfileService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private helperService: HelperService
     ) { }
 
     ngOnInit(): void {
@@ -103,6 +105,7 @@ export class AccessDashboardComponent implements OnInit, OnDestroy {
     updateSelectedArea() {
         if (this.areas.length > 0) {
             this.selectedArea = this.areas[this.selectedAreaIndex];
+            this.helperService.updateData(this.selectedArea);
         }
 
         this.getValues();
@@ -121,13 +124,13 @@ export class AccessDashboardComponent implements OnInit, OnDestroy {
         this.selectedAreaIndex = (this.selectedAreaIndex + 1) % this.areas.length;
         this.updateSelectedArea();
     }
-    
+
     getValues() {
         this.dashboardOptions.map((option) => {
             option.value = '0';
             option.items = [];
         });
-        
+
         this.getInsidePersonel();
         this.getLast100Process();
         this.getDisconnectedDevices();
@@ -252,7 +255,7 @@ export class AccessDashboardComponent implements OnInit, OnDestroy {
                 this.matchValues(mappingData);
             });
     }
-    
+
     getInsidePersonel() {
         var sp: any[] = [
             {
@@ -283,7 +286,7 @@ export class AccessDashboardComponent implements OnInit, OnDestroy {
                 this.matchValues(mappingData);
             });
     }
-    
+
     matchValues(data: any[]) {
         if (!data || data.length === 0) {
             return;
@@ -343,6 +346,9 @@ export class AccessDashboardComponent implements OnInit, OnDestroy {
         });
     }
 
+    editModeToggle() {
+        this.editMode = !this.editMode;
+    }
 
     ngOnDestroy(): void {
         this.ngUnsubscribe.next(true);

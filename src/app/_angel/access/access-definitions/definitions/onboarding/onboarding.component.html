@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Başlangıç Ekranı" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Bilgilerini_Buradan_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="d-grid mb-3">
+                            <button class="btn btn-sm btn-secondary" (click)="showAdd()">
+                                + Ekle
+                            </button>
+                        </div>
+                        
+                        <div class="col-12">
+                            @if (loading$ | async) {
+                            <app-loading-skeleton [count]="6"></app-loading-skeleton>
+                            } @else if (items?.length) {
+                            <div class="row">
+                                @for (item of items; track item.id) {
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                    <app-item-card [item]="item" (fetchEvent)="fetchItems()"></app-item-card>
+                                </div>
+                                }
+                            </div>
+                            } @else {
+                            <div class="alert alert-info">
+                                Gösterilecek Bir Şey Bulunamadı
+                            </div>
+                            }
+                            <app-new-item [display]="display" (closeEvent)="close($event)"></app-new-item>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

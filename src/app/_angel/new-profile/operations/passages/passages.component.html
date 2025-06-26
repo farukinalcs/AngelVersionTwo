@@ -1,221 +1,118 @@
-<div class="container">
-    <div class="card p-5">
-        <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="getTransitions($event)" style="min-height: 300px;">
-            <mat-tab label="{{'Günlük' | translate}}">
-                <div class="m-2 card card-custom gutter-b">
-                    <div class="card-body">
-                        <div class="row d-flex justify-content-center">
-                            <ng-container *ngIf="transitions.length > 0">
-                                <div class="col-12 frame pb-20">
-                                    <div class="timeline timeline-4">
-                                        <div class="timeline-items" *ngFor="let item of transitions">
-                                            <ng-container *ngIf="item.yon == '3' ">
-                                                <div class="timeline-item timeline-item-left">
-                                                    <div class="timeline-badge">
-                                                        <div class="bg-danger"></div>
-                                                    </div>
-                            
-                                                    <div class="timeline-label p-0 m-0 px-md-2 mb-md-2">
-                                                        <span class="fw-bold fs-6 text-gray-600">
-                                                            {{item.zaman | date:'yyyy-MM-dd'}}
-                                                        </span>
-
-                                                        <span class="fw-bold fs-6 text-gray-600">
-                                                            {{item.zaman | date : 'HH:mm:ss'}}
-                                                        </span>
-                                                    </div>
-                            
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center">
-                                                        {{item.cihaz}}
-                                                    </div>
-                                                </div>
-                                            </ng-container>
-                            
-                                            <ng-container *ngIf="item.yon == '2' ">
-                                                <div class="timeline-item timeline-item-right">
-                                                    <div class="timeline-badge">
-                                                        <div class="bg-success"></div>
-                                                    </div>
-                                                    <div class="timeline-label p-0 m-0 px-md-2 mb-md-2">
-                                                        <span class="fw-bold fs-6 text-gray-600">
-                                                            {{item.zaman | date:'yyyy-MM-dd'}}
-                                                        </span>
-
-                                                        <span class="fw-bold fs-6 text-gray-600">
-                                                            {{item.zaman | date : 'HH:mm:ss'}}
-                                                        </span>
-                                                    </div>
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center">
-                                                        {{item.cihaz}}
-                                                    </div>
-                                                </div>
-                                            </ng-container>
-                                        </div>
-                                    </div>
+<div class="container my-4">
+    <p-tabView (onChange)="getTransitions($event.index)">
+        <p-tabPanel header="{{ 'Günlük' | translate }}">
+            <ng-template pTemplate="content">
+                <ng-container *ngIf="transitions.length > 0; else noData">
+                    <p-timeline [value]="transitions" align="alternate" styleClass="custom-timeline">
+                        <ng-template let-item pTemplate="content">
+                            <div class="timeline-item-box" [ngClass]="{
+                    'text-start me-auto': item.yon == '2',
+                    'text-end ms-auto': item.yon == '3'
+                  }">
+                                <span class="badge px-2 py-1 mb-1" [ngClass]="{
+                      'bg-success': item.yon == '2',
+                      'bg-danger': item.yon == '3'
+                    }">
+                                    {{ item.yon == '2' ? 'Giriş' : 'Çıkış' }}
+                                </span>
+                                <div class="fw-bold">
+                                    {{ item.zaman | date: 'yyyy-MM-dd HH:mm:ss' }}
                                 </div>
-                            </ng-container>
+                                <div class="text-muted">{{ item.cihaz }}</div>
+                            </div>
+                        </ng-template>
+                        <!-- <ng-template let-item pTemplate="opposite">
+                            <i class="pi" [ngClass]="{
+                    'pi-sign-in text-success': item.yon == '2',
+                    'pi-sign-out text-danger': item.yon == '3'
+                  }" style="font-size: 1.4rem"></i>
+                        </ng-template> -->
+                    </p-timeline>
+                </ng-container>
 
-                            <ng-container *ngIf="transitions.length == 0">
-                                <div class="row pt-10">
-                                    <div class="col-12 d-flex justify-content-center align-items-center">
-                                        <div class="row">
-                                            <app-data-not-found [imgWidth]=" '70%' "></app-data-not-found>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </div>
+                <!-- BOŞ VERİ ŞABLONU -->
+                <ng-template #noData>
+                    <div class="d-flex justify-content-center align-items-center py-5">
+                        <app-data-not-found [imgWidth]="'70%'"></app-data-not-found>
                     </div>
-                </div>
+                </ng-template>
+            </ng-template>
+        </p-tabPanel>
 
-            </mat-tab>
-
-
-
-
-            <mat-tab label="{{'Haftalık' | translate}}" (click)="getTransitions('7')">
-                <div class="m-2 card card-custom gutter-b">
-
-                    <div class="card-body">
-                        <div class="row d-flex justify-content-center">
-                            <ng-container *ngIf="transitions.length > 0">
-                                <div class="col-12 frame pb-20">
-                                    <div class="timeline timeline-4">
-                                        <div class="timeline-items" *ngFor="let item of transitions">
-                                            <ng-container *ngIf="item.yon == '3' ">
-                                                <div class="timeline-item timeline-item-left">
-                                                    <div class="timeline-badge">
-                                                        <div class="bg-danger"></div>
-                                                    </div>
-                            
-                                                    <div class="timeline-label p-0 m-0 px-md-2 mb-md-2">
-                                                        <span class="fw-bold fs-6 text-gray-600">
-                                                            {{item.zaman | date:'yyyy-MM-dd'}}
-                                                        </span>
-
-                                                        <span class="fw-bold fs-6 text-gray-600">
-                                                            {{item.zaman | date : 'HH:mm:ss'}}
-                                                        </span>
-                                                    </div>
-                            
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center">
-                                                        {{item.cihaz}}
-                                                    </div>
-                                                </div>
-                                            </ng-container>
-                            
-                                            <ng-container *ngIf="item.yon == '2' ">
-                                                <div class="timeline-item timeline-item-right">
-                                                    <div class="timeline-badge">
-                                                        <div class="bg-success"></div>
-                                                    </div>
-                                                    <div class="timeline-label p-0 m-0 px-md-2 mb-md-2">
-                                                        <span class="fw-bold fs-6 text-gray-600">
-                                                            {{item.zaman | date:'yyyy-MM-dd'}}
-                                                        </span>
-
-                                                        <span class="fw-bold fs-6 text-gray-600">
-                                                            {{item.zaman | date : 'HH:mm:ss'}}
-                                                        </span>
-                                                    </div>
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center">
-                                                        {{item.cihaz}}
-                                                    </div>
-                                                </div>
-                                            </ng-container>
-                                        </div>
-                                    </div>
+        <!-- HAFTALIK -->
+        <p-tabPanel header="{{ 'Haftalık' | translate }}">
+            <ng-template pTemplate="content">
+                <ng-container *ngIf="transitions.length > 0; else noData">
+                    <p-timeline [value]="transitions" align="alternate" styleClass="custom-timeline">
+                        <ng-template let-item pTemplate="content">
+                            <div class="timeline-item-box" [ngClass]="{
+                    'text-start me-auto': item.yon == '2',
+                    'text-end ms-auto': item.yon == '3'
+                  }">
+                                <span class="badge px-2 py-1 mb-1" [ngClass]="{
+                      'bg-success': item.yon == '2',
+                      'bg-danger': item.yon == '3'
+                    }">
+                                    {{ item.yon == '2' ? 'Giriş' : 'Çıkış' }}
+                                </span>
+                                <div class="fw-bold">
+                                    {{ item.zaman | date: 'yyyy-MM-dd HH:mm:ss' }}
                                 </div>
-                            </ng-container>
-
-                            <ng-container *ngIf="transitions.length == 0">
-                                <div class="row pt-10">
-                                    <div class="col-12 d-flex justify-content-center align-items-center">
-                                        <div class="row">
-                                            <app-data-not-found [imgWidth]=" '70%' "></app-data-not-found>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </div>
+                                <div class="text-muted">{{ item.cihaz }}</div>
+                            </div>
+                        </ng-template>
+                        <!-- <ng-template let-item pTemplate="opposite">
+                            <i class="pi" [ngClass]="{
+                    'pi-sign-in text-success': item.yon == '2',
+                    'pi-sign-out text-danger': item.yon == '3'
+                  }" style="font-size: 1.4rem"></i>
+                        </ng-template> -->
+                    </p-timeline>
+                </ng-container>
+                <ng-template #noData>
+                    <div class="d-flex justify-content-center align-items-center py-5">
+                        <app-data-not-found [imgWidth]="'70%'"></app-data-not-found>
                     </div>
-                </div>
-            </mat-tab>
+                </ng-template>
+            </ng-template>
+        </p-tabPanel>
 
-
-
-
-            <mat-tab label="{{'Aylık' | translate}}" (click)="getTransitions('30')">
-                <div class="m-2 card card-custom gutter-b">
-
-                    <div class="card-body">
-                        <div class="row d-flex justify-content-center">
-                            <ng-container *ngIf="transitions.length > 0">
-                                <div class="col-12 frame pb-20">
-                                    <div class="timeline timeline-4">
-                                        <div class="timeline-items" *ngFor="let item of transitions">
-                            
-                                            <ng-container *ngIf="item.yon == '3' ">
-                                                <div class="timeline-item timeline-item-left">
-                                                    <div class="timeline-badge">
-                                                        <div class="bg-danger"></div>
-                                                    </div>
-                            
-                                                    <div class="timeline-label p-0 m-0 px-md-2 mb-md-2">
-                                                        <span class="fw-bold fs-6 text-gray-600">
-                                                            {{item.zaman | date:'yyyy-MM-dd'}}
-                                                        </span>
-
-                                                        <span class="fw-bold fs-6 text-gray-600">
-                                                            {{item.zaman | date : 'HH:mm:ss'}}
-                                                        </span>
-                                                        
-                                                    </div>
-                            
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center">
-                                                        {{item.cihaz}}
-                                                    </div>
-                                                </div>
-                                            </ng-container>
-                            
-                                            <ng-container *ngIf="item.yon == '2' ">
-                                                <div class="timeline-item timeline-item-right">
-                                                    <div class="timeline-badge">
-                                                        <div class="bg-success"></div>
-                                                    </div>
-                                                    <div class="timeline-label  p-0 m-0 px-md-2 mb-md-2">
-                                                        <span class="fw-bold fs-6 text-gray-600">
-                                                            {{item.zaman | date:'yyyy-MM-dd'}}
-                                                        </span>
-
-                                                        <span class="fw-bold fs-6 text-gray-600">
-                                                            {{item.zaman | date : 'HH:mm:ss'}}
-                                                        </span>
-                                                    </div>
-                                                    <div class="timeline-content fw-bold fs-6 text-gray-800 text-center">
-                                                        {{item.cihaz}}
-                                                    </div>
-                                                </div>
-                                            </ng-container>
-                                        </div>
-                                    </div>
+        <!-- AYLIK -->
+        <p-tabPanel header="{{ 'Aylık' | translate }}">
+            <ng-template pTemplate="content">
+                <ng-container *ngIf="transitions.length > 0; else noData">
+                    <p-timeline [value]="transitions" align="alternate" styleClass="custom-timeline">
+                        <ng-template let-item pTemplate="content">
+                            <div class="timeline-item-box" [ngClass]="{
+                    'text-start me-auto': item.yon == '2',
+                    'text-end ms-auto': item.yon == '3'
+                  }">
+                                <span class="badge px-2 py-1 mb-1" [ngClass]="{
+                      'bg-success': item.yon == '2',
+                      'bg-danger': item.yon == '3'
+                    }">
+                                    {{ item.yon == '2' ? 'Giriş' : 'Çıkış' }}
+                                </span>
+                                <div class="fw-bold">
+                                    {{ item.zaman | date: 'yyyy-MM-dd HH:mm:ss' }}
                                 </div>
-                            </ng-container>
-
-                            <ng-container *ngIf="transitions.length == 0">
-                                <div class="row pt-10">
-                                    <div class="col-12 d-flex justify-content-center align-items-center">
-                                        <div class="row">
-                                            <app-data-not-found [imgWidth]=" '70%' "></app-data-not-found>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </div>
+                                <div class="text-muted">{{ item.cihaz }}</div>
+                            </div>
+                        </ng-template>
+                        <!-- <ng-template let-item pTemplate="opposite">
+                            <i class="pi" [ngClass]="{
+                    'pi-sign-in text-success': item.yon == '2',
+                    'pi-sign-out text-danger': item.yon == '3'
+                  }" style="font-size: 1.4rem"></i>
+                        </ng-template> -->
+                    </p-timeline>
+                </ng-container>
+                <ng-template #noData>
+                    <div class="d-flex justify-content-center align-items-center py-5">
+                        <app-data-not-found [imgWidth]="'70%'"></app-data-not-found>
                     </div>
-                </div>
-            </mat-tab>
-
-        </mat-tab-group>
-    </div>
+                </ng-template>
+            </ng-template>
+        </p-tabPanel>
+    </p-tabView>
 </div>

@@ -1,29 +1,24 @@
 <div class="container-fluid">
-    <div class="card py-5 px-3" *ngIf="!selectedReport">
+    <div class="" *ngIf="!selectedReport">
         <div class="row">
-            <div class="col-2 pe-10 border-end border-3 my-2">
-                <app-report-category
-                    [categories]="categories"
-                    [selectedCategory]="selectedCategory"
+            <div class="col-12">
+                <app-report-category [categories]="categories" [selectedCategory]="selectedCategory"
                     (selectCategory)="changeCategory($event)">
                 </app-report-category>
             </div>
-    
-            <div class="col-10">
-                <app-report-list
-                    [selectedCategory]="selectedCategory"
-                    [reports]="reports"
+
+            <div class="col-12">
+                <app-report-list [selectedCategory]="selectedCategory" [reports]="reports"
                     (selectReportEvent)="selectReport($event)">
                 </app-report-list>
             </div>
-        </div>   
+        </div>
     </div>
 
-    <div class="card py-5 px-3" *ngIf="selectedReport">
+    <!-- <div class="card py-5 px-3" *ngIf="selectedReport">
         <div class="card-header">
             <h3 class="card-title align-items-start flex-column">
                 <span class="card-label fw-bold text-gray-800">{{selectedReport.ad}}</span>
-                <!-- <span class="text-gray-500 mt-1 fw-semibold fs-6">-</span> -->
             </h3>
     
             <div class="card-toolbar">           
@@ -48,5 +43,82 @@
                 ></app-bold-report>
             </div>
         </div>   
-    </div>
+    </div> -->
+
+    <ng-container *ngIf="selectedReport">
+        <div class="row mx-2 my-5">
+            <div class="col-12">
+                <div class="card py-5 px-3">
+                    <div class="card-header d-flex justify-content-end flex-row-reverse gap-5 align-items-center border-0">
+                        <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bold text-gray-800">{{selectedReport.ad}}</span>
+                        </h3>
+
+                        <div class="card-toolbar">
+                            <div class="btn btn-sm btn-light d-flex align-items-center px-4" (click)="resetReport()">
+                                <div class="text-gray-600 fw-bold">{{'Geri_Dön' | translate}}</div>
+
+                                <i class="fa-solid fa-arrow-left text-gray-500 lh-0 fs-2 ms-2 me-0"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mx-2 my-5">
+            <ng-container *ngIf="showCard">
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-center flex-column py-5">
+                            <h3>
+                                <i class="fa-solid fa-filter fs-4 text-gray-800"></i>
+                                Rapor Parametreleri
+                            </h3>
+                            <h5 class="text-muted">
+                                Rapor kriterlerini belirleyerek özelleştirilmiş analiz oluşturun.
+                            </h5>
+                            <!-- <button class="btn btn-sm btn-danger m-2 z-3" (click)="toggleCard()">
+                                <i class="fa fa-times"></i>
+                            </button> -->
+    
+                            <button class="btn btn-sm btn-danger m-0 px-4 py-3 z-3"
+                                (click)="toggleCard()"
+                                style="
+                                    position: absolute;
+                                    top: -9px;
+                                    left: 271px;
+                                ">
+                                <i class="fa fa-times p-0"></i>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <app-report-params [report]="selectedReport"
+                                (cacheKeyEvent)="getCacheKey($event)"></app-report-params>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="!showCard">
+                <div class="col-1">
+                    <h3 (click)="toggleCard()">
+                        <i class="fa-solid fa-filter fs-4 text-danger"></i>
+                    </h3>
+                </div>      
+            </ng-container>
+            
+
+            <div class="" [ngClass]="{'col-9': showCard, 'col-11': !showCard}">
+                <div class="card">
+                        <app-bold-report [serviceUrl]="serviceUrl" [reportPath]="reportPath" [cacheKey]="cacheKey"
+                            [parameters]="parameters"></app-bold-report>
+                    
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+
+
 </div>

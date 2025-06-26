@@ -6,6 +6,7 @@ import { StepperOrientation } from '@angular/material/stepper';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InlineSVGModule } from 'ng-inline-svg-2';
 import { ToastrService } from 'ngx-toastr';
+import { DatePickerModule } from 'primeng/datepicker';
 import { Dialog } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
@@ -27,7 +28,8 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
     SharedModule,
     Dialog,
     SelectModule,
-    InlineSVGModule
+    InlineSVGModule,
+    DatePickerModule
   ],
   templateUrl: './visitor.component.html',
   styleUrl: './visitor.component.scss'
@@ -572,6 +574,10 @@ export class VisitorComponent implements OnInit, OnDestroy {
 
   getBosBelgeler(item: any[]): string[] {
     return item.filter(belge => !belge.files).map(belge => belge.ad);
+  }
+
+  getVisitTypeNameById(value: any) {
+    return this.visitTypes.filter(item => item.ID == value).map(item => item.ad);
   }
 
   ngOnDestroy(): void {

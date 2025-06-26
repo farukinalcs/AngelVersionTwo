@@ -10,6 +10,7 @@ import { SelectModule } from 'primeng/select';
 import { combineLatest, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { Visitor } from '../models/visitor.model';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-update-visitor',
@@ -21,7 +22,8 @@ import { Visitor } from '../models/visitor.model';
     SelectModule,
     ReactiveFormsModule,
     TranslateModule,
-    ProgressBarModule
+    ProgressBarModule,
+    DatePickerModule
   ],
   templateUrl: './update-visitor.component.html',
   styleUrl: './update-visitor.component.scss'

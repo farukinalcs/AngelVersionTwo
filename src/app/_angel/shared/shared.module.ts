@@ -69,6 +69,12 @@ import { ReportParamsComponent } from './bold-report/report-params/report-params
 
 import { HasPermissionAnyDirective } from 'src/app/core/permission/has-permission-any.directive';
 import { HasPermissionDirective } from 'src/app/core/permission/has-permission.directive';
+import { NewRegistryCardComponent } from './registry-list/new-registry-card/new-registry-card.component';
+import { IconFieldModule } from 'primeng/iconfield';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputIconModule } from 'primeng/inputicon';
+import { DatePickerModule } from 'primeng/datepicker';
+import { SelectModule } from 'primeng/select';
 
 
 
@@ -105,7 +111,8 @@ import { HasPermissionDirective } from 'src/app/core/permission/has-permission.d
     ReportListComponent,
     ReportParamsComponent,
     HasPermissionDirective,
-    HasPermissionAnyDirective
+    HasPermissionAnyDirective,
+    NewRegistryCardComponent
   ],
   imports: [
     CommonModule,
@@ -129,7 +136,8 @@ import { HasPermissionDirective } from 'src/app/core/permission/has-permission.d
     NgbProgressbarModule,
     InlineSVGModule,
     MatExpansionModule,
-    BoldReportViewerModule // Bold Reports
+    BoldReportViewerModule, // Bold Reports
+    InputIconModule, IconFieldModule, FloatLabelModule, DatePickerModule, SelectModule
   ],
   exports: [
     SicilListeComponent,
@@ -156,7 +164,8 @@ import { HasPermissionDirective } from 'src/app/core/permission/has-permission.d
     BoldReportComponent,
     PersonalInfoComponent,
     HasPermissionDirective,
-    HasPermissionAnyDirective
+    HasPermissionAnyDirective,
+    NewRegistryCardComponent
   ]
 })
 export class SharedModule { }

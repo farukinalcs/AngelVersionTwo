@@ -102,7 +102,8 @@
                                             <span class="">{{"Periyot_Başlangıç_Tarihi" | translate}}</span>
                                         </label>
             
-                                        <input type="date" [(ngModel)]="startPeriodDate" class="form-control form-control-sm form-control-solid">
+                                        <!-- <input type="date" [(ngModel)]="startPeriodDate" class="form-control form-control-sm form-control-solid"> -->
+                                        <p-datepicker [(ngModel)]="startPeriodDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                                     </div>
 
                                     <div class="col-3 py-3" *ngIf="shiftCorrection">
@@ -110,7 +111,8 @@
                                             <span class="">{{"Periyot_Başlangıç_Saati" | translate}}</span>
                                         </label>
             
-                                        <input type="time" [(ngModel)]="startPeriodTime" class="form-control form-control-sm form-control-solid">
+                                        <!-- <input type="time" [(ngModel)]="startPeriodTime" class="form-control form-control-sm form-control-solid"> -->
+                                        <p-datepicker [(ngModel)]="startPeriodTime" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
                                     </div>
 
                                     <div class="py-3" [ngClass]="{'col-6': !shiftCorrection, 'col-3': shiftCorrection}">
@@ -142,7 +144,7 @@
                                         <div class="table-responsive h-550px scroll">
                                             <table
                                                 class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
-                                                <thead class="sticky-top">
+                                                <thead class="">
                                                     <tr class="fs-8 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
                                                         <th class="fw-bolder me-1 rounded-start" style="width: 70%;"> {{"Grup_Açıklama" | translate}}</th>
                                                         <th class="fw-bolder me-1 rounded-end" style="width: 30%;">{{"İşlem" | translate}}</th>
@@ -172,7 +174,7 @@
                                     <div class="col-6">
                                         <div class="table-responsive h-550px scroll">
                                             <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
-                                                <thead class="sticky-top">
+                                                <thead class="">
                                                     <tr class="fs-8 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
                                                         <th class="fw-bolder me-1 rounded-start" style="width: 30%;">{{"İşlem" | translate}}</th>
                                                         <th class="fw-bolder me-1 rounded-end" style="width: 70%;"> {{"Mesai_Açıklama" | translate}}</th>

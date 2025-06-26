@@ -8,60 +8,114 @@ import { DemandProcessModel } from '../../profile/models/demandProcess';
 import { ProfileService } from '../../profile/profile.service';
 
 @Component({
-  selector: 'app-request-process',
-  templateUrl: './request-process.component.html',
-  styleUrls: ['./request-process.component.scss']
+    selector: 'app-request-process',
+    templateUrl: './request-process.component.html',
+    styleUrls: ['./request-process.component.scss']
 })
 export class RequestProcessComponent implements OnInit, OnDestroy {
-  @Input() demandId: any;
-  @Input() demandTypeName: any;
-  @Input() displayRequestProcess: boolean;
-  @Output() displayRequestProcessEvent : EventEmitter<void> = new EventEmitter<void>();
+    @Input() demandId: any;
+    @Input() demandTypeName: any;
+    @Input() displayRequestProcess: boolean;
+    @Output() displayRequestProcessEvent: EventEmitter<void> = new EventEmitter<void>();
 
-  private ngUnsubscribe = new Subject();
-  
-  requestProcess : any[] = [];
+    private ngUnsubscribe = new Subject();
 
-  constructor(
-    private profileService: ProfileService,
-    private toastrService: ToastrService,
-    private translateService: TranslateService,
-    private ref: ChangeDetectorRef
-  ) { }
-  
-  ngOnInit(): void {
-    this.getDemandProcess(this.demandId, this.demandTypeName);
-  }
+    requestProcess: any[] = [];
 
-  getDemandProcess(formId : any, formTip : any) {
-    if (formTip == 'İzin') {
-      formTip = 'izin';
-    }else if (formTip == 'Fazla Mesai'){
-      formTip = 'fazlamesai'
+    constructor(
+        private profileService: ProfileService,
+        private toastrService: ToastrService,
+        private translateService: TranslateService,
+        private ref: ChangeDetectorRef
+    ) { }
+
+    ngOnInit(): void {
+        this.getDemandProcess(this.demandId, this.demandTypeName);
     }
-    this.profileService.getDemandProcess(formId, formTip).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<DemandProcessModel, ResponseDetailZ>[]) => {
-      let data = response[0].x;
-      let message = response[0].z;
 
-      console.log("Talep Süreci : ", data);
-      if (message.islemsonuc == 1) {
-        this.requestProcess = data; 
+    getDemandProcess(formId: any, formTip: any) {
+        if (formTip == 'İzin') {
+            formTip = 'izin';
+        } else if (formTip == 'Fazla Mesai') {
+            formTip = 'fazlamesai'
+        }
+        this.profileService.getDemandProcess(formId, formTip).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<DemandProcessModel, ResponseDetailZ>[]) => {
+            let data = response[0].x;
+            let message = response[0].z;
 
-      }else {
-        this.toastrService.warning(
-          this.translateService.instant("Gösterilecek_Süreç_Bulunamadı"),
-          this.translateService.instant("Uyarı")
-        );
-      }
-      this.ref.detectChanges();
-    })
-  }
+            console.log("Talep Süreci : ", data);
+            if (message.islemsonuc == 1) {
+                this.requestProcess = data;
 
-  hideRequestProcess() {
-    this.displayRequestProcessEvent.emit();
-  }
+            } else {
+                this.toastrService.warning(
+                    this.translateService.instant("Gösterilecek_Süreç_Bulunamadı"),
+                    this.translateService.instant("Uyarı")
+                );
+            }
+            this.ref.detectChanges();
+        })
+    }
 
-  ngOnDestroy(): void {
-    this.displayRequestProcessEvent.emit();
-  }
+    hideRequestProcess() {
+        this.displayRequestProcessEvent.emit();
+    }
+
+
+    formatDate(dateStr: string): string {
+        const date = new Date(dateStr);
+        return date.toLocaleString('tr-TR', {
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+    }
+
+    getStatusColor(status: string): string {
+        switch (status) {
+            case 'Eklendi':
+                return 'bg-primary';
+            case 'Reddedildi':
+                return 'bg-danger';
+            case 'Onay Bekleniyor':
+                return 'bg-warning';
+            case 'Onaylandı':
+                return 'bg-success';
+            default:
+                return 'bg-secondary';
+        }
+    }
+
+    getStatusIcon(status: string): string {
+        switch (status) {
+            case 'Eklendi':
+                return 'bi bi-plus';
+            case 'Reddedildi':
+                return 'bi bi-x';
+            case 'Onay Bekleniyor':
+                return 'bi bi-clock';
+            case 'Onaylandı':
+                return 'bi bi-check';
+            default:
+                return 'bi bi-info-circle';
+        }
+    }
+
+    getBadgeVariant(status: string): string {
+        switch (status) {
+            case 'Eklendi':
+                return 'primary';
+            case 'Reddedildi':
+                return 'danger';
+            case 'Onay Bekleniyor':
+                return 'warning';
+            case 'Onaylandı':
+                return 'success';
+            default:
+                return 'secondary';
+        }
+    }
+
+    ngOnDestroy(): void {
+        this.displayRequestProcessEvent.emit();
+    }
 }

@@ -36,6 +36,7 @@ import { AccessRegistryListComponent } from './access-registry-list/access-regis
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TooltipModule } from 'primeng/tooltip';
 import { SelectModule } from 'primeng/select';
+import { OverviewContentComponent } from './access-dashboard/overview-content/overview-content.component';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import { SelectModule } from 'primeng/select';
     MatTabsModule,
     MatTooltipModule,
     TooltipModule,
-    SelectModule    
+    SelectModule,
+    OverviewContentComponent
   ]
 
 })

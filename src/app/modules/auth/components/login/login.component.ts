@@ -134,6 +134,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         this.authService.selectedApp = this.loginForm.value.appList; 
         const userkey = this.generateRandomKey();
+        sessionStorage.setItem('userkey', userkey);
         this.authHttpService.userkey = userkey;
         var loginOptions = {
             loginName: this.f.userName.value,
@@ -154,7 +155,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             
             if (data) {
                 console.log("Login yanıtı:", data);
-
+                sessionStorage.setItem('id', data.Id);
                 // 2FA gerekiyorsa two-factor sayfasına yönlendir
                 if (data['2FA']) {
                     this.router.navigate(['/auth/two-factor'], {

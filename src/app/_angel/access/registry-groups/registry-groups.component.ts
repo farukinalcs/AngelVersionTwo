@@ -14,6 +14,7 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { RegistriesComponent } from './registries/registries.component';
 import Swal from 'sweetalert2';
 import { TooltipModule } from 'primeng/tooltip';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-registry-groups',
@@ -54,11 +55,13 @@ export class RegistryGroupsComponent implements OnInit, OnDestroy {
     selectedDetail: any;
     imageUrl: string;
     editTriggered: boolean = false; // Düzenleme tetiklendi mi?
+    newExplanation: string = ''; // Yeni açıklama için değişken
 
     constructor(
         private profileService: ProfileService,
         private fb: FormBuilder,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private toastrService: ToastrService
     ) {
         this.imageUrl = this.profileService.getImageUrl();
     }
@@ -89,7 +92,7 @@ export class RegistryGroupsComponent implements OnInit, OnDestroy {
         });
     }
 
-    getRegistryGroups(): void {
+    getRegistryGroups(groupId?: any): void {
         var sp: any[] = [
             {
                 mkodu: 'yek326'
@@ -105,6 +108,17 @@ export class RegistryGroupsComponent implements OnInit, OnDestroy {
             }
 
             this.registryGroups = [...data];
+
+            if (groupId) {
+                // Eğer grup ID'si verilmişse, o grubu seç
+                const selectedGroup = this.registryGroups.find(group => group.id === groupId);
+                if (selectedGroup) {
+                    this.form.get('registryGroup')?.setValue(selectedGroup);
+                } else {
+                    this.form.get('registryGroup')?.setValue(null); // Grup bulunamazsa null yap
+                }
+                
+            }
         });
 
     }
@@ -156,14 +170,14 @@ export class RegistryGroupsComponent implements OnInit, OnDestroy {
             }
 
             // Yeni grup eklendiğinde veya düzenlendiğinde formu güncelle
-            this.getRegistryGroups();
+            this.getRegistryGroups(action == 'edit' ? this.form.get('registryGroup')?.value.id : null);
             this.hideEditDialog();
 
             if (this.isFlipped) {
                 this.toggleFlip(); // Kart açıldıysa, kartı kapat
             }
 
-            this.form.get('registryGroup')?.setValue(data[0]); // Yeni veya düzenlenen grubu formda ayarla
+            this.form.get('registryGroup')?.setValue(null) // Yeni veya düzenlenen grubu formda ayarla
         });
 
     }
@@ -255,6 +269,9 @@ export class RegistryGroupsComponent implements OnInit, OnDestroy {
     }
 
     toggleFlip(item?: any) {
+        if (item) {
+            this.newExplanation = item.aciklama || ''; // Detay açıklamasını güncelle
+        }
         this.selectedDetail = item;
         this.isFlipped = !this.isFlipped;
     }
@@ -273,8 +290,10 @@ export class RegistryGroupsComponent implements OnInit, OnDestroy {
             if (result.isConfirmed) {
                 const sp: any[] = [
                     {
-                        mkodu: 'yek329',
-                        grupid: detail.id.toString()
+                        mkodu: 'yek339',
+                        formid: detail.formid.toString(),
+                        aktif: detail.aktif.toString(),
+                        statik: detail.statik.toString() 
                     }
                 ];
 
@@ -285,6 +304,8 @@ export class RegistryGroupsComponent implements OnInit, OnDestroy {
                     if (message.islemsonuc == -1) {
                         return;
                     }
+
+                    this.toastrService.success("Sicil Grup Detayı Silindi","Başarılı");
 
                     console.log('Sicil grubu detayı silindi:', data);
 
@@ -309,8 +330,10 @@ export class RegistryGroupsComponent implements OnInit, OnDestroy {
             if (result.isConfirmed) {
                 const sp: any[] = [
                     {
-                        mkodu: 'yek330',
-                        grupid: detail.id.toString()
+                        mkodu: 'yek338',
+                        formid: detail.formid.toString(),
+                        aktif: detail.aktif.toString(),
+                        statik: detail.statik.toString() 
                     }
                 ];
 
@@ -322,6 +345,7 @@ export class RegistryGroupsComponent implements OnInit, OnDestroy {
                         return;
                     }
 
+                    this.toastrService.success("Sicil Grup Detayı Durumu Değiştirildi","Başarılı");
                     console.log('Sicil grubu detayı durumu değiştirildi:', data);
 
                     // Durum değişikliğinden sonra grup detaylarını güncelle
@@ -474,7 +498,7 @@ export class RegistryGroupsComponent implements OnInit, OnDestroy {
                     {
                         mkodu: 'yek332',
                         grupid: detail.grupid.toString(),
-                        aciklama: detail.aciklama, // Detay açıklamasını güncelle
+                        aciklama: this.newExplanation, // Detay açıklamasını güncelle
                         formid: detail.formid.toString(),
                         islem: detail.islem ? '1' : '0', // İşlem durumunu güncelle
                         siciller: selecteds.selectedRows ? selecteds.selectedRows.map((item: any) => item.Id).join(',') : '', // Sicil ID'lerini virgülle ayır

@@ -1,0 +1,74 @@
+<!-- <div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Add New Item</h5>
+        <form [formGroup]="newItemForm">
+            <div class="mb-3">
+                <label for="new-baslik" class="form-label">Title:</label>
+                <input type="text" class="form-control" id="new-baslik" formControlName="baslik"
+                    [ngClass]="{'is-invalid': submitted && f.baslik.errors}">
+                @if (submitted && f.baslik.errors) {
+                <div class="invalid-feedback">Title is required</div>
+                }
+            </div>
+            <div class="mb-3">
+                <label for="new-metin" class="form-label">Content:</label>
+                <textarea class="form-control" id="new-metin" rows="3" formControlName="metin"
+                    [ngClass]="{'is-invalid': submitted && f.metin.errors}">
+          </textarea>
+                @if (submitted && f.metin.errors) {
+                <div class="invalid-feedback">Content is required</div>
+                }
+            </div>
+            <div class="d-flex justify-content-end">
+                @if (newItemForm.valid && (newItemForm.value.title || newItemForm.value.content)) {
+                <button type="button" class="btn btn-success" (click)="onSave()">
+                    Save
+                </button>
+                }
+            </div>
+        </form>
+    </div>
+</div> -->
+
+
+
+
+
+<p-dialog header="{{'Yeni Oluştur' | translate}}" [(visible)]="display" [position]="'top'"
+    [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="-40" [draggable]="false" [resizable]="false"
+    (onHide)="closeAction()">
+
+    <form [formGroup]="newItemForm">
+        <div class="fv-row my-5 fv-plugins-icon-container">
+            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                <span class="required">{{"Başlık" | translate}}</span>
+            </label>
+
+            <input type="text" class="form-control form-control-sm form-control-solid" id="new-title"
+                formControlName="title">
+        </div>
+
+        <div class="fv-row my-5 fv-plugins-icon-container">
+            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                <span class="required">{{"İçerik" | translate}}</span>
+            </label>
+
+            <textarea class="form-control form-control-sm form-control-solid" id="new-content" rows="3" formControlName="content"></textarea>
+        </div>
+    </form>
+
+
+    <ng-template pTemplate="footer">
+        <a class="btn btn-sm btn-danger mx-1" (click)="closeAction()">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'İptal' | translate}}
+        </a>
+
+        @if (newItemForm.valid && (newItemForm.value.title || newItemForm.value.content)) {
+        <a class="btn btn-sm btn-danger mx-1" (click)="onSave()">
+            <i class="fa-solid fa-floppy-disk fs-7"></i>
+            {{'Gönder' | translate}}
+        </a>
+        }
+    </ng-template>
+</p-dialog>

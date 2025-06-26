@@ -120,6 +120,21 @@
                                         </p-select>
                                     </div>
 
+                                    <div class="col-12 py-2">
+                                        <div class="input-group py-3" style="flex: 1;">
+                                            <input
+                                                class="form-control form-control-solid p-2 border-1 border-dark rounded-lg font-size-h6"
+                                                [(ngModel)]="filterTextDevice" type="text" placeholder="{{'Arama' | translate}}"
+                                                style="height: 30px;">
+        
+                                            <button class="search-icon">
+                                                <div class="svg">
+                                                    <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+
                                     <div class="col-6 ">
                                         <div class="table-responsive h-550px scroll">
                                             <table
@@ -132,7 +147,7 @@
                                                 </thead>
 
                                                 <tbody>
-                                                    <tr *ngFor="let item of relations " class="cursor-pointer fs-8">
+                                                    <tr *ngFor="let item of relations | searchFilter:filterTextDevice: ['kaynakad']" class="cursor-pointer fs-8">
                                                         <ng-container *ngIf="item.dahil == 1">
                                                             <td>
                                                                 <span class="mb-1">{{ item?.kaynakad }}</span>
@@ -162,7 +177,7 @@
                                                 </thead>
 
                                                 <tbody>
-                                                    <tr *ngFor="let item of relations " class="cursor-pointer fs-8">
+                                                    <tr *ngFor="let item of relations | searchFilter:filterTextDevice: ['kaynakad']" class="cursor-pointer fs-8">
                                                         <ng-container *ngIf="item.dahil == 0">
                                                             <td>
                                                                 <a class="btn btn-primary btn-sm py-1 px-2" (click)="relationStateChange(item, 'i')">

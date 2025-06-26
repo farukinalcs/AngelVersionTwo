@@ -200,7 +200,8 @@
                     <span>{{"Süre_Başlangıç_Tarihi" | translate}}</span>
                 </label>
 
-                <input type="date" class="form-control form-control-sm form-control-solid" placeholder="{{'Süre_Başlangıç_Tarihi' | translate}}" [(ngModel)]="startDate">
+                <!-- <input type="date" class="form-control form-control-sm form-control-solid" placeholder="{{'Süre_Başlangıç_Tarihi' | translate}}" [(ngModel)]="startDate"> -->
+                <p-datepicker [(ngModel)]="startDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
             </div>
 
             <div class="col-6 p-5">
@@ -208,7 +209,8 @@
                     <span>{{"Süre_Başlangıç_Saati" | translate}}</span>
                 </label>
 
-                <input type="time" class="form-control form-control-sm form-control-solid" placeholder="{{'Süre_Başlangıç_Saati' | translate}}" [(ngModel)]="startTime">
+                <!-- <input type="time" class="form-control form-control-sm form-control-solid" placeholder="{{'Süre_Başlangıç_Saati' | translate}}" [(ngModel)]="startTime"> -->
+                <p-datepicker [(ngModel)]="startTime" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
             </div>
 
             <div class="col-6 p-5">
@@ -216,7 +218,8 @@
                     <span>{{"Süre_Bitiş_Tarihi" | translate}}</span>
                 </label>
 
-                <input type="date" class="form-control form-control-sm form-control-solid" placeholder="{{'Süre_Bitiş_Tarihi' | translate}}" [(ngModel)]="endDate">
+                <!-- <input type="date" class="form-control form-control-sm form-control-solid" placeholder="{{'Süre_Bitiş_Tarihi' | translate}}" [(ngModel)]="endDate"> -->
+                <p-datepicker [(ngModel)]="endDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
             </div>
 
             <div class="col-6 p-5">
@@ -224,7 +227,8 @@
                     <span>{{"Süre_Bitiş_Saati" | translate}}</span>
                 </label>
 
-                <input type="time" class="form-control form-control-sm form-control-solid" placeholder="{{'Süre_Bitiş_Saati' | translate}}" [(ngModel)]="endTime">
+                <!-- <input type="time" class="form-control form-control-sm form-control-solid" placeholder="{{'Süre_Bitiş_Saati' | translate}}" [(ngModel)]="endTime"> -->
+                <p-datepicker [(ngModel)]="endTime" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
             </div>
 
             <div class="col-12 p-5">

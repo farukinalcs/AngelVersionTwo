@@ -9,69 +9,77 @@ import { SharedModule } from 'src/app/_angel/shared/shared.module';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 
+// PrimeNG 18 Modules
+import { BadgeModule } from 'primeng/badge';
+import { TabViewModule } from 'primeng/tabview';
+import { TimelineModule } from 'primeng/timeline';
+import { ButtonModule } from 'primeng/button';
 @Component({
-  selector: 'app-passages',
-  standalone: true,
-  imports: [
-    CommonModule,
-    SharedModule,
-    TranslateModule,
-    MatTabsModule
-  ],
-  templateUrl: './passages.component.html',
-  styleUrl: './passages.component.scss'
+    selector: 'app-passages',
+    standalone: true,
+    imports: [
+        CommonModule,
+        SharedModule,
+        TranslateModule,
+        TabViewModule,
+        TimelineModule,
+        BadgeModule,
+        ButtonModule,
+    ],
+    templateUrl: './passages.component.html',
+    styleUrl: './passages.component.scss'
 })
 export class PassagesComponent implements OnInit, OnDestroy {
-  private ngUnsubscribe = new Subject();
-  transitions : any[]  = [];
-  
-  constructor(
-    private profileService : ProfileService,
-    private ref : ChangeDetectorRef,
-  ) { }
+    private ngUnsubscribe = new Subject();
+    transitions: any[] = [];
 
-  ngOnInit(): void {
-    this.getTransitions('1');
-  }
+    constructor(
+        private profileService: ProfileService,
+        private ref: ChangeDetectorRef,
+    ) { }
 
-  getTransitions(event : any) {
-    var zamanAralik : any = '1';
-    if (event.tab) {
-      if (event.tab.textLabel == 'Günlük' || event.tab.textLabel == 'Daily') {
-        zamanAralik = '1';
-      } else if (event.tab.textLabel == 'Haftalık' || event.tab.textLabel == 'Weekly') {
-        zamanAralik = '7';
-      } else if (event.tab.textLabel == 'Aylık' || event.tab.textLabel == 'Monthly'){
-        zamanAralik = '30';
-      }  
+    ngOnInit(): void {
+        this.getTransitions('0');
     }
 
-    var sp : any[] = [{
-      mkodu : 'yek033',
-      zamanaralik : zamanAralik,
-    }];
-    
-    this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<TransitionsModel, ResponseDetailZ>[]) => {
-      const data = response[0].x;
-      const message = response[0].z;
+    getTransitions(event: any) {
+        var zamanAralik: any = '1';
 
-      if(message.islemsonuc == -1) {
-        return;
-      }
-
-      this.transitions = [...data];
-      console.log("Geçişler Geldi :", this.transitions);      
-    });
-  }
+        if (event == 0) {
+            zamanAralik = '1';
+        } else if (event == 1) {
+            zamanAralik = '7';
+        } else if (event == 2) {
+            zamanAralik = '30';
+        }
 
 
+        var sp: any[] = [{
+            mkodu: 'yek033',
+            zamanaralik: zamanAralik,
+        }];
+
+        this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<TransitionsModel, ResponseDetailZ>[]) => {
+            const data = response[0].x;
+            const message = response[0].z;
+
+            if (message.islemsonuc == -1) {
+                return;
+            }
+
+            this.transitions = [...data];
+            console.log("Geçişler Geldi :", this.transitions);
+        });
+    }
 
 
 
 
 
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next(true);
-    this.ngUnsubscribe.complete();
-  }
+
+
+    ngOnDestroy(): void {
+        this.ngUnsubscribe.next(true);
+        this.ngUnsubscribe.complete();
+    }
 }

@@ -7,14 +7,14 @@
                     <div class="text-center mb-10">
                         <img alt="Logo" class="mh-125px" src="./assets/media/svg/misc/smartphone-2.svg" />
                     </div>
-                
+
                     <div class="text-center mb-10">
                         <h1 class="text-gray-900 mb-3">{{ 'İki Aşamalı Doğrulama' | translate }}</h1>
                         <div class="text-muted fw-semibold fs-5 mb-5">
                             {{ 'Size gönderdiğimiz doğrulama kodunu girin' | translate }}
                         </div>
                         @let faLower = fa?.toLowerCase?.();
-                        
+
                         @if (faLower?.includes('sms')) {
                         <div class="fw-bold text-gray-900 fs-3">
                             {{ phone || 'Telefon numarası bulunamadı' }}
@@ -37,34 +37,35 @@
                         }
 
 
-                          
+
                     </div>
-                
+
                     <div class="mb-10">
                         <div class="fw-bold text-center text-gray-900 fs-6 mb-1 ms-1">
                             {{ '4 haneli güvenlik kodunu giriniz' | translate }}
                         </div>
-                
+
                         <div class="d-flex flex-wrap justify-content-center">
                             <input type="text" maxlength="1" formControlName="digit1" #digit1
-                              class="form-control bg-transparent h-60px w-60px fs-2qx text-center mx-1 my-2 border border-3 border-secondary"
-                              (input)="moveToNext($event, digit2)" (keydown)="onKeyDown($event, null)" />
-                          
+                                class="form-control bg-transparent h-60px w-60px fs-2qx text-center mx-1 my-2 border border-3 border-secondary"
+                                (input)="moveToNext($event, digit2)" (keydown)="onKeyDown($event, null)"
+                                (paste)="handlePaste($event)" />
+
                             <input type="text" maxlength="1" formControlName="digit2" #digit2
-                              class="form-control bg-transparent h-60px w-60px fs-2qx text-center mx-1 my-2 border border-3 border-secondary"
-                              (input)="moveToNext($event, digit3)" (keydown)="onKeyDown($event, digit1)" />
-                          
+                                class="form-control bg-transparent h-60px w-60px fs-2qx text-center mx-1 my-2 border border-3 border-secondary"
+                                (input)="moveToNext($event, digit3)" (keydown)="onKeyDown($event, digit1)" />
+
                             <input type="text" maxlength="1" formControlName="digit3" #digit3
-                              class="form-control bg-transparent h-60px w-60px fs-2qx text-center mx-1 my-2 border border-3 border-secondary"
-                              (input)="moveToNext($event, digit4)" (keydown)="onKeyDown($event, digit2)" />
-                          
+                                class="form-control bg-transparent h-60px w-60px fs-2qx text-center mx-1 my-2 border border-3 border-secondary"
+                                (input)="moveToNext($event, digit4)" (keydown)="onKeyDown($event, digit2)" />
+
                             <input type="text" maxlength="1" formControlName="digit4" #digit4
-                              class="form-control bg-transparent h-60px w-60px fs-2qx text-center mx-1 my-2 border border-3 border-secondary"
-                              (input)="moveToNext($event, null)" (keydown)="onKeyDown($event, digit3)" />
-                          </div>
-                          
+                                class="form-control bg-transparent h-60px w-60px fs-2qx text-center mx-1 my-2 border border-3 border-secondary"
+                                (input)="moveToNext($event, null)" (keydown)="onKeyDown($event, digit3)" />
+                        </div>
+
                     </div>
-                
+
                     <div class="d-flex flex-center">
                         <button type="submit" id="kt_sing_in_two_factor_submit" class="btn btn-lg btn-danger fw-bold">
                             <span class="indicator-label">{{ 'Gönder' | translate }}</span>

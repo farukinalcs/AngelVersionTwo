@@ -1,52 +1,95 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { Subject, takeUntil } from 'rxjs';
+import { ProfileService } from 'src/app/_angel/profile/profile.service';
+import { MyFilesDetailComponent } from './my-files-detail/my-files-detail.component';
+import { HelperService } from 'src/app/_helpers/helper.service';
+import { DialogModule } from 'primeng/dialog';
+import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
-  selector: 'app-my-files',
-  standalone: true,
-  imports: [
-    CommonModule,
-    TranslateModule
-  ],
-  templateUrl: './my-files.component.html',
-  styleUrl: './my-files.component.scss'
+    selector: 'app-my-files',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MyFilesDetailComponent,
+        DialogModule,
+        SharedModule,
+        TooltipModule
+    ],
+    templateUrl: './my-files.component.html',
+    styleUrl: './my-files.component.scss'
 })
-export class MyFilesComponent implements OnInit {
-  isItUploaded : boolean = false;
-  uploadedFile : any;
-  src: any;
-  constructor(
-    private toastrService: ToastrService,
-    private ref : ChangeDetectorRef
-  ) { }
+export class MyFilesComponent implements OnInit, OnDestroy {
+    private ngUnsubscribe = new Subject();
+    necessaries: any[] = [];
+    display: boolean = false;
+    registryId: any;
 
-  ngOnInit(): void {
-  }
-
-  getFile(event : any) {
-    this.uploadedFile = event.target.files[0];
-    console.log("File : ", this.uploadedFile);
-
-    let fileSize : any = (this.uploadedFile?.size / 1024).toFixed(1);
-    let fileSizeType = 'KB';
-    if (fileSize >= 1024) {
-      fileSize = (fileSize / 1024).toFixed(1);
-      fileSizeType = 'MB';
+    ngOnInit(): void {
+        this.registryId = this.helperService.userLoginModel.xSicilID;
+        this.fetchNecessaryDocs();
     }
 
-    this.uploadedFile.fileSize = fileSize + ' ' + fileSizeType;
-    console.log("File Size :", this.uploadedFile.fileSize);
+    constructor(
+        private profileService: ProfileService,
+        private helperService: HelperService,
+        private toastrService: ToastrService
+    ) { }
+    
 
-    let reader = new FileReader();
-    reader.readAsDataURL(this.uploadedFile);
-    reader.onload = (event) => {
-      this.uploadedFile.url = event.target?.result;
-      this.src = event.target?.result;
-      this.ref.detectChanges();
+    fetchNecessaryDocs() {
+        var sp: any[] = [
+            {
+                mkodu: 'yek349'
+            }
+        ];
 
+        this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((res: any) => {
+            const data = res[0].x;
+            const message =  res[0].z;
+
+            if (message.islemsonuc == -1) {
+                return;
+            }
+            this.necessaries = [...data];
+
+            console.log("Zorunlu Belgeler Geldi:", this.necessaries);
+
+        });
     }
 
-  }
+    open() {
+        if (this.necessaries.length > 0) {
+            this.display = true;            
+        } else {
+            this.toastrService.warning("Gerekli Belge Bulunamadı!", "Uyarı");
+        }
+    }
+    
+    close() {
+        this.display = false;
+    }
+
+    onUploaded(event: any) {
+        console.log("(YENİ) Dosya Yüklendi... ", event);
+        this.fetchNecessaryDocs();
+    }
+
+    getTooltipText(item: any): string {
+        if (item.durum == 1) {
+            return "İstenilen Belge Yüklenmiş. 'Tümü' kısmından inceleyebilirsiniz";
+        } else {
+            return 'Henüz Yüklenmemiş';
+        }
+    }
+
+    ngOnDestroy(): void {
+        this.ngUnsubscribe.next(true);
+        this.ngUnsubscribe.complete();
+    }
 }

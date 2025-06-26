@@ -1,0 +1,321 @@
+<div class="container-fluid">
+    <div class="card mb-5 mb-xl-10">
+        <div class="card-body pt-9 pb-0">
+            <div class="row">
+
+                <ng-container >
+                    <div class="row" >
+                        <div class="col-xl-2 d-flex justify-content-center">
+                            <div class="me-7 mb-4">
+                                <div class="symbol symbol-100px symbol-xl-160px symbol-fixed position-relative">
+                                    <div class="profile-picture-container position-relative d-inline-block">
+                                        <!-- Kullanıcı Fotoğrafı -->
+                                        <!-- <img src="{{imageUrl}}?sicilid={{selectedRegister?.Id}}" alt="Profile" class="profile-picture rounded-circle"> -->
+    
+                                        <ng-container *ngIf="operationType == 'u'">
+                                            <img [src]="imageUrl + '?sicilid=' + selectedRegister?.Id + '&t=' + timestamp" alt="Profile" class="profile-picture rounded-circle">
+                                        </ng-container>
+    
+                                        <ng-container *ngIf="operationType == 'i'">
+                                            <img src="../../../../../assets/media/avatars/blank.png" alt="Profile" class="profile-picture rounded-circle">
+                                        </ng-container>
+                                         
+                                    
+                                        <!-- Fotoğraf Yükleme İkonu (Sağ Üst) -->
+                                        <label *ngIf="operationType == 'u' && registerDetail[0]?.fotoid == '0'" class="btn btn-icon upload-btn position-absolute top-0 end-0 bg-white bg-hover-danger text-hover-white border rounded-circle shadow-sm" >
+                                            <i class="bi bi-pencil"></i>
+                                            <input type="file" class="d-none" (change)="addRegisterPhoto($event)" multiple="false" accept="image/*">
+                                        </label>
+                                    
+                                        <!-- Fotoğraf Silme İkonu (Sağ Alt) -->
+                                        <button *ngIf="operationType == 'u' && registerDetail[0]?.fotoid != '0'" class="btn btn-icon remove-btn position-absolute bottom-0 end-0 bg-white bg-hover-danger text-hover-white border rounded-circle shadow-sm" (click)="remove()">
+                                            <i class="bi bi-x"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-10">
+                            <div class="row">
+                                <div
+                                    class="col-xl-8 pt-xl-4 d-flex justify-content-center d-xl-flex justify-content-xl-start">
+                                    <div class="d-flex align-items-center mb-2">
+
+                                        <a class="text-gray-800 text-hover-danger fs-2 fw-bolder me-1 cursor-pointer" (click)="close()">
+                                            {{ name }} {{ surname }}
+                                        </a>
+
+                                        <ng-container *ngIf="birthday">
+                                            <a class="btn btn-sm btn-light-danger fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
+                                                {{"Doğum Tarihi" | translate}} : {{ birthday | date :'yyyy-MM-dd'}}
+                                            </a>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="!birthday">
+                                            <a class="btn btn-sm btn-light-danger fw-bolder ms-2 fs-8 py-1 px-3 cursor-pointer">
+                                                YYYY-MM-DD
+                                            </a>
+                                        </ng-container>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-4 d-flex justify-content-end align-items-center">
+                                    <a class="btn btn-sm btn-dark mx-1" (click)="close()" *ngIf="!loading">
+                                        <i class="fa-solid fa-xmark fs-7"></i>
+                                        {{'Sicil Listesine Dön' | translate}}
+                                    </a>
+                                    <a class="btn btn-sm btn-dark mx-1" (click)="collectAllFormData()" *ngIf="!loading">
+                                        <i class="fa-solid fa-floppy-disk fs-7"></i>
+                                        {{'Kaydet' | translate}}
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="row pt-4">
+                                <div class="col-12 d-flex justify-content-center d-xl-flex justify-content-xl-start">
+                                    <div class="d-flex  fw-bold fs-6 mb-4 pe-2">
+
+                                        <a
+                                            class="d-flex align-items-center text-gray-400 text-hover-danger me-5 mb-2 cursor-pointer ">
+                                            <span [inlineSVG]="'./assets/media/icons/duotune/general/gen001.svg'"
+                                                class="svg-icon svg-icon-4 me-1"></span>
+                                            _user.firmaad 
+                                        </a>
+
+                                        <a
+                                            class="d-flex align-items-center text-gray-400 text-hover-danger me-5 mb-2 cursor-pointer">
+                                            <span [inlineSVG]="'./assets/media/icons/duotune/communication/com009.svg'"
+                                                class="svg-icon svg-icon-4 me-1"></span>
+                                            _user.gorevad
+                                        </a>
+
+                                        <a
+                                            class="d-flex align-items-center text-gray-400 text-hover-danger mb-2 cursor-pointer">
+                                            <span [inlineSVG]="'./assets/media/icons/duotune/communication/com008.svg'"
+                                                class="svg-icon svg-icon-4 me-1"></span>
+                                            _user.bolumad
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="d-flex flex-wrap flex-stack">
+                                        <div class="d-flex flex-column flex-grow-1">
+                                            <div
+                                                class="d-flex justify-content-center d-xl-flex justify-content-xl-start flex-wrap">
+
+                                                <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <ng-container *ngIf="seniority">
+                                                            <div class="fs-2 fw-bolder">{{ seniority }}
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="seniority">
+                                                            <div class="fs-2 fw-bolder">-</div>
+                                                        </ng-container>
+                                                    </div>
+
+                                                    <div class="fw-bold fs-6 text-gray-400">{{"Kıdem" | translate}}
+                                                    </div>
+                                                </div>
+
+                                                <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <ng-container *ngIf="left">
+                                                            <div class="fs-2 fw-bolder">{{ left }}</div>
+
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="!left">
+                                                            <div class="fs-2 fw-bolder">-</div>
+                                                        </ng-container>
+                                                    </div>
+
+                                                    <div class="fw-bold fs-6 text-gray-400">{{"İzin_Hakkı" | translate}}
+                                                    </div>
+                                                </div>
+
+
+                                                <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <ng-container *ngIf="used">
+                                                            <div class="fs-2 fw-bolder"> {{
+                                                                used }} </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="!used">
+                                                            <div class="fs-2 fw-bolder"> - </div>
+
+                                                        </ng-container>
+
+                                                    </div>
+
+                                                    <div class="fw-bold fs-6 text-gray-400">{{"Kullanılan_İzin" |
+                                                        translate}}
+                                                    </div>
+                                                </div>
+
+                                                <!-- <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <ng-container *ngIf="userInformation">
+                                                            <div class="fs-2 fw-bolder">{{ userInformation.IzinDevir }}
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="!userInformation">
+                                                            <div class="fs-2 fw-bolder">-</div>
+                                                        </ng-container>
+                                                    </div>
+
+                                                    <div class="fw-bold fs-6 text-gray-400">{{"Devir" | translate}}
+                                                    </div>
+                                                </div> -->
+
+
+                                                <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <ng-container *ngIf="used">
+                                                            <div class="fs-2 fw-bolder">{{ used }}
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="!used">
+                                                            <div class="fs-2 fw-bolder">-</div>
+                                                        </ng-container>
+                                                    </div>
+                                                    <div class="fw-bold fs-6 text-gray-400">{{"Kalan" | translate}}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-12">
+                            <div class="d-flex overflow-auto h-55px">
+                                <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fw-bolder flex-nowrap">
+
+                                    <li class="nav-item" *ngFor="let item of tabs">
+                                        <a class="nav-link text-active-danger text-center me-6 cursor-pointer" [ngClass]="{'active': item.id == selectedIndex}" (click)="changeTabMenu(item.id)" translate="{{item.label}}"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<ng-container>
+    <app-personal-info 
+        *ngIf="selectedIndex == 1"
+        (formEvent)="formEvent($event)" 
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-personal-info>
+
+    <app-contact-info 
+        *ngIf="selectedIndex == 2"
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-contact-info>
+    
+    <app-organization-info 
+        *ngIf="selectedIndex == 3" 
+        (formEvent)="organizationFormEvent($event)" 
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-organization-info>
+    
+    <app-custom-info
+        *ngIf="selectedIndex == 4"
+        [inputValue]="1"
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-custom-info>
+    
+    <app-custom-info
+        *ngIf="selectedIndex == 5"
+        [inputValue]="2"
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-custom-info>
+    
+    <app-shift-info
+        *ngIf="selectedIndex == 6"
+        (formEvent)="formEvent($event)" 
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-shift-info>
+    
+    <app-access-info
+        *ngIf="selectedIndex == 7"
+        [fromWhere]="fromWhere"
+        (formEvent)="formEvent($event)" 
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-access-info>
+
+    <app-access-group
+        *ngIf="selectedIndex == 8"
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-access-group>
+
+    <app-register-authorized-areas
+        *ngIf="selectedIndex == 9"
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-register-authorized-areas>
+
+    <app-application-use
+        *ngIf="selectedIndex == 10"
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-application-use>
+
+    <app-register-history
+        *ngIf="selectedIndex == 11"
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-register-history>
+
+    <app-working-periods
+        *ngIf="selectedIndex == 12"
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-working-periods>
+
+    <app-files
+        *ngIf="selectedIndex == 13"
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-files>
+
+    <app-splits
+        *ngIf="selectedIndex == 14"
+        [operationType]="operationType"
+        [selectedRegister]="selectedRegister">
+    </app-splits>
+
+    
+</ng-container>

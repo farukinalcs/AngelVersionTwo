@@ -1,7 +1,6 @@
-<p-dialog header="{{'Ziyaretçi_Talep_Formu' | translate}}" [(visible)]="display"
-        (onHide)="closedFormDialog()" [modal]="true" [maximizable]="true" [baseZIndex]="10000"
-        [draggable]="true" [resizable]="false"
-        [style]="{width: '80%', 'max-width': '100%', height: '80%', 'max-height':'100%'}">
+<p-dialog header="{{'Ziyaretçi_Talep_Formu' | translate}}" [(visible)]="display" (onHide)="closedFormDialog()"
+    [modal]="true" [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false"
+    [style]="{width: '80%', 'max-width': '100%'}">
 
     <div class="row h-100">
         <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid">
@@ -12,13 +11,10 @@
                 </div>
             </div>
 
-            <app-form-stepper 
-                [stepperFields]="stepperFields"
-                [isFromAttendance]="false"
-                [lineHeight]="'h-15px'">
+            <app-form-stepper [stepperFields]="stepperFields" [isFromAttendance]="false" [lineHeight]="'h-15px'">
             </app-form-stepper>
 
-            <div class="row w-xl-700px">
+            <div class="row w-xl-700px gap-5">
                 <div class="col-12">
                     <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="visitTypeForm">
                         <ng-container *ngIf="currentStep$.value == 1">
@@ -26,12 +22,15 @@
                                 <div class="w-100">
                                     <div class="row mb-2">
                                         <div class="col-12 d-flex justify-content-center">
-                                            <label class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
+                                            <label
+                                                class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
                                                 <div class="d-flex align-items-center me-2">
-                                                    <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
-                                                        <input class="form-check-input" type="radio" formControlName="visitType" value="1" />
+                                                    <div
+                                                        class="form-check form-check-custom form-check-solid form-check-danger me-6">
+                                                        <input class="form-check-input" type="radio"
+                                                            formControlName="visitType" value="1" />
                                                     </div>
-                                        
+
                                                     <div class="flex-grow-1">
                                                         <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
                                                             {{ "Ziyaret_Edeceğim" | translate }}
@@ -42,14 +41,17 @@
                                                     </div>
                                                 </div>
                                             </label>
-                                            
+
                                         </div>
 
                                         <div class="col-12 d-flex justify-content-center">
-                                            <label class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
+                                            <label
+                                                class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
                                                 <div class="d-flex align-items-center me-2">
-                                                    <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
-                                                        <input class="form-check-input" type="radio" formControlName="visitType" value="0" />
+                                                    <div
+                                                        class="form-check form-check-custom form-check-solid form-check-danger me-6">
+                                                        <input class="form-check-input" type="radio"
+                                                            formControlName="visitType" value="0" />
                                                     </div>
 
                                                     <div class="flex-grow-1">
@@ -77,36 +79,42 @@
                                                 <label
                                                     class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
                                                     <div class="d-flex align-items-center me-2">
-                                                        <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
-                                                            <input class="form-check-input" type="radio" formControlName="personInformation"
-                                                                value="1" />
+                                                        <div
+                                                            class="form-check form-check-custom form-check-solid form-check-danger me-6">
+                                                            <input class="form-check-input" type="radio"
+                                                                formControlName="personInformation" value="1" />
                                                         </div>
                                                         <div class="flex-grow-1">
-                                                            <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
+                                                            <h2
+                                                                class="d-flex align-items-center fs-3 fw-bold flex-wrap">
                                                                 {{ "Toplu_Ziyaret" | translate }}
                                                             </h2>
                                                             <div class="fw-semibold opacity-50">
-                                                                Birden fazla kişi ziyarete gelecek onlar için talep oluşturuyorsunuz
+                                                                Birden fazla kişi ziyarete gelecek onlar için talep
+                                                                oluşturuyorsunuz
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </label>
                                             </div>
-                            
+
                                             <div class="col-12 d-flex justify-content-center">
                                                 <label
                                                     class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
                                                     <div class="d-flex align-items-center me-2">
-                                                        <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
-                                                            <input class="form-check-input" type="radio" formControlName="personInformation"
-                                                                value="2" />
+                                                        <div
+                                                            class="form-check form-check-custom form-check-solid form-check-danger me-6">
+                                                            <input class="form-check-input" type="radio"
+                                                                formControlName="personInformation" value="2" />
                                                         </div>
                                                         <div class="flex-grow-1">
-                                                            <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
+                                                            <h2
+                                                                class="d-flex align-items-center fs-3 fw-bold flex-wrap">
                                                                 {{ "Tek_Ziyaret" | translate }}
                                                             </h2>
                                                             <div class="fw-semibold opacity-50">
-                                                                Bir kişi ziyarete gelecek onun için talep oluşturuyorsunuz
+                                                                Bir kişi ziyarete gelecek onun için talep
+                                                                oluşturuyorsunuz
                                                             </div>
                                                         </div>
                                                     </div>
@@ -116,7 +124,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div *ngIf="visitType == 1">
                                 <div class="current">
                                     <div class="w-100">
@@ -125,12 +133,14 @@
                                                 <label
                                                     class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
                                                     <div class="d-flex align-items-center me-2">
-                                                        <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
-                                                            <input class="form-check-input" type="radio" formControlName="personInformation"
-                                                                value="3" />
+                                                        <div
+                                                            class="form-check form-check-custom form-check-solid form-check-danger me-6">
+                                                            <input class="form-check-input" type="radio"
+                                                                formControlName="personInformation" value="3" />
                                                         </div>
                                                         <div class="flex-grow-1">
-                                                            <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
+                                                            <h2
+                                                                class="d-flex align-items-center fs-3 fw-bold flex-wrap">
                                                                 {{ "Kendim_İçin_Talep_Oluşturuyorum" | translate }}
                                                             </h2>
                                                             <div class="fw-semibold opacity-50">
@@ -140,38 +150,44 @@
                                                     </div>
                                                 </label>
                                             </div>
-                            
+
                                             <div class="col-12 d-flex justify-content-center">
                                                 <label
                                                     class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
                                                     <div class="d-flex align-items-center me-2">
-                                                        <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
-                                                            <input class="form-check-input" type="radio" formControlName="personInformation"
-                                                                value="4" />
+                                                        <div
+                                                            class="form-check form-check-custom form-check-solid form-check-danger me-6">
+                                                            <input class="form-check-input" type="radio"
+                                                                formControlName="personInformation" value="4" />
                                                         </div>
                                                         <div class="flex-grow-1">
-                                                            <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
+                                                            <h2
+                                                                class="d-flex align-items-center fs-3 fw-bold flex-wrap">
                                                                 {{ "Ekibim_İçin_Talep_Oluşturuyorum" | translate }}
                                                             </h2>
                                                             <div class="fw-semibold opacity-50">
-                                                                Sizin ekleyeceğiniz ekibinizin üyeleri için ziyaret talep oluşturuyorsunuz
+                                                                Sizin ekleyeceğiniz ekibinizin üyeleri için ziyaret
+                                                                talep oluşturuyorsunuz
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </label>
                                             </div>
-                            
+
                                             <div class="col-12 d-flex justify-content-center">
                                                 <label
                                                     class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100">
                                                     <div class="d-flex align-items-center me-2">
-                                                        <div class="form-check form-check-custom form-check-solid form-check-danger me-6">
-                                                            <input class="form-check-input" type="radio" formControlName="personInformation"
-                                                                value="5" />
+                                                        <div
+                                                            class="form-check form-check-custom form-check-solid form-check-danger me-6">
+                                                            <input class="form-check-input" type="radio"
+                                                                formControlName="personInformation" value="5" />
                                                         </div>
                                                         <div class="flex-grow-1">
-                                                            <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
-                                                                {{ "Ekibim_Ve_Kendim_İçin_Talep_Oluşturuyorum" | translate }}
+                                                            <h2
+                                                                class="d-flex align-items-center fs-3 fw-bold flex-wrap">
+                                                                {{ "Ekibim_Ve_Kendim_İçin_Talep_Oluşturuyorum" |
+                                                                translate }}
                                                             </h2>
                                                             <div class="fw-semibold opacity-50">
                                                                 Ekibiniz ve kendiniz için ziyaret talep oluşturuyorsunuz
@@ -184,7 +200,7 @@
                                     </div>
                                 </div>
                             </div>
-                              
+
                         </ng-container>
 
                         <ng-container *ngIf="currentStep$.value == 3">
@@ -194,25 +210,33 @@
                                     <div class="w-100">
                                         <div class="row">
                                             <div class="col-12 p-3">
-                                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
-                                                    <span >{{"Ad" | translate}}</span>
+                                                <label
+                                                    class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
+                                                    <span>{{"Ad" | translate}}</span>
                                                 </label>
-                                
-                                                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Ad_Giriniz'| translate}}" formControlName="name">
+
+                                                <input type="text"
+                                                    class="form-control form-control-sm form-control-solid"
+                                                    placeholder="{{'Ad_Giriniz'| translate}}" formControlName="name">
                                             </div>
 
                                             <div class="col-12 p-3">
-                                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
-                                                    <span >{{"Soyad" | translate}}</span>
+                                                <label
+                                                    class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
+                                                    <span>{{"Soyad" | translate}}</span>
                                                 </label>
-                                
-                                                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Soyad_Giriniz'| translate}}" formControlName="surname">
+
+                                                <input type="text"
+                                                    class="form-control form-control-sm form-control-solid"
+                                                    placeholder="{{'Soyad_Giriniz'| translate}}"
+                                                    formControlName="surname">
                                             </div>
-                                            
+
                                             <div class="col-12">
                                                 <div
                                                     class="fv-row mb-10 fv-plugins-icon-container d-flex justify-content-center align-items-center">
-                                                    <button class="btn btn-danger btn-sm px-4 py-2" (click)="addVisitor()"
+                                                    <button class="btn btn-danger btn-sm px-4 py-2"
+                                                        (click)="addVisitor()"
                                                         [disabled]="visitTypeForm.controls['name'].invalid || visitTypeForm.controls['surname'].invalid">
                                                         <i class="fa-solid fa-plus m-0 p-0"></i>
                                                     </button>
@@ -224,52 +248,70 @@
                                                     <div class="tab-content">
                                                         <div class="tab-pane fade active show">
                                                             <div class="table-responsive">
-                                                                <table class="table table-hover table-borderless align-middle shadow-sm rounded overflow-hidden">
+                                                                <table
+                                                                    class="table table-hover table-borderless align-middle shadow-sm rounded overflow-hidden">
                                                                     <thead class="bg-light">
-                                                                        <tr class="text-uppercase text-gray-700 fw-bold fs-7 border-bottom border-2">
+                                                                        <tr
+                                                                            class="text-uppercase text-gray-700 fw-bold fs-7 border-bottom border-2">
                                                                             <th class="text-center rounded-start"></th>
-                                                                            <th class="text-center">{{ "Ad" | translate }}</th>
-                                                                            <th class="text-center">{{ "Soyad" | translate }}</th>
+                                                                            <th class="text-center">{{ "Ad" | translate
+                                                                                }}</th>
+                                                                            <th class="text-center">{{ "Soyad" |
+                                                                                translate }}</th>
                                                                             <th class="text-center rounded-end"></th>
                                                                         </tr>
                                                                     </thead>
-                                                            
+
                                                                     <tbody>
-                                                                        <tr *ngFor="let item of visitors; index as i" class="bg-white border-bottom border-light"
+                                                                        <tr *ngFor="let item of visitors; index as i"
+                                                                            class="bg-white border-bottom border-light"
                                                                             [ngClass]="{'bg-light-danger': isFirstVisitor(i)}">
                                                                             <td class="text-center">
                                                                                 <div class="symbol symbol-50px">
-                                                                                    <ng-container *ngIf="isFirstVisitor(i)">
-                                                                                        <div class="symbol-label bg-light-danger">
-                                                                                            <i class="fa-solid fa-sitemap fs-2x text-danger"></i>
+                                                                                    <ng-container
+                                                                                        *ngIf="isFirstVisitor(i)">
+                                                                                        <div
+                                                                                            class="symbol-label bg-light-danger">
+                                                                                            <i
+                                                                                                class="fa-solid fa-sitemap fs-2x text-danger"></i>
                                                                                         </div>
                                                                                     </ng-container>
-                                                                                    <ng-container *ngIf="!isFirstVisitor(i)">
-                                                                                        <div class="symbol-label bg-light text-danger fw-bold">
+                                                                                    <ng-container
+                                                                                        *ngIf="!isFirstVisitor(i)">
+                                                                                        <div
+                                                                                            class="symbol-label bg-light text-danger fw-bold">
                                                                                             {{ i + 1 }}
                                                                                         </div>
                                                                                     </ng-container>
                                                                                 </div>
                                                                             </td>
-                                                            
+
                                                                             <td class="text-center">
-                                                                                <span class="fw-semibold text-gray-800 fs-6">{{ item.name }}</span>
+                                                                                <span
+                                                                                    class="fw-semibold text-gray-800 fs-6">{{
+                                                                                    item.name }}</span>
                                                                             </td>
-                                                            
+
                                                                             <td class="text-center">
-                                                                                <span class="fw-semibold text-gray-800 fs-6">{{ item.surname }}</span>
+                                                                                <span
+                                                                                    class="fw-semibold text-gray-800 fs-6">{{
+                                                                                    item.surname }}</span>
                                                                             </td>
-                                                            
+
                                                                             <td class="text-center">
-                                                                                <button class="btn btn-icon btn-sm btn-light-danger" (click)="removeVisitor(item)" title="Sil">
-                                                                                    <i class="fa-solid fa-trash text-danger"></i>
+                                                                                <button
+                                                                                    class="btn btn-icon btn-sm btn-light-danger"
+                                                                                    (click)="removeVisitor(item)"
+                                                                                    title="Sil">
+                                                                                    <i
+                                                                                        class="fa-solid fa-trash text-danger"></i>
                                                                                 </button>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
                                                             </div>
-                                                              
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -284,21 +326,28 @@
                                     <div class="w-100">
                                         <div class="row">
                                             <div class="col-12 p-3">
-                                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
-                                                    <span >{{"Ad" | translate}}</span>
+                                                <label
+                                                    class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
+                                                    <span>{{"Ad" | translate}}</span>
                                                 </label>
-                                
-                                                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Ad_Giriniz'| translate}}" formControlName="name">
+
+                                                <input type="text"
+                                                    class="form-control form-control-sm form-control-solid"
+                                                    placeholder="{{'Ad_Giriniz'| translate}}" formControlName="name">
                                             </div>
 
                                             <div class="col-12 p-3">
-                                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
-                                                    <span >{{"Soyad" | translate}}</span>
+                                                <label
+                                                    class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
+                                                    <span>{{"Soyad" | translate}}</span>
                                                 </label>
-                                
-                                                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Soyad_Giriniz'| translate}}" formControlName="surname">
+
+                                                <input type="text"
+                                                    class="form-control form-control-sm form-control-solid"
+                                                    placeholder="{{'Soyad_Giriniz'| translate}}"
+                                                    formControlName="surname">
                                             </div>
-                                            
+
                                             <!-- <div class="col-12">
 
                                                 <div class="fv-row mb-10 fv-plugins-icon-container">
@@ -346,20 +395,19 @@
                                     <div class="row">
                                         <div class="col-6 p-3">
                                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
-                                                <span >{{"Email" | translate}}</span>
+                                                <span>{{"Email" | translate}}</span>
                                             </label>
-                            
-                                            <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{'Email_Giriniz'| translate}}" formControlName="email">
-                                            <ng-container [ngTemplateOutlet]="formError" 
-                                                [ngTemplateOutletContext]="{
+
+                                            <input type="text" class="form-control form-control-sm form-control-solid"
+                                                placeholder="{{'Email_Giriniz'| translate}}" formControlName="email">
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'email',
                                                 message: translateService.instant('Doğru_Mail_Adresi_Girmelisiniz'),
                                                 control: visitTypeForm.controls['email']
                                                 }">
                                             </ng-container>
 
-                                            <ng-container [ngTemplateOutlet]="formError" 
-                                                [ngTemplateOutletContext]="{
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: translateService.instant('Boş_Geçilemez'),
                                                 control: visitTypeForm.controls['email']
@@ -369,13 +417,15 @@
 
                                         <div class="col-6 p-3">
                                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
-                                                <span >{{"Firma" | translate}}</span>
+                                                <span>{{"Firma" | translate}}</span>
                                             </label>
-                            
-                                            
 
-                                            <p-select [options]="company" formControlName="company" optionLabel="Ad" [editable]="true"
-                                                emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="true" filterBy="Ad" [showClear]="true"
+
+
+                                            <p-select [options]="company" formControlName="company" optionLabel="Ad"
+                                                [editable]="true"
+                                                emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="true"
+                                                filterBy="Ad" [showClear]="true"
                                                 placeholder="{{'Firma_Seçiniz' | translate}}" class="w-100 md:w-56">
                                                 <ng-template #selectedItem let-selected>
                                                     <div class="flex items-center gap-2">
@@ -389,8 +439,7 @@
                                                 </ng-template>
                                             </p-select>
 
-                                            <ng-container [ngTemplateOutlet]="formError" 
-                                                [ngTemplateOutletContext]="{
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: translateService.instant('Boş_Geçilemez'),
                                                 control: visitTypeForm.controls['company']
@@ -402,37 +451,38 @@
                                     <ng-container *ngIf="isOtherCompany">
                                         <div class="col-6 p-3">
                                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
-                                                <span >{{"Diğer_Firma" | translate}}</span>
+                                                <span>{{"Diğer_Firma" | translate}}</span>
                                             </label>
 
-                                            <input type="text" class="form-control form-control-sm form-control-solid" placeholder="{{ 'Diğer_Firmayı_Girmelisiniz' | translate }}" formControlName="otherCompany">
+                                            <input type="text" class="form-control form-control-sm form-control-solid"
+                                                placeholder="{{ 'Diğer_Firmayı_Girmelisiniz' | translate }}"
+                                                formControlName="otherCompany">
                                         </div>
                                     </ng-container>
 
                                     <div class="row">
                                         <div class="col-12 p-3">
                                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
-                                                <span >{{"Açıklama" | translate}}</span>
+                                                <span>{{"Açıklama" | translate}}</span>
                                             </label>
-        
-                                            <textarea class="form-control form-control-sm form-control-solid" rows="3" maxlength="500"
-                                                formControlName="description"
+
+                                            <textarea class="form-control form-control-sm form-control-solid" rows="3"
+                                                maxlength="500" formControlName="description"
                                                 placeholder="{{ 'Açıklama_Giriniz' | translate }}"></textarea>
                                             <ng-container *ngIf="visitTypeForm.controls['description']?.value">
                                                 <div class="text-end">
                                                     <span class="badge badge-light-danger">{{
-                                                        visitTypeForm.controls['description'].value.length }} / 500</span>
+                                                        visitTypeForm.controls['description'].value.length }} /
+                                                        500</span>
                                                 </div>
                                             </ng-container>
-                                            <ng-container [ngTemplateOutlet]="formError" 
-                                                [ngTemplateOutletContext]="{
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: translateService.instant('Boş_Geçilemez'),
                                                 control: visitTypeForm.controls['description']
                                                 }">
                                             </ng-container>
-                                            <ng-container [ngTemplateOutlet]="formError" 
-                                                [ngTemplateOutletContext]="{
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'maxLength',
                                                 message: translateService.instant('Karakter_Limitini_Aştınız'),
                                                 control: visitTypeForm.controls['email']
@@ -440,7 +490,7 @@
                                             </ng-container>
                                         </div>
                                     </div>
-                                
+
 
                                     <div class="fv-row mb-10 fv-plugins-icon-container">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
@@ -462,26 +512,30 @@
 
                                                             <div *ngSwitchCase="'Etkinlik'">
                                                                 <span class="symbol-label bg-light-secondary  ">
-                                                                    <i class="fa-solid fa-cake-candles text-gray-900 fs-3"></i>
+                                                                    <i
+                                                                        class="fa-solid fa-cake-candles text-gray-900 fs-3"></i>
                                                                 </span>
                                                             </div>
 
                                                             <div *ngSwitchCase="'İnsan Kaynakları Görüşmesi'">
                                                                 <span class="symbol-label bg-light-secondary">
-                                                                    <i class="fa-solid fa-handshake text-gray-900 fs-3"></i>
+                                                                    <i
+                                                                        class="fa-solid fa-handshake text-gray-900 fs-3"></i>
                                                                 </span>
                                                             </div>
 
                                                             <div *ngSwitchCase="'Ürün Girişi'">
                                                                 <span class="symbol-label bg-light-secondary">
-                                                                    <i class="fa-solid fa-truck-ramp-box text-gray-900 fs-3"></i>
+                                                                    <i
+                                                                        class="fa-solid fa-truck-ramp-box text-gray-900 fs-3"></i>
                                                                 </span>
                                                             </div>
 
 
                                                             <div *ngSwitchDefault>
                                                                 <span class="symbol-label bg-light-secondary">
-                                                                    <i class="fa-solid fa-thumbtack text-gray-900 fs-3"></i>
+                                                                    <i
+                                                                        class="fa-solid fa-thumbtack text-gray-900 fs-3"></i>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -497,8 +551,7 @@
                                                         formControlName="type" value="{{item.ID}}">
                                                 </span>
                                             </label>
-                                            <ng-container [ngTemplateOutlet]="formError" 
-                                                [ngTemplateOutletContext]="{
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: translateService.instant('Boş_Geçilemez'),
                                                 control: visitTypeForm.controls['type']
@@ -518,12 +571,13 @@
                                     <div class="row">
                                         <div class="col-6 p-3">
                                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
-                                                <span >{{"Giriş_Tarihi" | translate}}</span>
+                                                <span>{{"Giriş_Tarihi" | translate}}</span>
                                             </label>
-                            
-                                            <input type="date" class="form-control form-control-sm form-control-solid" formControlName="entryDate">
-                                            <ng-container [ngTemplateOutlet]="formError" 
-                                                [ngTemplateOutletContext]="{
+
+                                            <!-- <input type="date" class="form-control form-control-sm form-control-solid"
+                                                formControlName="entryDate"> -->
+                                                <p-datepicker formControlName="entryDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: translateService.instant('Boş_Geçilemez'),
                                                 control: visitTypeForm.controls['entryDate']
@@ -533,12 +587,13 @@
 
                                         <div class="col-6 p-3">
                                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
-                                                <span >{{"Giriş_Saati" | translate}}</span>
+                                                <span>{{"Giriş_Saati" | translate}}</span>
                                             </label>
-                            
-                                            <input type="time" class="form-control form-control-sm form-control-solid" formControlName="entryTime">
-                                            <ng-container [ngTemplateOutlet]="formError" 
-                                                [ngTemplateOutletContext]="{
+
+                                            <!-- <input type="time" class="form-control form-control-sm form-control-solid"
+                                                formControlName="entryTime"> -->
+                                                <p-datepicker formControlName="entryTime" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: translateService.instant('Boş_Geçilemez'),
                                                 control: visitTypeForm.controls['entryTime']
@@ -548,12 +603,13 @@
 
                                         <div class="col-6 p-3">
                                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
-                                                <span >{{"Çıkış_Tarihi" | translate}}</span>
+                                                <span>{{"Çıkış_Tarihi" | translate}}</span>
                                             </label>
-                            
-                                            <input type="date" class="form-control form-control-sm form-control-solid" formControlName="exitDate">
-                                            <ng-container [ngTemplateOutlet]="formError" 
-                                                [ngTemplateOutletContext]="{
+
+                                            <!-- <input type="date" class="form-control form-control-sm form-control-solid"
+                                                formControlName="exitDate"> -->
+                                                <p-datepicker formControlName="exitDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: translateService.instant('Boş_Geçilemez'),
                                                 control: visitTypeForm.controls['exitDate']
@@ -563,12 +619,13 @@
 
                                         <div class="col-6 p-3">
                                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
-                                                <span >{{"Çıkış_Saati" | translate}}</span>
+                                                <span>{{"Çıkış_Saati" | translate}}</span>
                                             </label>
-                            
-                                            <input type="time" class="form-control form-control-sm form-control-solid" formControlName="exitTime">
-                                            <ng-container [ngTemplateOutlet]="formError" 
-                                                [ngTemplateOutletContext]="{
+
+                                            <!-- <input type="time" class="form-control form-control-sm form-control-solid"
+                                                formControlName="exitTime"> -->
+                                                <p-datepicker formControlName="exitTime" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: translateService.instant('Boş_Geçilemez'),
                                                 control: visitTypeForm.controls['exitTime']
@@ -582,153 +639,118 @@
                         </ng-container>
 
                         <ng-container *ngIf="currentStep$.value == 6">
-                            <div class="border border-3 rounded-5">
-                                <div class="row py-2 px-4">
+                            <div class="container">
+                                <div class="card shadow-lg border-0 rounded-4">
+                                    <div class="card-body p-4">
 
-                                    <div class="col-12 d-flex justify-content-center pb-1">
-                                        <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{
-                                            "Talep_Sahibi" | translate }}</span>
-                                    </div>
-
-                                    <div class="col-12 d-flex justify-content-center pb-2"
-                                        *ngIf="this.authService.currentUserSubject | async as _user">
-                                        <span class="text-gray-800 fs-6 fw-bolder">{{_user.adsoyad}}</span>
-                                        <span class="text-muted fw-bold d-block fs-7"></span>
-                                    </div>
-
-                                    <div class="separator mb-2"></div>
-
-                                    <!-- style="background-image: url(../../../../../assets/media/logos/Mediamodifier-Design-Template\ \(11\).png); background-repeat: no-repeat; background-size: contain; background-position: center;" -->
-                                    <div>
-                                        <div class="col-12 d-flex justify-content-center">
-                                            <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{
-                                                "Ziyaretçi_Bilgileri" | translate }}</span>
+                                        <!-- Talep Sahibi -->
+                                        <div class="text-center mb-4">
+                                            <h5 class="text-danger fw-bold mb-1">{{ "Talep_Sahibi" | translate }}</h5>
+                                            <div *ngIf="authService.currentUserSubject | async as _user">
+                                                <span class="text-dark fs-6 fw-semibold">{{ _user.adsoyad }}</span>
+                                            </div>
                                         </div>
 
-                                        <div class="col-12">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="row">
-                                                        <div class="col-12 py-3">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{ "Email" | translate }}:</span>
-                                                            <span class="text-muted fw-bold d-block fs-7">
-                                                                {{visitorFormValues.email}} </span>
-                                                        </div>
+                                        <hr />
 
-                                                        <ng-container *ngIf="visitorFormValues.company.ID != '0' ">
-                                                            <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{ "Firma" |
-                                                                    translate }}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7"> {{
-                                                                    visitorFormValues.company.Ad ?
-                                                                    visitorFormValues.company.Ad : visitorFormValues.company
-                                                                    }} </span>
-                                                            </div>
-                                                        </ng-container>
+                                        <!-- Ziyaretçi Bilgileri -->
+                                        <div class="mb-3 text-center">
+                                            <h5 class="text-danger fw-bold mb-3">{{ "Ziyaretçi_Bilgileri" | translate }}
+                                            </h5>
+                                        </div>
 
-                                                        <ng-container *ngIf="visitorFormValues.company.ID == '0' ">
-                                                            <div class="col-12 py-3">
-                                                                <span class="text-gray-800  fs-6 fw-bolder">{{ "Firma" |
-                                                                    translate }}:</span>
-                                                                <span class="text-muted fw-bold d-block fs-7">
-                                                                    {{visitorFormValues.otherCompany}} </span>
-                                                            </div>
-                                                        </ng-container>
-
-
-                                                        <div class="col-12 py-3">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{ "Açıklama" |
-                                                                translate }}:</span>
-                                                            <span class="text-muted fw-bold d-block fs-7">
-                                                                {{visitorFormValues.description}} </span>
-                                                        </div>
-
-                                                        <div class="col-12 py-3">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{ "Ziyaret_Tipi" |
-                                                                translate }}:</span>
-                                                            <span class="text-muted fw-bold d-block fs-7">
-                                                                {{visitorFormValues.type }} </span>
-                                                        </div>
-
-                                                        <div class="col-6 py-3">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{ "Giriş_Tarihi" |
-                                                                translate }}:</span>
-                                                            <span class="text-muted fw-bold d-block fs-7">
-                                                                {{visitorFormValues.entryDate }} </span>
-                                                        </div>
-
-                                                        <div class="col-6 py-3">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{ "Giriş_Saati" |
-                                                                translate }}:</span>
-                                                            <span class="text-muted fw-bold d-block fs-7">
-                                                                {{visitorFormValues.entryTime }} </span>
-                                                        </div>
-
-                                                        <div class="col-6 py-3">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{ "Çıkış_Tarihi" |
-                                                                translate }}:</span>
-                                                            <span class="text-muted fw-bold d-block fs-7">
-                                                                {{visitorFormValues.exitDate }} </span>
-                                                        </div>
-
-                                                        <div class="col-6 py-3">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{ "Çıkış_Saati" |
-                                                                translate }}:</span>
-                                                            <span class="text-muted fw-bold d-block fs-7">
-                                                                {{visitorFormValues.exitTime }} </span>
-                                                        </div>
-                                                    </div>
+                                        <div class="row gy-3">
+                                            <!-- Sol Sütun -->
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label class="fw-bold text-gray-700">{{ "Email" | translate
+                                                        }}:</label>
+                                                    <p class="text-muted">{{ visitorFormValues.email }}</p>
                                                 </div>
 
-                                                <div class="col-6">
-                                                    <div class="row">
-                                                        <div class="col-12 py-3">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{ "Ziyaretçiler" |
-                                                                translate }}:</span>
-                                                            <div class="row">
-                                                                <div class="col-12">
-                                                                    <ul>
-                                                                        <ng-container
-                                                                            *ngIf="personInformation != 3 && personInformation != 2">
-                                                                            <li class="my-4"
-                                                                                *ngFor="let item of visitorFormValues.visitors">
-                                                                                <span
-                                                                                    class="badge badge-light-dark text-muted fw-bold d-block fs-7">
-                                                                                    {{item.name }} {{item.surname }}</span>
+                                                <div *ngIf="visitorFormValues.company.ID != '0'">
+                                                    <label class="fw-bold text-gray-700">{{ "Firma" | translate
+                                                        }}:</label>
+                                                    <p class="text-muted">
+                                                        {{ visitorFormValues.company.Ad || visitorFormValues.company }}
+                                                    </p>
+                                                </div>
+                                                <div *ngIf="visitorFormValues.company.ID == '0'">
+                                                    <label class="fw-bold text-gray-700">{{ "Firma" | translate
+                                                        }}:</label>
+                                                    <p class="text-muted">{{ visitorFormValues.otherCompany }}</p>
+                                                </div>
 
-                                                                                <!-- <ng-container *ngIf="item.files.length != 0">
-                                                                                            <ul class="my-2">
-                                                                                                <li *ngFor="let value of item.files">
-                                                                                                    <span class="text-muted fw-bold d-block fs-7"> {{value.fileName }}</span>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                        </ng-container> -->
-                                                                            </li>
-                                                                        </ng-container>
+                                                <div>
+                                                    <label class="fw-bold text-gray-700">{{ "Açıklama" | translate
+                                                        }}:</label>
+                                                    <p class="text-muted">{{ visitorFormValues.description }}</p>
+                                                </div>
 
-                                                                        <ng-container
-                                                                            *ngIf="personInformation == 3 || personInformation == 2">
-                                                                            <li class="my-4">
-                                                                                <span
-                                                                                    class="badge badge-light-dark text-muted fw-bold d-block fs-7">
-                                                                                    {{ visitTypeForm.get('name')?.value }}
-                                                                                    {{ visitTypeForm.get('surname')?.value
-                                                                                    }}
-                                                                                </span>
-                                                                            </li>
-                                                                        </ng-container>
+                                                <div>
+                                                    <label class="fw-bold text-gray-700">{{ "Ziyaret_Tipi" | translate
+                                                        }}:</label>
+                                                    <p class="text-muted">{{
+                                                        getVisitTypeNameById(visitorFormValues.type) }}</p>
+                                                </div>
 
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <label class="fw-bold text-gray-700">{{ "Giriş_Tarihi" |
+                                                            translate }}:</label>
+                                                        <p class="text-muted">{{ visitorFormValues.entryDate }}</p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="fw-bold text-gray-700">{{ "Giriş_Saati" |
+                                                            translate }}:</label>
+                                                        <p class="text-muted">{{ visitorFormValues.entryTime }}</p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="fw-bold text-gray-700">{{ "Çıkış_Tarihi" |
+                                                            translate }}:</label>
+                                                        <p class="text-muted">{{ visitorFormValues.exitDate }}</p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="fw-bold text-gray-700">{{ "Çıkış_Saati" |
+                                                            translate }}:</label>
+                                                        <p class="text-muted">{{ visitorFormValues.exitTime }}</p>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <!-- Sağ Sütun -->
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label class="fw-bold text-gray-700">{{ "Ziyaretçiler" | translate
+                                                        }}:</label>
+                                                    <ul class="list-group mt-2">
+                                                        <ng-container
+                                                            *ngIf="personInformation !== 2 && personInformation !== 3">
+                                                            <li class="list-group-item py-2"
+                                                                *ngFor="let item of visitorFormValues.visitors">
+                                                                <span class="fw-normal">{{ item.name }} {{ item.surname
+                                                                    }}</span>
+                                                            </li>
+                                                        </ng-container>
+
+                                                        <ng-container
+                                                            *ngIf="personInformation === 2 || personInformation === 3">
+                                                            <li class="list-group-item py-2">
+                                                                <span class="fw-normal">
+                                                                    {{ visitTypeForm.get('name')?.value }}
+                                                                    {{ visitTypeForm.get('surname')?.value }}
+                                                                </span>
+                                                            </li>
+                                                        </ng-container>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
+
 
 
                         </ng-container>
@@ -782,7 +804,8 @@
                                                                     </td>
 
                                                                     <td class="text-center text-muted fw-bold fs-4">
-                                                                        <span class="fs-5 text-dark">{{item.Soyad}}</span>
+                                                                        <span
+                                                                            class="fs-5 text-dark">{{item.Soyad}}</span>
                                                                     </td>
 
                                                                     <td class="text-center">
@@ -844,7 +867,8 @@
                                     </button>
                                 </ng-container>
                                 <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                    <button type="button" class="btn btn-sm btn-danger me-3" (click)="closedFormDialog()">
+                                    <button type="button" class="btn btn-sm btn-danger me-3"
+                                        (click)="closedFormDialog()">
                                         <span class="indicator-label">
                                             {{ "Kapat" | translate }}
                                         </span>

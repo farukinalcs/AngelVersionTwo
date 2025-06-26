@@ -45,6 +45,11 @@ export class PendingComponent implements OnInit, OnDestroy {
     tip: any;
   }>();
 
+  @Output() rejectDialogEvent = new EventEmitter<{
+    item: any;
+    tip: any;
+  }>();
+
   private ngUnsubscribe = new Subject();
 
   allComplete: boolean = false;
@@ -108,7 +113,7 @@ export class PendingComponent implements OnInit, OnDestroy {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        isOnay == '+' ? this.confirmDemandSingle(item.Id, item.tipad, aktifMenu) : this.showCancelDemandDialog(item, 1);
+        isOnay == '+' ? this.confirmDemandSingle(item.Id, item.tipad, aktifMenu) : this.showRejectDialog(item, 1);
         
         Swal.fire({
           title: `Talep ${isOnay == '+' ? 'Onaylandı' : 'Reddedildi'}!`,
@@ -270,6 +275,10 @@ export class PendingComponent implements OnInit, OnDestroy {
 
   showCancelDemandDialog(item: any, tip: any) {
     this.cancelMultipleDialogEvent.emit({ item, tip });
+  }
+
+  showRejectDialog(item: any, tip: any) {
+    this.rejectDialogEvent.emit({ item, tip })
   }
 
   showUploadedFiles(selectedDemand: any) {

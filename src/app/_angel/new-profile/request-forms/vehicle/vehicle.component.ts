@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InlineSVGModule } from 'ng-inline-svg-2';
 import { ToastrService } from 'ngx-toastr';
+import { DatePickerModule } from 'primeng/datepicker';
 import { Dialog } from 'primeng/dialog';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
@@ -23,7 +24,8 @@ import { AuthService } from 'src/app/modules/auth';
     TranslateModule,
     SharedModule,
     Dialog,
-    InlineSVGModule
+    InlineSVGModule,
+    DatePickerModule
   ],
   templateUrl: './vehicle.component.html',
   styleUrl: './vehicle.component.scss'

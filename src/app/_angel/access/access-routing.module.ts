@@ -19,6 +19,8 @@ import { PrintersComponent } from './access-definitions/definitions/printers/pri
 import { AccessDashboardComponent } from './access-dashboard/access-dashboard.component';
 import { AccessRegistryListComponent } from './access-registry-list/access-registry-list.component';
 import { AccessGroupsComponent } from './access-groups/access-groups.component';
+import { OnboardingComponent } from './access-definitions/definitions/onboarding/onboarding.component';
+import { NecessaryDocsComponent } from './access-definitions/definitions/necessary-docs/necessary-docs.component';
 
 
 const routes: Routes = [
@@ -67,7 +69,9 @@ const routes: Routes = [
       { path: 'printers', component: PrintersComponent},
       { path: 'led-panels', component: LedPanelsComponent},
       { path: 'authority-roles', component: AuthorityRolesComponent},
-      { path: 'my-page', component: MyPageComponent}
+      { path: 'my-page', component: MyPageComponent},
+      { path: 'onboarding', component: OnboardingComponent},
+      { path: 'necessary-docs', component: NecessaryDocsComponent}
       
     ]
   },

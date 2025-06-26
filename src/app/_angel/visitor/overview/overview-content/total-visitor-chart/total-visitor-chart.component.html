@@ -2,17 +2,17 @@
     <div class="btn-group btn-group-sm" role="group">
         <button type="button" class="btn"
             [ngClass]="{ 'btn-dark': selectedPeriod === '1D', 'btn-outline-secondary': selectedPeriod !== '1D' }"
-            (click)="setPeriod('1D')">
+            (click)="getChartData('1D')">
             1G
         </button>
         <button type="button" class="btn"
             [ngClass]="{ 'btn-dark': selectedPeriod === '1W', 'btn-outline-secondary': selectedPeriod !== '1W' }"
-            (click)="setPeriod('1W')">
+            (click)="getChartData('1W')">
             1H
         </button>
         <button type="button" class="btn"
             [ngClass]="{ 'btn-dark': selectedPeriod === '1M', 'btn-outline-secondary': selectedPeriod !== '1M' }"
-            (click)="setPeriod('1M')">
+            (click)="getChartData('1M')">
             1A
         </button>
     </div>

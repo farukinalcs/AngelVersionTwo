@@ -5,6 +5,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DropdownModule } from 'primeng/dropdown';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { SelectModule } from 'primeng/select';
 import { Subject, takeUntil } from 'rxjs';
 import { MyIncompleteTimeModel } from 'src/app/_angel/profile/models/myIncompleteTime';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
@@ -20,11 +24,14 @@ import { TranslationService } from 'src/app/modules/i18n';
   imports: [
     CommonModule,
     FormsModule,
-    DropdownModule,
     MatTooltipModule,
     TranslateModule,
     CustomPipeModule,
-    SharedModule
+    SharedModule,
+    InputIconModule,
+    IconFieldModule,
+    FloatLabelModule,
+    SelectModule
   ],
   templateUrl: './missing-durations.component.html',
   styleUrl: './missing-durations.component.scss'
@@ -60,7 +67,8 @@ export class MissingDurationsComponent implements OnInit, OnDestroy {
   ) {}
 
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
+    this.selectedTime = this.timeRange[0];    
     this.getIncompleteTimes('1');
   }
 
@@ -94,15 +102,6 @@ export class MissingDurationsComponent implements OnInit, OnDestroy {
 
       this.ref.detectChanges();
     });
-  }
-
-  applyFilter(event : Event){
-    const filterValue  = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
   ngOnDestroy(): void {

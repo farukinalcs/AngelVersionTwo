@@ -57,11 +57,13 @@ export class AuthService implements OnDestroy {
             const data = auth[0].x;
             var message = auth[0].z;
 
-            localStorage.setItem('is-secure', data[0].issecure);
+            localStorage.setItem('is-secure', data[0]?.issecure);
             
 
             if (message.islemsonuc == -13) {
                 return -13;                
+            } else if (message.islemsonuc == -1) {
+                return -1;
             }
             
             console.log("Auth :", data);

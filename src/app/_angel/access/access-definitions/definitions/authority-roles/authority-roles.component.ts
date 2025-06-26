@@ -27,6 +27,7 @@ export class AuthorityRolesComponent implements OnInit, OnDestroy {
   vacationAuthorizations: any[]= [];
   roleName: string = "";
   display: boolean = false;
+  filterTextData: string = "";
 
   constructor(
     private profileService: ProfileService,

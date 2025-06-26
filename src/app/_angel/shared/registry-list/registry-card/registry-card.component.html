@@ -128,12 +128,14 @@
                                         <a class="text-gray-600 text-hover-danger">{{birthday == "" ? "dd-mm-yyyy" : birthday}}</a>
                                     </div>
                                     <div *ngIf="isEdit">
-                                        <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="birthday">
+                                        <!-- <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="birthday"> -->
+                                        <p-datepicker [(ngModel)]="birthday" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                                     </div>
                                     <div class="fw-bold mt-5">{{"Giriş_Tarihi" | translate}}</div>
                                     <div class="text-gray-600" *ngIf="!isEdit">{{employmentDate == "" ? "dd-mm-yyyy" : employmentDate}}</div>
                                     <div *ngIf="isEdit">
-                                        <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="employmentDate">
+                                        <!-- <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="employmentDate"> -->
+                                        <p-datepicker [(ngModel)]="employmentDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +210,8 @@
                         <app-application-use
                             *ngIf="selectedIndex == 10"
                             [operationType]="operationType"
-                            [selectedRegister]="selectedRegister">
+                            [selectedRegister]="selectedRegister"
+                            [registerDetail]="registerDetail">
                         </app-application-use>
 
                         <app-register-history

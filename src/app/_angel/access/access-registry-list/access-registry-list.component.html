@@ -1,75 +1,81 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <div class="card card-custom gutter-b" [ngClass]="{'disabled': loading}"
+            <div class="gutter-b" [ngClass]="{'disabled': loading, 'card card-custom': !detail}"
                 [ngStyle]="{ 'opacity': loading ? 0.5 : 1, 'cursor': loading ? 'not-allowed' : 'auto' }">
 
-                <div class="card-header border-0">
-                    <div class="card-title">
-                        <h3 class="card-label">{{"Access_Sicil_Listesi" | translate}} </h3>
-                    </div>
-
-                    <div class="card-toolbar">
-                        <div class="symbol symbol-40px cursor-pointer me-2" (click)="refreshList()" pTooltip="{{'Listeyi_Güncelle' | translate}}" tooltipPosition="top">
-                            <span class="symbol-label symbol-label bg-hover-secondary">
-                              <i class="fas fa-undo-alt fs-3 text-danger"></i>
-                            </span>
+                <ng-container *ngIf="!detail">
+                    <div class="card-header border-0">
+                        <div class="card-title">
+                            <h3 class="card-label">{{"Access_Sicil_Listesi" | translate}} </h3>
+                        </div>
+    
+                        <div class="card-toolbar">
+                            <div class="symbol symbol-40px cursor-pointer me-2" (click)="refreshList()" pTooltip="{{'Listeyi_Güncelle' | translate}}" tooltipPosition="top">
+                                <span class="symbol-label symbol-label bg-hover-secondary">
+                                  <i class="fas fa-undo-alt fs-3 text-danger"></i>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </ng-container>
+                
 
                 <div class="card-body pt-3 pb-0">
-                    <div class="row d-flex justify-content-end">
-                        <div class="col-6 d-flex align-sm-items-end gap-2 flex-column flex-sm-row">
-                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="showRegistryCard()">
-                                <i class="fa-solid fa-file-circle-plus"></i>
-                                {{"Yeni_Sicil" | translate}}
-                            </a>
-
-                            <a class="btn btn-dark btn-sm hover-elevate-up">
-                                <i class="fa-solid fa-file-excel"></i>
-                                {{"Toplu_Sicil" | translate}}
-                            </a>
+                    <ng-container *ngIf="!detail">
+                        <div class="row d-flex justify-content-end">
+                            <div class="col-6 d-flex align-sm-items-end gap-2 flex-column flex-sm-row">
+                                <a class="btn btn-dark btn-sm hover-elevate-up" (click)="showRegistryCard()">
+                                    <i class="fa-solid fa-file-circle-plus"></i>
+                                    {{"Yeni_Sicil" | translate}}
+                                </a>
+    
+                                <a class="btn btn-dark btn-sm hover-elevate-up">
+                                    <i class="fa-solid fa-file-excel"></i>
+                                    {{"Toplu_Sicil" | translate}}
+                                </a>
+                            </div>
+    
+                            <div class="col-6 d-flex align-sm-items-end justify-content-end gap-2 flex-column flex-sm-row">
+                                <a class="btn btn-dark btn-sm hover-elevate-up">
+                                    <i class="fa-solid fa-filter"></i>
+                                    {{"Filtrele" | translate}}
+                                </a>
+    
+                                <a class="btn btn-dark btn-sm hover-elevate-up" (click)="clearFilters()">
+                                    <i class="fa-solid fa-eraser"></i>
+                                    {{"Temizle" | translate}}
+                                </a>
+                            </div>
                         </div>
-
-                        <div class="col-6 d-flex align-sm-items-end justify-content-end gap-2 flex-column flex-sm-row">
-                            <a class="btn btn-dark btn-sm hover-elevate-up">
-                                <i class="fa-solid fa-filter"></i>
-                                {{"Filtrele" | translate}}
-                            </a>
-
-                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="clearFilters()">
-                                <i class="fa-solid fa-eraser"></i>
-                                {{"Temizle" | translate}}
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="row mt-2 mb-6">
-                        <div class="col-12">
-                            <span class="text-gray-500 mt-1 fw-semibold fs-8">Seçili Kişiler için
-                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Toplu Değişiklik</a>
-                                veya
-                                <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Task Atama</a>
-                            </span>
-                        </div>
-                    </div>
-
-                    <ul class="nav nav-pills nav-pills-custom item position-relative mx-1 mb-1">
-                        <li class="nav-item col mx-0 p-0" *ngFor="let item of tabList">
-                            <a class="nav-link d-flex justify-content-center w-100 border-0 h-100 cursor-pointer"
-                                [ngClass]="{'active': selectedTab.type == item.type}" (click)="changeTabMenu(item)">
-                                <span class="nav-text text-gray-800 fw-bold fs-6 mb-3">
-                                    {{item.name}}
+    
+                        <div class="row mt-2 mb-6">
+                            <div class="col-12">
+                                <span class="text-gray-500 mt-1 fw-semibold fs-8">Seçili Kişiler için
+                                    <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Toplu Değişiklik</a>
+                                    veya
+                                    <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Task Atama</a>
                                 </span>
-
-                                <span
-                                    class="bullet-custom position-absolute z-index-2 bottom-0 w-100 h-4px bg-dark rounded"></span>
-                            </a>
-                        </li>
-
-                        <span class="position-absolute z-index-1 bottom-0 w-100 h-4px bg-light rounded"></span>
-                    </ul>
+                            </div>
+                        </div>
+    
+                        <ul class="nav nav-pills nav-pills-custom item position-relative mx-1 mb-1">
+                            <li class="nav-item col mx-0 p-0" *ngFor="let item of tabList">
+                                <a class="nav-link d-flex justify-content-center w-100 border-0 h-100 cursor-pointer"
+                                    [ngClass]="{'active': selectedTab.type == item.type}" (click)="changeTabMenu(item)">
+                                    <span class="nav-text text-gray-800 fw-bold fs-6 mb-3">
+                                        {{item.name}}
+                                    </span>
+    
+                                    <span
+                                        class="bullet-custom position-absolute z-index-2 bottom-0 w-100 h-4px bg-dark rounded"></span>
+                                </a>
+                            </li>
+    
+                            <span class="position-absolute z-index-1 bottom-0 w-100 h-4px bg-light rounded"></span>
+                        </ul>
+                    </ng-container>
+                    
 
 
                     <app-registry-list
@@ -80,7 +86,8 @@
                         (requestTimeEvent)="getRequestTime($event)"
                         [refreshEvent]="refreshEvent"
                         [filterEvent]="filterEvent"
-                        [userdef]="'1'">
+                        [userdef]="'1'"
+                        (displayRegistryEvent)="onRegistry($event)">
                     </app-registry-list>
                 </div>
             </div>

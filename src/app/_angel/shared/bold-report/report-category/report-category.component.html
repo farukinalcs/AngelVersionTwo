@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs nav-pills flex-column border-0 gap-2">
+<!-- <ul class="nav nav-tabs nav-pills flex-column border-0 gap-2">
     <li class="nav-item me-0 cursor-pointer" *ngFor="let item of categories">
         <a class="nav-link d-flex gap-2"
             [ngClass]="{
@@ -16,4 +16,18 @@
             <span class="nav-link-title ms-1 fw-bold fs-5"> {{item.category}} </span>
         </a>
     </li>
-</ul>
+</ul> -->
+
+<div class="card py-5 px-10">
+    <div class="d-flex justify-content-center">
+        <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fw-bolder flex-nowrap">
+    
+            <li class="nav-item" *ngFor="let item of categories">
+                <a (click)="changeCategory(item)" class="nav-link text-active-danger text-center me-6 cursor-pointer" [ngClass]="{ 'active': selectedCategory.category == item.category}">
+                    {{item.category}} ({{item.count}})
+                </a>
+            </li>
+    
+        </ul>
+    </div>
+</div>

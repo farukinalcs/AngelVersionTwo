@@ -26,6 +26,7 @@ export class DeviceGroupsComponent implements OnInit, OnDestroy {
   dropdownEmptyMessage: any = this.translateService.instant('Kayıt_Bulunamadı');
   displayUpdate: boolean = false;
   displayAdd: boolean = false;
+  filterTextDevice: string = "";
 
   constructor(
     private profileService: ProfileService,

@@ -26,209 +26,190 @@ import { VisitorComponent } from './request-forms/visitor/visitor.component';
 import { SharedModule } from '../shared/shared.module';
 
 @Component({
-  selector: 'app-new-profile',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    MatProgressSpinnerModule,
-    TranslateModule,
-    InlineSVGModule,
-    MatMenuModule,
-    AttendanceChangeComponent,
-    AuthorityComponent,
-    VehicleComponent,
-    AdvanceComponent,
-    OvertimeComponent,
-    ShiftChangeComponent,
-    ExpenseComponent,
-    LeaveComponent,
-    VisitorComponent,
-    SharedModule
-  ],
-  templateUrl: './new-profile.component.html',
-  styleUrl: './new-profile.component.scss'
+    selector: 'app-new-profile',
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        RouterModule,
+        MatProgressSpinnerModule,
+        TranslateModule,
+        InlineSVGModule,
+        MatMenuModule,
+        AttendanceChangeComponent,
+        AuthorityComponent,
+        VehicleComponent,
+        AdvanceComponent,
+        OvertimeComponent,
+        ShiftChangeComponent,
+        ExpenseComponent,
+        LeaveComponent,
+        VisitorComponent,
+        SharedModule
+    ],
+    templateUrl: './new-profile.component.html',
+    styleUrl: './new-profile.component.scss'
 })
 export class NewProfileComponent implements OnInit, OnDestroy {
-  menuConfig : any;
-  private ngUnsubscribe = new Subject();
-  user$: Observable<UserType>;
-  @HostBinding('attr.data-kt-menu') dataKtMenu = 'true';
+    menuConfig: any;
+    private ngUnsubscribe = new Subject();
+    user$: Observable<UserType>;
+    @HostBinding('attr.data-kt-menu') dataKtMenu = 'true';
 
 
-  displayOvertimeForm : boolean;
-  displayVacationForm: boolean;
+    displayOvertimeForm: boolean;
+    displayVacationForm: boolean;
 
-  userInformation : UserInformation;
-  public isLoading : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    userInformation: UserInformation;
+    public isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  displayVisitRequestForm: boolean;
-  displayAdvancePaymentForm: boolean;
-  displayAuthorityRequestForm: boolean;
-  displayVehicleRequestForm: boolean;
-  displayExpenseRequestForm: boolean;
-  displayShiftForm: boolean;
-  displayAttendanceForm: boolean;
-  imageUrl: string;
-  constructor(
-    private auth: AuthService,
-    private authMenuService : AuthMenuService,
-    public dialog: MatDialog,
-    private profileService : ProfileService,
-    private ref : ChangeDetectorRef,
-  ) {
-    this.imageUrl = this.profileService.getImageUrl();
-  }
+    displayVisitRequestForm: boolean;
+    displayAdvancePaymentForm: boolean;
+    displayAuthorityRequestForm: boolean;
+    displayVehicleRequestForm: boolean;
+    displayExpenseRequestForm: boolean;
+    displayShiftForm: boolean;
+    displayAttendanceForm: boolean;
+    imageUrl: string;
+    constructor(
+        private auth: AuthService,
+        private authMenuService: AuthMenuService,
+        public dialog: MatDialog,
+        private profileService: ProfileService,
+        private ref: ChangeDetectorRef,
+    ) {
+        this.imageUrl = this.profileService.getImageUrl();
+    }
 
-  ngOnInit(): void {
-    this.getMenuConfig();
-    this.getUserInformation();
-    this.getCurrentUserInformations();
-  }
+    ngOnInit(): void {
+        this.getMenuConfig();
+        this.getUserInformation();
+        this.getCurrentUserInformations();
+    }
 
-  getUserInformation() {
-    this.profileService.getUserInformation().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response : ResponseModel<UserInformation,ResponseDetailZ>[]) => {
-      // let data = JSON.parse(response[0].x.toString());
-      // let message = JSON.parse(response[0].z.toString());
-      let data = response[0].x;
-      let message = response[0].z;
-      let responseToken = response[0].y;
+    getUserInformation() {
+        this.profileService.getUserInformation().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<UserInformation, ResponseDetailZ>[]) => {
+            // let data = JSON.parse(response[0].x.toString());
+            // let message = JSON.parse(response[0].z.toString());
+            let data = response[0].x;
+            let message = response[0].z;
+            let responseToken = response[0].y;
 
-      console.log("Sicil Bilgiler :", data);
-      
-
-      if (message.islemsonuc == 1) {
-        this.userInformation = data[0];
-        console.log("USER :", this.userInformation);
-      }
-      
-      this.isLoading.next(false);
-      this.ref.detectChanges();
-    });
-  }
-
-  getMenuConfig() {
-    this.authMenuService.menuConfig$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(res => {
-      this.menuConfig = res;
-      this.ref.detectChanges();
-    });
-
-    console.log("ben ekranı menü config :", this.menuConfig);
-
-    console.log("Kurabiye : ", this.getCookie('UserId')); 
-  }
-
-  getCookie(name: string): string | null {
-    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? match[2] : null;
-  }
-
-  getCurrentUserInformations() {
-    this.user$ = this.auth.currentUserSubject.asObservable();
-  }
-
-  /* Fazla Mesai Form Dialog Penceresi */
-  showOvertimeDialog(){
-    this.displayOvertimeForm = true;
-  }
-  onHideOvertimeForm() {
-    this.displayOvertimeForm = false;
-  }
-  /* --------------------------------- */
+            console.log("Sicil Bilgiler :", data);
 
 
-  /* İzin Form Dialog Penceresi */
-  showVacationDialog(){
-    this.displayVacationForm = true;
-  }
-  
-  onHideVacationForm() {
-    this.displayVacationForm = false;
-  }
-  /* --------------------------------- */
+            if (message.islemsonuc == 1) {
+                this.userInformation = data[0];
+                console.log("USER :", this.userInformation);
+            }
+
+            this.isLoading.next(false);
+            this.ref.detectChanges();
+        });
+    }
+
+    getMenuConfig() {
+        this.authMenuService.menuConfig$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(res => {
+            this.menuConfig = res;
+            this.ref.detectChanges();
+        });
+
+        console.log("ben ekranı menü config :", this.menuConfig);
+
+        console.log("Kurabiye : ", this.getCookie('UserId'));
+    }
+
+    getCookie(name: string): string | null {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? match[2] : null;
+    }
+
+    getCurrentUserInformations() {
+        this.user$ = this.auth.currentUserSubject.asObservable();
+    }
+
+    /* Fazla Mesai Form Dialog Penceresi */
+    showOvertimeDialog() {
+        this.displayOvertimeForm = true;
+    }
+    onHideOvertimeForm() {
+        this.displayOvertimeForm = false;
+    }
+    /* --------------------------------- */
 
 
-  /* Ziyaretçi Form Dialog Penceresi */
-  showVisitRequestDialog() {
-    this.displayVisitRequestForm = true;
-  }
-  visitRequestFormIsSend() {
-    this.displayVisitRequestForm = false;
-  }
-  /* --------------------------------- */
+    /* İzin Form Dialog Penceresi */
+    showVacationDialog() {
+        this.displayVacationForm = true;
+    }
+
+    onHideVacationForm() {
+        this.displayVacationForm = false;
+    }
+    /* --------------------------------- */
 
 
-  /* Yetki Form Dialog Penceresi */
-  // showAuthorityDialog() {
-  //   this.displayAuthorityRequestForm = true;
-  // }
-  // authorityRequestFormIsSend() {
-  //   this.displayAuthorityRequestForm = false;
-  // }
+    /* Ziyaretçi Form Dialog Penceresi */
+    showVisitRequestDialog() {
+        this.displayVisitRequestForm = true;
+    }
+    visitRequestFormIsSend() {
+        this.displayVisitRequestForm = false;
+    }
 
-  displayAuthority() {
-    this.displayAuthorityRequestForm = !this.displayAuthorityRequestForm;
-  }
-  /* --------------------------------- */
+    /* Yetkili Alan İsteği Form Dialog Penceresi */
+    showAuthorityRequestDialog() {
+        this.displayAuthorityRequestForm = true;
+    }
+    authorityRequestFormIsSend() {
+        this.displayAuthorityRequestForm = false;
+    }
+    /* --------------------------------- */
 
-  /* Avans Form Dialog Penceresi */
-  // showAdvancePaymentDialog() {
-  //   this.displayAdvancePaymentForm = true;
-  // }
-  // advancePaymentIsSend() {
-  //   this.displayAdvancePaymentForm = false;
-  // }
+    // displayAuthority() {
+    //     this.displayAuthorityRequestForm = !this.displayAuthorityRequestForm;
+    // }
 
-  displayAdvance() {
-    this.displayAdvancePaymentForm = !this.displayAdvancePaymentForm;
-  }
-  /* --------------------------------- */
+    /* Avans Form Dialog Penceresi */
+    showAdvancePaymentDialog() {
+        this.displayAdvancePaymentForm = true;
+    }
+    advancePaymentFormIsSend() {
+        this.displayAdvancePaymentForm = false;
+    }
+    /* --------------------------------- */
+    
+    // displayAdvance() {
+    //     this.displayAdvancePaymentForm = !this.displayAdvancePaymentForm;
+    // }
 
-  /* Araç Talep Form Dialog Penceresi */
-  // showVehicleRequestDialog() {
-  //   this.displayVehicleRequestForm = true;
-  // }
-  // vehicleRequestIsSend() {
-  //   this.displayVehicleRequestForm = false;
-  // }
+    
+    displayVehicle() {
+        this.displayVehicleRequestForm = !this.displayVehicleRequestForm;
+    }
 
-  displayVehicle() {
-    this.displayVehicleRequestForm = !this.displayVehicleRequestForm;
-  }
-  /* --------------------------------- */
+    displayExpense() {
+        this.displayExpenseRequestForm = !this.displayExpenseRequestForm;
+    }
 
+    showShiftDialog() {
+        this.displayShiftForm = true;
+    }
 
-  // showExpenseDialog() {
-  //   this.displayExpenseRequestForm = true;
-  // }
+    onHideShiftForm() {
+        this.displayShiftForm = false;
+    }
 
-  // expenseRequestIsSend() {
-  //   this.displayExpenseRequestForm = false;
-  // }
+    showAttendanceDialog() {
+        this.displayAttendanceForm = true;
+    }
 
-  displayExpense() {
-    this.displayExpenseRequestForm = !this.displayExpenseRequestForm;
-  }
+    onHideAttendanceForm() {
+        this.displayAttendanceForm = false;
+    }
 
-  showShiftDialog() {
-    this.displayShiftForm = true;
-  }
-
-  onHideShiftForm() {
-    this.displayShiftForm = false;
-  }
-
-  showAttendanceDialog() {
-    this.displayAttendanceForm = true;
-  }
-
-  onHideAttendanceForm() {
-    this.displayAttendanceForm = false;
-  }
-
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next(true);
-    this.ngUnsubscribe.complete();
-  }
+    ngOnDestroy(): void {
+        this.ngUnsubscribe.next(true);
+        this.ngUnsubscribe.complete();
+    }
 }

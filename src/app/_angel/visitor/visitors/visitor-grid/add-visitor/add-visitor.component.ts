@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModu
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { DatePickerModule } from 'primeng/datepicker';
 import { Dialog } from 'primeng/dialog';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SelectModule } from 'primeng/select';
@@ -20,7 +21,8 @@ import { ProfileService } from 'src/app/_angel/profile/profile.service';
     SelectModule,
     ReactiveFormsModule,
     TranslateModule,
-    ProgressBarModule
+    ProgressBarModule,
+    DatePickerModule
   ],
   templateUrl: './add-visitor.component.html',
   styleUrl: './add-visitor.component.scss'

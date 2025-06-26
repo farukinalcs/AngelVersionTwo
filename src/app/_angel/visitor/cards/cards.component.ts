@@ -11,6 +11,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { DropdownModule } from 'primeng/dropdown';
 import { TooltipModule } from 'primeng/tooltip';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-cards',
@@ -22,7 +23,8 @@ import { ProgressBarModule } from 'primeng/progressbar';
     SharedModule,
     DropdownModule,
     TooltipModule,
-    ProgressBarModule
+    ProgressBarModule,
+    DatePickerModule
   ],
   templateUrl: './cards.component.html',
   styleUrl: './cards.component.scss'

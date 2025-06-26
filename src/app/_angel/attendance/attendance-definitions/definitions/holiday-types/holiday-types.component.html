@@ -50,7 +50,8 @@
                                     <span>{{"Tarih" | translate}}</span>
                                 </label>
 
-                                <input type="date" class="form-control form-control-sm form-control-solid" formControlName="date" />
+                                <!-- <input type="date" class="form-control form-control-sm form-control-solid" formControlName="date" /> -->
+                                <p-datepicker formControlName="date" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                             </div>
 
                             <div class="col-1">
@@ -80,7 +81,8 @@
                                         <span>{{"Başlangıç_Saati" | translate}}</span>
                                     </label>
     
-                                    <input type="time" class="form-control form-control-sm form-control-solid" formControlName="startTime" />
+                                    <!-- <input type="time" class="form-control form-control-sm form-control-solid" formControlName="startTime" /> -->
+                                    <p-datepicker formControlName="startTime" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
                                 </div>
                             </ng-container>
                             

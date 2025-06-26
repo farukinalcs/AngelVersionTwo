@@ -52,7 +52,8 @@
                     <span >{{"Rf_Son_Geçerlilik_Tarihi" | translate}}</span>
                 </label>
 
-                <input type="date" class="form-control form-control-sm form-control-solid" placeholder="{{'Rf_Son_Geçerlilik_Tarihi' | translate}}" formControlName="rfLastValidty">
+                <!-- <input type="date" class="form-control form-control-sm form-control-solid" placeholder="{{'Rf_Son_Geçerlilik_Tarihi' | translate}}" formControlName="rfLastValidty"> -->
+                <p-datepicker formControlName="rfLastValidty" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
             </div>
 
             <div class="p-3" [ngClass]="{'col-12': operationType == 't', 'col-6': operationType != 't'}">

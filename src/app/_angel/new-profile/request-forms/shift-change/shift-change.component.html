@@ -16,7 +16,7 @@
                     <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields"
                         [isFromAttendance]="false"></app-form-stepper>
 
-                    <div class="row w-xl-700px">
+                    <div class="row w-xl-700px gap-5">
                         <div class="col-12">
                             <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10" [formGroup]="shiftForm">
 
@@ -99,14 +99,16 @@
                                                         <span class="required">{{"Başlangıç_Tarihi" | translate}}</span>
                                                     </label>
                                 
-                                                    <input type="date" class="form-control form-control-sm form-control-solid" formControlName="startDate">
+                                                    <!-- <input type="date" class="form-control form-control-sm form-control-solid" formControlName="startDate"> -->
+                                                    <p-datepicker formControlName="startDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                                                 </div>
                                                 <div class="col-6 my-5" *ngIf="isFromAttendance">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"Bitiş_Tarihi" | translate}}</span>
                                                     </label>
                                 
-                                                    <input type="date" class="form-control form-control-sm form-control-solid" formControlName="endDate">
+                                                    <!-- <input type="date" class="form-control form-control-sm form-control-solid" formControlName="endDate"> -->
+                                                    <p-datepicker formControlName="endDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                                                 </div>
     
                                                 <div class="col-12 my-5" *ngIf="!isFromAttendance">
