@@ -12,6 +12,7 @@ import { SeniorEmployeesComponent } from './senior-employees/senior-employees.co
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { SuggestionsComponent } from './suggestions/suggestions.component';
 import { InventoryComponent } from './inventory/inventory.component';
+import { SurveyInHouseComponent } from '../survey-in-house/survey-in-house.component';
 
 @Component({
   selector: 'app-widgets',
@@ -29,7 +30,8 @@ import { InventoryComponent } from './inventory/inventory.component';
     AnnouncementsComponent,
     SuggestionsComponent,
     SurveyComponent,
-    InventoryComponent
+    InventoryComponent,
+    SurveyInHouseComponent
   ],
   templateUrl: './widgets.component.html',
   styleUrl: './widgets.component.scss'
