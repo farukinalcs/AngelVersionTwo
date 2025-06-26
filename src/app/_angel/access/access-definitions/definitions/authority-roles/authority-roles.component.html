@@ -90,123 +90,24 @@
                                                 </div>
                                             </div>
                                         </div>
-                                          
-                                          
-                                          
-                                        
-                                        
-                                        <!-- <div class="row">
-                                            <div class="col-2">
-                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
-                                                    <span >{{"Access" | translate}}</span>
-                                                </label>
-    
-                                                <div class="d-flex">
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-
-                                            <div class="col-2">
-                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
-                                                    <span >{{"PDKS" | translate}}</span>
-                                                </label>
-    
-                                                
-                                                <div class="d-flex">
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-2">
-                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
-                                                    <span >{{"Ziyaretçi" | translate}}</span>
-                                                </label>
-    
-                                                <div class="d-flex">
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-2">
-                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
-                                                    <span >{{"Yemekhane" | translate}}</span>
-                                                </label>
-    
-                                                <div class="d-flex">
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-2">
-                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
-                                                    <span >{{"Kantin" | translate}}</span>
-                                                </label>
-    
-                                                <div class="d-flex">
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-2">
-                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
-                                                    <span >{{"Otopark" | translate}}</span>
-                                                </label>
-    
-                                                <div class="d-flex">
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                    <div class="form-check form-check-sm">
-                                                        <input class="form-check-input" type="checkbox"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
                                         
                                     </div>
 
+                                    <div class="col-12 py-2">
+                                        <div class="input-group py-3" style="flex: 1;">
+                                            <input
+                                                class="form-control form-control-solid p-2 border-1 border-dark rounded-lg font-size-h6"
+                                                [(ngModel)]="filterTextData" type="text" placeholder="{{'Arama' | translate}}"
+                                                style="height: 30px;">
+        
+                                            <button class="search-icon">
+                                                <div class="svg">
+                                                    <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="col-12">
                                         <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="changeTabMenu($event)" [selectedIndex]="selectedIndex"  style="min-height: 300px;">
                                             <mat-tab label="{{'Menü_Yetkilendirme' | translate}}">
@@ -224,7 +125,7 @@
                                                                 </thead>
                         
                                                                 <tbody>
-                                                                    <ng-container *ngFor="let item of menuAuthorizations | searchFilter:filterText: ['ad', 'modul']">
+                                                                    <ng-container *ngFor="let item of menuAuthorizations | searchFilter:filterTextData: ['ad', 'modul']">
                                                                         <tr class="cursor-pointer fs-7">
                                                                             <td>
                                                                                 <span class="mb-1 fw-bolder">{{item.ad}}</span>
@@ -266,7 +167,7 @@
                                                                 </thead>
                         
                                                                 <tbody>
-                                                                    <ng-container *ngFor="let item of shiftAuthorizations | searchFilter:filterText: ['Aciklama', 'MesaiID']">
+                                                                    <ng-container *ngFor="let item of shiftAuthorizations | searchFilter:filterTextData: ['Aciklama', 'MesaiID']">
                                                                         <tr class="cursor-pointer fs-7">
                                                                             <td>
                                                                                 <span class="mb-1 fw-bolder">{{item.Aciklama}}</span>
@@ -309,7 +210,7 @@
                                                                 </thead>
                         
                                                                 <tbody>
-                                                                    <ng-container *ngFor="let item of vacationAuthorizations | searchFilter:filterText: ['Aciklama', 'IzinID']">
+                                                                    <ng-container *ngFor="let item of vacationAuthorizations | searchFilter:filterTextData: ['Aciklama', 'IzinID']">
                                                                         <tr class="cursor-pointer fs-7">
                                                                             <td>
                                                                                 <span class="mb-1 fw-bolder">{{item.Aciklama}}</span>
@@ -351,7 +252,7 @@
                                                                 </thead>
                         
                                                                 <tbody>
-                                                                    <ng-container *ngFor="let item of reportAuthorizations | searchFilter:filterText: ['ad', 'Grupad']">
+                                                                    <ng-container *ngFor="let item of reportAuthorizations | searchFilter:filterTextData: ['ad', 'Grupad']">
                                                                         <tr class="cursor-pointer fs-7">
                                                                             <td>
                                                                                 <span class="mb-1 fw-bolder">{{item.ad}}</span>

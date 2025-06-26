@@ -1,91 +1,98 @@
 <div class="card card-flush h-md-100" >
-    <div class="card-header pt-5" style="display: block;">
-        <div class="card-title" style="display: block;">
-            <div class="row">
-                <div class="col-8">
-                    <i class="fa-solid fa-screwdriver-wrench fs-2 text-danger pe-2"></i>
-                    <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Envanterlerim" | translate}}</span>
-                </div>
 
-                <div class="col-4 d-flex justify-content-end align-items-center" (click)="showMyInventory()">
-                    <span class="text-gray-400 text-hover-danger cursor-pointer pt-1 fw-semibold fs-7">
-                        Tümü
-                        <i class="fa-solid fa-chevron-right ps-2 fs-7"></i>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card-body p-4">
-        <div class="mb-5">
+    <!-- Coming Soon Filigranı -->
+    <div class="watermark">Coming Soon</div>
 
-            <div class="row">
-                <div class="col-12 border-bottom border-3" *ngFor="let item of items">
-                    <div class="row d-flex align-items-center my-3">
-                        <div class="col-2">
-                            <div class="symbol symbol-50px me-5">
-                                <div [ngSwitch]="item.aldim">
-                                    <div *ngSwitchCase="'0'">
-                                        <span class="symbol-label bg-light-info">
-                                            <i class="fa-solid fa-clock h-50 align-self-center fs-2x text-info"></i>
-                                        </span>
-                                    </div>
-
-                                    <div *ngSwitchCase="'1'">
-                                        <span class="symbol-label bg-light-success">
-                                            <i
-                                                class="fa-solid fa-circle-check h-50 align-self-center fs-2x text-success"></i>
-                                        </span>
-                                    </div>
-
-                                    <div *ngSwitchCase="'-1'">
-                                        <span class="symbol-label bg-light-danger">
-                                            <i
-                                                class="fa-solid fa-circle-xmark h-50 align-self-center fs-2x text-danger"></i>
-                                        </span>
-                                    </div>
-
-                                    <div *ngSwitchDefault>
-                                        <span class="symbol-label bg-light-primary">
-                                            <i
-                                                class="fa-solid fa-layer-group h-50 align-self-center fs-2x text-primary"></i>
-                                        </span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-                                <div class="flex-grow-1 me-2">
-                                    <a class="text-gray-800 text-hover-primary fs-6 fw-bolder"> {{item.altBaslik}} </a>
-                                    <span class="text-muted fw-bold d-block fs-7"> {{item.anaBaslik}} </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <ng-container *ngIf="item.aldim == 0">
-                            <div class="col-2">
-                                <a class="btn btn-sm btn-primary">{{"Aldım" | translate}}</a>
-                            </div>
-
-                            <div class="col-2">
-                                <a class="btn btn-sm btn-primary">{{"Almadım" | translate}}</a>
-                            </div>
-                        </ng-container>
-
+    <div class="content-wrapper">
+        <div class="card-header pt-5" style="display: block;">
+            <div class="card-title" style="display: block;">
+                <div class="row">
+                    <div class="col-8">
+                        <i class="fa-solid fa-screwdriver-wrench fs-2 text-danger pe-2"></i>
+                        <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Envanterlerim" | translate}}</span>
+                    </div>
+    
+                    <div class="col-4 d-flex justify-content-end align-items-center" (click)="showMyInventory()">
+                        <span class="text-gray-400 text-hover-danger cursor-pointer pt-1 fw-semibold fs-7">
+                            Tümü
+                            <i class="fa-solid fa-chevron-right ps-2 fs-7"></i>
+                        </span>
                     </div>
                 </div>
-
-                <div class="col-12 d-flex justify-content-center align-items-center">
-                    <a class="btn text-gray-400 text-hover-danger">
-                        <i class="fa-solid fa-circle-plus fs-1 pe-2"></i>
-                        <span class="fs-4">{{"Envanter_Talebi_Oluştur" | translate}}</span>
-                    </a>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="mb-5">
+    
+                <div class="row">
+                    <div class="col-12 border-bottom border-3" *ngFor="let item of items">
+                        <div class="row d-flex align-items-center my-3">
+                            <div class="col-2">
+                                <div class="symbol symbol-50px me-5">
+                                    <div [ngSwitch]="item.aldim">
+                                        <div *ngSwitchCase="'0'">
+                                            <span class="symbol-label bg-light-info">
+                                                <i class="fa-solid fa-clock h-50 align-self-center fs-2x text-info"></i>
+                                            </span>
+                                        </div>
+    
+                                        <div *ngSwitchCase="'1'">
+                                            <span class="symbol-label bg-light-success">
+                                                <i
+                                                    class="fa-solid fa-circle-check h-50 align-self-center fs-2x text-success"></i>
+                                            </span>
+                                        </div>
+    
+                                        <div *ngSwitchCase="'-1'">
+                                            <span class="symbol-label bg-light-danger">
+                                                <i
+                                                    class="fa-solid fa-circle-xmark h-50 align-self-center fs-2x text-danger"></i>
+                                            </span>
+                                        </div>
+    
+                                        <div *ngSwitchDefault>
+                                            <span class="symbol-label bg-light-primary">
+                                                <i
+                                                    class="fa-solid fa-layer-group h-50 align-self-center fs-2x text-primary"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                                    <div class="flex-grow-1 me-2">
+                                        <a class="text-gray-800 text-hover-primary fs-6 fw-bolder"> {{item.altBaslik}} </a>
+                                        <span class="text-muted fw-bold d-block fs-7"> {{item.anaBaslik}} </span>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <ng-container *ngIf="item.aldim == 0">
+                                <div class="col-2">
+                                    <a class="btn btn-sm btn-primary">{{"Aldım" | translate}}</a>
+                                </div>
+    
+                                <div class="col-2">
+                                    <a class="btn btn-sm btn-primary">{{"Almadım" | translate}}</a>
+                                </div>
+                            </ng-container>
+    
+                        </div>
+                    </div>
+    
+                    <div class="col-12 d-flex justify-content-center align-items-center">
+                        <a class="btn text-gray-400 text-hover-danger">
+                            <i class="fa-solid fa-circle-plus fs-1 pe-2"></i>
+                            <span class="fs-4">{{"Envanter_Talebi_Oluştur" | translate}}</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    
 </div>
 
 

@@ -32,7 +32,9 @@ export class AccessDefinitionsComponent implements OnInit, OnDestroy {
     {id: 18, label: this.translateService.instant("Yazıcılar"), icon: "fa-solid fa-print", path: "printers"},
     {id: 19, label: this.translateService.instant("Led_Panalor"), icon: "fa-solid fa-tachograph-digital", path: "led-panels"},
     {id: 20, label: this.translateService.instant("Yetki_Rolleri"), icon: "fa-solid fa-key", path: "authority-roles"},
-    {id: 21, label: this.translateService.instant("Ben_Sayfası"), icon: "fa-solid fa-user", path: "my-page"}
+    {id: 21, label: this.translateService.instant("Ben_Sayfası"), icon: "fa-solid fa-user", path: "my-page"},
+    {id: 22, label: this.translateService.instant("Bilgilendirme Ekranı"), icon: "fa-solid fa-handshake", path: "onboarding"},
+    {id: 23, label: this.translateService.instant("Gerekli Belgeler"), icon: "fa-solid fa-folder-open", path: "necessary-docs"}
   ];
 
   visibleTabs: any[] = [];

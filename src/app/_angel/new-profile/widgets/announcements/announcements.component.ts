@@ -5,71 +5,96 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
 import { CarouselModule } from 'primeng/carousel';
 import { DialogModule } from 'primeng/dialog';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { AnnouncementComponent } from '../../request-forms/announcement/announcement.component';
+import { ProfileService } from 'src/app/_angel/profile/profile.service';
+import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
-  selector: 'app-announcements',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    DialogModule,
-    TranslateModule,
-    MatTabsModule,
-    CarouselModule,
-    AnnouncementComponent
-  ],
-  templateUrl: './announcements.component.html',
-  styleUrl: './announcements.component.scss'
+    selector: 'app-announcements',
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        DialogModule,
+        TranslateModule,
+        MatTabsModule,
+        CarouselModule,
+        AnnouncementComponent,
+        TooltipModule,
+        ButtonModule,
+        CustomPipeModule,
+    ],
+    templateUrl: './announcements.component.html',
+    styleUrl: './announcements.component.scss'
 })
 export class AnnouncementsComponent implements OnInit, OnDestroy {
-  private ngUnsubscribe = new Subject();
-  public closedAnnouncementForm : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    private ngUnsubscribe = new Subject();
 
-  items: any[] = [
-    {tarih : '04 Temmuz 2023', aciklama : "28.06.2019 Cuma günü saat 18:00'dan sonra şirketimizde ilaçlama yapılacaktır. Yapılacak ilaçlamanın insan sağlığına bir etkisi yoktur, mesai yapacak personelimiz mesailerini yapabilirler. 28.06.2019 Cuma günü saat 18:00'dan sonra şirketimizde ilaçlama yapılacaktır. Yapılacak ilaçlamanın insan sağlığına bir etkisi yoktur, mesai yapacak personelimiz mesailerini yapabilirler. 28.06.2019 Cuma günü saat 18:00'dan sonra şirketimizde ilaçlama yapılacaktır. Yapılacak ilaçlamanın insan sağlığına bir etkisi yoktur, mesai yapacak personelimiz mesailerini yapabilirler.", bolum : 'İnsan Kaynakları'},
-    {tarih : '05 Temmuz 2023', aciklama : 'Araç Talep Modülü Yayınlanmıştır.', bolum : 'Yazılım Geliştirme'},
-  ];
+    items: any[] = [];
 
-  currentItemIndex = 0;
-  displayAllAnnouncements : boolean;
-  displayAnnouncementForm: boolean = false;
+    displayAllAnnouncements: boolean;
+    displayAnnouncementForm: boolean = false;
 
-  constructor(
-  ) { }
+    constructor(
+        private profileService: ProfileService
+    ) { }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+        this.fetchData('0')
+    }
 
-  get currentItem(): any {
-    return this.items[this.currentItemIndex];
-  }
+    fetchData(range: any) {
+        var sp: any[] = [
+            {
+                mkodu: 'yek351',
+                zamanaralik: range
+            }
+        ];
+        console.log("Zamanaralik :", sp);
+        
 
-  /* Tüm Duyurular Dialog Penceresi */
-  showAllAnnouncements() {
-    this.displayAllAnnouncements = true;
-  }
-  /* --------------------------------- */
+        this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((res: any) => {
+            const data = res[0].x;
+            const message = res[0].z;
 
+            if (message.islemsonuc == -1) {
+                return;
+            }
 
-  /* Duyuru Form Dialog Penceresi */
-  // showAnnouncementFormDialog() {
-  //   this.displayAnnouncementForm = true;
-  // }
-  // announcementFormIsSend() {
-  //   this.displayAnnouncementForm = false;
-  //   this.closedAnnouncementForm.next(false);
-  // }
+            this.items = [...data];
+            console.log("Duyuru geldi :", data);
+        });
+    }
 
-  displayAnnouncement() {
-    this.displayAnnouncementForm = !this.displayAnnouncementForm;
-  }
-  /* --------------------------------- */
+    showAllAnnouncements() {
+        this.displayAllAnnouncements = true;
+    }
 
+    onHideAll() {
+        this.displayAllAnnouncements = false;
+        this.fetchData('0');
+    }
+    displayAnnouncement(event?: boolean) {
+        this.displayAnnouncementForm = !this.displayAnnouncementForm;
 
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next(true);
-    this.ngUnsubscribe.complete();
-  }
+        if (event) {
+            this.fetchData('0');
+        }
+    }
+
+    delete(item: any) {
+
+    }
+
+    onChangeTab(index: any) {
+        this.fetchData(index == 0 ? '0' : index == 1 ? '7' : '30');
+    }
+
+    ngOnDestroy(): void {
+        this.ngUnsubscribe.next(true);
+        this.ngUnsubscribe.complete();
+    }
 }

@@ -8,8 +8,10 @@
         
         <div class="d-flex gap-1">
             <!-- Date Input -->
-            <input *ngIf="param.tip == '16'" type="datetime-local" class="form-control form-control-sm form-control-solid"
-                [formControlName]="param.ParameterName">
+            <!-- <input *ngIf="param.tip == '16'" type="datetime-local" class="form-control form-control-sm form-control-solid"
+                [formControlName]="param.ParameterName"> -->
+
+            <p-datepicker *ngIf="param.tip == '16'" [formControlName]="param.ParameterName" [showTime]="true" [hourFormat]="'24'" />
         
             <!-- Time Input (Eğer tip 16 ise time input eklenir) -->
             <!-- <input *ngIf="param.hasTimeField" type="time" class="form-control form-control-sm form-control-solid"

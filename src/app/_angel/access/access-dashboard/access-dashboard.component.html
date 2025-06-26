@@ -1,21 +1,21 @@
 <div class="container-fluid">
     <div class="row gy-5 gx-xl-4">
         <div class="col-12 py-2">
-            <p-button 
-                [label]="getNextAreaLabel()" 
-                [icon]="'pi pi-arrow-right'" 
-                iconPos="right" 
-                (onClick)="goToNextArea()"
-                [rounded]="true"
-                severity="secondary">
+            <p-button [label]="getNextAreaLabel()" [icon]="'pi pi-arrow-right'" iconPos="right"
+                (onClick)="goToNextArea()" [rounded]="true" severity="secondary">
             </p-button>
+
+            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="editModeToggle()">
+                <i class="fa-solid fa-grip"></i>
+                {{"Düzenle" | translate}}
+            </a>
         </div>
     </div>
-    
-    
-    <app-dashboard-card
-        [cards]="dashboardOptions"
-        [editMode]="false"
-        [fromWhere]="'access'">
+
+
+    <app-dashboard-card [cards]="dashboardOptions" [editMode]="false" [fromWhere]="'access'">
     </app-dashboard-card>
+
+    <app-overview-content [editMode]="editMode">
+    </app-overview-content>
 </div>

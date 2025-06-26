@@ -4,11 +4,12 @@
             <div class="row">
                 <div class="col-8">
                     <i class="fa-solid fa-folder-open fs-2 text-danger pe-2"></i>
-                    <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Dosyalarım" | translate}}</span>
+                    <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Dosyalarım" |
+                        translate}}</span>
                 </div>
 
                 <div class="col-4 d-flex justify-content-end align-items-center">
-                    <span class="text-gray-400 text-hover-danger cursor-pointer pt-1 fw-semibold fs-7">
+                    <span class="text-gray-400 text-hover-danger cursor-pointer pt-1 fw-semibold fs-7" (click)="open()">
                         {{"Tümü" | translate}}
                         <i class="fa-solid fa-chevron-right ps-2 fs-7"></i>
                     </span>
@@ -16,105 +17,137 @@
             </div>
         </div>
     </div>
-    <div class="card-body p-4">
-        <!-- <div class="row">
-            <div class="col-12">
-                <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"  accept="image/*"
-                    [multiple]="true"
-                    [maxFileSize]="1000000"
-                    cancelLabel="Vazgeç"
-                    chooseLabel="Dosya Seç"
-                    uploadLabel="Yükle"
-                    class="d-block hover-scroll h-250px">
-                    <ng-template pTemplate="content">
-                        <ul *ngIf="uploadedFiles.length">
-                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                        </ul>
-                    </ng-template>
-                </p-fileUpload>
-            </div>
-        </div> -->
-        <div class="mb-5">
-            <div class="row">
-                <div class="col-12 border-bottom border-3">
-                    <div class="row d-flex align-items-center">
+    <div class="card-body px-4 py-1">
+        <div class="row h-100">
+            <div class="col-12 d-flex flex-column justify-content-around">
+                <ng-container *ngIf="necessaries.length > 0">
+                    <div class="row d-flex align-items-center" *ngFor="let item of necessaries">
                         <div class="col-2 d-flex justify-content-center">
-                            <div class="symbol symbol-50px me-5 p-1">
-                                <span class="symbol-label" [ngClass]="{'bg-light-warning': !isItUploaded, 'bg-light-success': isItUploaded}" [ngSwitch]="isItUploaded">
-                                    <i *ngSwitchCase="true" class="fa-solid fa-circle-check h-50 align-self-center fs-2x text-success"></i>
-                                    <i *ngSwitchCase="false" class="fa-solid fa-circle-exclamation h-50 align-self-center fs-2x text-warning"></i>
+                            <div class="symbol symbol-50px me-5 p-1" [pTooltip]="getTooltipText(item)" tooltipPosition="top">
+                                <span class="symbol-label"
+                                    [ngClass]="{'bg-light-warning': !item.durum, 'bg-light-success': item.durum == 1, 'bg-light-danger': item.durum == -1}"
+                                    [ngSwitch]="item.durum">
+                                    <i *ngSwitchCase="1"
+                                        class="fa-solid fa-circle-check h-50 align-self-center fs-2x text-success"></i>
+                                    <i *ngSwitchCase="-1"
+                                        class="fa-solid fa-xmark h-50 align-self-center fs-2x text-danger"></i>
+                                    <i *ngSwitchCase="null"
+                                        class="fa-solid fa-circle-exclamation h-50 align-self-center fs-2x text-warning"></i>
                                 </span>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                                 <div class="flex-grow-1 me-2">
-                                    <a class="text-gray-800 text-hover-primary fs-6 fw-bolder"> Kimlik Fotokopisi </a>
-                                    <span class="text-muted fw-bold d-block fs-7"> Muhasebe </span>
+                                    <a class="text-gray-800 text-hover-primary fs-6 fw-bolder"> {{ item.belgetipiad }}
+                                    </a>
+                                    <span class="text-muted fw-bold d-block fs-7"> {{ item.duzenleyen }} </span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-4 d-flex justify-content-center">
-                            <input type="file" id="upload" style="display: none;" (change)="getFile($event)">
-                            <label for="upload" class="btn btn-sm btn-danger">
-                                <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                                {{"Yükle" | translate}}
-                            </label>
+                        <div class="col-4">
+                            <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                                @if(item.belgezaman) {
+                                    <span class="text-muted fw-bold d-block fs-7">
+                                        {{ item.belgezaman | date:'longDate' }}
+                                    </span>
+                                } @else {
+                                    <a (click)="open()" class="btn btn-sm bg-gray-100 text-gray-700 bg-hover-secondary">Yükle</a>
+                                }
+                                
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-4 d-flex justify-content-center">
+                                <input type="file" id="upload" style="display: none;" (change)="getFile($event, item)">
+                                <label for="upload" class="btn btn-sm btn-danger">
+                                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                    {{"Yükle" | translate}}
+                                </label>
+                            </div> -->
+
+                        <!-- <ng-container *ngIf="item.file">
+                                <div class="card bg-gray-100 m-3">
+                                    <div class="card-body px-2 py-1">
+                                        <div class="row d-flex justify-content-center align-items-center">
+        
+                                            <ng-container *ngIf="!item.file.type.startsWith('image')">
+                                                <div class="col-3 text-center">
+                                                    <div [ngSwitch]="item.file.type">
+                                                        <div *ngSwitchCase="['image/jpeg', 'image/png', 'image/svg'].includes(item.file.type) ? item.file.type : !item.file.type"><i class="fa-solid fa-file-image text-dark fs-3x"></i></div>
+                                                        <div *ngSwitchCase="['text/plain'].includes(item.file.type) ? item.file.type : !item.file.type"><i class="fa-solid fa-file-lines text-dark fs-3x"></i></div>
+                                                        <div *ngSwitchCase="['application/pdf'].includes(item.file.type) ? item.file.type : !item.file.type"><i class="fa-solid fa-file-pdf text-dark fs-3x"></i></div>
+                                                        <div *ngSwitchDefault><i class="fa-solid fa-file text-dark fs-3x"></i></div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            
+                                            
+                                            <ng-container *ngIf="item.file.type.startsWith('image')">
+                                                <div class="col-3 d-flex justify-content-center">
+                                                    <div class="symbol symbol-75px">
+                                                        <img alt="Uploaded File" src="{{item.file.url}}">
+                                                    </div>
+                                                </div>    
+                                            </ng-container>
+                                            
+        
+                                            <div class="col-5">
+                                                <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                    {{item.file.name}}
+                                                </div>
+        
+                                                <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                    {{item.file.fileSize}}
+                                                </div>
+                                            </div>
+                
+                                            <div class="col-2">
+                                                <a (click)="setFile(item)" class="btn btn-sm btn btn-primary">{{"Kaydet" | translate}}</a>
+                                            </div>
+                
+                                            <div class="col-2">
+                                                <a (click)="cancelUploading(item)" class="btn btn-sm btn btn-light-primary">{{"İptal" | translate}}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </ng-container> -->
+                    </div>
+                </ng-container>
+
+
+                <ng-container *ngIf="necessaries.length == 0">
+                    <div class="row pt-10">
+                        <div class="col-12 d-flex justify-content-center align-items-center">
+                            <div class="row">
+                                <app-data-not-found [imgWidth]=" '100%' ">
+                                </app-data-not-found>
+                            </div>
                         </div>
                     </div>
-
-                    <ng-container *ngIf="uploadedFile">
-                        <div [@fileUploaded]="'uploaded'" class="card bg-light-dark m-3">
-                            <div class="card-body">
-                                <div class="row d-flex justify-content-center align-items-center">
-
-                                    <ng-container *ngIf="!uploadedFile.type.startsWith('image')">
-                                        <div class="col-3 text-center">
-                                            <div [ngSwitch]="uploadedFile.type">
-                                                <div *ngSwitchCase="['image/jpeg', 'image/png', 'image/svg'].includes(uploadedFile.type) ? uploadedFile.type : !uploadedFile.type"><i class="fa-solid fa-file-image text-dark fs-3x"></i></div>
-                                                <div *ngSwitchCase="['text/plain'].includes(uploadedFile.type) ? uploadedFile.type : !uploadedFile.type"><i class="fa-solid fa-file-lines text-dark fs-3x"></i></div>
-                                                <div *ngSwitchCase="['application/pdf'].includes(uploadedFile.type) ? uploadedFile.type : !uploadedFile.type"><i class="fa-solid fa-file-pdf text-dark fs-3x"></i></div>
-                                                <div *ngSwitchDefault><i class="fa-solid fa-file text-dark fs-3x"></i></div>
-                                            </div>
-                                        </div>
-                                    </ng-container>
-                                    
-                                    
-                                    <ng-container *ngIf="uploadedFile.type.startsWith('image')">
-                                        <div class="col-3 d-flex justify-content-center">
-                                            <div class="symbol symbol-75px">
-                                                <img alt="Uploaded File" src="{{uploadedFile.url}}">
-                                            </div>
-                                        </div>    
-                                    </ng-container>
-                                    
-
-                                    <div class="col-5">
-                                        <div class="fs-6 fw-bold text-gray-800 text-center">
-                                            {{uploadedFile.name}}
-                                        </div>
-
-                                        <div class="fs-6 fw-bold text-gray-800 text-center">
-                                            {{uploadedFile.fileSize}}
-                                        </div>
-                                    </div>
-        
-                                    <div class="col-2">
-                                        <a class="btn btn-sm btn btn-primary">{{"Kaydet" | translate}}</a>
-                                    </div>
-        
-                                    <div class="col-2">
-                                        <a (click)="uploadedFile = null" class="btn btn-sm btn btn-light-primary">{{"İptal" | translate}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </ng-container>
-                    
-                </div>
+                </ng-container>
             </div>
         </div>
     </div>
 </div>
+
+
+<ng-container *ngIf="display">
+    <p-dialog header="{{'Gerekli Belgeler' | translate}}" [(visible)]="display" [modal]="true"
+        [breakpoints]="{ '2560px': '70vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true" [baseZIndex]="10000"
+        [draggable]="false" [resizable]="false" (onHide)="close()">
+
+        <div class="row">
+            <app-my-files-detail
+                [types]="necessaries"
+                [formId]="registryId"
+                [source]="'sicildosya'"
+                (uploadEvent)="onUploaded($event)">
+            </app-my-files-detail>
+        </div>
+
+    </p-dialog>
+</ng-container>

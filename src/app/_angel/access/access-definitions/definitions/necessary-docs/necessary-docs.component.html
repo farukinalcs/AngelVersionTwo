@@ -1,0 +1,131 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Gerekli Belgeler" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Buradan_Belirleyebilirsiniz" | translate}}</h4>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row d-flex align-items-strech">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-6 py-3">
+                                    <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                        <span>{{"Sicil_Grubu" | translate}}</span>
+                                    </label>
+
+
+                                    <p-select [options]="registryGroups" [(ngModel)]="selected"
+                                        (ngModelChange)="onChange()" optionLabel="ad"
+                                        [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad"
+                                        [showClear]="true" class="w-100 md:w-56">
+                                        <ng-template #selectedItem let-selected>
+                                            <div class="flex items-center gap-2">
+                                                <div>{{ selected?.ad }}</div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template let-item #item>
+                                            <div class="flex items-center gap-2">
+                                                <div>{{ item?.ad }}</div>
+                                            </div>
+                                        </ng-template>
+                                    </p-select>
+                                </div>
+
+                                <div class="col-6 py-3 d-flex align-items-end">
+                                    <div class="input-group py-1" style="flex: 1;">
+                                        <input
+                                            class="form-control form-control-solid p-2 border-1 border-dark rounded-lg font-size-h6"
+                                            [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}"
+                                            style="height: 30px;">
+
+                                        <button class="search-icon">
+                                            <div class="svg">
+                                                <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 ">
+                                    <div class="table-responsive h-550px scroll">
+                                        <table
+                                            class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                            <thead class="">
+                                                <tr
+                                                    class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-light rounded text-gray-600">
+                                                    <th class=" fw-bolder me-1 cursor-pointer rounded-start"
+                                                        style="width: 80%;">{{"Atanmış" | translate}}
+                                                    </th>
+                                                    <th class=" fw-bolder me-1 cursor-pointer rounded-end"
+                                                        style="width: 20%;">{{"İşlem" | translate}}</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr *ngFor="let item of assigns | searchFilter:filterText: ['Ad']"
+                                                    class="cursor-pointer fs-8">
+                                                    <td>
+                                                        <span class="mb-1">{{ item?.Ad }}</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <a class="btn btn-warning btn-sm py-1 px-2"
+                                                            (click)="relationStateChange(item, 'd')">
+                                                            <i class="fa-solid fa-minus p-0"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="table-responsive h-550px scroll">
+                                        <table
+                                            class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                            <thead class="">
+                                                <tr
+                                                    class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-light rounded text-gray-600">
+                                                    <th class=" rounded-start" style="width: 20%;">{{"İşlem" |
+                                                        translate}}</th>
+                                                    <th class=" fw-bolder me-1 cursor-pointer rounded-end"
+                                                        style="width: 80%;">{{"Eklenebilir_Terminaller" | translate}}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr *ngFor="let item of control() | searchFilter:filterText: ['Ad']"
+                                                    class="cursor-pointer fs-8">
+                                                    <td>
+                                                        <a class="btn btn-primary btn-sm py-1 px-2"
+                                                            (click)="relationStateChange(item, 'i')">
+                                                            <i class="fa-solid fa-plus p-0"></i>
+                                                        </a>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="mb-1">{{ item?.Ad }}</span>
+                                                    </td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

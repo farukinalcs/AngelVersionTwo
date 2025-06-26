@@ -15,7 +15,7 @@
 
                     <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields" [isFromAttendance]="false"></app-form-stepper>
 
-                    <div class="row w-xl-700px">
+                    <div class="row w-xl-700px gap-5">
                         <div class="col-12">
                             <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10" [formGroup]="announcementForm">
 
@@ -70,7 +70,8 @@
                                                             <span class="required">{{"Başlangıç_Tarihi" | translate}}</span>
                                                         </label>
 
-                                                        <input type="date" class="form-control form-control-lg form-control-solid" formControlName="startDate">
+                                                        <!-- <input type="date" class="form-control form-control-lg form-control-solid" formControlName="startDate"> -->
+                                                        <p-datepicker formControlName="startDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
 
                                                         <div class="fv-plugins-message-container invalid-feedback"></div>
                                                     </div>
@@ -82,7 +83,8 @@
                                                             <span class="required">{{"Bitiş_Tarihi" | translate}}</span>
                                                         </label>
 
-                                                        <input type="date" class="form-control form-control-lg form-control-solid" formControlName="endDate">
+                                                        <!-- <input type="date" class="form-control form-control-lg form-control-solid" formControlName="endDate"> -->
+                                                        <p-datepicker formControlName="endDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
 
                                                         <div class="fv-plugins-message-container invalid-feedback"></div>
                                                     </div>
@@ -108,21 +110,22 @@
                                 <ng-container *ngIf="currentStep$.value == 3">
                                     <div class="current">
                                         <div class="w-100">
-                                            <div class="row bg-light-danger rounded p-10">
+                                            <div class="row card shadow-lg rounded m-10 p-2">
                                                 <div class="col-12">
-                                                    <div class="fs-2x fw-bold text-gray-800 text-center mb-13">
-                                                        <span class="badge badge-dark fs-6">{{announcementFormValues.owner}}</span>
+                                                    <div class="fs-2x fw-bold text-gray-800 text-center mb-2">
+                                                        <span class="badge badge-dark fs-6">{{announcementFormValues.title}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 scroll h-100px d-flex justify-content-center">
-                                                    <div class="fs-3 fw-bold text-gray-800 text-center">
+                                                    <div class="fs-6 fw-bold text-gray-600 text-center">
                                                         <span>{{announcementFormValues.description}}</span>
                                                     </div>
                                                 </div>
                                             
                                                 <div class="col-12">
-                                                    <div class="text-gray-400 fw-semibold fs-7 text-end">
-                                                        <span>{{announcementFormValues.startDate}}</span>
+                                                    <div class="text-gray-400 fw-semibold fs-7 text-end d-flex flex-column">
+                                                        <span>{{announcementFormValues.owner}}</span>
+                                                        <span>{{announcementFormValues.startDate}} - {{announcementFormValues.startDate}}</span>
                                                     </div>
                                                 </div>
                                             

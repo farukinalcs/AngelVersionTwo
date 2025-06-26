@@ -16,7 +16,7 @@
                     <app-form-stepper class="d-flex align-items-center justify-content-center"
                         [stepperFields]="stepperFields" [isFromAttendance]="false"></app-form-stepper>
 
-                    <div class="row w-xl-700px">
+                    <div class="row w-xl-700px gap-5">
                         <div class="col-12">
                             <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="authorityForm">
 
@@ -163,9 +163,10 @@
                                                             </label>
 
                                                             <div class="position-relative d-flex align-items-center">
-                                                                <input type="date"
+                                                                <!-- <input type="date"
                                                                     class="form-control form-control-lg form-control-solid"
-                                                                    formControlName="startDate">
+                                                                    formControlName="startDate"> -->
+                                                                    <p-datepicker formControlName="startDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                                                             </div>
 
                                                             <div class="fv-plugins-message-container invalid-feedback">
@@ -182,9 +183,10 @@
                                                             </label>
 
                                                             <div class="position-relative d-flex align-items-center">
-                                                                <input type="time"
+                                                                <!-- <input type="time"
                                                                     class="form-control form-control-lg form-control-solid"
-                                                                    formControlName="startTime">
+                                                                    formControlName="startTime"> -->
+                                                                    <p-datepicker formControlName="startTime" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
                                                             </div>
 
                                                             <div class="fv-plugins-message-container invalid-feedback">
@@ -201,9 +203,10 @@
                                                             </label>
 
                                                             <div class="position-relative d-flex align-items-center">
-                                                                <input
+                                                                <!-- <input
                                                                     class="form-control form-control-lg form-control-solid"
-                                                                    type="date" formControlName="endDate">
+                                                                    type="date" formControlName="endDate"> -->
+                                                                    <p-datepicker formControlName="endDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                                                             </div>
 
                                                             <div class="fv-plugins-message-container invalid-feedback">
@@ -220,9 +223,10 @@
                                                             </label>
 
                                                             <div class="position-relative d-flex align-items-center">
-                                                                <input type="time"
+                                                                <!-- <input type="time"
                                                                     class="form-control form-control-lg form-control-solid"
-                                                                    formControlName="endTime">
+                                                                    formControlName="endTime"> -->
+                                                                    <p-datepicker formControlName="endTime" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
                                                             </div>
 
                                                             <div class="fv-plugins-message-container invalid-feedback">
@@ -243,9 +247,11 @@
                                                     <span class="required">{{"Açıklama" | translate}}</span>
                                                 </label>
                                     
-                                                <textarea class="form-control form-control-solid" rows="3" [maxlength]="maxLength" formControlName="description"
-                                                    placeholder="{{'Açıklama_Giriniz' | translate}}">
-                                                                                </textarea>
+                                                <textarea class="form-control form-control-solid"
+                                                    rows="3" [maxlength]="maxLength" formControlName="description"
+                                                    placeholder="{{'Açıklama_Giriniz' | translate}}">                       
+                                                </textarea>
+                                                
                                                 <ng-container *ngIf="authorityForm.controls['description']?.value">
                                                     <div class="text-end">
                                                         <span class="badge badge-light-danger">{{

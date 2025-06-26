@@ -113,8 +113,9 @@
                                 <span>{{"Giriş_Tarihi" | translate}}</span>
                             </label>
 
-                            <input type="date" class="form-control form-control-sm form-control-solid"
-                                formControlName="startDate">
+                            <!-- <input type="date" class="form-control form-control-sm form-control-solid"
+                                formControlName="startDate"> -->
+                                <p-datepicker formControlName="startDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                         </div>
 
                         <div class="col-6 p-3">
@@ -122,8 +123,9 @@
                                 <span>{{"Çıkış_Tarihi" | translate}}</span>
                             </label>
 
-                            <input type="date" class="form-control form-control-sm form-control-solid"
-                                formControlName="endDate">
+                            <!-- <input type="date" class="form-control form-control-sm form-control-solid"
+                                formControlName="endDate"> -->
+                                <p-datepicker formControlName="endDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                         </div>
 
                         <div class="col-12 p-3">

@@ -5,45 +5,28 @@ import {
   RouterStateSnapshot,
   Router,
 } from '@angular/router';
-import { SessionService } from 'src/app/_helpers/session.service';
-import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
   constructor(
-    private router: Router,
-    private sessionService: SessionService
+    private router: Router
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const token = localStorage.getItem('token');
     const isSecure = localStorage.getItem('is-secure'); 
     const triggered = localStorage.getItem('manualLogoutTriggered');
     if (isSecure == '1' && !triggered) {
-      // logged in so return true
+      // Eğer token ve isSecure varsa, sessionService ile doğrulama yap
       return true;
     }
 
-    // not logged in so redirect to login page with the return url
+    // login olunmadığı için false döndür ve storage'yi temizle
     localStorage.removeItem('token');
     localStorage.removeItem('is-secure'); 
     localStorage.removeItem('manualLogoutTriggered');
+    localStorage.removeItem('onboarded'); 
+
     this.router.navigate(['/auth/login']);
     return false;
   }
-
-  // canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-  //   const token = localStorage.getItem('token');
-  //   const triggered = localStorage.getItem('manualLogoutTriggered');
-
-  //   if (token && !triggered) {
-  //     return true;
-  //   }
-
-  //   // if (triggered) {
-  //   //   this.sessionService.logoutUser();      
-  //   // }
-  //   return false;
-  // }
 }

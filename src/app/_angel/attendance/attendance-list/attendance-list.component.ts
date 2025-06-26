@@ -553,6 +553,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy, AfterViewInit
           headerName: this.translateService.instant('İzin_Açıklama'),
           field: 'izinaciklama',
           headerTooltip: this.translateService.instant('İzin_Açıklama'),
+          cellClass: (params) => this.timeClassChange(params),
           hide: false,
         },
       ],
@@ -741,7 +742,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy, AfterViewInit
 
   autoSizeAllColumns() {
     if (this.columnApi) {
-      const allColumnIds: string[] = ['sicilid', 'sicilno', 'ad', 'soyad', 'mesaitarih', 'ggiris', 'gcikis'];
+      const allColumnIds: string[] = ['sicilid', 'sicilno', 'ad', 'soyad', 'mesaitarih', 'ggiris', 'gcikis', 'izinaciklama'];
       this.columnApi.getColumns()?.forEach((column) => {
         allColumnIds.push(column.getId());
       });
@@ -1128,6 +1129,11 @@ export class AttendanceListComponent implements OnInit, OnDestroy, AfterViewInit
               this.loading = false;
             }
 
+                // Tüm kolonları içeriğe göre otomatik ayarla
+                setTimeout(() => {
+                    this.autoSizeAllColumns();
+                }, 100);
+            
             this.ref.detectChanges();
             resolve();
           },
@@ -1430,6 +1436,17 @@ export class AttendanceListComponent implements OnInit, OnDestroy, AfterViewInit
       if (params.value == 0 || params.value == null) {
         return 'cell-time-zero';
       }
+    }
+
+    // İzin Açıklama
+    if (params.column.colId == 'izinaciklama') {
+        if (
+            params.data.izinaciklama !== '' &&
+            params.data.izinaciklama !== undefined &&
+            params.data.izinaciklama !== '#__#'
+        ) {
+            return 'cell-green';
+        }
     }
   }
 

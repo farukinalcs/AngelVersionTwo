@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InlineSVGModule } from 'ng-inline-svg-2';
 import { ToastrService } from 'ngx-toastr';
+import { DatePickerModule } from 'primeng/datepicker';
 import { Dialog } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
@@ -29,7 +30,8 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
     TranslateModule,
     InlineSVGModule,
     Dialog,
-    SelectModule
+    SelectModule,
+    DatePickerModule
   ],
   templateUrl: './shift-change.component.html',
   styleUrl: './shift-change.component.scss'

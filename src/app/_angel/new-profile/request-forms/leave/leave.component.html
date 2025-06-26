@@ -1,62 +1,80 @@
-<p-dialog header="{{'İzin_Talep_Formu' | translate}}" [(visible)]="displayVacationForm"
-    (onHide)="closedFormDialog()" [modal]="true"
-    [breakpoints]="{ '2560px': '70vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true" [baseZIndex]="10000"
-    [draggable]="true" [resizable]="false">
+<p-dialog header="{{'İzin_Talep_Formu' | translate}}" [(visible)]="displayVacationForm" (onHide)="closedFormDialog()"
+    [modal]="true" [breakpoints]="{ '2560px': '70vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true"
+    [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
     <div class="container py-0 px-5">
         <div class="container">
             <div class="row">
-                <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
-    
-                    <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-                        <div class="stepper-nav d-flex justify-content-center">
-                            <img src="../../../../../assets/media/illustrations/storyset-1/3.svg" width="100%" alt="">
+                <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid">
+
+                    <ng-container *ngIf="currentStep$.value != 6 || isFromAttendance">
+                        <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                            <div class="stepper-nav d-flex justify-content-center">
+                                <img src="../../../../../assets/media/illustrations/storyset-1/3.svg" width="100%" alt="">
+                            </div>
                         </div>
-                    </div>
+                    </ng-container>
                     
-                    <app-form-stepper class="d-flex align-item-center" [stepperFields]="stepperFields" [isFromAttendance]="isFromAttendance" [lineHeight]="'h-30px'"></app-form-stepper>
-    
-                    <div class="row w-xl-700px">
+
+                    <ng-container *ngIf="currentStep$.value != 6 || isFromAttendance">
+                        <app-form-stepper class="d-flex align-item-center" [stepperFields]="stepperFields"
+                        [isFromAttendance]="isFromAttendance" [lineHeight]="'h-30px'"></app-form-stepper>
+                    </ng-container>
+                    
+
+                    <div class="row gap-5" [ngClass]="{'w-xl-700px': currentStep$.value != 6 || isFromAttendance, 'w-100': currentStep$.value == 6 && !isFromAttendance}">
                         <div class="col-12">
-                            <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10" [formGroup]="vacationForm">
-    
+                            <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10"
+                                [formGroup]="vacationForm">
+
                                 <ng-container *ngIf="currentStep$.value == 1 && isFromAttendance">
                                     <div class="current">
                                         <div class="w-100">
                                             <div class="row">
-                                                    
+
                                                 <div class="col-12">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"Günlük_Saatlik" | translate}}</span>
                                                     </label>
-                                                
+
                                                     <div class="row">
                                                         <div class="col-lg-6">
-                                                            <input type="radio" class="btn-check" formControlName="gunluksaatlik"  value="gunluk"
+                                                            <input type="radio" class="btn-check"
+                                                                formControlName="gunluksaatlik" value="gunluk"
                                                                 id="kt_radio_buttons_2_option_1" />
-                                                            <label class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center mb-5"
+                                                            <label
+                                                                class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center mb-5"
                                                                 for="kt_radio_buttons_2_option_1">
-                                                                <i class="fa-solid fa-calendar-days fs-2x text-danger"></i>
-                                                        
+                                                                <i
+                                                                    class="fa-solid fa-calendar-days fs-2x text-danger"></i>
+
                                                                 <span class="d-block fw-semibold text-start ps-3">
-                                                                    <span class="text-dark fw-bold d-block fs-3">{{"Günlük" | translate}}</span>
+                                                                    <span
+                                                                        class="text-dark fw-bold d-block fs-3">{{"Günlük"
+                                                                        | translate}}</span>
                                                                 </span>
                                                             </label>
                                                         </div>
-                                                        
+
                                                         <div class="col-lg-6">
-                                                            <input type="radio" class="btn-check" formControlName="gunluksaatlik"  value="saatlik" id="kt_radio_buttons_2_option_2" />
-                                                            <label class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center"
+                                                            <input type="radio" class="btn-check"
+                                                                formControlName="gunluksaatlik" value="saatlik"
+                                                                id="kt_radio_buttons_2_option_2" />
+                                                            <label
+                                                                class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center"
                                                                 for="kt_radio_buttons_2_option_2">
                                                                 <i class="fa-solid fa-clock fs-2x text-danger"></i>
                                                                 <span class="d-block fw-semibold text-start ps-3">
-                                                                    <span class="text-dark fw-bold d-block fs-3">{{"Saatlik" | translate}}</span>
+                                                                    <span
+                                                                        class="text-dark fw-bold d-block fs-3">{{"Saatlik"
+                                                                        | translate}}</span>
                                                                 </span>
                                                             </label>
                                                         </div>
                                                     </div>
 
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
                                                                                                 validation: 'required',
                                                                                                 message: translateService.instant('Boş_Geçilemez'),
                                                                                                 control: vacationForm.controls['gunluksaatlik']
@@ -67,78 +85,98 @@
                                         </div>
                                     </div>
                                 </ng-container>
-                                
+
                                 <ng-container *ngIf="currentStep$.value == 1 && !isFromAttendance">
                                     <div class="current">
                                         <div class="w-100">
                                             <div class="row">
                                                 <div class="col-12 mb-10 theme-light-show">
-                                                    <div class="border border-gray-300 border-dashed rounded text-center bg-light-dark min-w-125px py-3 px-4">
+                                                    <div
+                                                        class="border border-gray-300 border-dashed rounded text-center bg-gray-100 min-w-125px py-3 px-4">
                                                         <ng-container *ngIf="izinKalan">
-                                                            <div class="d-flex align-items-center justify-content-center">
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center">
                                                                 <div class="fs-2 fw-bolder">{{ izinKalan }}</div>
                                                             </div>
                                                         </ng-container>
-                                    
+
                                                         <ng-container *ngIf="!izinKalan">
-                                                            <div class="d-flex align-items-center justify-content-center">
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center">
                                                                 <div class="fs-2 fw-bolder">0</div>
                                                             </div>
                                                         </ng-container>
-                                      
-                                                        <div class="fw-bold fs-6 text-gray-400">{{"İzin_Hakkı" | translate}}</div>
+
+                                                        <div class="fw-bold fs-6 text-gray-400">{{"İzin_Hakkı" |
+                                                            translate}}</div>
                                                     </div>
                                                 </div>
-    
+
                                                 <div class="col-12 mb-10 theme-dark-show">
-                                                    <div class="border border-danger border-dashed rounded text-center bg-light-danger min-w-125px py-3 px-4">
+                                                    <div
+                                                        class="border border-danger border-dashed rounded text-center bg-light-danger min-w-125px py-3 px-4">
                                                         <ng-container *ngIf="izinKalan">
-                                                            <div class="d-flex align-items-center justify-content-center">
-                                                                <div class="fs-2 fw-bolder text-white">{{ izinKalan }}</div>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center">
+                                                                <div class="fs-2 fw-bolder text-white">{{ izinKalan }}
+                                                                </div>
                                                             </div>
                                                         </ng-container>
-                                    
+
                                                         <ng-container *ngIf="!izinKalan">
-                                                            <div class="d-flex align-items-center justify-content-center">
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center">
                                                                 <div class="fs-2 fw-bolder text-white">0</div>
                                                             </div>
                                                         </ng-container>
-                                      
-                                                        <div class="fw-bold fs-6 text-gray-700">{{"İzin_Hakkı" | translate}}</div>
+
+                                                        <div class="fw-bold fs-6 text-gray-700">{{"İzin_Hakkı" |
+                                                            translate}}</div>
                                                     </div>
                                                 </div>
-    
+
                                                 <div class="col-12">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"Günlük_Saatlik" | translate}}</span>
                                                     </label>
-                                                
+
                                                     <div class="row">
                                                         <div class="col-lg-6">
-                                                            <input type="radio" class="btn-check" formControlName="gunluksaatlik"  value="gunluk"
+                                                            <input type="radio" class="btn-check"
+                                                                formControlName="gunluksaatlik" value="gunluk"
                                                                 id="kt_radio_buttons_2_option_1" />
-                                                            <label class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center mb-5"
+                                                            <label
+                                                                class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center mb-5"
                                                                 for="kt_radio_buttons_2_option_1">
-                                                                <i class="fa-solid fa-calendar-days fs-2x text-danger"></i>
-                                                        
+                                                                <i
+                                                                    class="fa-solid fa-calendar-days fs-2x text-danger"></i>
+
                                                                 <span class="d-block fw-semibold text-start ps-3">
-                                                                    <span class="text-dark fw-bold d-block fs-3">{{"Günlük" | translate}}</span>
+                                                                    <span
+                                                                        class="text-dark fw-bold d-block fs-3">{{"Günlük"
+                                                                        | translate}}</span>
                                                                 </span>
                                                             </label>
                                                         </div>
-                                                        
+
                                                         <div class="col-lg-6">
-                                                            <input type="radio" class="btn-check" formControlName="gunluksaatlik"  value="saatlik" id="kt_radio_buttons_2_option_2" />
-                                                            <label class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center"
+                                                            <input type="radio" class="btn-check"
+                                                                formControlName="gunluksaatlik" value="saatlik"
+                                                                id="kt_radio_buttons_2_option_2" />
+                                                            <label
+                                                                class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center"
                                                                 for="kt_radio_buttons_2_option_2">
                                                                 <i class="fa-solid fa-clock fs-2x text-danger"></i>
                                                                 <span class="d-block fw-semibold text-start ps-3">
-                                                                    <span class="text-dark fw-bold d-block fs-3">{{"Saatlik" | translate}}</span>
+                                                                    <span
+                                                                        class="text-dark fw-bold d-block fs-3">{{"Saatlik"
+                                                                        | translate}}</span>
                                                                 </span>
                                                             </label>
                                                         </div>
                                                     </div>
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
                                                                                                             validation: 'required',
                                                                                                             message: translateService.instant('Boş_Geçilemez'),
                                                                                                             control: vacationForm.controls['gunluksaatlik']
@@ -149,7 +187,7 @@
                                         </div>
                                     </div>
                                 </ng-container>
-        
+
                                 <ng-container *ngIf="currentStep$.value == 2">
                                     <div class="current">
                                         <div class="w-100">
@@ -158,17 +196,13 @@
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"İzin_Tipi" | translate}}</span>
                                                     </label>
-                                    
-                                                    
 
-                                                    <p-select
-                                                        [options]="vacationReasons"
-                                                        formControlName="tip"
+
+
+                                                    <p-select [options]="vacationReasons" formControlName="tip"
                                                         optionLabel="ad"
                                                         emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
-                                                        [filter]="true"
-                                                        filterBy="ad"
-                                                        [showClear]="true"
+                                                        [filter]="true" filterBy="ad" [showClear]="true"
                                                         placeholder="{{'İzin_Tipi_Seçiniz' | translate}}"
                                                         class="w-100 md:w-56">
                                                         <ng-template #selectedItem let-selected>
@@ -183,7 +217,8 @@
                                                         </ng-template>
                                                     </p-select>
 
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
                                                         validation: 'required',
                                                         message: translateService.instant('Boş_Geçilemez'),
                                                         control: vacationForm.controls['tip']
@@ -200,22 +235,28 @@
 
                                                         <table class="table table-hover table-rounded border gy-2 gs-2">
                                                             <thead class="sticky-top bg-white">
-                                                                <tr class="fw-semibold fs-6 text-gray-500 border-bottom-2 border-gray-200">
+                                                                <tr
+                                                                    class="fw-semibold fs-6 text-gray-500 border-bottom-2 border-gray-200">
                                                                     <th>Ad</th>
                                                                     <th>Soyad</th>
-                                                                    <th *ngIf="vacationForm.controls['tip']?.value?.ID == 3">Kalan Hak</th>
+                                                                    <th
+                                                                        *ngIf="vacationForm.controls['tip']?.value?.ID == 3">
+                                                                        Kalan Hak</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr *ngFor="let item of selectedEmployeesFromAttendance">
+                                                                <tr
+                                                                    *ngFor="let item of selectedEmployeesFromAttendance">
                                                                     <td class="fw-bold">{{item.ad}}</td>
                                                                     <td class="fw-bold">{{item.soyad}}</td>
-                                                                    <ng-container *ngIf="vacationForm.controls['tip']?.value?.ID == 3">
+                                                                    <ng-container
+                                                                        *ngIf="vacationForm.controls['tip']?.value?.ID == 3">
                                                                         <ng-container *ngIf="item.Kalan">
                                                                             <td class="fw-bolder">{{item.Kalan}}</td>
                                                                         </ng-container>
                                                                         <ng-container *ngIf="!item.Kalan">
-                                                                            <td class="fw-bolder text-danger">İzin Hakkı Hesaplanamadı!</td>
+                                                                            <td class="fw-bolder text-danger">İzin Hakkı
+                                                                                Hesaplanamadı!</td>
                                                                         </ng-container>
                                                                     </ng-container>
                                                                 </tr>
@@ -226,10 +267,10 @@
                                             </div>
                                         </div>
                                     </div>
-        
-        
+
+
                                 </ng-container>
-        
+
                                 <ng-container *ngIf="currentStep$.value == 3">
                                     <div class="current">
                                         <div class="w-100">
@@ -238,24 +279,33 @@
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"Başlangıç_Tarihi" | translate}}</span>
                                                     </label>
-                                
-                                                    <input type="date" class="form-control form-control-sm form-control-solid" formControlName="bastarih">
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+
+                                                    <!-- <input type="date"
+                                                        class="form-control form-control-sm form-control-solid"
+                                                        formControlName="bastarih"> -->
+                                                    <p-datepicker formControlName="bastarih" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
                                                         validation: 'required',
                                                         message: translateService.instant('Boş_Geçilemez'),
                                                         control: vacationForm.controls['bastarih']
                                                         }">
                                                     </ng-container>
                                                 </div>
-                                
+
                                                 <ng-container *ngIf="isHourly">
                                                     <div class="col-12 col-md-6 p-5">
                                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                            <span class="required">{{"Başlangıç_Saati" | translate}}</span>
+                                                            <span class="required">{{"Başlangıç_Saati" |
+                                                                translate}}</span>
                                                         </label>
-                                
-                                                        <input type="time" class="form-control form-control-sm form-control-solid" formControlName="bassaat">
-                                                        <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+
+                                                        <!-- <input type="time"
+                                                            class="form-control form-control-sm form-control-solid"
+                                                            formControlName="bassaat"> -->
+                                                            <p-datepicker formControlName="bassaat" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
+                                                        <ng-container [ngTemplateOutlet]="formError"
+                                                            [ngTemplateOutletContext]="{
                                                             validation: 'required',
                                                             message: translateService.instant('Boş_Geçilemez'),
                                                             control: vacationForm.controls['bassaat']
@@ -263,38 +313,47 @@
                                                         </ng-container>
                                                     </div>
                                                 </ng-container>
-                                
+
                                                 <div class="col-12 col-md-6 p-5">
                                                     <ng-container *ngIf="isHourly">
                                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                             <span class="required">{{"Bitiş_Tarihi" | translate}}</span>
                                                         </label>
                                                     </ng-container>
-                                
+
                                                     <ng-container *ngIf="!isHourly">
                                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                            <span class="required">{{"İş_Başı_Tarihi" | translate}}</span>
+                                                            <span class="required">{{"İş_Başı_Tarihi" |
+                                                                translate}}</span>
                                                         </label>
                                                     </ng-container>
-                                
-                                
-                                                    <input type="date" class="form-control form-control-sm form-control-solid" formControlName="bittarih">
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+
+
+                                                    <!-- <input type="date"
+                                                        class="form-control form-control-sm form-control-solid"
+                                                        formControlName="bittarih"> -->
+                                                    <p-datepicker formControlName="bittarih" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
                                                         validation: 'required',
                                                         message: translateService.instant('Boş_Geçilemez'),
                                                         control: vacationForm.controls['bittarih']
                                                         }">
                                                     </ng-container>
                                                 </div>
-                                
+
                                                 <ng-container *ngIf="isHourly">
                                                     <div class="col-12 col-md-6 p-5">
                                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                             <span class="required">{{"Bitiş_Saati" | translate}}</span>
                                                         </label>
-                                
-                                                        <input type="time" class="form-control form-control-sm form-control-solid" formControlName="bitsaat">
-                                                        <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+
+                                                        <!-- <input type="time"
+                                                            class="form-control form-control-sm form-control-solid"
+                                                            formControlName="bitsaat"> -->
+                                                            <p-datepicker formControlName="bitsaat" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
+                                                        <ng-container [ngTemplateOutlet]="formError"
+                                                            [ngTemplateOutletContext]="{
                                                             validation: 'required',
                                                             message: translateService.instant('Boş_Geçilemez'),
                                                             control: vacationForm.controls['bitsaat']
@@ -302,42 +361,66 @@
                                                         </ng-container>
                                                     </div>
                                                 </ng-container>
-    
+
                                                 <div class="col-12 mt-10" *ngIf="!isFromAttendance">
-                                                    <div class="border border-danger border-dashed rounded text-center min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div
+                                                        class="border border-danger border-dashed rounded text-center min-w-125px py-3 px-4 me-6 mb-3">
                                                         <ng-container *ngIf="isHourly">
-                                                            <div class="d-flex align-items-center justify-content-center">
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center">
                                                                 <ng-container *ngIf="calcTimeDesc">
-                                                                    <div class="fs-2 fw-bolder">{{calcTimeDesc}}</div>
+                                                                    <div
+                                                                        [ngClass]="{'placeholder-glow': loadingStates.calculate}">
+                                                                        <div class="fs-2 fw-bolder"
+                                                                            [ngClass]="{'placeholder': loadingStates.calculate}">
+                                                                            {{calcTimeDesc}}</div>
+                                                                    </div>
                                                                 </ng-container>
-                                    
+
                                                                 <ng-container *ngIf="!calcTimeDesc">
-                                                                    <div class="fs-2 fw-bolder">{{calcTimeValue}} Saat</div>                                
+                                                                    <div
+                                                                        [ngClass]="{'placeholder-glow': loadingStates.calculate}">
+                                                                        <div class="fs-2 fw-bolder"
+                                                                            [ngClass]="{'placeholder': loadingStates.calculate}">
+                                                                            {{calcTimeValue}} Saat</div>
+                                                                    </div>
                                                                 </ng-container>
                                                             </div>
                                                         </ng-container>
-                                    
-                                    
+
+
                                                         <ng-container *ngIf="!isHourly">
-                                                            <div class="d-flex align-items-center justify-content-center">
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center">
                                                                 <ng-container *ngIf="calcTimeDesc">
-                                                                    <div class="fs-2 fw-bolder">{{calcTimeDesc}}</div>
+                                                                    <div
+                                                                        [ngClass]="{'placeholder-glow': loadingStates.calculate}">
+                                                                        <div class="fs-2 fw-bolder"
+                                                                            [ngClass]="{'placeholder': loadingStates.calculate}">
+                                                                            {{calcTimeDesc}}</div>
+                                                                    </div>
                                                                 </ng-container>
-                                    
+
                                                                 <ng-container *ngIf="!calcTimeDesc">
-                                                                    <div class="fs-2 fw-bolder">{{calcTimeValue}} Gün</div>
+                                                                    <div
+                                                                        [ngClass]="{'placeholder-glow': loadingStates.calculate}">
+                                                                        <div class="fs-2 fw-bolder"
+                                                                            [ngClass]="{'placeholder': loadingStates.calculate}">
+                                                                            {{calcTimeValue}} Gün</div>
+                                                                    </div>
                                                                 </ng-container>
                                                             </div>
                                                         </ng-container>
-                                      
-                                                        <div class="fw-bold fs-6 text-gray-400 text-center">{{"Hesaplanan_İzin_Süresi" | translate}}</div>
+
+                                                        <div class="fw-bold fs-6 text-gray-400 text-center">
+                                                            {{"Hesaplanan_İzin_Süresi" | translate}}</div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </ng-container>
-        
+
                                 <ng-container *ngIf="currentStep$.value == 4">
                                     <div class="current">
                                         <div class="w-100">
@@ -346,27 +429,33 @@
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"İzin_Adresi" | translate}}</span>
                                                     </label>
-                                    
-                                                    <textarea class="form-control form-control-solid" rows="3" formControlName="izinadresi" placeholder="{{'Adres_Giriniz' | translate}}">
-    
+
+                                                    <textarea class="form-control form-control-solid" rows="3"
+                                                        formControlName="izinadresi"
+                                                        placeholder="{{'Adres_Giriniz' | translate}}">
+
                                                     </textarea>
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
                                                         validation: 'required',
                                                         message: translateService.instant('Boş_Geçilemez'),
                                                         control: vacationForm.controls['izinadresi']
                                                         }">
                                                     </ng-container>
                                                 </div>
-    
+
                                                 <div class="col-12">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{"Açıklama" | translate}}</span>
                                                     </label>
-                                    
-                                                    <textarea class="form-control form-control-solid" rows="3" formControlName="aciklama" placeholder="{{'Açıklama_Giriniz' | translate}}">
-    
+
+                                                    <textarea class="form-control form-control-solid" rows="3"
+                                                        formControlName="aciklama"
+                                                        placeholder="{{'Açıklama_Giriniz' | translate}}">
+
                                                     </textarea>
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
                                                         validation: 'required',
                                                         message: translateService.instant('Boş_Geçilemez'),
                                                         control: vacationForm.controls['aciklama']
@@ -377,7 +466,7 @@
                                         </div>
                                     </div>
                                 </ng-container>
-        
+
                                 <ng-container *ngIf="currentStep$.value == 5">
                                     <div class="border border-3 rounded-5" *ngIf="!isCompleted">
                                         <div class="row py-1 px-4">
@@ -393,7 +482,6 @@
         
                                             <div class="separator mb-4"></div>
         
-                                            <!-- style="background-image: url(../../../../../assets/media/logos/Mediamodifier-Design-Template\ \(11\).png); background-repeat: no-repeat; background-size: contain; background-position: center;" -->
                                             <div>
                                                 <div class="col-12 d-flex justify-content-center">
                                                     <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"İzin_Talep_Formu" | translate}}</span>
@@ -459,15 +547,18 @@
 
                                                 <table class="table table-hover table-rounded border gy-7 gs-7">
                                                     <thead>
-                                                        <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                        <tr
+                                                            class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                                             <th>Ad</th>
                                                             <th>Soyad</th>
                                                             <th class="text-center">Talep Durumu</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <ng-container *ngFor="let item of selectedEmployeesFromAttendance">
-                                                            <tr [ngClass]="{'bg-light-danger' : item.sonuc != 1, 'bg-light-success' : item.sonuc == 1}">
+                                                        <ng-container
+                                                            *ngFor="let item of selectedEmployeesFromAttendance">
+                                                            <tr
+                                                                [ngClass]="{'bg-light-danger' : item.sonuc != 1, 'bg-light-success' : item.sonuc == 1}">
                                                                 <td class="fw-bold">{{item.ad}}</td>
                                                                 <td class="fw-bold">{{item.soyad}}</td>
                                                                 <ng-container *ngIf="item.sonuc == 1">
@@ -477,7 +568,8 @@
                                                                 </ng-container>
                                                                 <ng-container *ngIf="item.sonuc != 1">
                                                                     <td class="fw-bolder text-center">
-                                                                        <i class="fa-solid fa-xmark fs-2 text-danger"></i>
+                                                                        <i
+                                                                            class="fa-solid fa-xmark fs-2 text-danger"></i>
                                                                     </td>
                                                                 </ng-container>
                                                             </tr>
@@ -488,31 +580,35 @@
                                         </div>
                                     </div>
                                 </ng-container>
-    
-                                
+
+
                                 <ng-container *ngIf="currentStep$.value == 6 && !isFromAttendance">
-                                    <div class="current h-xl-400px scroll">
+                                    <!-- <div class="current h-xl-400px scroll">
                                         <div class="w-100">
                                             <div class="row pb-3" *ngFor="let item of fileTypes; index as i">
                                                 <div class="col-12 d-flex justify-content-center align-items-center">
-                                                    <input type="file" [id]="'upload_' + i" style="display: none;" (change)="getFile($event, item)"
-                                                        formControlName="file">
+                                                    <input type="file" [id]="'upload_' + i" style="display: none;"
+                                                        (change)="getFile($event, item)" formControlName="file">
                                                     <label [for]="'upload_' + i" class="w-100">
                                                         <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center"
                                                             style="padding: 1.5rem 0;">
                                                             <div class="dropzone-msg dz-message needsclick">
-                                                                <h3 class="dropzone-msg-title text-center">{{"DOSYA_YUKLE" | translate: { fileType: item.ad } }}</h3>
+                                                                <h3 class="dropzone-msg-title text-center">
+                                                                    {{"DOSYA_YUKLE" | translate: { fileType: item.ad }
+                                                                    }}</h3>
                                                             </div>
                                                         </div>
                                                     </label>
                                                 </div>
-                                
+
                                                 <div class="col-12">
                                                     <ng-container *ngIf="item.files">
-                                                        <div [@fileUploaded]="'uploaded'" class="card bg-light-dark mx-8 my-5">
+                                                        <div [@fileUploaded]="'uploaded'"
+                                                            class="card bg-light-dark mx-8 my-5">
                                                             <div class="card-body">
-                                                                <div class="row d-flex justify-content-center align-items-center">
-                                
+                                                                <div
+                                                                    class="row d-flex justify-content-center align-items-center">
+
                                                                     <div class="col-3 text-center">
                                                                         <div [ngSwitch]="item.files.type">
                                                                             <div
@@ -520,119 +616,141 @@
                                                                                 <i class="file-type cursor-pointer fa-solid fa-file-image text-dark fs-3x"
                                                                                     (click)="showUploadedFile(item)"></i>
                                                                             </div>
-                                
+
                                                                             <div
                                                                                 *ngSwitchCase="['text/plain'].includes(item.files.type) ? item.files.type : !item.files.type">
                                                                                 <i class="file-type cursor-pointer fa-solid fa-file-lines text-dark fs-3x"
                                                                                     (click)="showUploadedFile(item)"></i>
                                                                             </div>
-                                
+
                                                                             <div
                                                                                 *ngSwitchCase="['application/pdf'].includes(item.files.type) ? item.files.type : !item.files.type">
                                                                                 <i class="file-type cursor-pointer fa-solid fa-file-pdf text-dark fs-3x"
                                                                                     (click)="showUploadedFile(item)"></i>
                                                                             </div>
-                                
+
                                                                             <div *ngSwitchDefault>
                                                                                 <i class="fa-solid cursor-pointer fa-file text-dark fs-3x"
                                                                                     (click)="showUploadedFile(item)"></i>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                
+
                                                                     <div class="col-7">
-                                                                        <div class="fs-6 fw-bold text-gray-800 text-center">
+                                                                        <div
+                                                                            class="fs-6 fw-bold text-gray-800 text-center">
                                                                             {{ item.files.name }}
                                                                         </div>
-                                
-                                                                        <div class="fs-6 fw-bold text-gray-800 text-center">
-                                                                            {{ item.files.fileSize }} {{ item.files.fileSizeType }}
+
+                                                                        <div
+                                                                            class="fs-6 fw-bold text-gray-800 text-center">
+                                                                            {{ item.files.fileSize }} {{
+                                                                            item.files.fileSizeType }}
                                                                         </div>
                                                                     </div>
-                                
+
                                                                     <div class="col-2">
-                                                                        <a (click)="item.files = null" class="btn btn-icon btn-danger btn-sm me-3">
+                                                                        <a (click)="item.files = null"
+                                                                            class="btn btn-icon btn-danger btn-sm me-3">
                                                                             <i class="fa-solid fa-xmark fs-4"></i>
                                                                         </a>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                
+
                                                         </div>
                                                     </ng-container>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div> -->
+
+                                    <div class="row">
+                                        <app-file-upload
+                                            [types]="fileTypes"
+                                            (uploadEvent)="onUploaded($event)"
+                                            [formId]="formId"
+                                            [source]="'izin'">
+
+                                        </app-file-upload>
                                     </div>
+                                    
                                 </ng-container>
-                                
-                                
-        
-                                
+
+
+
+
                             </form>
                         </div>
-    
+
                         <div class="col-12 d-flex align-items-end justify-content-center justify-content-md-end">
                             <div class="d-flex flex-stack pt-0">
                                 <div class="mr-2">
                                     <ng-container *ngIf=" 6 > currentStep$.value && currentStep$.value > 1">
-                                        <button type="button" class="btn btn-lg btn-light-danger me-3"
+                                        <button type="button" class="btn btn-sm btn-light-danger me-3"
                                             (click)="prevStep()">
                                             <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                                 class="svg-icon svg-icon-4 me-1"></span>
-                                                {{"Geri" | translate}}
+                                            {{"Geri" | translate}}
                                         </button>
                                     </ng-container>
-    
+
                                     <ng-container *ngIf="currentStep$.value == formsCount">
-                                        <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
+                                        <button mat-dialog-close type="button" class="btn btn-sm btn-light-danger me-3">
                                             <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                                 class="svg-icon svg-icon-4 me-1"></span>
-                                                {{"Kapat" | translate}}
+                                            {{"Kapat" | translate}}
                                         </button>
                                     </ng-container>
                                 </div>
-    
-                                <ng-container *ngIf="currentStep$.value !== formsCount">
-                                    <div>
-                                        <ng-container *ngIf="currentStep$.value < formsCount - 1">
-                                            <button type="button" class="btn btn-lg btn-danger me-3" (click)="nextStep()">
-                                                <span class="indicator-label">
-                                                    {{"İleri" | translate}} {{ " " }}
-                                                    <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
-                                                        class="svg-icon svg-icon-3 ms-2 me-0"></span>
-                                                    <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                                        {{"Gönder" | translate}}
-                                                    </ng-container>
-                                                </span>
-                                            </button>
-                                        </ng-container>
-                                        <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                            <button type="button" class="btn btn-lg btn-danger me-3" (click)="closedFormDialog()">
-                                                <span class="indicator-label">
-                                                    <ng-container *ngIf="isCompleted">
-                                                        {{"Kapat" | translate}}
-                                                    </ng-container>
-                                                    
-                                                    <ng-container *ngIf="!isCompleted">
-                                                        {{"İptal" | translate}}
-                                                    </ng-container>
-                                                </span>
-                                            </button>
-                                            
-                                            <ng-container *ngIf="!isCompleted">
-                                                <button type="button" class="btn btn-lg btn-danger me-3" (click)="getFormValues()">
+
+                                <ng-container *ngIf="currentStep$.value != 6 || isFromAttendance">
+                                    <ng-container *ngIf="currentStep$.value !== formsCount">
+                                        <div>
+                                            <ng-container *ngIf="currentStep$.value < formsCount - 1">
+                                                <button type="button" class="btn btn-sm btn-danger me-3"
+                                                    (click)="nextStep()">
                                                     <span class="indicator-label">
-                                                        {{"Gönder" | translate}}
+                                                        {{"İleri" | translate}} {{ " " }}
+                                                        <span
+                                                            [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
+                                                            class="svg-icon svg-icon-3 ms-2 me-0"></span>
+                                                        <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                            {{"Gönder" | translate}}
+                                                        </ng-container>
                                                     </span>
                                                 </button>
                                             </ng-container>
-                                            
+                                            <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                <button type="button" class="btn btn-sm btn-danger me-3"
+                                                    (click)="closedFormDialog()">
+                                                    <span class="indicator-label">
+                                                        <ng-container *ngIf="isCompleted">
+                                                            {{"Kapat" | translate}}
+                                                        </ng-container>
     
-                                        </ng-container>
+                                                        <ng-container *ngIf="!isCompleted">
+                                                            {{"İptal" | translate}}
+                                                        </ng-container>
+                                                    </span>
+                                                </button>
     
-                                    </div>
+                                                <ng-container *ngIf="!isCompleted">
+                                                    <button type="button" class="btn btn-sm btn-danger me-3"
+                                                        (click)="getFormValues()">
+                                                        <span class="indicator-label">
+                                                            {{"Gönder" | translate}}
+                                                        </span>
+                                                    </button>
+                                                </ng-container>
+    
+    
+                                            </ng-container>
+    
+                                        </div>
+                                    </ng-container>
                                 </ng-container>
+                                
                             </div>
                         </div>
                     </div>
@@ -641,53 +759,31 @@
         </div>
     </div>
 
-
 </p-dialog>
 
 
 
 
+<p-dialog header="{{'İzin_Talep_Formu' | translate}}" [(visible)]="displayUploadedFile" position="center" [modal]="true"
+    [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [baseZIndex]="10000" [draggable]="false"
+    [resizable]="false">
 
-
-
-<!-- <ng-template #formError let-control="control" let-message="message" let-validation="validation">
-    <ng-container *ngIf="control.hasError(validation)">
-        <div class="invalid-feedback">
-            {{message | translate}}
-        </div>
-    </ng-container>
-</ng-template>
-
-<ng-template #formSuccess let-control="control" let-message="message" let-validation="validation">
-    <ng-container *ngIf="control.valid">
-        <div class="valid-feedback">
-            {{message | translate}}
-        </div>
-    </ng-container>
-</ng-template> -->
-
-
-
-
-<p-dialog header="{{'İzin_Talep_Formu' | translate}}" [(visible)]="displayUploadedFile" position="center"
-    [modal]="true" [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
-    
     <ng-container *ngIf="currentUploadedFile">
         <div class="col-12 d-flex justify-content-center">
             <div class="symbol symbol-75px">
                 <iframe [src]="currentUploadedFile?.files?.url" iframeborder="0" width="600px" height="600px"></iframe>
             </div>
-        </div>    
+        </div>
     </ng-container>
-    
-    
+
+
 
     <ng-template pTemplate="footer">
         <a (click)="displayUploadedFile=false" class="btn btn-sm btn-danger mx-1">
-          <i class="fa-solid fa-xmark fs-7"></i>
-          {{'Kapat' | translate}}
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'Kapat' | translate}}
         </a>
-      </ng-template>
+    </ng-template>
 </p-dialog>
 
 

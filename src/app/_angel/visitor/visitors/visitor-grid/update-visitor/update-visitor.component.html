@@ -232,7 +232,8 @@
                     <span>{{"İSG_Eğitim_Tarihi" | translate}}</span>
                 </label>
 
-                <input type="date" class="form-control form-control-sm form-control-solid" formControlName="oshTrainingDate">
+                <!-- <input type="date" class="form-control form-control-sm form-control-solid" formControlName="oshTrainingDate"> -->
+                <p-datepicker formControlName="oshTrainingDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
             </div>
 
             <div class="col-sm-6 p-3">
@@ -240,7 +241,8 @@
                     <span>{{"Gizlilik_Sözleşmesi_Tarihi" | translate}}</span>
                 </label>
 
-                <input type="date" class="form-control form-control-sm form-control-solid" formControlName="confidentialityDate">
+                <!-- <input type="date" class="form-control form-control-sm form-control-solid" formControlName="confidentialityDate"> -->
+                <p-datepicker formControlName="confidentialityDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
             </div>
 
             <div class="col-sm-6 p-3">

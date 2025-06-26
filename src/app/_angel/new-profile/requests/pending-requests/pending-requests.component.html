@@ -8,7 +8,8 @@
                     (getDemandsEvent)="getDemanded($event)"
                     (showDetailSearchDialogEvent)="showDetailSearchDialog($event)"
                     (showUploadedFilesEvent)="showUploadedFiles($event)"
-                    (cancelMultipleDialogEvent)="showCancelDemandDialog($event)">
+                    (cancelMultipleDialogEvent)="showCancelDemandDialog($event)"
+                    (rejectDialogEvent)="showRejectDemandDialog($event)">
                 </app-pending>
             </mat-tab>
 
@@ -53,7 +54,7 @@
 
 
 <ng-container *ngIf="displayCancelDemand">
-    <p-dialog header="{{'Talep_Reddet' | translate}}" [(visible)]="displayCancelDemand" position="top" [modal]="true"
+    <p-dialog header="{{'Talebi_İptal_Et' | translate}}" [(visible)]="displayCancelDemand" position="top" [modal]="true"
         [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
 
         <div class="fv-row mb-10 fv-plugins-icon-container">
@@ -74,6 +75,36 @@
             </a>
 
             <a class="btn btn-sm btn-danger mx-1" (click)="isSingleOrMultiple(kaynak, descriptionText)">
+                <i class="fa-solid fa-check fs-7"></i>
+                {{'Gönder' | translate}}
+            </a>
+        </ng-template>
+    </p-dialog>
+</ng-container>
+
+
+<ng-container *ngIf="displayRejectDemand">
+    <p-dialog header="{{'Talep_Reddet' | translate}}" [(visible)]="displayRejectDemand" position="top" [modal]="true"
+        [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+
+        <div class="fv-row mb-10 fv-plugins-icon-container">
+
+            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                <span>{{"Açıklama" | translate}}</span>
+            </label>
+
+            <textarea [(ngModel)]="descriptionText" class="form-control form-control-solid" rows="3"
+                placeholder="Reddetme sebebini giriniz" style="height: 12px;"></textarea>
+            <div class="fv-plugins-message-container invalid-feedback"></div>
+        </div>
+
+        <ng-template pTemplate="footer">
+            <a class="btn btn-sm btn-danger mx-1" (click)="displayRejectDemand=false; descriptionText = ''">
+                <i class="fa-solid fa-xmark fs-7"></i>
+                {{'Kapat' | translate}}
+            </a>
+
+            <a class="btn btn-sm btn-danger mx-1" (click)="isSingleOrMultipleReject(kaynak, descriptionText)">
                 <i class="fa-solid fa-check fs-7"></i>
                 {{'Gönder' | translate}}
             </a>

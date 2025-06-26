@@ -16,7 +16,8 @@
                                 <span class="required">{{"Başlangıç_Tarihi" | translate}}</span>
                             </label>
 
-                            <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="startDate">
+                            <!-- <input type="date" class="form-control form-control-sm form-control-solid" [(ngModel)]="startDate"> -->
+                            <p-datepicker [(ngModel)]="startDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                         </div>
 
                         <div class="col-6 d-flex align-items-end justify-content-end gap-2 p-0">

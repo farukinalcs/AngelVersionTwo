@@ -8,16 +8,22 @@
             <div class="row">
                 <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
 
-                    <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-                        <div class="stepper-nav d-flex justify-content-center">
-                            <img src="../../../../../assets/media/illustrations/storyset-1/5.svg" width="100%" alt="">
+                    <ng-container *ngIf="currentStep$.value != 5">
+                        <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                            <div class="stepper-nav d-flex justify-content-center">
+                                <img src="../../../../../assets/media/illustrations/storyset-1/5.svg" width="100%" alt="">
+                            </div>
                         </div>
-                    </div>
+                    </ng-container>
+                    
 
-                    <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields"
-                    [isFromAttendance]="isFromAttendance"></app-form-stepper>
+                    <ng-container *ngIf="currentStep$.value != 5">
+                        <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields"
+                                            [isFromAttendance]="isFromAttendance"></app-form-stepper>
+                    </ng-container>
+                    
 
-                    <div class="row w-xl-700px">
+                    <div class="row gap-5" [ngClass]="{'w-xl-700px': currentStep$.value != 5, 'w-100': currentStep$.value == 5 }">
                         <div class="col-12">
                             <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10"
                                 [formGroup]="overtimeForm">
@@ -184,9 +190,10 @@
                                                         <span class="required">{{"Başlangıç_Tarihi" | translate}}</span>
                                                     </label>
 
-                                                    <input type="date"
+                                                    <!-- <input type="date"
                                                         class="form-control form-control-sm form-control-solid"
-                                                        formControlName="bastarih">
+                                                        formControlName="bastarih"> -->
+                                                        <p-datepicker formControlName="bastarih" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
 
                                                         <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                             validation: 'required',
@@ -201,9 +208,10 @@
                                                         <span class="required">{{"Başlangıç_Saati" | translate}}</span>
                                                     </label>
 
-                                                    <input type="time"
+                                                    <!-- <input type="time"
                                                         class="form-control form-control-sm form-control-solid"
-                                                        formControlName="bassaat">
+                                                        formControlName="bassaat"> -->
+                                                        <p-datepicker formControlName="bassaat" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
                                                         <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                             validation: 'required',
                                                             message: translateService.instant('Boş_Geçilemez'),
@@ -217,9 +225,10 @@
                                                         <span class="required">{{"Bitiş_Tarihi" | translate}}</span>
                                                     </label>
 
-                                                    <input type="date"
+                                                    <!-- <input type="date"
                                                         class="form-control form-control-sm form-control-solid"
-                                                        formControlName="bittarih">
+                                                        formControlName="bittarih"> -->
+                                                        <p-datepicker formControlName="bittarih" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                                                         <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                             validation: 'required',
                                                             message: translateService.instant('Boş_Geçilemez'),
@@ -233,9 +242,10 @@
                                                         <span class="required">{{"Bitiş_Saati" | translate}}</span>
                                                     </label>
 
-                                                    <input type="time"
+                                                    <!-- <input type="time"
                                                         class="form-control form-control-sm form-control-solid"
-                                                        formControlName="bitsaat">
+                                                        formControlName="bitsaat"> -->
+                                                        <p-datepicker formControlName="bitsaat" [timeOnly]="true" dateFormat="HH:ii" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
                                                         <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                             validation: 'required',
                                                             message: translateService.instant('Boş_Geçilemez'),
@@ -368,7 +378,7 @@
                                 </ng-container>
 
                                 <ng-container *ngIf="currentStep$.value == 5">
-                                    <div class="current h-xl-400px scroll">
+                                    <!-- <div class="current h-xl-400px scroll">
                                         <div class="w-100">
                                             <div class="row pb-3" *ngFor="let item of fileTypes; index as i">
                                                 <div class="col-12 d-flex justify-content-center align-items-center">
@@ -446,6 +456,16 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div> -->
+
+                                    <div class="row">
+                                        <app-file-upload
+                                            [types]="fileTypes"
+                                            (uploadEvent)="onUploaded($event)"
+                                            [formId]="formId"
+                                            [source]="'fm'">
+
+                                        </app-file-upload>
                                     </div>
                                 </ng-container>
 
@@ -474,40 +494,43 @@
                                     </ng-container>
                                 </div>
 
-                                <ng-container *ngIf="currentStep$.value !== formsCount">
-                                    <div>
-                                        <ng-container *ngIf="currentStep$.value < formsCount - 1">
-                                            <button type="button" class="btn btn-sm btn-danger me-3"
-                                                (click)="nextStep()">
-                                                <span class="indicator-label">
-                                                    {{"İleri" | translate}} {{ " " }}
-                                                    <span
-                                                        [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
-                                                        class="svg-icon svg-icon-3 ms-2 me-0"></span>
-                                                    <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                <ng-container *ngIf="currentStep$.value != 5">
+                                    <ng-container *ngIf="currentStep$.value !== formsCount">
+                                        <div>
+                                            <ng-container *ngIf="currentStep$.value < formsCount - 1">
+                                                <button type="button" class="btn btn-sm btn-danger me-3"
+                                                    (click)="nextStep()">
+                                                    <span class="indicator-label">
+                                                        {{"İleri" | translate}} {{ " " }}
+                                                        <span
+                                                            [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
+                                                            class="svg-icon svg-icon-3 ms-2 me-0"></span>
+                                                        <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                            {{"Gönder" | translate}}
+                                                        </ng-container>
+                                                    </span>
+                                                </button>
+                                            </ng-container>
+                                            <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                <button type="button" class="btn btn-sm btn-danger me-3"
+                                                    (click)="closedFormDialog()">
+                                                    <span class="indicator-label">
+                                                        {{"Kapat" | translate}}
+                                                    </span>
+                                                </button>
+
+                                                <button #btnComplate type="button" class="btn btn-sm btn-danger me-3" (click)="getFormValues()">
+                                                    <span class="indicator-label">
                                                         {{"Gönder" | translate}}
-                                                    </ng-container>
-                                                </span>
-                                            </button>
-                                        </ng-container>
-                                        <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                            <button type="button" class="btn btn-sm btn-danger me-3"
-                                                (click)="closedFormDialog()">
-                                                <span class="indicator-label">
-                                                    {{"Kapat" | translate}}
-                                                </span>
-                                            </button>
+                                                    </span>
+                                                </button>
 
-                                            <button #btnComplate type="button" class="btn btn-sm btn-danger me-3" (click)="getFormValues()">
-                                                <span class="indicator-label">
-                                                    {{"Gönder" | translate}}
-                                                </span>
-                                            </button>
+                                            </ng-container>
 
-                                        </ng-container>
-
-                                    </div>
+                                        </div>
+                                    </ng-container>
                                 </ng-container>
+                                
                             </div>
                         </div>
                     </div>

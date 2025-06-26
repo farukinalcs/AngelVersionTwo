@@ -1,4 +1,4 @@
-<p-dialog header="{{'Hareket_Değişiklik_Talep_Formu' | translate}}" [(visible)]="displayAttendanceForm" [modal]="true"
+<p-dialog header="{{'Hareket_Düzenleme_Talep_Formu' | translate}}" [(visible)]="displayAttendanceForm" [modal]="true"
     [breakpoints]="{ '2560px': '90vw', '992px': '90vw', '576px': '99vw' }"
     [style]="{backgroundColor : '#fcfcfc'} " 
     (onHide)="closedFormDialog()" [maximizable]="true" [baseZIndex]="-50" [draggable]="true" [resizable]="false">
@@ -15,7 +15,7 @@
 
                 <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields" [isFromAttendance]="false"></app-form-stepper>
 
-                <div class="row w-xl-700px">
+                <div class="row w-xl-700px gap-5">
                     <div class="col-12">
                         <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="attendanceForm">
 
@@ -247,7 +247,8 @@
                                                     <span class="required">{{"Mesai_Tarihi" | translate}}</span>
                                                 </label>
                             
-                                                <input type="date" class="form-control form-control-sm form-control-solid" formControlName="shiftDate">
+                                                <!-- <input type="date" class="form-control form-control-sm form-control-solid" formControlName="shiftDate"> -->
+                                                <p-datepicker formControlName="shiftDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                                             </div>
 
                                             <div class="col-6 my-5" *ngIf="attendanceForm.get('formState')?.value == 0">
@@ -255,7 +256,8 @@
                                                     <span class="required">{{"Saat" | translate}}</span>
                                                 </label>
                             
-                                                <input type="time" class="form-control form-control-sm form-control-solid" formControlName="shiftTime">
+                                                <!-- <input type="time" class="form-control form-control-sm form-control-solid" formControlName="shiftTime"> -->
+                                                <p-datepicker formControlName="shiftTime" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
                                             </div>
 
                                             <div class="my-5 fv-plugins-icon-container" [ngClass]="{'col-6': this.gridStartDate != this.gridEndDate || this.selectedEmployeesFromAttendance.length > 1,

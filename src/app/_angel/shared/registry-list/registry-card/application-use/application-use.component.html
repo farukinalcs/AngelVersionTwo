@@ -229,25 +229,34 @@
 
                     <div class="row">
 
-                        <div class="col-12 py-1">
+                        <div class="col-6 py-1">
                             <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
                                 <span>{{"Yetki_Rolleri" | translate}}</span>
                             </label>
-            
-                            <p-dropdown [options]="roles" [(ngModel)]="selectedRole" (ngModelChange)="selectRole(selectedRole)" optionLabel="Ad" [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="Ad"
-                                [showClear]="true" placeholder="{{'Yetki_Rolü_Seçiniz' | translate}}">
-                                <ng-template pTemplate="selectedItem">
-                                    <div class="item-item item-item-value" *ngIf="selectedRole">
-                                        <div>{{selectedRole?.Ad}}</div>
+
+                            <p-select [options]="roles" [(ngModel)]="selectedRole" optionLabel="Ad" (ngModelChange)="selectRole(selectedRole)"
+                                emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="true" filterBy="Ad" [showClear]="true"
+                                placeholder="{{'Bir Rol Seçiniz' | translate}}" class="w-100 md:w-56">
+                                <ng-template #selectedItem let-selected>
+                                    <div class="flex items-center gap-2">
+                                        <div>{{ selectedRole.Ad }}</div>
                                     </div>
                                 </ng-template>
-                                <ng-template let-item pTemplate="item">
-                                    <div class="item-item">
-                                        <div>{{item?.Ad}}</div>
+                                <ng-template let-item #item>
+                                    <div class="flex items-center gap-2">
+                                        <div>{{ item?.Ad }}</div>
                                     </div>
                                 </ng-template>
-                            </p-dropdown>
+                            </p-select>
                             
+                        </div>
+
+                        <div class="col-6">
+                            <div *ngIf="changeDetection()"
+                                class="alert alert-warning mt-3 d-flex align-items-center gap-2">
+                                <i class="pi pi-exclamation-triangle"></i>
+                                <span>Rol Değişiliğini Uygulamak İçin Kaydetmeniz Gerekmektedir!</span>
+                            </div>
                         </div>
                         
                         <div class="col-12 py-1">

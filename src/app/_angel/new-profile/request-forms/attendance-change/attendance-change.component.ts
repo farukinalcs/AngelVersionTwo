@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InlineSVGModule } from 'ng-inline-svg-2';
 import { ToastrService } from 'ngx-toastr';
+import { DatePickerModule } from 'primeng/datepicker';
 import { Dialog } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
@@ -30,7 +31,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
     Dialog,
     SharedModule,
     SelectModule,
-    InlineSVGModule
+    InlineSVGModule,
+    DatePickerModule
   ],
   templateUrl: './attendance-change.component.html',
   styleUrl: './attendance-change.component.scss'

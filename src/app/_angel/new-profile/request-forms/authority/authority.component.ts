@@ -6,6 +6,7 @@ import { StepperOrientation } from '@angular/material/stepper';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InlineSVGModule } from 'ng-inline-svg-2';
 import { ToastrService } from 'ngx-toastr';
+import { DatePickerModule } from 'primeng/datepicker';
 import { Dialog } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { SelectModule } from 'primeng/select';
@@ -28,7 +29,8 @@ import { AuthService, UserType } from 'src/app/modules/auth';
     DropdownModule,
     TranslateModule,
     InlineSVGModule,
-    SelectModule
+    SelectModule,
+    DatePickerModule
   ],
   templateUrl: './authority.component.html',
   styleUrl: './authority.component.scss'
@@ -83,7 +85,6 @@ export class AuthorityComponent implements OnInit, OnDestroy {
   getMenuConfig() {
     this.authMenuService.menuConfig$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(res => {
       this.menuConfig = res;
-      this.ref.detectChanges();
     });
 
     console.log("ben ekranı menü config :", this.menuConfig);
@@ -99,6 +100,7 @@ export class AuthorityComponent implements OnInit, OnDestroy {
     if (this.currentStep$.value === 2) {
       // return this.authorityForm.controls['durationType'].valid; // 2. Adımı Geçtiğinde, 2. Adımda İşarretleme Yapıldı Mı Kontrolü
     } else if(this.currentStep$.value === 3) {
+        console.log("Form Value :", this.authorityForm.value);
       return this.authorityForm.valid; // 3. Adımı Geçtiğinde, Form Geçerli Mi Kontrolü 
     }
     return true;
@@ -160,11 +162,11 @@ export class AuthorityComponent implements OnInit, OnDestroy {
     this.authorityForm = this.formBuilder.group({
       transitionGroup: ['',Validators.required],
       durationType: ['',Validators.required],
-      startDate: ['', Validators.required],
-      startTime: ['', Validators.required],
-      endDate: ['', Validators.required ],
-      endTime: ['', Validators.required],
-      description: ['', Validators.required, Validators.maxLength(this.maxLength)],
+      startDate: [new Date()],
+      startTime: [new Date()],
+      endDate: [new Date()],
+      endTime: [new Date()],
+      description: ['', [Validators.required, Validators.maxLength(this.maxLength)]],
     });
   }
 
@@ -181,7 +183,6 @@ export class AuthorityComponent implements OnInit, OnDestroy {
 
       console.log("Geçiş Gruubu : ", this.transitionGroup);
       
-      this.ref.detectChanges();
     });
   }
 
@@ -238,7 +239,8 @@ export class AuthorityComponent implements OnInit, OnDestroy {
       }
 
       console.log("Yetki Talebi Gönderildi : ", data);
-      
+      this.toastrService.success("Yetki Talebi Gönderildi", "Başarılı");
+      this.close();
       
     });
   }

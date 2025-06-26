@@ -1,0 +1,13 @@
+.transition {
+    transition: all 0.3s ease-in-out;
+}
+
+.fade-start-left {
+    opacity: 0;
+    transform: translateX(-30%);
+}
+
+.fade-start-right {
+    opacity: 0;
+    transform: translateX(30%);
+}

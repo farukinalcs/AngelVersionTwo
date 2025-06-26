@@ -108,6 +108,8 @@ export class TokenInterceptor implements HttpInterceptor {
                         this.sessionService.stopMonitoring();
                         localStorage.removeItem('token');
                         localStorage.removeItem('is-secure');
+                        localStorage.removeItem('onboarded'); 
+
                         this.router.navigate(['/auth/login']);
                         // document.location.reload();
                       }
@@ -115,7 +117,7 @@ export class TokenInterceptor implements HttpInterceptor {
                   }
                 }
                 if (item.m) {
-                  // item.m = JSON.parse(item.m);
+                  item.m = JSON.parse(item?.m);
                 }
               });
 

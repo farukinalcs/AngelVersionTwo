@@ -147,8 +147,9 @@
                             <span>{{"Başlangıç_Tarihi" | translate}}</span>
                         </label>
 
-                        <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6"
-                            type="date" formControlName="tarih">
+                        <!-- <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6"
+                            type="date" formControlName="tarih"> -->
+                            <p-datepicker formControlName="tarih" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                     </div>
 
                     <div class="col-sm-12 col-md-6 col-lg-4 mt-5">
@@ -156,8 +157,9 @@
                             <span>{{"Bitiş_Tarihi" | translate}}</span>
                         </label>
 
-                        <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6"
-                            type="date" formControlName="tarihbit">
+                        <!-- <input class="form-control form-control-solid h-auto p-4 border-0 rounded-lg font-size-h6"
+                            type="date" formControlName="tarihbit"> -->
+                            <p-datepicker formControlName="tarihbit" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                     </div>
 
                     <ng-container *ngIf="selectedNavItem == 'izin'">

@@ -14,7 +14,7 @@
 
                     <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields" [isFromAttendance]="false"></app-form-stepper>
 
-                    <div class="row w-xl-700px">
+                    <div class="row w-xl-700px gap-5">
                         <div class="col-12">
                             <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10" [formGroup]="vehicleForm">
 
@@ -57,8 +57,8 @@
                                                         <span class="required">{{"Başlangıç_Tarihi" | translate}}</span>
                                                     </label>
                                         
-                                                    <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bastarih">
-                                                    
+                                                    <!-- <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bastarih"> -->
+                                                    <p-datepicker formControlName="bastarih" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                                                 </div>
                                 
                                                 <div class="col-6 p-5">
@@ -66,7 +66,8 @@
                                                         <span class="required">{{"Başlangıç_Saati" | translate}}</span>
                                                     </label>
                                         
-                                                    <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bassaat">
+                                                    <!-- <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bassaat"> -->
+                                                    <p-datepicker formControlName="bassaat" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
                                                 </div>    
                                 
                                                 <div class="col-6 p-5">
@@ -74,7 +75,8 @@
                                                         <span class="required">{{"Bitiş_Tarihi" | translate}}</span>
                                                     </label>
                                         
-                                                    <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bittarih">                         
+                                                    <!-- <input type="date" class="form-control form-control-lg form-control-solid" formControlName="bittarih">                          -->
+                                                    <p-datepicker formControlName="bittarih" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
                                                 </div>
                                 
                                                 <div class="col-6 p-5">
@@ -82,7 +84,8 @@
                                                         <span class="required">{{"Bitiş_Saati" | translate}}</span>
                                                     </label>
                                         
-                                                    <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bitsaat">
+                                                    <!-- <input type="time" class="form-control form-control-lg form-control-solid" formControlName="bitsaat"> -->
+                                                    <p-datepicker formControlName="bitsaat" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
                                                 </div>
                                             </div>
                                         </div>

@@ -1,0 +1,105 @@
+<div class="container py-4">
+    <div class="text-center mb-4">
+        <h2>Belge Yükleme</h2>
+        <p class="text-muted">Talebinizin değerlendirilmesi için gerekli belgeleri yükleyiniz</p>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <strong>Yükleme Durumu:</strong>
+                    <p class="text-muted mb-0">
+                        {{ getRequiredCompletedCount() }}/{{ getTotalRequiredCount() }} zorunlu belge tamamlandı
+                    </p>
+                </div>
+                <span
+                    class="badge bg-{{ getRequiredCompletedCount() === getTotalRequiredCount() ? 'success' : 'secondary' }}">
+                    {{ getCompletedCount() }} belge yüklendi
+                </span>
+            </div>
+            <div class="progress mt-3" style="height: 6px">
+                <div class="progress-bar bg-dark"
+                    [style.width.%]="(getRequiredCompletedCount() / getTotalRequiredCount()) * 100"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row d-flex justify-content-evenly gap-5">
+        <div class="col-md-5" *ngFor="let doc of documentTypes">
+            <div class="card h-100 border border-2 rounded" [ngClass]="{ 
+                    'border-primary bg-light': draggedOver === doc.id, 
+                    'border-success bg-success bg-opacity-10': isCompleted(doc.id) 
+                }" (drop)="handleDrop($event, doc.id)" (dragover)="handleDragOver($event, doc.id)"
+                (dragleave)="handleDragLeave($event)">
+                <div class="card-header d-flex align-items-center gap-5 justify-content-start">
+                    <i [class]="'bi ' + doc.icon + ' fs-4 text-primary'"></i>
+                    <div>
+                        <h5 class="mb-0">
+                            {{ doc.name }}
+                            <span *ngIf="doc.required" class="badge bg-danger ms-1">Zorunlu</span>
+                        </h5>
+                        <small class="text-muted">{{ doc.description }}</small>
+                        <small class="text-muted">Max: 2MB</small>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="border border-2 border-dashed border-gray-300 rounded p-3 text-center">
+                            <i class="fa-solid fa-upload fs-3x"></i>
+                            <p class="mb-2">Dosyaları buraya sürükleyin veya</p>
+                            <button class="btn bg-white border bg-hover-secondary btn-sm"
+                                (click)="triggerFileInput(doc)">Dosya Seç</button>
+                        </div>
+                    </div>
+
+                    <div *ngIf="uploadedFiles[doc.id] && uploadedFiles[doc.id].length > 0">
+                        <div class="d-flex align-items-center bg-light rounded p-2 mb-2"
+                            *ngFor="let file of uploadedFiles[doc.id]; let i = index">
+                            <i class="bi bi-file-earmark-text me-2 fs-3"></i>
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold text-truncate">{{ file.file.name }}</div>
+                                <div class="small text-muted">
+                                    <ng-container [ngSwitch]="file.status">
+                                        <ng-container *ngSwitchCase="'uploading'">
+                                            <div class="progress mt-1" style="height: 4px">
+                                                <div class="progress-bar bg-dark" [style.width.%]="file.progress"></div>
+                                            </div>
+                                            {{ file.progress }}%
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'completed'">
+                                            <span class="text-success"><i class="bi bi-check-circle"></i>
+                                                Yüklendi</span>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'error'">
+                                            <span class="text-danger"><i class="bi bi-x-circle"></i> Hata</span>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <button class="btn btn-sm btn-danger ms-2 p-2" (click)="removeFile(doc.id, i)">
+                                <i class="bi bi-x p-0 m-0"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Butonlar -->
+    <div class="text-center mt-4 d-flex justify-content-center gap-3 flex-wrap">
+        <!-- <button class="btn btn-outline-secondary px-4">Taslak Kaydet</button> -->
+        <button class="btn btn-danger px-4" [disabled]="getRequiredCompletedCount() < getTotalRequiredCount()" (click)="onSendFiles()">
+            Belgeleri Gönder
+        </button>
+    </div>
+
+    <!-- Uyarı -->
+    <div class="text-center mt-2" *ngIf="getRequiredCompletedCount() < getTotalRequiredCount()">
+        <small class="text-danger d-flex justify-content-center align-items-center gap-1">
+            <i class="bi bi-exclamation-circle"></i>
+            Devam etmek için tüm zorunlu belgeleri yüklemeniz gerekmektedir
+        </small>
+    </div>
+</div>

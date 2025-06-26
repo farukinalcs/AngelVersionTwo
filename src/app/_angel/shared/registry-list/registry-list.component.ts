@@ -32,6 +32,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges, Afte
   @Input() filterEvent: boolean;
   @Input() bulkChangeEvent: boolean;
   @Input() userdef: string;
+  @Output() displayRegistryEvent = new EventEmitter<any>();
 
   gridHeight = '80vh';
   gridStyle: any = {
@@ -887,11 +888,14 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges, Afte
 
     // this.router.navigate(['/attendance/register-detail', this.selectedRegister.Id, 'u' ]);
     
+    this.displayRegistryEvent.emit();
     this.ref.detectChanges();
   }
 
   closeRegistryCard(event: any) {
     this.displayRegistryCard = event;
+    this.displayRegistryEvent.emit();
+
     this.resetAccessGroupState();
   }
 

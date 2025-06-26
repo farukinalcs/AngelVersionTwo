@@ -2,18 +2,18 @@
     <div class="card card-xl-stretch mb-xl-8 m-10">
         <div class="col-12 d-flex justify-content-center py-5">
             <div id="container" class="col-10 col-md-8 col-lg-6">
-                <button mat-icon-button (click)="goToBack()">
+                <a mat-icon-button (click)="goToBack()">
                     <i class="fa-solid fa-circle-left fs-2x text-dark text-hover-danger"></i>
-                </button>
+                </a>
 
                 <div class="date-container bg-hover-light-dark p-2" (click)="openDialog()">
                     <span class="month">{{ month }}</span>
                     <span class="year text-dark">{{ year }}</span>
                 </div>
 
-                <button mat-icon-button (click)="goToNext()">
+                <a mat-icon-button (click)="goToNext()">
                     <i class="fa-solid fa-circle-right fs-2x text-dark text-hover-danger"></i>
-                </button>
+                </a>
             </div>
         </div>
 

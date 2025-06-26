@@ -1,0 +1,67 @@
+<div class="container-fluid min-vh-100 bg-light d-flex align-items-center justify-content-center">
+    <div class="w-100" style="max-width: 800px">
+        <!-- Logo Alanı -->
+        <div class="text-center mb-5">
+            <div class="bg-white rounded shadow-sm border px-4 py-3 d-inline-block">
+                <span class="fs-4 fw-bold text-secondary">
+                    <img alt="Logo" src="../../../../assets/media/logos/meyerlogozen.png" class="h-30px" />
+                </span>
+            </div>
+        </div>
+
+        <!-- Ana Kart -->
+        <div class="bg-white rounded-4 shadow border p-4 position-relative">
+            <!-- İlerleme Çubuğu -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <ng-container *ngFor="let step of steps; let i = index">
+                    <div class="d-flex align-items-center">
+                        <div class="rounded-circle" [ngClass]="{
+                            'bg-danger': i <= currentStep,
+                            'bg-secondary': i > currentStep
+                            }" style="width: 12px; height: 12px;">
+                        </div>
+                        <div *ngIf="i < steps.length - 1" class="mx-2" style="width: 40px; height: 2px;" [ngClass]="{
+                                'bg-danger': i < currentStep,
+                                'bg-secondary': i >= currentStep
+                            }">
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="text-center text-muted mb-4">Adım {{ currentStep + 1 }} / {{ steps.length }}</div>
+
+            <!-- İçerik Alanı -->
+            <div class="transition fade" [ngClass]="{
+                    'show': !isAnimating,
+                    'fade-start-left': animationDirection === 'backward' && isAnimating,
+                    'fade-start-right': animationDirection === 'forward' && isAnimating
+                }">
+                <h2 class="text-center fw-bold mb-3">{{ currentStepData.title }}</h2>
+                <p class="text-center text-muted mb-4">{{ currentStepData.content }}</p>
+
+                <!-- KVKK Onayı -->
+                <div *ngIf="currentStepData.hasConsent" class="form-check d-flex justify-content-center mb-4">
+                    <input type="checkbox" class="form-check-input me-2" id="consent" [(ngModel)]="consentGiven" />
+                    <label class="form-check-label text-muted" for="consent">
+                        KVKK ve gizlilik politikasını okudum ve kabul ediyorum.
+                    </label>
+                </div>
+            </div>
+
+            <!-- Navigasyon Butonları -->
+            <div class="d-flex justify-content-between mt-4">
+                <button class="btn btn-outline-secondary px-4" [disabled]="isFirstStep || isAnimating"
+                    (click)="previousStep()">
+                    <i class="bi bi-chevron-left"></i> Geri
+                </button>
+                <button class="btn btn-danger px-4" [disabled]="!canProceed || isAnimating" (click)="nextStep()">
+                    {{ isLastStep ? 'Bitir' : 'İleri' }}
+                    <i class="bi" [ngClass]="isLastStep ? 'bi-check-lg' : 'bi-chevron-right'"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Alt Bilgi -->
+        <div class="text-center mt-4 text-muted small">Lütfen her adımı dikkatlice okuyunuz.</div>
+    </div>
+</div>

@@ -22,42 +22,18 @@
         </div>
     </div>
     <div class="card-body p-4">
-        <!-- <div class="mb-5">
-            <div class="row">
-                <div class="col-2 d-flex align-items-center">
-                    <i class="fa-solid fa-chevron-left text-hover-danger fs-2" (click)="previousItem()"></i>
-                </div>
 
-                <div class="col-8 d-flex justify-content-center">
-                    <div class="symbol symbol-75px"><img alt="Logo"
-                        src="{{currentItem.img}}">
-                    </div>
-                </div>
-
-                <div class="col-2 d-flex align-items-center justify-content-end">
-                    <i class="fa-solid fa-chevron-right text-hover-danger fs-2" (click)="nextItem()"></i>
-                </div>
-            </div>
-
-            <div class="row mt-10">
-                <div class="col-12">
-                    <div class="fs-1 fw-bold text-gray-800 text-center mb-13">
-                        <div>İyi ki Doğdun</div>
-                        <div>{{currentItem.ad}} {{currentItem.soyisim}}</div>
-                    </div>
-                </div>
-
-                <div class="col-12 scroll h-50px">
-                    <div class="fs-6 fw-bold text-gray-800 text-center">
-                        <span>Merhaba {{currentItem.ad}}, doğum gününüzü kutlar, sevdiklerinizle mutlu bir ömür dileriz.</span>
-                    </div>
-                </div>
-            </div>
-        </div> -->
 
         <ng-container *ngIf="todayPersonsBirthday.length > 0">
-            <p-carousel [value]="todayPersonsBirthday" [numVisible]="1" [numScroll]="1" [circular]="true"
-                [autoplayInterval]="50000" [showIndicators]="false">
+            <p-carousel 
+                [value]="todayPersonsBirthday" 
+                [numVisible]="1" 
+                [numScroll]="1" 
+                [circular]="true"
+                [autoplayInterval]="50000" 
+                [showIndicators]="false"
+                [showNavigators]="todayPersonsBirthday.length > 1">
+                
                 <ng-template let-item pTemplate="item">
                     <div class="tanimlar-item">
                         <div class="tanimlar-item-content">
@@ -69,7 +45,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+        
                                 <div class="row mt-10">
                                     <div class="col-12">
                                         <div class="fs-1 fw-bold text-gray-800 text-center mb-13">
@@ -77,10 +53,10 @@
                                             <div>{{item.ad}}</div>
                                         </div>
                                     </div>
-
+        
                                     <div class="col-12">
                                         <div class="fs-6 fw-bold text-gray-800 text-center">
-                                            <span>{{"DOGUM_MESAJ" | translate: { value1: item.ad} }}</span>
+                                            <span>{{"DOGUM_MESAJ" | translate: { value1: item.ad } }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -90,6 +66,7 @@
                 </ng-template>
             </p-carousel>
         </ng-container>
+        
 
         <ng-container *ngIf="todayPersonsBirthday.length == 0">
             <div class="row pt-10">

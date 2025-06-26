@@ -10,21 +10,6 @@
                     </div>
                 </div>
 
-                <!-- <ng-container *ngIf="!loading">
-                    <div class="card-body">
-                        <div class="col-12 pt-10">
-                            <div class="loader-container">
-                                <div id="splash-screen" class="splash-screen"
-                                    style="position: inherit; color:transparent; background-color: transparent;">
-                                    <img src="./assets/media/logos/meyerlogozen.png" alt="Meyer logo"
-                                        style="margin-left: 0; height: 0;" />
-                                    <mat-spinner></mat-spinner>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </ng-container> -->
-
                 <ng-container *ngIf="loading">
                     <div class="card-body">
                         <div class="row">
@@ -55,14 +40,13 @@
 
                         <div class="row my-4">
                             <div class="col-12">
-                                <div class="table-responsive">
-                                    <!-- <table class="table table-hover border table-striped table-rounded table-row-dashed table-row-gray-400 align-middle gs-4 gy-2"> -->
-                                    <table class="table table-hover border table-rounded table-row-dashed align-middle gs-4 gy-2">
+                                <div class="table-responsive shadow-lg">
+                                    <table class="table table-rounded table-row-bordered border gy-7 gs-7">
                                         <thead>
-                                            <tr class="fs-6 fw-bold border-bottom-0 text-uppercase rounded text-gray-600 bg-secondary">
+                                            <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                                 <th class="rounded-start" style="width: 5%;">{{"Id" | translate}}</th>
-                                                <th class="fw-bolder me-1 cursor-pointer" style="width: 85%;">{{"Ad" | translate}}</th>
-                                                <th class="rounded-end text-center" style="width: 10%;">{{"#" | translate}}</th>
+                                                <th class="" style="width: 85%;">{{"Ad" | translate}}</th>
+                                                <th class="rounded-end" style="width: 10%;">{{"#" | translate}}</th>
                                             </tr>
                                         </thead>
 

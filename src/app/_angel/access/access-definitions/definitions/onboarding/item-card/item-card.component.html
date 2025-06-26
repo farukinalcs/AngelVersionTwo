@@ -1,0 +1,31 @@
+<div class="card shadow-lg h-100">
+    <div class="card-body">
+        <form [formGroup]="itemForm">
+            <div class="mb-3">
+                <label for="title-{{ item.id }}" class="form-label">Başlık:</label>
+                <input type="text" class="form-control" id="title-{{ item.id }}" formControlName="title"
+                    [ngClass]="{'is-invalid': submitted && f.title.errors}">
+                @if (submitted && f.title.errors) {
+                <div class="invalid-feedback">Title is required</div>
+                }
+            </div>
+            <div class="mb-3">
+                <label for="content-{{ item.id }}" class="form-label">Metin:</label>
+                <textarea class="form-control" id="content-{{ item.id }}" rows="3" formControlName="content"
+                    [ngClass]="{'is-invalid': submitted && f.content.errors}">
+          </textarea>
+                @if (submitted && f.content.errors) {
+                <div class="invalid-feedback">Content is required</div>
+                }
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-sm btn-primary me-2" (click)="onUpdate()">
+                    Güncelle
+                </button>
+                <button type="button" class="btn btn-sm btn-danger" (click)="onDelete()">
+                    Sil
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
