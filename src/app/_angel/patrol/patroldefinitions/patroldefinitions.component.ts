@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { PatrolService } from '../patrol.service';
 import { ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
@@ -12,7 +11,6 @@ export class PatroldefinitionsComponent implements OnInit, OnDestroy{
   activeWidget: number = 1;
 
     constructor(
-      private patrol : PatrolService,
       private ref : ChangeDetectorRef
     ) { }
 

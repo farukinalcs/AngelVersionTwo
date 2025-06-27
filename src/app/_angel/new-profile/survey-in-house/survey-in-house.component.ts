@@ -69,12 +69,12 @@ export class SurveyInHouseComponent implements OnInit, OnDestroy  {
 
     getMySurvey(){
       this.profileService.getMySurvey().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response:any) => {
-        const data = response[0].x;
+        this.mySurveyList = response[0].x;
         const message = response[0].z;
         if (message.islemsonuc == -1) {
           return;  
         }
-        console.log("getMySurvey : ", data);
+        console.log("getMySurvey : ", this.mySurveyList);
       });
     }
 

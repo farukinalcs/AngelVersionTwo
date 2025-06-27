@@ -1,0 +1,7 @@
+.report-item {
+    &:hover {
+        .report-name {
+            color: var(--kt-danger) !important;
+        }
+    }
+}

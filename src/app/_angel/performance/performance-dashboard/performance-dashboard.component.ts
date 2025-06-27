@@ -27,8 +27,7 @@ export class PerformanceDashboardComponent {
   categoryS: any[] = [];
   questionS: any[] = [];
   scaleS: any[] = [];
-
-  sicilGroup:any[] = [];
+  sicilGroup: any[] = [];
 
   quesPuan: any;
   catPuan: any
@@ -207,10 +206,11 @@ export class PerformanceDashboardComponent {
     console.log('Event Value:', event.value);
   }
 
-  getSicilGroups(){
+  getSicilGroups() {
     this.perform.getSicilGroups().subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
-      this.sicilGroup = response[0].x;
-      console.log("getSicilGroups:", this.sicilGroup );
+      const result = response?.[0]?.x;
+      this.sicilGroup = Array.isArray(result) ? result : [];
+      console.log("getSicilGroups:", result );
       this.ref.detectChanges();
     });
   }
