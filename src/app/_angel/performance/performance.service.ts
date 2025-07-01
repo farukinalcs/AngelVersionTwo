@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 })
 export class PerformanceService {
 
+
   constructor(
     private httpClient: HttpClient,
     private helperService: HelperService,
@@ -182,6 +183,7 @@ export class PerformanceService {
   }
 
   form_question(formId:number,questionId:number,catId:number,){
+    console.log("formId:",formId,"question",questionId,"CAT",catId);
     var sp: any[] = [{
       mkodu: 'yek318',
       formid:formId.toString(),

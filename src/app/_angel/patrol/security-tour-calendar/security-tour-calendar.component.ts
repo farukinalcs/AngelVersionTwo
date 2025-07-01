@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { PatrolService } from '../patrol.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ChangeDetectionStrategy } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-security-tour-calendar',
@@ -10,7 +11,10 @@ import { ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./security-tour-calendar.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default 
 })
-export class SecurityTourCalendarComponent {
+export class SecurityTourCalendarComponent  implements OnInit, OnDestroy {
+
+   private ngUnsubscribe = new Subject();
+
   locationName:string = "";
 
   tourList: any[] = [];
@@ -61,7 +65,7 @@ export class SecurityTourCalendarComponent {
       }
 
         getGuardTour(id:string): void {
-          this.patrol.getGuardTour(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+          this.patrol.getGuardTour(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
             this.tourList = response[0].x;
             console.log("getGuardTour:", this.tourList);
             this.ref.detectChanges();
@@ -70,7 +74,7 @@ export class SecurityTourCalendarComponent {
         }
 
         getLocation(){
-          this.patrol.getLocation().subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+          this.patrol.getLocation().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
             this._locations = response[0].x;
             this._filteredItems = [...this._locations];
             console.log("getLocation takvimm:", this._locations); 
@@ -98,25 +102,16 @@ export class SecurityTourCalendarComponent {
 
       setTourCalendar(dayId:string)
       {
-        // const tourDay = day;
+    
         this.dayIndex = dayId;
         this._setTourCalendarModal = true;
         console.log("TOUR DAY",this.dayIndex)
-
-        // gun:gun.toString(),
-        // tur:tur.toString(),
-        // tursaat:tursaat.toString(),
-        // lokasyon:id.toString(),
-        // ozel:ozel.toString()
+    
       }
 
       setGuardTourCalendar(){
-        this.patrol.setGuardTourCalendar(this.lokasyonId,this.dayIndex,this.tourId,this.tourTime,this.ozel).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-          // this._locations = response[0].x;
-          // this._filteredItems = [...this._locations];
-          // console.log("getLocation takvimm:", this._locations); 
-          
-          // this.locationName = '';
+        this.patrol.setGuardTourCalendar(this.lokasyonId,this.dayIndex,this.tourId,this.tourTime,this.ozel).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+  
           this._activeTourList = response[0].x
           console.log("RESULT", this._activeTourList);
           this.ref.detectChanges();
@@ -138,5 +133,8 @@ export class SecurityTourCalendarComponent {
         const checked = (event.target as HTMLInputElement).checked;
         this.ozel = checked ? "1" : "0";
       }
-      
+      ngOnDestroy(): void {
+        this.ngUnsubscribe.next(true);
+        this.ngUnsubscribe.complete();
+      }
 }

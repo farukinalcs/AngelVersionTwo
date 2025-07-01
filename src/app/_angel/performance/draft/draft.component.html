@@ -37,7 +37,7 @@
                 <div class="p-field">
                     <label for="countSelect">Soru seçimi</label>
                     <p-dropdown [options]="questionList" [(ngModel)]="selectedQuestionId" optionLabel="aciklama"
-                        optionValue="id" placeholder="Seçiniz" (onChange)="onQuestionChange($event.value)" class="full-width-input">
+                        optionValue="id" placeholder="Seçiniz" (onChange)="onQuestionChange($event.value)"  class="full-width-input">
                     </p-dropdown>
                 </div>
                  <button pButton type="button" label="Soru Ekle" (click)="form_question()" class="full-width-button"></button>

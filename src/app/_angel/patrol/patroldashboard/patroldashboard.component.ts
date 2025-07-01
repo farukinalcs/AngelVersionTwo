@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input,OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { PatrolService } from '../patrol.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
@@ -59,6 +59,10 @@ export class CustomDateAdapter extends NativeDateAdapter {
 })
 
 export class PatroldashboardComponent implements OnInit, OnDestroy {
+
+  private ngUnsubscribe = new Subject();
+ 
+
   formattedDate: string = '';
   selectedDate: Date = new Date();
   dateControl = new FormControl();
@@ -107,10 +111,6 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe
   ) { }
 
-  ngOnDestroy(): void {
-    console.log("destroyyy")
-  }
-  
 
   ngOnInit(): void {
 
@@ -126,10 +126,9 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
    window.setInterval(() => {
     this.getPatrolInfo(this.selectLocationId);
     this.dailyGuardTourCheck(this.formattedDate);
-    this.dailyGuardTourCheck2(this.formattedDate);
     this.dailyGuardTourDetail(this.formattedDate,this.selectLocationId);
  
-    }, 3000);
+    }, 30000);
     this.getLocation();
   }
 
@@ -143,7 +142,8 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   }
 
  getPatrolInfo(locationid:number): void {
-  this.patrol.getPatrolInfo(locationid).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+ 
+  this.patrol.getPatrolInfo(locationid).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
     this.patrolInfo = response[0]?.x;
     console.log(' this.patrolInfo:',  this.patrolInfo);
     this.ref.detectChanges();
@@ -232,7 +232,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   // }
 
   getLocation(){
-    this.patrol.getLocation().subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.patrol.getLocation().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this._locations = response[0].x;
       console.log("getLocation:", this._locations); 
       this.selectLocationId = this._locations[0]?.id;
@@ -303,7 +303,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
     this.deviceIncidentList = true;
     const imei = item?.imei;
-    this.patrol.getGuardEvents(0,imei).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+    this.patrol.getGuardEvents(0,imei).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
      this.guardEventList = response[0]?.x;
      this.ref.detectChanges();
      this.guardEventList = this.guardEventList?.map(olay => {
@@ -343,36 +343,22 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     this.loadMap(parseFloat(patrol?.lat || "0"), parseFloat(patrol?.lng || "0"), patrol?.securityname);
   }
 
-  // changeContent(widgetValue: number) {
-  //   this.activeWidget = widgetValue;
-  // }
 
 
   dailyGuardTourCheck(date:any){
-    this.patrol.dailyGuardTourCheck(date).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+    this.patrol.dailyGuardTourCheck(date).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
        this.dailyGuardTour = response[0]?.x;
-       //console.log("......dailyGuardTourCheck........",this.dailyGuardTour);
+     
        this.atilmayan = (this.dailyGuardTour?? []).filter((item:any)=> item.durum === 0)
        this.atilan = (this.dailyGuardTour?? []).filter((item:any)=> item.durum === 1)
        this.atilacak = (this.dailyGuardTour?? []).filter((item:any)=> item.durum === 2)
-      //  console.log("......dailyGuardTour........",this.dailyGuardTour);
-      //  console.log("......atilmayan........",this.atilmayan);
-      //  console.log("......atilan........",this.atilan);
-      //  console.log("......atilacak........",this.atilacak);
+
        this.updateWidgets();
        this.ref.detectChanges();
      })
 
   }
 
-  dailyGuardTourCheck2(date:any){
-    this.patrol.dailyGuardTourCheck2(date).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
-      this.dailyGuardTour2 = response[0]?.x;
-      this.alarmlar = (this.dailyGuardTour2?? []).filter((item:any)=> item.durum === 1)
-      this.olaylar = (this.dailyGuardTour2?? []).filter((item:any)=>item.durum === 2)
-      this.updateWidgets();
-     })
-  }
 
   updateWidgets() {
     this.widgets = [
@@ -403,11 +389,11 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
   dailyGuardTourDetail(date:any,locationid:number)
   {
-    this.patrol.tour_s(date,locationid)?.subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+    this.patrol.tour_s(date,locationid)?.pipe(takeUntil(this.ngUnsubscribe)).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
       this.tour_s = response[0]?.x;
        console.log("this.tour_s",this.tour_s);
      })
-     this.patrol.tour_sd(date,locationid)?.subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
+     this.patrol.tour_sd(date,locationid)?.pipe(takeUntil(this.ngUnsubscribe)).subscribe((response:ResponseModel<"",ResponseDetailZ>[])=>{
       this.tour_sd = response[0]?.x;
        console.log("this.tour_sd........sd",this.tour_sd);
      })
@@ -423,6 +409,11 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   
   pad(num: number): string {
     return num.toString().padStart(2, '0');
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
   }
 
 }

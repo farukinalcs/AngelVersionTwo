@@ -67,6 +67,13 @@ export class ProfileService {
     return this.requestMethod(sp);
   }
 
+  perfprmans_form_s(id:number){
+    var sp: any[] = [{
+      mkodu: 'yek314',
+      id:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
 
 
   getUserInformation() {
@@ -800,6 +807,21 @@ export class ProfileService {
   getMySurvey() {
     var sp : any[] = [{
       mkodu : 'yek334'
+    }];
+
+    return this.requestMethod(sp);
+  }
+
+  sendAnswer(sicilid:number,formid:number,soruid:number,cevap:string){
+
+    var sp : any[] = [{
+
+      sicilid:sicilid.toString(),
+      formid:formid.toString(),
+      soruid:soruid.toString(),
+      cevapid:cevap.toString(),
+      mkodu : 'yek358'
+
     }];
 
     return this.requestMethod(sp);

@@ -27,8 +27,7 @@ export class PerformanceDashboardComponent {
   categoryS: any[] = [];
   questionS: any[] = [];
   scaleS: any[] = [];
-
-  sicilGroup:any[] = [];
+  sicilGroup: any[] = [];
 
   quesPuan: any;
   catPuan: any
@@ -207,10 +206,11 @@ export class PerformanceDashboardComponent {
     console.log('Event Value:', event.value);
   }
 
-  getSicilGroups(){
+  getSicilGroups() {
     this.perform.getSicilGroups().subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
-      this.sicilGroup = response[0].x;
-      console.log("getSicilGroups:", this.sicilGroup );
+      const result = response?.[0]?.x;
+      this.sicilGroup = Array.isArray(result) ? result : [];
+      console.log("getSicilGroups:", result );
       this.ref.detectChanges();
     });
   }
@@ -240,28 +240,6 @@ export class PerformanceDashboardComponent {
     console.log("7",this.endDateStr)
     if(this.isValid){
       this.perform.formMatchSicil(this.selectedFormId ?? 0,this.selectedSicilGroupId ?? 0,this.as,this.us,this.myself,this.startDateStr,this.endDateStr).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
-        const result = response;
-        console.log("formMatchSicil:", result );
-        this.ref.detectChanges();
-      });
-    }else {
-      this.toastrService.error(
-        "Lütfen Formun Kimin Tarafından Cevaplanacağını Seçiniz");
-    }
-
-    
-  }
-
-  formMatchSicil2(){
-    console.log("1",this.selectedFormId)
-    console.log("2",this.selectedSicilGroupId)
-    console.log("3",this.as)
-    console.log("4",this.us)
-    console.log("5",this.myself)
-    console.log("6",this.startDateStr)
-    console.log("7",this.endDateStr)
-    if(this.isValid){
-      this.perform.formMatchSicil(4,0,1,1,1,"2025-06-25","2025-06-30").subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
         const result = response;
         console.log("formMatchSicil:", result );
         this.ref.detectChanges();
