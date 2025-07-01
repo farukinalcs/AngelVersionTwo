@@ -1,7 +1,15 @@
-.report-item {
-    &:hover {
-        .report-name {
-            color: var(--kt-danger) !important;
-        }
-    }
+
+.card{
+    cursor: pointer;
 }
+.label-spacing {
+
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+
+  .radio-answer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px; /* sorular arası boşluk */
+  }

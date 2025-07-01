@@ -252,26 +252,4 @@ export class PerformanceDashboardComponent {
     
   }
 
-  formMatchSicil2(){
-    console.log("1",this.selectedFormId)
-    console.log("2",this.selectedSicilGroupId)
-    console.log("3",this.as)
-    console.log("4",this.us)
-    console.log("5",this.myself)
-    console.log("6",this.startDateStr)
-    console.log("7",this.endDateStr)
-    if(this.isValid){
-      this.perform.formMatchSicil(4,0,1,1,1,"2025-06-25","2025-06-30").subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
-        const result = response;
-        console.log("formMatchSicil:", result );
-        this.ref.detectChanges();
-      });
-    }else {
-      this.toastrService.error(
-        "Lütfen Formun Kimin Tarafından Cevaplanacağını Seçiniz");
-    }
-
-    
-  }
-
 }
