@@ -4,38 +4,36 @@ import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { CardMenuComponent } from 'src/app/_angel/shared/dashboard-card/card-menu/card-menu.component';
-import { AccessEventsComponent } from './access-events/access-events.component';
-import { AccessTransitsComponent } from './access-transits/access-transits.component';
+import { AttendanceTransitsComponent } from './attendance-transits/attendance-transits.component';
+import { AttendanceShiftControlComponent } from './attendance-shift-control/attendance-shift-control.component';
 
 @Component({
-    selector: 'app-overview-content',
+    selector: 'app-attendance-overview-content',
     standalone: true,
     imports: [
         CommonModule,
         FormsModule,
         CardMenuComponent,
-        AccessEventsComponent,
-        AccessTransitsComponent
     ],
-    templateUrl: './overview-content.component.html',
-    styleUrl: './overview-content.component.scss'
+    templateUrl: './attendance-overview-content.component.html',
+    styleUrl: './attendance-overview-content.component.scss'
 })
-export class OverviewContentComponent implements OnInit, OnDestroy, OnChanges {
+export class AttendanceOverviewContentComponent implements OnInit, OnDestroy, OnChanges {
     @Input() editMode: boolean = false;
     private ngUnsubscribe = new Subject();
 
     charts = [
         {
             Id: 1,
-            Ad: 'Olaylar',
-            component: 'accessEvents',
+            Ad: 'Vardiya Durumu',
+            component: 'attendanceShiftControl',
             collapsed: false,
             visible: false
         },
         {
             Id: 2,
             Ad: 'Geçişler',
-            component: 'accessTransits',
+            component: 'attendanceTransits',
             collapsed: false,
             visible: false
         }
@@ -58,8 +56,8 @@ export class OverviewContentComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     componentMap: { [key: string]: any } = {
-        accessEvents: AccessEventsComponent,
-        accessTransits: AccessTransitsComponent 
+        attendanceShiftControl: AttendanceShiftControlComponent,
+        attendanceTransits: AttendanceTransitsComponent
     };
 
     toggleCollapse(index: number) {
@@ -83,7 +81,7 @@ export class OverviewContentComponent implements OnInit, OnDestroy, OnChanges {
         var sp: any[] = [
             {
                 mkodu: 'yek104',
-                ad: 'access_dashboard_content_visible',
+                ad: 'attendance_dashboard_content_visible',
                 deger: value,
             }
         ];
@@ -100,7 +98,7 @@ export class OverviewContentComponent implements OnInit, OnDestroy, OnChanges {
         var sp: any[] = [
             {
                 mkodu: 'yek105',
-                ad: 'access_dashboard_content_visible',
+                ad: 'attendance_dashboard_content_visible',
             },
         ];
 

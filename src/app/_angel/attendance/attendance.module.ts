@@ -48,6 +48,10 @@ import { AttendanceChangeComponent } from '../new-profile/request-forms/attendan
 import { ShiftChangeComponent } from '../new-profile/request-forms/shift-change/shift-change.component';
 import { LeaveComponent } from '../new-profile/request-forms/leave/leave.component';
 import { DatePickerModule } from 'primeng/datepicker';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { AttendanceOverviewContentComponent } from './attendance-dashboard/overview-content/attendance-overview-content.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +108,11 @@ import { DatePickerModule } from 'primeng/datepicker';
     AttendanceChangeComponent,
     ShiftChangeComponent,
     LeaveComponent,
-    DatePickerModule
+    DatePickerModule,
+    InputIconModule,
+    IconFieldModule,
+    FloatLabelModule,
+    AttendanceOverviewContentComponent
   ],
   
   exports: [

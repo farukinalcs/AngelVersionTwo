@@ -3,6 +3,9 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslateModule } from '@ngx-translate/core';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { TooltipModule } from 'primeng/tooltip';
 import { Subject } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
@@ -19,7 +22,10 @@ import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
     TranslateModule,
     MatExpansionModule,
     CustomPipeModule,
-    SharedModule
+    SharedModule,
+    InputIconModule,
+    IconFieldModule,
+    FloatLabelModule
   ],
   templateUrl: './approved-requests.component.html',
   styleUrl: './approved-requests.component.scss'

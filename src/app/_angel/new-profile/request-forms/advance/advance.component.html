@@ -1,4 +1,4 @@
-<p-dialog header="{{'Avans_Talep_Formu' | translate}}" [(visible)]="display" [modal]="true"
+<p-dialog header="{{'Avans_Talep_Formu' | translate}}" [(visible)]="display" [modal]="true" (onHide)="closedFormDialog()"
     [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
 
     <div class="container py-0 px-5">

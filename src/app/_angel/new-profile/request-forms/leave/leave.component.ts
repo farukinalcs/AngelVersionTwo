@@ -395,13 +395,17 @@ export class LeaveComponent implements OnInit, OnDestroy {
         const bitsaatChanges$ = this.vacationForm.get('bitsaat')?.valueChanges.pipe(
             startWith(this.vacationForm.get('bitsaat')?.value)
         );
+        const typeChanges$ = this.vacationForm.get('tip')?.valueChanges.pipe(
+            startWith(this.vacationForm.get('tip')?.value)
+        );
 
-        combineLatest([bastarihChanges$, bittarihChanges$, bassaatChanges$, bitsaatChanges$])
+
+        combineLatest([bastarihChanges$, bittarihChanges$, bassaatChanges$, bitsaatChanges$, typeChanges$])
             .pipe(
                 debounceTime(300), // Kullanıcı hızlı yazıyorsa istek sayısını azaltmak için
                 takeUntil(this.ngUnsubscribe)
             )
-            .subscribe(([bastarih, bittarih, bassaat, bitsaat]: any) => {
+            .subscribe(([bastarih, bittarih, bassaat, bitsaat, tip]: any) => {
                 // Form değerlerini doğrudan parametrelerden al
                 const formValue = {
                     ...this.vacationForm.value,
@@ -409,6 +413,7 @@ export class LeaveComponent implements OnInit, OnDestroy {
                     bittarih,
                     bassaat,
                     bitsaat,
+                    tip,
                     siciller: this.currentSicilId
                 };
 

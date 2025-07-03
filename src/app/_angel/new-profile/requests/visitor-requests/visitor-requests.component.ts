@@ -13,6 +13,9 @@ import { LayoutService } from 'src/app/_metronic/layout';
 import { VisitorUploadedFilesComponent } from '../my-visitor-requests/visitor-uploaded-files/visitor-uploaded-files.component';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-visitor-requests',
@@ -27,7 +30,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     SharedModule,
     VisitorUploadedFilesComponent,
     CustomPipeModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    InputIconModule,
+    IconFieldModule,
+    FloatLabelModule,
   ],
   templateUrl: './visitor-requests.component.html',
   styleUrl: './visitor-requests.component.scss'

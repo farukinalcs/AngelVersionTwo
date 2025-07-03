@@ -3,6 +3,9 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslateModule } from '@ngx-translate/core';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { TooltipModule } from 'primeng/tooltip';
 import { Subject } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
@@ -20,7 +23,10 @@ import { LayoutService } from 'src/app/_metronic/layout';
     TooltipModule,
     MatExpansionModule,
     CustomPipeModule,
-    SharedModule
+    SharedModule,
+    InputIconModule,
+    IconFieldModule,
+    FloatLabelModule,
   ],
   templateUrl: './ongoing-requests.component.html',
   styleUrl: './ongoing-requests.component.scss'

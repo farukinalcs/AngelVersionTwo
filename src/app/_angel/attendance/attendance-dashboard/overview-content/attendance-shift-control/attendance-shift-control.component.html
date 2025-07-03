@@ -1,0 +1,75 @@
+<div class="d-flex flex-column gap-3 h-400px scroll">
+    <div class="card w-100">
+
+        <div class="card-body">
+            <div class="border-bottom pb-3 mb-3">
+                <div class="row text-center">
+                    <div class="col">
+                        <small class="text-muted">Toplam Gerekli</small>
+                        <div class="fw-bold">{{ totalRequired }}</div>
+                    </div>
+                    <div class="col">
+                        <small class="text-muted">Toplam Gelen</small>
+                        <div class="fw-bold text-success">{{ totalPresent }}</div>
+                    </div>
+                    <div class="col">
+                        <small class="text-muted">Toplam Gelmeyen</small>
+                        <div class="fw-bold text-danger">{{ totalAbsent }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngFor="let shift of shifts" class="mb-4 p-3 border rounded event-card position-relative">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div>
+                        <h6 class="mb-1">{{ shift.Aciklama }}</h6>
+                        <small class="text-muted">{{ shift?.time }}</small>
+                    </div>
+                    <!-- <span class="badge" [ngClass]="getStatusClass(shift.status)">
+                        {{ getStatusText(shift?.status) }}
+                    </span> -->
+                </div>
+
+                <div class="row text-center mb-2">
+                    <div class="col">
+                        <div class="text-gray-800 small d-flex justify-content-center align-items-center gap-1">
+                            <i class="fas fa-users text-gray-800"></i>
+                            <span>Gerekli</span>
+                        </div>
+                        <div class="fw-bold fs-5">{{ shift.olmasi }}</div>
+                    </div>
+                    <div class="col">
+                        <div class="text-success small d-flex justify-content-center align-items-center gap-1">
+                            <i class="fas fa-user-check text-success"></i>
+                            <span>Gelen</span>
+                        </div>
+                        <div class="fw-bold fs-5 text-success">{{ shift.gelen }}</div>
+                    </div>
+                    <div class="col">
+                        <div class="text-danger small d-flex justify-content-center align-items-center gap-1">
+                            <i class="fas fa-user-xmark text-danger"></i>
+                            <span>Gelmeyen</span>
+                        </div>
+                        <div class="fw-bold fs-5 text-danger">{{ shift.gelmeyen }}</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="d-flex justify-content-between small text-muted">
+                        <span>Katılım Oranı</span>
+                        <span class="fw-semibold">{{ getAttendanceRate(shift.gelen, shift.olmasi) }}%</span>
+                    </div>
+                    <div class="progress" style="height: 6px">
+                        <div class="progress-bar bg-gray-700"
+                            [style.width.%]="getAttendanceRate(shift.gelen, shift.olmasi)"></div>
+                    </div>
+                </div>
+
+                <div class="indicator-line position-absolute top-0 bottom-0 start-0 rounded-start"></div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

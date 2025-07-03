@@ -47,12 +47,13 @@ export class SessionService {
                         // Devam eden işlemler...
                         this.stopMonitoring();
                         const storageKeys = [
-                            'token',
-                            'is-secure',
                             'manualLogoutTriggered',
                             'onboarded'
                         ];
                         storageKeys.forEach(key => localStorage.removeItem(key));
+
+                        sessionStorage.removeItem('is-secure');
+                        sessionStorage.removeItem('token');
                         // Oturum sonlandırıldıktan sonra yönlendirme                        
 
                         sessionStorage.removeItem('id');
@@ -124,12 +125,13 @@ export class SessionService {
                     if (session && session.current || userkey) {
                         this.stopMonitoring();
                         const storageKeys = [
-                            'token',
-                            'is-secure',
                             'manualLogoutTriggered',
                             'onboarded'
                         ];
                         storageKeys.forEach(key => localStorage.removeItem(key));
+
+                        sessionStorage.removeItem('is-secure');
+                        sessionStorage.removeItem('token');
                         // Oturum sonlandırıldıktan sonra yönlendirme                        
                         this.router.navigate(['/auth/login']);
                     }
@@ -222,12 +224,13 @@ export class SessionService {
                                 // Devam eden işlemler...
                                 this.stopMonitoring();
                                 const storageKeys = [
-                                    'token',
-                                    'is-secure',
                                     'manualLogoutTriggered',
                                     'onboarded'
                                 ];
                                 storageKeys.forEach(key => localStorage.removeItem(key));
+
+                                sessionStorage.removeItem('is-secure');
+                                sessionStorage.removeItem('token');
                                 // Oturum sonlandırıldıktan sonra yönlendirme                        
 
                                 sessionStorage.removeItem('id');
@@ -258,12 +261,13 @@ export class SessionService {
                         // Devam eden işlemler...
                         this.stopMonitoring();
                         const storageKeys = [
-                            'token',
-                            'is-secure',
                             'manualLogoutTriggered',
                             'onboarded'
                         ];
                         storageKeys.forEach(key => localStorage.removeItem(key));
+
+                        sessionStorage.removeItem('is-secure');
+                        sessionStorage.removeItem('token');
                         // Oturum sonlandırıldıktan sonra yönlendirme                        
 
                         sessionStorage.removeItem('id');

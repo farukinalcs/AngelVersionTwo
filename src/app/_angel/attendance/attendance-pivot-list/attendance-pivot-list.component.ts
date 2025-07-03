@@ -1127,7 +1127,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
           if (this.selectedTab == '0' || this.selectedTab == '1') {
             let value = params?.data[key];
 
-            let parts = value.split(',');
+            let parts = value?.split(',');
             let color = parts[1];
             if (color === 'green') {
               let firstValue = parts[0].split('<br>')[0] || '';
@@ -1151,7 +1151,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
 
             let value = params?.data[key];
 
-            let parts = value.split(',');
+            let parts = value?.split(',');
             let color = parts[1];
             if (color === 'green') {
               let firstValue = parts[0].split('<br>')[0] || '';
@@ -1233,7 +1233,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
 
     for (const key of dateKeys) {
       if (params.column.colId === key) {
-        const color = params.data[key].split(',')[1].trim();
+        const color = params.data[key]?.split(',')[1].trim();
 
         switch (color) {
           case 'blue':

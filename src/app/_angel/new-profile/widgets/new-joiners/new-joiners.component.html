@@ -88,7 +88,7 @@
             <div class="col-12">
                 <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="getNewPersons($event)"
                     style="min-height: 300px;">
-                    <mat-tab label="{{'Günlük' | translate}}">
+                    <mat-tab label="{{'Bugün' | translate}}">
                         <div class="card">
                             <div class="card-body py-3">
                                 <ng-container *ngIf="todayNewPerson.length > 0">
@@ -160,7 +160,7 @@
                         </div>
                     </mat-tab>
 
-                    <mat-tab label="{{'Haftalık' | translate}}">
+                    <mat-tab label="{{'Bu Hafta' | translate}}">
                         <div class="card">
                             <div class="card-body py-3">
                                 <ng-container *ngIf="newPersons.length > 0">
@@ -232,7 +232,7 @@
                         </div>
                     </mat-tab>
 
-                    <mat-tab label="{{'Aylık' | translate}}">
+                    <mat-tab label="{{'Bu Ay' | translate}}">
                         <div class="card">
                             <div class="card-body py-3">
                                 <ng-container *ngIf="newPersons.length > 0">

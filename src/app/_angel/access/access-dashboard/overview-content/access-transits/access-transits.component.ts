@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
+import { SharedModule } from 'src/app/_angel/shared/shared.module';
 import { HelperService } from 'src/app/_helpers/helper.service';
 
 interface PersonnelTransit {
@@ -20,7 +21,8 @@ interface PersonnelTransit {
     selector: 'app-access-transits',
     standalone: true,
     imports: [
-        CommonModule
+        CommonModule,
+        SharedModule
     ],
     templateUrl: './access-transits.component.html',
     styleUrl: './access-transits.component.scss'

@@ -57,7 +57,8 @@ export class AuthService implements OnDestroy {
             const data = auth[0].x;
             var message = auth[0].z;
 
-            localStorage.setItem('is-secure', data[0]?.issecure);
+            // localStorage.setItem('is-secure', data[0]?.issecure);
+            sessionStorage.setItem('is-secure', data[0]?.issecure);
             
 
             if (message.islemsonuc == -13) {
@@ -154,18 +155,18 @@ export class AuthService implements OnDestroy {
     setAuthFromLocalStorage2(token: any): boolean {
         // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
 
-        const storageToken = JSON.parse(localStorage.getItem('token') || '{}');
+        const storageToken = JSON.parse(sessionStorage.getItem('token') || '{}');
         // console.log("....STORAGE TOKEN",storageToken);
         // console.log("....REfRESH TOKEN",token);
         if (storageToken != token) {
-            localStorage.setItem(this.authLocalStorageToken, JSON.stringify(token));
+            sessionStorage.setItem(this.authLocalStorageToken, JSON.stringify(token));
             return true;
         }
         return false;
     }
 
     setAuthFromLocalStorage(token: any): boolean {
-        const storageTokenStr = localStorage.getItem('token');
+        const storageTokenStr = sessionStorage.getItem('token');
 
         let storageToken;
         try {
@@ -175,7 +176,7 @@ export class AuthService implements OnDestroy {
             storageToken = {};
         }
         if (storageToken !== token) {
-            localStorage.setItem(this.authLocalStorageToken, JSON.stringify(token));
+            sessionStorage.setItem(this.authLocalStorageToken, JSON.stringify(token));
             return true;
         }
         return false;
@@ -189,7 +190,7 @@ export class AuthService implements OnDestroy {
     private getAuthFromLocalStorage(): any {
         try {
             const authData = JSON.parse(
-                localStorage.getItem(this.authLocalStorageToken) || '{}'
+                sessionStorage.getItem(this.authLocalStorageToken) || '{}'
             );
             return authData;
         } catch (error) {

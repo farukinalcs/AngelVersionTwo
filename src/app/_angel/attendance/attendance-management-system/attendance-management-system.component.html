@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="col-12 my-5">
-                        <div class="input-group h-100" style="flex: 1;">
+                        <!-- <div class="input-group h-100" style="flex: 1;">
                             <input
                                 class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
                                 [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}">
@@ -73,7 +73,14 @@
                                     <i class="fa-solid fa-magnifying-glass text-white fs-4"></i>
                                 </div>
                             </button>
-                        </div>
+                        </div> -->
+                        <p-floatlabel variant="on" class="mt-2">
+                            <p-iconfield>
+                                <p-inputicon class="pi pi-search" />
+                                <input pInputText id="over_label" [(ngModel)]="filterText" autocomplete="off" />
+                            </p-iconfield>
+                            <label for="over_label">Arama..</label>
+                        </p-floatlabel>
                     </div>
 
                     <div class="col-12 px-15 h-300px scroll">

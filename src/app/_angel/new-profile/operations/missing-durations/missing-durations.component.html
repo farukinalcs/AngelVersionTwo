@@ -3,9 +3,10 @@
         <div class="row">
             <div class="col-6">
 
-                <p-select [options]="timeRange" [(ngModel)]="selectedTime" optionLabel="text" (onChange)="onDropdownChange($event)"
-                    emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="true" filterBy="text"
-                    [showClear]="true" placeholder="{{'Aralık Seçiniz' | translate}}" class="w-100 md:w-56">
+                <p-select [options]="timeRange" [(ngModel)]="selectedTime" optionLabel="text"
+                    (onChange)="onDropdownChange($event)" emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                    [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'Aralık Seçiniz' | translate}}"
+                    class="w-100 md:w-56">
                     <ng-template #selectedItem let-selected>
                         <div class="flex items-center gap-2">
                             <div>{{ selectedTime.text }}</div>
@@ -20,7 +21,7 @@
             </div>
 
             <div class="col-6 d-flex justify-content-end">
-                <p-floatlabel variant="on">
+                <p-floatlabel variant="on" class="mt-2">
                     <p-iconfield>
                         <p-inputicon class="pi pi-search" />
                         <input pInputText id="over_label" [(ngModel)]="filterText" autocomplete="off" />
@@ -78,8 +79,6 @@
                                             <td class="text-center">
                                                 <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.mesaitarih
                                                     | date : 'yyyy-MM-dd'}}</a>
-                                                <span class="text-muted fw-semibold d-block">{{item.mesaitarih | date :
-                                                    'HH:mm'}}</span>
                                             </td>
 
                                             <td class="text-center text-muted fw-bold fs-4">
@@ -109,6 +108,7 @@
 
                                             <td class="text-center text-muted fw-bold fs-4">
                                                 <a class="btn btn-icon btn-light-danger btn-sm me-3"
+                                                    (click)="openMissingDurationForm(item)"
                                                     matTooltip="{{'Eksik_Süre_Formu' | translate}}">
                                                     <i class="fa-solid fa-file-lines fs-4"></i>
                                                 </a>
@@ -124,3 +124,108 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+<ng-container *ngIf="showForm">
+    <p-dialog header="{{ 'Eksik Süreler İçin Talep Oluştur' | translate }}" [(visible)]="showForm" (onHide)="onHide()"
+        [modal]="true" [breakpoints]="{ '2560px': '60vw', '992px': '80vw', '576px': '90vw' }" [baseZIndex]="10000"
+        [draggable]="false" [resizable]="false" [maximizable]="true">
+
+        <div class="container py-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <!-- Header -->
+                    <div class="text-center mb-4">
+                        <h1 class="h3 fw-bold text-dark">Mesai Takip</h1>
+                        <p class="text-muted">
+                            Giriş-çıkış kayıtlarınızı görüntüleyin ve eksik süre talebi oluşturun
+                        </p>
+                    </div>
+
+                    <!-- Mesai Kayıtları -->
+                    <div *ngFor="let group of groupedData" class="mb-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header bg-white d-flex align-items-center justify-content-start gap-2">
+                                <i class="fa-regular fa-calendar-alt text-danger"></i>
+                                <span class="text-danger fw-bolder">{{ group.date }}</span>
+                            </div>
+                            <div class="card-body">
+                                <div *ngFor="let record of group.records"
+                                    class="border rounded p-3 mb-3 d-flex justify-content-between align-items-center bg-light">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i
+                                                [ngClass]="record.arakayit === 1 ? 'fa-solid fa-mug-hot text-warning' : 'fa-regular fa-clock text-primary'"></i>
+                                            <span
+                                                [ngClass]="record.arakayit === 1 ? 'badge bg-light-warning text-warning' : 'badge bg-light-primary text-primary'">
+                                                {{ record.arakayit === 1 ? 'Ara Süre' : 'Mesai' }}
+                                            </span>
+                                        </div>
+
+                                        <div class="d-flex align-items-center gap-4 small">
+                                            <div>
+                                                <div class="text-muted">Giriş</div>
+                                                <div class="fw-semibold text-dark">{{ formatTime(record.giris) }}</div>
+                                            </div>
+                                            <div class="text-muted">→</div>
+                                            <div>
+                                                <div class="text-muted">Çıkış</div>
+                                                <div class="fw-semibold text-dark">{{ formatTime(record.cikis) }}</div>
+                                            </div>
+                                            <div>
+                                                <div class="text-muted">Süre</div>
+                                                <div class="fw-semibold text-dark">{{ calculateDuration(record.giris,
+                                                    record.cikis) }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn bg-white bg-hover-secondary btn-sm d-flex align-items-center">
+                                        <i class="fas fa-plus me-1"></i> Talep Oluştur
+                                    </button>
+                                </div>
+
+                                <!-- Günlük Özet -->
+                                <div class="border rounded p-3 bg-light mt-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="fa-regular fa-clock text-danger"></i>
+                                            <span class="text-danger fw-bolder">Günlük Toplam</span>
+                                        </div>
+                                        <div class="text-end small">
+                                            <!-- <div class="text-primary">
+                                                Toplam Mesai: {{ getTotalHours(group.records, 0) }}h
+                                            </div> -->
+                                            <div class="text-danger">
+                                                Toplam Ara: {{ getTotalMinutes(group.records, 1) }}dk
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-template pTemplate="footer">
+            <a (click)="onHide()" class="btn btn-danger btn-sm mx-1">
+                <i class="fa-solid fa-xmark fs-7"></i>
+                {{'Kapat' | translate}}
+            </a>
+            <a class="btn btn-danger btn-sm mx-1">
+                <i class="fa-solid fa-check fs-7"></i>
+                {{'Gönder' | translate}}
+            </a>
+        </ng-template>
+    </p-dialog>
+
+</ng-container>

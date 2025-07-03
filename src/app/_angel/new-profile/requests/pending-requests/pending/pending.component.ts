@@ -6,6 +6,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { TooltipModule } from 'primeng/tooltip';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
@@ -24,7 +27,10 @@ import Swal from 'sweetalert2';
     MatExpansionModule,
     CustomPipeModule,
     MatCheckboxModule,
-    SharedModule
+    SharedModule,
+    InputIconModule,
+    IconFieldModule,
+    FloatLabelModule,
   ],
   templateUrl: './pending.component.html',
   styleUrl: './pending.component.scss'

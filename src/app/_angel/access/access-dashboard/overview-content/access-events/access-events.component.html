@@ -1,3 +1,32 @@
 <div class="d-flex flex-column gap-3 h-400px scroll">
-    
+    <div class="px-4 pb-4 pt-2">
+        <div *ngFor="let event of events" class="event-card position-relative mb-2">
+            <div class="d-flex justify-content-between gap-3">
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="text-truncate m-0">{{ event.terminal }}</h6>
+                        <div class="text-gray-800 fw-semibold small d-flex align-items-center gap-1">
+                            <i class="bi bi-clock"></i> {{ event.zaman }}
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge badge-danger border text-capitalize px-2 py-1 small">
+                            {{ event.aciklama }}
+                        </span>
+
+                        <ng-container *ngIf="event.sicilid">
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="{{imageUrl}}?sicilid={{event.sicilid}}" alt="{{ event.adsoyad }}"
+                                    class="rounded-circle" width="24" height="24" />
+                                <span class="small text-truncate" style="max-width: 120px;">{{ event.ad }} {{ event.soyad }}</span>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <div class="indicator-line position-absolute top-0 bottom-0 start-0 rounded-start"></div>
+        </div>
+    </div>
 </div>

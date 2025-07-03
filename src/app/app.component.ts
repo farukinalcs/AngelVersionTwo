@@ -10,6 +10,7 @@ import { SessionService } from './_helpers/session.service';
 })
 
 export class AppComponent implements OnInit {
+    fullUrl: string;
     constructor(
         private modeService: ThemeModeService,
         public loadingService: LoadingService,
@@ -17,6 +18,13 @@ export class AppComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+
+        this.fullUrl = window.location.href;
+        console.log('Kullanıcının linki:', this.fullUrl);
+        
+        
+        
+        
         window.addEventListener('beforeunload', () => {
             // Yenileme olabilir! İşaret bırakıyoruz
             localStorage.setItem('manualLogoutTriggered', 'true');
