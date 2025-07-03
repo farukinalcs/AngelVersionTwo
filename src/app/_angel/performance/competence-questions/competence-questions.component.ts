@@ -1,17 +1,18 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { PerformanceService } from '../performance.service';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-competence-questions',
   templateUrl: './competence-questions.component.html',
   styleUrls: ['./competence-questions.component.scss']
 })
-export class CompetenceQuestionsComponent {
-
+export class CompetenceQuestionsComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject();
   questionName: string = '';
   // selectedCount: number = 0;
   // answers: any[] = [null, null, null, null, null];
@@ -101,7 +102,7 @@ export class CompetenceQuestionsComponent {
 
 
   updateQuestion(): void {
-    this.perform.updateQuestion(this.selectedQuestionId,this.questionName,this.selectedCategoryId ?? 0,this.selectedScaleId ?? 0).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+    this.perform.updateQuestion(this.selectedQuestionId,this.questionName,this.selectedCategoryId ?? 0,this.selectedScaleId ?? 0).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
       const result = response[0].x[0].islemsonuc;
       console.log("updateQuestion:", result);
       if(result == 1){
@@ -118,7 +119,7 @@ export class CompetenceQuestionsComponent {
   }
 
   deleteQuestion(){
-    this.perform.deleteQuestion(this.selectedQuestionId).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+    this.perform.deleteQuestion(this.selectedQuestionId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
       const result = response[0].x[0].islemsonuc;
       console.log("deleteQuestion:", result);
       if(result == 1){
@@ -135,7 +136,7 @@ export class CompetenceQuestionsComponent {
   }
 
   getQuestion(id: number,categoryId:number) {
-    this.perform.getQuestion(id,categoryId).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.perform.getQuestion(id,categoryId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.questionList = response[0]?.x ?? [];
       console.log("questionList:", this.questionList);
       this.ref.detectChanges();
@@ -147,7 +148,7 @@ export class CompetenceQuestionsComponent {
   }
 
   getCategory(id:number){
-    this.perform.getCategory(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.perform.getCategory(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.categoryList = response[0].x;
       // this.filteredItems = [...this.categoryList]
       console.log("getCategory:", this.categoryList);
@@ -156,10 +157,15 @@ export class CompetenceQuestionsComponent {
   }
 
   getScale(id: number) {
-    this.perform.getScale(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.perform.getScale(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.scaleList = response[0]?.x ?? [];
       console.log("getScale:", this.scaleList);
       this.ref.detectChanges();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
   }
 }

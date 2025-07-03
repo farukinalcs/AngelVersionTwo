@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { PerformanceService } from '../performance.service';
 import { ToastrService } from 'ngx-toastr';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-draft',
@@ -12,7 +13,9 @@ import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 })
 
 
-export class DraftComponent {
+export class DraftComponent implements OnInit, OnDestroy {
+
+  private ngUnsubscribe = new Subject();
   formTitle: string = "";
   explanation: string = "";
   categoryList: any[] = [];
@@ -45,7 +48,7 @@ export class DraftComponent {
  
 
   getQuestion(id: number, categoryId: number) {
-    this.perform.getQuestion(id, categoryId).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.perform.getQuestion(id, categoryId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.questionList = response[0]?.x ?? [];
       console.log("questionList:", this.questionList);
       this.ref.detectChanges();
@@ -53,7 +56,7 @@ export class DraftComponent {
   }
 
   getCategory(id: number) {
-    this.perform.getCategory(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.perform.getCategory(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.categoryList = response[0].x;
       // this.filteredItems = [...this.categoryList]
       console.log("getCategory:", this.categoryList);
@@ -83,7 +86,7 @@ export class DraftComponent {
   }
 
   form_i() {
-    this.perform.form_i(this.formTitle, this.explanation).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+    this.perform.form_i(this.formTitle, this.explanation).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
       const result = response[0].x[0].islemsonuc;
       console.log("form_i:", result);
       if (result == 1) {
@@ -99,7 +102,7 @@ export class DraftComponent {
   }
 
   form_s(id: number) {
-    this.perform.form_s(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.perform.form_s(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.formList = response[0]?.x ?? [];
       console.log("form_s:", this.formList);
 
@@ -116,21 +119,10 @@ export class DraftComponent {
   }
 
 
-  // form_question(formId:number,questionId:number,catId:number,){
-  //   var sp: any[] = [{
-  //     mkodu: 'yek318',
-  //     formid:formId.toString(),
-  //     soruid:questionId.toString(),
-  //     kategoriid:catId.toString()
-  //   }]
-  //   return this.requestMethod(sp);
-  // }
-
-
 
   form_question() {
     if (this.selectedQuestionId != 0) {
-      this.perform.form_question(this.selectedFormId ?? 0, this.selectedQuestionId ?? 0, this.selectedCategoryId ?? 0).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+      this.perform.form_question(this.selectedFormId ?? 0, this.selectedQuestionId ?? 0, this.selectedCategoryId ?? 0).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
         const result = response[0].x[0].islemsonuc;
         console.log("form_question:", result);
         if (result == 1) {
@@ -148,7 +140,11 @@ export class DraftComponent {
       this.toastrService.error(
         "Lütfen Eklemek İstediğiniz Soruyu Seçin");
     }
+  }
 
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
   }
 }
 

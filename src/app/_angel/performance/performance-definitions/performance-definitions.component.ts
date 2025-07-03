@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-performance-definitions',
@@ -6,9 +7,9 @@ import { ChangeDetectorRef, Component } from '@angular/core';
   templateUrl: './performance-definitions.component.html',
   styleUrls: ['./performance-definitions.component.scss']
 })
-export class PerformanceDefinitionsComponent {
+export class PerformanceDefinitionsComponent implements OnInit, OnDestroy {
   activeWidget: number = 1;
-
+  private ngUnsubscribe = new Subject();
     constructor(
       private ref : ChangeDetectorRef
     ) { }
