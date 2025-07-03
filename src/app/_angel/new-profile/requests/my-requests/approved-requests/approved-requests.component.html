@@ -40,15 +40,22 @@
 
             <div class="row d-flex justify-content-center justify-content-sm-start gy-4 gy-sm-0 justify-content-between">
                 <div class="col-12 col-sm-4 d-flex justify-content-start">
-                    <div class="input-group h-100 ">
+                    <!-- <div class="input-group h-100 ">
                         <input class="form-control form-control-solid h-30px p-2 border-1 border-dark rounded-lg font-size-h6"
                             [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}">
-                        <button class="search-icon">
+                        <button class="">
                             <div class="svg">
                                 <i class="fa-solid fa-magnifying-glass text-white fs-4"></i>
                             </div>
                         </button>
-                    </div>
+                    </div> -->
+                    <p-floatlabel variant="on" class="mt-2">
+                        <p-iconfield>
+                            <p-inputicon class="pi pi-search" />
+                            <input pInputText id="over_label" [(ngModel)]="filterText" autocomplete="off" />
+                        </p-iconfield>
+                        <label for="over_label">Arama..</label>
+                    </p-floatlabel>
                 </div>
 
                 <div class="col-10 col-sm-7 d-flex justify-content-end">

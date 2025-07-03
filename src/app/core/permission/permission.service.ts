@@ -23,6 +23,7 @@ export class PermissionService {
    * Tek bir permission code kontrolü
    */
   has(code: string): boolean {
+    console.log(`Kod kontrol ediliyor: ${code} - Sonuç: ${this.permissionSet.has(code)}`);
     return this.permissionSet.has(code);
   }
 

@@ -333,7 +333,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy, AfterViewInit
           headerName: this.translateService.instant('Mesai_Tarihi'),
           field: 'mesaitarih',
           headerTooltip: this.translateService.instant('Mesai_Tarihi'),
-          filter: 'agDateColumnFilter',
+          filter: false,
           filterParams: filterParams,
           cellClass: (params) => this.applyWeekendClass(params),
           sort: 'asc',
@@ -1085,7 +1085,7 @@ export class AttendanceListComponent implements OnInit, OnDestroy, AfterViewInit
       console.log('PDKS :', sp);
 
       this.profileService
-        .requestMethod(sp)
+        .requestMethod(sp, { 'noloading': 'true' })
         .pipe(
           takeUntil(this.cancelRequest), // İptal sinyalini dinler
           takeUntil(this.ngUnsubscribe),

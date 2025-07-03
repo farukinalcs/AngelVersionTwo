@@ -77,6 +77,80 @@ export class PassagesComponent implements OnInit, OnDestroy {
 
 
 
+    movements: any[] = [
+        {
+            id: '1',
+            type: 'entry',
+            timestamp: '2024-01-15T08:30:00',
+            device: 'desktop',
+            deviceName: 'Ana Giriş Terminali',
+            employeeName: 'Ahmet Yılmaz',
+        },
+        {
+            id: '2',
+            type: 'exit',
+            timestamp: '2024-01-15T12:15:00',
+            device: 'mobile',
+            deviceName: 'Mobil Uygulama',
+            employeeName: 'Ahmet Yılmaz',
+        },
+        {
+            id: '3',
+            type: 'entry',
+            timestamp: '2024-01-15T13:00:00',
+            device: 'tablet',
+            deviceName: 'Yemekhane Tablet',
+            employeeName: 'Ahmet Yılmaz',
+        },
+        {
+            id: '4',
+            type: 'exit',
+            timestamp: '2024-01-15T17:45:00',
+            device: 'desktop',
+            deviceName: 'Ana Giriş Terminali',
+            employeeName: 'Ahmet Yılmaz',
+        },
+        {
+            id: '5',
+            type: 'entry',
+            timestamp: '2024-01-16T08:45:00',
+            device: 'mobile',
+            deviceName: 'Mobil Uygulama',
+            employeeName: 'Ahmet Yılmaz',
+        },
+        {
+            id: '6',
+            type: 'exit',
+            timestamp: '2024-01-16T11:30:00',
+            device: 'desktop',
+            deviceName: 'Ana Giriş Terminali',
+            employeeName: 'Ahmet Yılmaz',
+        },
+        {
+            id: '7',
+            type: 'exit',
+            timestamp: '2024-01-16T11:35:00',
+            device: 'mobile',
+            deviceName: 'Mobil Uygulama',
+            employeeName: 'Ahmet Yılmaz',
+        },
+    ]
+
+    getDeviceIcon(device: string): string {
+        switch (device) {
+            case 'desktop':
+                return 'fa-solid fa-desktop'
+            case 'mobile':
+                return 'fa-solid fa-mobile-alt'
+            case 'tablet':
+                return 'fa-solid fa-tablet-alt'
+            default:
+                return 'fa-solid fa-desktop'
+        }
+    }
+
+
+
 
     ngOnDestroy(): void {
         this.ngUnsubscribe.next(true);

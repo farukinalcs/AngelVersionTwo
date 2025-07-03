@@ -1,0 +1,26 @@
+<app-card-menu [menu]="charts" (changeVisible)="onChangeVisible($event)" [editMode]="editMode">
+</app-card-menu>
+
+<div class="row">
+    <ng-container *ngFor="let chart of charts; let i = index">
+        <div class="col-12 col-md-6 p-3" *ngIf="chart.visible">
+            <div class="custom-card" [class.collapsed]="chart.collapsed" [ngClass]="{'card-edit-mode': editMode}">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="m-0">{{ chart.Ad }}</h5>
+                    <div class="action-buttons">
+                        <button class="btn btn-sm btn-outline-secondary" (click)="toggleCollapse(i)" *ngIf="!editMode">
+                            <i class="bi p-0 fs-4"
+                                [ngClass]="chart.collapsed ? 'bi-chevron-down' : 'bi-chevron-up'"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary" (click)="hideChart(i)" *ngIf="editMode">
+                            <i class="bi bi-x p-0 fs-4"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body" *ngIf="!chart.collapsed">
+                    <ng-container *ngComponentOutlet="componentMap[chart.component]"></ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

@@ -1,0 +1,64 @@
+// shift-dashboard.component.scss
+
+// Renk Temaları
+.text-purple {
+    color: #8b5cf6;
+}
+
+// Kart Ayarları
+.card {
+    border-radius: 0.5rem;
+    border: none;
+}
+
+.card-body {
+    padding: 1rem 1.25rem;
+}
+
+// Başlıklar
+.card-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+// Buton Grupları
+.btn-group .btn {
+    min-width: 80px;
+}
+
+.btn-group .btn.active {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+// ApexChart Stil Ayarları
+.apexcharts-title-text {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #1e293b !important;
+}
+
+.apexcharts-legend-text {
+    color: #64748b !important;
+}
+
+// Badge Stil Ayarları
+.badge {
+    font-size: 0.75rem;
+    padding: 0.4em 0.6em;
+    border-radius: 0.25rem;
+}
+
+// Özel Margin ve Boşluk Ayarları
+.ms-2 {
+    margin-left: 0.5rem !important;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+.gap-1 {
+    gap: 0.25rem;
+}

@@ -1,0 +1,119 @@
+<!-- leave-management-overview.component.html -->
+<div class="container py-4">
+    <!-- Header -->
+    <!-- <div class="mb-4">
+        <h1 class="h3 fw-bold text-dark">İzin Yönetimi</h1>
+        <p class="text-muted">Personel izin talepleri ve istatistikleri genel bakış</p>
+    </div> -->
+
+    <!-- Summary Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-12 col-md-6 col-lg-3" *ngFor="let stat of summaryStats">
+            <div class="card shadow-sm h-100">
+                <div class="card-body bg-danger rounded">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <small class="text-white">{{ stat.title }}</small>
+                        <i [ngClass]="stat.icon" class="text-white"></i>
+                    </div>
+                    <h4 class="fw-bold text-white">{{ stat.value }}</h4>
+                    <div class="d-flex align-items-center gap-2 text-muted">
+                        <span class="badge" [ngClass]="{
+                'bg-success-subtle text-success': stat.changeType === 'increase',
+                'bg-danger-subtle text-warning': stat.changeType === 'decrease'
+              }">{{ stat.change }}</span>
+                        <small class="text-white">{{ stat.description }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Grid -->
+    <div class="row g-4 mb-5">
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">İzin Durumu Dağılımı</h5>
+                    <p class="text-muted">Mevcut izin taleplerinin durumu</p>
+                    <apx-chart [series]="leaveStatusChart.series" [chart]="leaveStatusChart.chart"
+                        [labels]="leaveStatusChart.labels" [colors]="leaveStatusChart.colors"
+                        [legend]="leaveStatusChart.legend" [responsive]="leaveStatusChart.responsive">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">İzin Talep Trendi</h5>
+                    <p class="text-muted">Aylık izin talep ve onay sayıları</p>
+                    <apx-chart [series]="leaveTrendsChart.series" [chart]="leaveTrendsChart.chart"
+                        [xaxis]="leaveTrendsChart.xaxis" [stroke]="leaveTrendsChart.stroke"
+                        [colors]="leaveTrendsChart.colors" [tooltip]="leaveTrendsChart.tooltip">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">İzin Türleri</h5>
+                    <p class="text-muted">İzin türlerine göre dağılım</p>
+                    <apx-chart [series]="leaveTypesChart.series" [chart]="leaveTypesChart.chart"
+                        [plotOptions]="leaveTypesChart.plotOptions" [xaxis]="leaveTypesChart.xaxis"
+                        [colors]="leaveTypesChart.colors">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Departman İstatistikleri</h5>
+                    <p class="text-muted">Departmanlara göre izin durumu</p>
+                    <apx-chart [series]="departmentChart.series" [chart]="departmentChart.chart"
+                        [xaxis]="departmentChart.xaxis" [colors]="departmentChart.colors"
+                        [legend]="departmentChart.legend" [plotOptions]="departmentChart.plotOptions">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Son Aktiviteler</h5>
+            <p class="text-muted">En son izin talepleri ve durumları</p>
+
+            <div class="list-group">
+                <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                    *ngFor="let activity of activities">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="avatar bg-primary-subtle text-primary fw-bold rounded-circle">
+                            {{ getInitials(activity.name) }}
+                        </div>
+                        <div>
+                            <div class="fw-semibold">{{ activity.name }}</div>
+                            <small class="text-muted">{{ activity.department }} • {{ activity.type }}</small>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <div class="d-flex justify-content-end gap-2">
+                            <span class="fw-semibold">{{ activity.days }}</span>
+                            <span class="badge" [ngClass]="{
+                  'bg-success-subtle text-success': activity.status === 'approved',
+                  'bg-warning-subtle text-warning': activity.status === 'pending',
+                  'bg-danger-subtle text-danger': activity.status === 'rejected'
+                }">
+                                {{ getStatusText(activity.status) }}
+                            </span>
+                        </div>
+                        <small class="text-muted">{{ activity.time }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

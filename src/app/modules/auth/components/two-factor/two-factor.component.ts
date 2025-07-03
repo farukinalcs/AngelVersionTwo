@@ -68,8 +68,10 @@ export class TwoFactorComponent implements OnInit {
             next: (_) => {
                 if (_ == -13) {
                     console.log("Duplicate Key :", _);
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('is-secure');
+                    sessionStorage.removeItem('token');
+                    // localStorage.removeItem('token');
+                    // localStorage.removeItem('is-secure');
+                    sessionStorage.removeItem('is-secure');
                     localStorage.removeItem('onboarded');
 
                     this.router.navigate(['/auth/login']);

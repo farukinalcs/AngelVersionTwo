@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Dialog, DialogModule } from 'primeng/dialog';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { TooltipModule } from 'primeng/tooltip';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
@@ -18,7 +21,10 @@ import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
     DialogModule,
     TranslateModule,
     CustomPipeModule,
-    TooltipModule
+    TooltipModule,
+    InputIconModule,
+    IconFieldModule,
+    FloatLabelModule,
   ],
   templateUrl: './visit-reason.component.html',
   styleUrl: './visit-reason.component.scss'

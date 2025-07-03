@@ -4,6 +4,7 @@ import { ChartComponent } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
 import { DatePipe } from '@angular/common';
+import { HelperService } from 'src/app/_helpers/helper.service';
 
 export type ChartOptions = {
     series: ApexAxisChartSeries;
@@ -83,13 +84,19 @@ export class AttendanceDashboardComponent implements OnInit, OnDestroy {
         },
     ];
 
+    selectedAreaIndex = 0;
+    selectedArea: any = null;
+    areas: any[] = [];
+    editMode: boolean = false;
+
     constructor(
         private profileService: ProfileService,
         private translateService: TranslateService,
+        private helperService: HelperService,
     ) { }
 
     ngOnInit(): void {
-        this.getValues();
+        this.getAreaAccess();
     }
 
     getValues() {
@@ -137,7 +144,7 @@ export class AttendanceDashboardComponent implements OnInit, OnDestroy {
             const minutes = totalMinutes % 60;
             return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
         };
-        
+
         if (!data || data.length === 0) {
             return;
         }
@@ -193,6 +200,52 @@ export class AttendanceDashboardComponent implements OnInit, OnDestroy {
                     break;
             }
         });
+    }
+
+    getAreaAccess() {
+        var sp: any[] = [
+            { mkodu: 'yek309' }
+        ];
+
+        this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((res: any) => {
+            const data = res[0].x;
+            const message = res[0].z;
+
+            if (message == -1) {
+                return;
+            }
+
+            this.areas = [...data];
+            console.log('Bölgeler :', this.areas);
+            this.updateSelectedArea();
+        });
+    }
+
+    updateSelectedArea() {
+        if (this.areas.length > 0) {
+            this.selectedArea = this.areas[this.selectedAreaIndex];
+            this.helperService.updateData(this.selectedArea);
+        }
+
+        this.getValues();
+    }
+
+    getNextAreaLabel(): string {
+        if (this.areas.length === 0 || !this.selectedArea) {
+            return 'Genel Bakış';
+        }
+        return `${this.selectedArea.ad} Genel Bakış`;
+    }
+
+    goToNextArea() {
+        if (this.areas.length === 0) return;
+
+        this.selectedAreaIndex = (this.selectedAreaIndex + 1) % this.areas.length;
+        this.updateSelectedArea();
+    }
+
+    editModeToggle() {
+        this.editMode = !this.editMode;
     }
 
 

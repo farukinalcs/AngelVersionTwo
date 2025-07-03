@@ -3,6 +3,9 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { SelectModule } from 'primeng/select';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
@@ -17,7 +20,10 @@ import Swal from 'sweetalert2';
         FormsModule,
         TranslateModule,
         CustomPipeModule,
-        SelectModule
+        SelectModule,
+        InputIconModule,
+        IconFieldModule,
+        FloatLabelModule,
     ],
     templateUrl: './necessary-docs.component.html',
     styleUrl: './necessary-docs.component.scss'

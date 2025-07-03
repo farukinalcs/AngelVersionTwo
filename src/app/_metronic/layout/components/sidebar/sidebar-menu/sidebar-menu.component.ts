@@ -38,6 +38,8 @@ export class SidebarMenuComponent implements OnInit, OnDestroy {
                     this.permissionService.setPermissions(permissions); // YETKİLER YÜKLENDİ
                     console.log(this.permissionService.getAll());
                     this.menu = this.applyPermissions(MENU, permissions);
+                    console.log("Menü Öğeleri:", this.menu);
+                    
                     this.ref.detectChanges();
                 }
             });

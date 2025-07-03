@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <div class="row mb-5">
                             <div class="col-3">
-                                <div class="input-group py-3" style="flex: 1;">
+                                <!-- <div class="input-group py-3" style="flex: 1;">
                                     <input class="form-control form-control-solid p-2 border-1 border-dark rounded-lg font-size-h6"
                                         [(ngModel)]="filterText" style="height: 30px;"
                                         type="text" placeholder="{{'Arama' | translate}}">
@@ -37,7 +37,14 @@
                                             <i class="fa-solid fa-magnifying-glass text-white fs-7"></i>
                                         </div>
                                     </button>
-                                </div>
+                                </div> -->
+                                <p-floatlabel variant="on" class="mt-2">
+                                    <p-iconfield>
+                                        <p-inputicon class="pi pi-search" />
+                                        <input pInputText id="over_label" [(ngModel)]="filterText" autocomplete="off" />
+                                    </p-iconfield>
+                                    <label for="over_label">Arama..</label>
+                                </p-floatlabel>
                             </div>
                             <div class="col-9 d-flex align-items-center justify-content-end">
                                 <a class="btn btn-dark btn-sm hover-elevate-up" (click)="openAction('add')">

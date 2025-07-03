@@ -1,0 +1,58 @@
+<div class="d-flex flex-column gap-3 h-400px scroll">
+    <ng-container *ngIf="transits.length > 0">
+        <cdk-virtual-scroll-viewport itemSize="100" class="h-400px scroll" style="height: 400px;">
+            <div *cdkVirtualFor="let transit of transits; trackBy: trackByTransit"
+                class="event-card d-flex gap-3 p-3 mb-3 rounded border transition position-relative">
+
+                <div
+                    class="rounded-circle d-flex align-items-center justify-content-center shadow-sm text-white fw-bold">
+                    <img loading="lazy" [src]="imageUrl + '?sicilid=' + transit.sicilid" alt="{{transit.adsoyad}}"
+                        class="rounded-circle" width="40" height="40" />
+                </div>
+
+                <div class="flex-grow-1 min-w-0">
+                    <div class="d-flex justify-content-between">
+                        <div class="text-truncate">
+                            <h6 class="mb-0 fw-semibold">{{ transit.ad }} {{ transit.soyad }}</h6>
+                            <p class="small text-muted mb-0">#{{ transit.userid }}</p>
+                        </div>
+                        <span class="badge rounded-pill gap-1 text-gray-800" [ngClass]="{
+                      'bg-secondary bg-gradient': transit.type == '1',
+                      'bg-danger bg-gradient': transit.type == 'out'
+                    }">
+                            <i class="fa-solid text-gray-800" [ngClass]="{
+                        'fa-right-to-bracket': transit.type == '1',
+                        'fa-right-from-bracket': transit.type == 'out'
+                      }"></i>
+                            {{ transit.terminal }}
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center small mt-2">
+                        <div class="d-flex align-items-center gap-1 text-muted">
+                            <i class="bi bi-geo-alt"></i>
+                            <span>{{ transit.aciklama }}</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-1 text-muted">
+                            <i class="bi bi-clock"></i>
+                            <span>{{ transit.zaman | date:'MMM d, y, HH:mm:ss' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="indicator-line position-absolute top-0 bottom-0 start-0 rounded-start"></div>
+            </div>
+        </cdk-virtual-scroll-viewport>
+
+    </ng-container>
+
+
+    <ng-container *ngIf="transits.length == 0">
+        <div class="row pt-10">
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <div class="row">
+                    <app-data-not-found [imgWidth]=" '70%' "></app-data-not-found>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

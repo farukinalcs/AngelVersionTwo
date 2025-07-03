@@ -55,7 +55,8 @@ export class TokenInterceptor implements HttpInterceptor {
     } else {
       // İlk iki istekten sonra yapılacak istekler
       
-      const token = JSON.parse(localStorage.getItem('token') || '{}');
+      const token = JSON.parse(sessionStorage.getItem('token') || '{}');
+    //   const token = JSON.parse(localStorage.getItem('token') || '{}');
       const latitude = localStorage.getItem('lat') || 'izin vermedi';
       const longitude = localStorage.getItem('lng') || 'izin vermedi';
       if (token) {
@@ -106,8 +107,10 @@ export class TokenInterceptor implements HttpInterceptor {
                     }).then((result) => {
                       if (result.isConfirmed) {
                         this.sessionService.stopMonitoring();
-                        localStorage.removeItem('token');
-                        localStorage.removeItem('is-secure');
+                        sessionStorage.removeItem('token');
+                        // localStorage.removeItem('token');
+                        // localStorage.removeItem('is-secure');
+                        sessionStorage.removeItem('is-secure');
                         localStorage.removeItem('onboarded'); 
 
                         this.router.navigate(['/auth/login']);

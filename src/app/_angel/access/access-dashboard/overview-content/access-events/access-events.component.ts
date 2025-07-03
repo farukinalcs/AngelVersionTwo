@@ -4,7 +4,17 @@ import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { HelperService } from 'src/app/_helpers/helper.service';
 
-
+interface Event {
+    Id: number;
+    terminal: string;
+    aciklama: string;
+    zaman: string;
+    ad: string;
+    soyad: string;
+    adsoyad: string;
+    type: number;
+    userid: string;
+}
 
 @Component({
     selector: 'app-access-events',
@@ -36,7 +46,7 @@ export class AccessEventsComponent implements OnInit, OnDestroy {
     fetchData(terminalgroup: any) {
         var sp: any[] = [
             {
-                mkodu: 'yek354',
+                mkodu: 'yek355',
                 terminalgroup: terminalgroup.id.toString(),
             }
         ];
@@ -55,11 +65,35 @@ export class AccessEventsComponent implements OnInit, OnDestroy {
         });
     }
 
-    
+
 
     ngOnDestroy(): void {
         this.ngUnsubscribe.next(true);
         this.ngUnsubscribe.complete();
     }
 
+
+
+
+    getStatusColor(status: string): string {
+        const map: Record<string, string> = {
+            'Kapı Açıldı': 'green',
+            'Kapı Kapandı': 'blue',
+            'Başarısız Geçiş': 'red',
+            'Yetkisiz Erişim': 'orange',
+            'Sistem Hatası': 'gray',
+            'Kart Okunamadı': 'yellow',
+            'Başarılı Geçiş': 'emerald',
+        };
+        return map[status] || 'gray';
+    }
+
+    getInitials(name: string): string {
+        return name
+            .split(' ')
+            .map((w) => w.charAt(0))
+            .join('')
+            .toUpperCase()
+            .slice(0, 2);
+    }
 }

@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     // private fields
     private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
-
+    companyLogo: string;
 
     constructor(
         private fb: FormBuilder,
@@ -66,6 +66,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         private sessionService: SessionService,
         private toastrService: ToastrService
     ) {
+        const url = window.location.href;
+        if (url.includes('cadde')) {
+            this.companyLogo = '../../../../../assets/media/logos/cadde-logo.png';
+        } else {
+            this.companyLogo = '../../../../../assets/media/logos/MECLOUD (13).png'
+        }
+        
         this.isLoading$ = this.authService.isLoading$;
         // redirect to home if already logged in
         if (this.authService.currentUserValue) {

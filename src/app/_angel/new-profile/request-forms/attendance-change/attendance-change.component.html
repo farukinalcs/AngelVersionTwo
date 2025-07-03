@@ -1,6 +1,5 @@
 <p-dialog header="{{'Hareket_Düzenleme_Talep_Formu' | translate}}" [(visible)]="displayAttendanceForm" [modal]="true"
-    [breakpoints]="{ '2560px': '90vw', '992px': '90vw', '576px': '99vw' }"
-    [style]="{backgroundColor : '#fcfcfc'} " 
+    [breakpoints]="{ '2560px': '90vw', '992px': '90vw', '576px': '99vw' }" [style]="{backgroundColor : '#fcfcfc'} "
     (onHide)="closedFormDialog()" [maximizable]="true" [baseZIndex]="-50" [draggable]="true" [resizable]="false">
 
     <div class="container h-100">
@@ -9,11 +8,13 @@
 
                 <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
                     <div class="stepper-nav d-flex justify-content-center">
-                        <img src="../../../../../assets/media/illustrations/storyset-1/Time management-pana.svg" width="100%" alt="">
+                        <img src="../../../../../assets/media/illustrations/storyset-1/Time management-pana.svg"
+                            width="100%" alt="">
                     </div>
                 </div>
 
-                <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields" [isFromAttendance]="false"></app-form-stepper>
+                <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields"
+                    [isFromAttendance]="false"></app-form-stepper>
 
                 <div class="row w-xl-700px gap-5">
                     <div class="col-12">
@@ -25,72 +26,100 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="mb-10">
-                                                    <label class="required fw-semibold fs-5 fw-semibold mb-10">Yapılacak İşlem Türü</label>
-                                                    <div class="d-flex row">
+                                                    <label class="required fw-semibold fs-5 fw-semibold mb-10">Yapılacak
+                                                        İşlem Türü</label>
+                                                    <div class="d-flex row p-5"
+                                                        [ngClass]="{'border border-3 border-danger rounded': attendanceForm.get('formState')?.value == 0}">
                                                         <div class="col-11">
                                                             <div class="form-check form-check-custom form-check-danger">
-                                                                <input class="form-check-input me-3" formControlName="formState" type="radio" value="0"
-                                                                    id="kt_modal_update_role_option_0" checked="checked">
-                                                                
-                                                                
-                                                    
-                                                                <label class="form-check-label" for="kt_modal_update_role_option_0">
-                                                                    <div class="fw-bold text-gray-800">{{ "Yeni_Hareket_Eklemek" | translate }}</div>
-                                                                    <div class="text-gray-600">{{ "Personelin_Seçilen_Mesai_Tarihine_Yeni_Hareket_Eklemek_İçin" | translate }}</div>
+                                                                <input class="form-check-input me-3"
+                                                                    formControlName="formState" type="radio" value="0"
+                                                                    id="kt_modal_update_role_option_0"
+                                                                    checked="checked">
+
+
+
+                                                                <label class="form-check-label"
+                                                                    for="kt_modal_update_role_option_0">
+                                                                    <div class="fw-bold text-gray-800">{{
+                                                                        "Yeni_Hareket_Eklemek" | translate }}</div>
+                                                                    <div class="text-gray-600">{{
+                                                                        "Personelin_Seçilen_Mesai_Tarihine_Yeni_Hareket_Eklemek_İçin"
+                                                                        | translate }}</div>
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                        
-                                                        <div class="col-1 d-flex justify-content-end align-items-center">
+
+                                                        <div
+                                                            class="col-1 d-flex justify-content-end align-items-center">
                                                             <span class="mx-5">
-                                                                <i class="fa-regular fa-calendar-plus fs-1 text-danger"></i>
+                                                                <i class="fa-regular fa-calendar-plus fs-1"
+                                                                    [ngClass]="{'text-danger': attendanceForm.get('formState')?.value == 0, 'text-gray-600': attendanceForm.get('formState')?.value != 0}"></i>
                                                             </span>
                                                         </div>
-                                                        
+
                                                     </div>
-                                                
-                                                    <div class="separator separator-dashed my-5"></div> 
-                                                    <div class="d-flex row">
+
+                                                    <div class="separator separator-dashed my-5"></div>
+                                                    <div class="d-flex row p-5"
+                                                        [ngClass]="{'border border-3 border-danger rounded': attendanceForm.get('formState')?.value == 2}">
                                                         <div class="col-11">
                                                             <div class="form-check form-check-custom form-check-danger">
-                                                                <input class="form-check-input me-3" formControlName="formState" type="radio" value="2"
+                                                                <input class="form-check-input me-3"
+                                                                    formControlName="formState" type="radio" value="2"
                                                                     id="kt_modal_update_role_option_2">
-                                                               
-                                                                <label class="form-check-label" for="kt_modal_update_role_option_2">
-                                                                    <div class="fw-bold text-gray-800">{{ "Mevcut_Hareketin_Yönünü_Değiştirmek" | translate }}</div>
-                                                                    <div class="text-gray-600">{{ "Personelin_Mesai_Tarihinde_Bulunan_Hareketini_Düzenlemek_İçin" | translate }}</div>
+
+                                                                <label class="form-check-label"
+                                                                    for="kt_modal_update_role_option_2">
+                                                                    <div class="fw-bold text-gray-800">{{
+                                                                        "Mevcut_Hareketin_Yönünü_Değiştirmek" |
+                                                                        translate }}</div>
+                                                                    <div class="text-gray-600">{{
+                                                                        "Personelin_Mesai_Tarihinde_Bulunan_Hareketini_Düzenlemek_İçin"
+                                                                        | translate }}</div>
                                                                 </label>
-    
-                                                                
+
+
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-1 d-flex justify-content-end align-items-center">
+                                                        <div
+                                                            class="col-1 d-flex justify-content-end align-items-center">
                                                             <span class="mx-5">
-                                                                <i class="fa-solid fa-gears fs-1 text-danger"></i>
+                                                                <i class="fa-solid fa-gears fs-1"
+                                                                    [ngClass]="{'text-danger': attendanceForm.get('formState')?.value == 2, 'text-gray-600': attendanceForm.get('formState')?.value != 2}"></i>
                                                             </span>
                                                         </div>
                                                     </div>
-                                                
-                                                    <div class="separator separator-dashed my-5"></div> 
-                                                    <div class="d-flex ">
+
+                                                    <div class="separator separator-dashed my-5"></div>
+                                                    <div class="d-flex row p-5"
+                                                        [ngClass]="{'border border-3 border-danger rounded': attendanceForm.get('formState')?.value == 1}">
                                                         <div class="col-11">
                                                             <div class="form-check form-check-custom form-check-danger">
-                                                                <input class="form-check-input me-3" formControlName="formState" type="radio" value="1"
+                                                                <input class="form-check-input me-3"
+                                                                    formControlName="formState" type="radio" value="1"
                                                                     id="kt_modal_update_role_option_1">
-                                                    
-                                                                <label class="form-check-label" for="kt_modal_update_role_option_1">
-                                                                    <div class="fw-bold text-gray-800">{{ "Mevcut_Hareketi_Kaldırmak_Veya_Aktif_Etmek" | translate }}</div>
-                                                                    <div class="text-gray-600">{{ "Personelin_Mesai_Tarihinde_Bulunan_Hareketini_Kaldırmak_Veya_Aktif_Etmek_İçin" | translate }}</div>
+
+                                                                <label class="form-check-label"
+                                                                    for="kt_modal_update_role_option_1">
+                                                                    <div class="fw-bold text-gray-800">{{
+                                                                        "Mevcut_Hareketi_Kaldırmak_Veya_Aktif_Etmek" |
+                                                                        translate }}</div>
+                                                                    <div class="text-gray-600">{{
+                                                                        "Personelin_Mesai_Tarihinde_Bulunan_Hareketini_Kaldırmak_Veya_Aktif_Etmek_İçin"
+                                                                        | translate }}</div>
                                                                 </label>
-    
-                                                                
+
+
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-1 d-flex justify-content-end align-items-center">
+                                                        <div
+                                                            class="col-1 d-flex justify-content-end align-items-center">
                                                             <span class="mx-5">
-                                                                <i class="fa-regular fa-calendar-xmark fs-1 text-danger"></i>
+                                                                <i class="fa-regular fa-calendar-xmark fs-1"
+                                                                    [ngClass]="{'text-danger': attendanceForm.get('formState')?.value == 1, 'text-gray-600': attendanceForm.get('formState')?.value != 1}"></i>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -105,105 +134,94 @@
                                 <div class="current">
                                     <div class="w-100">
                                         <div class="row">
-                                            <div class="col-12" *ngIf="isFromAttendance">
-                                                <!-- <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                    <span class="">{{"Seçilen_Kişiler" | translate}}</span>
-                                                </label>
 
-                                                <div class="d-flex justify-content-center align-items-center border border-3 rounded p-5">
-                                                    <span class="badge badge-circle badge-danger mx-5">
-                                                        <i class="fa-solid fa-info text-white"></i>
-                                                    </span>
-                                                    <span class="text-gray-500 pt-1 fw-semibold fs-6">{{getTooltipScript()}}</span>
-                                                </div> -->
-                                            </div>
+                                            <div class="d-flex flex-column gap-4">
+                                                <div class="text-center">
+                                                    <h3 class="fs-5 fw-semibold">Personel Hareketleri</h3>
+                                                    <p class="text-muted small">
+                                                        {{ actionType }} işlemi için seçilen personeller
+                                                    </p>
+                                                </div>
 
-                                            <div class="col-12">
-                                                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                    <span>{{"Seçilen_Kişiler" | translate}}</span>
-                                                </label>
-                                                <div class="row gap-2">
-                                                    <ng-container *ngFor="let item of paginatedItems">
-                                                    
-                                                        <div class="border border-dashed border-gray-300 rounded px-7 py-2 mb-2 bg-hover-light"
-                                                        [ngClass]="{'col-12': paginatedItems.length <= 3, 'col-6  w-250px': paginatedItems.length > 3}"
-                                                        (click)="getPersonActivity(item.sicilid)"> 
-                                                            <!--begin::Info-->
-                                                            <div class="d-flex flex-stack mb-3">
-                                                                <!--begin::Wrapper-->
-                                                                <div class="me-3">
-                                                                    <!--begin::Icon-->
-                                                                    <div class="symbol symbol-30px me-3">                                                   
-                                                                        <img src="{{imageUrl}}?sicilid={{item.sicilid}}" alt="{{item.adsoyad}}" class="">                                                    
-                                                                    </div>
-                                                                    <!--end::Icon-->
-                                        
-                                                                    <!--begin::Title-->
-                                                                    <a class="text-gray-800 text-hover-danger fw-bold">{{item.ad}} {{item.soyad}}</a>
-                                                                    <!--end::Title-->
-                                                                </div>
-                                                                <!--end::Wrapper-->
-                                                            </div>
-                                                            <!--end::Info-->
-                                        
-                                                            <!--begin::Customer-->
-                                                            <div class="d-flex flex-stack">
-                                                                <!--begin::Name-->
-                                                                <span class="text-gray-500 fw-bold">Giriş-Çıkış:
-                                                                    <a class="text-gray-800 text-hover-danger fw-bold"> {{item.ggiris | date:'HH:mm:ss'}}-{{item.gcikis | date:'HH:mm:ss'}} </a>
-                                                                </span>
-                                                                <!--end::Name-->
-                                                                
-                                                            </div>
-                                                            <!--end::Customer-->
+                                                <div class="card shadow-lg border-0">
+                                                    <div class="card-body p-0 h-300px scroll-y">
+                                                        <table class="table table-hover mb-0 gx-2">
+                                                            <thead class="bg-light">
+                                                                <tr>
+                                                                    <th style="width: 300px">Personel</th>
+                                                                    <th>Hareketler</th>
+                                                                    <th class="text-center">İşlemler</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let employee of paginatedItems"
+                                                                    class="pointer-row"
+                                                                    >
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center gap-3">
+                                                                            <div class="avatar rounded-circle">
+                                                                                <img src="{{imageUrl}}?sicilid={{employee.sicilid}}"
+                                                                                    [alt]="employee.adsoyad"
+                                                                                    class="img-fluid rounded-circle"
+                                                                                    width="40" height="40" />
+                                                                            </div>
+                                                                            <div>
+                                                                                <p class="mb-0 fw-medium small">
+                                                                                    {{ employee.adsoyad }}</p>
+                                                                                <p class="mb-0 text-muted small">
+                                                                                    {{ employee.bolumad }} 
+                                                                                </p>
+                                                                                <p class="mb-0 text-muted small">
+                                                                                    {{ employee.pozisyonad }} 
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column align-items-start gap-1">
+                                                                            <span class="badge text-bg-{{ employee.ggiris ? 'primary' : 'secondary' }} small text-white">
+                                                                                {{ employee.ggiris ? 'Giriş' : '-'}} {{ employee.ggiris | date:'HH:mm:ss' }}
+                                                                            </span>
 
-                                                            <div class="col-6 d-flex flex-stack mt-2">
-                                                                <ng-container *ngIf="!isThereActivity(item)">
-                                                                    <!--begin::Label-->
-                                                                    <span class="badge badge-light-warning">Kayıt Yok</span>
-                                                                    <!--end::Label-->
-                                                                </ng-container>
+                                                                            <span class="badge text-bg-{{ employee.gcikis ? 'danger' : 'secondary' }} small text-white">
+                                                                                {{ employee.gcikis ? 'Çıkış' : '-'}} {{ employee.gcikis | date:'HH:mm:ss' }}
+                                                                            </span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <div class="d-flex flex-column align-items-center gap-2">
+                                                                            <button *ngIf="attendanceForm.get('formState')?.value == 2"
+                                                                                (click)="viewDetails(employee, 'change_direction')"
+                                                                                class="btn btn-outline-secondary btn-sm px-2 py-1">
+                                                                                <i class="fas fa-arrow-right me-1"></i>
+                                                                                Yön Değiştir
+                                                                            </button>
 
-                                                                <ng-container *ngIf="isThereActivity(item)">
-                                                                    <!--begin::Label-->
-                                                                    <span class="badge badge-light-danger">Kayıt Var!</span>
-                                                                    <!--end::Label-->
-                                                                </ng-container>
-                                                                
-                                                            </div>
-                                                            
-                                                            <!-- <div class="col-6 d-flex justify-content-end flex-stack mt-2" *ngIf="findDifferencesForPerson(item).length > 0">
-                                                                <span class="badge badge-light-info">Düzenlendi!</span>
-                                                            </div> -->
-                                                        </div>
-                                                    </ng-container>
+                                                                            <button *ngIf="attendanceForm.get('formState')?.value == 1"
+                                                                                (click)="viewDetails(employee, 'delete_movement')"
+                                                                                class="btn btn-outline-secondary btn-sm px-2 py-1">
+                                                                                <i class="fas fa-trash-alt me-1"></i>
+                                                                                Kaldır
+                                                                            </button>
+
+                                                                            <button class="btn btn-outline-secondary btn-sm px-2 py-1" (click)="viewDetails(employee, 'details')">
+                                                                                <i class="fas fa-eye me-1"></i>
+                                                                                Detay
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            <div class="col-12" >
-                                                
-                                                <!--begin::List widget 5-->
-                                               
 
-                                                <!-- Pagination -->
-                                                <nav *ngIf="paginatedItems.length > 0">
-                                                    <ul class="pagination cursor-pointer" *ngIf="totalPages > 1">
-                                                        <li class="page-item" [class.disabled]="currentPage === 1">
-                                                            <a class="page-link " (click)="changePage(currentPage - 1)"><span aria-hidden="true">&laquo;</span></a>
-                                                        </li>
-                                                        <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
-                                                            [class.active]="currentPage === i + 1">
-                                                            <a class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</a>
-                                                        </li>
-                                                        <li class="page-item" [class.disabled]="currentPage === totalPages">
-                                                            <a class="page-link" (click)="changePage(currentPage + 1)"><span aria-hidden="true">&raquo;</span></a>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
 
-                                            </div>
                                             
-                                            
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -213,20 +231,17 @@
                                 <div class="current">
                                     <div class="w-100">
                                         <div class="row">
-                                            <div class="col-12 mb-5" *ngIf="attendanceForm.get('formState')?.value == 0">
+                                            <div class="col-12 mb-5"
+                                                *ngIf="attendanceForm.get('formState')?.value == 0">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                     <span class="required">{{"Terminal" | translate}}</span>
                                                 </label>
 
-                                            
-                                                <p-select
-                                                    [options]="deviceList"
-                                                    formControlName="device"
+
+                                                <p-select [options]="deviceList" formControlName="device"
                                                     optionLabel="ad"
                                                     emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
-                                                    [filter]="true"
-                                                    filterBy="ad"
-                                                    [showClear]="true"
+                                                    [filter]="true" filterBy="ad" [showClear]="true"
                                                     placeholder="{{'Terminal_Seçiniz' | translate}}"
                                                     class="w-100 md:w-56">
                                                     <ng-template #selectedItem let-selected>
@@ -242,45 +257,53 @@
                                                 </p-select>
                                             </div>
 
-                                            <div class="col-6 my-5" *ngIf="(this.gridStartDate == this.gridEndDate && this.selectedEmployeesFromAttendance.length <= 1) && attendanceForm.get('formState')?.value == 0">
+                                            <div class="col-6 my-5"
+                                                *ngIf="(this.gridStartDate == this.gridEndDate && this.selectedEmployeesFromAttendance.length <= 1) && attendanceForm.get('formState')?.value == 0">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                     <span class="required">{{"Mesai_Tarihi" | translate}}</span>
                                                 </label>
-                            
+
                                                 <!-- <input type="date" class="form-control form-control-sm form-control-solid" formControlName="shiftDate"> -->
-                                                <p-datepicker formControlName="shiftDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
+                                                <p-datepicker formControlName="shiftDate" [readonlyInput]="true"
+                                                    dateFormat="yy-mm-dd" dataType="string" appendTo="body"
+                                                    placeholder="Tarih Seçiniz" />
                                             </div>
 
                                             <div class="col-6 my-5" *ngIf="attendanceForm.get('formState')?.value == 0">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                     <span class="required">{{"Saat" | translate}}</span>
                                                 </label>
-                            
+
                                                 <!-- <input type="time" class="form-control form-control-sm form-control-solid" formControlName="shiftTime"> -->
-                                                <p-datepicker formControlName="shiftTime" [timeOnly]="true" dataType="string" appendTo="body" placeholder="Saat Seçiniz"/>
+                                                <p-datepicker formControlName="shiftTime" [timeOnly]="true"
+                                                    dataType="string" appendTo="body" placeholder="Saat Seçiniz" />
                                             </div>
 
-                                            <div class="my-5 fv-plugins-icon-container" [ngClass]="{'col-6': this.gridStartDate != this.gridEndDate || this.selectedEmployeesFromAttendance.length > 1,
+                                            <div class="my-5 fv-plugins-icon-container"
+                                                [ngClass]="{'col-6': this.gridStartDate != this.gridEndDate || this.selectedEmployeesFromAttendance.length > 1,
                                                 'col-12':(this.gridStartDate == this.gridEndDate && this.selectedEmployeesFromAttendance.length <= 1) && attendanceForm.get('formState')?.value == 0}">
                                                 <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                     <span class="required">{{"Açıklama" | translate}}</span>
                                                 </label>
-        
-                                                <textarea class="form-control form-control-solid" rows="this.attendanceForm.get('formState')?.value != 0 ? 5 : 1" maxlength="500"
-                                                    formControlName="explanation"
+
+                                                <textarea class="form-control form-control-solid"
+                                                    rows="this.attendanceForm.get('formState')?.value != 0 ? 5 : 1"
+                                                    maxlength="500" formControlName="explanation"
                                                     placeholder="{{'Açıklama_Giriniz' | translate}}">
                                                 </textarea>
-                                                    <ng-container *ngIf="attendanceForm.controls['explanation']?.value">
-                                                        <div class="text-end">
-                                                            <span class="badge badge-light-danger">{{ attendanceForm.controls['explanation'].value.length }} / 500</span>
-                                                        </div>
-                                                    </ng-container>
+                                                <ng-container *ngIf="attendanceForm.controls['explanation']?.value">
+                                                    <div class="text-end">
+                                                        <span class="badge badge-light-danger">{{
+                                                            attendanceForm.controls['explanation'].value.length }} /
+                                                            500</span>
+                                                    </div>
+                                                </ng-container>
                                                 <div class="fv-plugins-message-container invalid-feedback"></div>
                                             </div>
                                         </div>
-                                        
 
-                                        
+
+
                                     </div>
                                 </div>
                             </ng-container>
@@ -288,45 +311,59 @@
                             <ng-container *ngIf="currentStep$.value == 4">
                                 <div class="border border-3 rounded-5" *ngIf="!isCompleted">
                                     <div class="row py-1 px-4">
-                                        
+
                                         <div class="col-12 d-flex justify-content-center pb-3">
-                                            <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Talep_Sahibi" | translate}}</span>
+                                            <span
+                                                class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Talep_Sahibi"
+                                                | translate}}</span>
                                         </div>
-                                        
-                                        <div class="col-12 d-flex justify-content-center  pb-3" *ngIf="this.authService.currentUserSubject | async as _user">
+
+                                        <div class="col-12 d-flex justify-content-center  pb-3"
+                                            *ngIf="this.authService.currentUserSubject | async as _user">
                                             <span class="text-gray-800 fs-6 fw-bolder">{{_user.adsoyad}}</span>
                                             <span class="text-muted fw-bold d-block fs-7"></span>
                                         </div>
-    
+
                                         <div class="separator mb-4"></div>
-    
+
                                         <!-- style="background-image: url(../../../../../assets/media/logos/Mediamodifier-Design-Template\ \(11\).png); background-repeat: no-repeat; background-size: contain; background-position: center;" -->
                                         <div>
                                             <div class="col-12 d-flex justify-content-center">
-                                                <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Mesai_Değişiklik_Talep_Formu" | translate}}</span>
+                                                <span
+                                                    class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Mesai_Değişiklik_Talep_Formu"
+                                                    | translate}}</span>
                                             </div>
-        
+
                                             <div class="col-12">
                                                 <div class="row text-center">
-                                            
+
                                                     <div class="col-12 py-2">
-                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"Seçilen_Terminal" | translate}}:</span>
-                                                        <span class="text-muted fw-bold d-block fs-7"> {{attendanceFormValues?.device?.ad}} </span>
-                                                    </div>
-                                                    
-                                                    <div class="col-12 py-2">
-                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"Tarih" | translate}}:</span>
-                                                        <span class="text-muted fw-bold d-block fs-7"> {{attendanceFormValues?.shiftDate || this.gridStartDate }} </span>
+                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"Seçilen_Terminal"
+                                                            | translate}}:</span>
+                                                        <span class="text-muted fw-bold d-block fs-7">
+                                                            {{attendanceFormValues?.device?.ad}} </span>
                                                     </div>
 
                                                     <div class="col-12 py-2">
-                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"Saat" | translate}}:</span>
-                                                        <span class="text-muted fw-bold d-block fs-7"> {{attendanceFormValues?.shiftTime}} </span>
+                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"Tarih" |
+                                                            translate}}:</span>
+                                                        <span class="text-muted fw-bold d-block fs-7">
+                                                            {{attendanceFormValues?.shiftDate || this.gridStartDate }}
+                                                        </span>
                                                     </div>
 
                                                     <div class="col-12 py-2">
-                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"Açıklama" | translate}}:</span>
-                                                        <span class="text-muted fw-bold d-block fs-7"> {{attendanceFormValues?.explanation}} </span>
+                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"Saat" |
+                                                            translate}}:</span>
+                                                        <span class="text-muted fw-bold d-block fs-7">
+                                                            {{attendanceFormValues?.shiftTime}} </span>
+                                                    </div>
+
+                                                    <div class="col-12 py-2">
+                                                        <span class="text-gray-800  fs-6 fw-bolder">{{"Açıklama" |
+                                                            translate}}:</span>
+                                                        <span class="text-muted fw-bold d-block fs-7">
+                                                            {{attendanceFormValues?.explanation}} </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -340,7 +377,8 @@
                                         <div class="table-responsive scroll h-350px">
                                             <table class="table table-hover table-rounded border gy-2 gs-2">
                                                 <thead class="sticky-top bg-white">
-                                                    <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                    <tr
+                                                        class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                                         <th>Ad</th>
                                                         <th>Soyad</th>
                                                         <th class="text-center">Talep Durumu</th>
@@ -348,7 +386,8 @@
                                                 </thead>
                                                 <tbody>
                                                     <ng-container *ngFor="let item of selectedEmployeesFromAttendance">
-                                                        <tr [ngClass]="{'bg-light-danger' : item.sonuc != 1, 'bg-light-success' : item.sonuc == 1}">
+                                                        <tr
+                                                            [ngClass]="{'bg-light-danger' : item.sonuc != 1, 'bg-light-success' : item.sonuc == 1}">
                                                             <td class="fw-bold">{{item.ad}}</td>
                                                             <td class="fw-bold">{{item.soyad}}</td>
                                                             <ng-container *ngIf="item.sonuc == 1">
@@ -377,8 +416,7 @@
                         <div class="d-flex flex-stack pt-0">
                             <div class="mr-2">
                                 <ng-container *ngIf=" 4 > currentStep$.value && currentStep$.value > 1">
-                                    <button type="button" class="btn btn-sm btn-light-danger me-3"
-                                        (click)="prevStep()">
+                                    <button type="button" class="btn btn-sm btn-light-danger me-3" (click)="prevStep()">
                                         <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
                                             class="svg-icon svg-icon-4 me-1"></span>
                                         {{"Geri" | translate}}
@@ -397,13 +435,11 @@
                             <ng-container *ngIf="currentStep$.value !== formsCount">
                                 <div>
                                     <ng-container *ngIf="currentStep$.value < formsCount - 1">
-                                        <button type="button" class="btn btn-sm btn-danger me-3"
-                                            (click)="nextStep()">
+                                        <button type="button" class="btn btn-sm btn-danger me-3" (click)="nextStep()">
                                             <span class="indicator-label">
                                                 {{"İleri" | translate}}
                                                 {{""}}
-                                                <span
-                                                    [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
+                                                <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
                                                     class="svg-icon svg-icon-3 ms-2 me-0"></span>
                                                 <ng-container *ngIf="currentStep$.value === formsCount - 1">
                                                     {{"Gönder" | translate}}
@@ -418,7 +454,7 @@
                                                 <ng-container *ngIf="isCompleted">
                                                     {{"Kapat" | translate}}
                                                 </ng-container>
-                                                
+
                                                 <ng-container *ngIf="!isCompleted">
                                                     {{"İptal" | translate}}
                                                 </ng-container>
@@ -426,13 +462,14 @@
                                         </button>
 
                                         <ng-container *ngIf="!isCompleted">
-                                            <button type="button" class="btn btn-sm btn-danger me-3" (click)="getFormValues()">
+                                            <button type="button" class="btn btn-sm btn-danger me-3"
+                                                (click)="getFormValues()">
                                                 <span class="indicator-label">
                                                     {{"Gönder" | translate}}
                                                 </span>
                                             </button>
                                         </ng-container>
-                                        
+
 
                                     </ng-container>
 
@@ -495,7 +532,7 @@
                     </h3>
                 </div>
                 <!--end::Header-->
-        
+
                 <!--begin::Body-->
                 <div class="card-body pt-5 scroll h-500px">
                     <!--begin::Item-->
@@ -504,28 +541,31 @@
                             <!--begin::Symbol-->
                             <div class="symbol symbol-60px symbol-2by3 flex-shrink-0 me-4">
                                 <span class="symbol-label">
-                                    <img src="/metronic8/demo1/assets/media/svg/brand-logos/plurk.svg" class="h-50 align-self-center" alt="">
-        
+                                    <img src="/metronic8/demo1/assets/media/svg/brand-logos/plurk.svg"
+                                        class="h-50 align-self-center" alt="">
+
                                 </span>
                             </div>
                             <!--end::Symbol-->
-            
+
                             <!--begin::Section-->
-                            <div class="d-flex align-items-center flex-wrap flex-grow-1 mt-n2 mt-lg-n1" >
+                            <div class="d-flex align-items-center flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                 <!--begin::Title-->
                                 <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3 col-10">
-                                    <a  class="fs-5 text-gray-800 text-hover-danger fw-bold">{{item.zaman | date: 'yyyy-MM-dd HH:mm:ss'}}</a>
-            
+                                    <a class="fs-5 text-gray-800 text-hover-danger fw-bold">{{item.zaman | date:
+                                        'yyyy-MM-dd HH:mm:ss'}}</a>
+
                                     <span class="text-gray-500 fw-semibold fs-7 my-1">{{item.terminal}}</span>
-            
+
                                     <span class="text-gray-500 fw-semibold fs-7">
-                                        By: <a  class="text-danger fw-bold">{{item.adsoyad}}</a>
+                                        By: <a class="text-danger fw-bold">{{item.adsoyad}}</a>
                                     </span>
-    
-                                    <span class="text-gray-500 fw-semibold fs-7 my-1">{{getRecordStatusMessage(item)}}</span>
+
+                                    <span
+                                        class="text-gray-500 fw-semibold fs-7 my-1">{{getRecordStatusMessage(item)}}</span>
                                 </div>
                                 <!--end::Title-->
-            
+
                                 <!--begin::Info-->
                                 <div class="text-end py-lg-0 py-2">
                                     <span class=" fw-bolder fs-3" [ngClass]="{
@@ -534,24 +574,25 @@
                                         }">
                                         {{textIO(item.pdks)}}
                                     </span>
-        
-            
-                                    <span class="text-gray-500 fs-7 fw-semibold d-block">{{isThereTampering(item)}}</span>
+
+
+                                    <span
+                                        class="text-gray-500 fs-7 fw-semibold d-block">{{isThereTampering(item)}}</span>
                                 </div>
                                 <!--end::Info-->
                             </div>
                             <!--end::Section-->
                         </div>
-                    </ng-container>                
+                    </ng-container>
                     <!--end::Item-->
-        
+
                 </div>
                 <!--end::Body-->
             </div>
             <!--end::List Widget 9-->
         </div>
     </ng-container>
-    
+
 
     <div class="container mt-5">
         <div class="row d-flex justify-content-center mb-3" *ngFor="let item of personActivityTemp; let i = index">
@@ -561,40 +602,41 @@
                         <div class="symbol symbol-circle symbol-40px"
                             [ngClass]="{'bg-success': item.pdks == 1, 'bg-danger': item.pdks == 2}">
                             <i class="fa-solid fs-3 p-3 text-white"
-                               [ngClass]="{'fa-right-to-bracket': item.pdks == 1, 'fa-right-from-bracket': item.pdks == 2}"></i>
+                                [ngClass]="{'fa-right-to-bracket': item.pdks == 1, 'fa-right-from-bracket': item.pdks == 2}"></i>
                         </div>
                     </div>
-                    <div class="col-12 d-flex justify-content-center align-items-center" *ngIf="personActivityTemp.length > 1">
-                        <div class="border border-1 border-gray-500 rounded time-line-border" [style.height.px]="getLineHeight(item)" [ngClass]="{'line-border-expanded': item.isShow}"></div>
+                    <div class="col-12 d-flex justify-content-center align-items-center"
+                        *ngIf="personActivityTemp.length > 1">
+                        <div class="border border-1 border-gray-500 rounded time-line-border"
+                            [style.height.px]="getLineHeight(item)" [ngClass]="{'line-border-expanded': item.isShow}">
+                        </div>
                     </div>
                 </div>
             </div>
-    
-            <div class="col-10 d-flex align-items-center border border-2 rounded px-5" [ngClass]="getClassForValue(item)">
+
+            <div class="col-10 d-flex align-items-center border border-2 rounded px-5"
+                [ngClass]="getClassForValue(item)">
                 <div class="row w-100">
                     <ng-container *ngIf="!item.isFlipping">
                         <div class="col-1 bg-hover-light-danger text-dark text-hover-danger fw-semibold cursor-pointer p-0 m-0 rot-btn"
-                            style="border-radius: 0 20px 20px 0;"
-                            *ngIf="attendanceForm.get('formState')?.value == 2"
+                            style="border-radius: 0 20px 20px 0;" *ngIf="attendanceForm.get('formState')?.value == 2"
                             [ngClass]="{
                                 'bg-white': item.deleted !== 0 && !item.undelete,
                                 'bg-secondary': item.deleted === 0 || item.undelete,
                                 'rot-btn-expanded': item.isShow
-                            }"
-                            [style.height.px]="getRotBtnHeight(item)" (click)="changeRotateActivity(item)">
+                            }" [style.height.px]="getRotBtnHeight(item)" (click)="changeRotateActivity(item)">
                             <i class="fa-solid fa-arrows-rotate text-dark mx-2 fs-7"></i>
                             {{'Yön Değiştir' | translate}}
                         </div>
-                    
+
                         <div class="col-1 bg-hover-light-danger text-dark text-hover-danger fw-semibold cursor-pointer p-0 m-0 rot-btn"
-                        style="border-radius: 0 20px 20px 0;"
-                            *ngIf="attendanceForm.get('formState')?.value == 1 && (item.deleted === 0 || item.undelete)" 
+                            style="border-radius: 0 20px 20px 0;"
+                            *ngIf="attendanceForm.get('formState')?.value == 1 && (item.deleted === 0 || item.undelete)"
                             [ngClass]="{
                                 'bg-white': item.deleted !== 0 && !item.undelete,
                                 'bg-secondary': item.deleted === 0 || item.undelete,
                                 'rot-btn-expanded': item.isShow
-                            }"
-                            [style.height.px]="getRotBtnHeight(item)" (click)="removeActivity(item)">
+                            }" [style.height.px]="getRotBtnHeight(item)" (click)="removeActivity(item)">
                             <i class="fa-solid fa-trash text-dark mx-2 fs-7"></i>
                             {{'Kaldır' | translate}}
                         </div>
@@ -606,20 +648,18 @@
                                 'bg-white': item.deleted !== 0 && !item.undelete,
                                 'bg-secondary': item.deleted === 0 || item.undelete,
                                 'rot-btn-expanded': item.isShow
-                            }"
-                            [style.height.px]="getRotBtnHeight(item)" (click)="repairActivity(item)">
+                            }" [style.height.px]="getRotBtnHeight(item)" (click)="repairActivity(item)">
                             <i class="fa-solid fa-screwdriver-wrench text-dark mx-2 fs-7"></i>
                             {{'Aktif_Et' | translate}}
                         </div>
 
-                        
+
                     </ng-container>
 
 
                     <ng-container *ngIf="item.isFlipping">
                         <div class="col-1 bg-hover-light-danger text-dark text-hover-danger fw-semibold rounded cursor-pointer p-0 m-0 rot-btn disabled placeholder"
-                            *ngIf="attendanceForm.get('formState')?.value == 2"
-                            [ngClass]="{
+                            *ngIf="attendanceForm.get('formState')?.value == 2" [ngClass]="{
                                 'bg-white': item.deleted !== 0 && !item.undelete,
                                 'bg-secondary': item.deleted === 0 || item.undelete,
                                 'rot-btn-expanded': item.isShow
@@ -627,10 +667,9 @@
                             <i class="fa-solid fa-arrows-rotate text-dark my-2 fs-7"></i>
                             {{'Yön Değiştir' | translate}}
                         </div>
-                        
+
                         <div class="col-1 bg-hover-light-danger text-hover-danger fw-semibold rounded cursor-pointer p-0 m-0 rot-btn disabled placeholder"
-                            *ngIf="attendanceForm.get('formState')?.value == 1"
-                            [ngClass]="{
+                            *ngIf="attendanceForm.get('formState')?.value == 1" [ngClass]="{
                                 'bg-white text-white': item.deleted !== 0 && !item.undelete,
                                 'bg-secondary text-dark': item.deleted === 0 || item.undelete,
                                 'rot-btn-expanded': item.isShow
@@ -640,10 +679,11 @@
                         </div>
                     </ng-container>
 
-                    
-    
+
+
                     <div class="col-10 d-flex align-items-center">
-                        <div class="row" [ngClass]="{'placeholder-glow d-flex justify-content-between w-100': item.isFlipping}">
+                        <div class="row"
+                            [ngClass]="{'placeholder-glow d-flex justify-content-between w-100': item.isFlipping}">
                             <ng-container *ngIf="!item.isFlipping">
                                 <div class="col-6 d-flex align-items-center ">
                                     <span class="fs-4" [ngClass]="{
@@ -698,67 +738,83 @@
                                 <div class="col-12 expandable" [ngClass]="{'expanded': item.isShow}">
                                     <div class="row mx-5 my-2">
                                         <div class="col-12" *ngIf="item.insert.length > 0">
-                                            <span class="fw-bold fs-4" [ngClass]="{'text-dark': item.deleted !== 0 && !item.undelete}">{{"Kayıt_Ekleme" | translate}}</span>
+                                            <span class="fw-bold fs-4"
+                                                [ngClass]="{'text-dark': item.deleted !== 0 && !item.undelete}">{{"Kayıt_Ekleme"
+                                                | translate}}</span>
                                         </div>
-                                        <div class="col-12 mx-6 d-flex align-items-center " *ngFor="let insert of item.insert">
+                                        <div class="col-12 mx-6 d-flex align-items-center "
+                                            *ngFor="let insert of item.insert">
                                             <span class="bullet bg-danger me-3"></span>
-                                            <span class="text-gray-400">{{insert.insertEden}} ({{insert.insertTarihi}})</span>
+                                            <span class="text-gray-400">{{insert.insertEden}}
+                                                ({{insert.insertTarihi}})</span>
                                         </div>
                                         <div class="col-12" *ngIf="item.update.length > 0">
-                                            <span class="fw-bold fs-4" [ngClass]="{'text-dark': item.deleted !== 0 && !item.undelete}">{{"Kayıt_Güncelleme" | translate}}</span>
+                                            <span class="fw-bold fs-4"
+                                                [ngClass]="{'text-dark': item.deleted !== 0 && !item.undelete}">{{"Kayıt_Güncelleme"
+                                                | translate}}</span>
                                         </div>
-                                        <div class="col-12 mx-6 d-flex align-items-center " *ngFor="let update of item.update">
+                                        <div class="col-12 mx-6 d-flex align-items-center "
+                                            *ngFor="let update of item.update">
                                             <span class="bullet bg-danger me-3"></span>
-                                            <span class="text-gray-400">{{update.insertEden}} ({{update.insertTarihi}})</span>
+                                            <span class="text-gray-400">{{update.insertEden}}
+                                                ({{update.insertTarihi}})</span>
                                         </div>
                                     </div>
-                                </div>    
+                                </div>
                             </ng-container>
-                            
+
 
                             <ng-container *ngIf="item.isFlipping">
                                 <div class="col-6 d-flex align-items-center placeholder" style="width: 25%;"></div>
 
-                                <div class="col-6 d-flex align-items-end justify-content-end placeholder" style="width: 40%;"></div>
+                                <div class="col-6 d-flex align-items-end justify-content-end placeholder"
+                                    style="width: 40%;"></div>
 
                                 <div class="col-6 d-flex align-items-center my-1 placeholder" style="width: 49%;"></div>
 
-                                <div class="col-6 d-flex align-items-center justify-content-end my-1 placeholder" style="width: 36%;"></div>
+                                <div class="col-6 d-flex align-items-center justify-content-end my-1 placeholder"
+                                    style="width: 36%;"></div>
 
                                 <div class="col-5 mt-3 placeholder" style="width: 40%;"></div>
 
-                                <div class="col-7 mt-3 d-flex justify-content-end align-items-end placeholder" style="width: 44%;"></div>
+                                <div class="col-7 mt-3 d-flex justify-content-end align-items-end placeholder"
+                                    style="width: 44%;"></div>
 
                                 <div class="col-12 expandable" [ngClass]="{'expanded': item.isShow}">
                                     <div class="row mx-5 my-2">
-                                        <div class="col-12 placeholder" style="width: 40%;" *ngIf="item.insert.length > 0" >
+                                        <div class="col-12 placeholder" style="width: 40%;"
+                                            *ngIf="item.insert.length > 0">
                                             <span class="fw-bold fs-4">{{"Kayıt_Ekleme" | translate}}</span>
                                         </div>
 
-                                        <div class="col-12 mx-6 d-flex align-items-center placeholder" style="width: 40%;" *ngFor="let insert of item.insert"></div>
+                                        <div class="col-12 mx-6 d-flex align-items-center placeholder"
+                                            style="width: 40%;" *ngFor="let insert of item.insert"></div>
 
-                                        <div class="col-12 placeholder" style="width: 40%;" *ngIf="item.update.length > 0" >
+                                        <div class="col-12 placeholder" style="width: 40%;"
+                                            *ngIf="item.update.length > 0">
                                             <span class="fw-bold fs-4">{{"Kayıt_Güncelleme" | translate}}</span>
                                         </div>
 
-                                        <div class="col-12 mx-6 d-flex align-items-center placeholder" style="width: 40%;" *ngFor="let update of item.update"></div>
+                                        <div class="col-12 mx-6 d-flex align-items-center placeholder"
+                                            style="width: 40%;" *ngFor="let update of item.update"></div>
                                     </div>
                                 </div>
                             </ng-container>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-      
-    
+
+
 
 
 
     <ng-template pTemplate="footer">
-        <a (click)="resetChanges()" class="btn btn-sm btn-danger ms-2" *ngIf="attendanceForm.get('formState')?.value != 0">
+        <a (click)="resetChanges()" class="btn btn-sm btn-danger ms-2"
+            *ngIf="attendanceForm.get('formState')?.value != 0">
             <i class="fa-solid fa-rotate-right fs-7"></i>
             {{'Sıfırla' | translate}}
         </a>
@@ -768,3 +824,17 @@
         </a>
     </ng-template>
 </p-dialog>
+
+
+<ng-container *ngIf="displayAction">
+    <app-attendance-action
+        [display]="displayAction"
+        [selectedAction]="selectedAction"
+        (closeEvent)="displayAction = false"
+        [imageUrl]="imageUrl"
+        [employee]="selectedEmployee"
+        
+    />
+</ng-container>
+
+
