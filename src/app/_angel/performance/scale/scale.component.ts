@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { PerformanceService } from '../performance.service';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { Scale } from '../models/scale';
 import { ToastrService } from 'ngx-toastr';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-scale',
@@ -12,7 +13,9 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./scale.component.scss']
 })
 
-export class ScaleComponent {
+export class ScaleComponent implements OnInit,OnDestroy{
+
+  private ngUnsubscribe = new Subject();
   scaleName: string = '';
   selectedCount: number = 0;
   answers: any[] = [null, null, null, null, null];
@@ -84,7 +87,7 @@ export class ScaleComponent {
       direction: this.direction
     };
 
-    this.perform.setScale(scale).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+    this.perform.setScale(scale).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
       const result = response[0].x[0].islemsonuc;
       console.log("setScale:", result);
       if(result == 1){
@@ -102,7 +105,7 @@ export class ScaleComponent {
   }
 
   getScale(id: number) {
-    this.perform.getScale(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.perform.getScale(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.scaleList = response[0]?.x ?? [];
       console.log("getScale:", this.scaleList);
       this.ref.detectChanges();
@@ -123,7 +126,7 @@ export class ScaleComponent {
       direction: this.direction
     };
 
-    this.perform.updateScale(scale).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+    this.perform.updateScale(scale).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
       const result = response[0].x[0].islemsonuc;
       console.log("updateScale:", result);
       if(result == 1){
@@ -149,7 +152,7 @@ export class ScaleComponent {
   //   this.direction = scale.direction;
   // }
   deleteScale(){
-    this.perform.deleteScale(this.selectedScaleId ?? 0).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+    this.perform.deleteScale(this.selectedScaleId ?? 0).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
       const result = response[0].x[0].islemsonuc;
       if(result == 1){
         this.toastrService.success(
@@ -163,5 +166,9 @@ export class ScaleComponent {
       this.ref.detectChanges();
     });
   }
-
+  
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
+  }
 }

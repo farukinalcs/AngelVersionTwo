@@ -9,7 +9,6 @@ import { ChangeDetectionStrategy } from '@angular/core';
 })
 export class PatroldefinitionsComponent implements OnInit, OnDestroy{
   activeWidget: number = 1;
-
     constructor(
       private ref : ChangeDetectorRef
     ) { }

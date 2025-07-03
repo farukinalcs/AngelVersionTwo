@@ -17,14 +17,16 @@
                 <div class="p-field">
                     <label for="countSelect">Hangi Kategori</label>
                     <p-dropdown [options]="categoryList" [(ngModel)]="selectedCategoryId" optionLabel="Ad"
-                        optionValue="Id" placeholder="Seçiniz" (onChange)="onCategoryChange($event.value)" class="full-width-input">
+                        optionValue="Id" placeholder="Seçiniz" (onChange)="onCategoryChange($event.value)" class="full-width-input"
+                        [appendTo]="'body'" [panelStyle]="{ width: '100%' }" >
                     </p-dropdown>
                 </div>
     
                 <div class="p-field">
                     <label for="countSelect">Scale seçimi</label>
                     <p-dropdown [options]="scaleList" [(ngModel)]="selectedScaleId" optionLabel="ad"
-                        optionValue="id" placeholder="Seçiniz"  (onChange)="onScaleChange($event.value)" class="full-width-input">
+                        optionValue="id" placeholder="Seçiniz"  (onChange)="onScaleChange($event.value)" class="full-width-input"
+                        [appendTo]="'body'" [panelStyle]="{ width: '100%' }" >
                     </p-dropdown>
                 </div>
          
@@ -46,7 +48,8 @@
                             <div class="p-field">
                                 <label for="countSelect">Soru seçimi</label>
                                 <p-dropdown [options]="questionList" [(ngModel)]="selectedQuestionId" optionLabel="aciklama"
-                                    optionValue="id" placeholder="Seçiniz" (onChange)="onQuestionChange($event.value)" class="full-width-input">
+                                    optionValue="id" placeholder="Seçiniz" (onChange)="onQuestionChange($event.value)" class="full-width-input"
+                                    [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
                                 </p-dropdown>
                             </div>
 
@@ -61,14 +64,16 @@
                                 <div class="p-field">
                                     <label for="countSelect">Hangi Kategori</label>
                                     <p-dropdown [options]="categoryList" [(ngModel)]="selectedCategoryId" optionLabel="Ad"
-                                        optionValue="Id" placeholder="Seçiniz" (onChange)="onCategoryChange($event.value)" class="full-width-input">
+                                        optionValue="Id" placeholder="Seçiniz" (onChange)="onCategoryChange($event.value)" class="full-width-input"
+                                        [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
                                     </p-dropdown>
                                 </div>
                     
                                 <div class="p-field">
                                     <label for="countSelect">Hangi Ölçek</label>
                                     <p-dropdown [options]="scaleList" [(ngModel)]="selectedScaleId" optionLabel="ad"
-                                        optionValue="id" placeholder="Seçiniz"  (onChange)="onScaleChange($event.value)" class="full-width-input">
+                                        optionValue="id" placeholder="Seçiniz"  (onChange)="onScaleChange($event.value)" class="full-width-input"
+                                        [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
                                     </p-dropdown>
                                 </div>
 

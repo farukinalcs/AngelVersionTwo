@@ -13,11 +13,12 @@ import { TableModule } from 'primeng/table';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SliderModule } from 'primeng/slider';
 import { FormsModule } from '@angular/forms';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-survey-in-house',
   standalone: true,
-  imports: [CommonModule,TranslateModule,MatTabsModule,DialogModule,TableModule,RadioButtonModule,SliderModule,FormsModule],
+  imports: [CommonModule,TranslateModule,MatTabsModule,DialogModule,TableModule,RadioButtonModule,SliderModule,FormsModule,TooltipModule],
   templateUrl: './survey-in-house.component.html',
   styleUrl: './survey-in-house.component.scss'
 })
@@ -209,6 +210,15 @@ export class SurveyInHouseComponent implements OnInit, OnDestroy  {
       }
       
     
+      getTooltipText(item: any): string {
+        if (item.durum == 1) {
+            return "Tamamlandı";
+        } else if(item.durum == 99) {
+            return 'Devam ediyor';
+        }else{
+          return 'Başlanmadı'
+        }
+    }
       // getDropdownOptionsForQuestion(question: any) {
       //   const scale = this.getScaleByQuestion(question);
       //   if (!scale) return [];

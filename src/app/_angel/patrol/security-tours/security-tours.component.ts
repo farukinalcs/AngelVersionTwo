@@ -4,7 +4,7 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-security-tours',
@@ -50,7 +50,7 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
 
   setGuardTour(): void {
     if (this.tourNameInput != '') {
-      this.patrol.setGuardTour(this.tourNameInput).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      this.patrol.setGuardTour(this.tourNameInput).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         const responsee = response[0].x;
         console.log("setGuardTour:", responsee);
         this.getGuardTour();
@@ -66,7 +66,7 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
   deleteGuardTour(tour: any): void {
     this.selectedTour = tour;
     this.selectTourId = tour.id;
-    this.patrol.deleteGuardTour(this.selectTourId).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.patrol.deleteGuardTour(this.selectTourId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       const responsee = response[0].x;
       console.log("deleteGuardTour:", responsee);
       this.getGuardTour();
@@ -74,7 +74,7 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
   }
 
   getGuardTour(): void {
-    this.patrol.getGuardTour('0').subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.patrol.getGuardTour('0').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.tourList = response[0].x;
       this.filteredTours = [...this.tourList];
       console.log("getGuardTour:", this.tourList);
@@ -85,7 +85,7 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
   }
 
   getGuardStation(): void {
-    this.patrol.getGuardStation('-1').subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.patrol.getGuardStation('-1').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.allStation = response[0].x;
       this.filteredStations = [...this.allStation];
       // console.log("getGuardStation:", this.allStation);
@@ -96,7 +96,7 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
 
   getGuardStationForTour(turid: string) {
     /* Tur a ait olan istasyonlar   */
-    this.patrol.getGuardStation(turid).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.patrol.getGuardStation(turid).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.targetList = response[0].x;
       this.filteredTargets = [...this.targetList];
       this.ref.detectChanges();
@@ -116,7 +116,7 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
     if (this.selectTourId != 0) {
       const exists = this.targetList.some(item => item.id === station.id);
       if (!exists) {
-        this.patrol.relation_i(station.id, this.selectTourId).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+        this.patrol.relation_i(station.id, this.selectTourId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
           this.targetList = response[0].x;
           this.filteredTargets = [...this.targetList];
           this.ref.detectChanges();
@@ -144,7 +144,7 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
     console.log("deleteTourStation:", item);
     if (id !== undefined) {
 
-      this.patrol.relation_d(id, hedefid).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      this.patrol.relation_d(id, hedefid).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         this.targetList = response[0].x;
         this.filteredTargets = [...this.targetList];
         console.log("deleteTourStation: TARGET", this.targetList);
@@ -157,7 +157,7 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
       console.log("kaynakid:", kaynakid);
       console.log("hedefid:", hedefid);
       console.log("Station:", item);
-      this.patrol.relation_d(kaynakid, hedefid).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      this.patrol.relation_d(kaynakid, hedefid).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         this.targetList = response[0].x;
         this.filteredTargets = [...this.targetList];
         console.log("deleteTourStation:", this.targetList);
