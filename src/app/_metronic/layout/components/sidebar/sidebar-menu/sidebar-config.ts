@@ -140,9 +140,20 @@ export const MENU: MenuItem[] = [
             { title: 'Genel Bakış', routerLink: 'patrol/dashboard' },
             { title: 'Güvenlikçiler', routerLink: 'patrol/guvenlikciler' },
             { title: 'Tanımlamalar', routerLink: 'patrol/tanimlamalar' },
-            { title: 'Raporlar', routerLink: 'patrol/raporlar' }
+            // { title: 'Raporlar', routerLink: 'patrol/raporlar' }
         ],
         app: ['2']
+    },
+    {
+        title: 'Performans Yönetimi',
+        icon: 'fa-solid fa-paste text-danger',
+        children: [
+            { title: 'Genel Bakış', routerLink: 'performance/dashboard' },
+            { title: 'Tanımlamalar', routerLink: 'performance/tanimlamalar' },
+            // { title: 'Tanımlamalar', routerLink: 'patrol/tanimlamalar' },
+            // { title: 'Raporlar', routerLink: 'patrol/raporlar' }
+        ],
+        app: ['3']
     }
 ];
 

@@ -20,13 +20,13 @@
 <ng-container *ngIf="this.helperService.loginOptions.appcode == '1'">
   <app-sidebar-menu class="app-sidebar-menu overflow-hidden flex-column-fluid"></app-sidebar-menu> 
 </ng-container> -->
+<app-sidebar-menu class="app-sidebar-menu overflow-hidden flex-column-fluid"></app-sidebar-menu>
 
-
-<ng-container [ngSwitch]="helperService.loginOptions.appcode">
+<!-- <ng-container [ngSwitch]="helperService.loginOptions.appcode">
   <app-sidebar-menu class="app-sidebar-menu overflow-hidden flex-column-fluid" *ngSwitchCase="'1'"></app-sidebar-menu>
   <app-sidebar-menu-patrol class="app-sidebar-menu overflow-hidden flex-column-fluid" *ngSwitchCase="'2'"></app-sidebar-menu-patrol>
   <app-sidebar-menu-performance class="app-sidebar-menu overflow-hidden flex-column-fluid" *ngSwitchCase="'3'"></app-sidebar-menu-performance>
-</ng-container>
+</ng-container> -->
 
 <!--end::sidebar menu-->
 
