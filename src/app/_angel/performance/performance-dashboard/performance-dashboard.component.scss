@@ -64,3 +64,25 @@
     padding-top: 5px;
     padding-bottom: 5px;
   }
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .form-group p-checkbox {
+    margin-right: 0.5rem;
+  }
+  
+  .form-group label {
+    min-width: 60px; /* label genişliği ayarlanabilir */
+  }
+  
+  .form-group p-datepicker {
+    width: 200px; /* datepicker genişliği */
+  }
+
+  .btn-right {
+    float: right;
+    margin-top: 1rem; /* İstersen biraz üst boşluk */
+  }

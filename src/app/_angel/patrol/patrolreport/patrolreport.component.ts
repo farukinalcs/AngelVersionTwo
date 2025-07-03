@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-patrolreport',
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './patrolreport.component.scss'
 })
 export class PatrolreportComponent {
-
+  private ngUnsubscribe = new Subject();
 }

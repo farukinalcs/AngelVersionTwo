@@ -8,7 +8,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { SharedModule } from '../shared/shared.module';
-import { PerformanceformStepsComponent } from './performanceform-steps/performanceform-steps.component';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { PerformanceDefinitionsComponent } from './performance-definitions/performance-definitions.component';
@@ -28,18 +27,15 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ChipModule } from 'primeng/chip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DatePickerModule } from 'primeng/datepicker';
-import { TestsurveyComponent } from './testsurvey/testsurvey.component';
 import { AccordionModule } from 'primeng/accordion';
 @NgModule({
   declarations: [
     PerformanceDashboardComponent,
-    PerformanceformStepsComponent,
     PerformanceDefinitionsComponent,
     PerformanceQuestionCategoryComponent,
     ScaleComponent,
     CompetenceQuestionsComponent,
-    DraftComponent,
-    TestsurveyComponent],
+    DraftComponent],
 
   imports: [
     CommonModule,

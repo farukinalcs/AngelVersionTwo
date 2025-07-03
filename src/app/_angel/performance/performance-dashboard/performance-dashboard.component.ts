@@ -1,17 +1,20 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { PerformanceService } from '../performance.service';
 import { ToastrService } from 'ngx-toastr';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { formatDate } from '@angular/common';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-performance-dashboard',
   templateUrl: './performance-dashboard.component.html',
   styleUrl: './performance-dashboard.component.scss'
 })
-export class PerformanceDashboardComponent {
+export class PerformanceDashboardComponent implements OnInit, OnDestroy {
+
+  private ngUnsubscribe = new Subject();
 
   @Input() isFromAttendance: boolean;
 
@@ -27,8 +30,7 @@ export class PerformanceDashboardComponent {
   categoryS: any[] = [];
   questionS: any[] = [];
   scaleS: any[] = [];
-
-  sicilGroup:any[] = [];
+  sicilGroup: any[] = [];
 
   quesPuan: any;
   catPuan: any
@@ -88,7 +90,7 @@ export class PerformanceDashboardComponent {
   }
 
   form_s(id: number) {
-    this.perform.form_s(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.perform.form_s(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.formList = response[0]?.x ?? [];
       console.log("form_s:", this.formList);
       this.ref.detectChanges();
@@ -97,7 +99,7 @@ export class PerformanceDashboardComponent {
 
   forms_Detail(id: number){
     console.log("KAAAÇ",id);
-    this.perform.form_s(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.perform.form_s(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.formDetail = response[0]?.x ?? [];
       console.log("formDetail:", this.formDetail);
   
@@ -163,7 +165,7 @@ export class PerformanceDashboardComponent {
 
   editCategory(cat: any) {
     // this.selectedCategoryId = cat.Id;
-    this.perform.edit_Category(this.selectedFormId ?? 0, cat.Id ?? 0, cat.kategoripuan).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+    this.perform.edit_Category(this.selectedFormId ?? 0, cat.Id ?? 0, cat.kategoripuan).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
       const result = response[0].x[0].islemsonuc;
       console.log("editCategory:", result);
       if (result == 1) {
@@ -207,10 +209,11 @@ export class PerformanceDashboardComponent {
     console.log('Event Value:', event.value);
   }
 
-  getSicilGroups(){
-    this.perform.getSicilGroups().subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
-      this.sicilGroup = response[0].x;
-      console.log("getSicilGroups:", this.sicilGroup );
+  getSicilGroups() {
+    this.perform.getSicilGroups().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+      const result = response?.[0]?.x;
+      this.sicilGroup = Array.isArray(result) ? result : [];
+      console.log("getSicilGroups:", result );
       this.ref.detectChanges();
     });
   }
@@ -239,7 +242,7 @@ export class PerformanceDashboardComponent {
     console.log("6",this.startDateStr)
     console.log("7",this.endDateStr)
     if(this.isValid){
-      this.perform.formMatchSicil(this.selectedFormId ?? 0,this.selectedSicilGroupId ?? 0,this.as,this.us,this.myself,this.startDateStr,this.endDateStr).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+      this.perform.formMatchSicil(this.selectedFormId ?? 0,this.selectedSicilGroupId ?? 0,this.as,this.us,this.myself,this.startDateStr,this.endDateStr).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
         const result = response;
         console.log("formMatchSicil:", result );
         this.ref.detectChanges();
@@ -252,26 +255,9 @@ export class PerformanceDashboardComponent {
     
   }
 
-  formMatchSicil2(){
-    console.log("1",this.selectedFormId)
-    console.log("2",this.selectedSicilGroupId)
-    console.log("3",this.as)
-    console.log("4",this.us)
-    console.log("5",this.myself)
-    console.log("6",this.startDateStr)
-    console.log("7",this.endDateStr)
-    if(this.isValid){
-      this.perform.formMatchSicil(4,0,1,1,1,"2025-06-25","2025-06-30").subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
-        const result = response;
-        console.log("formMatchSicil:", result );
-        this.ref.detectChanges();
-      });
-    }else {
-      this.toastrService.error(
-        "Lütfen Formun Kimin Tarafından Cevaplanacağını Seçiniz");
-    }
-
-    
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
   }
 
 }

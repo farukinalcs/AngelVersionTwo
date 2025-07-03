@@ -244,7 +244,8 @@
                             <div class="p-field">
                                 <label for="countSelect">Scale seçimi</label>
                                 <p-dropdown [options]="scaleList" [(ngModel)]="selectedScaleId" optionLabel="ad"
-                                    optionValue="id" placeholder="Seçiniz"  (onChange)="onScaleChange($event.value)" class="full-width-input">
+                                    optionValue="id" placeholder="Seçiniz"  (onChange)="onScaleChange($event.value)" class="full-width-input" 
+                                    [panelStyle]="{ width: '100%' }" [appendTo]="'body'" >
                                 </p-dropdown>
                             </div>
 
@@ -258,7 +259,8 @@
                             <div class="p-field">
                                 <label for="countSelect">Kaç seçenek olsun?</label>
                                 <p-dropdown [options]="allowedCounts" [(ngModel)]="selectedCount" optionLabel="label"
-                                    optionValue="value" placeholder="Seçiniz" class="full-width-input">
+                                    optionValue="value" placeholder="Seçiniz" class="full-width-input"
+                                    [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
                                 </p-dropdown>
                             </div>
                 

@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { PerformanceService } from '../performance.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ToastrService } from 'ngx-toastr';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-performance-question-category',
@@ -10,7 +11,9 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./performance-question-category.component.scss']
 })
 
-export class PerformanceQuestionCategoryComponent {
+export class PerformanceQuestionCategoryComponent implements OnInit, OnDestroy {
+  
+  private ngUnsubscribe = new Subject();
   categoryName: string = "";
 
   updateName: string = ""
@@ -42,7 +45,7 @@ export class PerformanceQuestionCategoryComponent {
   }
 
   setCategory(name: string): void {
-    this.perform.setCategory(name).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+    this.perform.setCategory(name).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
 
       const result = response[0].x[0].islemsonuc;
       console.log("setCategory:", result);
@@ -72,7 +75,7 @@ export class PerformanceQuestionCategoryComponent {
 
 
   deleteCategory() {
-    this.perform.deleteCategory(this._deleteCategoryId).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+    this.perform.deleteCategory(this._deleteCategoryId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
       const result = response[0].x[0].islemsonuc;
       console.log("deleteCategory:", result);
       if (result == 1) {
@@ -92,7 +95,7 @@ export class PerformanceQuestionCategoryComponent {
   updateCategory() {
     if(this.updateName != "")
     {
-      this.perform.updateCategory(this._updateCategoryId, this.updateName).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+      this.perform.updateCategory(this._updateCategoryId, this.updateName).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
         const result = response[0].x[0].islemsonuc;
         console.log("updateCategory:", result);
         if (result == 1) {
@@ -114,7 +117,7 @@ export class PerformanceQuestionCategoryComponent {
 
 
   getCategory(id: number) {
-    this.perform.getCategory(id).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.perform.getCategory(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.categoryList = response[0].x;
       this.filteredItems = [...this.categoryList]
       console.log("getCategory:", this.categoryList);
@@ -126,6 +129,11 @@ export class PerformanceQuestionCategoryComponent {
       this.updateName = "";
       this.categoryName = '';
     });
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
   }
 
 }

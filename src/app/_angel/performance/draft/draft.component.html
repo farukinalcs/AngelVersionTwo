@@ -1,8 +1,8 @@
 <div class="container-fluid m-5">
 
-    <mat-tab-group>
+    <mat-tab-group style="height: fit-content;">
 
-        <mat-tab label="INSERT">
+        <mat-tab label="INSERT" style="height: fit-content;">
 
             <div class="scale-form-box">
                 <label for="formTitle" class="border">Yeni Form Kaydı</label>
@@ -25,19 +25,22 @@
                 <div class="p-field">
                     <label for="formList">Form seçimi</label>
                     <p-dropdown [options]="formList" [(ngModel)]="selectedFormId" optionLabel="baslik"
-                        optionValue="id" placeholder="Seçiniz"  (onChange)="onFormChange($event.value)" class="full-width-input">
+                        optionValue="id" placeholder="Seçiniz"  (onChange)="onFormChange($event.value)" class="full-width-input"
+                        [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
                     </p-dropdown>
                 </div>
                 <div class="p-field">
                     <label for="countSelect">Hangi Kategori</label>
                     <p-dropdown [options]="categoryList" [(ngModel)]="selectedCategoryId" optionLabel="Ad"
-                        optionValue="Id" placeholder="Seçiniz" (onChange)="onCategoryChange($event.value)" class="full-width-input">
+                        optionValue="Id" placeholder="Seçiniz" (onChange)="onCategoryChange($event.value)" class="full-width-input"
+                        [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
                     </p-dropdown>
                 </div> 
                 <div class="p-field">
                     <label for="countSelect">Soru seçimi</label>
                     <p-dropdown [options]="questionList" [(ngModel)]="selectedQuestionId" optionLabel="aciklama"
-                        optionValue="id" placeholder="Seçiniz" (onChange)="onQuestionChange($event.value)" class="full-width-input">
+                        optionValue="id" placeholder="Seçiniz" (onChange)="onQuestionChange($event.value)"  class="full-width-input"
+                        [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
                     </p-dropdown>
                 </div>
                  <button pButton type="button" label="Soru Ekle" (click)="form_question()" class="full-width-button"></button>
