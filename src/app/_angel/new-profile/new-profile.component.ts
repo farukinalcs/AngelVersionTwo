@@ -24,6 +24,9 @@ import { ExpenseComponent } from './request-forms/expense/expense.component';
 import { LeaveComponent } from './request-forms/leave/leave.component';
 import { VisitorComponent } from './request-forms/visitor/visitor.component';
 import { SharedModule } from '../shared/shared.module';
+import { HasPermissionAnyDirective } from 'src/app/core/permission/has-permission-any.directive';
+import { HasPermissionDirective } from 'src/app/core/permission/has-permission.directive';
+import { LayoutModule } from 'src/app/_metronic/layout';
 
 @Component({
     selector: 'app-new-profile',
@@ -45,7 +48,8 @@ import { SharedModule } from '../shared/shared.module';
         ExpenseComponent,
         LeaveComponent,
         VisitorComponent,
-        SharedModule
+        SharedModule,
+        HasPermissionDirective
     ],
     templateUrl: './new-profile.component.html',
     styleUrl: './new-profile.component.scss'

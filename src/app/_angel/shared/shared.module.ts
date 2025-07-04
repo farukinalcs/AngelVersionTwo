@@ -110,8 +110,6 @@ import { SelectModule } from 'primeng/select';
     ReportCategoryComponent,
     ReportListComponent,
     ReportParamsComponent,
-    HasPermissionDirective,
-    HasPermissionAnyDirective,
     NewRegistryCardComponent
   ],
   imports: [
@@ -163,8 +161,6 @@ import { SelectModule } from 'primeng/select';
     ReportParamsComponent,
     BoldReportComponent,
     PersonalInfoComponent,
-    HasPermissionDirective,
-    HasPermissionAnyDirective,
     NewRegistryCardComponent
   ]
 })

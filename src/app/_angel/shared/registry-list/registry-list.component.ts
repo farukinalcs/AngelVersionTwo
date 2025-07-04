@@ -15,6 +15,7 @@ import { AttendanceService } from '../../attendance/attendance.service';
 import { OrganizationColumnFilterComponent } from '../../attendance/organization-column-filter/organization-column-filter.component';
 import { Router } from '@angular/router';
 import { AG_GRID_LOCALE_TR } from '@ag-grid-community/locale';
+import { ImageTooltipRendererComponent } from './image-renderer/image-tooltip-renderer.component';
 
 @Component({
     selector: 'app-registry-list',
@@ -39,14 +40,23 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges, Afte
         height: this.gridHeight,
         flex: '1 1 auto',
     };
+    // public defaultColDef: ColDef = {
+    //     minWidth: 70,
+    //     filter: true,
+    //     floatingFilter: true,
+    //     sortable: true,
+    //     resizable: true,
+    //     editable: false,
+    //     menuTabs: ['filterMenuTab'],
+    // };
     public defaultColDef: ColDef = {
         minWidth: 70,
-        filter: true,
+        filter: false,
         floatingFilter: true,
         sortable: true,
         resizable: true,
         editable: false,
-        menuTabs: ['filterMenuTab'],
+        menuTabs: [],
     };
     public rowSelection: 'single' | 'multiple' = 'multiple';
     public isRowSelectable: IsRowSelectable = (params: IRowNode<any>) => {
@@ -115,6 +125,13 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges, Afte
         private router: Router
     ) {
         this.imageUrl = this.profileService.getImageUrl();
+
+        this.gridOptions = {
+            localeText: AG_GRID_LOCALE_TR, // Türkçe dil desteği
+            context: {
+                imageBaseUrl: this.imageUrl
+            }
+        };
     }
 
     ngAfterViewInit(): void {
@@ -146,8 +163,9 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges, Afte
                 sortable: false,
                 headerTooltip: this.translateService.instant('Fotoğraf'),
                 cellStyle: {},
-                cellRenderer: (params: any) => this.getImageGrid(params),
-                cellRendererParams: { exampleParameter: 'red' },
+                // cellRenderer: (params: any) => this.getImageGrid(params),
+                cellRenderer: ImageTooltipRendererComponent,
+                // cellRendererParams: { exampleParameter: 'red' },
                 hide: false,
             },
             {
@@ -215,7 +233,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges, Afte
                         },
                         cellClass: (params) => this.applyLinkClass(),
                         hide: false,
-                        onCellDoubleClicked: (params) => this.clickedRegistry(params)
+                        // onCellDoubleClicked: (params) => this.clickedRegistry(params)
                     },
                     {
                         headerName: this.translateService.instant('Soyad'),
@@ -243,6 +261,7 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges, Afte
                         filter: false,
                         // cellClass: (params) => this.applyWeekendClass(params),
                         hide: false,
+                        menuTabs: []
                     },
                 ],
             },
@@ -949,6 +968,10 @@ export class RegistryListComponent implements OnInit, OnDestroy, OnChanges, Afte
 
     completedBulkChange() {
         this.getRegistryList();
+    }
+
+    onRowClicked(event: any) {
+        this.clickedRegistry(event);
     }
 
 

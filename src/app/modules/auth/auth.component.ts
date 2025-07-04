@@ -17,7 +17,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             this.companyLogo = '../../../assets/media/logos/cadde-logo.png';
             
         } else {
-            this.companyLogo = '../../../assets/media/logos/yeni.png';
+            this.companyLogo = '../../../assets/media/logos/MECLOUD (13).png';
         }
     }
 

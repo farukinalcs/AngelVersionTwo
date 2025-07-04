@@ -36,7 +36,7 @@ export class TempCardComponent implements OnInit, OnDestroy, OnChanges {
     sortable: true,
     resizable: true,
     editable: false,
-    menuTabs: ['filterMenuTab'],
+    menuTabs: [],
   };
   public rowSelection: 'single' | 'multiple' = 'multiple';
   public isRowSelectable: IsRowSelectable = (params: IRowNode<any>) => {

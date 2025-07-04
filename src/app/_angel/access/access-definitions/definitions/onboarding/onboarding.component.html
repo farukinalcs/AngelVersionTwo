@@ -21,7 +21,7 @@
                         <div class="col-12">
                             @if (loading$ | async) {
                             <app-loading-skeleton [count]="6"></app-loading-skeleton>
-                            } @else if (items?.length) {
+                            } @else if (items.length) {
                             <div class="row">
                                 @for (item of items; track item.id) {
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
