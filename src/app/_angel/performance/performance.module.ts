@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { SharedModule } from '../shared/shared.module';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { PerformanceDefinitionsComponent } from './performance-definitions/performance-definitions.component';
@@ -28,6 +27,8 @@ import { ChipModule } from 'primeng/chip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DatePickerModule } from 'primeng/datepicker';
 import { AccordionModule } from 'primeng/accordion';
+import { DialogModule } from 'primeng/dialog';
+
 @NgModule({
   declarations: [
     PerformanceDashboardComponent,
@@ -44,7 +45,6 @@ import { AccordionModule } from 'primeng/accordion';
     RadioButtonModule,
     ButtonModule,
     CardModule,
-    SharedModule,
     StepsModule,
     InputIconModule,
     IconFieldModule,
@@ -58,7 +58,8 @@ import { AccordionModule } from 'primeng/accordion';
     ChipModule,
     CheckboxModule,
     DatePickerModule,
-    AccordionModule
+    AccordionModule,
+    DialogModule
   ]
 })
 export class PerformanceModule { }
