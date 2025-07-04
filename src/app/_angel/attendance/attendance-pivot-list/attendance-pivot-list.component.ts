@@ -311,7 +311,7 @@ export class AttendancePivotListComponent implements OnInit, OnDestroy {
     sortable: true,
     resizable: true,
     editable: false,
-    menuTabs: ['filterMenuTab'],
+    menuTabs: [],
     // cellStyle: { height: '100px', fontWeight: 'bold' }
   };
   public rowSelection: 'single' | 'multiple' = 'multiple';

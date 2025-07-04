@@ -6,12 +6,12 @@ import { leaveRoutes } from '../_angel/leave/leave.routes';
 import { shiftRoutes } from '../_angel/shift/shift.routes';
 
 const Routing: Routes = [
-    {
-        path: 'dashboard',
-        loadChildren: () =>
-            import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
-        data: { layout: 'light-sidebar' }
-    },
+    // {
+    //     path: 'dashboard',
+    //     loadChildren: () =>
+    //         import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+    //     data: { layout: 'light-sidebar' }
+    // },
     {
         path: 'performance',
         loadChildren: () =>

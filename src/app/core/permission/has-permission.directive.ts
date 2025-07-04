@@ -8,7 +8,8 @@ import {
 import { PermissionService } from './permission.service';
 
 @Directive({
-    selector: '[appPermission]' // kullanımı: *appPermission="'kod123'"
+    selector: '[appPermission]', // kullanımı: *appPermission="'kod123'"
+    standalone: true
 })
 export class HasPermissionDirective implements OnInit {
     @Input('appPermission') code?: string; // permission kodu, örneğin 'kod123'

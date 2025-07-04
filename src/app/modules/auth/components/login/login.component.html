@@ -51,7 +51,7 @@
                                         <input type="radio" class="form-check-input me-3" formControlName="appList"
                                             [value]="item.appId" hidden />
                                         <i [ngClass]="getIconClass(item.appId)" class="fs-4 me-2 text-danger"></i>
-                                        <span class="fw-semibold">{{ item.appName }}</span>
+                                        <span class="fw-semibold">{{ item.appName | translate}}</span>
                                     </label>
                                 </div>
                             </div>

@@ -10,6 +10,7 @@ import { AuthComponent } from './auth.component';
 import { TranslationModule } from '../i18n/translation.module';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LogoClockComponent } from './components/logo-clock/logo-clock.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     FormsModule,
     ReactiveFormsModule,
     NgbDropdownModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    LogoClockComponent
 
   ],
 })

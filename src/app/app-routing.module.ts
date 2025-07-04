@@ -25,10 +25,10 @@ export const routes: Routes = [
         path: 'onboarding',
         loadComponent: () => import('../app/_helpers/components/onboarding-wizard/onboarding-wizard.component').then(m => m.OnboardingWizardComponent),
     },
-    {
-    path:"survey",
-    component:OutServeyComponent
-    },
+    // {
+    // path:"survey",
+    // component:OutServeyComponent
+    // },
     // {
     //   path: 'patrol',
     //   canActivate: [AuthGuard],

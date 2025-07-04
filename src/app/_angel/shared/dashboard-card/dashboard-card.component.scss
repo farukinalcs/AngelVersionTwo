@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .icon-container {
     font-size: 4rem;
     /* Daha büyük ikon */
@@ -69,7 +71,8 @@
 // Asimetrik wiggle: her kart için farklı delay
 @for $i from 1 through 20 {
     .col-sm-6:nth-child(#{$i}) .card-edit-mode {
-        animation-delay: #{random(200) / 180}s;
+        // animation-delay: #{random(200) / 180}s;
+        animation-delay: #{math.div(random(200), 180)}s;
     }
 }
   

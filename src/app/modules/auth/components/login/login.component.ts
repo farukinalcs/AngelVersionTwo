@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (url.includes('cadde')) {
             this.companyLogo = '../../../../../assets/media/logos/cadde-logo.png';
         } else {
-            this.companyLogo = '../../../../../assets/media/logos/MECLOUD (13).png'
+            this.companyLogo = '../../../../../assets/media/logos/MECLOUD (13) - Copy.png'
         }
         
         this.isLoading$ = this.authService.isLoading$;

@@ -25,7 +25,6 @@ import { HeaderMenuComponent } from './components/header/header-menu/header-menu
 import {
   DrawersModule,
   DropdownMenusModule,
-  ModalsModule,
   EngagesModule,
 } from '../partials';
 import { EngagesComponent } from '../partials/layout/engages/engages.component';
@@ -45,6 +44,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SidebarMenuPatrolComponent } from './components/sidebar/sidebar-menu-patrol/sidebar-menu-patrol.component';
 import { SidebarMenuPerformanceComponent } from './components/sidebar/sidebar-menu-performance/sidebar-menu-performance.component';
 import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { HasPermissionDirective } from 'src/app/core/permission/has-permission.directive';
+import { HasPermissionAnyDirective } from 'src/app/core/permission/has-permission-any.directive';
 
 const routes: Routes = [
   {
@@ -71,34 +72,25 @@ const routes: Routes = [
     SidebarComponent,
     SidebarLogoComponent,
     SidebarMenuComponent,
-    SidebarMenuPatrolComponent,
     SidebarFooterComponent,
     NavbarComponent,
     AccountingComponent,
     ClassicComponent,
     ExtendedComponent,
     ReportsComponent,
-    SaasComponent,
-    SidebarMenuPerformanceComponent
+    SaasComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     TranslationModule,
     InlineSVGModule,
-    NgbDropdownModule,
-    NgbProgressbarModule,
     ExtrasModule,
-    ModalsModule,
     DrawersModule,
     EngagesModule,
-    DropdownMenusModule,
-    NgbTooltipModule,
     TranslateModule,
     ThemeModeModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    SharedModule
+    HasPermissionDirective
   ],
   exports: [RouterModule],
 })
