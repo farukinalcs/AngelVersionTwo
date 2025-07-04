@@ -1,5 +1,24 @@
-
 <div class="container-fluid d-flex flex-wrap justify-content-start gap-3 definitions">
+  <p-card [style]="{ width: '260px', height: '300px', cursor: 'pointer' }"
+    styleClass="d-flex flex-column justify-content-center align-items-center">
+
+    <ng-template #header>
+      <div
+        style="width: 100%; height: 120px; background-color: #fff; display: flex; align-items: center; justify-content: center;">
+        <i class="pi pi-plus" style="font-size: 2.5rem; color: #000;margin-top: 5px;"></i>
+      </div>
+    </ng-template>
+
+    <ng-template #title>
+      <div style="text-align: center;font-weight: bold; background-color: #fff; font-size: 1rem; margin-top: 10px;">
+        YENİ DEĞERLEME BAŞLAT
+      </div>
+    </ng-template>
+
+    <ng-template #subtitle>
+      <div style="height: 40px;"></div>
+    </ng-template>
+  </p-card>
   <p-card *ngFor="let item of formList" [style]="{ width: '260px', height: '300px', overflow: 'hidden' }"
     styleClass="d-flex flex-column justify-content-between">
 
@@ -23,8 +42,8 @@
     <ng-template #footer>
       <div class="d-flex justify-content-center gap-2 mt-2 w-100">
         <p-button label="Sil" severity="secondary" styleClass="px-3 mr-2" [outlined]="true" />
-        <p-button label="Ata" styleClass="my-blue-btn mr-2" (click)="formMatch(item)" />
-        <p-button label="Düzenle" styleClass="px-3" (click)="getItem(item)" />
+        <p-button label="Yayınla" styleClass="my-blue-btn mr-2" (click)="formMatch(item)" />
+        <p-button label="Puanla" styleClass="px-3" (click)="getItem(item)" />
 
       </div>
     </ng-template>
@@ -46,27 +65,30 @@
     <p-checkbox [(ngModel)]="asChecked" [binary]="true" inputId="as" (ngModelChange)="onCheckboxChange()"></p-checkbox>
     <label for="as" class="ml-2">As</label>
   </div>
-  
+
   <div class="form-group">
     <p-checkbox [(ngModel)]="usChecked" [binary]="true" inputId="us" (ngModelChange)="onCheckboxChange()"></p-checkbox>
     <label for="us" class="ml-2">ÜS</label>
   </div>
-  
+
   <div class="form-group">
-    <p-checkbox [(ngModel)]="myselfChecked" [binary]="true" inputId="myself" (ngModelChange)="onCheckboxChange()"></p-checkbox>
+    <p-checkbox [(ngModel)]="myselfChecked" [binary]="true" inputId="myself"
+      (ngModelChange)="onCheckboxChange()"></p-checkbox>
     <label for="myself" class="ml-2">Kendisi</label>
   </div>
-  
+
   <div class="form-group">
     <label for="startDate">Başlangıç Tarihi:</label>&nbsp;
-    <p-datepicker [(ngModel)]="startDate" [iconDisplay]="'input'" (onSelect)="getDate('start', $event)" [showIcon]="true" inputId="startDate"></p-datepicker>
+    <p-datepicker [(ngModel)]="startDate" [iconDisplay]="'input'" (onSelect)="getDate('start', $event)"
+      [showIcon]="true" inputId="startDate"></p-datepicker>
   </div>
-  
+
   <div class="form-group">
     <label for="endDate" style="margin-right: 35px;">Bitiş Tarihi:</label>
-    <p-datepicker [(ngModel)]="endDate" [iconDisplay]="'input'" (onSelect)="getDate('end', $event)" [showIcon]="true" inputId="endDate"></p-datepicker>
+    <p-datepicker [(ngModel)]="endDate" [iconDisplay]="'input'" (onSelect)="getDate('end', $event)" [showIcon]="true"
+      inputId="endDate"></p-datepicker>
   </div>
-  
+
 
   <p-table #table [value]="categoryS" [tableStyle]="{ 'min-width': '60rem' }" dataKey="id">
 
