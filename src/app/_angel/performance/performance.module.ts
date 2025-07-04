@@ -28,6 +28,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DatePickerModule } from 'primeng/datepicker';
 import { AccordionModule } from 'primeng/accordion';
 import { DialogModule } from 'primeng/dialog';
+
 @NgModule({
   declarations: [
     PerformanceDashboardComponent,
