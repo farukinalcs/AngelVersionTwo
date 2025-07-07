@@ -47,7 +47,7 @@ export class PatrolService {
   getPatrolInfo(locationid:number){
     var sp : any[] = [{
       mkodu : 'yek189',
-      lokasyon:locationid.toString()
+      lokasyon:locationid?.toString()
     }]
     return this.requestMethod(sp);
   }

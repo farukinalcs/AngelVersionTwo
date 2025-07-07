@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input,OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input,OnDestroy, OnInit, Signal, ViewEncapsulation } from '@angular/core';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { PatrolService } from '../patrol.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
@@ -12,6 +12,8 @@ import { DatePipe } from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { NativeDateAdapter } from '@angular/material/core';
 import { ChangeDetectionStrategy } from '@angular/core';
+import { SignalrPatrolService } from '../signalr-patrol.service';
+import { HelperService } from 'src/app/_helpers/helper.service';
 
 
 export const MY_DATE_FORMATS: MatDateFormats = {
@@ -108,11 +110,13 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     private patrol : PatrolService,
     private ref : ChangeDetectorRef,
     private translateService: TranslateService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private signalRService: SignalrPatrolService,
+     private helperService : HelperService
   ) { }
 
 
-  ngOnInit(): void {
+   ngOnInit(): void {
 
     const today = new Date();
     this.formattedDate = this.datePipe.transform(today, 'yyyy-MM-dd')!;
@@ -122,7 +126,8 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
       this.formattedDate = this.datePipe.transform(newDate, 'yyyy-MM-dd')!;
     });
     
- 
+   this.signalRService.startConnection();
+
    window.setInterval(() => {
     this.getPatrolInfo(this.selectLocationId);
     this.dailyGuardTourCheck(this.formattedDate);
@@ -130,7 +135,34 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
  
     }, 30000);
     this.getLocation();
+
+    //await this.signalRService.startConnection();
+    this.StartSignalR();
+    this.signalRService.addTransferChartDataListener((data) => {
+      console.log('Sunucudan gelen veri:', data);
+    });
+
+    this.signalRService.onReceivePatrolInfo((data) => {
+      console.log('Patrol SignalR bilgisi geldi:', data);
+    });
   }
+
+  async StartSignalR(): Promise<void> {
+    await this.signalRService.startConnection();
+    // await this.signalRService.registerToServer({
+    //   userId: "233",
+    //   adSoyad: "string",
+    //   kullaniciAdi: "string",
+    //   tokenId: this.helperService.gateResponseY,
+    //   loginId: "233",
+    //   customerCode: 'MeyerTakip14367',
+    //   clientType: 44,
+    //   accessToken: this.helperService.gateResponseY,
+    //   clientInfo: '{"AppName": "M5ServiceRD", "IpAddr": "10.20.24.27"}'
+
+    // })
+  }
+
 
   ngAfterViewInit(): void {
     this.initializeMap();
@@ -149,11 +181,11 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     this.ref.detectChanges();
     (this.patrolInfo ?? []).forEach((patrol) => {
       if (+patrol?.olay > 0) {
-      // this.lastIncidentModal = true;
-      // this.openAlarmModal(patrol);
+      this.lastIncidentModal = true;
+      this.openAlarmModal(patrol);
       }
       if (+patrol?.alarm > 0) {
-        this.openAlarmModal(patrol);
+       // this.LastEventModal(patrol);
       }
     });
 
@@ -211,25 +243,25 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     this.getPatrolInfo(this.selectLocationId);
   }
 
-  // LastEventModal(item:AlarmModel){
-  //   console.log("ALARM MODEL",item);
-  //   if (!this.validateCoordinates(item.olat, item.olng)) {
-  //     console.error("Geçersiz koordinatlar:", item.olat, item.olng);
-  //     return;
-  //   }
-  //   this.loadMap(parseFloat(item.olat || "0"), parseFloat(item.olng || "0"), item.name);
-  //   this.lastIncidentModal = true;
-  //   this.lastIncidentDesc = item.oaciklama || '';
-  //   this.lastIncidentSecurity = item.securityname;
+  LastEventModal(item:AlarmModel){
+    console.log("ALARM MODEL",item);
+    if (!this.validateCoordinates(item.olat, item.olng)) {
+      console.error("Geçersiz koordinatlar:", item.olat, item.olng);
+      return;
+    }
+    this.loadMap(parseFloat(item.olat || "0"), parseFloat(item.olng || "0"), item.name);
+    this.lastIncidentModal = true;
+    this.lastIncidentDesc = item.oaciklama || '';
+    this.lastIncidentSecurity = item.securityname;
 
-  //   const lat = parseFloat(item.olat || "0");
-  //   const lng = parseFloat(item.olng || "0");
+    const lat = parseFloat(item.olat || "0");
+    const lng = parseFloat(item.olng || "0");
   
-  //   if (isNaN(lat) || isNaN(lng)) {
-  //     console.error("Geçersiz koordinatlar:", item.olat, item.olng);
-  //     return;
-  //   }
-  // }
+    if (isNaN(lat) || isNaN(lng)) {
+      console.error("Geçersiz koordinatlar:", item.olat, item.olng);
+      return;
+    }
+  }
 
   getLocation(){
     this.patrol.getLocation().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
