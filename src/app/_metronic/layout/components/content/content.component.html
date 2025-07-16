@@ -7,9 +7,11 @@
   </div>
   <!-- end::Content container -->
 </ng-container>
-<ng-container *ngIf="!appContentContiner">
-  <router-outlet></router-outlet>
-</ng-container>
+<div [id]="'kt_app_content'" [ngClass]="{ 'app-content': !disablePadding }">
+  <ng-container *ngIf="!appContentContiner">
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+  </ng-container>
+</div>
 
 <!-- <div id="kt_app_content_container" class="app-container d-flex align-items-stretch justify-content-between">
 <router-outlet></router-outlet>

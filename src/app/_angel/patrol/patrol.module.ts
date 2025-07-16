@@ -31,6 +31,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule,MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { TooltipModule } from 'primeng/tooltip';
+import { DeviceAndmapComponent } from './device-andmap/device-andmap.component';
+import { ToursComponent } from './tours/tours.component';
+import { ContentContainerComponent } from './content-container/content-container.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 
 @NgModule({
   declarations: [
@@ -40,7 +45,10 @@ import { TooltipModule } from 'primeng/tooltip';
     SecurityLocationsComponent,
     SecurityStationsComponent,
     SecurityTourCalendarComponent,
-    SecurityToursComponent],
+    SecurityToursComponent,
+    DeviceAndmapComponent,
+    ToursComponent,
+    ContentContainerComponent],
   imports: [
     CommonModule,
     PatrolRoutingModule,
@@ -69,8 +77,11 @@ import { TooltipModule } from 'primeng/tooltip';
     MatNativeDateModule,
     MatOptionModule,
     MatSelectModule,
-    TooltipModule
+    TooltipModule,
+    DropdownModule,
+    SelectModule,
   ],
+  
   providers: [
     { provide: DateAdapter, useClass: CustomDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },

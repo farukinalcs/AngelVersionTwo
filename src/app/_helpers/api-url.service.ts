@@ -58,9 +58,11 @@ export class ApiUrlService {
             .then((result: any) => {
                 const hostname = window.location.hostname; 
                 if (hostname.includes('localhost')) {
-                    return;
+                    result.baseUrl = "https://yekgateway.mecloud.com.tr/api"
+                    
                 }
-                const parts = hostname.split('.');
+                else {
+                    const parts = hostname.split('.');
 
                 if (parts.length > 0) {
                     const rawSubdomain = parts[0]; 
@@ -68,6 +70,8 @@ export class ApiUrlService {
                     const domain = parts.slice(1).join('.'); 
                     result.baseUrl = `https://${subdomain}gateway.${domain}/api`;
                 }
+                }
+               
 
                 this.config = result;
                 console.log('Config Loaded: ', this.config.baseUrl);

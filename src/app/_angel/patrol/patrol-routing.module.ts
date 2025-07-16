@@ -4,6 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { PatroldashboardComponent } from './patroldashboard/patroldashboard.component';
 import { PatroldefinitionsComponent } from './patroldefinitions/patroldefinitions.component';
 import { PatrolreportComponent } from './patrolreport/patrolreport.component';
+import { DeviceAndmapComponent } from './device-andmap/device-andmap.component';
+import { ToursComponent } from './tours/tours.component';
+import { ContentContainerComponent } from './content-container/content-container.component';
 
 
 
@@ -12,13 +15,6 @@ const routes: Routes = [
   {
     path:'dashboard',
     component:PatroldashboardComponent,
-    // children:[
-    //   {
-    //     path:'guvenlikciler',
-    //     component:SecurityGuardsComponent
-    //   }
-
-    // ]
   },
   {
     path:'guvenlikciler',
@@ -27,6 +23,20 @@ const routes: Routes = [
   {
     path:'tanimlamalar',
     component:PatroldefinitionsComponent
+  },
+  {
+    path:'content',
+    component:ContentContainerComponent,
+       children:[
+        {
+          path:'device-map',
+          component:DeviceAndmapComponent
+        },
+        {
+          path:'tours',
+          component:ToursComponent
+        },
+    ]
   },
   {
     path:'raporlar',
