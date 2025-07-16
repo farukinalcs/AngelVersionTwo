@@ -19,7 +19,8 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
 
-        this.fullUrl = window.location.href;
+        // this.fullUrl = window.location.href;
+        this.fullUrl = "https://yekgateway.mecloud.com.tr/api/gate";
         console.log('Kullanıcının linki:', this.fullUrl);
         
         

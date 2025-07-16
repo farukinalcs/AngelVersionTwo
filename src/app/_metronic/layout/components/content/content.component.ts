@@ -13,11 +13,32 @@ export class ContentComponent implements OnInit, OnDestroy {
   @Input() appContentContainerClass: string = '';
 
   private unsubscribe: Subscription[] = [];
-
+  disablePadding = false;
   constructor(private router: Router) {}
+
 
   ngOnInit(): void {
     this.routingChanges();
+  }
+
+  onActivate(componentRef: any): void {
+    const deepestComponent = this.getDeepestChild(componentRef);
+    console.log('Aktif component:', componentRef);
+    console.log('disableLayoutPadding:', componentRef?.disableLayoutPadding);
+    this.disablePadding = componentRef?.disableLayoutPadding === true;
+  }
+
+  getDeepestChild(component: any): any {
+    let current = component;
+    while (current?.childOutletContexts) {
+      const outlet = current.childOutletContexts?.contexts.get('primary');
+      if (outlet?.outlet?.component) {
+        current = outlet.outlet.component;
+      } else {
+        break;
+      }
+    }
+    return current;
   }
 
   routingChanges() {
@@ -32,4 +53,5 @@ export class ContentComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
+  
 }

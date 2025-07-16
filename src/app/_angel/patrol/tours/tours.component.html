@@ -1,0 +1,60 @@
+<div class="container-fluid">
+    <div class="tab-content">
+
+        <div class="row g-3 widget-section mt-3">
+          <ng-container *ngFor="let widget of widgets">
+            <div class="col-md-2">
+              <div class="widget-card cursor-pointer" 
+                  style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;"
+                  (click)="openWidget(widget)">
+                <h6 class="widget-title">{{ widget.title }}</h6>
+                <p class="widget-value">{{ widget.value }}</p>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="row align-items-center justify-content-center mt-3 custom-container">
+    
+        
+
+          <div class="col-md-12 mt-3">
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" [formControl]="dateControl">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="row mt-4">
+
+          <div class="col-md-3 mb-3" *ngFor="let item of this.tour_s">
+            <div class="card custom-card">
+              <div class="card-header" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700)) 100%;font-weight: bold;">
+                <h5 class="text-white mb-0">{{item.tur}}</h5>
+              </div>
+              <div class="card-body">
+                <div class="row text-center">
+                  <h3>{{item.sicil}}</h3>
+                </div> 
+                <div class="row text-center">
+                  <div class="col-12">
+                    <p><b>Tarih:</b>&nbsp;&nbsp;<b>{{item?.zaman | date: 'yyyy-MM-dd'}}</b></p>
+                    <p><b>Başlangıç:</b>&nbsp;&nbsp;<b>{{item?.zaman | date: 'hh:mm' }}</b></p>
+                    <p><b>Bitiş:</b>&nbsp;&nbsp;<b>{{item?.zaman2 | date: 'hh:mm' }}</b></p>
+                    <p><b>Tur Tanımı:</b>&nbsp;&nbsp;<b>{{item?.turtanim}}</b></p>
+                    <p><b>Gerçekleşen Süre:</b>&nbsp;&nbsp;<b>{{this.formatTime(item?.stursure)}}</b></p>
+                    <p><b>Planlanan Süre:</b>&nbsp;&nbsp;<b>{{item?.sturmaxsure}}</b></p>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+  
+      </div>
+      
+      </div>
+</div>
