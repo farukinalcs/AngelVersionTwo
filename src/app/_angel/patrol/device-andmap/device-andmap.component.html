@@ -1,0 +1,84 @@
+<div class="tab-content">
+    <!-- Dropdown Satırı (TAM genişlik, ama container içinde) -->
+    <div class="row mb-3">
+        <div class="col-md-12">
+          <p-dropdown [options]="_locations"
+                      [(ngModel)]="selectLocationId"
+                      optionLabel="ad"
+                      optionValue="id"
+                      placeholder="Seçiniz"
+                      [appendTo]="'body'"
+                      [panelStyle]="{ width: '100%' }"
+                      class="w-100"
+                      (onChange)="changeLocation($event.value)">
+          </p-dropdown>
+        </div>
+      </div>
+  {{this.selectLocationId}}
+    <!-- Kartlar Satırı -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <!-- Sol Kart (3/12) -->
+          <div class="col-md-3">
+            <div class="card custom-card h-100">
+              <div class="card-header border-0 bg-danger">
+                <h5 class="text-white mb-0">Cihaz Tablosu</h5>
+              </div>
+              <div class="card-body">
+                <table class="table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Cihaz Adı</th>
+                      <th scope="col">Pil</th>
+                      <th scope="col">Durum</th>
+                      <th scope="col">Olay</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of displayList || []" class="cursor-pointer" (click)="getGuardEventList(item)">
+                      <td>
+                        {{ item.terminalname }}<br>
+                        <span *ngIf="item.securityid" class="text-muted small">
+                          ID: {{ item.securityid }}
+                        </span>
+                      </td>
+                      <td>{{ item.battery }}%</td>
+                      <td>
+                        <!-- <i class="fa fa-circle"
+                          [ngClass]="{
+                            'text-success': item.alarm == '0',
+                            'text-danger': item.alarm != '0'
+                          }">
+                        </i> -->
+                        <i class="fa fa-circle" [ngClass]="item.isOnline ? 'text-success' : 'text-danger'">
+                       
+                        </i>
+                      </td>
+                      <td>
+                        <i *ngIf="item.alarm != '0'" class="fa fa-flag text-danger"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Sağ Kart (9/12) -->
+          <div class="col-md-9">
+            <div class="card custom-card h-100">
+              <div class="card-header border-0 bg-danger">
+                <h5 class="text-white mb-0">Cihaz Haritası</h5>
+              </div>
+              <div class="card-body">
+                <div id="map" style="height: 50vh;"></div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  

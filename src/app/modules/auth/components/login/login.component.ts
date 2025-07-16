@@ -18,8 +18,12 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent implements OnInit, OnDestroy {
     // KeenThemes mock, change it to:
     defaultAuth: any = {
-        userName: '',
-        password: '',
+        userName: 'meyer',
+        password: 'Mcld1878*',
+    };
+    defaultAuth2: any = {
+        userName: 'guvenme02',
+        password: '1234',
     };
     loginForm: FormGroup;
     hasError: boolean;

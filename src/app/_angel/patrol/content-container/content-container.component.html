@@ -1,0 +1,43 @@
+<div class="container-fluid content">
+
+    <div class="card mb-5 mb-xl-10">
+        <div class="card-body pt-9 pb-0">
+            <div class="row">
+          
+
+                <ng-container>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex overflow-auto">
+                                <ul
+                                    class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fw-bolder flex-nowrap">
+
+                                    <ng-container>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-active-danger text-center me-6" 
+                                            [routerLink]="['device-map']"
+                                            routerLinkActive="active" translate="Cihaz Ve Harita"></a>
+                                        </li>
+                                    </ng-container>
+
+                                    <ng-container>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-active-danger text-center me-6"
+                                            [routerLink]="['tours']" 
+                                            routerLinkActive="active" translate="Turlar"></a>
+                                        </li>
+                                    </ng-container>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <router-outlet></router-outlet>
+
+</div>

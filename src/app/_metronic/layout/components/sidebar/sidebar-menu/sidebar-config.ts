@@ -141,7 +141,8 @@ export const MENU: MenuItem[] = [
             { title: 'Genel Bakış', routerLink: 'patrol/dashboard' },
             { title: 'Güvenlikçiler', routerLink: 'patrol/guvenlikciler' },
             { title: 'Tanımlamalar', routerLink: 'patrol/tanimlamalar' },
-            // { title: 'Raporlar', routerLink: 'patrol/raporlar' }
+            { title: 'Cihazlar ve Harita', routerLink: '/patrol/content/device-map' },
+            { title: 'Turlar', routerLink: '/patrol/content/tours' }
         ],
         app: ['2']
     },
