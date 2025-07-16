@@ -12,7 +12,7 @@ import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { OKodFieldsModel } from 'src/app/_angel/profile/models/oKodFields';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { FormStepperComponent } from 'src/app/_angel/shared/form-stepper/form-stepper.component';
 import { AuthService } from 'src/app/modules/auth';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
@@ -25,11 +25,11 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    SharedModule,
     Dialog,
     SelectModule,
     InlineSVGModule,
-    DatePickerModule
+    DatePickerModule,
+    FormStepperComponent
   ],
   templateUrl: './visitor.component.html',
   styleUrl: './visitor.component.scss'

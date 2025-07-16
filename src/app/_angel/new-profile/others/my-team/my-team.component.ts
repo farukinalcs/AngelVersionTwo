@@ -8,7 +8,6 @@ import { InputIconModule } from 'primeng/inputicon';
 import { Subject, takeUntil } from 'rxjs';
 import { MyTeamModel } from 'src/app/_angel/profile/models/myTeam';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 import { SearchFilterPipe } from 'src/app/_helpers/pipes/search-filter.pipe';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
@@ -20,7 +19,6 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
     imports: [
         CommonModule,
         FormsModule,
-        SharedModule,
         TranslateModule,
         CustomPipeModule,
         InputIconModule,

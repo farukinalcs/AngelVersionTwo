@@ -17,7 +17,7 @@ import { OKodFieldsModel } from 'src/app/_angel/profile/models/oKodFields';
 import { PostFormModel } from 'src/app/_angel/profile/models/postForm';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { FileUploadComponent } from 'src/app/_angel/shared/file-upload/file-upload.component';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { FormStepperComponent } from 'src/app/_angel/shared/form-stepper/form-stepper.component';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { AuthService, UserType } from 'src/app/modules/auth';
@@ -34,12 +34,12 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
         TranslateModule,
         Dialog,
         InlineSVGModule,
-        SharedModule,
         CustomPipeModule,
         TooltipModule,
         SelectModule,
         FileUploadComponent,
-        DatePickerModule
+        DatePickerModule,
+        FormStepperComponent
     ],
     templateUrl: './overtime.component.html',
     styleUrl: './overtime.component.scss'

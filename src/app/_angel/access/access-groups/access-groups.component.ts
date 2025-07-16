@@ -5,7 +5,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SelectModule } from 'primeng/select';
 import { combineLatest, debounceTime, filter, Subject, take, takeUntil } from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
-import { SharedModule } from '../../shared/shared.module';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import Swal from 'sweetalert2';
@@ -13,6 +12,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 import { FloatLabel } from 'primeng/floatlabel';
+import { DataNotFoundComponent } from '../../shared/data-not-found/data-not-found.component';
 @Component({
     selector: 'app-access-groups',
     standalone: true,
@@ -22,13 +22,13 @@ import { FloatLabel } from 'primeng/floatlabel';
         ReactiveFormsModule,
         TranslateModule,
         SelectModule,
-        SharedModule,
         CheckboxModule,
         DialogModule,
         InputIconModule,
         IconFieldModule,
         CustomPipeModule,
-        FloatLabel
+        FloatLabel,
+        DataNotFoundComponent
     ],
     templateUrl: './access-groups.component.html',
     styleUrl: './access-groups.component.scss'

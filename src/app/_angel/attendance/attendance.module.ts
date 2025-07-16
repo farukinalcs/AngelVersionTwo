@@ -52,6 +52,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { AttendanceOverviewContentComponent } from './attendance-dashboard/overview-content/attendance-overview-content.component';
+import { DataNotFoundComponent } from '../shared/data-not-found/data-not-found.component';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,8 @@ import { AttendanceOverviewContentComponent } from './attendance-dashboard/overv
     InputIconModule,
     IconFieldModule,
     FloatLabelModule,
-    AttendanceOverviewContentComponent
+    AttendanceOverviewContentComponent,
+    DataNotFoundComponent
   ],
   
   exports: [

@@ -10,7 +10,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { Dialog } from 'primeng/dialog';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { FormStepperComponent } from 'src/app/_angel/shared/form-stepper/form-stepper.component';
 
 @Component({
     selector: 'app-announcement',
@@ -20,10 +20,10 @@ import { SharedModule } from 'src/app/_angel/shared/shared.module';
         FormsModule,
         ReactiveFormsModule,
         TranslateModule,
-        SharedModule,
         Dialog,
         InlineSVGModule,
-        DatePickerModule
+        DatePickerModule,
+        FormStepperComponent
     ],
     templateUrl: './announcement.component.html',
     styleUrl: './announcement.component.scss'

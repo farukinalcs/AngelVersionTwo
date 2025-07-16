@@ -13,7 +13,7 @@ import { SelectModule } from 'primeng/select';
 import { Subject, takeUntil } from 'rxjs';
 import { MyIncompleteTimeModel } from 'src/app/_angel/profile/models/myIncompleteTime';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
@@ -28,12 +28,12 @@ import { TranslationService } from 'src/app/modules/i18n';
         MatTooltipModule,
         TranslateModule,
         CustomPipeModule,
-        SharedModule,
         InputIconModule,
         IconFieldModule,
         FloatLabelModule,
         SelectModule,
-        DialogModule
+        DialogModule,
+        DataNotFoundComponent
     ],
     templateUrl: './missing-durations.component.html',
     styleUrl: './missing-durations.component.scss'

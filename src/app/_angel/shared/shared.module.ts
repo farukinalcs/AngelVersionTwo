@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SicilListeComponent } from './sicil-liste/sicil-liste.component';
-import { DataNotFoundComponent } from './data-not-found/data-not-found.component';
-import { FormStepperComponent } from './form-stepper/form-stepper.component';
 import { DetailSearchComponent } from './detail-search/detail-search.component';
 import { RequestProcessComponent } from './request-process/request-process.component';
 import { RequestMenuComponent } from './request-menu/request-menu.component';
@@ -75,14 +73,13 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputIconModule } from 'primeng/inputicon';
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
+import { DataNotFoundComponent } from './data-not-found/data-not-found.component';
 
 
 
 @NgModule({
   declarations: [
     SicilListeComponent,
-    DataNotFoundComponent,
-    FormStepperComponent,
     DetailSearchComponent,
     RequestProcessComponent,
     RequestMenuComponent,
@@ -135,12 +132,11 @@ import { SelectModule } from 'primeng/select';
     InlineSVGModule,
     MatExpansionModule,
     BoldReportViewerModule, // Bold Reports
-    InputIconModule, IconFieldModule, FloatLabelModule, DatePickerModule, SelectModule
+    InputIconModule, IconFieldModule, FloatLabelModule, DatePickerModule, SelectModule,
+    DataNotFoundComponent
   ],
   exports: [
     SicilListeComponent,
-    DataNotFoundComponent,
-    FormStepperComponent,
     DetailSearchComponent,
     RequestProcessComponent,
     RequestMenuComponent,

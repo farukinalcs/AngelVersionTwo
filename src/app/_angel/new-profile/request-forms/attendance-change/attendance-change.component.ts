@@ -14,7 +14,6 @@ import { BehaviorSubject, map, Observable, Subject, take, takeUntil } from 'rxjs
 import { AttendanceService } from 'src/app/_angel/attendance/attendance.service';
 import { OKodFieldsModel } from 'src/app/_angel/profile/models/oKodFields';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
 import { AuthService, UserType } from 'src/app/modules/auth';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
@@ -23,6 +22,7 @@ import { AttendanceActionComponent } from './attendance-action/attendance-action
 import { Store } from '@ngrx/store';
 import { resetWizardForm } from './store/wizard-form.actions';
 import { selectAllPersonnelRequests } from './store/wizard-form.selectors';
+import { FormStepperComponent } from 'src/app/_angel/shared/form-stepper/form-stepper.component';
 
 @Component({
     selector: 'app-attendance-change',
@@ -33,11 +33,11 @@ import { selectAllPersonnelRequests } from './store/wizard-form.selectors';
         TranslateModule,
         ReactiveFormsModule,
         Dialog,
-        SharedModule,
         SelectModule,
         InlineSVGModule,
         DatePickerModule,
-        AttendanceActionComponent
+        AttendanceActionComponent,
+        FormStepperComponent
     ],
     templateUrl: './attendance-change.component.html',
     styleUrl: './attendance-change.component.scss'

@@ -60,6 +60,7 @@ export class PendingRequestsComponent implements OnInit, OnDestroy {
         { id: 'fazlamesaiNavItem', key: 'fazlamesai', icon: 'fa-business-time', label: 'Fazla_Mesai' },
         { id: 'yetkiNavItem', key: 'sureliyetki', icon: 'fa-door-open', label: 'Yetki' },
         { id: 'avansNavItem', key: 'avans', icon: 'fa-sack-dollar', label: 'Avans' },
+        { id: 'expenseNavItem', key: 'expense', icon: 'fa-receipt', label: 'Masraf' }
     ];
     fileTypes: any[];
     uploadedFiles: any[];

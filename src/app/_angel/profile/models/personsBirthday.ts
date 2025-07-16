@@ -8,4 +8,5 @@ export class PersonBirthday{
     bolum: string;
     pozisyon: string;
     dogumtarih: string;
+    kendi: any;
 }

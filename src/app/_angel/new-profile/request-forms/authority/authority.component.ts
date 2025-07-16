@@ -12,6 +12,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
+import { FormStepperComponent } from 'src/app/_angel/shared/form-stepper/form-stepper.component';
 import { SharedModule } from 'src/app/_angel/shared/shared.module';
 import { AuthMenuModel } from 'src/app/_metronic/core/auth-menu-model';
 import { AuthMenuService } from 'src/app/_metronic/core/services/auth-menu.service';
@@ -30,7 +31,8 @@ import { AuthService, UserType } from 'src/app/modules/auth';
     TranslateModule,
     InlineSVGModule,
     SelectModule,
-    DatePickerModule
+    DatePickerModule,
+    FormStepperComponent
   ],
   templateUrl: './authority.component.html',
   styleUrl: './authority.component.scss'

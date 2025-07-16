@@ -9,74 +9,78 @@ import { InputIconModule } from 'primeng/inputicon';
 import { TooltipModule } from 'primeng/tooltip';
 import { Subject } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 
 @Component({
-  selector: 'app-approved-requests',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    TooltipModule,
-    TranslateModule,
-    MatExpansionModule,
-    CustomPipeModule,
-    SharedModule,
-    InputIconModule,
-    IconFieldModule,
-    FloatLabelModule
-  ],
-  templateUrl: './approved-requests.component.html',
-  styleUrl: './approved-requests.component.scss'
+    selector: 'app-approved-requests',
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        TooltipModule,
+        TranslateModule,
+        MatExpansionModule,
+        CustomPipeModule,
+        InputIconModule,
+        IconFieldModule,
+        FloatLabelModule,
+        DataNotFoundComponent
+    ],
+    templateUrl: './approved-requests.component.html',
+    styleUrl: './approved-requests.component.scss'
 })
 export class ApprovedRequestsComponent implements OnInit, OnDestroy {
-  @Input() approvedRequests: any;
-  @Input() selectedNavItem: any;
-  @Input() menuItems: any;
-  @Output() getMyDemandsEvent = new EventEmitter<any>();
-  @Output() showDetailSearchDialogEvent = new EventEmitter<any>();
-  @Output() showDemandProcessDialogEvent = new EventEmitter<{demandId: any, demandTypeName: any}>();
-  
-  private ngUnsubscribe = new Subject()
+    @Input() approvedRequests: any;
+    @Input() selectedNavItem: any;
+    @Input() menuItems: any;
+    @Output() getMyDemandsEvent = new EventEmitter<any>();
+    @Output() showDetailSearchDialogEvent = new EventEmitter<any>();
+    @Output() showDemandProcessDialogEvent = new EventEmitter<{ demandId: any, demandTypeName: any }>();
+    @Output() showUploadedFilesEvent = new EventEmitter<any>();
+    private ngUnsubscribe = new Subject()
 
-  checkGrid: boolean = true;
-  filterText : string  = "";
-  imageUrl: any;
-  
-  constructor(
-    private profileService: ProfileService
-  ) {
-    this.imageUrl = this.profileService.getImageUrl();
-  }
+    checkGrid: boolean = true;
+    filterText: string = "";
+    imageUrl: any;
 
-  ngOnInit(): void {
-  }
+    constructor(
+        private profileService: ProfileService
+    ) {
+        this.imageUrl = this.profileService.getImageUrl();
+    }
 
-  getMyDemands(menuItemKey: any) {
-    this.getMyDemandsEvent.emit(menuItemKey);
-  }
+    ngOnInit(): void {
+    }
 
-  showDetailSearchDialog() {
-    this.showDetailSearchDialogEvent.emit(this.selectedNavItem);
-  }
+    getMyDemands(menuItemKey: any) {
+        this.getMyDemandsEvent.emit(menuItemKey);
+    }
 
-  showDemandProcessDialog(demandId: any, demandTypeName: any) {
-    this.showDemandProcessDialogEvent.emit({demandId, demandTypeName});
-  }
+    showDetailSearchDialog() {
+        this.showDetailSearchDialogEvent.emit(this.selectedNavItem);
+    }
 
-  isCardOpen(item : any) {
-    item.panelOpenState = true;
-    console.log("Kard Açıldı : "); 
-  }
+    showDemandProcessDialog(demandId: any, demandTypeName: any) {
+        this.showDemandProcessDialogEvent.emit({ demandId, demandTypeName });
+    }
 
-  trackBy(index: number, item: any): number {
-    return item.Id;
-  }
+    isCardOpen(item: any) {
+        item.panelOpenState = true;
+        console.log("Kard Açıldı : ");
+    }
 
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next(true);
-    this.ngUnsubscribe.complete();
-  }
+    trackBy(index: number, item: any): number {
+        return item.Id;
+    }
+
+    showUploadedFiles(selectedDemand: any) {
+        this.showUploadedFilesEvent.emit(selectedDemand);
+    }
+
+    ngOnDestroy(): void {
+        this.ngUnsubscribe.next(true);
+        this.ngUnsubscribe.complete();
+    }
 
 }

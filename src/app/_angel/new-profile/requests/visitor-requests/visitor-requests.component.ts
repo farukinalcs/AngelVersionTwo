@@ -8,7 +8,6 @@ import { DialogModule } from 'primeng/dialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, EMPTY, forkJoin, from, mergeMap, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
 import { LayoutService } from 'src/app/_metronic/layout';
 import { VisitorUploadedFilesComponent } from '../my-visitor-requests/visitor-uploaded-files/visitor-uploaded-files.component';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
@@ -16,6 +15,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 
 @Component({
   selector: 'app-visitor-requests',
@@ -27,13 +27,13 @@ import { FloatLabelModule } from 'primeng/floatlabel';
     MatTabsModule,
     TooltipModule,
     TranslateModule,
-    SharedModule,
     VisitorUploadedFilesComponent,
     CustomPipeModule,
     MatCheckboxModule,
     InputIconModule,
     IconFieldModule,
     FloatLabelModule,
+    DataNotFoundComponent
   ],
   templateUrl: './visitor-requests.component.html',
   styleUrl: './visitor-requests.component.scss'

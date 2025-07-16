@@ -23,7 +23,6 @@ import { ShiftChangeComponent } from './request-forms/shift-change/shift-change.
 import { ExpenseComponent } from './request-forms/expense/expense.component';
 import { LeaveComponent } from './request-forms/leave/leave.component';
 import { VisitorComponent } from './request-forms/visitor/visitor.component';
-import { SharedModule } from '../shared/shared.module';
 import { HasPermissionAnyDirective } from 'src/app/core/permission/has-permission-any.directive';
 import { HasPermissionDirective } from 'src/app/core/permission/has-permission.directive';
 import { LayoutModule } from 'src/app/_metronic/layout';
@@ -48,7 +47,6 @@ import { LayoutModule } from 'src/app/_metronic/layout';
         ExpenseComponent,
         LeaveComponent,
         VisitorComponent,
-        SharedModule,
         HasPermissionDirective
     ],
     templateUrl: './new-profile.component.html',

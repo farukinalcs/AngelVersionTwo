@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { TransitionsModel } from 'src/app/_angel/profile/models/transations';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 
@@ -14,12 +12,13 @@ import { BadgeModule } from 'primeng/badge';
 import { TabViewModule } from 'primeng/tabview';
 import { TimelineModule } from 'primeng/timeline';
 import { ButtonModule } from 'primeng/button';
+import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 @Component({
     selector: 'app-passages',
     standalone: true,
     imports: [
         CommonModule,
-        SharedModule,
+        DataNotFoundComponent,
         TranslateModule,
         TabViewModule,
         TimelineModule,
