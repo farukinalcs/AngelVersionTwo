@@ -1,18 +1,17 @@
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
 })
- export class ApiUrlService {
+export class ApiUrlService {
     private config: { baseUrl: string } = { baseUrl: '' };
 
     constructor(private http: HttpClient) { }
 
     
     loadAppConfig(): Promise<void> {
-       const headers = new HttpHeaders({ 'skipInterceptor': 'true' });
+        const headers = new HttpHeaders({ 'skipInterceptor': 'true' });
 
         return this.http
             .get('/assets/config.json', { headers })
@@ -20,29 +19,30 @@ import { Injectable } from '@angular/core';
             .then((result: any) => {
                 const hostname = window.location.hostname; 
                 if (hostname.includes('localhost')) {
-                    result.baseUrl = "https://yekgateway.mecloud.com.tr/api"
-                    
+                        result.baseUrl = "https://yekgateway.mecloud.com.tr/api"
+                    return;
                 }
-                else {
-                    const parts = hostname.split('.');
+                const parts = hostname.split('.');
 
                 if (parts.length > 0) {
                     const rawSubdomain = parts[0]; 
                     const subdomain = rawSubdomain === 'www' ? 'yek' : rawSubdomain; 
                     const domain = parts.slice(1).join('.'); 
                     result.baseUrl = `https://${subdomain}gateway.${domain}/api`;
-              
-                }}
-          
-              this.config = result;
+
+                }
+
+                this.config = result;
+
                 console.log('Config Loaded: ', this.config.baseUrl);
-          .catch((error) => {
-                 console.error('Config Load Error: ', error);
-                 throw error;
+            })
+            .catch((error) => {
+                console.error('Config Load Error: ', error);
+                throw error;
             });
     }
 
-   get apiUrl(): string {
-         return this.config.baseUrl;
+    get apiUrl(): string {
+        return this.config.baseUrl;
     }
- }
+}
