@@ -32,8 +32,8 @@ import { Injectable } from '@angular/core';
                     const domain = parts.slice(1).join('.'); 
                     result.baseUrl = `https://${subdomain}gateway.${domain}/api`;
               
-
-
+                }}
+          
               this.config = result;
                 console.log('Config Loaded: ', this.config.baseUrl);
           .catch((error) => {
