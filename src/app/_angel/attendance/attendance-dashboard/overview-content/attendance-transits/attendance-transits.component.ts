@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 
 interface PersonnelTransit {
     Id: number;
@@ -24,8 +24,8 @@ interface PersonnelTransit {
     standalone: true,
     imports: [
         CommonModule,
-        SharedModule,
-        ScrollingModule
+        ScrollingModule,
+        DataNotFoundComponent
     ],
     templateUrl: './attendance-transits.component.html',
     styleUrl: './attendance-transits.component.scss'

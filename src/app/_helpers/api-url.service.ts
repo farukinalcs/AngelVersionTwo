@@ -1,84 +1,84 @@
-// import { HttpClient, HttpHeaders } from '@angular/common/http';
-// import { Injectable } from '@angular/core';
-// import { environment } from 'src/environments/environment';
-// import { environment as prodEnvironment} from 'src/environments/environment.prod';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class ApiUrlService {
-//   private config: { baseUrl: string } = { baseUrl: '' };
-
-//   constructor(private http: HttpClient) {}
-
-//   // Config.json'u yükler
-//   loadAppConfig(): Promise<void> {
-//     const headers = new HttpHeaders({ 'skipInterceptor': 'true' });
-//         // return this.httpClient.get<any>(API_DynamicPlus,{params,headers});
-//     return this.http
-//       .get('/assets/config.json',{headers})
-//       .toPromise()
-//       .then((result: any) => {
-//         this.config = result;
-//         console.log('Config Loaded: ', this.config.baseUrl);
-//       })
-//       .catch((error) => {
-//         console.error('Config Load Error: ', error);
-//         throw error;
-//       });
-//   }
-  
-
-//   // API URL'sini döner
-//   get apiUrl(): string {
-//     return this.config.baseUrl;
-//   }
-// }
-
-
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { environment as prodEnvironment} from 'src/environments/environment.prod';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ApiUrlService {
-    private config: { baseUrl: string } = { baseUrl: '' };
+  private config: { baseUrl: string } = { baseUrl: '' };
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
+
+  // Config.json'u yükler
+  loadAppConfig(): Promise<void> {
+    const headers = new HttpHeaders({ 'skipInterceptor': 'true' });
+        // return this.httpClient.get<any>(API_DynamicPlus,{params,headers});
+    return this.http
+      .get('/assets/config.json',{headers})
+      .toPromise()
+      .then((result: any) => {
+        this.config = result;
+        console.log('Config Loaded: ', this.config.baseUrl);
+      })
+      .catch((error) => {
+        console.error('Config Load Error: ', error);
+        throw error;
+      });
+  }
+  
+
+  // API URL'sini döner
+  get apiUrl(): string {
+    return this.config.baseUrl;
+  }
+}
+
+
+
+// import { HttpClient, HttpHeaders } from '@angular/common/http';
+// import { Injectable } from '@angular/core';
+
+// @Injectable({
+//     providedIn: 'root'
+// })
+// export class ApiUrlService {
+//     private config: { baseUrl: string } = { baseUrl: '' };
+
+//     constructor(private http: HttpClient) { }
 
     
-    loadAppConfig(): Promise<void> {
-        const headers = new HttpHeaders({ 'skipInterceptor': 'true' });
+//     loadAppConfig(): Promise<void> {
+//         const headers = new HttpHeaders({ 'skipInterceptor': 'true' });
 
-        return this.http
-            .get('/assets/config.json', { headers })
-            .toPromise()
-            .then((result: any) => {
-                const hostname = window.location.hostname; 
-                if (hostname.includes('localhost')) {
-                    return;
-                }
-                const parts = hostname.split('.');
+//         return this.http
+//             .get('/assets/config.json', { headers })
+//             .toPromise()
+//             .then((result: any) => {
+//                 const hostname = window.location.hostname; 
+//                 if (hostname.includes('localhost')) {
+//                     return;
+//                 }
+//                 const parts = hostname.split('.');
 
-                if (parts.length > 0) {
-                    const rawSubdomain = parts[0]; 
-                    const subdomain = rawSubdomain === 'www' ? 'yek' : rawSubdomain; 
-                    const domain = parts.slice(1).join('.'); 
-                    result.baseUrl = `https://${subdomain}gateway.${domain}/api`;
-                }
+//                 if (parts.length > 0) {
+//                     const rawSubdomain = parts[0]; 
+//                     const subdomain = rawSubdomain === 'www' ? 'yek' : rawSubdomain; 
+//                     const domain = parts.slice(1).join('.'); 
+//                     result.baseUrl = `https://${subdomain}gateway.${domain}/api`;
+//                 }
 
-                this.config = result;
-                console.log('Config Loaded: ', this.config.baseUrl);
-            })
-            .catch((error) => {
-                console.error('Config Load Error: ', error);
-                throw error;
-            });
-    }
+//                 this.config = result;
+//                 console.log('Config Loaded: ', this.config.baseUrl);
+//             })
+//             .catch((error) => {
+//                 console.error('Config Load Error: ', error);
+//                 throw error;
+//             });
+//     }
 
-    get apiUrl(): string {
-        return this.config.baseUrl;
-    }
-}
+//     get apiUrl(): string {
+//         return this.config.baseUrl;
+//     }
+// }

@@ -40,6 +40,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { AccessOverviewContentComponent } from './access-dashboard/overview-content/access-overview-content.component';
+import { FormStepperComponent } from '../shared/form-stepper/form-stepper.component';
 
 
 @NgModule({
@@ -87,7 +88,8 @@ import { AccessOverviewContentComponent } from './access-dashboard/overview-cont
     AccessOverviewContentComponent,
     InputIconModule,
     FloatLabelModule,
-    IconFieldModule
+    IconFieldModule,
+    FormStepperComponent
   ]
 
 })

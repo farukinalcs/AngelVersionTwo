@@ -10,7 +10,7 @@ import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 
 @Component({
     selector: 'app-bulletin',
@@ -25,7 +25,7 @@ import { SharedModule } from 'src/app/_angel/shared/shared.module';
         TooltipModule,
         ButtonModule,
         CustomPipeModule,
-        SharedModule
+        DataNotFoundComponent
     ],
     templateUrl: './bulletin.component.html',
     styleUrl: './bulletin.component.scss'

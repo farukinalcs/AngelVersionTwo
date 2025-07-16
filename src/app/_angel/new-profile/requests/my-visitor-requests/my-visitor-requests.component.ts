@@ -10,7 +10,7 @@ import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { VisitorUploadedFilesComponent } from './visitor-uploaded-files/visitor-uploaded-files.component';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 
 @Component({
   selector: 'app-my-visitor-requests',
@@ -19,10 +19,10 @@ import { SharedModule } from 'src/app/_angel/shared/shared.module';
     CommonModule,
     FormsModule,
     DialogModule,
-    SharedModule,
     TranslateModule,
     TooltipModule,
-    VisitorUploadedFilesComponent
+    VisitorUploadedFilesComponent,
+    DataNotFoundComponent
   ],
   templateUrl: './my-visitor-requests.component.html',
   styleUrl: './my-visitor-requests.component.scss'

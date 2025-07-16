@@ -25,7 +25,6 @@ import { UpdateVisitorComponent } from './visitor-grid/update-visitor/update-vis
     BannedVisitorComponent,
     AddBannedVisitorComponent,
     UpdateBannedVisitorComponent,
-    TempCardComponent,
     AddTempCardComponent,
     AddVisitorComponent,
     UpdateVisitorComponent
@@ -41,7 +40,6 @@ export class VisitorsComponent implements OnInit, OnDestroy {
   tabList = [
     { name: this.translateService.instant('Ziyaretçi_Listesi'), type: '1' },
     { name: this.translateService.instant('Yasak_Ziyaretçi_Listesi'), type: '2' },
-    { name: this.translateService.instant('Geçici_Kart_Listesi'), type: '3' }
   ];
   displayAddBanned: boolean = false;
   selectedBanned: any;
@@ -85,11 +83,6 @@ export class VisitorsComponent implements OnInit, OnDestroy {
   }
   
 
-  visibleAddCard() {
-    this.displayAddCard = !this.displayAddCard;
-    
-  }
-
   visibleAddVisitor() {
     this.displayAddVisitor = !this.displayAddVisitor;
   }
@@ -99,9 +92,6 @@ export class VisitorsComponent implements OnInit, OnDestroy {
     switch (event.key) {
       case 'F2':
         this.visibleAddVisitor();
-        break;
-      case 'F8':
-        this.visibleAddCard();
         break;
       case 'F9':
         this.visibleAddBanned();

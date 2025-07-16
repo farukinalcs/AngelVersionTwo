@@ -16,7 +16,7 @@
             <mat-tab label="{{'Onaylananlar' | translate}}">
                 <app-approved-requests [approvedRequests]="onaylananFormlar" [selectedNavItem]="kaynak"
                     [menuItems]="menuItems" (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
-                    (getMyDemandsEvent)="getDemanded($event)"
+                    (getMyDemandsEvent)="getDemanded($event)" (showUploadedFilesEvent)="showUploadedFiles($event)"
                     (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
                 </app-approved-requests>
             </mat-tab>
@@ -24,7 +24,7 @@
             <mat-tab label="{{'Reddedilenler' | translate}}">
                 <app-denied-requests [deniedRequests]="reddedilenFormlar" [selectedNavItem]="kaynak"
                     [menuItems]="menuItems" (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
-                    (getMyDemandsEvent)="getDemanded($event)"
+                    (getMyDemandsEvent)="getDemanded($event)" (showUploadedFilesEvent)="showUploadedFiles($event)"
                     (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
                 </app-denied-requests>
             </mat-tab>

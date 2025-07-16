@@ -3,11 +3,12 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
 import { CarouselModule } from 'primeng/carousel';
+import { DialogModule } from 'primeng/dialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { Subject, takeUntil } from 'rxjs';
 import { SeniorPerson } from 'src/app/_angel/profile/models/seniorPerson';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 import { LayoutService } from 'src/app/_metronic/layout';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
@@ -19,11 +20,12 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
   imports: [
     CommonModule,
     TranslateModule,
-    SharedModule,
     CustomPipeModule,
     TooltipModule,
     MatTabsModule,
-    CarouselModule
+    CarouselModule,
+    DataNotFoundComponent,
+    DialogModule
   ],
   templateUrl: './senior-employees.component.html',
   styleUrl: './senior-employees.component.scss'

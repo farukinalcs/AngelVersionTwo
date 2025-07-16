@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-custom gutter-b" [ngClass]="{'disabled': loading}"
+                [ngStyle]="{ 'opacity': loading ? 0.5 : 1, 'cursor': loading ? 'not-allowed' : 'auto' }">
+
+                <div class="card-header border-0">
+                    <div class="card-title">
+                        <h3 class="card-label">{{"Ziyaretçiler" | translate}} </h3>
+                        <span class="text-gray-500 mt-1 fw-semibold fs-8">Ziyaretçi işlemlerinizi buradan
+                            yapabilirsiniz.</span>
+                    </div>
+
+                    <div class="card-toolbar">
+
+                        <div class="symbol symbol-40px cursor-pointer me-2"
+                            pTooltip="{{'Listeyi_Güncelle' | translate}}" tooltipPosition="top">
+                            <span class="symbol-label symbol-label bg-hover-secondary">
+                                <i class="fas fa-undo-alt fs-3 text-danger"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body pt-3 pb-0">
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-12 d-flex align-sm-items-end gap-2 flex-column flex-sm-row">
+                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="visibleAddCard()">
+                                <i class="fa-solid fa-file-excel"></i>
+                                {{"Geçici_Kart_F8" | translate}}
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-8">
+                        <ul class="nav nav-pills nav-pills-custom item position-relative mx-1 mb-1">
+                            <li class="nav-item col mx-0 p-0" *ngFor="let item of tabList">
+                                <a class="nav-link d-flex justify-content-center w-100 border-0 h-100 cursor-pointer"
+                                    [ngClass]="{'active': selectedTab.type == item.type}" (click)="changeTab(item)">
+                                    <span class="nav-text text-gray-800 fw-bold fs-6 mb-3">
+                                        {{item.name}}
+                                    </span>
+
+                                    <span
+                                        class="bullet-custom position-absolute z-index-2 bottom-0 w-100 h-4px bg-dark rounded"></span>
+                                </a>
+                            </li>
+
+                            <span class="position-absolute z-index-1 bottom-0 w-100 h-4px bg-light rounded"></span>
+                        </ul>
+                    </div>
+
+                    <app-temp-card *ngIf="selectedTab.type == 3" [selectedTab]="selectedTab" [refresh]="refresh">
+                    </app-temp-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-container *ngIf="displayAddCard">
+    <app-add-temp-card [visible]="displayAddCard" (hideEvent)="visibleAddCard()" (refreshEvent)="refreshToggle()">
+    </app-add-temp-card>
+</ng-container>

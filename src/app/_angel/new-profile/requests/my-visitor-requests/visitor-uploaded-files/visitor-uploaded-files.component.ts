@@ -9,7 +9,6 @@ import { DialogModule } from 'primeng/dialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 
 @Component({
@@ -23,7 +22,6 @@ import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
     TooltipModule,
     CustomPipeModule,
     MatProgressSpinnerModule,
-    SharedModule
   ],
   templateUrl: './visitor-uploaded-files.component.html',
   styleUrl: './visitor-uploaded-files.component.scss'

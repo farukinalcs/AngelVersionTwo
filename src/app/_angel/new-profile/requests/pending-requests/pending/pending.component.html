@@ -179,7 +179,7 @@
                                                 <ng-container *ngIf="!item.panelOpenState">
                                                     <ng-container *ngIf="item.Baslangic">
                                                         <div class="text-gray-400 fs-8">
-                                                            {{item.Baslangic | date : 'yyyy-MM-dd'}}
+                                                            {{item.Baslangic | date : 'dd-MM-yyyy'}}
                                                             <span>
                                                                 ({{item.Baslangic | date : 'HH:mm'}})
                                                             </span>
@@ -188,7 +188,7 @@
 
                                                     <ng-container *ngIf="item.Bitis">
                                                         <div class="text-gray-400 fs-8">
-                                                            {{item.Bitis | date : 'yyyy-MM-dd'}}
+                                                            {{item.Bitis | date : 'dd-MM-yyyy'}}
                                                             <span>
                                                                 ({{item.Bitis | date : 'HH:mm'}})
                                                             </span>
@@ -225,14 +225,14 @@
                                     <ng-container *ngIf="item.Baslangic">
                                         <div class="col-6 mt-3 text-center">
                                             <h5>{{"Başlangıç" | translate}}</h5>
-                                            <span class="text-gray-600">{{item.Baslangic | date: 'yyyy-MM-dd - HH:mm'}}</span>
+                                            <span class="text-gray-600">{{item.Baslangic | date: 'dd-MM-yyyy / HH:mm'}}</span>
                                         </div>
                                     </ng-container>
 
                                     <ng-container *ngIf="item.Bitis">
                                         <div class="col-6 mt-3 text-center">
                                             <h5>{{"Bitiş_İş_Başı" | translate}}</h5>
-                                            <span class="text-gray-600">{{item.Bitis | date: 'yyyy-MM-dd - HH:mm'}}</span>
+                                            <span class="text-gray-600">{{item.Bitis | date: 'dd-MM-yyyy / HH:mm'}}</span>
                                         </div>
                                     </ng-container>
 
@@ -265,7 +265,7 @@
                                         <div class="col-12 mt-3 text-center">
                                             <h5>{{"Son" | translate}}</h5>
                                             <span class="text-gray-600">{{item.Onaylayan}}</span>
-                                            <p class="text-gray-600">{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}
+                                            <p class="text-gray-600">{{item.OnayTarih | date : 'dd-MM-yyyy / HH:mm'}}
                                             </p>
                                         </div>
                                     </ng-container>
@@ -380,7 +380,7 @@
 
                                                 <ng-container *ngIf="item.tarih">
                                                     <div class="text-gray-400 fs-8">
-                                                        {{item.tarih | date : 'yyyy-MM-dd'}}
+                                                        {{item.tarih | date : 'dd-MM-yyyy'}}
                                                     </div>
                                                 </ng-container>
 
@@ -417,7 +417,7 @@
                                 <ng-container *ngIf="item.tarih">
                                     <div class="col-6 mt-3 text-center">
                                         <h5>{{"Tarih" | translate}}</h5>
-                                        <span class="text-gray-600">{{ item.tarih | date: 'yyyy-MM-dd' }}</span>
+                                        <span class="text-gray-600">{{ item.tarih | date: 'dd-MM-yyyy' }}</span>
                                     </div>
                                 </ng-container>
 
@@ -449,7 +449,7 @@
                                     <div class="col-12 mt-3 text-center">
                                         <h5>{{"Son" | translate}}</h5>
                                         <span class="text-gray-600">{{item.Onaylayan}}</span>
-                                        <p class="text-gray-600">{{item.OnayTarih | date : 'yyyy-MM-dd - HH:mm'}}</p>
+                                        <p class="text-gray-600">{{item.OnayTarih | date : 'dd-MM-yyyy / HH:mm'}}</p>
                                     </div>
                                 </ng-container>
 
@@ -572,13 +572,13 @@
 
                                     <td class="text-center">
                                         <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Baslangic |
-                                            date: 'yyyy-MM-dd'}}</p>
+                                            date: 'dd-MM-yyyy'}}</p>
                                         <span class="text-muted fw-semibold d-block">{{item.Baslangic | date:
                                             'HH:mm'}}</span>
                                     </td>
 
                                     <td class="text-center">
-                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Bitis | date: 'yyyy-MM-dd'}}
+                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Bitis | date: 'dd-MM-yyyy'}}
                                         </p>
                                         <span class="text-muted fw-semibold d-block">{{item.Bitis | date: 'HH:mm'}}</span>
                                     </td>
@@ -699,7 +699,7 @@
                                     </td>
 
                                     <td class="text-center">
-                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-8">{{item.tarih | date:'yyyy-MM-dd'}}</p>
+                                        <p class="text-dark fw-bold text-hover-danger mb-1 fs-8">{{item.tarih | date:'dd-MM-yyyy'}}</p>
                                     </td>
 
                                     <td class="text-center">
@@ -865,39 +865,19 @@
                                                     <ng-container
                                                         *ngIf="item.tipad == 'Yetki' && item.Baslangic && item.Bitis">
                                                         <td>
-                                                            <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Baslangic | date : 'yyyy-MM-dd'}}</a>
+                                                            <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Baslangic | date : 'dd-MM-yyyy'}}</a>
                                                             <span
                                                                 class="text-muted fw-semibold d-block">{{item.Baslangic | date :'HH:mm'}}</span>
                                                         </td>
 
                                                         <td>
-                                                            <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Bitis | date : 'yyyy-MM-dd'}}</a>
+                                                            <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Bitis | date : 'dd-MM-yyyy'}}</a>
                                                             <span class="text-muted fw-semibold d-block">{{item.Bitis | date :'HH:mm'}}</span>
                                                         </td>
                                                     </ng-container>
 
 
-                                                    <!-- <td>
-                                                        <ng-container *ngIf="item.tipad == 'Yetki' && !item.Baslangic && !item.Bitis">
-                                                            <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{"Süresiz" | translate}}</a>    
-                                                        </ng-container>
-
-                                                        <ng-container *ngIf="item.Baslangic && item.Bitis">
-                                                            <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Baslangic | date : 'yyyy-MM-dd'}}</a>
-                                                            <span class="text-muted fw-semibold d-block">{{item.Baslangic | date :'HH:mm'}}</span>
-                                                        </ng-container>
-                                                    </td>
-    
-                                                    <td>
-                                                        <ng-container *ngIf="item.tipad == 'Yetki' && !item.Baslangic && !item.Bitis">
-                                                            <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{"Süresiz" | translate}}</a>    
-                                                        </ng-container>
-
-                                                        <ng-container *ngIf="item.Baslangic && item.Bitis">
-                                                            <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Bitis | date : 'yyyy-MM-dd'}}</a>
-                                                            <span class="text-muted fw-semibold d-block">{{item.Bitis | date :'HH:mm'}}</span>
-                                                        </ng-container>
-                                                    </td> -->
+                                                    
 
                                                     <td class="text-end text-muted fw-bold fs-4">
                                                         <span
@@ -974,7 +954,7 @@
 
                                                     <td>
                                                         <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">
-                                                            {{item.tarih | date : 'yyyy-MM-dd'}}
+                                                            {{item.tarih | date : 'dd-MM-yyyy'}}
                                                         </a>
                                                     </td>
 
@@ -1098,7 +1078,7 @@
                                                 <td>
                                                     <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Baslangic
                                                         | date :
-                                                        'yyyy-MM-dd'}}</a>
+                                                        'dd-MM-yyyy'}}</a>
                                                     <span class="text-muted fw-semibold d-block">{{item.Baslangic | date
                                                         :'HH:mm'}}</span>
                                                 </td>
@@ -1106,7 +1086,7 @@
                                                 <td>
                                                     <a class="text-dark fw-bold text-hover-danger mb-1 fs-6">{{item.Bitis
                                                         | date :
-                                                        'yyyy-MM-dd'}}</a>
+                                                        'dd-MM-yyyy'}}</a>
                                                     <span class="text-muted fw-semibold d-block">{{item.Bitis | date
                                                         :'HH:mm'}}</span>
                                                 </td>

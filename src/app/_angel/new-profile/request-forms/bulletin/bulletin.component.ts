@@ -12,7 +12,7 @@ import { Dialog } from 'primeng/dialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { FormStepperComponent } from 'src/app/_angel/shared/form-stepper/form-stepper.component';
 import { LayoutService } from 'src/app/_metronic/layout';
 
 @Component({
@@ -23,11 +23,11 @@ import { LayoutService } from 'src/app/_metronic/layout';
         FormsModule,
         ReactiveFormsModule,
         TranslateModule,
-        SharedModule,
         Dialog,
         InlineSVGModule,
         TooltipModule,
-        DatePickerModule
+        DatePickerModule,
+        FormStepperComponent
     ],
     templateUrl: './bulletin.component.html',
     styleUrl: './bulletin.component.scss'

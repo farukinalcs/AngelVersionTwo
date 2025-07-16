@@ -8,6 +8,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InlineSVGModule } from 'ng-inline-svg-2';
 import { ToastrService } from 'ngx-toastr';
 import { DatePickerModule } from 'primeng/datepicker';
+import { DialogModule } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, catchError, combineLatest, debounceTime, map, Observable, of, startWith, Subject, takeUntil } from 'rxjs';
 import { AttendanceService } from 'src/app/_angel/attendance/attendance.service';
@@ -15,7 +16,7 @@ import { OKodFieldsModel } from 'src/app/_angel/profile/models/oKodFields';
 import { UserInformation } from 'src/app/_angel/profile/models/user-information';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { FileUploadComponent } from 'src/app/_angel/shared/file-upload/file-upload.component';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { FormStepperComponent } from 'src/app/_angel/shared/form-stepper/form-stepper.component';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { ThemeModeService } from 'src/app/_metronic/partials/layout/theme-mode-switcher/theme-mode.service';
 import { AuthService, UserType } from 'src/app/modules/auth';
@@ -30,11 +31,12 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
         FormsModule,
         ReactiveFormsModule,
         TranslateModule,
-        SharedModule,
         InlineSVGModule,
         SelectModule,
         FileUploadComponent,
-        DatePickerModule
+        DatePickerModule,
+        FormStepperComponent,
+        DialogModule
     ],
     templateUrl: './leave.component.html',
     styleUrl: './leave.component.scss'

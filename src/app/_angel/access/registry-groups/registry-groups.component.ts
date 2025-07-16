@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { forkJoin, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
-import { SharedModule } from '../../shared/shared.module';
 import { SelectModule } from 'primeng/select';
 import { DialogModule } from 'primeng/dialog';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
@@ -15,6 +14,7 @@ import { RegistriesComponent } from './registries/registries.component';
 import Swal from 'sweetalert2';
 import { TooltipModule } from 'primeng/tooltip';
 import { ToastrService } from 'ngx-toastr';
+import { DataNotFoundComponent } from '../../shared/data-not-found/data-not-found.component';
 
 @Component({
     selector: 'app-registry-groups',
@@ -24,7 +24,6 @@ import { ToastrService } from 'ngx-toastr';
         FormsModule,
         ReactiveFormsModule,
         TranslateModule,
-        SharedModule,
         SelectModule,
         DialogModule,
         CustomPipeModule,
@@ -32,7 +31,8 @@ import { ToastrService } from 'ngx-toastr';
         IconFieldModule,
         FloatLabel,
         RegistriesComponent,
-        TooltipModule
+        TooltipModule,
+        DataNotFoundComponent
     ],
     templateUrl: './registry-groups.component.html',
     styleUrl: './registry-groups.component.scss'

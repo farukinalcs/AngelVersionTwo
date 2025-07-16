@@ -28,11 +28,6 @@
                                 {{"Yeni_Ziyaretçi_F2" | translate}}
                             </a>
 
-                            <a class="btn btn-dark btn-sm hover-elevate-up" (click)="visibleAddCard()">
-                                <i class="fa-solid fa-file-excel"></i>
-                                {{"Geçici_Kart_F8" | translate}}
-                            </a>
-
                             <a class="btn btn-dark btn-sm hover-elevate-up" (click)="visibleAddBanned()">
                                 <i class="fa-solid fa-file-excel"></i>
                                 {{"Yasak_Ziyaretçi_Kaydet_F9" | translate}}
@@ -73,12 +68,6 @@
                         (updateEmit)="visibleUpdateBanned()"
                         [refresh]="refresh">
                     </app-banned-visitor>
-
-                    <app-temp-card *ngIf="selectedTab.type == 3"
-                        [selectedTab]="selectedTab"
-
-                        [refresh]="refresh">
-                    </app-temp-card>
                 </div>
             </div>
         </div>
@@ -105,13 +94,6 @@
     </app-update-banned-visitor>
 </ng-container>
 
-<ng-container *ngIf="displayAddCard">
-    <app-add-temp-card
-        [visible]="displayAddCard"
-        (hideEvent)="visibleAddCard()"
-        (refreshEvent)="refreshToggle()">
-    </app-add-temp-card>
-</ng-container>
 
 <ng-container *ngIf="displayAddVisitor">
     <app-add-visitor

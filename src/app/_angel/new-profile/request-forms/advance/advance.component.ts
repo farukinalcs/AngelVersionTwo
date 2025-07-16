@@ -12,7 +12,7 @@ import { Dialog } from 'primeng/dialog';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { FileUploadComponent } from 'src/app/_angel/shared/file-upload/file-upload.component';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { FormStepperComponent } from 'src/app/_angel/shared/form-stepper/form-stepper.component';
 import { AuthService } from 'src/app/modules/auth';
 
 @Component({
@@ -23,11 +23,11 @@ import { AuthService } from 'src/app/modules/auth';
         FormsModule,
         ReactiveFormsModule,
         TranslateModule,
-        SharedModule,
         Dialog,
         InlineSVGModule,
         FileUploadComponent,
-        DatePickerModule
+        DatePickerModule,
+        FormStepperComponent
     ],
     templateUrl: './advance.component.html',
     styleUrl: './advance.component.scss'

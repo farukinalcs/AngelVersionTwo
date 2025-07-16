@@ -7,7 +7,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { MyPermissions } from 'src/app/_angel/profile/models/myPermissions';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 
@@ -17,9 +17,9 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
   imports: [
     CommonModule,
     TranslateModule,
-    SharedModule,
     MatTooltipModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    DataNotFoundComponent
   ],
   templateUrl: './leaves.component.html',
   styleUrl: './leaves.component.scss'

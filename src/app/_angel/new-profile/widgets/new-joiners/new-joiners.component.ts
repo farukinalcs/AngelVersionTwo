@@ -13,7 +13,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { TranslateModule } from '@ngx-translate/core';
 import { TooltipModule } from 'primeng/tooltip';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 
 @Component({
   selector: 'app-new-joiners',
@@ -27,7 +27,7 @@ import { SharedModule } from 'src/app/_angel/shared/shared.module';
     TranslateModule,
     TooltipModule,
     CustomPipeModule,
-    SharedModule
+    DataNotFoundComponent
   ],
   templateUrl: './new-joiners.component.html',
   styleUrl: './new-joiners.component.scss'

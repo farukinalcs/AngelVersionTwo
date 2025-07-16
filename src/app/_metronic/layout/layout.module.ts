@@ -39,13 +39,7 @@ import { ClassicComponent } from './components/toolbar/classic/classic.component
 import { ExtendedComponent } from './components/toolbar/extended/extended.component';
 import { ReportsComponent } from './components/toolbar/reports/reports.component';
 import { SaasComponent } from './components/toolbar/saas/saas.component';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { SidebarMenuPatrolComponent } from './components/sidebar/sidebar-menu-patrol/sidebar-menu-patrol.component';
-import { SidebarMenuPerformanceComponent } from './components/sidebar/sidebar-menu-performance/sidebar-menu-performance.component';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
 import { HasPermissionDirective } from 'src/app/core/permission/has-permission.directive';
-import { HasPermissionAnyDirective } from 'src/app/core/permission/has-permission-any.directive';
 
 const routes: Routes = [
   {

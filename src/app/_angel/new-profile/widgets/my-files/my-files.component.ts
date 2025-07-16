@@ -7,8 +7,8 @@ import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { MyFilesDetailComponent } from './my-files-detail/my-files-detail.component';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import { DialogModule } from 'primeng/dialog';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
 import { TooltipModule } from 'primeng/tooltip';
+import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 
 @Component({
     selector: 'app-my-files',
@@ -18,8 +18,8 @@ import { TooltipModule } from 'primeng/tooltip';
         TranslateModule,
         MyFilesDetailComponent,
         DialogModule,
-        SharedModule,
-        TooltipModule
+        TooltipModule,
+        DataNotFoundComponent
     ],
     templateUrl: './my-files.component.html',
     styleUrl: './my-files.component.scss'

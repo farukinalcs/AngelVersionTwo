@@ -12,7 +12,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { TooltipModule } from 'primeng/tooltip';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 import Swal from 'sweetalert2';
 
@@ -27,10 +27,10 @@ import Swal from 'sweetalert2';
     MatExpansionModule,
     CustomPipeModule,
     MatCheckboxModule,
-    SharedModule,
     InputIconModule,
     IconFieldModule,
     FloatLabelModule,
+    DataNotFoundComponent
   ],
   templateUrl: './pending.component.html',
   styleUrl: './pending.component.scss'

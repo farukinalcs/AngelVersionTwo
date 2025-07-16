@@ -41,6 +41,7 @@ export const MENU: MenuItem[] = [
             { title: 'Terminal', routerLink: 'access/terminal' },
             { title: 'Geçiş Grupları', routerLink: 'access/access-groups' },
             { title: 'Sicil Grupları', routerLink: 'access/registry-groups'},
+            { title: 'Geçici Kartlar', routerLink: 'access/temp-card'},
             { title: 'Tanımlamalar', routerLink: 'access/definitions' },
             { title: 'Raporlar', routerLink: 'access/raporlar' }
         ],
@@ -103,7 +104,7 @@ export const MENU: MenuItem[] = [
             { title: 'Tanımlamalar', routerLink: 'yemekhane/tanimlamalar' },
             { title: 'Raporlar', routerLink: 'yemekhane/raporlar' }
         ],
-        app: ['1']
+        app: ['1', '5']
     },
     {
         title: 'Kantin',

@@ -79,6 +79,10 @@ const routes: Routes = [
     path: 'raporlar',
     component: RaporlarComponent,
   },
+  {
+    path: 'temp-card',
+    loadComponent: () => import('./access-temp-card/access-temp-card.component').then(m => m.AccessTempCardComponent)
+  }
 ];
 
 
