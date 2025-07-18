@@ -111,12 +111,12 @@ export class ToursComponent implements OnInit, OnDestroy {
 
   updateWidgets() {
     this.widgets = [
-      { title: 'Planlanan Turlar', value: this.dailyGuardTour?.length, index: 0 },
-      { title: 'Atılan Turlar', value: this.atilan?.length, index: 1 },
-      { title: 'Atılmayan Turlar', value: this.atilmayan?.length, index: 2 },
-      { title: 'Atılacak Turlar', value: this.atilacak?.length, index: 3 },
-      { title: 'Alarmlar', value: this.alarmlar?.length, index: 4 },
-      { title: 'Olaylar', value: this.olaylar?.length, index: 5 },
+      { title: 'Planlanan Turlar', value: this.dailyGuardTour?.length, index: 0,  icon: 'fa-solid fa-calendar'},
+      { title: 'Atılan Turlar', value: this.atilan?.length, index: 1,  icon: 'fa-solid fa-route'},
+      { title: 'Atılmayan Turlar', value: this.atilmayan?.length, index: 2,  icon: 'fa-solid fa-user-xmark'},
+      { title: 'Atılacak Turlar', value: this.atilacak?.length, index: 3,  icon: 'fa-solid fa-person-walking-arrow-right'},
+      { title: 'Alarmlar', value: this.alarmlar?.length, index: 4,  icon: 'fa-solid fa-volume-high'},
+      { title: 'Olaylar', value: this.olaylar?.length, index: 5,  icon: 'fa-solid fa-bell'},
     ];
   }
 
