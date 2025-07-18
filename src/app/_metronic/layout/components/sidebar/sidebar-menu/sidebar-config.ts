@@ -38,10 +38,10 @@ export const MENU: MenuItem[] = [
         children: [
             { title: 'Genel Bakış', routerLink: 'access/dashboard' },
             { title: 'Sicil Liste', routerLink: 'access/registry-list' },
+            { title: 'Geçici Kartlar', routerLink: 'access/temp-card'},
             { title: 'Terminal', routerLink: 'access/terminal' },
             { title: 'Geçiş Grupları', routerLink: 'access/access-groups' },
             { title: 'Sicil Grupları', routerLink: 'access/registry-groups'},
-            { title: 'Geçici Kartlar', routerLink: 'access/temp-card'},
             { title: 'Tanımlamalar', routerLink: 'access/definitions' },
             { title: 'Raporlar', routerLink: 'access/raporlar' }
         ],
@@ -91,10 +91,11 @@ export const MENU: MenuItem[] = [
             { title: 'Genel Bakış', routerLink: 'visitor/overview' },
             { title: 'Ziyaretçi Kartları', routerLink: 'visitor/cards' },
             { title: 'Ziyaretçiler', routerLink: 'visitor/visitors' },
+            { title: 'Geçici Kartlar', routerLink: 'visitor/temp-card'},
             { title: 'Tanımlamalar', routerLink: 'visitor/definitions' },
             { title: 'Raporlar', routerLink: 'visitor/reports' }
         ],
-        app: ['1']
+        app: ['1', '5']
     },
     {
         title: 'Yemekhane',
@@ -104,7 +105,7 @@ export const MENU: MenuItem[] = [
             { title: 'Tanımlamalar', routerLink: 'yemekhane/tanimlamalar' },
             { title: 'Raporlar', routerLink: 'yemekhane/raporlar' }
         ],
-        app: ['1', '5']
+        app: ['1', '6']
     },
     {
         title: 'Kantin',

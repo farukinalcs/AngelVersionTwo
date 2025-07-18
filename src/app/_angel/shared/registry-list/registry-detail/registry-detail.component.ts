@@ -6,7 +6,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InlineSVGModule } from 'ng-inline-svg-2';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from '../../shared.module';
+import { PersonalInfoComponent } from '../registry-card/personal-info/personal-info.component';
 
 @Component({
     selector: 'app-registry-detail',
@@ -16,7 +16,7 @@ import { SharedModule } from '../../shared.module';
         FormsModule,
         TranslateModule,
         InlineSVGModule,
-        SharedModule
+        PersonalInfoComponent
     ],
     templateUrl: './registry-detail.component.html',
     styleUrl: './registry-detail.component.scss'

@@ -19,7 +19,7 @@ export class ApiUrlService {
             .then((result: any) => {
                 const hostname = window.location.hostname; 
                 if (hostname.includes('localhost')) {
-                        result.baseUrl = "https://yekgateway.mecloud.com.tr/api"
+                    this.config = result;
                     return;
                 }
                 const parts = hostname.split('.');

@@ -1,0 +1,390 @@
+<p-dialog header="{{'İzin_Talep_Formu' | translate}}" [(visible)]="displayVacationForm" (onHide)="closedFormDialog()"
+    [modal]="true" [breakpoints]="{ '2560px': '70vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true"
+    [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+
+    <div class="container py-0 px-5">
+        <div class="container">
+            <div class="row">
+                <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid">
+
+                    <ng-container *ngIf="currentStep$.value != 6">
+                        <div
+                            class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                            <div class="stepper-nav d-flex justify-content-center">
+                                <img src="../../../../../assets/media/illustrations/storyset-1/3.svg" width="100%"
+                                    alt="">
+                            </div>
+                        </div>
+
+
+                        <app-form-stepper class="d-flex align-item-center" [stepperFields]="stepperFields" [lineHeight]="'h-30px'"></app-form-stepper>
+                    </ng-container>
+
+
+                    <div class="row gap-5"
+                        [ngClass]="{'w-xl-700px': currentStep$.value != 6, 'w-100': currentStep$.value == 6 }">
+                        <div class="col-12">
+                            <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10"
+                                [formGroup]="vacationForm">
+
+
+
+                                <ng-container *ngIf="currentStep$.value == 1">
+                                    <div class="current">
+                                        <div class="w-100">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"İzin_Tipi" | translate}}</span>
+                                                    </label>
+
+
+
+                                                    <p-select [options]="vacationReasons" formControlName="vacationType"
+                                                        optionLabel="ad"
+                                                        emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}"
+                                                        [filter]="true" filterBy="ad" [showClear]="true"
+                                                        placeholder="{{'İzin_Tipi_Seçiniz' | translate}}"
+                                                        class="w-100 md:w-56">
+                                                        <ng-template #selectedItem let-selected>
+                                                            <div class="flex items-center gap-2">
+                                                                <div>{{ vacationForm.get('vacationType')?.value?.ad }}
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template let-item #item>
+                                                            <div class="flex items-center gap-2">
+                                                                <div>{{ item?.ad }}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </p-select>
+
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
+                                                        validation: 'required',
+                                                        message: translateService.instant('Boş_Geçilemez'),
+                                                        control: vacationForm.controls['vacationType']
+                                                        }">
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </ng-container>
+
+                                <ng-container *ngIf="currentStep$.value == 2">
+                                    <div class="current">
+                                        <div class="w-100">
+                                            <div class="row">
+                                                <div class="col-12 col-md-6 p-5">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Başlangıç_Tarihi" | translate}}</span>
+                                                    </label>
+
+                                                    <p-datepicker formControlName="startDate" [readonlyInput]="true"
+                                                        dateFormat="yy-mm-dd" dataType="string" appendTo="body"
+                                                        placeholder="Tarih Seçiniz" />
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
+                                                        validation: 'required',
+                                                        message: translateService.instant('Boş_Geçilemez'),
+                                                        control: vacationForm.controls['startDate']
+                                                        }">
+                                                    </ng-container>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 p-5">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Başlangıç_Saati" |
+                                                            translate}}</span>
+                                                    </label>
+
+                                                    <p-datepicker formControlName="startTime" [timeOnly]="true"
+                                                        dataType="string" appendTo="body" placeholder="Saat Seçiniz" />
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
+                                                            validation: 'required',
+                                                            message: translateService.instant('Boş_Geçilemez'),
+                                                            control: vacationForm.controls['startTime']
+                                                            }">
+                                                    </ng-container>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 p-5">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Bitiş_Tarihi" | translate}}</span>
+                                                    </label>
+
+
+                                                    <p-datepicker formControlName="endDate" [readonlyInput]="true"
+                                                        dateFormat="yy-mm-dd" dataType="string" appendTo="body"
+                                                        placeholder="Tarih Seçiniz" />
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
+                                                        validation: 'required',
+                                                        message: translateService.instant('Boş_Geçilemez'),
+                                                        control: vacationForm.controls['endDate']
+                                                        }">
+                                                    </ng-container>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 p-5">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Bitiş_Saati" | translate}}</span>
+                                                    </label>
+
+                                                    <p-datepicker formControlName="endTime" [timeOnly]="true"
+                                                        dataType="string" appendTo="body" placeholder="Saat Seçiniz" />
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
+                                                            validation: 'required',
+                                                            message: translateService.instant('Boş_Geçilemez'),
+                                                            control: vacationForm.controls['endTime']
+                                                            }">
+                                                    </ng-container>
+                                                </div>
+
+                                                <div
+                                                    class="border border-danger border-dashed rounded text-center min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <ng-container *ngIf="calcTimeDesc">
+                                                            <div
+                                                                [ngClass]="{'placeholder-glow': loadingStates.calculate}">
+                                                                <div class="fs-2 fw-bolder"
+                                                                    [ngClass]="{'placeholder': loadingStates.calculate}">
+                                                                    {{calcTimeDesc}}</div>
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="!calcTimeDesc">
+                                                            <div
+                                                                [ngClass]="{'placeholder-glow': loadingStates.calculate}">
+                                                                <div class="fs-2 fw-bolder"
+                                                                    [ngClass]="{'placeholder': loadingStates.calculate}">
+                                                                    {{calcTimeValue}} Saat</div>
+                                                            </div>
+                                                        </ng-container>
+                                                    </div>
+
+
+                                                    <div class="fw-bold fs-6 text-gray-400 text-center">
+                                                        {{"Hesaplanan_İzin_Süresi" | translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="currentStep$.value == 3">
+                                    <div class="current">
+                                        <div class="w-100">
+                                            <div class="row">
+                                                <div class="col-12 mb-10">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"İzin_Adresi" | translate}}</span>
+                                                    </label>
+
+                                                    <textarea class="form-control form-control-solid" rows="3"
+                                                        formControlName="address"
+                                                        placeholder="{{'Adres_Giriniz' | translate}}">
+
+                                                    </textarea>
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
+                                                        validation: 'required',
+                                                        message: translateService.instant('Boş_Geçilemez'),
+                                                        control: vacationForm.controls['address']
+                                                        }">
+                                                    </ng-container>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Açıklama" | translate}}</span>
+                                                    </label>
+
+                                                    <textarea class="form-control form-control-solid" rows="3"
+                                                        formControlName="explanation"
+                                                        placeholder="{{'Açıklama_Giriniz' | translate}}">
+
+                                                    </textarea>
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
+                                                        validation: 'required',
+                                                        message: translateService.instant('Boş_Geçilemez'),
+                                                        control: vacationForm.controls['explanation']
+                                                        }">
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="currentStep$.value == 4">
+                                    <div class="border border-3 rounded-5">
+                                        <div class="row py-1 px-4">
+
+                                            <div class="col-12 d-flex justify-content-center pb-3">
+                                                <span
+                                                    class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Talep_Sahibi"
+                                                    | translate}}</span>
+                                            </div>
+
+                                            <div class="col-12 d-flex justify-content-center  pb-3"
+                                                *ngIf="this.authService.currentUserSubject | async as _user">
+                                                <span class="text-gray-800 fs-6 fw-bolder">{{_user.adsoyad}}</span>
+                                                <span class="text-muted fw-bold d-block fs-7"></span>
+                                            </div>
+
+                                            <div class="separator mb-4"></div>
+
+                                            <div>
+                                                <div class="col-12 d-flex justify-content-center">
+                                                    <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"İzin_Talep_Formu" | translate}}</span>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div class="row text-center">
+                                                        <div class="col-12 py-2">
+                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"İzin_Tipi" |
+                                                                translate}}:</span>
+                                                            <span class="text-muted fw-bold d-block fs-7">
+                                                                {{vacationFormValues.vacationType.ad}} </span>
+                                                        </div>
+
+                                                        <div class="col-12 py-2">
+                                                            <span
+                                                                class="text-gray-800  fs-6 fw-bolder">{{"Başlangıç_Tarihi"
+                                                                |
+                                                                translate}}:</span>
+                                                            <span class="text-muted fw-bold d-block fs-7">
+                                                                {{vacationFormValues.startDate}}
+                                                                <ng-container *ngIf="vacationFormValues.startTime">
+                                                                    {{vacationFormValues.startTime}}
+                                                                </ng-container>
+                                                            </span>
+                                                        </div>
+
+                                                        <div class="col-12 py-2">
+                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Bitiş_Tarihi"
+                                                                | translate}}:</span>
+                                                            <span class="text-muted fw-bold d-block fs-7">
+                                                                {{vacationFormValues.endDate}}
+                                                                <ng-container *ngIf="vacationFormValues.endTime">
+                                                                    {{vacationFormValues.endTime}}
+                                                                </ng-container>
+                                                            </span>
+                                                        </div>
+
+                                                        <div class="col-12 py-2">
+                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"İzin_Adresi"
+                                                                | translate}}:</span>
+                                                            <span class="text-muted fw-bold d-block fs-7">
+                                                                {{vacationFormValues.address}} </span>
+                                                        </div>
+
+                                                        <div class="col-12 py-2">
+                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Açıklama" |
+                                                                translate}}:</span>
+                                                            <span class="text-muted fw-bold d-block fs-7">
+                                                                {{vacationFormValues.explanation}} </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+
+                                <ng-container *ngIf="currentStep$.value == 5">
+                                    <div class="row">
+                                        <app-file-upload [types]="fileTypes" (uploadEvent)="onUploaded($event)"
+                                            [formId]="formId" [source]="'izin'">
+
+                                        </app-file-upload>
+                                    </div>
+                                </ng-container>
+                            </form>
+                        </div>
+
+                        <div class="col-12 d-flex align-items-end justify-content-center justify-content-md-end">
+                            <div class="d-flex flex-stack pt-0">
+                                <div class="mr-2">
+                                    <ng-container *ngIf=" 5 > currentStep$.value && currentStep$.value > 1">
+                                        <button type="button" class="btn btn-sm btn-light-danger me-3"
+                                            (click)="prevStep()">
+                                            <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                                                class="svg-icon svg-icon-4 me-1"></span>
+                                            {{"Geri" | translate}}
+                                        </button>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="currentStep$.value == formsCount">
+                                        <button mat-dialog-close type="button" class="btn btn-sm btn-light-danger me-3">
+                                            <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                                                class="svg-icon svg-icon-4 me-1"></span>
+                                            {{"Kapat" | translate}}
+                                        </button>
+                                    </ng-container>
+                                </div>
+
+                                <ng-container *ngIf="currentStep$.value != 5">
+                                    <ng-container *ngIf="currentStep$.value !== formsCount">
+                                        <div>
+                                            <ng-container *ngIf="currentStep$.value < formsCount - 1">
+                                                <button type="button" class="btn btn-sm btn-danger me-3"
+                                                    (click)="nextStep()">
+                                                    <span class="indicator-label">
+                                                        {{"İleri" | translate}} {{ " " }}
+                                                        <span
+                                                            [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
+                                                            class="svg-icon svg-icon-3 ms-2 me-0"></span>
+                                                        <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                            {{"Gönder" | translate}}
+                                                        </ng-container>
+                                                    </span>
+                                                </button>
+                                            </ng-container>
+                                            <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                <button type="button" class="btn btn-sm btn-danger me-3"
+                                                    (click)="closedFormDialog()">
+                                                    <span class="indicator-label">
+                                                            {{"İptal" | translate}}
+                                                    </span>
+                                                </button>
+                                            </ng-container>
+
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</p-dialog>
+
+
+
+
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+    <ng-container *ngIf="control.hasError(validation)">
+        <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+                <span role="alert">
+                    {{ message }}
+                </span>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

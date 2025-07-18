@@ -186,7 +186,7 @@
                                         </div>
                                     </div>
 
-                                    <button class="btn bg-white bg-hover-secondary btn-sm d-flex align-items-center">
+                                    <button class="btn bg-white bg-hover-secondary btn-sm d-flex align-items-center" (click)="onShowForm(record)">
                                         <i class="fas fa-plus me-1"></i> Talep Oluştur
                                     </button>
                                 </div>
@@ -228,4 +228,11 @@
         </ng-template>
     </p-dialog>
 
+</ng-container>
+
+
+
+
+<ng-container *ngIf="displayVacationForm">
+    <app-create-request [displayVacationForm]="displayVacationForm" (onHideVacationForm)="onHideForm()" [record]="selectedRecord"></app-create-request>
 </ng-container>

@@ -417,6 +417,23 @@
 
                                         <div class="col-6 p-3">
                                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
+                                                <span>{{"Telefon Numarası" | translate}}</span>
+                                            </label>
+
+                                            <input type="tel" class="form-control form-control-sm form-control-solid"
+                                                placeholder="{{'Telefon Numarası Giriniz'| translate}}" formControlName="phone">
+                                            
+
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'required',
+                                                message: translateService.instant('Boş_Geçilemez'),
+                                                control: visitTypeForm.controls['phone']
+                                                }">
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="col-6 p-3">
+                                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
                                                 <span>{{"Firma" | translate}}</span>
                                             </label>
 
@@ -485,7 +502,7 @@
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'maxLength',
                                                 message: translateService.instant('Karakter_Limitini_Aştınız'),
-                                                control: visitTypeForm.controls['email']
+                                                control: visitTypeForm.controls['description']
                                                 }">
                                             </ng-container>
                                         </div>
@@ -666,6 +683,11 @@
                                                     <label class="fw-bold text-gray-700">{{ "Email" | translate
                                                         }}:</label>
                                                     <p class="text-muted">{{ visitorFormValues.email }}</p>
+                                                </div>
+
+                                                <div>
+                                                    <label class="fw-bold text-gray-700">{{ "Telefon" | translate }}:</label>
+                                                    <p class="text-muted">{{ visitorFormValues.phone }}</p>
                                                 </div>
 
                                                 <div *ngIf="visitorFormValues.company.ID != '0'">

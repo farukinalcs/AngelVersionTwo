@@ -176,6 +176,7 @@ export class VisitorComponent implements OnInit, OnDestroy {
       name: [''],
       surname: [''],
       email: ['', Validators.compose([Validators.required, Validators.email]) ],
+      phone: ['', Validators.required],
       company: ['', Validators.required],
       description: ['', [Validators.required, Validators.maxLength(500)]],
       type: ['', Validators.required],

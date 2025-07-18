@@ -4,9 +4,9 @@ import { ProfileService } from '../../profile/profile.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SharedModule } from '../../shared/shared.module';
 import { CardMenuComponent } from '../../shared/dashboard-card/card-menu/card-menu.component';
 import { OverviewContentComponent } from './overview-content/overview-content.component';
+import { DashboardCardComponent } from '../../shared/dashboard-card/dashboard-card.component';
 
 @Component({
   selector: 'app-overview',
@@ -15,9 +15,9 @@ import { OverviewContentComponent } from './overview-content/overview-content.co
     CommonModule,
     FormsModule,
     TranslateModule,
-    SharedModule,
     CardMenuComponent,
-    OverviewContentComponent
+    OverviewContentComponent,
+    DashboardCardComponent
   ],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'

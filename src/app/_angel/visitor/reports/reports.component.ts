@@ -6,8 +6,11 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ProfileService } from '../../profile/profile.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SharedModule } from '../../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { BoldReportComponent } from '../../shared/bold-report/bold-report.component';
+import { ReportParamsComponent } from '../../shared/bold-report/report-params/report-params.component';
+import { ReportCategoryComponent } from '../../shared/bold-report/report-category/report-category.component';
+import { ReportListComponent } from '../../shared/bold-report/report-list/report-list.component';
 
 @Component({
   selector: 'app-reports',
@@ -15,8 +18,11 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     CommonModule,
     FormsModule,
-    SharedModule,
-    TranslateModule
+    TranslateModule,
+    BoldReportComponent,
+    ReportParamsComponent,
+    ReportCategoryComponent,
+    ReportListComponent
   ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss'

@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AttendanceRoutingModule } from './attendance-routing.module';
-import { AttendanceListComponent } from './attendance-list/attendance-list.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProgressBarModule } from 'primeng/progressbar';
@@ -12,11 +10,9 @@ import { AttendanceManagementSystemComponent } from './attendance-management-sys
 import { InlineSVGModule } from 'ng-inline-svg-2';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 import { OrganizationColumnFilterComponent } from './organization-column-filter/organization-column-filter.component';
-import { AttendanceListFilterComponent } from './attendance-list-filter/attendance-list-filter.component';
 import { DialogModule } from 'primeng/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DropdownModule } from 'primeng/dropdown';
-import { SharedModule } from '../shared/shared.module';
 import { AttendancePivotListComponent } from './attendance-pivot-list/attendance-pivot-list.component';
 import { DrawersModule } from 'src/app/_metronic/partials';
 import { ProcessChangeComponent } from './attendance-pivot-list/process-change/process-change.component';
@@ -24,7 +20,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AttendanceDashboardComponent } from './attendance-dashboard/attendance-dashboard.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { AttendanceRegistryListComponent } from './attendance-registry-list/attendance-registry-list.component';
 import { CarouselModule } from 'primeng/carousel';
 import { TooltipModule } from 'primeng/tooltip';
 import { AttendanceDefinitionsComponent } from './attendance-definitions/attendance-definitions.component';
@@ -53,73 +48,71 @@ import { InputIconModule } from 'primeng/inputicon';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { AttendanceOverviewContentComponent } from './attendance-dashboard/overview-content/attendance-overview-content.component';
 import { DataNotFoundComponent } from '../shared/data-not-found/data-not-found.component';
+import { DashboardCardComponent } from '../shared/dashboard-card/dashboard-card.component';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
-  declarations: [
-    AttendanceListComponent,
-    AttendanceDefinitionsComponent,
-    AttendanceReportComponent,
-    AttendanceManagementSystemComponent,
-    OrganizationColumnFilterComponent,
-    AttendanceListFilterComponent,
-    AttendancePivotListComponent,
-    ProcessChangeComponent,
-    LevelDefinitionComponent,
-    OvertimeCausesComponent,
-    AttendanceRestrictionComponent,
-    FormMailsComponent,
-    ExcuseCardPermissionAssignmentComponent,
-    ShiftPlanningComponent,
-    BreakTimesComponent,
-    SplitTheDayComponent,
-    AdvertComponent,
-    PermitTypesComponent,
-    HolidayTypesComponent,
-    ShiftsComponent,
-    OverrideComponent,
-    ShiftGroupsComponent,
-    ShiftPeriodsComponent,
-    AttendanceDashboardComponent,
-    AttendanceRegistryListComponent
-  ],
+    declarations: [
+        AttendanceDefinitionsComponent,
+        AttendanceManagementSystemComponent,
+        OrganizationColumnFilterComponent,
+        LevelDefinitionComponent,
+        OvertimeCausesComponent,
+        AttendanceRestrictionComponent,
+        FormMailsComponent,
+        ExcuseCardPermissionAssignmentComponent,
+        ShiftPlanningComponent,
+        BreakTimesComponent,
+        SplitTheDayComponent,
+        AdvertComponent,
+        PermitTypesComponent,
+        HolidayTypesComponent,
+        ShiftsComponent,
+        OverrideComponent,
+        ShiftGroupsComponent,
+        ShiftPeriodsComponent,
+        AttendanceDashboardComponent,
+    ],
 
-  imports: [
-    CommonModule,
-    AttendanceRoutingModule,
-    AgGridModule,
-    FormsModule,
-    TranslateModule,
-    MatProgressSpinnerModule,
-    ProgressBarModule,
-    ReactiveFormsModule,
-    InlineSVGModule,
-    CustomPipeModule,
-    DialogModule,
-    MatExpansionModule,
-    DropdownModule,
-    // ProfileModule,
-    SharedModule,
-    DrawersModule,
-    MatTooltipModule,
-    MatTabsModule,
-    NgApexchartsModule,
-    CarouselModule,
-    TooltipModule,
-    OvertimeComponent,
-    AttendanceChangeComponent,
-    ShiftChangeComponent,
-    LeaveComponent,
-    DatePickerModule,
-    InputIconModule,
-    IconFieldModule,
-    FloatLabelModule,
-    AttendanceOverviewContentComponent,
-    DataNotFoundComponent
-  ],
-  
-  exports: [
-    AttendanceManagementSystemComponent,
-    AttendanceListFilterComponent
-  ]
+    imports: [
+        CommonModule,
+        AttendanceRoutingModule,
+        AgGridModule,
+        FormsModule,
+        TranslateModule,
+        MatProgressSpinnerModule,
+        ProgressBarModule,
+        ReactiveFormsModule,
+        InlineSVGModule,
+        CustomPipeModule,
+        DialogModule,
+        MatExpansionModule,
+        DropdownModule,
+        DrawersModule,
+        MatTooltipModule,
+        MatTabsModule,
+        NgApexchartsModule,
+        CarouselModule,
+        TooltipModule,
+        OvertimeComponent,
+        AttendanceChangeComponent,
+        ShiftChangeComponent,
+        LeaveComponent,
+        DatePickerModule,
+        InputIconModule,
+        IconFieldModule,
+        FloatLabelModule,
+        AttendanceOverviewContentComponent,
+        DataNotFoundComponent,
+        DashboardCardComponent,
+        ButtonModule,
+        InputTextModule
+
+    ],
+
+    exports: [
+        AttendanceManagementSystemComponent,
+    ]
 })
 export class AttendanceModule { }

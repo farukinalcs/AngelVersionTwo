@@ -20,10 +20,32 @@ import { CustomInfoComponent } from '../registry-card/custom-info/custom-info.co
 import { OrganizationInfoComponent } from '../registry-card/organization-info/organization-info.component';
 import { ContactInfoComponent } from '../registry-card/contact-info/contact-info.component';
 import { PersonalInfoComponent } from '../registry-card/personal-info/personal-info.component';
+import { CommonModule } from '@angular/common';
+import { SplitsComponent } from '../registry-card/splits/splits.component';
+import { FilesComponent } from '../registry-card/files/files.component';
+import { WorkingPeriodsComponent } from '../registry-card/working-periods/working-periods.component';
+import { RegisterHistoryComponent } from '../registry-card/register-history/register-history.component';
+import { ApplicationUseComponent } from '../registry-card/application-use/application-use.component';
 
 @Component({
     selector: 'app-new-registry-card',
-    standalone: false,
+    standalone: true,
+    imports: [
+        CommonModule,
+        SplitsComponent,
+        FilesComponent,
+        WorkingPeriodsComponent,
+        RegisterHistoryComponent,
+        ApplicationUseComponent,
+        RegisterAuthorizedAreasComponent,
+        AccessGroupComponent,
+        AccessInfoComponent,
+        ShiftInfoComponent,
+        CustomInfoComponent,
+        OrganizationInfoComponent,
+        ContactInfoComponent,
+        PersonalInfoComponent
+    ],
     templateUrl: './new-registry-card.component.html',
     styleUrl: './new-registry-card.component.scss'
 })

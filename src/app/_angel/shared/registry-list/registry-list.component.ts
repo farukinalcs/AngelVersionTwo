@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { AgGridAngular } from 'ag-grid-angular';
+import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
 import { _, ColumnApi, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, GridOptions, GridReadyEvent, RowHeightParams } from 'ag-grid-community';
 import { ColDef, ColGroupDef, IMultiFilterParams, IRowNode, IsRowSelectable, SideBarDef, StatusPanelDef, ValueFormatterParams, GridApi } from 'ag-grid-enterprise';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
@@ -16,9 +16,21 @@ import { OrganizationColumnFilterComponent } from '../../attendance/organization
 import { Router } from '@angular/router';
 import { AG_GRID_LOCALE_TR } from '@ag-grid-community/locale';
 import { ImageTooltipRendererComponent } from './image-renderer/image-tooltip-renderer.component';
+import { CommonModule } from '@angular/common';
+import { BulkRegistryChangeComponent } from './bulk-registry-change/bulk-registry-change.component';
+import { RegistryFilterComponent } from './registry-filter/registry-filter.component';
+import { RegistryCardComponent } from './registry-card/registry-card.component';
 
 @Component({
     selector: 'app-registry-list',
+    standalone: true,
+    imports: [
+        CommonModule,
+        BulkRegistryChangeComponent,
+        RegistryFilterComponent,
+        RegistryCardComponent,
+        AgGridModule
+    ],
     templateUrl: './registry-list.component.html',
     styleUrls: ['./registry-list.component.scss']
 })

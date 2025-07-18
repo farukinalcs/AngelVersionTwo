@@ -13,7 +13,7 @@ import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { FormStepperComponent } from 'src/app/_angel/shared/form-stepper/form-stepper.component';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
+import { SicilListeComponent } from 'src/app/_angel/shared/sicil-liste/sicil-liste.component';
 import { AuthMenuModel } from 'src/app/_metronic/core/auth-menu-model';
 import { AuthMenuService } from 'src/app/_metronic/core/services/auth-menu.service';
 import { AuthService, UserType } from 'src/app/modules/auth';
@@ -26,13 +26,13 @@ import { AuthService, UserType } from 'src/app/modules/auth';
     FormsModule,
     Dialog,
     ReactiveFormsModule,
-    SharedModule,
     DropdownModule,
     TranslateModule,
     InlineSVGModule,
     SelectModule,
     DatePickerModule,
-    FormStepperComponent
+    FormStepperComponent,
+    SicilListeComponent
   ],
   templateUrl: './authority.component.html',
   styleUrl: './authority.component.scss'

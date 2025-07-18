@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { DatePickerModule } from 'primeng/datepicker';
+import { DropdownModule } from 'primeng/dropdown';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
@@ -9,6 +12,14 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 
 @Component({
     selector: 'app-report-params',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        DropdownModule,
+        ReactiveFormsModule,
+        DatePickerModule
+    ],
     templateUrl: './report-params.component.html',
     styleUrls: ['./report-params.component.scss']
 })

@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
@@ -21,6 +22,7 @@ import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
     InputIconModule,
     IconFieldModule,
     FloatLabelModule,
+    InputTextModule
   ],
   templateUrl: './custom-code-assignment.component.html',
   styleUrl: './custom-code-assignment.component.scss'

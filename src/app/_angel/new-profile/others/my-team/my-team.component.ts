@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { Subject, takeUntil } from 'rxjs';
 import { MyTeamModel } from 'src/app/_angel/profile/models/myTeam';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
@@ -24,6 +25,8 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
         InputIconModule,
         IconFieldModule,
         FloatLabelModule,
+        InputTextModule
+
     ],
     templateUrl: './my-team.component.html',
     styleUrl: './my-team.component.scss'

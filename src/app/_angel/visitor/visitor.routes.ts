@@ -14,6 +14,10 @@ export const visitorRoutes: Routes = [
     loadComponent: () => import('./visitors/visitors.component').then(m => m.VisitorsComponent),
   },
   {
+    path: 'temp-card',
+    loadComponent: () => import('./visitor-temp-card/visitor-temp-card.component').then(m => m.VisitorTempCardComponent),
+  },
+  {
     path: 'definitions',
     loadChildren: () =>
       import('./definitions/definitions.routes').then(m => m.definitionsRoutes),

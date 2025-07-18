@@ -8,13 +8,14 @@ import { DialogModule } from 'primeng/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { DemandProcessModel } from 'src/app/_angel/profile/models/demandProcess';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { UploadedFilesComponent } from './uploaded-files/uploaded-files.component';
 import { DeniedRequestsComponent } from '../my-requests/denied-requests/denied-requests.component';
 import { ApprovedRequestsComponent } from '../my-requests/approved-requests/approved-requests.component';
 import { PendingComponent } from './pending/pending.component';
+import { DetailSearchComponent } from 'src/app/_angel/shared/detail-search/detail-search.component';
+import { RequestProcessComponent } from 'src/app/_angel/shared/request-process/request-process.component';
 
 @Component({
     selector: 'app-pending-requests',
@@ -25,11 +26,12 @@ import { PendingComponent } from './pending/pending.component';
         TranslateModule,
         MatTabsModule,
         DialogModule,
-        SharedModule,
         UploadedFilesComponent,
         DeniedRequestsComponent,
         ApprovedRequestsComponent,
-        PendingComponent
+        PendingComponent,
+        DetailSearchComponent,
+        RequestProcessComponent
     ],
     templateUrl: './pending-requests.component.html',
     styleUrl: './pending-requests.component.scss'

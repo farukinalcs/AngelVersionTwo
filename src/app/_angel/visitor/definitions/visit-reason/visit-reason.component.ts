@@ -7,6 +7,7 @@ import { Dialog, DialogModule } from 'primeng/dialog';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
@@ -25,6 +26,7 @@ import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
     InputIconModule,
     IconFieldModule,
     FloatLabelModule,
+    InputTextModule
   ],
   templateUrl: './visit-reason.component.html',
   styleUrl: './visit-reason.component.scss'
