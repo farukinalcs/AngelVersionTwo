@@ -12,6 +12,7 @@ import { FormControl } from '@angular/forms';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { Incident } from '../models/incident';
+import { LocationService } from '../content-container/location.service';
 
 @Component({
   selector: 'app-device-andmap',
@@ -21,7 +22,7 @@ import { Incident } from '../models/incident';
 
 
 export class DeviceAndmapComponent {
-
+  locationSub!: Subscription;
   private hubConnection!: signalR.HubConnection;
 
   private ngUnsubscribe = new Subject();
@@ -29,7 +30,7 @@ export class DeviceAndmapComponent {
   dateControl = new FormControl();
   selectedDate: Date = new Date();
   formattedDate: string = '';
-  _locations: any[] = [];
+  selectedLocationID : number;
   displayList: any[] = [];
   patrolInfo: any[] = [];
   guardEventList: any[] = [];
@@ -40,7 +41,7 @@ export class DeviceAndmapComponent {
   mobileClientInfos: any[] = [];
   intervalId:any;
   allClitenInfos: any[] = [];
-  selectLocationId: number;
+  
   map: google.maps.Map | undefined;
   latitude: any = "";
   longitude: any = "";
@@ -52,7 +53,8 @@ export class DeviceAndmapComponent {
     private translateService: TranslateService,
     private datePipe: DatePipe,
     private signalRService: SignalrPatrolService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private location :LocationService
 
   ) { }
 
@@ -72,8 +74,8 @@ export class DeviceAndmapComponent {
     this.startConnection(this.helperService.gateResponseY, 'https://mecloud.com.tr:8011/angelhub');
     this.intervalId = setInterval(() => {
       this.updateOnlineStatus();
-      this.ref.detectChanges(); // DOM'u güncelle
-    }, 1000); // her 10 saniyede bir
+      this.ref.detectChanges(); 
+    }, 1000);
   }
 
 
@@ -97,16 +99,23 @@ export class DeviceAndmapComponent {
     });
 
     console.log('Harita yüklendi:', this.map);
-    this.getPatrolInfo(this.selectLocationId);
+    //this.getPatrolInfo(this.selectLocationId);
   }
 
   getLocation() {
-    this.patrol.getLocation().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-      this._locations = response[0].x;
-      console.log("getLocation:", this._locations);
-      this.selectLocationId = this._locations[0]?.id;
-      this.ref.detectChanges();
-      this.getPatrolInfo(this.selectLocationId);
+    // this.patrol.getLocation().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    //   this._locations = response[0].x;
+    //   console.log("getLocation:", this._locations);
+    //   this.selectLocationId = this._locations[0]?.id;
+    //   this.ref.detectChanges();
+    //   this.getPatrolInfo(this.selectLocationId);
+    // });
+    this.locationSub = this.location.selectedLocationId$.subscribe(locationId => {
+      if (locationId !== null) {
+        this.selectedLocationID = locationId;
+        console.log("DMLocation:", locationId);
+        this.getPatrolInfo(locationId);
+      }
     });
   }
 
@@ -148,10 +157,9 @@ export class DeviceAndmapComponent {
             new google.maps.Marker({
               position: { lat: +patrol?.lat, lng: +patrol?.lng },
               map: this.map,
-              title: patrol?.name,
-              icon: patrol?.durum === 'offline'
-                ? 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-                : 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+              title: patrol?.terminalname,
+              icon:
+              'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
             });
           } else {
             console.warn('Geçersiz marker koordinatları:', patrol);
@@ -177,12 +185,6 @@ export class DeviceAndmapComponent {
     })
   }
 
-  changeLocation(locationid: number) {
-    this.displayList = [];
-    console.log("changeLocation", locationid);
-    this.selectLocationId = locationid;
-    this.getPatrolInfo(locationid);
-  }
 
   public startConnection(accessToken: string, serverUrl: string): void {
     this.hubConnection = new signalR.HubConnectionBuilder()
@@ -250,7 +252,7 @@ export class DeviceAndmapComponent {
   
 
             const lokasyonfilter = newClientInfos.filter(x=>  
-              x.LokasyonId == this.selectLocationId
+              x.LokasyonId == this.selectedLocationID
             )
 
             // ❗ Sadece yeni olanları ekle (imei ile karşılaştır)
@@ -262,13 +264,9 @@ export class DeviceAndmapComponent {
             const uniqNewDevices2 = this.displayList.filter(newItem =>
               !lokasyonfilter.some(existing => existing.imei !== newItem.imei)
             );
-            console.log('🧾 ime i farklı  liste:', uniqNewDevices2);
+           console.log('🧾 ime i farklı  liste:', uniqNewDevices2);
             
             this.displayList = [...uniqNewDevices2, ...uniqNewDevices];
-
-            console.log("LİSTENİN APİDEN GELEN HALİ",this.patrolInfo)
-            console.log('🧾 Yeni eklenen cihazlar:', uniqNewDevices);
-            console.log('🧾 Güncel displayList:', this.displayList);
   
           } catch (err) {
             console.error('❌ allconninfo parse hatası:', err);
@@ -462,10 +460,6 @@ export class DeviceAndmapComponent {
         const connectionDate = new Date(user.time);
         const diffMs = now.getTime() - connectionDate.getTime();
         const diffSeconds = (diffMs / 1000);
-        console.log("diffSeconds",diffSeconds)
-        console.log("diffMs",diffMs)
-        console.log("connectionDate",user.time);
-        console.log("BENİM SAATİM",now);
 
         return {
           ...user,
@@ -474,18 +468,42 @@ export class DeviceAndmapComponent {
         };
       
       });
-      console.log("Filte öncesi",this.selectLocationId,this.displayList)
-      this.displayList = this.displayList.filter(x=>  
-        x.lokasyonid == this.selectLocationId
-      )
 
-      console.log("Filte sonrası",this.selectLocationId,this.displayList)
+      console.log("Displayyy.................",this.displayList);
+      if (this.displayList?.length > 0) {
+        (this.displayList ?? []).forEach((device: any) => {
+          if (!isNaN(+device?.lat) && !isNaN(+device?.lng) && this.map) {
+            new google.maps.Marker({
+              
+              position: { lat: +device?.lat, lng: +device?.lng },
+              map: this.map,
+              title: device?.terminalname,
+              //icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+          
+              icon: device?.isOnline !== true
+                ? 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                : 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            });
+         
+          } else {
+            console.warn('Geçersiz marker koordinatları:', device);
+          }
+          this.ref.detectChanges();
+        });
+      }
+
+     
+      this.displayList = this.displayList.filter(x=>  
+        x.lokasyonid == this.selectedLocationID
+      )
+      console.log('📦 Güncel selectedLocationID:', this.selectedLocationID);
       console.log('📦 Güncel displayList:', this.displayList);
     } catch (err) {
       console.error('❌ conninfo parse hatası:', err);
     }
   }
   
+
   updateOnlineStatus() {
     
     const now = new Date();
@@ -494,11 +512,7 @@ export class DeviceAndmapComponent {
       const connectionDate = new Date(user.time);
       const diffMs = now.getTime() - connectionDate.getTime();
       const diffSeconds = (diffMs / 1000);
-      console.log("diffSeconds",diffSeconds)
-      console.log("diffMs",diffMs)
-      console.log("connectionDate",user.time);
-      console.log("BENİM SAATİM",now);
-
+  
       return {
         ...user,
         isOnline: diffSeconds <= 60
@@ -507,83 +521,6 @@ export class DeviceAndmapComponent {
     
     });
   }
-
-  // private async onConninfo(...args: any[]): Promise<void> {
-  //   if (args && args.length > 0) {
-  //     try {
-  //       const rawJson = args[0] as string;
-  //       const parsed = JSON.parse(rawJson) as ConnectionModel[];
-
-  //       let connections: ConnectionModel[] = [];
-
-  //       connections = parsed.map((conn) => {
-  //         let clientInfoParsed: any;
-  //         try {
-  //           clientInfoParsed = JSON.parse(conn.ClientInfo);
-  //         } catch {
-  //           console.warn('❌ Conninfo ClientInfo JSON değil:', conn.ClientInfo);
-  //           clientInfoParsed = {};
-  //         }
-
-  //         return {
-  //           ...conn,
-  //           ClientInfo: clientInfoParsed,
-  //         };
-  //       });
-
-  //       const updates = connections.filter(c => c.ClientType === 4);
-  //       // updates.forEach(conn => {
-  //       //   const uniqueKey = conn?.LoginId || conn.ClientInfo?.person || conn.KullaniciAdi || conn?.imei;
-
-  //       //   const index = this.displayList.findIndex(
-  //       //     u =>
-  //       //       u.LoginId === uniqueKey || // loginId eşleşmesi varsa
-  //       //       u.person === uniqueKey || // clientInfo.person eşleşiyorsa
-  //       //       u.kullaniciAdi === uniqueKey ||
-  //       //       u.imei === uniqueKey
-  //       //   );
-
-  //       //   if (conn.Process === '+' && index === -1) {
-  //       //     // ✔ cihaz yoksa → ekle
-  //       //     this.displayList.push({
-  //       //       terminalname: conn.terminalname,
-  //       //       connectionDate: conn.ConnectionDate,
-  //       //       connectionId: conn.ConnectionId,
-  //       //       loginId: conn.LoginId,
-  //       //       kullaniciAdi: conn.KullaniciAdi,
-  //       //       person: conn.ClientInfo?.person,
-  //       //       ...conn.ClientInfo
-  //       //     });
-  //       //     console.log('🟢 Yeni cihaz eklendi:', conn.terminalname);
-  //       //   }
-
-  //       //   if (conn.Process === '+' && index !== -1) {
-  //       //     // 🔁 varsa → güncelle (yani overwrite)
-  //       //     this.displayList[index] = {
-  //       //       terminalname: conn.terminalname,
-  //       //       connectionDate: conn.ConnectionDate,
-  //       //       connectionId: conn.ConnectionId,
-  //       //       loginId: conn.LoginId,
-  //       //       kullaniciAdi: conn.KullaniciAdi,
-  //       //       person: conn.ClientInfo?.person,
-  //       //       ...conn.ClientInfo
-  //       //     };
-  //       //     console.log('♻ Güncellendi:', conn.terminalname);
-  //       //   }
-  //       //   if (conn.Process === '-' && index !== -1) {
-  //       //     // 🔴 cihaz offline olduysa → sil
-  //       //     this.displayList.splice(index, 1);
-  //       //     console.log('🔴 Cihaz listeden silindi:', conn.terminalname);
-  //       //   }
-  //       // });
-
-  //       console.log("🔴 CONN İNFOO", connections);
-  //       console.log("❌❌❌❌❌❌ coninfo  SR", this.displayList);
-  //     } catch (err) {
-  //       console.error('❌ conninfo parse hatası:', err);
-  //     }
-  //   }
-  // }
 
   private async generateClientInfo(): Promise<ClientInfo> {
     const now = new Date().toISOString();
@@ -634,8 +571,8 @@ export class DeviceAndmapComponent {
     const clientInfo = await this.generateClientInfo();
 
     return {
-      terminalname: 'Faruk İnal',
-      KullaniciAdi: 'faruk.inal',
+      terminalname: 'Guard Dashboard',
+      KullaniciAdi: 'Guard Dashboard',
       LoginId: '',
       TokenId: '',
       CustomerCode: 'MeyerTakip14367',
@@ -656,9 +593,26 @@ export class DeviceAndmapComponent {
   //   return this.selectedDate ? this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd')! : '';
   // }
 
+  focusOnDevice(device: any): void {
+    if (!device || !this.map) return;
+  
+    const lat = parseFloat(device.lat);
+    const lng = parseFloat(device.lng);
+  
+    if (!isNaN(lat) && !isNaN(lng)) {
+      this.map.setCenter({ lat, lng });
+      this.map.setZoom(20);
+      console.log("📍 Harita ortalandı:", lat, lng);
+    } else {
+      console.warn("⚠ Geçersiz koordinatlar:", device);
+    }
+  }
+  
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
+    this.locationSub.unsubscribe();
     this.stopConnection();
   }
 }
