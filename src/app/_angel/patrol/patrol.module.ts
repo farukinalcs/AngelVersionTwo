@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PatrolRoutingModule } from './patrol-routing.module';
 import { AgGridModule } from 'ag-grid-angular';
 import { CustomDateAdapter, MY_DATE_FORMATS, PatroldashboardComponent } from './patroldashboard/patroldashboard.component';
 // import { AgmCoreModule } from '@agm/core';
-import { SecurityGuardsComponent } from './security-guards/security-guards.component';
-import { SharedModule } from '../shared/shared.module';
 import { TranslationModule } from 'src/app/modules/i18n';
 import { PatroldefinitionsComponent } from './patroldefinitions/patroldefinitions.component';
 import { SecurityLocationsComponent } from './security-locations/security-locations.component';
@@ -40,7 +38,6 @@ import { SelectModule } from 'primeng/select';
 @NgModule({
   declarations: [
     PatroldashboardComponent,
-    SecurityGuardsComponent,
     PatroldefinitionsComponent,
     SecurityLocationsComponent,
     SecurityStationsComponent,
@@ -56,7 +53,6 @@ import { SelectModule } from 'primeng/select';
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyAdALF-5HPnZFuvYRXmGY8qkv21TGD25ak',
     // }),
-    SharedModule,
     AgGridModule,
     TranslationModule,
     OverlayPanelModule,
@@ -80,6 +76,7 @@ import { SelectModule } from 'primeng/select';
     TooltipModule,
     DropdownModule,
     SelectModule,
+    ReactiveFormsModule
   ],
   
   providers: [

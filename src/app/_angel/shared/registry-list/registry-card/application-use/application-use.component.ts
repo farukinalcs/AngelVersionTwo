@@ -1,8 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material/tabs';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
+import { TooltipModule } from 'primeng/tooltip';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { updateForm } from 'src/app/store/actions/form.action';
@@ -10,6 +15,16 @@ import { FormState } from 'src/app/store/models/form.state';
 
 @Component({
     selector: 'app-application-use',
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        TranslateModule,
+        MatTabsModule,
+        SelectModule,
+        DropdownModule,
+        TooltipModule
+    ],
     templateUrl: './application-use.component.html',
     styleUrls: ['./application-use.component.scss']
 })
@@ -579,7 +594,7 @@ export class ApplicationUseComponent implements OnInit, OnDestroy {
     }
 
     saveRoleToStore(role: any) {
-        this.store.dispatch(updateForm({ formName: 'applicationUse', formData: { role : role } }));
+        this.store.dispatch(updateForm({ formName: 'applicationUse', formData: { role: role } }));
     }
 
     ngOnDestroy(): void {

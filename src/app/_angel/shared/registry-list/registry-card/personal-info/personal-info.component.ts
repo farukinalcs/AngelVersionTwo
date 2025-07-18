@@ -1,15 +1,24 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, take, takeUntil } from 'rxjs';
 import { resetForm, updateForm } from 'src/app/store/actions/form.action';
 import { FormState } from 'src/app/store/models/form.state';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
+import { CommonModule } from '@angular/common';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
     selector: 'app-personal-info',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        DropdownModule,
+        ReactiveFormsModule
+    ],
     templateUrl: './personal-info.component.html',
     styleUrls: ['./personal-info.component.scss']
 })

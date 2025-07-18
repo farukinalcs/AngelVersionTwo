@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
@@ -30,7 +31,8 @@ import Swal from 'sweetalert2';
     InputIconModule,
     IconFieldModule,
     FloatLabelModule,
-    DataNotFoundComponent
+    DataNotFoundComponent,
+    InputTextModule
   ],
   templateUrl: './pending.component.html',
   styleUrl: './pending.component.scss'

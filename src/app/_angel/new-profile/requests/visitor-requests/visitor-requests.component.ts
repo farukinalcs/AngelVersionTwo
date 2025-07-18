@@ -16,6 +16,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-visitor-requests',
@@ -33,7 +34,8 @@ import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data
     InputIconModule,
     IconFieldModule,
     FloatLabelModule,
-    DataNotFoundComponent
+    DataNotFoundComponent,
+    InputTextModule
   ],
   templateUrl: './visitor-requests.component.html',
   styleUrl: './visitor-requests.component.scss'

@@ -5,9 +5,24 @@ import { ResponseXloginDetail } from 'src/app/modules/auth/models/response-Xlogi
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ApiUrlService } from 'src/app/_helpers/api-url.service';
+import { CommonModule } from '@angular/common';
+import { BoldReportComponent } from '../../shared/bold-report/bold-report.component';
+import { ReportCategoryComponent } from '../../shared/bold-report/report-category/report-category.component';
+import { ReportListComponent } from '../../shared/bold-report/report-list/report-list.component';
+import { ReportParamsComponent } from '../../shared/bold-report/report-params/report-params.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-raporlar',
+    standalone: true,
+    imports: [
+        CommonModule,
+        BoldReportComponent,
+        ReportCategoryComponent,
+        ReportListComponent,
+        ReportParamsComponent,
+        TranslateModule
+    ],
     templateUrl: './raporlar.component.html',
     styleUrls: ['./raporlar.component.scss']
 })

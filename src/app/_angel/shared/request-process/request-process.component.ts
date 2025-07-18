@@ -1,14 +1,24 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { DemandProcessModel } from '../../profile/models/demandProcess';
 import { ProfileService } from '../../profile/profile.service';
+import { CommonModule } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
+import { TimelineModule } from 'primeng/timeline';
 
 @Component({
     selector: 'app-request-process',
+    standalone: true,
+    imports: [
+        CommonModule,
+        DialogModule,
+        TimelineModule,
+        TranslateModule
+    ],
     templateUrl: './request-process.component.html',
     styleUrls: ['./request-process.component.scss']
 })

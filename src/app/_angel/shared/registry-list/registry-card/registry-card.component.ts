@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, take, takeUntil } from 'rxjs';
 import { resetAllForms } from 'src/app/store/actions/form.action';
@@ -20,9 +20,41 @@ import { selectAddedGroups } from 'src/app/store/selectors/access-group.selector
 import { DomSanitizer } from '@angular/platform-browser';
 import { insertRegisterSuccess, loadRegistersSuccess, updateRegisterSuccess } from 'src/app/store/actions/register.action';
 import { selectAllRegisters } from 'src/app/store/selectors/register.selector';
+import { CommonModule } from '@angular/common';
+import { RegisterHistoryComponent } from './register-history/register-history.component';
+import { WorkingPeriodsComponent } from './working-periods/working-periods.component';
+import { FilesComponent } from './files/files.component';
+import { SplitsComponent } from './splits/splits.component';
+import { ApplicationUseComponent } from './application-use/application-use.component';
+import { DatePickerModule } from 'primeng/datepicker';
+import { CarouselModule } from 'primeng/carousel';
+import { DialogModule } from 'primeng/dialog';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-registry-card',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        PersonalInfoComponent,
+        ContactInfoComponent,
+        OrganizationInfoComponent,
+        CustomInfoComponent,
+        ShiftInfoComponent,
+        AccessInfoComponent,
+        AccessGroupComponent,
+        RegisterAuthorizedAreasComponent,
+        RegisterHistoryComponent,
+        WorkingPeriodsComponent,
+        FilesComponent,
+        SplitsComponent,
+        ApplicationUseComponent,
+        DatePickerModule,
+        CarouselModule,
+        DialogModule,
+        FormsModule
+    ],
     templateUrl: './registry-card.component.html',
     styleUrls: ['./registry-card.component.scss']
 })

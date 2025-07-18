@@ -5,10 +5,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { Subject, takeUntil } from 'rxjs';
 import { MyIncompleteTimeModel } from 'src/app/_angel/profile/models/myIncompleteTime';
@@ -18,6 +18,7 @@ import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { TranslationService } from 'src/app/modules/i18n';
+import { CreateRequestComponent } from './create-request/create-request.component';
 
 @Component({
     selector: 'app-missing-durations',
@@ -33,7 +34,9 @@ import { TranslationService } from 'src/app/modules/i18n';
         FloatLabelModule,
         SelectModule,
         DialogModule,
-        DataNotFoundComponent
+        DataNotFoundComponent,
+        InputTextModule,
+        CreateRequestComponent
     ],
     templateUrl: './missing-durations.component.html',
     styleUrl: './missing-durations.component.scss'
@@ -67,12 +70,13 @@ export class MissingDurationsComponent implements OnInit, OnDestroy {
 
 
     groupedData: { date: string; records: any }[] = []
+    displayVacationForm: boolean = false;
+    selectedRecord: any;
 
     constructor(
         private profileService: ProfileService,
         private translationService: TranslationService,
         private translateService: TranslateService,
-        private ref: ChangeDetectorRef
     ) { }
 
 
@@ -196,7 +200,16 @@ export class MissingDurationsComponent implements OnInit, OnDestroy {
         return Math.round(totalMs / (1000 * 60)).toString() // Toplam süreyi dakika cinsine çevirip string olarak döndürme
     }
 
+    onShowForm(item: any) {
+        this.selectedRecord = item;
+        this.displayVacationForm = true;
+        console.log("Eksik Kayıt : ", item);
+        
+    }
 
+    onHideForm() {
+        this.displayVacationForm = false;
+    } 
 
     ngOnDestroy(): void {
         this.ngUnsubscribe.next(true);

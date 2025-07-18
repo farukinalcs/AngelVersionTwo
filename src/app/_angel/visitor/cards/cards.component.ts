@@ -7,11 +7,13 @@ import { AttendanceService } from '../../attendance/attendance.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SharedModule } from '../../shared/shared.module';
 import { DropdownModule } from 'primeng/dropdown';
 import { TooltipModule } from 'primeng/tooltip';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { DatePickerModule } from 'primeng/datepicker';
+import { RegistryCardComponent } from '../../shared/registry-list/registry-card/registry-card.component';
+import { RegistryListComponent } from '../../shared/registry-list/registry-list.component';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-cards',
@@ -20,11 +22,13 @@ import { DatePickerModule } from 'primeng/datepicker';
     CommonModule,
     FormsModule,
     TranslateModule,
-    SharedModule,
     DropdownModule,
     TooltipModule,
     ProgressBarModule,
-    DatePickerModule
+    DatePickerModule,
+    RegistryCardComponent,
+    RegistryListComponent,
+    DialogModule
   ],
   templateUrl: './cards.component.html',
   styleUrl: './cards.component.scss'

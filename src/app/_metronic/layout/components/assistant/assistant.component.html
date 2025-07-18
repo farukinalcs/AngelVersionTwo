@@ -1,0 +1,32 @@
+<div class="assistant-container" [class.active]="showTodoList" [class.has-pending]="!allTasksCompleted">
+    <div class="assistant-character" (click)="toggleTodoList($event)" #character>
+        <canvas #assistantClock width="120" height="120"></canvas>
+        <div class="eyes">
+            <div class="eye" #leftEye>
+                <div class="pupil"></div>
+            </div>
+            <div class="eye" #rightEye>
+                <div class="pupil"></div>
+            </div>
+        </div>
+        <div class="mouth"></div>
+    </div>
+
+    <div class="speech-bubble" *ngIf="showTodoList" (click)="$event.stopPropagation()">
+        <div class="todo-list">
+            <h3>Yapılacaklar Listesi</h3>
+            <ul>
+                <li *ngFor="let item of todoItems">
+                    <input type="checkbox" [checked]="item.completed" (change)="toggleItem(item)" id="todo-{{item.id}}">
+                    <label for="todo-{{item.id}}" [class.completed]="item.completed">{{ item.text }}</label>
+                </li>
+            </ul>
+            <div class="progress-container" *ngIf="!allTasksCompleted">
+                <div class="progress-bar" [style.width.%]="completionPercentage"></div>
+            </div>
+            <div class="completion-message" *ngIf="allTasksCompleted">
+                <span> Tüm görevler tamamlandı!</span>
+            </div>
+        </div>
+    </div>
+</div>

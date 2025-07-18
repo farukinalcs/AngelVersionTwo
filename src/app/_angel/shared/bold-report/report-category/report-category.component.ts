@@ -1,21 +1,26 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-report-category',
-  templateUrl: './report-category.component.html',
-  styleUrls: ['./report-category.component.scss']
+    selector: 'app-report-category',
+    standalone: true,
+    imports: [
+        CommonModule
+    ],
+    templateUrl: './report-category.component.html',
+    styleUrls: ['./report-category.component.scss']
 })
 export class ReportCategoryComponent implements OnInit {
-  @Input() categories: any[] = [];
-  @Input() selectedCategory: any;
-  @Output() selectCategory = new EventEmitter<any>();
+    @Input() categories: any[] = [];
+    @Input() selectedCategory: any;
+    @Output() selectCategory = new EventEmitter<any>();
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
-  constructor() { }
+    constructor() { }
 
-  changeCategory(category: any): void {
-    this.selectCategory.emit(category);
-  }
+    changeCategory(category: any): void {
+        this.selectCategory.emit(category);
+    }
 }

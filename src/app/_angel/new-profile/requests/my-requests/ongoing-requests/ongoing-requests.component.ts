@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { Subject } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
@@ -26,7 +27,9 @@ import { LayoutService } from 'src/app/_metronic/layout';
         InputIconModule,
         IconFieldModule,
         FloatLabelModule,
-        DataNotFoundComponent
+        DataNotFoundComponent,
+        InputTextModule
+
     ],
     templateUrl: './ongoing-requests.component.html',
     styleUrl: './ongoing-requests.component.scss'

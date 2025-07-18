@@ -13,8 +13,9 @@ import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ApprovedRequestsComponent } from './approved-requests/approved-requests.component';
 import { OngoingRequestsComponent } from './ongoing-requests/ongoing-requests.component';
 import { DeniedRequestsComponent } from './denied-requests/denied-requests.component';
-import { SharedModule } from 'src/app/_angel/shared/shared.module';
 import { UploadedFilesComponent } from '../pending-requests/uploaded-files/uploaded-files.component';
+import { DetailSearchComponent } from 'src/app/_angel/shared/detail-search/detail-search.component';
+import { RequestProcessComponent } from 'src/app/_angel/shared/request-process/request-process.component';
 
 @Component({
     selector: 'app-my-requests',
@@ -28,8 +29,9 @@ import { UploadedFilesComponent } from '../pending-requests/uploaded-files/uploa
         ApprovedRequestsComponent,
         OngoingRequestsComponent,
         DeniedRequestsComponent,
-        SharedModule,
-        UploadedFilesComponent
+        UploadedFilesComponent,
+        DetailSearchComponent,
+        RequestProcessComponent
     ],
     templateUrl: './my-requests.component.html',
     styleUrl: './my-requests.component.scss'

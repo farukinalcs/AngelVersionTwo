@@ -1,7 +1,24 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 
 @Component({
     selector: 'app-report-list',
+    standalone: true,
+    imports: [
+        CommonModule,
+        CustomPipeModule,
+        FormsModule,
+        InputIconModule,
+        FloatLabelModule,
+        IconFieldModule,
+        InputTextModule
+    ],
     templateUrl: './report-list.component.html',
     styleUrls: ['./report-list.component.scss']
 })

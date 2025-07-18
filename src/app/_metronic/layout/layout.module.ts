@@ -40,6 +40,7 @@ import { ExtendedComponent } from './components/toolbar/extended/extended.compon
 import { ReportsComponent } from './components/toolbar/reports/reports.component';
 import { SaasComponent } from './components/toolbar/saas/saas.component';
 import { HasPermissionDirective } from 'src/app/core/permission/has-permission.directive';
+import { AssistantComponent } from './components/assistant/assistant.component';
 
 const routes: Routes = [
   {
@@ -84,7 +85,8 @@ const routes: Routes = [
     EngagesModule,
     TranslateModule,
     ThemeModeModule,
-    HasPermissionDirective
+    HasPermissionDirective,
+    AssistantComponent
   ],
   exports: [RouterModule],
 })
