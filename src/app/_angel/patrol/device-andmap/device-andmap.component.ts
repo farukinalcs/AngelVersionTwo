@@ -254,7 +254,7 @@ export class DeviceAndmapComponent {
             const lokasyonfilter = newClientInfos.filter(x=>  
               x.LokasyonId == this.selectedLocationID
             )
-
+            console.log('🧾lokasyon......................filter......:', this.selectedLocationID,lokasyonfilter);
             // ❗ Sadece yeni olanları ekle (imei ile karşılaştır)
             const uniqNewDevices = lokasyonfilter.filter(newItem =>
               !this.displayList.some(existing => existing.imei === newItem.imei)
@@ -496,7 +496,7 @@ export class DeviceAndmapComponent {
       this.displayList = this.displayList.filter(x=>  
         x.lokasyonid == this.selectedLocationID
       )
-      console.log('📦 Güncel selectedLocationID:', this.selectedLocationID);
+      console.log('📦 Güncel....... selectedLocationID...............:', this.selectedLocationID);
       console.log('📦 Güncel displayList:', this.displayList);
     } catch (err) {
       console.error('❌ conninfo parse hatası:', err);

@@ -31,10 +31,10 @@ export class PatroldefinitionsComponent implements OnInit, OnDestroy{
   }
 
   widgets = [
-    { title: 'Güvenlik Turları', value: 1},
-    { title: 'Güvenlik Lokasyonları', value: 2},
-    { title: 'Güvenlik İstasyonları', value: 3},
-    { title: 'Güvenlil Tur Takvim', value: 4},
+    { title: 'Güvenlik Turları',icon:'fa-solid fa-route', value: 1},
+    { title: 'Güvenlik Lokasyonları',icon:'fa-solid fa-location-dot', value: 2},
+    { title: 'Güvenlik İstasyonları',icon:'fa-solid fa-font-awesome', value: 3},
+    { title: 'Güvenlik Tur Takvim',icon: 'fa-solid fa-calendar', value: 4},
 
   ];
 

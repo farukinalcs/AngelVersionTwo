@@ -50,3 +50,22 @@
   }
 }
 
+
+.icon-container {
+  font-size: 5rem;
+  /* Daha büyük ikon */
+  color: var(--red-200);
+  /* İkonun rengi */
+  opacity: 0.5;
+  /* Şeffaflık */
+  position: absolute;
+  /* Kenara hizalama için */
+  top: 4px;
+  /* Yukarı kaydırma */
+  left: -2px;
+  /* Sola kaydırma */
+  z-index: 0;
+  /* Metinle çakışmaması için */
+  transform: scale(0.8);
+  /* İkonu büyüt */
+}

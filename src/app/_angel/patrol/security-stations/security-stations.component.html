@@ -5,13 +5,13 @@
             <div class="table-responsive">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" [(ngModel)]="stationName" (input)="filterItems()">
-                    <button class="btn btn-sm" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold; color: white;" type="button" id="button-addon2" (click)="setGuardStation(stationName)">Ekle</button>
+                    <button class="btn btn-sm" style="background: red;font-weight: bold; color: white;" type="button" id="button-addon2" (click)="setGuardStation(stationName)">Ekle</button>
                 </div>
              
                 <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"
             >
                 <thead> 
-                    <tr style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">
+                    <tr style="background:red;font-weight: bold;color:white;">
                         <th class="fw-bolder me-1 cursor-pointer rounded-start text-center text-white" style="width: 80%;">Station Name</th>
                         <th class="fw-bolder me-1 cursor-pointer rounded-end text-white" style="width: 20%;">Action</th>
                     </tr>
