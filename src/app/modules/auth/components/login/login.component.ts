@@ -129,11 +129,12 @@ export class LoginComponent implements OnInit, OnDestroy {
         for (let i = 0; i < 8; i++) {
             key += chars.charAt(Math.floor(Math.random() * chars.length));
         }
-
+        console.log("Key :", key);
         const now = new Date();
         const seconds = now.getSeconds().toString().padStart(2, '0');
         const milliseconds = now.getMilliseconds().toString().padStart(3, '0'); // 3 haneli salise
-
+        console.log("seconds :", seconds);
+        console.log("milliseconds :", milliseconds);
         return key + milliseconds;
     }
 

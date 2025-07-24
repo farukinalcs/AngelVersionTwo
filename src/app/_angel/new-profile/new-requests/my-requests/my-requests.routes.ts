@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { MyRequestsPage } from './my-requests.page';
+import { PendingComponent } from './pending/pending.component';
 
 export const MY_REQUESTS_ROUTES: Routes = [
     {
@@ -8,10 +9,14 @@ export const MY_REQUESTS_ROUTES: Routes = [
         children: [
             {
                 path: 'pending',
-                loadComponent: () =>
-                    import('./pending/pending.component').then(
-                        (m) => m.PendingComponent
-                    ),
+                component: PendingComponent,
+                children: [
+                    {
+                        path: '',
+                        loadChildren: () =>
+                            import('./pending/pending.routes').then(m => m.PENDING_ROUTES)
+                    }
+                ]
             },
             {
                 path: 'approved',

@@ -12,6 +12,7 @@ import { Subject } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
+import { ExpenseRequestsComponent } from '../../../new-requests/my-requests/pending/expense-requests/expense-requests.component';
 
 @Component({
     selector: 'app-approved-requests',
@@ -27,7 +28,8 @@ import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
         IconFieldModule,
         FloatLabelModule,
         DataNotFoundComponent,
-        InputTextModule
+        InputTextModule,
+        ExpenseRequestsComponent
 
     ],
     templateUrl: './approved-requests.component.html',
@@ -46,6 +48,7 @@ export class ApprovedRequestsComponent implements OnInit, OnDestroy {
     checkGrid: boolean = true;
     filterText: string = "";
     imageUrl: any;
+    otherComponent: boolean = false;
 
     constructor(
         private profileService: ProfileService
@@ -79,6 +82,17 @@ export class ApprovedRequestsComponent implements OnInit, OnDestroy {
 
     showUploadedFiles(selectedDemand: any) {
         this.showUploadedFilesEvent.emit(selectedDemand);
+    }
+
+    onTabChange(tab: any) {
+        if (tab.key == 'expense') {
+            this.selectedNavItem = tab.key;
+            this.otherComponent = true;
+        } else {
+            this.otherComponent = false;
+            this.getMyDemands(tab.key);
+        }
+
     }
 
     ngOnDestroy(): void {

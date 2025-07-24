@@ -1,21 +1,4 @@
-<div class="row mt-5 m-0">
-    <div class="col-12 d-flex justify-content-center">
-        <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3">
-            <li *ngFor="let menuItem of menuItems" class="nav-item mb-3 me-3 me-lg-6">
-                <a class="nav-link btn btn-outline btn-flex btn-color-gray-800 btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="onTabChange(menuItem)" [attr.id]="'bekleyen-' + menuItem.id">
-                    <div class="nav-icon mb-3">
-                        <i class="fa-solid {{ menuItem.icon }} fs-2"></i>
-                    </div>
-                    <span class="fw-bold fs-6 lh-1">{{ menuItem.label | translate }}</span>
-                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-danger"></span>
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<ng-container *ngIf="!selectedNavItem && ongoingRequests.length == 0">
+<ng-container *ngIf="!selectedTab && requests.length == 0">
     <div class="row mt-5 m-0">
         <div class="col-12 d-flex justify-content-center">
             <div class="d-flex align-items-center bg-light-danger rounded p-5 text-center w-100 w-md-50">
@@ -29,29 +12,18 @@
     </div>
 </ng-container>
 
-<ng-container *ngIf="selectedNavItem && ongoingRequests.length == 0 && !otherComponent">
+<ng-container *ngIf="selectedTab && requests.length == 0">
     <div class="row pt-10 m-0">
         <app-data-not-found [imgWidth]=" '30%' "></app-data-not-found>
     </div>
 </ng-container>
 
-
-<ng-container *ngIf="selectedNavItem && ongoingRequests.length > 0 && !otherComponent">
+<ng-container *ngIf="selectedTab && requests.length > 0">
     <div class="row mt-5 m-0 d-flex justify-content-center">
         <div class="card bg-light-secondary p-4">
 
             <div class="row d-flex align-items-center gy-3 gy-md-0 justify-content-between">
                 <div class="col-12 col-md-4 col-xl-4">
-                    <!-- <div class="input-group h-100" style="flex: 1;">
-                        <input class="form-control form-control-solid h-30px p-2 border-1 border-dark rounded-lg font-size-h6"
-                            [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}">
-                    
-                        <button class="search-icon">
-                            <div class="svg">
-                                <i class="fa-solid fa-magnifying-glass text-white fs-4"></i>
-                            </div>
-                        </button>
-                    </div> -->
                     <p-floatlabel variant="on" class="mt-2">
                         <p-iconfield>
                             <p-inputicon class="pi pi-search" />
@@ -62,11 +34,11 @@
                 </div>
 
                 <div class="col-6 col-md-4 col-xl-3 d-flex justify-content-md-center">
-                    <div class="symbol symbol-30px cursor-pointer me-2" pTooltip="{{'Detaylı_Arama' | translate}}">
+                    <!-- <div class="symbol symbol-30px cursor-pointer me-2" pTooltip="{{'Detaylı_Arama' | translate}}">
                         <span class="symbol-label symbol-label bg-dark" (click)="showDetailSearchDialog()">
                             <i class="fa-solid fa-search fs-7 text-white"></i>
                         </span>
-                    </div>
+                    </div> -->
 
                     <div class="symbol symbol-30px cursor-pointer me-2">
                         <span class="symbol-label symbol-label bg-dark" (click)="checkGrid = !checkGrid">
@@ -78,34 +50,6 @@
 
             </div>
 
-
-            <!-- <div class="row">
-                <div class="col-12 col-md-6 pb-2 p-md-auto d-flex justify-content-start">
-                    <div class="input-group h-100 w-100 w-md-75">
-                        <input class="form-control form-control-solid h-auto p-2 border-1 border-danger rounded-lg font-size-h6"
-                            [(ngModel)]="filterText" type="text" placeholder="{{'Arama' | translate}}">
-                        <button class="search-icon">
-                            <div class="svg">
-                                <i class="fa-solid fa-magnifying-glass text-white fs-4"></i>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="col-10 col-md-5 pb-2 p-md-auto d-flex justify-content-end">
-                    <a class="btn btn-sm btn-danger btn-shadow-hover font-weight-bold"
-                        [ngClass]="{'w-100': layoutService.isMobile | async}" (click)="showDetailSearchDialog()">
-                        {{"Detaylı_Arama" | translate}}
-                        <i class="fa fa-search"></i>
-                    </a>
-                </div>
-
-                <div class="col-2 col-md-1 d-flex justify-content-center justify-content-md-start">
-                    <a class="btn btn-icon btn-danger btn-sm me-3" (click)="checkGrid = !checkGrid">
-                        <i class="fa-solid fa-list fs-4" [ngClass]="{'fa-grip': checkGrid, 'fa-list' : !checkGrid}"></i>
-                    </a>
-                </div>
-            </div> -->
         </div>
     </div>
 
@@ -114,12 +58,12 @@
     <div class="row mt-5 m-0">
         <ng-container *ngIf="checkGrid">
             <div class="col-12 col-md-3 mb-9"
-                *ngFor="let item of ongoingRequests | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis', 'firma', 'bolum', 'pozisyon']">
+                *ngFor="let item of requests | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis', 'firma', 'bolum', 'pozisyon']">
                 <mat-accordion>
                     <mat-expansion-panel (opened)="isCardOpen(item)" (closed)="item.panelOpenState = false">
                         <mat-expansion-panel-header #panelA class="p-0">
-                            <ng-container *ngIf="item?.bosBelgeSayisi > 0">
-                                
+                            <ng-container *ngIf="item?.emptyDocumentCount > 0">
+
                                 <div class="col d-flex justify-content-center align-items-center">
                                     <span class="badge badge-circle badge-danger"
                                         [pTooltip]="getTooltipScript(item?.atananlar)">
@@ -247,7 +191,7 @@
 
                         <tbody>
                             <tr
-                                *ngFor="let item of ongoingRequests | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis', 'firma', 'bolum', 'pozisyon']">
+                                *ngFor="let item of requests | searchFilter:filterText: ['tipad', 'Personel', 'neden', 'nedenx', 'Baslangic', 'Bitis', 'firma', 'bolum', 'pozisyon']">
                                 <td class="text-center">
                                     <div class="symbol symbol-50px me-2">
                                         <img src="{{imageUrl}}?sicilid={{item.SicilId}}" alt="Personel Foto">
@@ -319,7 +263,47 @@
 </ng-container>
 
 
-<ng-container *ngIf="selectedNavItem && otherComponent">
-    <app-expense-requests [menu]="'myRequests'" [process]="'ongoing'"></app-expense-requests>
+
+<ng-container *ngIf="displayDemandProcess">
+    <app-request-process [demandId]="demandIdForProcess" [demandTypeName]="demandTypeNameForProcess"
+        [displayRequestProcess]="displayDemandProcess" (displayRequestProcessEvent)="displayDemandProcess = false">
+    </app-request-process>
 </ng-container>
 
+<ng-container *ngIf="displayUploadedFiles">
+    <app-uploaded-files [displayUploadedFiles]="displayUploadedFiles" [selectedDemand]="selectedDemand"
+        [selectedNavItem]="selectedTab.key" (onHideUploadedFilesEvent)="onHideUploadedFiles()"
+        (selectedDemandEvent)="setSelectedDemandEmptyFile($event)">
+    </app-uploaded-files>
+</ng-container>
+
+
+<p-dialog header="{{'Talep_İptal' | translate}}" [(visible)]="displayPosition" [position]="position" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+
+    <div class="fv-row mb-10 fv-plugins-icon-container">
+
+        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+            <span class="required">{{"Açıklama" | translate}}</span>
+        </label>
+
+        <textarea [(ngModel)]="descriptionText" class="form-control form-control-solid" rows="3"
+            placeholder="{{'Açıklama_Giriniz' | translate}}" style="height: 12px;"></textarea>
+        <div class="fv-plugins-message-container invalid-feedback"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 d-flex justify-content-end align-items-center mt-5">
+            <a (click)="cancelMyDemands(selectedDemand.Id, selectedDemand.tipad, descriptionText, selectedTab.key)"
+                class="btn btn-danger mx-2">
+                <i class="fa-solid fa-check fs-1"></i>
+                {{'Gönder' | translate}}
+            </a>
+
+            <a (click)="displayPosition=false; descriptionText = ''" class="btn btn-danger">
+                <i class="fa-solid fa-xmark fs-1"></i>
+                {{'Vazgeç' | translate}}
+            </a>
+        </div>
+    </div>
+</p-dialog>

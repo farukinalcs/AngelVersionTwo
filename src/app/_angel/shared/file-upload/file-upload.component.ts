@@ -221,12 +221,12 @@ export class FileUploadComponent implements OnInit, OnChanges, OnDestroy {
 
     onSendFiles() {
         this.documentTypes.forEach(doc => {
-            this.setFile(doc.file, doc.fileId)
+            this.setFile(doc)
         });
     }
 
-    setFile(file: any, fileType: any) { // API'ye, Oluşturulan İzin Talebi İçin Yüklenen Dosyaları İleten Kısım 
-        this.profileService.postFileForDemand(file, this.formId, this.source, fileType)
+    setFile(doc:any) { // API'ye, Oluşturulan İzin Talebi İçin Yüklenen Dosyaları İleten Kısım 
+        this.profileService.postFileForDemand(doc.file, this.formId || doc.id, this.source, doc.fileId)
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe((response: any) => {
 

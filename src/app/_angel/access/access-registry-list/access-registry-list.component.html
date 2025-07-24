@@ -52,7 +52,7 @@
                         <div class="row mt-2 mb-6">
                             <div class="col-12">
                                 <span class="text-gray-500 mt-1 fw-semibold fs-8">Seçili Kişiler için
-                                    <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Toplu Değişiklik</a>
+                                    <a class="text-gray-800 fw-bolder fs-8 cursor-pointer" (click)="onClickBulkChange()">Toplu Değişiklik</a>
                                     veya
                                     <a class="text-gray-800 fw-bolder fs-8 cursor-pointer">Task Atama</a>
                                 </span>
@@ -87,7 +87,8 @@
                         [refreshEvent]="refreshEvent"
                         [filterEvent]="filterEvent"
                         [userdef]="'1'"
-                        (displayRegistryEvent)="onRegistry($event)">
+                        (displayRegistryEvent)="onRegistry($event)"
+                        [bulkChangeEvent]="bulkChangeEvent">
                     </app-registry-list>
                 </div>
             </div>

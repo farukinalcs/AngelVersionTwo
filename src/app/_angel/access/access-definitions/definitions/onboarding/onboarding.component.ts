@@ -6,11 +6,12 @@ import { NewItemComponent } from './new-item/new-item.component';
 import { LoadingSkeletonComponent } from './loading-skeleton/loading-skeleton.component';
 import { ItemCardComponent } from './item-card/item-card.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'app-onboarding',
     standalone: true,
-    imports: [CommonModule, ItemCardComponent, NewItemComponent, LoadingSkeletonComponent, TranslateModule],
+    imports: [CommonModule, ItemCardComponent, NewItemComponent, LoadingSkeletonComponent, TranslateModule, DragDropModule],
     templateUrl: './onboarding.component.html',
     styleUrl: './onboarding.component.scss'
 })
@@ -47,13 +48,13 @@ export class OnboardingComponent implements OnInit {
             }
 
             console.log("Geldi :", data);
-            
+
             this.items = [...data];
         });
     }
 
     addNewItemForm(): void {
-        
+
     }
 
     showAdd() {
@@ -63,9 +64,52 @@ export class OnboardingComponent implements OnInit {
     close(event: any) {
         this.display = false;
         console.log("Event :", event);
-        
+
         if (event) {
             this.fetchItems();
         }
+    }
+
+    drop(event: CdkDragDrop<any[]>) {
+        if (event.previousContainer === event.container) {
+            moveItemInArray(this.items, event.previousIndex, event.currentIndex);
+
+            this.saveOrder();
+        }
+    }
+
+    private saveOrder() {
+        const orderedItems = this.items.map((item, index) => ({
+            ...item,
+            order: index + 1
+        }));
+
+        console.log(orderedItems);
+        const formatString = this.convertToApiFormat(orderedItems);
+
+        var sp: any[] = [
+            {
+                mkodu: 'yek359',
+                sira: formatString
+            }
+        ];
+
+        console.log(sp);
+
+        this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response) => {
+            const data = response[0].x;
+            const message = response[0].z;
+
+            if (message.islemsonuc == -1) {
+                return;
+            }
+
+            console.log("Sıralandı :", data);
+            
+        });
+    }
+
+    private convertToApiFormat(items: any[]): string {
+        return items.map(item => item.id).join(',');
     }
 }

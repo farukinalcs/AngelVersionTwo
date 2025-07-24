@@ -3,7 +3,7 @@
         <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3">
             <li *ngFor="let menuItem of menuItems" class="nav-item mb-3 me-3 me-lg-6">
                 <a class="nav-link btn btn-outline btn-flex btn-color-gray-800 btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
-                    data-bs-toggle="pill" (click)="getMyDemands(menuItem.key)" [attr.id]="'reddedilen-' +menuItem.id">
+                    data-bs-toggle="pill" (click)="onTabChange(menuItem)" [attr.id]="'reddedilen-' +menuItem.id">
                     <div class="nav-icon mb-3">
                         <i class="fa-solid {{ menuItem.icon }} fs-2"></i>
                     </div>
@@ -29,13 +29,13 @@
     </div>
 </ng-container>
 
-<ng-container *ngIf="selectedNavItem && deniedRequests.length == 0">
+<ng-container *ngIf="selectedNavItem && deniedRequests.length == 0 && !otherComponent">
     <div class="row pt-10 m-0">
         <app-data-not-found [imgWidth]=" '30%' "></app-data-not-found>
     </div>
 </ng-container>
 
-<ng-container *ngIf="deniedRequests.length > 0">
+<ng-container *ngIf="deniedRequests.length > 0 && !otherComponent">
     <div class="row mt-5 m-0 d-flex justify-content-center">
         <div class="card bg-light-secondary p-4">
 
@@ -568,4 +568,8 @@
             </ng-container>
         </ng-container>
     </div>
+</ng-container>
+
+<ng-container *ngIf="selectedNavItem && otherComponent">
+    <app-expense-requests [menu]="'myRequests'" [process]="'denied'"></app-expense-requests>
 </ng-container>

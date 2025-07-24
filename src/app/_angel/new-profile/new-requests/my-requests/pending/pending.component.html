@@ -1,1 +1,18 @@
-<p>pending works!</p>
+<div class="row mt-5 m-0">
+    <div class="col-12 d-flex justify-content-center">
+        <ul class="nav nav-pills nav-pills-custom d-flex justify-content-center mb-3">
+            <li *ngFor="let tab of menuItems; let i = index" class="nav-item mb-3 me-3 me-lg-6">
+                <a class="nav-link btn btn-outline btn-flex btn-color-gray-800 btn-active-color-danger flex-column overflow-hidden w-80px h-85px pt-5 pb-2"
+                    [class.active]="tab.type === selectedKey" (click)="onTabChange(tab)" [attr.id]="tab.id">
+                    <div class="nav-icon mb-3">
+                        <i class="fa-solid {{ tab.icon }} fs-2"></i>
+                    </div>
+                    <span class="fw-bold fs-6 lh-1">{{ tab.label | translate }}</span>
+                    <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-danger"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

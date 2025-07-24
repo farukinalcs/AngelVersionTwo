@@ -28,6 +28,13 @@
     transition: transform 0.3s ease;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 
+    &.hovered {
+        .eye .pupil {
+            transform: translate(-50%, -50%) !important;
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+    }
+
     canvas {
         background-color: white;
         border-radius: 50%;
@@ -54,7 +61,7 @@
         transform: translateX(-50%) translateY(2px);
         border-radius: 0 0 70% 70%;
     }
-    
+
 
     .eyes {
         position: absolute;
@@ -85,6 +92,7 @@
             transform: translate(-50%, -50%);
             transition: all 0.1s ease;
             box-shadow: 0 0 0 2px white;
+            transition: transform 0.3s ease-out;
         }
 
         &::before {

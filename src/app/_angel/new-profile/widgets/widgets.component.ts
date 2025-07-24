@@ -13,6 +13,7 @@ import { AnnouncementsComponent } from './announcements/announcements.component'
 import { SuggestionsComponent } from './suggestions/suggestions.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { SurveyInHouseComponent } from '../survey-in-house/survey-in-house.component';
+import { DepartureComponent } from './departure/departure.component';
 
 @Component({
   selector: 'app-widgets',
@@ -31,7 +32,8 @@ import { SurveyInHouseComponent } from '../survey-in-house/survey-in-house.compo
     SuggestionsComponent,
     SurveyComponent,
     InventoryComponent,
-    SurveyInHouseComponent
+    SurveyInHouseComponent,
+    DepartureComponent
   ],
   templateUrl: './widgets.component.html',
   styleUrl: './widgets.component.scss'
