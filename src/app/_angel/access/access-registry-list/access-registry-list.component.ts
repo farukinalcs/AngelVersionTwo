@@ -39,6 +39,7 @@ export class AccessRegistryListComponent implements OnInit, OnDestroy {
     requestTime: any;
     refreshEvent: boolean = false;
     detail: boolean = false;
+    bulkChangeEvent: boolean = false;
 
     constructor(
         private profileService: ProfileService,
@@ -87,6 +88,10 @@ export class AccessRegistryListComponent implements OnInit, OnDestroy {
 
     onRegistry(event: any) {
         this.detail = !this.detail;
+    }
+
+    onClickBulkChange() {
+        this.bulkChangeEvent = !this.bulkChangeEvent;
     }
 
     ngOnDestroy(): void {

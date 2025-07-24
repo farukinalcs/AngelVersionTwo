@@ -13,6 +13,7 @@ import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { DataNotFoundComponent } from 'src/app/_angel/shared/data-not-found/data-not-found.component';
 import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
 import { LayoutService } from 'src/app/_metronic/layout';
+import { ExpenseRequestsComponent } from '../../../new-requests/my-requests/pending/expense-requests/expense-requests.component';
 
 @Component({
     selector: 'app-ongoing-requests',
@@ -28,7 +29,8 @@ import { LayoutService } from 'src/app/_metronic/layout';
         IconFieldModule,
         FloatLabelModule,
         DataNotFoundComponent,
-        InputTextModule
+        InputTextModule,
+        ExpenseRequestsComponent
 
     ],
     templateUrl: './ongoing-requests.component.html',
@@ -49,6 +51,7 @@ export class OngoingRequestsComponent implements OnInit, OnDestroy {
     checkGrid: boolean = true;
     filterText: string = "";
     imageUrl: any;
+    otherComponent: boolean = false;
 
     constructor(
         public layoutService: LayoutService,
@@ -100,6 +103,20 @@ export class OngoingRequestsComponent implements OnInit, OnDestroy {
         return item
             .filter((belge) => belge.link === 'boş')
             .map((belge) => belge.BelgeAdi);
+    }
+
+
+    onTabChange(tab: any) {
+        console.log("x :", this.selectedNavItem);
+        
+        if (tab.key == 'expense') {
+            this.selectedNavItem = tab.key;
+            this.otherComponent = true;
+        } else {
+            this.otherComponent = false;
+            this.getMyDemands(tab.key);
+        }
+
     }
 
     ngOnDestroy(): void {

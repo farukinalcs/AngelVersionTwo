@@ -2,8 +2,11 @@
     <div class="card p-5">
         <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="resetArr()" style="min-height: 300px;">
             <mat-tab label="{{'Süreci_Devam_Eden_Formlar' | translate}}">
-                <app-ongoing-requests [ongoingRequests]="sureciDevamEdenFormlar" [selectedNavItem]="kaynak"
-                    [menuItems]="menuItems" (getMyDemandsEvent)="getMyDemands($event)"
+                <app-ongoing-requests 
+                    [ongoingRequests]="sureciDevamEdenFormlar"
+                    [selectedNavItem]="kaynak"
+                    [menuItems]="menuItems"
+                    (getMyDemandsEvent)="getMyDemands($event)"
                     (showDetailSearchDialogEvent)="showDetailSearchDialog($event)"
                     (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
                     (showPositionDialogEvent)="showPositionDialog($event)"
@@ -12,17 +15,25 @@
             </mat-tab>
 
             <mat-tab label="{{'Onaylananlar' | translate}}">
-                <app-approved-requests [approvedRequests]="onaylananFormlar" [selectedNavItem]="kaynak"
-                    [menuItems]="menuItems" (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
-                    (getMyDemandsEvent)="getMyDemands($event)" (showUploadedFilesEvent)="showUploadedFiles($event)"
+                <app-approved-requests
+                    [approvedRequests]="onaylananFormlar"
+                    [selectedNavItem]="kaynak"
+                    [menuItems]="menuItems"
+                    (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
+                    (getMyDemandsEvent)="getMyDemands($event)"
+                    (showUploadedFilesEvent)="showUploadedFiles($event)"
                     (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
                 </app-approved-requests>
             </mat-tab>
 
             <mat-tab label="{{'Reddedilenler' | translate}}">
-                <app-denied-requests [deniedRequests]="reddedilenFormlar" [selectedNavItem]="kaynak"
-                    [menuItems]="menuItems" (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
-                    (getMyDemandsEvent)="getMyDemands($event)" (showUploadedFilesEvent)="showUploadedFiles($event)"
+                <app-denied-requests
+                    [deniedRequests]="reddedilenFormlar"
+                    [selectedNavItem]="kaynak"
+                    [menuItems]="menuItems"
+                    (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
+                    (getMyDemandsEvent)="getMyDemands($event)"
+                    (showUploadedFilesEvent)="showUploadedFiles($event)"
                     (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
                 </app-denied-requests>
             </mat-tab>

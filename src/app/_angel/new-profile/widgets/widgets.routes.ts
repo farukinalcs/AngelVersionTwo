@@ -10,6 +10,7 @@ import { SuggestionsComponent } from './suggestions/suggestions.component';
 import { MealMenuComponent } from './meal-menu/meal-menu.component';
 import { NewJoinersComponent } from './new-joiners/new-joiners.component';
 import { MyFilesComponent } from './my-files/my-files.component';
+import { DepartureComponent } from './departure/departure.component';
 
 export const widgetsRoutes: Routes = [
   {
@@ -26,6 +27,7 @@ export const widgetsRoutes: Routes = [
       { path: 'meal-menu', component: MealMenuComponent },
       { path: 'my-files', component: MyFilesComponent },
       { path: 'new-joiners', component: NewJoinersComponent },
+      { path: 'departure', component: DepartureComponent },
       // { path: '', pathMatch: 'full' },
     ],
   },

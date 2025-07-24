@@ -34,6 +34,7 @@ import { ToursComponent } from './tours/tours.component';
 import { ContentContainerComponent } from './content-container/content-container.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { SelectModule } from 'primeng/select';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { SelectModule } from 'primeng/select';
     TooltipModule,
     DropdownModule,
     SelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatExpansionModule
   ],
   
   providers: [

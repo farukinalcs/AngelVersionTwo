@@ -4,47 +4,71 @@
     <div class="container py-0 px-5">
         <div class="container">
             <div class="row">
-                <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10">
+                <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid">
 
-                    <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-                        <div class="stepper-nav d-flex justify-content-center">
-                            <img src="../../../../../assets/media/illustrations/storyset-1/12.svg" width="100%" alt="">
+                    <ng-container *ngIf="currentStep$.value != 4">
+                        <div
+                            class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                            <div class="stepper-nav d-flex justify-content-center">
+                                <img src="../../../../../assets/media/illustrations/storyset-1/12.svg" width="100%"
+                                    alt="">
+                            </div>
                         </div>
-                    </div>
 
-                    <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields" [isFromAttendance]="false"></app-form-stepper>
+                        <app-form-stepper class="d-flex align-items-center" [stepperFields]="stepperFields"
+                            [isFromAttendance]="false"></app-form-stepper>
+                    </ng-container>
+
+
+
 
                     <div class="row w-xl-700px gap-5">
                         <div class="col-12">
-                            <form class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10" [formGroup]="advanceForm">
+                            <form class="form fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="advanceForm">
 
                                 <ng-container *ngIf="currentStep$.value == 1">
                                     <div class="current">
                                         <div class="w-100">
                                             <div class="row">
-                                                <div class="col-12 my-5">
+
+                                                <div class="col-12 mb-5">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">{{"Açıklama" | translate}}</span>
+                                                    </label>
+
+                                                    <textarea class="form-control form-control-sm form-control-solid"
+                                                        rows="3" formControlName="explanation"
+                                                        placeholder="{{'Açıklama_Giriniz' | translate}}"
+                                                        style="height: 12px;">
+                                                    </textarea>
+                                                </div>
+
+                                                <div class="col-12 mb-5">
                                                     <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                         <span class="required">{{'IBAN' | translate}}</span>
                                                     </label>
-                                                
-                                                    <input type="text" maxlength="32" class="form-control form-control-lg form-control-solid" max="31" formControlName="iban" [ngClass]="{
+
+                                                    <input type="text" maxlength="32"
+                                                        class="form-control form-control-sm form-control-solid" max="31"
+                                                        formControlName="iban" [ngClass]="{
                                                                                                     'is-invalid': advanceForm.controls['iban'].invalid,
                                                                                                     'is-valid': advanceForm.controls['iban'].valid
                                                                                                 }">
-                                                
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
                                                                                                     validation: 'required',
                                                                                                     message: 'IBAN gerekli',
                                                                                                     control: advanceForm.controls['iban']
                                                                                                 }"></ng-container>
-                                                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                    <ng-container [ngTemplateOutlet]="formError"
+                                                        [ngTemplateOutletContext]="{
                                                                                                     validation: 'pattern',
                                                                                                     message: 'Geçersiz IBAN formatı',
                                                                                                     control: advanceForm.controls['iban']
                                                                                                 }"></ng-container>
-                                                
-                                                    <ng-container 
-                                                        [ngTemplateOutlet]="formError"
+
+                                                    <ng-container [ngTemplateOutlet]="formError"
                                                         [ngTemplateOutletContext]="
                                                         { 
                                                             validation: 'invalidIBAN',
@@ -54,9 +78,11 @@
                                                     </ng-container>
                                                 </div>
 
-                                                <div class="col-12 my-5">
-                                                    <div class="form-check form-check-custom form-check-danger form-check-solid">
-                                                        <input id="saveIban" class="form-check-input" type="checkbox" value="true" formControlName="ibanKaydet"/>
+                                                <div class="col-12 mb-5">
+                                                    <div
+                                                        class="form-check form-check-custom form-check-danger form-check-solid">
+                                                        <input id="saveIban" class="form-check-input" type="checkbox"
+                                                            value="true" formControlName="ibanSave" />
                                                         <label class="form-check-label" for="saveIban">
                                                             {{'IBAN_Kaydet' | translate}}
                                                         </label>
@@ -64,29 +90,33 @@
                                                 </div>
 
                                                 <ng-container *ngIf="ibanList.length != 0">
-                                                    <div class="col-12 my-5">
+                                                    <div class="col-12 mb-5">
                                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                             <span class="required">{{'Kayıtlı_IBAN' | translate}}</span>
                                                         </label>
-                                                
+
                                                         <div class="row">
-                                                            <div class="col-lg-12" *ngFor="let item of ibanList; let i = index">
-                                                                <input type="radio" class="btn-check" formControlName="kayitliIbanlar" value="{{item.iban}}"
+                                                            <div class="col-lg-12"
+                                                                *ngFor="let item of ibanList; let i = index">
+                                                                <input type="radio" class="btn-check"
+                                                                    formControlName="savedIbans" value="{{item.iban}}"
                                                                     id="{{'kt_radio_buttons_2_option_' + i}}" />
                                                                 <label
                                                                     class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center mb-5"
                                                                     for="{{'kt_radio_buttons_2_option_' + i}}">
-                                                                    <i class="fa-solid fa-building-columns fs-2x text-danger"></i>
-                                                
+                                                                    <i
+                                                                        class="fa-solid fa-building-columns fs-2x text-danger"></i>
+
                                                                     <span class="d-block fw-semibold text-start ps-3">
-                                                                        <span class="text-dark fw-bold d-block fs-3">{{ item.maskIban }}</span>
+                                                                        <span class="text-dark fw-bold d-block fs-3">{{
+                                                                            item.maskIban }}</span>
                                                                     </span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </ng-container>
-                                                
+
 
 
                                             </div>
@@ -96,301 +126,301 @@
 
                                 <ng-container *ngIf="currentStep$.value == 2">
                                     <div class="current">
-                                        <div class="w-100">
-                                            <div class="row">
-                                                <div class="col-6 p-5">
-                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"Tarih" | translate}}</span>
-                                                    </label>
+                                        <!-- Dinamik masraf kalemleri -->
+                                        <div formArrayName="expenseItems" class="mb-3"
+                                            style="max-height: 400px; overflow-y: auto;">
+                                            <ng-container *ngFor="let item of expenseItems.controls; let i = index">
+                                                <div [formGroupName]="i" class="card mb-3 border-light" *ngIf="i === 0">
+                                                    <div
+                                                        class=" bg-light d-flex justify-content-between align-items-center py-4 px-2 rounded">
+                                                        <h6 class="mb-0">{{'Masraf_Kalemi' | translate}}
+                                                            #{{addedExpenses.length + 1}}</h6>
 
-                                                    <input type="date" class="form-control form-control-lg form-control-solid" formControlName="tarih">
+                                                    </div>
+
+                                                    <div class="card-body p-3">
+                                                        <div class="row g-2">
+                                                            <!-- Tutar -->
+                                                            <div class="col-md-6">
+                                                                <label class="form-label small fw-bold mb-1">
+                                                                    <span class="required">{{'Tutar' |
+                                                                        translate}}</span>
+                                                                </label>
+                                                                <div class="input-group input-group-sm">
+                                                                    <span class="input-group-text">
+                                                                        {{item.get('currency')?.value | currencySymbol}}
+                                                                    </span>
+                                                                    <input type="number" min="0.01" step="0.01"
+                                                                        formControlName="amount" class="form-control">
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Vergi Oranı -->
+                                                            <div class="col-md-3">
+                                                                <label class="form-label small fw-bold mb-1">
+                                                                    <span class="required">{{'Vergi_Oranı' | translate}}
+                                                                        (%)</span>
+                                                                </label>
+                                                                <input type="number" min="0" max="100"
+                                                                    class="form-control form-control-sm"
+                                                                    formControlName="taxRate">
+                                                            </div>
+
+                                                            <!-- Para Birimi -->
+                                                            <div class="col-md-3">
+                                                                <label class="form-label small fw-bold mb-1">
+                                                                    <span class="required">{{'Birim' |
+                                                                        translate}}</span>
+                                                                </label>
+                                                                <select class="form-select form-select-sm"
+                                                                    formControlName="currency">
+                                                                    <option value="TRY">TRY</option>
+                                                                    <option value="USD">USD</option>
+                                                                    <option value="EUR">EUR</option>
+                                                                    <option value="GBP">GBP</option>
+                                                                    <option value="RUB">RUB</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <!-- Açıklama -->
+                                                            <div class="col-md-6">
+                                                                <label class="form-label small fw-bold mb-1">
+                                                                    <span class="required">{{'Açıklama' |
+                                                                        translate}}</span>
+                                                                </label>
+                                                                <input type="text" formControlName="description"
+                                                                    class="form-control form-control-sm"
+                                                                    [placeholder]="'Masraf_Açıklaması' | translate">
+                                                            </div>
+
+                                                            <!-- Fiş Tarihi -->
+                                                            <div class="col-md-3">
+                                                                <label class="form-label small fw-bold mb-1">
+                                                                    <span class="required">{{"Fiş Tarih" |
+                                                                        translate}}</span>
+                                                                </label>
+
+                                                                <!-- <input type="date" class="form-control form-control-sm" formControlName="date"> -->
+                                                                <p-datepicker formControlName="date"
+                                                                    [readonlyInput]="true" dateFormat="yy-mm-dd"
+                                                                    dataType="string" appendTo="body"
+                                                                    placeholder="Tarih Seçiniz" />
+                                                            </div>
+
+                                                            <!-- Masraf Tipi -->
+                                                            <div class="col-md-3">
+                                                                <label class="form-label small fw-bold mb-1">
+                                                                    <span class="required">{{'Masraf Tipi' |
+                                                                        translate}}</span>
+                                                                </label>
+                                                                <!-- <select class="form-select form-select-sm"
+                                                                    formControlName="type">
+                                                                    <option *ngFor="let item of expenseTypes"
+                                                                        value="{{item.id}}">{{item.ad}}</option>
+                                                                </select> -->
+
+                                                                <p-select [options]="expenseTypes"
+                                                                    formControlName="type" optionLabel="aciklama"
+                                                                    emptyFilterMessage="{{'Kayıt Bulunamadı' | translate}}"
+                                                                    [filter]="true" filterBy="aciklama"
+                                                                    [showClear]="true"
+                                                                    placeholder="{{'Tipi Seçiniz' | translate}}"
+                                                                    [appendTo]="'body'" class="w-100 md:w-56">
+                                                                    <ng-template #selectedItem let-selected>
+                                                                        <div class="flex items-center gap-2">
+                                                                            <div>{{ item.get('type')?.value?.aciklama }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </ng-template>
+                                                                    <ng-template let-type #type>
+                                                                        <div class="flex items-center gap-2">
+                                                                            <div>{{ type.aciklama }}</div>
+                                                                        </div>
+                                                                    </ng-template>
+                                                                </p-select>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Kalem Toplamı (Kompakt) -->
+                                                        <div class="d-flex justify-content-end mt-2">
+                                                            <div class="badge bg-light text-dark">
+                                                                <span class="small">{{'Kalem_Toplamı' |
+                                                                    translate}}:</span>
+                                                                <span class="fw-bold ms-1">
+                                                                    {{ (item.get('amount')?.value || 0) |
+                                                                    currency:item.get('currency')?.value:'symbol':'1.2-2'}}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                            </ng-container>
 
-                                                <div class="col-6 p-5">
-                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"Açıklama" | translate}}</span>
-                                                    </label>
+                                        </div>
 
-                                                    <textarea class="form-control form-control-solid" rows="3"
-                                                        formControlName="aciklama"
-                                                        placeholder="{{'Açıklama_Giriniz' | translate}}"
-                                                        style="height: 12px;">
-                                                    </textarea>
-                                                </div>
+                                        <!-- Yeni kalem ekle butonu -->
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <button type="button" pButton pRipple icon="pi pi-plus"
+                                                [label]="'Yeni_Masraf_Ekle' | translate" class="p-button-sm"
+                                                (click)="addExpenseItem()"></button>
+                                        </div>
 
-                                                
+                                        <!-- Genel Toplam (Kompakt) -->
+                                        <div
+                                            class="d-flex justify-content-between align-items-center mt-3 p-2 bg-light rounded">
+                                            <span class="fw-bold">{{ 'Toplam_Tutar' | translate }} (TRY):</span>
+                                            <span class="fw-bold fs-5 text-primary">
+                                                {{ getTotalAmount() | currency:'TRY':'symbol':'1.2-2' }}
+                                            </span>
+                                        </div>
+
+                                        <!-- Masraf Özeti Tablosu -->
+                                        <div class="mt-3" *ngIf="addedExpenses.length > 0">
+                                            <h6 class="fw-bold mb-2">{{'Masraf_Özeti' | translate}}</h6>
+                                            <div class="table-responsive">
+                                                <table class="table table-sm table-hover">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>{{'Açıklama' | translate}}</th>
+                                                            <th>{{'Tip' | translate}}</th>
+                                                            <th class="text-end">{{'Tutar' | translate}}</th>
+                                                            <th class="text-end">{{'Vergi' | translate}}</th>
+                                                            <th class="text-end">{{'Toplam' | translate}}</th>
+                                                            <th class="text-end">{{'İşlem' | translate}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of addedExpenses; let i = index">
+                                                            <td>{{ i + 1 }}</td>
+                                                            <td>{{ item.description }}</td>
+                                                            <td pTooltip="{{item.type.aciklama}}" tooltipPosition="top">
+                                                                {{ item.type.aciklama | truncate:15 }}</td>
+                                                            <td class="text-end">{{ item.amount | number:'1.2-2' }} {{
+                                                                item.currency }}</td>
+                                                            <td class="text-end">{{ item.taxRate }}%</td>
+                                                            <td class="text-end fw-bold">
+                                                                {{ (item.amount || 0) | currency:item.currency:'symbol':'1.2-2' }}
+                                                            </td>
+                                                            <td class="text-end">
+                                                                <button type="button" pButton pRipple icon="pi pi-trash"
+                                                                    class="p-button-rounded p-button-text p-button-danger p-button-sm"
+                                                                    (click)="removeAddedExpense(i)"></button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
+
                                     </div>
-
-
                                 </ng-container>
 
                                 <ng-container *ngIf="currentStep$.value == 3">
-                                    <div class="current">
-                                        <div class="w-100">
-                                            <div class="row">
-                                                <div class="col-12 my-5">
-                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{'Para_Birimi' | translate}}</span>
-                                                    </label>
-
-                                                    <div class="form-check form-check-custom form-check-danger form-check-solid">
-                                                        <div class="mx-3">
-                                                            <input class="form-check-input" type="radio" value="TRY" id="flexCheckboxTl" formControlName="paraBirimi" />
-                                                            <label class="form-check-label" for="flexCheckboxTl">
-                                                                TRY
-                                                            </label>
-                                                        </div>
-                                                        
-                                                        <div class="mx-3">
-                                                            <input class="form-check-input" type="radio" value="USD" id="flexCheckboxUsd" formControlName="paraBirimi" />
-                                                            <label class="form-check-label" for="flexCheckboxUsd">
-                                                                USD
-                                                            </label>
-                                                        </div>
-                                                        
-                                                        <div class="mx-3">
-                                                            <input class="form-check-input" type="radio" value="EUR" id="flexCheckboxEur" formControlName="paraBirimi" />
-                                                            <label class="form-check-label" for="flexCheckboxEur">
-                                                                EUR
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="mx-3">
-                                                            <input class="form-check-input" type="radio" value="GBP" id="flexCheckboxEur" formControlName="paraBirimi" />
-                                                            <label class="form-check-label" for="flexCheckboxEur">
-                                                                GBP
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="mx-3">
-                                                            <input class="form-check-input" type="radio" value="RUB" id="flexCheckboxEur" formControlName="paraBirimi" />
-                                                            <label class="form-check-label" for="flexCheckboxEur">
-                                                                RUB
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-6 my-5">
-                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"Tutar" | translate}}</span>
-                                                    </label>
-
-                                                    <div class="input-group mb-5">
-                                                        <span class="input-group-text">
-                                                            <div [ngSwitch]="advanceForm.get('paraBirimi')?.value">
-                                                                <div *ngSwitchCase="['TRY']">₺</div>
-                                                                <div *ngSwitchCase="['USD']">$</div>
-                                                                <div *ngSwitchCase="['EUR']">€</div>
-                                                                <div *ngSwitchCase="['GBP']">£</div>
-                                                                <div *ngSwitchCase="['RUB']">₽</div>
-                                                                <div *ngSwitchDefault>₺</div>
-                                                            </div>
-                                                        </span>
-                                                        <input type="number" min="1" class="form-control" formControlName="tutar" aria-label="Tutar"/>
-                                                        <!-- <span class="input-group-text">.00</span> -->
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-6 my-5">
-                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                        <span class="required">{{"Taksit" | translate}}</span>
-                                                    </label>
-
-                                                    <input type="number" min="1" max="12" class="form-control form-control-lg form-control-solid" formControlName="taksit">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-container>
-
-                                <ng-container *ngIf="currentStep$.value == 4">
                                     <div class="border border-3 rounded-5">
                                         <div class="row py-8 px-10">
 
+                                            <!-- Talep Sahibi -->
                                             <div class="col-12 d-flex justify-content-center pb-3">
-                                                <span class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">
-                                                    {{"Talep_Sahibi" | translate}}
+                                                <span
+                                                    class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">
+                                                    {{ "Talep_Sahibi" | translate }}
                                                 </span>
                                             </div>
 
-                                            <div class="col-12 d-flex justify-content-center  pb-10"
-                                                *ngIf="this.authService.currentUserSubject | async as _user">
-                                                <span class="text-gray-800 fs-6 fw-bolder">{{_user.adsoyad}}</span>
-                                                <span class="text-muted fw-bold d-block fs-7"></span>
+                                            <div class="col-12 d-flex justify-content-center pb-10"
+                                                *ngIf="authService.currentUserSubject | async as _user">
+                                                <span class="text-gray-800 fs-6 fw-bolder">{{ _user.adsoyad }}</span>
                                             </div>
 
                                             <div class="separator mb-10"></div>
 
+                                            <!-- Masraf Talep Formu -->
                                             <div>
                                                 <div class="col-12 d-flex justify-content-center">
                                                     <span
-                                                        class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">{{"Avans_Talep_Formu" | translate}}</span>
+                                                        class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">
+                                                        {{ "Masraf_Talep_Formu" | translate }}
+                                                    </span>
                                                 </div>
 
                                                 <div class="col-12">
                                                     <div class="row text-center">
-                                                        <div class="col-6 py-3">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"IBAN" | translate}}:</span>
+                                                        <div class="col-md-6 py-3">
+                                                            <span class="text-gray-800 fs-6 fw-bolder">{{ "IBAN" |
+                                                                translate }}:</span>
                                                             <span class="text-muted fw-bold d-block fs-7">
-                                                                {{ advanceFormValues?.iban }}
+                                                                {{ formValues?.iban }}
                                                             </span>
                                                         </div>
 
-                                                        <div class="col-6 py-3">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Tutar" | translate}}:</span>
+                                                        <div class="col-md-6 py-3">
+                                                            <span class="text-gray-800 fs-6 fw-bolder">{{ "Açıklama" |
+                                                                translate }}:</span>
                                                             <span class="text-muted fw-bold d-block fs-7">
-                                                                {{advanceFormValues?.tutar | currency: advanceFormValues?.paraBirimi:"symbol-narrow":"1.2-2"}}
-                                                                / {{ advanceFormValues?.taksit }} {{"Taksit" | translate}}
+                                                                {{ formValues?.explanation }}
                                                             </span>
                                                         </div>
-                                                        
-                                                        <div class="col-6 py-3">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Açıklama" | translate}}:</span>
-                                                            <span class="text-muted fw-bold d-block fs-7">
-                                                                {{ advanceFormValues?.aciklama }}
-                                                            </span>
-                                                        </div>
-
-                                                        <div class="col-6 py-3">
-                                                            <span class="text-gray-800  fs-6 fw-bolder">{{"Tarih" | translate}}:</span>
-                                                            <span class="text-muted fw-bold d-block fs-7">
-                                                                {{ advanceFormValues?.tarih }}
-                                                            </span>
-                                                        </div>
-
-                                                        
-
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="separator my-10"></div>
+
+                                            <!-- Masraf Kalemleri -->
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-center pb-3">
+                                                    <span
+                                                        class="fs-5 fw-bolder me-1 cursor-pointer text-danger opacity-74-hover">
+                                                        {{ "Eklenen_Masraf_Kalemleri" | translate }}
+                                                    </span>
+                                                </div>
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered text-center align-middle">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>{{ "Açıklama" | translate }}</th>
+                                                                <th>{{ "Tür" | translate }}</th>
+                                                                <th>{{ "Tutar" | translate }}</th>
+                                                                <th>{{ "KDV Oranı" | translate }}</th>
+                                                                <th>{{ "Döviz" | translate }}</th>
+                                                                <th>{{ "Tarih" | translate }}</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let item of addedExpenses; let i = index">
+                                                                <td>{{ i + 1 }}</td>
+                                                                <td>{{ item.description }}</td>
+                                                                <td>{{ item.type?.aciklama | truncate: 15 }}</td>
+                                                                <td>{{ item.amount }}</td>
+                                                                <td>{{ item.taxRate }}%</td>
+                                                                <td>{{ item.currency }}</td>
+                                                                <td>{{ item.date }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                                <!-- Toplam Tutar -->
+                                                <div class="text-end mt-3 pe-4">
+                                                    <strong>{{ "Toplam Tutar" | translate }}:</strong>
+                                                    <span class="text-primary fw-bold fs-5">
+                                                        {{ getTotalAmount() | currency:'TRY':'symbol':'1.2-2' }}
+                                                    </span>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </ng-container>
 
-                                <ng-container *ngIf="currentStep$.value == 5">
-                                    <div class="current h-xl-500px scroll">
-                                        <div class="w-100">
-                                            <div class="row pb-3" *ngFor="let item of fileTypes; index as i">
-                                                <div class="col-12 d-flex justify-content-center align-items-center">
-                                                    <input type="file" [id]="'upload_' + i" style="display: none;"
-                                                        (change)="getFile($event, item)" formControlName="file">
-                                                    <label [for]="'upload_' + i" class="w-100">
-                                                        <div class="dropzone dropzone-default dropzone-primary dz-clickable d-flex justify-content-center"
-                                                            style="padding: 1.5rem 0;">
-                                                            <div class="dropzone-msg dz-message needsclick">
-                                                                <h3 class="dropzone-msg-title text-center">
-                                                                    {{"DOSYA_YUKLE" | translate: { fileType: item.ad } }}
-                                                                </h3>
-                                                            </div>
-                                                        </div>
-                                                    </label>
-                                                </div>
 
-                                                <div class="col-12">
-                                                    <ng-container *ngIf="item.files">
-                                                        <div [@fileUploaded]="'uploaded'"
-                                                            class="card bg-light-dark mx-8 my-5">
-                                                            <div class="card-body">
-                                                                <div
-                                                                    class="row d-flex justify-content-center align-items-center">
-
-                                                                    <!-- <ng-container *ngIf="!item.files.type.startsWith('image')"> -->
-                                                                    <div class="col-3 text-center">
-                                                                        <div [ngSwitch]="item.files.type">
-                                                                            <div *ngSwitchCase="['image/jpeg', 'image/png', 'image/svg'].includes(item.files.type) ? item.files.type : !item.files.type">
-                                                                                <i class="file-type cursor-pointer fa-solid fa-file-image text-dark fs-3x"
-                                                                                    (click)="showUploadedFile(item)"></i>
-                                                                            </div>
-
-                                                                            <div *ngSwitchCase="['text/plain'].includes(item.files.type) ? item.files.type : !item.files.type">
-                                                                                <i class="file-type cursor-pointer fa-solid fa-file-lines text-dark fs-3x"
-                                                                                    (click)="showUploadedFile(item)"></i>
-                                                                            </div>
-
-                                                                            <div *ngSwitchCase="['application/pdf'].includes(item.files.type) ? item.files.type : !item.files.type">
-                                                                                <i class="file-type cursor-pointer fa-solid fa-file-pdf text-dark fs-3x"
-                                                                                    (click)="showUploadedFile(item)"></i>
-                                                                            </div>
-
-                                                                            <div *ngSwitchDefault>
-                                                                                <i class="fa-solid cursor-pointer fa-file text-dark fs-3x"
-                                                                                    (click)="showUploadedFile(item)"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- </ng-container> -->
-
-
-                                                                    <div class="col-7">
-                                                                        <div class="fs-6 fw-bold text-gray-800 text-center">
-                                                                            {{ item.files.name }}
-                                                                        </div>
-
-                                                                        <div class="fs-6 fw-bold text-gray-800 text-center">
-                                                                            {{ item.files.fileSize }} {{ item.files.fileSizeType }}
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-2">
-                                                                        <a (click)="item.files = null"
-                                                                            class="btn btn-icon btn-danger btn-sm me-3">
-                                                                            <i class="fa-solid fa-xmark fs-4"></i>
-                                                                        </a>
-                                                                    </div>
-
-                                                                    <!-- <ng-container *ngIf="item.files.type.startsWith('image')">
-                                                                        <div class="col-12 d-flex justify-content-center">
-                                                                            <div class="symbol symbol-75px">
-                                                                                <img alt="Uploaded File" src="{{item.files.url}}">
-                                                                                <iframe [src]="item.files.url" iframeborder="0"></iframe>
-                                                                            </div>
-                                                                        </div>    
-                                                                    </ng-container> -->
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </ng-container>
-                                                </div>
-
-                                                <!-- <ng-container *ngIf="uploadedFile">
-                                                    <div [@fileUploaded]="'uploaded'" class="card bg-light-dark m-3">
-                                                        <div class="card-body">
-                                                            <div class="row d-flex justify-content-center align-items-center">
-                                            
-                                                                <div class="col-12 d-flex justify-content-end mb-3">
-                                                                    <a (click)="uploadedFile = null" class="btn btn-icon btn-danger btn-sm me-3">
-                                                                        <i class="fa-solid fa-xmark fs-4"></i>
-                                                                    </a>
-                                                                </div>
-                                                                
-                                                                <div class="col-12">
-                                                                    <iframe [src]="uploadedFile.url" width="100%" height="300px"></iframe>
-                                                                </div>
-                                            
-                                                                <div class="col-4">
-                                                                    <div class="fs-6 fw-bold text-gray-800 text-center">
-                                                                        {{uploadedFile.name}}
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-4">
-                                                                    <div class="fs-6 fw-bold text-gray-800 text-center">
-                                                                        {{uploadedFile.fileSize}} {{uploadedFile.fileSizeType}}
-                                                                    </div>
-                                                                </div>
-                                            
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </ng-container> -->
-
-
-                                            </div>
-                                        </div>
+                                <ng-container *ngIf="currentStep$.value == 4">
+                                    <div class="row">
+                                        <app-file-upload [types]="fileTypes" (uploadEvent)="onUploaded($event)"
+                                            [formId]="formId" [source]="'masraf'"></app-file-upload>
                                     </div>
                                 </ng-container>
 
@@ -398,60 +428,67 @@
                             </form>
                         </div>
 
-                        <div class="col-12 d-flex align-items-end justify-content-center justify-content-md-end">
-                            <div class="d-flex flex-stack pt-0">
-                                <div class="mr-2">
-                                    <ng-container *ngIf=" 5 > currentStep$.value && currentStep$.value > 1">
-                                        <button type="button" class="btn btn-lg btn-light-danger me-3" (click)="prevStep()">
-                                            <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
-                                                class="svg-icon svg-icon-4 me-1"></span>
-                                            {{"Geri" | translate}}
-                                        </button>
-                                    </ng-container>
+                        <ng-container *ngIf="currentStep$.value != 4">
+                            <div class="col-12 d-flex align-items-end justify-content-center justify-content-md-end">
+                                <div class="d-flex flex-stack pt-0">
+                                    <div class="mr-2">
+                                        <ng-container *ngIf=" 4 > currentStep$.value && currentStep$.value > 1">
+                                            <button type="button" class="btn btn-sm btn-light-danger me-3"
+                                                (click)="prevStep()">
+                                                <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                                                    class="svg-icon svg-icon-4 me-1"></span>
+                                                {{"Geri" | translate}}
+                                            </button>
+                                        </ng-container>
 
-                                    <ng-container *ngIf="currentStep$.value == formsCount">
-                                        <button mat-dialog-close type="button" class="btn btn-lg btn-light-danger me-3">
-                                            <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
-                                                class="svg-icon svg-icon-4 me-1"></span>
-                                            {{"Kapat" | translate}}
-                                        </button>
+                                        <ng-container *ngIf="currentStep$.value == formsCount">
+                                            <button mat-dialog-close type="button"
+                                                class="btn btn-sm btn-light-danger me-3">
+                                                <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                                                    class="svg-icon svg-icon-4 me-1"></span>
+                                                {{"Kapat" | translate}}
+                                            </button>
+                                        </ng-container>
+                                    </div>
+
+                                    <ng-container *ngIf="currentStep$.value !== formsCount">
+                                        <div>
+                                            <ng-container *ngIf="currentStep$.value < formsCount - 1">
+                                                <button type="button" class="btn btn-sm btn-danger me-3"
+                                                    (click)="nextStep()">
+                                                    <span class="indicator-label">
+                                                        {{"İleri" | translate}} {{ " " }}
+                                                        <span
+                                                            [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
+                                                            class="svg-icon svg-icon-3 ms-2 me-0"></span>
+                                                        <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                            {{"Gönder" | translate}}
+                                                        </ng-container>
+                                                    </span>
+                                                </button>
+                                            </ng-container>
+                                            <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                                                <button type="button" class="btn btn-sm btn-danger me-3"
+                                                    (click)="closedFormDialog()">
+                                                    <span class="indicator-label">
+                                                        {{"Kapat" | translate}}
+                                                    </span>
+                                                </button>
+
+                                                <button type="button" class="btn btn-sm btn-danger me-3">
+                                                    <span class="indicator-label">
+                                                        {{"Gönder" | translate}}
+                                                    </span>
+                                                </button>
+
+                                            </ng-container>
+
+                                        </div>
                                     </ng-container>
                                 </div>
-
-                                <ng-container *ngIf="currentStep$.value !== formsCount">
-                                    <div>
-                                        <ng-container *ngIf="currentStep$.value < formsCount - 1">
-                                            <button type="button" class="btn btn-lg btn-danger me-3" (click)="nextStep()">
-                                                <span class="indicator-label">
-                                                    {{"İleri" | translate}} {{ " " }}
-                                                    <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg' "
-                                                        class="svg-icon svg-icon-3 ms-2 me-0"></span>
-                                                    <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                                        {{"Gönder" | translate}}
-                                                    </ng-container>
-                                                </span>
-                                            </button>
-                                        </ng-container>
-                                        <ng-container *ngIf="currentStep$.value === formsCount - 1">
-                                            <button type="button" class="btn btn-lg btn-danger me-3" (click)="closedFormDialog()">
-                                                <span class="indicator-label">
-                                                    {{"Kapat" | translate}}
-                                                </span>
-                                            </button>
-                                            
-                                            <button type="button" class="btn btn-lg btn-danger me-3"
-                                                (click)="getFormValues()">
-                                                <span class="indicator-label">
-                                                    {{"Gönder" | translate}}
-                                                </span>
-                                            </button>
-
-                                        </ng-container>
-
-                                    </div>
-                                </ng-container>
                             </div>
-                        </div>
+                        </ng-container>
+
                     </div>
                 </div>
             </div>
@@ -477,30 +514,3 @@
         </div>
     </ng-container>
 </ng-template>
-
-
-
-
-
-
-<p-dialog header="{{'Önizleme' | translate}}" [(visible)]="displayUploadedFile" position="center" [modal]="true"
-    [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [baseZIndex]="10000" [draggable]="false"
-    [resizable]="false">
-
-    <ng-container *ngIf="currentUploadedFile">
-        <div class="col-12 d-flex justify-content-center">
-            <div class="symbol symbol-75px">
-                <iframe [src]="currentUploadedFile?.files?.url" iframeborder="0" width="600px" height="600px"></iframe>
-            </div>
-        </div>
-    </ng-container>
-
-
-
-    <ng-template pTemplate="footer">
-        <a (click)="displayUploadedFile=false" class="btn btn-sm btn-danger mx-1">
-            <i class="fa-solid fa-xmark fs-7"></i>
-            {{'Kapat' | translate}}
-        </a>
-    </ng-template>
-</p-dialog>

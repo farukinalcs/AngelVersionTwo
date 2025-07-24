@@ -30,7 +30,7 @@ export class AssistantComponent implements AfterViewInit {
     private offsetY = 0;
     private currentX = 30; // Başlangıç pozisyonu (right)
     private currentY = 30; // Başlangıç pozisyonu (bottom)
-
+    private isHovered = false;
 
     showTodoList = false;
     todoItems = [
@@ -303,6 +303,8 @@ export class AssistantComponent implements AfterViewInit {
     // }
 
     private updateEyePosition(): void {
+        if (this.isSleeping || this.isHovered) return; // Hover durumunda takip yapma
+        
         if (this.isSleeping) return;
 
         const characterRect = this.character.nativeElement.getBoundingClientRect();
@@ -400,6 +402,18 @@ export class AssistantComponent implements AfterViewInit {
     get completionPercentage(): number {
         const completed = this.todoItems.filter(item => item.completed).length;
         return (completed / this.todoItems.length) * 100;
+    }
+
+    @HostListener('mouseenter')
+    onMouseEnter() {
+        this.isHovered = true;
+        this.renderer.addClass(this.character.nativeElement, 'hovered');
+    }
+
+    @HostListener('mouseleave')
+    onMouseLeave() {
+        this.isHovered = false;
+        this.renderer.removeClass(this.character.nativeElement, 'hovered');
     }
 }
 

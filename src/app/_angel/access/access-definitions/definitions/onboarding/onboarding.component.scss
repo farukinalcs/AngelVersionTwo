@@ -1,0 +1,58 @@
+.drag-container {
+    min-height: 200px;
+}
+
+.cdk-drag-preview {
+    opacity: 0.8;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 200ms ease;
+    z-index: 1000 !important;
+
+    .card-wrapper {
+        transform: scale(1.02);
+    }
+}
+
+.cdk-drag-placeholder {
+    opacity: 0.3;
+    background: #f5f5f5;
+    border: 2px dashed #ccc;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drag-container.cdk-drop-list-dragging .cdk-drag:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drag-handle{
+    cursor: move;
+    transition: transform 0.2s ease;
+
+    &:active {
+        cursor: grabbing;
+    }
+}
+
+@media (max-width: 768px) {
+    .cdk-drag-preview {
+        width: 100% !important;
+    }
+
+    .drag-container {
+        flex-direction: column;
+    }
+}
+
+.drag-handle {
+    cursor: move;
+    padding: 8px;
+    color: #666;
+
+    &:hover {
+        color: #333;
+    }
+}
