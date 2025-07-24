@@ -47,6 +47,9 @@ export class DeviceAndmapComponent {
   longitude: any = "";
 
   disableLayoutPadding = true;
+
+  markerMap = new Map<string, google.maps.Marker>();
+  private markers: google.maps.Marker[] = [];
   constructor(
     private patrol: PatrolService,
     private ref: ChangeDetectorRef,
@@ -114,6 +117,8 @@ export class DeviceAndmapComponent {
       if (locationId !== null) {
         this.selectedLocationID = locationId;
         console.log("DMLocation:", locationId);
+        this.markers.forEach(marker => marker.setMap(null));
+        this.markers = [];
         this.getPatrolInfo(locationId);
       }
     });
@@ -151,16 +156,17 @@ export class DeviceAndmapComponent {
         console.warn('Geçersiz koordinatlar:', this.patrolInfo?.[0]);
       }
 
-      if (this.patrolInfo?.length > 0) {
-        (this.patrolInfo ?? []).forEach((patrol: any) => {
+      if (this.displayList?.length > 0) {
+        (this.displayList ?? []).forEach((patrol: any) => {
           if (!isNaN(+patrol?.lat) && !isNaN(+patrol?.lng) && this.map) {
-            new google.maps.Marker({
+            const marker =  new google.maps.Marker({
               position: { lat: +patrol?.lat, lng: +patrol?.lng },
               map: this.map,
               title: patrol?.terminalname,
               icon:
               'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
             });
+            this.markers.push(marker);
           } else {
             console.warn('Geçersiz marker koordinatları:', patrol);
           }
@@ -473,18 +479,19 @@ export class DeviceAndmapComponent {
       if (this.displayList?.length > 0) {
         (this.displayList ?? []).forEach((device: any) => {
           if (!isNaN(+device?.lat) && !isNaN(+device?.lng) && this.map) {
-            new google.maps.Marker({
+            const marker = new google.maps.Marker({
               
               position: { lat: +device?.lat, lng: +device?.lng },
               map: this.map,
               title: device?.terminalname,
+              animation: google.maps.Animation.BOUNCE,
               //icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
           
               icon: device?.isOnline !== true
                 ? 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
                 : 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
             });
-         
+            this.markers.push(marker);
           } else {
             console.warn('Geçersiz marker koordinatları:', device);
           }
