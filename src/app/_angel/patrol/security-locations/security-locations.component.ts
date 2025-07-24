@@ -45,7 +45,7 @@ export class SecurityLocationsComponent implements OnInit, OnDestroy {
   _allLocationDetails: any[] = [];
 
   _locationDetails: any[] = [];
-  targetProducts: any[] = [];
+  //targetProducts: any[] = [];
 
   constructor(
     private patrol: PatrolService,
@@ -90,12 +90,13 @@ export class SecurityLocationsComponent implements OnInit, OnDestroy {
   }
 
   deleteLocation(id: number) {
-    this.patrol.deletelocation(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-      const deleteLocation = response[0].x;
-      console.log("deleteLocation:", deleteLocation);
-      this.ref.detectChanges();
-      this.getLocation();
-    });
+    console.log("deleteLocation:", id);
+    // this.patrol.deletelocation(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    //   const deleteLocation = response[0].x;
+    //   console.log("deleteLocation:", deleteLocation);
+    //   this.ref.detectChanges();
+    //   this.getLocation();
+    // });
   }
 
   updateLocation(name: string, id: number) {
@@ -122,7 +123,7 @@ export class SecurityLocationsComponent implements OnInit, OnDestroy {
   allLocationDetails(id: number) {
     this.patrol.allLocationDetails(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this._allLocationDetails = response[0].x;
-
+      console.log("_allLocationDetails yek245:", this._allLocationDetails);
       this._getlocationEmergencySms = this._allLocationDetails?.filter((x: any) => x.tip === 'X');
       this._getlocationEmergencyCall = this._allLocationDetails?.filter((x: any) => x.tip === 'Y');
       this._getlocationGuards = this._allLocationDetails?.filter((x: any) => x.tip === 'G');
@@ -163,8 +164,8 @@ export class SecurityLocationsComponent implements OnInit, OnDestroy {
       this._setlocationVehicle = this._locationDetails?.filter((x: any) => x.tip === 'C');
       console.log("ATAMADAN SONRA DÖNEN yek243:", this._locationDetails);
       this.ref.detectChanges();
-      this.locationDetails(item.id);
-      this.allLocationDetails(item.id);
+      //this.locationDetails(item.id);
+      //this.allLocationDetails(item.id);
     });
 
   }
@@ -203,39 +204,4 @@ export class SecurityLocationsComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  // relationStateChange(item:any, process:any) {
-  //   var mkodu;
-  //   if (process == "i") {
-  //     mkodu = "yek156"
-  //   } else if (process == "d") {
-  //     mkodu = "yek157"
-  //   }
-
-  //   var sp: any[] = [
-  //     {
-  //       mkodu: mkodu,
-  //       kaynakid: item.kaynakId.toString(),
-  //       hedefid: item.hedefId.toString(),
-  //       hedeftablo: 'mesaigruplari',
-  //       extra: ""
-
-  //     },
-  //   ];
-
-  //   // this.patrol
-  //   //   .requestMethod(sp)
-  //   //   .pipe(takeUntil(this.ngUnsubscribe))
-  //   //   .subscribe((response: any) => {
-  //   //     const data = response[0].x;
-  //   //     const message = response[0].z;
-
-  //   //     if (message.islemsonuc != 1) {
-  //   //       return;
-  //   //     }
-  //   //     console.log('relations durum değişti: ', data);
-
-  //   //     this.relations = [...data];        
-
-  //   //   });
-  // }
 }

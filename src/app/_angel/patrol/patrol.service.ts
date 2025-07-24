@@ -239,23 +239,23 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
-  dailyGuardTourCheck(date:string){
+  dailyGuardTourCheck(date:string,lokasyonId:number){
 
     var sp: any[] = [{
       mkodu:'yek258',
       tarih: date.toString(),
-      lokasyon:'0',
+      lokasyon:lokasyonId.toString(),
     
     }]
     return this.requestMethod(sp);
   }
 
-  dailyGuardTourCheck2(date:string){
+  dailyGuardTourCheck2(date:string,lokasyonId:number){
 
     var sp: any[] = [{
       mkodu:'yek259',
       tarih: date.toString(),
-      lokasyon:'0',
+      lokasyon:lokasyonId.toString(),
     
     }]
     return this.requestMethod(sp);
