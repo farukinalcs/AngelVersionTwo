@@ -6,7 +6,7 @@
         
           <div class="col-md-3">
             <div class="card custom-card h-100">
-              <div class="card-header border-0 bg-danger">
+              <div class="card-header border-0 bg-danger" style="min-height: 45px;">
                 <h5 class="text-white mb-0">Cihaz Tablosu</h5>
               </div>
               <div class="card-body">
@@ -23,10 +23,10 @@
                     <tr *ngFor="let item of displayList || []" class="cursor-pointer" (click)="getGuardEventList(item); focusOnDevice(item)">
                       <td class="text-dark fw-bold">
                         {{ item.terminalname }}<br>
-                        <span class="text-dark text-hover-danger fw-bold small">
+                        <span class="text-dark text-muted small">
                           {{ item.AdSoyad}}
                         </span>
-                        <p>{{item.time | date:'dd-MMMM-yyyy'}}</p>
+                        <p class="text-dark text-muted small">{{item.time | date:'dd-MM-yyyy HH:mm'}}</p>
                       </td>
                       <td>{{ item.battery }}%</td>
                       <td>
@@ -53,7 +53,7 @@
           <!-- Sağ Kart (9/12) -->
           <div class="col-md-9">
             <div class="card custom-card h-100">
-              <div class="card-header border-0 bg-danger">
+              <div class="card-header border-0 bg-danger" style="min-height: 45px;">
                 <h5 class="text-white mb-0">Cihaz Haritası</h5>
               </div>
               <div class="card-body">

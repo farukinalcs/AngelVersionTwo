@@ -7,10 +7,11 @@ import { FormControl } from '@angular/forms';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { SignalrPatrolService } from '../signalr-patrol.service';
 import { HelperService } from 'src/app/_helpers/helper.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { PatrolService } from '../patrol.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
+import { LocationService } from '../content-container/location.service';
 
 
 
@@ -62,17 +63,21 @@ export class CustomDateAdapter extends NativeDateAdapter {
 })
 
 export class ToursComponent implements OnInit, OnDestroy {
-
+  locationSub!: Subscription;
   private ngUnsubscribe = new Subject();
+
   formattedDate: string = '';
   selectedDate: Date = new Date();
+
   dateControl = new FormControl();
   activeWidget: number = 0;
+
   tour_s: any[] = [];
   tour_sd: any[] = [];
 
   dailyGuardTour: any[] = [];
   dailyGuardTour2: any[] = [];
+
   atilan: any[] = [];
   atilmayan: any[] = [];
   atilacak: any[] = [];
@@ -92,7 +97,8 @@ export class ToursComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private datePipe: DatePipe,
     private signalRService: SignalrPatrolService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private location : LocationService
 
   ) { }
 
@@ -105,8 +111,9 @@ export class ToursComponent implements OnInit, OnDestroy {
     this.dateControl.valueChanges.subscribe((newDate) => {
       this.formattedDate = this.datePipe.transform(newDate, 'yyyy-MM-dd')!;
     });
-    this.dailyGuardTourCheck(this.formattedDate);
-    this.dailyGuardTourDetail(this.formattedDate, this.selectLocationId);
+
+    this.dailyGuardTourCheck(this.formattedDate,this.selectLocationId);
+    this.getLocation();
   }
 
   updateWidgets() {
@@ -148,8 +155,8 @@ export class ToursComponent implements OnInit, OnDestroy {
     return num.toString().padStart(2, '0');
   }
   
-  dailyGuardTourCheck(date: any) {
-    this.patrol.dailyGuardTourCheck(date).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+  dailyGuardTourCheck(date: any, lokasyonId:number) {
+    this.patrol.dailyGuardTourCheck(date,lokasyonId ).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.dailyGuardTour = response[0]?.x;
 
       this.atilmayan = (this.dailyGuardTour ?? []).filter((item: any) => item.durum === 0)
@@ -172,9 +179,25 @@ export class ToursComponent implements OnInit, OnDestroy {
         console.log("this.tour_sd........sd", this.tour_sd);
       })
     }
+
+      
+  getLocation() {
+
+    this.locationSub = this.location.selectedLocationId$.subscribe(locationId => {
+      if (locationId !== null) {
+        this.selectLocationId = locationId;
+        console.log("TOUR Location:",  this.selectLocationId);
+      }
+    });
+    this.dailyGuardTourDetail(this.formattedDate, this.selectLocationId);
+  }
+    
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
   }
+
+
 }
 

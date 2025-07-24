@@ -4,7 +4,7 @@
         <div class="col-12">
 
             <div class="card card-custom gutter-b my-5 pb-5">
-                <div class="card-header" style="background: linear-gradient(112.14deg, var(--p-red-600) 0%, var(--p-red-400) 100%);font-weight: bold; min-height: 45px;">
+                <div class="card-header" class="card-header border-0 bg-danger" style="min-height: 45px;">
                     <div class="card-title">
                         <h3 class="card-label text-light fw-bolder text-center">LOKASYON TANIMLARI</h3>
                     
@@ -18,12 +18,12 @@
                                 <div class="table-responsive">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" [(ngModel)]="locationName" (input)="filterItems()">
-                                        <button type="button" id="button-addon2" class="btn btn-sm " style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;color:white" (click)="setLocation(locationName)">Ekle</button>
+                                        <button type="button" id="button-addon2" class="btn btn-sm " style="background:red;font-weight: bold;color:white" (click)="setLocation(locationName)">Ekle</button>
                                     </div>
                     
                                     <table class="table table-striped ">
                                     <thead>
-                                        <tr style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">
+                                        <tr style="background:red;font-weight: bold;color:white">
                                             <th class="fw-bolder me-1 cursor-pointer rounded-start text-center text-white" style="width: 80%;">Lokasyonlar</th>
                                             <th class="fw-bolder me-1 cursor-pointer rounded-end text-white" style="width: 20%;" colspan="2">İşlem</th>
                                         </tr>
@@ -35,13 +35,13 @@
                                                     <span>{{item?.ad}}</span>
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-sm py-1 px-2" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);">
-                                                        <i class="fa-solid fa-pen p-0" style="background: linear-gradient(112.14deg, var(--red-400) 0%, var(--red-700) 100%);"></i>
+                                                    <a class="btn btn-sm py-1 px-2" style="background:red;font-weight: bold;color:white">
+                                                        <i class="fa-solid fa-pen p-0" style="background:red;font-weight: bold;color:white"></i>
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-sm py-1 px-2 text-white" style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);"(click)="deleteLocation(item?.id)">
-                                                        <i class="fa-solid fa-minus p-0"></i>
+                                                    <a class="btn btn-sm py-1 px-2 text-white" style="background:red;font-weight: bold;color:white"(click)="deleteLocation(item?.id)">
+                                                        <i class="fa-solid fa-minus p-0" style="background:red;font-weight: bold;color:white"></i>
                                                     </a>
                                                 </td>
                                         </tr>
@@ -64,10 +64,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 75%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 75%;">
                                                                    <span>Ad</span> 
                                                                 </th>
-                                                                <th style="width: 25%;text-align:right">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;text-align:right">
                                                                     <span>işlem</span>
                                                                 </th>
                                                             </tr>
@@ -95,10 +95,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 25%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;">
                                                                     <span>işlem</span>
                                                                 </th>
-                                                                <th style="width: 75%;text-align: right;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 75%;text-align: right;">
                                                                     <span>Ad</span> 
                                                                 </th>
                                                             </tr>
@@ -131,10 +131,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 75%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 75%;">
                                                                     <span>Ad</span> 
                                                                 </th>
-                                                                <th style="width: 25%;text-align:right">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;text-align:right">
                                                                     <span>işlem</span>
                                                                 </th>
                                                             </tr>
@@ -160,10 +160,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 25%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;">
                                                                     <span>işlem</span>
                                                                 </th>
-                                                                <th  style="width: 75%;text-align: right;">
+                                                                <th  style="background:red;font-weight: bold;color:white;width: 75%;text-align: right;">
                                                                     <span>Ad</span> 
                                                                 </th>
                                                             </tr>
@@ -196,10 +196,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 75%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 75%;">
                                                                     <span>Ad</span> 
                                                                 </th>
-                                                                <th style="width: 25%;text-align:right">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;text-align:right">
                                                                     <span>işlem</span>
                                                                 </th>
                                                             </tr>
@@ -226,10 +226,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 25%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;">
                                                                     <span>işlem</span>
                                                                 </th>
-                                                                <th style="width: 75%;text-align: right;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 75%;text-align: right;">
                                                                     <span>Ad</span> 
                                                                 </th>
                                                             </tr>
@@ -263,10 +263,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 75%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 75%;">
                                                                     <span>Ad</span> 
                                                                 </th>
-                                                                <th style="width: 25%;text-align:right">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;text-align:right">
                                                                     <span>işlem</span>
                                                                 </th>
                                                             </tr>
@@ -293,10 +293,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 25%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;">
                                                                     <span>işlem</span>
                                                                 </th>
-                                                                <th style="width: 75%;text-align:right">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 75%;text-align:right">
                                                                     <span>Ad</span> 
                                                                 </th>
                                                             </tr>
@@ -334,10 +334,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 75%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 75%;">
                                                                     <span>Ad</span> 
                                                                 </th>
-                                                                <th style="width: 25%;text-align:right">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;text-align:right">
                                                                     <span>işlem</span>
                                                                 </th>
                                                             </tr>
@@ -364,10 +364,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 25%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;">
                                                                     <span>işlem</span>
                                                                 </th>
-                                                                <th style="width: 75%;text-align:right">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 75%;text-align:right">
                                                                     <span>Ad</span> 
                                                                 </th>
                                                             </tr>
@@ -404,10 +404,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 75%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 75%;">
                                                                     <span>Ad</span> 
                                                                 </th>
-                                                                <th style="width: 25%;text-align:right">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;text-align:right">
                                                                     <span>işlem</span>
                                                                 </th>
                                                             </tr>
@@ -435,10 +435,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 25%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;">
                                                                     <span>işlem</span>
                                                                 </th>
-                                                                <th style="width: 75%;text-align:right">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 75%;text-align:right">
                                                                     <span>Ad</span> 
                                                                 </th>
                                                             </tr>
@@ -473,10 +473,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 75%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 75%;">
                                                                     <span>Ad</span> 
                                                                 </th>
-                                                                <th style="width: 25%;text-align:right">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;text-align:right">
                                                                     <span>işlem</span>
                                                                 </th>
                                                             </tr>
@@ -503,10 +503,10 @@
                                                     <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"> 
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 25%;">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 25%;">
                                                                     <span>işlem</span>
                                                                 </th>
-                                                                <th style="width: 75%;text-align:right">
+                                                                <th style="background:red;font-weight: bold;color:white;width: 75%;text-align:right">
                                                                     <span>Ad</span> 
                                                                 </th>
                                                             </tr>
