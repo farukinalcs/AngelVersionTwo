@@ -112,7 +112,7 @@ export class ToursComponent implements OnInit, OnDestroy {
       this.formattedDate = this.datePipe.transform(newDate, 'yyyy-MM-dd')!;
     });
 
-    this.dailyGuardTourCheck(this.formattedDate);
+    this.dailyGuardTourCheck(this.formattedDate,this.selectLocationId);
     this.getLocation();
   }
 
@@ -155,8 +155,8 @@ export class ToursComponent implements OnInit, OnDestroy {
     return num.toString().padStart(2, '0');
   }
   
-  dailyGuardTourCheck(date: any) {
-    this.patrol.dailyGuardTourCheck(date).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+  dailyGuardTourCheck(date: any, lokasyonId:number) {
+    this.patrol.dailyGuardTourCheck(date,lokasyonId ).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.dailyGuardTour = response[0]?.x;
 
       this.atilmayan = (this.dailyGuardTour ?? []).filter((item: any) => item.durum === 0)
