@@ -539,6 +539,8 @@ export class DeviceAndmapComponent {
   //   return this.selectedDate ? this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd')! : '';
   // }
 
+  
+
   focusOnDevice(device: any): void {
     if (!device || !this.map) return;
     Object.values(this.markers).forEach(marker => marker.setAnimation(null));
