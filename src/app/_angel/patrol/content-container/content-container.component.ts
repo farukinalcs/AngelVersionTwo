@@ -19,7 +19,7 @@ export class ContentContainerComponent {
   selectedDate: Date = new Date();
   formattedDate: string = '';
   _locations: any[] = [];
-  selectLocationId: number;
+  selectLocationId: number | null = null;
   private ngUnsubscribe = new Subject();
 
   constructor(
@@ -50,6 +50,8 @@ export class ContentContainerComponent {
         this._locations = response[0].x;
         console.log("getLocation:", this._locations);
         this.selectLocationId = this._locations[0]?.id;
+        console.log("ContentContainerComponent:", this.selectLocationId);
+        this.location.setLocation(this._locations[0]?.id);
         this.ref.detectChanges();
       });
     }
@@ -60,6 +62,7 @@ export class ContentContainerComponent {
         // console.log("changeLocation", locationid);
         // this.selectLocationId = locationid;
         // this.getPatrolInfo(locationid);
+        this.selectLocationId = locationid;
         this.location.setLocation(locationid);
       }
     

@@ -22,7 +22,7 @@ import { LocationService } from '../content-container/location.service';
 
 
 export class DeviceAndmapComponent {
-  locationSub!: Subscription;
+  // locationSub!: Subscription;
   private hubConnection!: signalR.HubConnection;
 
   private ngUnsubscribe = new Subject();
@@ -113,15 +113,25 @@ export class DeviceAndmapComponent {
     //   this.ref.detectChanges();
     //   this.getPatrolInfo(this.selectLocationId);
     // });
-    this.locationSub = this.location.selectedLocationId$.subscribe(locationId => {
-      if (locationId !== null) {
-        this.selectedLocationID = locationId;
-        console.log("DMLocation:", locationId);
+    // this.locationSub = this.location.selectedLocationId$.subscribe(locationId => {
+    //   if (locationId !== null) {
+    //     this.selectedLocationID = locationId;
+    //     console.log("DMLocation:", locationId);
+    //     this.markers.forEach(marker => marker.setMap(null));
+    //     this.markers = [];
+    //     this.getPatrolInfo(locationId);
+    //   }
+    // });
+
+    this.location.selectedLocationId$.subscribe(id => {
+      if(id !== null){
+        this.selectedLocationID = id;
+        console.log("DMLocation:", this.selectedLocationID);
         this.markers.forEach(marker => marker.setMap(null));
         this.markers = [];
-        this.getPatrolInfo(locationId);
+        this.getPatrolInfo(id);
       }
-    });
+    })
   }
 
   getPatrolInfo(locationid: number): void {
@@ -619,7 +629,7 @@ export class DeviceAndmapComponent {
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
-    this.locationSub.unsubscribe();
+    // this.locationSub.unsubscribe();
     this.stopConnection();
   }
 }

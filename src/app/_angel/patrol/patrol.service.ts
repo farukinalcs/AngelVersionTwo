@@ -244,7 +244,7 @@ export class PatrolService {
     var sp: any[] = [{
       mkodu:'yek258',
       tarih: date.toString(),
-      lokasyon:lokasyonId.toString(),
+      lokasyon:lokasyonId,
     
     }]
     return this.requestMethod(sp);
