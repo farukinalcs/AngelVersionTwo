@@ -43,6 +43,8 @@ export class ApprovedRequestsComponent implements OnInit, OnDestroy {
     @Output() showDetailSearchDialogEvent = new EventEmitter<any>();
     @Output() showDemandProcessDialogEvent = new EventEmitter<{ demandId: any, demandTypeName: any }>();
     @Output() showUploadedFilesEvent = new EventEmitter<any>();
+    @Input() from: string;
+
     private ngUnsubscribe = new Subject()
 
     checkGrid: boolean = true;
