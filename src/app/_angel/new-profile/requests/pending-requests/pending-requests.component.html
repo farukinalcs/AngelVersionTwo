@@ -17,7 +17,7 @@
                 <app-approved-requests [approvedRequests]="onaylananFormlar" [selectedNavItem]="kaynak"
                     [menuItems]="menuItems" (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
                     (getMyDemandsEvent)="getDemanded($event)" (showUploadedFilesEvent)="showUploadedFiles($event)"
-                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
+                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)" [from]="'requests'">
                 </app-approved-requests>
             </mat-tab>
 
@@ -25,7 +25,7 @@
                 <app-denied-requests [deniedRequests]="reddedilenFormlar" [selectedNavItem]="kaynak"
                     [menuItems]="menuItems" (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
                     (getMyDemandsEvent)="getDemanded($event)" (showUploadedFilesEvent)="showUploadedFiles($event)"
-                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
+                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)" [from]="'requests'">
                 </app-denied-requests>
             </mat-tab>
         </mat-tab-group>

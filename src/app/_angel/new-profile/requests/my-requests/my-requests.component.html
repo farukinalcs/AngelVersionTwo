@@ -22,7 +22,8 @@
                     (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
                     (getMyDemandsEvent)="getMyDemands($event)"
                     (showUploadedFilesEvent)="showUploadedFiles($event)"
-                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
+                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)"
+                    [from]="'myRequests'">
                 </app-approved-requests>
             </mat-tab>
 
@@ -34,7 +35,8 @@
                     (showDemandProcessDialogEvent)="showDemandProcessDialog($event)"
                     (getMyDemandsEvent)="getMyDemands($event)"
                     (showUploadedFilesEvent)="showUploadedFiles($event)"
-                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)">
+                    (showDetailSearchDialogEvent)="showDetailSearchDialog($event)"
+                    [from]="'myRequests'">
                 </app-denied-requests>
             </mat-tab>
         </mat-tab-group>

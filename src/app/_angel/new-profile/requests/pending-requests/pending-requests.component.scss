@@ -24,7 +24,7 @@
         line-height: 1;
     }
 
-    .p-card-body{
+    .p-card-body {
         background-color: #7239ea0f;
     }
 }
@@ -90,10 +90,18 @@
         flex-direction: row;
         overflow: hidden;
     }
+
+    .mat-mdc-tab-body.mat-mdc-tab-body-active {
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+        z-index: 110 !important;
+        flex-grow: 1;
+    }
 }
 
 
-.short-text{
+.short-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

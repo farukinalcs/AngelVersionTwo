@@ -45,11 +45,11 @@
 
 
 :host ::ng-deep {
-    .mat-tab-group[mat-stretch-tabs]>.mat-tab-header .mat-tab-label {	
-        flex-basis: auto;	
-        flex-grow: 1;	
+    .mat-tab-group[mat-stretch-tabs]>.mat-tab-header .mat-tab-label {
+        flex-basis: auto;
+        flex-grow: 1;
     }
-    
+
     .p-accordion-tab:not(.p-accordion-tab-active) {
         .p-toggleable-content {
             height: 0;
@@ -74,5 +74,13 @@
 
     .mat-expansion-panel-body {
         padding: 0.50rem;
+    }
+
+    .mat-mdc-tab-body.mat-mdc-tab-body-active {
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+        z-index: 110 !important;
+        flex-grow: 1;
     }
 }
