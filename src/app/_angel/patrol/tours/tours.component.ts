@@ -156,7 +156,7 @@ export class ToursComponent implements OnInit, OnDestroy {
   }
   
   dailyGuardTourCheck(date: any, lokasyonId:number) {
-    this.patrol.dailyGuardTourCheck(date,lokasyonId ).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.patrol.dailyGuardTourCheck(date,lokasyonId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.dailyGuardTour = response[0]?.x;
 
       this.atilmayan = (this.dailyGuardTour ?? []).filter((item: any) => item.durum === 0)
@@ -183,7 +183,7 @@ export class ToursComponent implements OnInit, OnDestroy {
       
   getLocation() {
 
-    this.locationSub = this.location.selectedLocationId$.subscribe(locationId => {
+    this.location.selectedLocationId$.subscribe(locationId => {
       if (locationId !== null) {
         this.selectLocationId = locationId;
         console.log("TOUR Location:",  this.selectLocationId);

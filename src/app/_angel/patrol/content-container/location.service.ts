@@ -7,16 +7,16 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LocationService {
 
-  private selectedLocationId = new BehaviorSubject<number | null>(null);
-  selectedLocationId$ = this.selectedLocationId.asObservable();
+  private locationIdSubject  = new BehaviorSubject<number | null>(null);
+  selectedLocationId$ = this.locationIdSubject .asObservable();
 
   constructor() { }
 
   setLocation(id: number) {
-    this.selectedLocationId.next(id);
+    this.locationIdSubject .next(id);
   }
 
   getCurrentLocation(): number | null {
-    return this.selectedLocationId.getValue();
+    return this.locationIdSubject .getValue();
   }
 }
