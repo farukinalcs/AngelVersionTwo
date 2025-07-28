@@ -48,6 +48,7 @@ export class DeviceAndmapComponent {
 
   disableLayoutPadding = true;
 
+ 
   markerMap = new Map<string, google.maps.Marker>();
   //private markers: google.maps.Marker[] = [];
   private markers: { [imei: string]: google.maps.Marker } = {};
@@ -65,13 +66,13 @@ export class DeviceAndmapComponent {
 
   ngOnInit(): void {
 
-    const today = new Date();
-    this.formattedDate = this.datePipe.transform(today, 'yyyy-MM-dd')!;
-    this.dateControl.setValue(today);
+    // const today = new Date();
+    // this.formattedDate = this.datePipe.transform(today, 'yyyy-MM-dd')!;
+    // this.dateControl.setValue(today);
 
-    this.dateControl.valueChanges.subscribe((newDate) => {
-      this.formattedDate = this.datePipe.transform(newDate, 'yyyy-MM-dd')!;
-    });
+    // this.dateControl.valueChanges.subscribe((newDate) => {
+    //   this.formattedDate = this.datePipe.transform(newDate, 'yyyy-MM-dd')!;
+    // });
 
     this.getLocation();
 
@@ -84,9 +85,18 @@ export class DeviceAndmapComponent {
 
 
   ngAfterViewInit(): void {
+
     this.initializeMap();
+
   }
 
+  private clearAllMarkers(): void {
+    Object.values(this.markers).forEach((marker) => {
+      marker.setMap(null);
+    });
+    this.markers = {};
+  }
+  
   initializeMap() {
 
     const mapElement = document.getElementById('map') as HTMLElement;
@@ -105,28 +115,28 @@ export class DeviceAndmapComponent {
     console.log('Harita yüklendi:', this.map);
   }
 
-  private clearAllMarkers() {
-    for (const marker of Object.values(this.markers)) {
-      marker.setMap(null);
-    }
-    this.markers = {};
-  }
+  // private clearAllMarkers() {
+  //   for (const marker of Object.values(this.markers)) {
+  //     marker.setMap(null);
+  //   }
+  //   this.markers = {};
+  // }
 
   getLocation() {
-
+    this.clearAllMarkers();
     this.location.selectedLocationId$.subscribe(id => {
       if(id !== null){
         this.selectedLocationID = id;
         console.log("DMLocation:", this.selectedLocationID);
         // this.markers.forEach(marker => marker.setMap(null));
         // this.markers = [];
-        this.clearAllMarkers();
+      
         this.getPatrolInfo(id);
       }
     })
   }
 
-  getPatrolInfo(locationid: number): void {
+  getPatrolInfo2(locationid: number): void {
 
     this.patrol.getPatrolInfo(locationid).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.displayList = response[0]?.x;
@@ -177,6 +187,52 @@ export class DeviceAndmapComponent {
     });
 
   }
+  getPatrolInfo(locationid: number): void {
+    this.patrol.getPatrolInfo(locationid)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+        this.displayList = response[0]?.x || [];
+        this.patrolInfo = response[0]?.x || [];
+  
+        this.ref.detectChanges();
+  
+        // Haritayı merkeze al
+        const firstDevice = this.patrolInfo[0];
+        const lat = +firstDevice?.lat;
+        const lng = +firstDevice?.lng;
+  
+        if (!isNaN(lat) && !isNaN(lng)) {
+          this.map?.setCenter({ lat, lng });
+        } else {
+          console.warn('Geçersiz koordinatlar:', firstDevice);
+        }
+  
+        // 🔴 Önce eski marker'ları temizle
+        this.clearAllMarkers();
+  
+        // 🟢 Yeni marker'ları ekle
+        this.displayList.forEach((device: any) => {
+          const lat = +device?.lat;
+          const lng = +device?.lng;
+  
+          if (!isNaN(lat) && !isNaN(lng) && this.map) {
+            const marker = new google.maps.Marker({
+              position: { lat, lng },
+              map: this.map,
+              title: device?.terminalname,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+            });
+  
+            this.markers[device.imei] = marker;
+          } else {
+            console.warn('Geçersiz marker koordinatları:', device);
+          }
+        });
+  
+        console.log("✅ Marker listesi güncellendi", this.markers);
+      });
+  }
+  
 
 
   getGuardEventList(item: Incident) {
@@ -214,7 +270,7 @@ export class DeviceAndmapComponent {
       .catch(err => console.error('🔴 SignalR bağlantı hatası:', err));
   }
 
-  public async register(): Promise<void> {
+  public async register2(): Promise<void> {
     if (!this.hubConnection || this.hubConnection.state !== signalR.HubConnectionState.Connected) {
       console.warn("❌ SignalR bağlantısı yok, register yapılamıyor.");
       return;
@@ -288,6 +344,96 @@ export class DeviceAndmapComponent {
       console.error('❌ Register hatası:', err);
     }
   }
+
+  public async register(): Promise<void> {
+    if (!this.hubConnection || this.hubConnection.state !== signalR.HubConnectionState.Connected) {
+      console.warn("❌ SignalR bağlantısı yok, register yapılamıyor.");
+      return;
+    }
+  
+    try {
+      const data = await this.generateRegisterData();
+      const jsonData = JSON.stringify(data);
+  
+      console.log('📦 Register gönderiliyor:', jsonData);
+  
+      this.hubConnection.on('allconninfo', (...args: any[]) => {
+        if (args && args.length > 0) {
+          try {
+            const rawJson = args[0] as string;
+            const parsed = JSON.parse(rawJson) as ConnectionModel[];
+  
+            const connections = parsed.map((conn) => {
+              let clientInfoParsed: any;
+              try {
+                clientInfoParsed = JSON.parse(conn.ClientInfo);
+              } catch {
+                console.warn('❌ ClientInfo JSON değil:', conn.ClientInfo);
+                clientInfoParsed = {};
+              }
+  
+              return {
+                ...conn,
+                ClientInfo: clientInfoParsed,
+              };
+            });
+  
+            const mobileConnections = connections.filter(c => c.ClientType === 4);
+  
+            const newClientInfos = mobileConnections.map(user => ({
+              terminalname: user.terminalname,
+              connectionDate: user.ConnectionDate,
+              ...user.ClientInfo
+            }));
+  
+            const filteredByLocation = newClientInfos.filter(x =>
+              x.LokasyonId == this.selectedLocationID
+            );
+  
+            // 🔄 Display list'i yeni lokasyon cihazlarıyla güncelle
+            this.displayList = [...filteredByLocation];
+  
+            // 🔄 Marker senkronizasyonu
+            filteredByLocation.forEach(device => {
+              const lat = +device.lat;
+              const lng = +device.lng;
+  
+              if (!isNaN(lat) && !isNaN(lng)) {
+                const existingMarker = this.markers[device.imei];
+  
+                if (!existingMarker) {
+                  const marker = new google.maps.Marker({
+                    position: { lat, lng },
+                    map: this.map,
+                    title: device.terminalname,
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                  });
+  
+                  this.markers[device.imei] = marker;
+                  console.log("🆕 Yeni marker eklendi:", device.imei);
+                } else {
+                  // İstenirse mevcut marker konumu güncellenebilir:
+                  // existingMarker.setPosition({ lat, lng });
+                }
+              } else {
+                console.warn('❌ Geçersiz koordinat:', device);
+              }
+            });
+  
+          } catch (err) {
+            console.error('❌ allconninfo parse hatası:', err);
+          }
+        }
+      });
+  
+      const result = await this.hubConnection.invoke("register", jsonData);
+      console.log('✅ Register başarılı:', result);
+  
+    } catch (err) {
+      console.error('❌ Register hatası:', err);
+    }
+  }
+  
   
   public listenSignalREvents(): void {
     this.hubConnection.on('incident', this.onIncident.bind(this));
@@ -324,7 +470,7 @@ export class DeviceAndmapComponent {
 
   }
 
-  private async onConninfo(...args: any[]): Promise<void> {
+  private async onConninfo2(...args: any[]): Promise<void> {
     if (!args || args.length === 0) return;
   
     try {
@@ -448,6 +594,124 @@ export class DeviceAndmapComponent {
       console.error('❌ conninfo parse hatası:', err);
     }
   }
+  private async onConninfo(...args: any[]): Promise<void> {
+    if (!args || args.length === 0) return;
+  
+    try {
+      const rawJson = args[0] as string;
+      const parsed = JSON.parse(rawJson) as ConnectionModel[];
+  
+      const connections = parsed.map((conn) => {
+        let clientInfoParsed: any;
+        try {
+          clientInfoParsed = JSON.parse(conn.ClientInfo);
+        } catch {
+          console.warn('❌ ClientInfo parse hatası:', conn.ClientInfo);
+          clientInfoParsed = {};
+        }
+  
+        return {
+          ...conn,
+          ClientInfo: clientInfoParsed,
+        };
+      });
+  
+      const updates = connections.filter(c => c.ClientType === 4);
+  
+      updates.forEach(conn => {
+        const imei = conn.ClientInfo?.imei;
+        if (!imei) return;
+  
+        const index = this.displayList.findIndex(item => item.imei === imei);
+  
+        if (conn.Process === '+' && index === -1) {
+          this.displayList.push({
+            terminalname: conn.terminalname,
+            connectionDate: conn.ConnectionDate,
+            connectionId: conn.ConnectionId,
+            loginId: conn.LoginId,
+            kullaniciAdi: conn.KullaniciAdi,
+            person: conn.ClientInfo?.person,
+            ...conn.ClientInfo
+          });
+          console.log('🟢 Yeni cihaz eklendi:', imei);
+        }
+  
+        if (conn.Process === '+' && index !== -1) {
+          this.displayList[index] = {
+            terminalname: conn.terminalname,
+            connectionDate: conn.ConnectionDate,
+            connectionId: conn.ConnectionId,
+            loginId: conn.LoginId,
+            kullaniciAdi: conn.KullaniciAdi,
+            person: conn.ClientInfo?.person,
+            ...conn.ClientInfo
+          };
+          console.log('♻ Güncellendi:', imei);
+        }
+  
+        if (conn.Process === '-' && index !== -1) {
+          this.displayList[index] = {
+            terminalname: conn.terminalname,
+            connectionDate: conn.ConnectionDate,
+            connectionId: conn.ConnectionId,
+            loginId: conn.LoginId,
+            kullaniciAdi: conn.KullaniciAdi,
+            person: conn.ClientInfo?.person,
+            ...conn.ClientInfo
+          };
+          console.log('🔴 Cihaz offline oldu, güncellendi:', imei);
+        }
+      });
+  
+      const now = new Date();
+  
+      this.displayList = this.displayList.map(user => {
+        const connectionDate = new Date(user.time);
+        const diffMs = now.getTime() - connectionDate.getTime();
+        const diffSeconds = (diffMs / 1000);
+  
+        return {
+          ...user,
+          isOnline: diffSeconds <= 60
+        };
+      });
+  
+      // Markerları harita üzerinden temizle
+      Object.values(this.markers).forEach(marker => marker.setMap(null));
+      this.markers = {};
+  
+      // Display list'i filtrele seçili lokasyona göre
+      this.displayList = this.displayList.filter(x => x.lokasyonid == this.selectedLocationID);
+  
+      // Yeni markerları oluştur
+      this.displayList.forEach(device => {
+        const lat = +device?.lat;
+        const lng = +device?.lng;
+  
+        if (!isNaN(lat) && !isNaN(lng) && this.map) {
+          const marker = new google.maps.Marker({
+            position: { lat, lng },
+            map: this.map,
+            title: device?.terminalname,
+            animation: null,
+            icon: device?.isOnline
+              ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+              : 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+          });
+          this.markers[device.imei] = marker;
+        } else {
+          console.warn('Geçersiz marker koordinatları:', device);
+        }
+      });
+  
+      this.ref.detectChanges();
+  
+      console.log('📦 Güncel displayList:', this.displayList);
+    } catch (err) {
+      console.error('❌ conninfo parse hatası:', err);
+    }
+  }
   
 
   updateOnlineStatus() {
@@ -535,13 +799,8 @@ export class DeviceAndmapComponent {
   }
 
 
-  // getFormattedDate(): string {
-  //   return this.selectedDate ? this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd')! : '';
-  // }
 
-  
-
-  focusOnDevice(device: any): void {
+  focusOnDevice2(device: any): void {
     if (!device || !this.map) return;
     Object.values(this.markers).forEach(marker => marker.setAnimation(null));
     const marker = this.markers[device.imei];
@@ -556,6 +815,22 @@ export class DeviceAndmapComponent {
       console.log("📍 Harita ortalandı:", lat, lng);
     } else {
       console.warn("⚠ Geçersiz koordinatlar:", device);
+    }
+  }
+
+  focusOnDevice(device: any): void {
+    Object.values(this.markers).forEach(marker => marker.setAnimation(null));
+  
+    const marker = this.markers[device.imei];
+    if (marker) {
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+      const position = marker.getPosition();
+      if (position && this.map) {
+        this.map.panTo(position);
+        this.map.setZoom(17);
+      } else {
+        console.warn("⚠ Marker pozisyonu veya map eksik:", device);
+      }
     }
   }
   
