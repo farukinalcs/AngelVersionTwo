@@ -1,0 +1,10 @@
+.opacity-50 {
+    opacity: 0.5;
+    pointer-events: none;
+
+    .badge-alive {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        user-select: auto !important;
+    }
+}

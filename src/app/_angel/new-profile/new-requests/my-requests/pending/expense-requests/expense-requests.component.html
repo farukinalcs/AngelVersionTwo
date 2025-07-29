@@ -2,17 +2,414 @@
     <ng-container *ngIf="menu == 'myRequests'">
 
         <ng-container *ngIf="process == 'ongoing'">
+            <div class="row w-100">
+                <div class="col-xl-4 mb-xl-10" *ngFor="let item of requests">
 
+                    <div class="card card-flush border border-2 border-gray-200 rounded shadow-sm">
+                        <!--begin::Header-->
+                        <div class="card-header pt-7 justify-content-start">
+                            <!--begin::Title-->
+                            <img src="{{imageUrl}}?sicilid={{item.sicilid}}" [alt]="item.adsoyad || ''"
+                                class="rounded-circle me-3" width="48" height="48" />
 
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label fw-bold text-gray-800" pTooltip="{{ item.adsoyad }}"
+                                    tooltipPosition="top">{{ item.adsoyad | truncate:17 }} ({{ item.sicilno }})</span>
+                                <span class="text-gray-500 mt-1 fw-semibold fs-6">{{ item.aciklama }}</span>
+                            </h3>
+                            <!--end::Title-->
 
+                        </div>
+                        <!--end::Header-->
+
+                        <!--begin::Body-->
+                        <div class="card-body">
+
+                            <!--begin::Tab Content-->
+                            <div class="tab-content">
+
+                                <!--begin::Tap pane-->
+                                <div class="tab-pane fade active show">
+
+                                    <div *ngFor="let expense of item.talepdetaylar; let i = index">
+                                        <!--begin::Item-->
+                                        <div class="m-0">
+                                            <!--begin::Wrapper-->
+                                            <div class="d-flex align-items-sm-center mb-5">
+                                                <!--begin::Symbol-->
+                                                <div class="symbol symbol-45px me-4">
+                                                    <span class="symbol-label bg-light-danger">
+                                                        <i class="fa-solid fa-receipt text-danger fs-1"></i>
+                                                    </span>
+                                                </div>
+                                                <!--end::Symbol-->
+
+                                                <!--begin::Section-->
+                                                <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                                                    <div class="flex-grow-1 me-2">
+                                                        <a class="text-gray-500 fs-7 fw-semibold">{{ expense.masraftarih
+                                                            |
+                                                            date: 'yyyy-MM-dd' }}</a>
+
+                                                        <span class="text-gray-800 fw-bold d-block fs-6"
+                                                            pTooltip="{{expense.masraftipiad}}" tooltipPosition="top">{{
+                                                            expense.masraftipiad | truncate:18 }}</span>
+                                                    </div>
+
+                                                    <!-- Badge: Onaylanabilir Durum -->
+                                                    <ng-container [ngSwitch]="expense.onaylanabilir">
+                                                        <span *ngSwitchCase="0"
+                                                            class="badge badge-light-warning mt-1 badge-alive"
+                                                            pTooltip="Önceki kademe henüz işlem yapmadı, beklemede.">
+                                                            Beklemede
+                                                        </span>
+                                                        <span *ngSwitchCase="1"
+                                                            class="badge badge-light-info mt-1 badge-alive"
+                                                            pTooltip="Önceki kademe onayladı, artık sizde.">
+                                                            Sıra Sizde
+                                                        </span>
+                                                        <span *ngSwitchCase="-1"
+                                                            class="badge badge-light-danger mt-1 badge-alive"
+                                                            pTooltip="Masraf, açıklamasıyla birlikte reddedildi.">
+                                                            Reddedildi
+                                                        </span>
+                                                        <span *ngSwitchCase="2"
+                                                            class="badge badge-light-success mt-1 badge-alive"
+                                                            pTooltip="Talep süreci tamamlanmıştır.">
+                                                            Onaylandı
+                                                        </span>
+                                                    </ng-container>
+
+                                                    <span
+                                                        class="badge badge-lg badge-light-success fw-bold my-2 fs-8">{{expense.tutar
+                                                        | currency:expense.parabirimi:'symbol':'1.2-2' }}</span>
+                                                </div>
+                                                <!--end::Section-->
+                                            </div>
+                                            <!--end::Wrapper-->
+
+                                            <!--begin::Timeline-->
+                                            <div class="d-flex flex-column gap-2 px-5">
+                                                <div class="d-flex">
+                                                    <span class="text-gray-800 fw-bold me-2">Açıklama: </span>
+                                                    <span class="text-gray-600">{{ expense.masrafaciklama }}</span>
+                                                </div>
+
+                                                <div class="d-flex">
+                                                    <span class="text-gray-800 fw-bold me-2">Vergi Oranı: </span>
+                                                    <span class="text-gray-600">%{{ expense.vergiorani }}</span>
+                                                </div>
+
+                                                <div class="d-flex">
+                                                    <span class="text-gray-800 fw-bold me-2">Tarih: </span>
+                                                    <span class="text-gray-600">{{ expense.masraftarih | date:
+                                                        'yyyy-MM-dd'
+                                                        }}</span>
+                                                </div>
+                                            </div>
+                                            <!--end::Timeline-->
+
+                                            <div class="d-flex justify-content-center gap-2 px-5 py-3">
+                                                <p-button (click)="showFiles(expense)" icon="pi pi-paperclip"
+                                                    severity="secondary" pTooltip="Belgeyi Göster" />
+                                                <p-button
+                                                    (click)="showDemandProcessDialog(expense.id, expense.masraftipi)"
+                                                    icon="pi pi-question" severity="secondary"
+                                                    pTooltip="Süreci Göster" />
+                                            </div>
+                                        </div>
+                                        <!--end::Item-->
+
+                                        <!--begin::Separator-->
+                                        <div *ngIf="i != item.talepdetaylar.length - 1"
+                                            class="separator separator-dashed my-6"></div>
+                                        <!--end::Separator-->
+                                    </div>
+
+                                </div>
+                                <!--end::Tap pane-->
+
+                            </div>
+                            <!--end::Tab Content-->
+                        </div>
+                        <!--end: Card Body-->
+                    </div>
+                </div>
+            </div>
         </ng-container>
 
         <ng-container *ngIf="process == 'denied'">
-            Reddedilen Taleplerim
+            <div class="row w-100">
+                <div class="col-xl-4 mb-xl-10" *ngFor="let item of requests">
+
+                    <div class="card card-flush border border-2 border-gray-200 rounded shadow-sm">
+                        <!--begin::Header-->
+                        <div class="card-header pt-7 justify-content-start">
+                            <!--begin::Title-->
+                            <img src="{{imageUrl}}?sicilid={{item.sicilid}}" [alt]="item.adsoyad || ''"
+                                class="rounded-circle me-3" width="48" height="48" />
+
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label fw-bold text-gray-800" pTooltip="{{ item.adsoyad }}"
+                                    tooltipPosition="top">{{ item.adsoyad | truncate:17 }} ({{ item.sicilno }})</span>
+                                <span class="text-gray-500 mt-1 fw-semibold fs-6">{{ item.aciklama }}</span>
+                            </h3>
+                            <!--end::Title-->
+
+                        </div>
+                        <!--end::Header-->
+
+                        <!--begin::Body-->
+                        <div class="card-body">
+
+                            <!--begin::Tab Content-->
+                            <div class="tab-content">
+
+                                <!--begin::Tap pane-->
+                                <div class="tab-pane fade active show">
+
+                                    <div *ngFor="let expense of item.talepdetaylar; let i = index">
+                                        <!--begin::Item-->
+                                        <div class="m-0">
+                                            <!--begin::Wrapper-->
+                                            <div class="d-flex align-items-sm-center mb-5">
+                                                <!--begin::Symbol-->
+                                                <div class="symbol symbol-45px me-4">
+                                                    <span class="symbol-label bg-light-danger">
+                                                        <i class="fa-solid fa-receipt text-danger fs-1"></i>
+                                                    </span>
+                                                </div>
+                                                <!--end::Symbol-->
+
+                                                <!--begin::Section-->
+                                                <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                                                    <div class="flex-grow-1 me-2">
+                                                        <a class="text-gray-500 fs-7 fw-semibold">{{ expense.masraftarih
+                                                            |
+                                                            date: 'yyyy-MM-dd' }}</a>
+
+                                                        <span class="text-gray-800 fw-bold d-block fs-6"
+                                                            pTooltip="{{expense.masraftipiad}}" tooltipPosition="top">{{
+                                                            expense.masraftipiad | truncate:18 }}</span>
+                                                    </div>
+
+                                                    <!-- Badge: Onaylanabilir Durum -->
+                                                    <ng-container [ngSwitch]="expense.onaylanabilir">
+                                                        <span *ngSwitchCase="0"
+                                                            class="badge badge-light-warning mt-1 badge-alive"
+                                                            pTooltip="Önceki kademe henüz işlem yapmadı, beklemede.">
+                                                            Beklemede
+                                                        </span>
+                                                        <span *ngSwitchCase="1"
+                                                            class="badge badge-light-info mt-1 badge-alive"
+                                                            pTooltip="Önceki kademe onayladı, artık sizde.">
+                                                            Sıra Sizde
+                                                        </span>
+                                                        <span *ngSwitchCase="-1"
+                                                            class="badge badge-light-danger mt-1 badge-alive"
+                                                            pTooltip="Masraf, açıklamasıyla birlikte reddedildi.">
+                                                            Reddedildi
+                                                        </span>
+                                                        <span *ngSwitchCase="2"
+                                                            class="badge badge-light-success mt-1 badge-alive"
+                                                            pTooltip="Talep süreci tamamlanmıştır.">
+                                                            Onaylandı
+                                                        </span>
+                                                    </ng-container>
+
+                                                    <span
+                                                        class="badge badge-lg badge-light-success fw-bold my-2 fs-8">{{expense.tutar
+                                                        | currency:expense.parabirimi:'symbol':'1.2-2' }}</span>
+                                                </div>
+                                                <!--end::Section-->
+                                            </div>
+                                            <!--end::Wrapper-->
+
+                                            <!--begin::Timeline-->
+                                            <div class="d-flex flex-column gap-2 px-5">
+                                                <div class="d-flex">
+                                                    <span class="text-gray-800 fw-bold me-2">Açıklama: </span>
+                                                    <span class="text-gray-600">{{ expense.masrafaciklama }}</span>
+                                                </div>
+
+                                                <div class="d-flex">
+                                                    <span class="text-gray-800 fw-bold me-2">Vergi Oranı: </span>
+                                                    <span class="text-gray-600">%{{ expense.vergiorani }}</span>
+                                                </div>
+
+                                                <div class="d-flex">
+                                                    <span class="text-gray-800 fw-bold me-2">Tarih: </span>
+                                                    <span class="text-gray-600">{{ expense.masraftarih | date:
+                                                        'yyyy-MM-dd'
+                                                        }}</span>
+                                                </div>
+                                            </div>
+                                            <!--end::Timeline-->
+
+                                            <div class="d-flex justify-content-center gap-2 px-5 py-3">
+                                                <p-button (click)="showFiles(expense)" icon="pi pi-paperclip"
+                                                    severity="secondary" pTooltip="Belgeyi Göster" />
+                                                <p-button
+                                                    (click)="showDemandProcessDialog(expense.id, expense.masraftipi)"
+                                                    icon="pi pi-question" severity="secondary"
+                                                    pTooltip="Süreci Göster" />
+                                            </div>
+                                        </div>
+                                        <!--end::Item-->
+
+                                        <!--begin::Separator-->
+                                        <div *ngIf="i != item.talepdetaylar.length - 1"
+                                            class="separator separator-dashed my-6"></div>
+                                        <!--end::Separator-->
+                                    </div>
+
+                                </div>
+                                <!--end::Tap pane-->
+
+                            </div>
+                            <!--end::Tab Content-->
+                        </div>
+                        <!--end: Card Body-->
+                    </div>
+                </div>
+            </div>
         </ng-container>
 
         <ng-container *ngIf="process == 'approved'">
-            Onaylanan Taleplerim
+            <div class="row w-100">
+                <div class="col-xl-4 mb-xl-10" *ngFor="let item of requests">
+
+                    <div class="card card-flush border border-2 border-gray-200 rounded shadow-sm">
+                        <!--begin::Header-->
+                        <div class="card-header pt-7 justify-content-start">
+                            <!--begin::Title-->
+                            <img src="{{imageUrl}}?sicilid={{item.sicilid}}" [alt]="item.adsoyad || ''"
+                                class="rounded-circle me-3" width="48" height="48" />
+
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label fw-bold text-gray-800" pTooltip="{{ item.adsoyad }}"
+                                    tooltipPosition="top">{{ item.adsoyad | truncate:17 }} ({{ item.sicilno }})</span>
+                                <span class="text-gray-500 mt-1 fw-semibold fs-6">{{ item.aciklama }}</span>
+                            </h3>
+                            <!--end::Title-->
+
+                        </div>
+                        <!--end::Header-->
+
+                        <!--begin::Body-->
+                        <div class="card-body">
+
+                            <!--begin::Tab Content-->
+                            <div class="tab-content">
+
+                                <!--begin::Tap pane-->
+                                <div class="tab-pane fade active show">
+
+                                    <div *ngFor="let expense of item.talepdetaylar; let i = index">
+                                        <!--begin::Item-->
+                                        <div class="m-0">
+                                            <!--begin::Wrapper-->
+                                            <div class="d-flex align-items-sm-center mb-5">
+                                                <!--begin::Symbol-->
+                                                <div class="symbol symbol-45px me-4">
+                                                    <span class="symbol-label bg-light-danger">
+                                                        <i class="fa-solid fa-receipt text-danger fs-1"></i>
+                                                    </span>
+                                                </div>
+                                                <!--end::Symbol-->
+
+                                                <!--begin::Section-->
+                                                <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                                                    <div class="flex-grow-1 me-2">
+                                                        <a class="text-gray-500 fs-7 fw-semibold">{{ expense.masraftarih
+                                                            |
+                                                            date: 'yyyy-MM-dd' }}</a>
+
+                                                        <span class="text-gray-800 fw-bold d-block fs-6"
+                                                            pTooltip="{{expense.masraftipiad}}" tooltipPosition="top">{{
+                                                            expense.masraftipiad | truncate:18 }}</span>
+                                                    </div>
+
+                                                    <!-- Badge: Onaylanabilir Durum -->
+                                                    <ng-container [ngSwitch]="expense.onaylanabilir">
+                                                        <span *ngSwitchCase="0"
+                                                            class="badge badge-light-warning mt-1 badge-alive"
+                                                            pTooltip="Önceki kademe henüz işlem yapmadı, beklemede.">
+                                                            Beklemede
+                                                        </span>
+                                                        <span *ngSwitchCase="1"
+                                                            class="badge badge-light-info mt-1 badge-alive"
+                                                            pTooltip="Önceki kademe onayladı, artık sizde.">
+                                                            Sıra Sizde
+                                                        </span>
+                                                        <span *ngSwitchCase="-1"
+                                                            class="badge badge-light-danger mt-1 badge-alive"
+                                                            pTooltip="Masraf, açıklamasıyla birlikte reddedildi.">
+                                                            Reddedildi
+                                                        </span>
+                                                        <span *ngSwitchCase="2"
+                                                            class="badge badge-light-success mt-1 badge-alive"
+                                                            pTooltip="Talep süreci tamamlanmıştır.">
+                                                            Onaylandı
+                                                        </span>
+                                                    </ng-container>
+
+                                                    <span
+                                                        class="badge badge-lg badge-light-success fw-bold my-2 fs-8">{{expense.tutar
+                                                        | currency:expense.parabirimi:'symbol':'1.2-2' }}</span>
+                                                </div>
+                                                <!--end::Section-->
+                                            </div>
+                                            <!--end::Wrapper-->
+
+                                            <!--begin::Timeline-->
+                                            <div class="d-flex flex-column gap-2 px-5">
+                                                <div class="d-flex">
+                                                    <span class="text-gray-800 fw-bold me-2">Açıklama: </span>
+                                                    <span class="text-gray-600">{{ expense.masrafaciklama }}</span>
+                                                </div>
+
+                                                <div class="d-flex">
+                                                    <span class="text-gray-800 fw-bold me-2">Vergi Oranı: </span>
+                                                    <span class="text-gray-600">%{{ expense.vergiorani }}</span>
+                                                </div>
+
+                                                <div class="d-flex">
+                                                    <span class="text-gray-800 fw-bold me-2">Tarih: </span>
+                                                    <span class="text-gray-600">{{ expense.masraftarih | date:
+                                                        'yyyy-MM-dd'
+                                                        }}</span>
+                                                </div>
+                                            </div>
+                                            <!--end::Timeline-->
+
+                                            <div class="d-flex justify-content-center gap-2 px-5 py-3">
+                                                <p-button (click)="showFiles(expense)" icon="pi pi-paperclip"
+                                                    severity="secondary" pTooltip="Belgeyi Göster" />
+                                                <p-button
+                                                    (click)="showDemandProcessDialog(expense.id, expense.masraftipi)"
+                                                    icon="pi pi-question" severity="secondary"
+                                                    pTooltip="Süreci Göster" />
+                                            </div>
+                                        </div>
+                                        <!--end::Item-->
+
+                                        <!--begin::Separator-->
+                                        <div *ngIf="i != item.talepdetaylar.length - 1"
+                                            class="separator separator-dashed my-6"></div>
+                                        <!--end::Separator-->
+                                    </div>
+
+                                </div>
+                                <!--end::Tap pane-->
+
+                            </div>
+                            <!--end::Tab Content-->
+                        </div>
+                        <!--end: Card Body-->
+                    </div>
+                </div>
+            </div>
         </ng-container>
 
     </ng-container>
@@ -51,7 +448,7 @@
 
                                     <div *ngFor="let expense of item.talepdetaylar; let i = index">
                                         <!--begin::Item-->
-                                        <div class="m-0">
+                                        <div class="m-0" [ngClass]="{'opacity-50': expense.onaylanabilir != 1 }">
                                             <!--begin::Wrapper-->
                                             <div class="d-flex align-items-sm-center mb-5">
                                                 <!--begin::Symbol-->
@@ -73,6 +470,30 @@
                                                             pTooltip="{{expense.masraftipiad}}" tooltipPosition="top">{{
                                                             expense.masraftipiad | truncate:18 }}</span>
                                                     </div>
+
+                                                    <!-- Badge: Onaylanabilir Durum -->
+                                                    <ng-container [ngSwitch]="expense.onaylanabilir">
+                                                        <span *ngSwitchCase="0"
+                                                            class="badge badge-light-warning mt-1 badge-alive"
+                                                            pTooltip="Önceki kademe henüz işlem yapmadı, beklemede.">
+                                                            Beklemede
+                                                        </span>
+                                                        <span *ngSwitchCase="1"
+                                                            class="badge badge-light-info mt-1 badge-alive"
+                                                            pTooltip="Önceki kademe onayladı, artık sizde.">
+                                                            Sıra Sizde
+                                                        </span>
+                                                        <span *ngSwitchCase="-1"
+                                                            class="badge badge-light-danger mt-1 badge-alive"
+                                                            pTooltip="Masraf, açıklamasıyla birlikte reddedildi.">
+                                                            Reddedildi
+                                                        </span>
+                                                        <span *ngSwitchCase="2"
+                                                            class="badge badge-light-success mt-1 badge-alive"
+                                                            pTooltip="Talep süreci tamamlanmıştır.">
+                                                            Onaylandı
+                                                        </span>
+                                                    </ng-container>
 
                                                     <span
                                                         class="badge badge-lg badge-light-success fw-bold my-2 fs-8">{{expense.tutar
@@ -103,16 +524,23 @@
                                             </div>
                                             <!--end::Timeline-->
 
-                                            <div class="d-flex justify-content-center gap-2 px-5 py-3">
+                                            <div class="d-flex justify-content-center gap-2 px-5 py-3 badge-alive">
                                                 <p-confirmpopup />
                                                 <p-button (onClick)="confirm($event, expense)" icon="pi pi-check-circle"
-                                                    severity="secondary" pTooltip="Onayla" />
+                                                    severity="secondary" pTooltip="Onayla"
+                                                    [disabled]="expense.onaylanabilir != 1" />
+
                                                 <p-button (onClick)="reject($event, expense)" icon="pi pi-times-circle"
-                                                    severity="secondary" pTooltip="Reddet" />
-                                                <p-button icon="pi pi-file-edit" severity="secondary"
-                                                    pTooltip="Düzenle" />
+                                                    severity="secondary" pTooltip="Reddet"
+                                                    [disabled]="expense.onaylanabilir != 1" />
+                                                <p-button (onClick)="onEdit()" icon="pi pi-file-edit"
+                                                    severity="secondary" pTooltip="Düzenle" />
                                                 <p-button (click)="showFiles(expense)" icon="pi pi-paperclip"
                                                     severity="secondary" pTooltip="Belgeyi Göster" />
+                                                <p-button
+                                                    (click)="showDemandProcessDialog(expense.id, expense.masraftipi)"
+                                                    icon="pi pi-question" severity="secondary"
+                                                    pTooltip="Süreci Göster" />
                                             </div>
                                         </div>
                                         <!--end::Item-->
@@ -190,6 +618,30 @@
                                                             expense.masraftipiad | truncate:18 }}</span>
                                                     </div>
 
+                                                    <!-- Badge: Onaylanabilir Durum -->
+                                                    <ng-container [ngSwitch]="expense.onaylanabilir">
+                                                        <span *ngSwitchCase="0"
+                                                            class="badge badge-light-warning mt-1 badge-alive"
+                                                            pTooltip="Önceki kademe henüz işlem yapmadı, beklemede.">
+                                                            Beklemede
+                                                        </span>
+                                                        <span *ngSwitchCase="1"
+                                                            class="badge badge-light-info mt-1 badge-alive"
+                                                            pTooltip="Önceki kademe onayladı, artık sizde.">
+                                                            Sıra Sizde
+                                                        </span>
+                                                        <span *ngSwitchCase="-1"
+                                                            class="badge badge-light-danger mt-1 badge-alive"
+                                                            pTooltip="Masraf, açıklamasıyla birlikte reddedildi.">
+                                                            Reddedildi
+                                                        </span>
+                                                        <span *ngSwitchCase="2"
+                                                            class="badge badge-light-success mt-1 badge-alive"
+                                                            pTooltip="Talep süreci tamamlanmıştır.">
+                                                            Onaylandı
+                                                        </span>
+                                                    </ng-container>
+
                                                     <span
                                                         class="badge badge-lg badge-light-success fw-bold my-2 fs-8">{{expense.tutar
                                                         | currency:expense.parabirimi:'symbol':'1.2-2' }}</span>
@@ -229,6 +681,10 @@
                                                     pTooltip="Düzenle" />
                                                 <p-button (click)="showFiles(expense)" icon="pi pi-paperclip"
                                                     severity="secondary" pTooltip="Belgeyi Göster" />
+                                                <p-button
+                                                    (click)="showDemandProcessDialog(expense.id, expense.masraftipi)"
+                                                    icon="pi pi-question" severity="secondary"
+                                                    pTooltip="Süreci Göster" />
                                             </div>
                                         </div>
                                         <!--end::Item-->
@@ -252,7 +708,147 @@
         </ng-container>
 
         <ng-container *ngIf="process == 'approved'">
-            Onayladığım Talepler
+            <div class="row w-100">
+                <div class="col-xl-4 mb-xl-10" *ngFor="let item of requests">
+
+                    <div class="card card-flush border border-2 border-gray-200 rounded shadow-sm">
+                        <!--begin::Header-->
+                        <div class="card-header pt-7 justify-content-start">
+                            <!--begin::Title-->
+                            <img src="{{imageUrl}}?sicilid={{item.sicilid}}" [alt]="item.adsoyad || ''"
+                                class="rounded-circle me-3" width="48" height="48" />
+
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label fw-bold text-gray-800" pTooltip="{{ item.adsoyad }}"
+                                    tooltipPosition="top">{{ item.adsoyad | truncate:17 }} ({{ item.sicilno }})</span>
+                                <span class="text-gray-500 mt-1 fw-semibold fs-6">{{ item.aciklama }}</span>
+                            </h3>
+                            <!--end::Title-->
+
+                        </div>
+                        <!--end::Header-->
+
+                        <!--begin::Body-->
+                        <div class="card-body">
+
+                            <!--begin::Tab Content-->
+                            <div class="tab-content">
+
+                                <!--begin::Tap pane-->
+                                <div class="tab-pane fade active show">
+
+                                    <div *ngFor="let expense of item.talepdetaylar; let i = index">
+                                        <!--begin::Item-->
+                                        <div class="m-0">
+                                            <!--begin::Wrapper-->
+                                            <div class="d-flex align-items-sm-center mb-5">
+                                                <!--begin::Symbol-->
+                                                <div class="symbol symbol-45px me-4">
+                                                    <span class="symbol-label bg-light-danger">
+                                                        <i class="fa-solid fa-receipt text-danger fs-1"></i>
+                                                    </span>
+                                                </div>
+                                                <!--end::Symbol-->
+
+                                                <!--begin::Section-->
+                                                <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                                                    <div class="flex-grow-1 me-2">
+                                                        <a class="text-gray-500 fs-7 fw-semibold">{{ expense.masraftarih
+                                                            |
+                                                            date: 'yyyy-MM-dd' }}</a>
+
+                                                        <span class="text-gray-800 fw-bold d-block fs-6"
+                                                            pTooltip="{{expense.masraftipiad}}" tooltipPosition="top">{{
+                                                            expense.masraftipiad | truncate:18 }}</span>
+                                                    </div>
+
+                                                    <!-- Badge: Onaylanabilir Durum -->
+                                                    <ng-container [ngSwitch]="expense.onaylanabilir">
+                                                        <span *ngSwitchCase="0"
+                                                            class="badge badge-light-warning mt-1 badge-alive"
+                                                            pTooltip="Önceki kademe henüz işlem yapmadı, beklemede.">
+                                                            Beklemede
+                                                        </span>
+                                                        <span *ngSwitchCase="1"
+                                                            class="badge badge-light-info mt-1 badge-alive"
+                                                            pTooltip="Önceki kademe onayladı, artık sizde.">
+                                                            Sıra Sizde
+                                                        </span>
+                                                        <span *ngSwitchCase="-1"
+                                                            class="badge badge-light-danger mt-1 badge-alive"
+                                                            pTooltip="Masraf, açıklamasıyla birlikte reddedildi.">
+                                                            Reddedildi
+                                                        </span>
+                                                        <span *ngSwitchCase="2"
+                                                            class="badge badge-light-success mt-1 badge-alive"
+                                                            pTooltip="Talep süreci tamamlanmıştır.">
+                                                            Onaylandı
+                                                        </span>
+                                                    </ng-container>
+
+                                                    <span
+                                                        class="badge badge-lg badge-light-success fw-bold my-2 fs-8">{{expense.tutar
+                                                        | currency:expense.parabirimi:'symbol':'1.2-2' }}</span>
+                                                </div>
+                                                <!--end::Section-->
+                                            </div>
+                                            <!--end::Wrapper-->
+
+                                            <!--begin::Timeline-->
+                                            <div class="d-flex flex-column gap-2 px-5">
+                                                <div class="d-flex">
+                                                    <span class="text-gray-800 fw-bold me-2">Açıklama: </span>
+                                                    <span class="text-gray-600">{{ expense.masrafaciklama }}</span>
+                                                </div>
+
+                                                <div class="d-flex">
+                                                    <span class="text-gray-800 fw-bold me-2">Vergi Oranı: </span>
+                                                    <span class="text-gray-600">%{{ expense.vergiorani }}</span>
+                                                </div>
+
+                                                <div class="d-flex">
+                                                    <span class="text-gray-800 fw-bold me-2">Tarih: </span>
+                                                    <span class="text-gray-600">{{ expense.masraftarih | date:
+                                                        'yyyy-MM-dd'
+                                                        }}</span>
+                                                </div>
+                                            </div>
+                                            <!--end::Timeline-->
+
+                                            <div class="d-flex justify-content-center gap-2 px-5 py-3">
+                                                <p-confirmpopup />
+                                                <p-button (onClick)="confirm($event, expense)" icon="pi pi-check-circle"
+                                                    severity="secondary" pTooltip="Onayla" />
+                                                <p-button (onClick)="reject($event, expense)" icon="pi pi-times-circle"
+                                                    severity="secondary" pTooltip="Reddet" />
+                                                <p-button icon="pi pi-file-edit" severity="secondary"
+                                                    pTooltip="Düzenle" />
+                                                <p-button (click)="showFiles(expense)" icon="pi pi-paperclip"
+                                                    severity="secondary" pTooltip="Belgeyi Göster" />
+                                                <p-button
+                                                    (click)="showDemandProcessDialog(expense.id, expense.masraftipi)"
+                                                    icon="pi pi-question" severity="secondary"
+                                                    pTooltip="Süreci Göster" />
+                                            </div>
+                                        </div>
+                                        <!--end::Item-->
+
+                                        <!--begin::Separator-->
+                                        <div *ngIf="i != item.talepdetaylar.length - 1"
+                                            class="separator separator-dashed my-6"></div>
+                                        <!--end::Separator-->
+                                    </div>
+
+                                </div>
+                                <!--end::Tap pane-->
+
+                            </div>
+                            <!--end::Tab Content-->
+                        </div>
+                        <!--end: Card Body-->
+                    </div>
+                </div>
+            </div>
         </ng-container>
 
     </ng-container>
@@ -279,6 +875,124 @@
                 (uploadEvent)="onUploaded($event)">
             </app-my-files-detail>
         </div>
+
+    </p-dialog>
+</ng-container>
+
+
+<p-dialog header="Masrafı Reddet" [(visible)]="displayRejectDialog" [modal]="true" [style]="{width: '30vw'}">
+
+    <div class="mb-3">
+        <label class="form-label">Reddetme Sebebi</label>
+        <textarea rows="3" class="form-control" [(ngModel)]="rejectReason" placeholder="Sebep giriniz..."></textarea>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <button pButton label="İptal" class="p-button-text me-2" (click)="cancelReject()"></button>
+        <button pButton label="Evet, reddet" [disabled]="!rejectReason" (click)="confirmReject()"></button>
+    </ng-template>
+</p-dialog>
+
+
+<ng-container *ngIf="displayDemandProcess">
+    <app-request-process [demandId]="demandIdForProcess" [demandTypeName]="'masraf'"
+        [displayRequestProcess]="displayDemandProcess" (displayRequestProcessEvent)="displayDemandProcess = false">
+    </app-request-process>
+</ng-container>
+
+
+<ng-container *ngIf="displayEdit">
+    <p-dialog header="{{'Düzenle' | translate}}" [(visible)]="displayEdit" [modal]="true"
+        [breakpoints]="{ '2560px': '70vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true" [baseZIndex]="10000"
+        [draggable]="false" [resizable]="false">
+
+        <div class="row" [formGroup]="expenseForm">
+            <div class="col-md-6 p-3">
+                <label class="form-label small fw-bold mb-1">
+                    <span class="required">{{'Tutar' |
+                        translate}}</span>
+                </label>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text">
+                        {{item.get('currency')?.value | currencySymbol}}
+                    </span>
+                    <input type="number" min="0.01" step="0.01" formControlName="amount" class="form-control">
+                </div>
+            </div>
+
+            <!-- Vergi Oranı -->
+            <div class="col-md-3 p-3">
+                <label class="form-label small fw-bold mb-1">
+                    <span class="required">{{'Vergi_Oranı' | translate}}
+                        (%)</span>
+                </label>
+                <input type="number" min="0" max="100" class="form-control form-control-sm" formControlName="taxRate">
+            </div>
+
+            <!-- Para Birimi -->
+            <div class="col-md-3 p-3">
+                <label class="form-label small fw-bold mb-1">
+                    <span class="required">{{'Birim' |
+                        translate}}</span>
+                </label>
+                <select class="form-select form-select-sm" formControlName="currency">
+                    <option value="TRY">TRY</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="RUB">RUB</option>
+                </select>
+            </div>
+
+            <!-- Açıklama -->
+            <div class="col-md-6 p-3">
+                <label class="form-label small fw-bold mb-1">
+                    <span class="required">{{'Açıklama' |
+                        translate}}</span>
+                </label>
+                <input type="text" formControlName="description" class="form-control form-control-sm"
+                    [placeholder]="'Masraf_Açıklaması' | translate">
+            </div>
+
+            <!-- Fiş Tarihi -->
+            <div class="col-md-3 p-3">
+                <label class="form-label small fw-bold mb-1">
+                    <span class="required">{{"Fiş Tarih" |
+                        translate}}</span>
+                </label>
+
+                <!-- <input type="date" class="form-control form-control-sm" formControlName="date"> -->
+                <p-datepicker formControlName="date" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string"
+                    appendTo="body" placeholder="Tarih Seçiniz" />
+            </div>
+
+            <!-- Masraf Tipi -->
+            <div class="col-md-3 p-3">
+                <label class="form-label small fw-bold mb-1">
+                    <span class="required">{{'Masraf Tipi' |
+                        translate}}</span>
+                </label>
+
+                <p-select [options]="expenseTypes" formControlName="type" optionLabel="aciklama"
+                    emptyFilterMessage="{{'Kayıt Bulunamadı' | translate}}" [filter]="true" filterBy="aciklama"
+                    [showClear]="true" placeholder="{{'Tipi Seçiniz' | translate}}" [appendTo]="'body'"
+                    class="w-100 md:w-56">
+                    <ng-template #selectedItem let-selected>
+                        <div class="flex items-center gap-2">
+                            <div>{{ item.get('type')?.value?.aciklama }}
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-type #type>
+                        <div class="flex items-center gap-2">
+                            <div>{{ type.aciklama }}</div>
+                        </div>
+                    </ng-template>
+                </p-select>
+            </div>
+        </div>
+
+
 
     </p-dialog>
 </ng-container>
