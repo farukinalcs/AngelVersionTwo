@@ -56,7 +56,7 @@
 
     <div class="col-md-12 mt-3">
       <mat-form-field appearance="outline" class="full-width">
-        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" [formControl]="dateControl">
+        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (ngModelChange)="onDateChanged($event)" [formControl]="dateControl">
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>

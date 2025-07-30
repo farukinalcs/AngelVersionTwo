@@ -675,7 +675,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
-    this.stopConnection();
+   
   }
 
 }

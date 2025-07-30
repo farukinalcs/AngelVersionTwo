@@ -11,7 +11,7 @@
                   <!-- <button class="btn btn-danger text-white" type="button" id="button-addon2" (click)="setLocation(locationName)">Ekle</button> -->
               </div>
 
-              <table class="table border table-rounded table-row-solid align-middle gs-3 gy-4">
+              <table class="table table-hover border table-rounded table-row-solid table-striped table-row-black-400 align-middle gs-3 gy-4">
               <thead>
                   <tr style="background: linear-gradient(112.14deg, var(--p-red-400) 0%, var(--p-red-700) 100%);font-weight: bold;">
                       <th class="me-1 rounded-start rounded-end text-center" style="background:red;font-weight: bold;color:white;">Lokasyonlar</th>
@@ -42,8 +42,9 @@
                           <button  class="btn btn-sm custom-btn"  (click)="setTourCalendar('2')">Salı</button>
                           <!-- <button class="btn btn-light-danger m-3" (click)="setTourCalendar('2')">Salı</button> -->
                       </th>
-                      <th class="equal-width">   
-                          <button class="btn btn-sm custom-btn" (click)="setTourCalendar('3')">Çarşamba</button>
+                      <th class="equal-width">
+                          <p>Çarşamba</p>
+                          <button class="btn btn-sm custom-btn" (click)="setTourCalendar('3')">Tur Ekle +</button>
                       </th>
                       <th class="equal-width">   
                           <button class="btn btn-sm custom-btn" (click)="setTourCalendar('4')">Perşembe</button>
@@ -64,12 +65,12 @@
 
                     <tr>
                       <td>
-                        <table>
+                        <table class="table table-hover border table-rounded table-row-solid table-striped table-row-black-400 align-middle">
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 1">
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-4">{{ item.bassaat }}</p> <p class="fs-4">{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-4">{{ item.bassaat }}</p> <p class="fs-4">{{ item.Aciklama }}</p><p class="fs-7">Haftalık Tur</p> </button>
                               </td>
                             </tr>
                           </tbody>
@@ -81,12 +82,12 @@
                    
                       <td>
                  
-                        <table>
+                        <table class="table table-hover border table-rounded table-row-solid table-striped table-row-black-400 align-middle">
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 2">
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-4">{{ item.bassaat }}</p> <p class="fs-4">{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-4">{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p><p class="fs-7">Haftalık Tur</p> </button>
                               </td>
                             </tr>
                           </tbody>
@@ -96,12 +97,12 @@
                    
                       <td>
                       
-                        <table>
+                        <table class="table table-hover border table-rounded table-row-solid table-striped table-row-black-400 align-middle">
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 3">
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1"style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1"style="border: 1px dashed black;"> <p class="fs-4">{{ item.bassaat }}</p> <p class="fs-4">{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-4">{{ item.bassaat }}</p> <p class="fs-4">{{ item.Aciklama }}</p> <p class="fs-7">Haftalık Tur</p></button>
                               </td>
                             </tr>
                           </tbody>
@@ -111,12 +112,12 @@
                  
                       <td>
                       
-                        <table>
+                        <table class="table table-hover border table-rounded table-row-solid table-striped table-row-black-400 align-middle">
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 4">
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-4">{{ item.bassaat }}</p> <p class="fs-4">{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-4">{{ item.bassaat }}</p> <p class="fs-4">{{ item.Aciklama }}</p><p class="fs-7">Haftalık Tur</p> </button>
                               </td>
                             </tr>
                           </tbody>
@@ -126,12 +127,12 @@
                    
                       <td>
                  
-                        <table>
+                        <table class="table table-hover border table-rounded table-row-solid table-striped table-row-black-400 align-middle">
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 5">
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-4">{{ item.bassaat }}</p> <p class="fs-4">{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-4">{{ item.bassaat }}</p> <p class="fs-4">{{ item.Aciklama }}</p><p class="fs-7">Haftalık Tur</p> </button>
                               </td>
                             </tr>
                           </tbody>
@@ -141,12 +142,12 @@
                     
                       <td>
                       
-                        <table>
+                        <table class="table table-hover border table-rounded table-row-solid table-striped table-row-black-400 align-middle">
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 6">
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-4">{{ item.bassaat }}</p> <p class="fs-4">{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-4">{{ item.bassaat }}</p> <p class="fs-4">{{ item.Aciklama }}</p><p class="fs-7">Haftalık Tur</p> </button>
                               </td>
                             </tr>
                           </tbody>
@@ -156,12 +157,12 @@
                 
                       <td>
                         
-                        <table>
+                        <table class="table table-hover border table-rounded table-row-solid table-striped table-row-black-400 align-middle">
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 7"> 
-                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p></button>
-                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p>{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p> </button>
+                                <button *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-4">{{ item.bassaat }}</p> <p class="fs-4">{{ item.Aciklama }}</p></button>
+                                <button *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-4">{{ item.bassaat }}</p> <p class="fs-4">{{ item.Aciklama }}</p> <p class="fs-7">Haftalık Tur</p> </button>
                               </td>
                             </tr>
                           </tbody>
