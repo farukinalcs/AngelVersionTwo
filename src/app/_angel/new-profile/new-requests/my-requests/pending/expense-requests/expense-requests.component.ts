@@ -243,12 +243,12 @@ export class ExpenseRequestsComponent implements OnInit, OnDestroy, OnChanges {
         this.demandTypeNameForProcess = demandTypeName;
     }
 
-    onEdit() {
+    onEdit(expense?: any) {
         this.displayEdit = !this.displayEdit;
 
         if (this.displayEdit) {
             this.createEditForm();
-            this.fetchExpenseTypes();
+            this.fetchExpenseTypes(expense);
         }
     }
 
@@ -268,7 +268,7 @@ export class ExpenseRequestsComponent implements OnInit, OnDestroy, OnChanges {
     }
 
 
-    fetchExpenseTypes() {
+    fetchExpenseTypes(expense: any) {
         var sp: any[] = [
             {
                 mkodu: 'yek363',
@@ -286,6 +286,40 @@ export class ExpenseRequestsComponent implements OnInit, OnDestroy, OnChanges {
 
             this.expenseTypes = [...data];
             console.log("Masraf Tipleri Geldi :", this.expenseTypes);
+
+            this.item.get('amount')?.setValue(expense.tutar);
+            this.item.get('taxRate')?.setValue(expense.vergiorani);
+            this.item.get('currency')?.setValue(expense.parabirimi);
+            this.item.get('description')?.setValue(expense.masrafaciklama);
+            this.item.get('date')?.setValue(expense.masraftarih.split('T')[0]);
+            this.item.get('type')?.setValue(this.expenseTypes.find(item => item.id == expense.masraftipi));
+
+            console.log("Form value :", this.item.value);
+            
+        });
+    }
+
+    saveEdit() {
+        var sp: any[] = [
+            {
+                mkodu: 'yek372',
+                tutar: '',
+                parabirimi: '',
+                aciklama: '',
+                vergiorani: '',
+                masraftarih: '',
+                masraftipi: ''
+            }
+        ];
+
+        this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe(response => {
+            const data = response[0].x;
+            const message = response[0].z;
+
+            if (message.islemsonuc == -1) {
+                return;
+            }
+            
         });
     }
 

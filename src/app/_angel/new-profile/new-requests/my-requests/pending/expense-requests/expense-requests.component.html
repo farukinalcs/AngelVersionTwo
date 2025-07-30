@@ -533,7 +533,7 @@
                                                 <p-button (onClick)="reject($event, expense)" icon="pi pi-times-circle"
                                                     severity="secondary" pTooltip="Reddet"
                                                     [disabled]="expense.onaylanabilir != 1" />
-                                                <p-button (onClick)="onEdit()" icon="pi pi-file-edit"
+                                                <p-button (onClick)="onEdit(expense)" icon="pi pi-file-edit"
                                                     severity="secondary" pTooltip="Düzenle" />
                                                 <p-button (click)="showFiles(expense)" icon="pi pi-paperclip"
                                                     severity="secondary" pTooltip="Belgeyi Göster" />
@@ -992,7 +992,10 @@
             </div>
         </div>
 
-
+        <ng-template pTemplate="footer">
+            <button pButton label="Vazgeç" class="p-button-text me-2" (click)="onEdit()"></button>
+            <button pButton label="Değişikliği Kaydet"></button>
+        </ng-template>
 
     </p-dialog>
 </ng-container>
