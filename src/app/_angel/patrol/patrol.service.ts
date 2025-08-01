@@ -77,7 +77,7 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
-  getGuardTour(lokasyon:string){
+  getGuardTour(lokasyon:number){
     var sp: any[] = [{
       mkodu:'yek225',
       lokasyon:lokasyon.toString(),
@@ -217,15 +217,17 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
-  setGuardTourCalendar(id:number,gun:string,tur:string,tursaat:string,ozel:string){
+  setGuardTourCalendar(id:number,day:string,tour:string,tourTime:string,forWeek:string,description:string){
     var sp: any[] = [{
       mkodu:'yek253',
-      gun:gun.toString(),
-      tur:tur.toString(),
-      tursaat:tursaat.toString(),
+      gun:day.toString(),
+      tur:tour.toString(),
+      tursaat:tourTime.toString(),
       lokasyon:id.toString(),
-      ozel:ozel.toString()
+      ozel:forWeek.toString(),
+      aciklama:description.toString()
     }]
+    console.log("SPPPPPPPPPPP CALENDER",sp)
     return this.requestMethod(sp);
   }
 

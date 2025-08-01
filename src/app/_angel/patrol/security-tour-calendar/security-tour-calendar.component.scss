@@ -11,7 +11,29 @@
     text-align: center;
   }
 
-  .table-hover > tbody > tr:hover {
-    background-color: red !important; 
-    color: red !important; 
+  // .table-hover > tbody > tr:hover {
+  //   background-color: red !important; 
+  //   color: red !important; 
+  // }
+
+  .selected-location {
+    background-color: #f0f0f0 !important; /* Açık gri */
+    color: #dc3545 !important;            /* Kırmızı yazı */
+    font-weight: bold;
+  }
+  .equal-width {
+    width: 14.28%; /* 100 / 7 gün */
+    vertical-align: top;
+    padding: 10px;
+  }
+  
+  .day-label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  
+  .custom-btn {
+    display: block;
+    margin: 0 auto;
   }
