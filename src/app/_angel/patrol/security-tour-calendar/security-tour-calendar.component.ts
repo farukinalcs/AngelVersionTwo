@@ -24,8 +24,10 @@ export class SecurityTourCalendarComponent implements OnInit, OnDestroy {
 
   _locations: any[] = [];
 
-
+  _deleteTourCalendarModal:boolean = false;
   _setTourCalendarModal: boolean = false;
+
+
 
   dayIndex: string = '0';
   tourId: string;
@@ -33,8 +35,10 @@ export class SecurityTourCalendarComponent implements OnInit, OnDestroy {
   tourTime: string;
   ozel: string = '0';
   checkboxValue: string = "0";
+  selectedTourDetail:TourCalendarModel;
+  stationsForTour:any[]=[];
 
-  selectTour: number;
+  description:string = "";
 
   constructor(
     private patrol: PatrolService,
@@ -45,11 +49,13 @@ export class SecurityTourCalendarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getLocation();
   }
+
   ngAfterViewInit() {
     setTimeout(() => {
       this.ref.detectChanges();
     });
   }
+
   days = [
     { id: '1', name: 'Pazartesi' },
     { id: '2', name: 'Salı' },
@@ -60,13 +66,15 @@ export class SecurityTourCalendarComponent implements OnInit, OnDestroy {
     { id: '7', name: 'Pazar' }
   ];
 
+
   getItemsByGun(dayId: string) {
     return this._activeTourList.filter(item => item.gun === dayId);
   }
 
-  getGuardTour(id: string): void {
+  getGuardTour(id: number): void {
     this.patrol.getGuardTour(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.tourList = response[0].x;
+      this.tourId = this.tourList[0].id;
       console.log("getGuardTour:", this.tourList);
       this.ref.detectChanges();
     });
@@ -88,6 +96,12 @@ export class SecurityTourCalendarComponent implements OnInit, OnDestroy {
       console.log("getLocation takvimm:", this._locations);
       this.ref.detectChanges();
       this.locationName = '';
+
+      if (this._filteredItems.length > 0) {
+        this.lokasyonId = this._filteredItems[0].id;
+        this.getGuardTour(this.lokasyonId);
+        this.getGuardTourCalendar(this.lokasyonId);
+      }
     });
 
 
@@ -103,8 +117,9 @@ export class SecurityTourCalendarComponent implements OnInit, OnDestroy {
 
 
   getItem(item: any) {
-    console.log("lokasyon item", item);
+
     this.lokasyonId = item.id;
+    console.log(" this.lokasyonId", typeof this.lokasyonId, this.lokasyonId);
     this.getGuardTour(item.id);
     this.getGuardTourCalendar(item.id)
   }
@@ -118,10 +133,12 @@ export class SecurityTourCalendarComponent implements OnInit, OnDestroy {
   }
 
   setGuardTourCalendar() {
-    this.patrol.setGuardTourCalendar(this.lokasyonId, this.dayIndex, this.tourId, this.tourTime, this.ozel).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    console.log(" TUR KAYDETMEKİ TUR ID", typeof this.tourId, this.tourId);
+    this.patrol.setGuardTourCalendar(this.lokasyonId, this.dayIndex, this.tourId, this.tourTime, this.ozel,this.description).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
 
       this._activeTourList = response[0].x
       console.log("RESULT", this._activeTourList);
+      this._setTourCalendarModal = false;
       this.ref.detectChanges();
     })
     this.getItemsByGun(this.dayIndex);
@@ -129,7 +146,7 @@ export class SecurityTourCalendarComponent implements OnInit, OnDestroy {
 
   getTourId(item: any) {
     this.tourId = item;
-    console.log("TOUR.....", typeof item, this.tourId)
+    console.log(" SECİLİ TUR ID", typeof this.tourId, this.tourId);
   }
 
   getTourTime(item: any) {
@@ -141,8 +158,37 @@ export class SecurityTourCalendarComponent implements OnInit, OnDestroy {
     const checked = (event.target as HTMLInputElement).checked;
     this.ozel = checked ? "1" : "0";
   }
+
+  openDeleteModal(tour:TourCalendarModel){
+    console.log("openDeleteModal",tour);
+    this.selectedTourDetail = tour;
+    try{
+      this.stationsForTour = JSON.parse(tour.istasyon || '[]');
+    }catch(err){
+      this.stationsForTour = [];
+    }
+    this._deleteTourCalendarModal = true;
+  }
+  
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
   }
+}
+
+
+
+interface TourCalendarModel {
+  Aciklama: string;
+  Lokasyon: string;
+  Sure: number;
+  bassaat: string;
+  code: string;
+  dayname: string;
+  gun: number;
+  istasyon: string; // JSON string
+  lokasyonid: number;
+  ozel: string;
+  takvimid: number;
+  turid: number;
 }

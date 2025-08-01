@@ -47,7 +47,7 @@ export class DeviceAndmapComponent {
   longitude: any = "";
 
   disableLayoutPadding = true;
-
+  selectedItem: any = null;
  
   markerMap = new Map<string, google.maps.Marker>();
   //private markers: google.maps.Marker[] = [];
@@ -136,57 +136,6 @@ export class DeviceAndmapComponent {
     })
   }
 
-  getPatrolInfo2(locationid: number): void {
-
-    this.patrol.getPatrolInfo(locationid).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-      this.displayList = response[0]?.x;
-      this.patrolInfo = response[0]?.x;
-      console.log(' Apiden gelen:', this.patrolInfo);
-      console.log(' APİ display:', this.displayList);
-      this.ref.detectChanges();
-      // (this.patrolInfo ?? []).forEach((patrol) => {
-      //   if (+patrol?.olay > 0) {
-      //     this.lastIncidentModal = true;
-      //     this.openAlarmModal(patrol);
-      //   }
-      //   if (+patrol?.alarm > 0) {
-      //     this.LastEventModal(patrol);
-      //   }
-      // });
-
-      if (this.patrolInfo?.[0]?.lat != null && this.patrolInfo?.[0]?.lng != null &&
-        !isNaN(+this.patrolInfo[0]?.lat) && !isNaN(+this.patrolInfo[0]?.lng)) {
-
-        this.map?.setCenter({
-          lat: +this.patrolInfo[0]?.lat,
-          lng: +this.patrolInfo[0]?.lng,
-        });
-
-        console.log('lat:', this.patrolInfo[0]?.lat);
-        console.log('lng:', this.patrolInfo[0]?.lng);
-      } else {
-        console.warn('Geçersiz koordinatlar:', this.patrolInfo?.[0]);
-      }
-
-      if (this.displayList?.length > 0) {
-        (this.displayList ?? []).forEach((patrol: any) => {
-          if (!isNaN(+patrol?.lat) && !isNaN(+patrol?.lng) && this.map) {
-            const marker =  new google.maps.Marker({
-              position: { lat: +patrol?.lat, lng: +patrol?.lng },
-              map: this.map,
-              title: patrol?.terminalname,
-              icon:
-              'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-            });
-            this.markers[patrol.imei] = marker;
-          } else {
-            console.warn('Geçersiz marker koordinatları:', patrol);
-          }
-        });
-      }
-    });
-
-  }
   getPatrolInfo(locationid: number): void {
     this.patrol.getPatrolInfo(locationid)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -220,7 +169,31 @@ export class DeviceAndmapComponent {
               position: { lat, lng },
               map: this.map,
               title: device?.terminalname,
-              icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+              icon: {
+                url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60">
+                    <path
+                      d="M20 0C9 0 0 9 0 20c0 11 20 40 20 40s20-29 20-40C40 9 31 0 20 0z"
+                      fill="red"
+                      stroke="white"
+                      stroke-width="3"
+                    />
+                    <text
+                      x="20"
+                      y="27"
+                      font-size="15"
+                      text-anchor="middle"
+                      fill="white"
+                      font-family="Arial"
+                      dominant-baseline="top"
+                    >
+                      ${device?.terminalname.trim()?.charAt(0)}
+                    </text>
+                  </svg>
+                `),
+                scaledSize: new google.maps.Size(30, 45),
+                anchor: new google.maps.Point(20, 60)
+              }
             });
   
             this.markers[device.imei] = marker;
@@ -236,7 +209,10 @@ export class DeviceAndmapComponent {
 
 
   getGuardEventList(item: Incident) {
-
+    this.selectedItem = item.imei;
+    
+    console.log('📦 selectedItem:', this.selectedItem);
+    console.log('📦 selectedItem ime:', this.selectedItem.imei);
     this.deviceIncidentList = true;
     const imei = item?.imei;
     this.patrol.getGuardEvents(0, imei).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
@@ -393,6 +369,7 @@ export class DeviceAndmapComponent {
             // 🔄 Display list'i yeni lokasyon cihazlarıyla güncelle
             this.displayList = [...filteredByLocation];
   
+
             // 🔄 Marker senkronizasyonu
             filteredByLocation.forEach(device => {
               const lat = +device.lat;
@@ -406,11 +383,20 @@ export class DeviceAndmapComponent {
                     position: { lat, lng },
                     map: this.map,
                     title: device.terminalname,
-                    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                    icon: {
+                      url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+                          <circle cx="20" cy="20" r="18" fill="red" />
+                          <text x="20" y="25" font-size="16" text-anchor="middle" fill="white" font-family="Arial">G</text>
+                        </svg>
+                      `),
+                      scaledSize: new google.maps.Size(40, 40),
+                      anchor: new google.maps.Point(20, 20)
+                    }
                   });
   
                   this.markers[device.imei] = marker;
-                  console.log("🆕 Yeni marker eklendi:", device.imei);
+                  console.log("🆕 Yeni marker eklendi: http://maps.google.com/mapfiles/ms/icons/red-dot.png ", device.imei);
                 } else {
                   // İstenirse mevcut marker konumu güncellenebilir:
                   // existingMarker.setPosition({ lat, lng });
@@ -470,130 +456,6 @@ export class DeviceAndmapComponent {
 
   }
 
-  private async onConninfo2(...args: any[]): Promise<void> {
-    if (!args || args.length === 0) return;
-  
-    try {
-      const rawJson = args[0] as string;
-      const parsed = JSON.parse(rawJson) as ConnectionModel[];
-  
-      const connections = parsed.map((conn) => {
-        let clientInfoParsed: any;
-        try {
-          clientInfoParsed = JSON.parse(conn.ClientInfo);
-        } catch {
-          console.warn('❌ ClientInfo parse hatası:', conn.ClientInfo);
-          clientInfoParsed = {};
-        }
-  
-        return {
-          ...conn,
-          ClientInfo: clientInfoParsed,
-        };
-      });
-  
-  
-      const updates = connections.filter(c => c.ClientType === 4);
-   
-      updates.forEach(conn => {
-        const imei = conn.ClientInfo?.imei;
-        if (!imei) return; // imei olmayanlar işlenmez
-  
-        const index = this.displayList.findIndex(item => item.imei === imei);
-  
-        if (conn.Process === '+' && index === -1) {
-          // ✅ Yeni cihaz: listeye ekle
-          this.displayList.push({
-            terminalname: conn.terminalname,
-            connectionDate: conn.ConnectionDate,
-            connectionId: conn.ConnectionId,
-            loginId: conn.LoginId,
-            kullaniciAdi: conn.KullaniciAdi,
-            person: conn.ClientInfo?.person,
-            ...conn.ClientInfo
-          });
-          console.log('🟢 Yeni cihaz eklendi:', imei);
-        }
-  
-        if (conn.Process === '+' && index !== -1) {
-    
-          this.displayList[index] = {
-            terminalname: conn.terminalname,
-            connectionDate: conn.ConnectionDate,
-            connectionId: conn.ConnectionId,
-            loginId: conn.LoginId,
-            kullaniciAdi: conn.KullaniciAdi,
-            person: conn.ClientInfo?.person,
-            ...conn.ClientInfo
-          };
-          console.log('♻ Güncellendi:', imei);
-        }
-  
-        if (conn.Process === '-' && index !== -1) {
-          //this.displayList.splice(index, 1);
-          this.displayList[index] = {
-            terminalname: conn.terminalname,
-            connectionDate: conn.ConnectionDate,
-            connectionId: conn.ConnectionId,
-            loginId: conn.LoginId,
-            kullaniciAdi: conn.KullaniciAdi,
-            person: conn.ClientInfo?.person,
-            ...conn.ClientInfo
-          };
-          console.log('🔴 Cihaz offline oldu, güncellendi:', imei);
-        }
-      });
-
-      const now = new Date();
-
-
-      this.displayList = this.displayList.map(user => {
-        const connectionDate = new Date(user.time);
-        const diffMs = now.getTime() - connectionDate.getTime();
-        const diffSeconds = (diffMs / 1000);
-
-        return {
-          ...user,
-          isOnline: diffSeconds <= 60
-          
-        };
-      
-      });
-
-      console.log("Displayyy.................",this.displayList);
-      if (this.displayList?.length > 0) {
-        (this.displayList ?? []).forEach((device: any) => {
-          if (!isNaN(+device?.lat) && !isNaN(+device?.lng) && this.map) {
-            const marker = new google.maps.Marker({
-              
-              position: { lat: +device?.lat, lng: +device?.lng },
-              map: this.map,
-              title: device?.terminalname,
-              animation: null,
-              //icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-          
-              icon: device?.isOnline !== true
-                ? 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-                : 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-            });
-            this.markers[device.imei] = marker;
-          } else {
-            console.warn('Geçersiz marker koordinatları:', device);
-          }
-          this.ref.detectChanges();
-        });
-      }
-
-     
-      this.displayList = this.displayList.filter(x=>  
-        x.lokasyonid == this.selectedLocationID
-      )
-      console.log('📦 Güncel....... selectedLocationID...............:', this.selectedLocationID);
-      console.log('📦 Güncel displayList:', this.displayList);
-    } catch (err) {
-      console.error('❌ conninfo parse hatası:', err);
-    }
-  }
   private async onConninfo(...args: any[]): Promise<void> {
     if (!args || args.length === 0) return;
   
@@ -819,11 +681,16 @@ export class DeviceAndmapComponent {
   }
 
   focusOnDevice(device: any): void {
-    Object.values(this.markers).forEach(marker => marker.setAnimation(null));
+    Object.values(this.markers).forEach(marker =>{
+      marker.setAnimation(null);
+      marker.setZIndex(1);
+    }
+   );
   
     const marker = this.markers[device.imei];
     if (marker) {
       marker.setAnimation(google.maps.Animation.BOUNCE);
+      marker.setZIndex(google.maps.Marker.MAX_ZINDEX + 1); // en üstte olacak
       const position = marker.getPosition();
       if (position && this.map) {
         this.map.panTo(position);

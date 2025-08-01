@@ -74,7 +74,7 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
   }
 
   getGuardTour(): void {
-    this.patrol.getGuardTour('0').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    this.patrol.getGuardTour(0).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.tourList = response[0].x;
       this.filteredTours = [...this.tourList];
       console.log("getGuardTour:", this.tourList);
