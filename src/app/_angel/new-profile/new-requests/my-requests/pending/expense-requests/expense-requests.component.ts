@@ -61,6 +61,9 @@ export class ExpenseRequestsComponent implements OnInit, OnDestroy, OnChanges {
     displayEdit: boolean = false;
     expenseForm: FormGroup;
     expenseTypes: any[] = [];
+    editedExpense: any;
+    displayHistory: boolean = false;
+    histories: any[] = [];
 
     constructor(
         private profileService: ProfileService,
@@ -246,6 +249,10 @@ export class ExpenseRequestsComponent implements OnInit, OnDestroy, OnChanges {
     onEdit(expense?: any) {
         this.displayEdit = !this.displayEdit;
 
+        if (expense) {
+            this.editedExpense = expense;
+        }
+
         if (this.displayEdit) {
             this.createEditForm();
             this.fetchExpenseTypes(expense);
@@ -295,7 +302,7 @@ export class ExpenseRequestsComponent implements OnInit, OnDestroy, OnChanges {
             this.item.get('type')?.setValue(this.expenseTypes.find(item => item.id == expense.masraftipi));
 
             console.log("Form value :", this.item.value);
-            
+
         });
     }
 
@@ -303,12 +310,13 @@ export class ExpenseRequestsComponent implements OnInit, OnDestroy, OnChanges {
         var sp: any[] = [
             {
                 mkodu: 'yek372',
-                tutar: '',
-                parabirimi: '',
-                aciklama: '',
-                vergiorani: '',
-                masraftarih: '',
-                masraftipi: ''
+                id: this.editedExpense.id.toString(),
+                tutar: this.item.get('amount')?.value.toString(),
+                parabirimi: this.item.get('currency')?.value,
+                masrafaciklama: this.item.get('description')?.value,
+                vergiorani: this.item.get('taxRate')?.value.toString(),
+                masraftarih: this.item.get('date')?.value,
+                masraftipi: this.item.get('type')?.value.id.toString()
             }
         ];
 
@@ -319,7 +327,47 @@ export class ExpenseRequestsComponent implements OnInit, OnDestroy, OnChanges {
             if (message.islemsonuc == -1) {
                 return;
             }
+
+            console.log("Masraf Düzenlendi :", data);
+            this.toastrService.success("Başarılı", "Düzenleme işlemi başarılı!")
+            this.fetchData();
+            this.displayEdit = false;
+
+        });
+    }
+
+    showHistory(expense?: any) {
+        this.displayHistory = !this.displayHistory
+
+        if (expense) {
+            this.fetchHistory(expense);
+        }
+    }
+
+    fetchHistory(expense: any) {
+        var sp: any[] = [
+            {
+                mkodu: 'yek373',
+                id: expense.id.toString()
+            }
+        ];
+
+        this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe(response => {
+            const data = response[0].x;
+            const message = response[0].z;
+
+            if (message.islemsonuc == -1) {
+                return;
+            }
+
+            console.log("Geçmiş Düzenlemeler Geldi :", data);
+
+            if (data.length <= 1) {
+                this.toastrService.info("Bilgi", "Gösterilecek Düzenleme Geçmişi Bulunamadı!");
+                this.displayHistory = false;
+            }
             
+            this.histories = [...data];
         });
     }
 

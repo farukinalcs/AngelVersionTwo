@@ -88,7 +88,9 @@
                                                         <!-- <input type="date"
                                                             class="form-control form-control-sm form-control-solid"
                                                             formControlName="startDate"> -->
-                                                            <p-datepicker formControlName="startDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
+                                                        <p-datepicker formControlName="startDate" [readonlyInput]="true"
+                                                            dateFormat="yy-mm-dd" dataType="string" appendTo="body"
+                                                            placeholder="Tarih Seçiniz" />
 
                                                         <div class="fv-plugins-message-container invalid-feedback">
                                                         </div>
@@ -104,7 +106,9 @@
                                                         <!-- <input type="date"
                                                             class="form-control form-control-sm form-control-solid"
                                                             formControlName="endDate"> -->
-                                                            <p-datepicker formControlName="endDate" [readonlyInput]="true" dateFormat="yy-mm-dd" dataType="string" appendTo="body" placeholder="Tarih Seçiniz"/>
+                                                        <p-datepicker formControlName="endDate" [readonlyInput]="true"
+                                                            dateFormat="yy-mm-dd" dataType="string" appendTo="body"
+                                                            placeholder="Tarih Seçiniz" />
 
                                                         <div class="fv-plugins-message-container invalid-feedback">
                                                         </div>
@@ -125,6 +129,30 @@
                                                         <div class="fv-plugins-message-container invalid-feedback">
                                                         </div>
                                                     </div>
+                                                </div>
+
+                                                <div class="col-12 my-5">
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required"> {{"Yayınlanacak Sicil Grubu" | translate}} </span>
+                                                    </label>
+
+                                                    <p-select [options]="registryGroups" formControlName="registryGroup"
+                                                        optionLabel="ad"
+                                                        emptyFilterMessage="{{'Kayıt Bulunamadı' | translate}}"
+                                                        [filter]="true" filterBy="ad" [showClear]="true"
+                                                        placeholder="{{'Sicil Grubu Seçiniz' | translate}}"
+                                                        class="w-100 md:w-56">
+                                                        <ng-template #selectedItem let-selected>
+                                                            <div class="flex items-center gap-2">
+                                                                <div>{{ bulletinForm.get('registryGroup')?.value?.ad }}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template let-item #item>
+                                                            <div class="flex items-center gap-2">
+                                                                <div>{{ item?.ad }}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </p-select>
                                                 </div>
 
                                             </div>
@@ -255,7 +283,7 @@
                                     <div class="current">
                                         <div class="w-100">
                                             <div class="row">
-                                                
+
 
                                                 <div class="col-12 p-3">
                                                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
@@ -264,7 +292,8 @@
 
                                                     <input #fileInput type="file"
                                                         class="form-control form-control-sm form-control-solid"
-                                                        formControlName="file" (change)="getFile($event)" accept="application/pdf">
+                                                        formControlName="file" (change)="getFile($event)"
+                                                        accept="application/pdf">
                                                     <div class="fv-plugins-message-container">
                                                         <div class="fv-help-block fs-8 text-gray-500">
                                                             <span role="alert">
@@ -290,13 +319,15 @@
                                                             </div>
 
                                                             <div class="col-2 d-flex align-items-center">
-                                                                <button type="button" pTooltip="{{'Önizleme' | translate}}"
+                                                                <button type="button"
+                                                                    pTooltip="{{'Önizleme' | translate}}"
                                                                     class="position-absolute position-sm-relative mx-1 m-sm-0 top-0 end-0 btn btn-sm btn-icon btn-light-dark ms-sm-auto"
                                                                     (click)="previewFileInNewTab(item.files.url)">
                                                                     <i class="fa-solid fa-eye fs-4"></i>
                                                                 </button>
-                                                                
-                                                                <button type="button" pTooltip="{{'Kaldır' | translate}}"
+
+                                                                <button type="button"
+                                                                    pTooltip="{{'Kaldır' | translate}}"
                                                                     class="position-absolute position-sm-relative mx-1 m-sm-0 top-0 end-0 btn btn-sm btn-icon btn-light-dark ms-sm-auto"
                                                                     (click)="removeUploadedFile(item)">
                                                                     <i class="fa-solid fa-xmark fs-4"></i>

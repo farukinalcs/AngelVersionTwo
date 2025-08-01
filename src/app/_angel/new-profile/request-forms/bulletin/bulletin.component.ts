@@ -9,6 +9,7 @@ import { InlineSVGModule } from 'ng-inline-svg-2';
 import { ToastrService } from 'ngx-toastr';
 import { DatePickerModule } from 'primeng/datepicker';
 import { Dialog } from 'primeng/dialog';
+import { SelectModule } from 'primeng/select';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
@@ -27,7 +28,8 @@ import { LayoutService } from 'src/app/_metronic/layout';
         InlineSVGModule,
         TooltipModule,
         DatePickerModule,
-        FormStepperComponent
+        FormStepperComponent,
+        SelectModule
     ],
     templateUrl: './bulletin.component.html',
     styleUrl: './bulletin.component.scss'
@@ -103,6 +105,7 @@ export class BulletinComponent implements OnInit, OnDestroy {
     itemsPerPage: number = 6;
     currentPage: number = 1;
     formId: any;
+    registryGroups: any[] = [];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -119,6 +122,7 @@ export class BulletinComponent implements OnInit, OnDestroy {
         this.setResponsiveForm();
         this.createFormGroup();
         this.updatePagedAvatars();
+        this.fetchRegistryGroup()
     }
 
     canProceedToNextStep(): boolean {
@@ -183,6 +187,7 @@ export class BulletinComponent implements OnInit, OnDestroy {
             owner: ['', Validators.required],
             file: [null],
             image: ['', Validators.required],
+            registryGroup: ['', Validators.required]
         });
     }
 
@@ -404,6 +409,25 @@ export class BulletinComponent implements OnInit, OnDestroy {
                 this.closedFormDialog();
             });
 
+    }
+
+    fetchRegistryGroup() {
+        var sp: any[] = [
+            {
+                mkodu: 'yek326'
+            }
+        ];
+
+        this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe(res => {
+            const data = res[0].x;
+            const message = res[0].z;
+
+            if (message.islemsonuc == -1) {
+                return;
+            }
+
+            this.registryGroups = [...data];
+        });
     }
 
     ngOnDestroy(): void {
