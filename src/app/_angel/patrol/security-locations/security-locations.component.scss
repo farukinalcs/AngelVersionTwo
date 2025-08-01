@@ -4,3 +4,9 @@ span {
     font-weight: 500; // MatTab'daki default font ağırlığı
     letter-spacing: 0.5px;
   }
+
+  .selected-location {
+    background-color: #f0f0f0 !important; /* Açık gri */
+    color: #dc3545 !important;            /* Kırmızı yazı */
+    font-weight: bold;
+  }
