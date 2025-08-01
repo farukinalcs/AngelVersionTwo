@@ -440,7 +440,8 @@ export class ProfileService {
       bastarih : formValues.startDate,
       bittarih : formValues.endDate,
       yayinlayan : formValues.owner,
-      imagepath : formValues.image
+      imagepath : formValues.image,
+      sicilgrup: formValues.registryGroup.id.toString()
     }
     ];
 

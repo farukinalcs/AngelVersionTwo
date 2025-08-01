@@ -68,6 +68,13 @@
                         (updateEmit)="visibleUpdateBanned()"
                         [refresh]="refresh">
                     </app-banned-visitor>
+
+                    <app-expected-visitor *ngIf="selectedTab.type == 3"
+                        [selectedTab]="selectedTab"
+                        (updateEmit)="visibleUpdateVisitor()"
+                        (selectedVisitor)="getSelectedVisitor($event)"
+                        [refresh]="refresh">
+                    </app-expected-visitor>
                 </div>
             </div>
         </div>

@@ -8,6 +8,7 @@ import { InlineSVGModule } from 'ng-inline-svg-2';
 import { ToastrService } from 'ngx-toastr';
 import { DatePickerModule } from 'primeng/datepicker';
 import { Dialog } from 'primeng/dialog';
+import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { FormStepperComponent } from 'src/app/_angel/shared/form-stepper/form-stepper.component';
@@ -23,7 +24,8 @@ import { FormStepperComponent } from 'src/app/_angel/shared/form-stepper/form-st
         Dialog,
         InlineSVGModule,
         DatePickerModule,
-        FormStepperComponent
+        FormStepperComponent,
+        SelectModule
     ],
     templateUrl: './announcement.component.html',
     styleUrl: './announcement.component.scss'
@@ -48,7 +50,7 @@ export class AnnouncementComponent implements OnInit, OnDestroy {
     stepperOrientation: Observable<StepperOrientation>;
 
     announcementForm: FormGroup;
-
+    registryGroups: any[] = []
     constructor(
         private formBuilder: FormBuilder,
         private profileService: ProfileService,
@@ -61,6 +63,7 @@ export class AnnouncementComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.setResponsiveForm();
         this.createFormGroup();
+        this.fetchRegistryGroup();
     }
 
     canProceedToNextStep(): boolean {
@@ -116,6 +119,7 @@ export class AnnouncementComponent implements OnInit, OnDestroy {
             startDate: ['', Validators.required],
             endDate: ['', Validators.required],
             owner: ['', Validators.required],
+            registryGroup: ['', Validators.required]
         });
     }
 
@@ -155,10 +159,14 @@ export class AnnouncementComponent implements OnInit, OnDestroy {
                 aciklama: formValues.description,
                 yayinlayan: formValues.owner,
                 baslangic: formValues.startDate,
-                bitis: formValues.endDate
+                bitis: formValues.endDate,
+                sicilgrup: formValues.registryGroup.id.toString()
             }
         ];
 
+        console.log("Duyuru parametre :", sp);
+        
+        
         this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((res: any) => {
             const data = res[0].x;
             const message = res[0].z;
@@ -172,6 +180,26 @@ export class AnnouncementComponent implements OnInit, OnDestroy {
             this.closedFormDialog(true);
         });
     }
+
+    fetchRegistryGroup() {
+        var sp: any[] = [
+            {
+                mkodu: 'yek326'
+            }
+        ];
+
+        this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe(res => {
+            const data = res[0].x;
+            const message = res[0].z;
+
+            if (message.islemsonuc == -1) {
+                return;
+            }
+
+            this.registryGroups = [...data];
+        });
+    }
+
     ngOnDestroy(): void {
         this.ngUnsubscribe.next(true);
         this.ngUnsubscribe.complete();

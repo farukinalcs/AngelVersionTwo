@@ -12,6 +12,7 @@ import { TempCardComponent } from './temp-card/temp-card.component';
 import { AddTempCardComponent } from './temp-card/add-temp-card/add-temp-card.component';
 import { AddVisitorComponent } from './visitor-grid/add-visitor/add-visitor.component';
 import { UpdateVisitorComponent } from './visitor-grid/update-visitor/update-visitor.component';
+import { ExpectedVisitorComponent } from './expected-visitor/expected-visitor.component';
 
 @Component({
   selector: 'app-visitors',
@@ -27,7 +28,8 @@ import { UpdateVisitorComponent } from './visitor-grid/update-visitor/update-vis
     UpdateBannedVisitorComponent,
     AddTempCardComponent,
     AddVisitorComponent,
-    UpdateVisitorComponent
+    UpdateVisitorComponent,
+    ExpectedVisitorComponent
   ],
   templateUrl: './visitors.component.html',
   styleUrl: './visitors.component.scss'
@@ -38,8 +40,9 @@ export class VisitorsComponent implements OnInit, OnDestroy {
   selectedTab: any = {};
   loading: boolean = false;
   tabList = [
-    { name: this.translateService.instant('Ziyaretçi_Listesi'), type: '1' },
-    { name: this.translateService.instant('Yasak_Ziyaretçi_Listesi'), type: '2' },
+    { name: this.translateService.instant('Ziyaretçi Listesi'), type: '1' },
+    { name: this.translateService.instant('Yasak Ziyaretçi Listesi'), type: '2' },
+    { name: this.translateService.instant('Beklenen Ziyaretçi Listesi'), type: '3' }
   ];
   displayAddBanned: boolean = false;
   selectedBanned: any;

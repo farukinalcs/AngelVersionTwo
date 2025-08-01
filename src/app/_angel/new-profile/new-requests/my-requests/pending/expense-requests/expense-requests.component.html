@@ -116,6 +116,8 @@
                                                     (click)="showDemandProcessDialog(expense.id, expense.masraftipi)"
                                                     icon="pi pi-question" severity="secondary"
                                                     pTooltip="Süreci Göster" />
+                                                <p-button (click)="showHistory(expense)" icon="pi pi-history"
+                                                    severity="secondary" pTooltip="Geçmiş Düzenlemeler" />
                                             </div>
                                         </div>
                                         <!--end::Item-->
@@ -146,8 +148,7 @@
                         <!--begin::Header-->
                         <div class="card-header pt-7 justify-content-start">
                             <!--begin::Title-->
-                            <img src="{{imageUrl}}?sicilid={{item.sicilid}}" [alt]="item.adsoyad || ''"
-                                class="rounded-circle me-3" width="48" height="48" />
+                            <img src="{{imageUrl}}?sicilid={{item.sicilid}}" [alt]="item.adsoyad || ''" class="rounded-circle me-3" width="48" height="48" />
 
                             <h3 class="card-title align-items-start flex-column">
                                 <span class="card-label fw-bold text-gray-800" pTooltip="{{ item.adsoyad }}"
@@ -184,13 +185,11 @@
                                                 <!--begin::Section-->
                                                 <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                                                     <div class="flex-grow-1 me-2">
-                                                        <a class="text-gray-500 fs-7 fw-semibold">{{ expense.masraftarih
-                                                            |
-                                                            date: 'yyyy-MM-dd' }}</a>
+                                                        <a class="text-gray-500 fs-7 fw-semibold">{{ expense.masraftarih | date: 'yyyy-MM-dd' }}</a>
 
-                                                        <span class="text-gray-800 fw-bold d-block fs-6"
-                                                            pTooltip="{{expense.masraftipiad}}" tooltipPosition="top">{{
-                                                            expense.masraftipiad | truncate:18 }}</span>
+                                                        <span class="text-gray-800 fw-bold d-block fs-6" pTooltip="{{expense.masraftipiad}}" tooltipPosition="top">
+                                                            {{ expense.masraftipiad | truncate:18 }}
+                                                        </span>
                                                     </div>
 
                                                     <!-- Badge: Onaylanabilir Durum -->
@@ -217,9 +216,9 @@
                                                         </span>
                                                     </ng-container>
 
-                                                    <span
-                                                        class="badge badge-lg badge-light-success fw-bold my-2 fs-8">{{expense.tutar
-                                                        | currency:expense.parabirimi:'symbol':'1.2-2' }}</span>
+                                                    <span class="badge badge-lg badge-light-success fw-bold my-2 fs-8">
+                                                        {{ expense.tutar | currency:expense.parabirimi:'symbol':'1.2-2' }}
+                                                    </span>
                                                 </div>
                                                 <!--end::Section-->
                                             </div>
@@ -239,27 +238,21 @@
 
                                                 <div class="d-flex">
                                                     <span class="text-gray-800 fw-bold me-2">Tarih: </span>
-                                                    <span class="text-gray-600">{{ expense.masraftarih | date:
-                                                        'yyyy-MM-dd'
-                                                        }}</span>
+                                                    <span class="text-gray-600">{{ expense.masraftarih | date:'yyyy-MM-dd' }}</span>
                                                 </div>
                                             </div>
                                             <!--end::Timeline-->
 
                                             <div class="d-flex justify-content-center gap-2 px-5 py-3">
-                                                <p-button (click)="showFiles(expense)" icon="pi pi-paperclip"
-                                                    severity="secondary" pTooltip="Belgeyi Göster" />
-                                                <p-button
-                                                    (click)="showDemandProcessDialog(expense.id, expense.masraftipi)"
-                                                    icon="pi pi-question" severity="secondary"
-                                                    pTooltip="Süreci Göster" />
+                                                <p-button (click)="showFiles(expense)" icon="pi pi-paperclip" severity="secondary" pTooltip="Belgeyi Göster" />
+                                                <p-button (click)="showDemandProcessDialog(expense.id, expense.masraftipi)" icon="pi pi-question" severity="secondary" pTooltip="Süreci Göster" />
+                                                <p-button (click)="showHistory(expense)" icon="pi pi-history" severity="secondary" pTooltip="Geçmiş Düzenlemeler" />
                                             </div>
                                         </div>
                                         <!--end::Item-->
 
                                         <!--begin::Separator-->
-                                        <div *ngIf="i != item.talepdetaylar.length - 1"
-                                            class="separator separator-dashed my-6"></div>
+                                        <div *ngIf="i != item.talepdetaylar.length - 1" class="separator separator-dashed my-6"></div>
                                         <!--end::Separator-->
                                     </div>
 
@@ -283,12 +276,12 @@
                         <!--begin::Header-->
                         <div class="card-header pt-7 justify-content-start">
                             <!--begin::Title-->
-                            <img src="{{imageUrl}}?sicilid={{item.sicilid}}" [alt]="item.adsoyad || ''"
-                                class="rounded-circle me-3" width="48" height="48" />
+                            <img src="{{imageUrl}}?sicilid={{item.sicilid}}" [alt]="item.adsoyad || ''" class="rounded-circle me-3" width="48" height="48" />
 
                             <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label fw-bold text-gray-800" pTooltip="{{ item.adsoyad }}"
-                                    tooltipPosition="top">{{ item.adsoyad | truncate:17 }} ({{ item.sicilno }})</span>
+                                <span class="card-label fw-bold text-gray-800" pTooltip="{{ item.adsoyad }}" tooltipPosition="top">
+                                    {{ item.adsoyad | truncate:17 }} ({{ item.sicilno }})
+                                </span>
                                 <span class="text-gray-500 mt-1 fw-semibold fs-6">{{ item.aciklama }}</span>
                             </h3>
                             <!--end::Title-->
@@ -321,13 +314,11 @@
                                                 <!--begin::Section-->
                                                 <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                                                     <div class="flex-grow-1 me-2">
-                                                        <a class="text-gray-500 fs-7 fw-semibold">{{ expense.masraftarih
-                                                            |
-                                                            date: 'yyyy-MM-dd' }}</a>
+                                                        <a class="text-gray-500 fs-7 fw-semibold">{{ expense.masraftarih | date: 'yyyy-MM-dd' }}</a>
 
-                                                        <span class="text-gray-800 fw-bold d-block fs-6"
-                                                            pTooltip="{{expense.masraftipiad}}" tooltipPosition="top">{{
-                                                            expense.masraftipiad | truncate:18 }}</span>
+                                                        <span class="text-gray-800 fw-bold d-block fs-6" pTooltip="{{expense.masraftipiad}}" tooltipPosition="top">
+                                                            {{ expense.masraftipiad | truncate:18 }}
+                                                        </span>
                                                     </div>
 
                                                     <!-- Badge: Onaylanabilir Durum -->
@@ -354,9 +345,9 @@
                                                         </span>
                                                     </ng-container>
 
-                                                    <span
-                                                        class="badge badge-lg badge-light-success fw-bold my-2 fs-8">{{expense.tutar
-                                                        | currency:expense.parabirimi:'symbol':'1.2-2' }}</span>
+                                                    <span class="badge badge-lg badge-light-success fw-bold my-2 fs-8">
+                                                        {{ expense.tutar | currency:expense.parabirimi:'symbol':'1.2-2' }}
+                                                    </span>
                                                 </div>
                                                 <!--end::Section-->
                                             </div>
@@ -376,27 +367,21 @@
 
                                                 <div class="d-flex">
                                                     <span class="text-gray-800 fw-bold me-2">Tarih: </span>
-                                                    <span class="text-gray-600">{{ expense.masraftarih | date:
-                                                        'yyyy-MM-dd'
-                                                        }}</span>
+                                                    <span class="text-gray-600">{{ expense.masraftarih | date: 'yyyy-MM-dd' }}</span>
                                                 </div>
                                             </div>
                                             <!--end::Timeline-->
 
                                             <div class="d-flex justify-content-center gap-2 px-5 py-3">
-                                                <p-button (click)="showFiles(expense)" icon="pi pi-paperclip"
-                                                    severity="secondary" pTooltip="Belgeyi Göster" />
-                                                <p-button
-                                                    (click)="showDemandProcessDialog(expense.id, expense.masraftipi)"
-                                                    icon="pi pi-question" severity="secondary"
-                                                    pTooltip="Süreci Göster" />
+                                                <p-button (click)="showFiles(expense)" icon="pi pi-paperclip" severity="secondary" pTooltip="Belgeyi Göster" />
+                                                <p-button (click)="showDemandProcessDialog(expense.id, expense.masraftipi)" icon="pi pi-question" severity="secondary" pTooltip="Süreci Göster" />
+                                                <p-button (click)="showHistory(expense)" icon="pi pi-history" severity="secondary" pTooltip="Geçmiş Düzenlemeler" />
                                             </div>
                                         </div>
                                         <!--end::Item-->
 
                                         <!--begin::Separator-->
-                                        <div *ngIf="i != item.talepdetaylar.length - 1"
-                                            class="separator separator-dashed my-6"></div>
+                                        <div *ngIf="i != item.talepdetaylar.length - 1" class="separator separator-dashed my-6"></div>
                                         <!--end::Separator-->
                                     </div>
 
@@ -424,12 +409,12 @@
                         <!--begin::Header-->
                         <div class="card-header pt-7 justify-content-start">
                             <!--begin::Title-->
-                            <img src="{{imageUrl}}?sicilid={{item.sicilid}}" [alt]="item.adsoyad || ''"
-                                class="rounded-circle me-3" width="48" height="48" />
+                            <img src="{{imageUrl}}?sicilid={{item.sicilid}}" [alt]="item.adsoyad || ''" class="rounded-circle me-3" width="48" height="48" />
 
                             <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label fw-bold text-gray-800" pTooltip="{{ item.adsoyad }}"
-                                    tooltipPosition="top">{{ item.adsoyad | truncate:17 }} ({{ item.sicilno }})</span>
+                                <span class="card-label fw-bold text-gray-800" pTooltip="{{ item.adsoyad }}" tooltipPosition="top">
+                                    {{ item.adsoyad | truncate:17 }} ({{ item.sicilno }})
+                                </span>
                                 <span class="text-gray-500 mt-1 fw-semibold fs-6">{{ item.aciklama }}</span>
                             </h3>
                             <!--end::Title-->
@@ -448,9 +433,9 @@
 
                                     <div *ngFor="let expense of item.talepdetaylar; let i = index">
                                         <!--begin::Item-->
-                                        <div class="m-0" [ngClass]="{'opacity-50': expense.onaylanabilir != 1 }">
+                                        <div class="m-0">
                                             <!--begin::Wrapper-->
-                                            <div class="d-flex align-items-sm-center mb-5">
+                                            <div class="d-flex align-items-sm-center mb-5" [ngClass]="{'opacity-50': expense.onaylanabilir != 1 }">
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-45px me-4">
                                                     <span class="symbol-label bg-light-danger">
@@ -462,13 +447,11 @@
                                                 <!--begin::Section-->
                                                 <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                                                     <div class="flex-grow-1 me-2">
-                                                        <a class="text-gray-500 fs-7 fw-semibold">{{ expense.masraftarih
-                                                            |
-                                                            date: 'yyyy-MM-dd' }}</a>
+                                                        <a class="text-gray-500 fs-7 fw-semibold">{{ expense.masraftarih | date: 'yyyy-MM-dd' }}</a>
 
-                                                        <span class="text-gray-800 fw-bold d-block fs-6"
-                                                            pTooltip="{{expense.masraftipiad}}" tooltipPosition="top">{{
-                                                            expense.masraftipiad | truncate:18 }}</span>
+                                                        <span class="text-gray-800 fw-bold d-block fs-6" pTooltip="{{expense.masraftipiad}}" tooltipPosition="top">
+                                                            {{ expense.masraftipiad | truncate:18 }}
+                                                        </span>
                                                     </div>
 
                                                     <!-- Badge: Onaylanabilir Durum -->
@@ -495,16 +478,16 @@
                                                         </span>
                                                     </ng-container>
 
-                                                    <span
-                                                        class="badge badge-lg badge-light-success fw-bold my-2 fs-8">{{expense.tutar
-                                                        | currency:expense.parabirimi:'symbol':'1.2-2' }}</span>
+                                                    <span class="badge badge-lg badge-light-success fw-bold my-2 fs-8">
+                                                        {{ expense.tutar | currency:expense.parabirimi:'symbol':'1.2-2' }}
+                                                    </span>
                                                 </div>
                                                 <!--end::Section-->
                                             </div>
                                             <!--end::Wrapper-->
 
                                             <!--begin::Timeline-->
-                                            <div class="d-flex flex-column gap-2 px-5">
+                                            <div class="d-flex flex-column gap-2 px-5" [ngClass]="{'opacity-50': expense.onaylanabilir != 1 }">
                                                 <div class="d-flex">
                                                     <span class="text-gray-800 fw-bold me-2">Açıklama: </span>
                                                     <span class="text-gray-600">{{ expense.masrafaciklama }}</span>
@@ -517,9 +500,7 @@
 
                                                 <div class="d-flex">
                                                     <span class="text-gray-800 fw-bold me-2">Tarih: </span>
-                                                    <span class="text-gray-600">{{ expense.masraftarih | date:
-                                                        'yyyy-MM-dd'
-                                                        }}</span>
+                                                    <span class="text-gray-600">{{ expense.masraftarih | date:'yyyy-MM-dd' }}</span>
                                                 </div>
                                             </div>
                                             <!--end::Timeline-->
@@ -541,13 +522,14 @@
                                                     (click)="showDemandProcessDialog(expense.id, expense.masraftipi)"
                                                     icon="pi pi-question" severity="secondary"
                                                     pTooltip="Süreci Göster" />
+                                                <p-button (click)="showHistory(expense)" icon="pi pi-history"
+                                                    severity="secondary" pTooltip="Geçmiş Düzenlemeler" />
                                             </div>
                                         </div>
                                         <!--end::Item-->
 
                                         <!--begin::Separator-->
-                                        <div *ngIf="i != item.talepdetaylar.length - 1"
-                                            class="separator separator-dashed my-6"></div>
+                                        <div *ngIf="i != item.talepdetaylar.length - 1" class="separator separator-dashed my-6"></div>
                                         <!--end::Separator-->
                                     </div>
 
@@ -664,9 +646,7 @@
 
                                                 <div class="d-flex">
                                                     <span class="text-gray-800 fw-bold me-2">Tarih: </span>
-                                                    <span class="text-gray-600">{{ expense.masraftarih | date:
-                                                        'yyyy-MM-dd'
-                                                        }}</span>
+                                                    <span class="text-gray-600">{{ expense.masraftarih | date: 'yyyy-MM-dd' }}</span>
                                                 </div>
                                             </div>
                                             <!--end::Timeline-->
@@ -685,13 +665,14 @@
                                                     (click)="showDemandProcessDialog(expense.id, expense.masraftipi)"
                                                     icon="pi pi-question" severity="secondary"
                                                     pTooltip="Süreci Göster" />
+                                                <p-button (click)="showHistory(expense)" icon="pi pi-history"
+                                                    severity="secondary" pTooltip="Geçmiş Düzenlemeler" />
                                             </div>
                                         </div>
                                         <!--end::Item-->
 
                                         <!--begin::Separator-->
-                                        <div *ngIf="i != item.talepdetaylar.length - 1"
-                                            class="separator separator-dashed my-6"></div>
+                                        <div *ngIf="i != item.talepdetaylar.length - 1" class="separator separator-dashed my-6"></div>
                                         <!--end::Separator-->
                                     </div>
 
@@ -829,6 +810,8 @@
                                                     (click)="showDemandProcessDialog(expense.id, expense.masraftipi)"
                                                     icon="pi pi-question" severity="secondary"
                                                     pTooltip="Süreci Göster" />
+                                                <p-button (click)="showHistory(expense)" icon="pi pi-history"
+                                                    severity="secondary" pTooltip="Geçmiş Düzenlemeler" />
                                             </div>
                                         </div>
                                         <!--end::Item-->
@@ -994,7 +977,93 @@
 
         <ng-template pTemplate="footer">
             <button pButton label="Vazgeç" class="p-button-text me-2" (click)="onEdit()"></button>
-            <button pButton label="Değişikliği Kaydet"></button>
+            <button pButton label="Değişikliği Kaydet" (click)="saveEdit()"></button>
+        </ng-template>
+
+    </p-dialog>
+</ng-container>
+
+
+
+<ng-container *ngIf="displayHistory">
+    <p-dialog header="{{'Düzenleme Geçmişi' | translate}}" [(visible)]="displayHistory" [modal]="true"
+        [breakpoints]="{ '2560px': '70vw', '992px': '90vw', '576px': '99vw' }" [maximizable]="true" [baseZIndex]="10000"
+        [draggable]="false" [resizable]="false">
+
+        <div class="row">
+            <div class="col-sm-6 col-lg-4 position-relative" *ngFor="let expense of histories; let i = index">
+
+                <span class="badge bg-danger position-absolute px-4 py-3 translate-middle rounded-circle" style="
+                    top: 0px;
+                    left: 15px;
+                    z-index: 1;
+                ">
+                    {{ i + 1 }}
+                </span>
+
+                <!-- Card -->
+                <div class="card shadow-sm h-100 px-2 py-4 position-relative border border-2" [ngClass]="{'border-success': i == histories.length -1, 'border-gray': i != histories.length -1 }">
+                    <!-- Card header -->
+                    <div class="card-header bg-white border-bottom-0 pb-2">
+                        <div class="d-flex justify-content-between align-items-center w-100">
+                            <div class="d-flex align-items-center">
+                                <img [src]="imageUrl + '?sicilid=' + expense.xsicilid" alt="{{ expense.adsoyad }}" class="rounded-circle me-3" width="48" height="48" />
+                                <div>
+                                    <h5 class="mb-0">{{ expense.xsiciladsoyad }}</h5>
+                                    <small class="text-muted">#{{ expense.sicilno }}</small>
+                                </div>
+                            </div>
+
+                            <span *ngIf="i == histories.length -1" class="badge bg-light text-success border border-success">
+                                <i class="pi pi-check me-1"></i> Aktif
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="d-flex align-items-center text-gray-700 mb-2">
+                            <i class="pi pi-tags me-2 text-info"></i>
+                            <span>{{ expense.masrafad }}</span>
+                        </div>
+
+                        <div class="d-flex align-items-center text-gray-700 mb-2">
+                            <i class="pi pi-pencil me-2 text-primary"></i>
+                            <span>{{ expense.masrafaciklama }}</span>
+                        </div>
+
+                        <div class="d-flex gap-4 small text-gray-700 mb-3">
+                            <div>
+                                <i class="pi pi-clock text-success me-1"></i>
+                                Düzenlenme Tarihi:
+                                <span class="fw-bold">{{ expense.zaman | date: 'yyyy-MM-dd / HH:mm:ss' }}</span>
+                            </div>
+                        </div>
+
+                        <div class="row text-center border-top pt-3">
+                            <div class="col">
+                                <div class="fw-bold">
+                                    {{ expense.tutar | currency: expense.parabirimi : 'symbol' : '1.2-2' }}
+                                </div>
+                                <small class="text-muted">Tutar</small>
+                            </div>
+                            <div class="col">
+                                <div class="fw-bold">{{ expense.parabirimi }}</div>
+                                <small class="text-muted">Para Birimi</small>
+                            </div>
+                            <div class="col">
+                                <div class="fw-bold">%{{ expense.vergiorani }}</div>
+                                <small class="text-muted">Vergi Oranı</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <ng-template pTemplate="footer">
+            <button pButton label="Kapat" class="p-button-text me-2" (click)="showHistory()"></button>
         </ng-template>
 
     </p-dialog>
