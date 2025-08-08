@@ -17,6 +17,7 @@ export class SecurityLocationsComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe = new Subject();
 
+  updateLocationName: string = "";
   locationName: string = "";
   _filteredItems: any[] = [];
 
@@ -47,6 +48,8 @@ export class SecurityLocationsComponent implements OnInit, OnDestroy {
   _locationDetails: any[] = [];
   //targetProducts: any[] = [];
 
+  _deleteLocationModal:boolean = false;
+  _updateLocationModal: boolean = false;
   constructor(
     private patrol: PatrolService,
     private ref: ChangeDetectorRef,
@@ -86,26 +89,42 @@ export class SecurityLocationsComponent implements OnInit, OnDestroy {
       console.log("getLocation:", this._locations);
       this.ref.detectChanges();
       this.locationName = '';
+      this.selectLocationId = this._filteredItems[0].id;
+      this.allLocationDetails(this.selectLocationId);
+      this.locationDetails(this.selectLocationId);
     });
   }
 
-  deleteLocation(id: number) {
-    console.log("deleteLocation:", id);
-    // this.patrol.deletelocation(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-    //   const deleteLocation = response[0].x;
-    //   console.log("deleteLocation:", deleteLocation);
-    //   this.ref.detectChanges();
-    //   this.getLocation();
-    // });
+  deleteLocationModal(id:number){
+    this.selectLocationId = id;
+    this._deleteLocationModal = true;
+
   }
 
-  updateLocation(name: string, id: number) {
-    this.patrol.updateLocation(name, id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+  deleteLocation() {
+    console.log("deleteLocation:", this.selectLocationId);
+    this.patrol.deletelocation(this.selectLocationId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      const deleteLocation = response[0].x;
+      console.log("deleteLocation:", deleteLocation);
+      this.ref.detectChanges();
+      this.getLocation();
+      this._deleteLocationModal = false;
+    });
+  }
+
+  updateLocationModal(name: string, id: number) {
+    this._updateLocationModal = true;
+    this.updateLocationName = name;
+    this.selectLocationId = id;
+  }
+
+  updateLocaion(){
+      this.patrol.updateLocation(this.updateLocationName, this.selectLocationId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       const updateLocation = response[0].x;
       console.log("updateLocation:", updateLocation);
       this.ref.detectChanges();
     });
-
+    this.getLocation();
   }
 
 
@@ -199,6 +218,7 @@ export class SecurityLocationsComponent implements OnInit, OnDestroy {
       }
     }
   }
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
