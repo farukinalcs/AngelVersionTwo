@@ -61,10 +61,12 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
-  setGuardTour(ad:string){
+  setGuardTour(ad:string,type:number,forced:string){
     var sp: any[] = [{
       mkodu:'yek223',
       ad:ad.toString(),
+      turtipi:type.toString(),
+      zorlama:forced.toString()
     }]
     return this.requestMethod(sp);
   }
@@ -85,20 +87,43 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
-  upGuardTour(ad:string,id:number){
+  upGuardTour(ad:string,id:number,type:number,forced:string){
     var sp: any[] = [{
       mkodu:'yek224',
       ad:ad.toString(),
-      id:id.toString()
+      id:id.toString(),
+      tip:type.toString(),
+      zorlama:forced.toString()
     }]
     return this.requestMethod(sp);
   }
 
-  setGuardStation(ad:string){
+  setGuardStation(ad:string,type:number,number:string,lat:string,lng:string,description:string){
     var sp: any[] = [{
       mkodu:'yek228',
       ad:ad.toString(),
+      tip:type.toString(),
+      numara:number.toString(),
+      lat:lat.toString(),
+      lng:lng.toString(),
+      aciklama:description.toString()
     }]
+    console.log("setGuardStation ",sp)
+    return this.requestMethod(sp);
+  }
+
+  updateGuardStation(ad:string,id:number,type:number,number:string,lat:string,lng:string,description:string){
+    var sp: any[] = [{
+      mkodu:'yek229',
+      ad:ad.toString(),
+      id:id.toString(),
+      tip:type.toString(),
+      numara:number.toString(),
+      lat:lat.toString(),
+      lng:lng.toString(),
+      aciklama:description.toString()
+    }]
+    console.log("updateGuardStation ",sp)
     return this.requestMethod(sp);
   }
 
@@ -227,7 +252,7 @@ export class PatrolService {
       ozel:forWeek.toString(),
       aciklama:description.toString()
     }]
-    console.log("SPPPPPPPPPPP CALENDER",sp)
+   
     return this.requestMethod(sp);
   }
 
@@ -291,9 +316,28 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
+  tip23_s(){
+    var sp: any[] = [{
+      mkodu:'yek041',
+      id: '0',
+      kaynak:'guvenlikistasyontipi'
+    }]
+    return this.requestMethod(sp);
+  }
 
 
-   
+  tip23_ss(){
+    var sp: any[] = [{
+      mkodu:'yek041',
+      id: '0',
+      kaynak:'guvenlikturtipi'
+    }]
+    return this.requestMethod(sp);
+  }
+
+
+
+
 
 
 

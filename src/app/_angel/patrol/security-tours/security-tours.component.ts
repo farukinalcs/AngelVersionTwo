@@ -17,19 +17,30 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe = new Subject();
 
-  targetList: any[] = [];
+
   selectedTour: any = null;
   selectTourId: number = 0;
   selectStationId: number = 0;
-  allStation: any[];
+
+  selectTypeId:number;
+
+  targetList: any[] = [];
+  allStation: any[] = [];
   filteredStations: any[] = [];
   filteredTours: any[] = [];
   filteredTargets: any[] = [];
+  tourList: any[] = [];
+  tourType: any[] = [];
+
   tourNameInput: string = '';
   stationNameInput: string = '';
   targetNameInput: string = "";
-  tourList: any[] = [];
-
+  updateTourName:string = "";
+  zorunlu:string = '0';
+  _updateTourModal:boolean = false;
+  _deleteTourModal: boolean = false;
+  _addTourModal:boolean = false;
+ 
   constructor(
     private patrol: PatrolService,
     private ref: ChangeDetectorRef,
@@ -40,6 +51,7 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getGuardTour();
     this.getGuardStation();
+    this.type_tour();
   }
 
   ngAfterViewInit() {
@@ -48,9 +60,14 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
     });
   }
 
-  setGuardTour(): void {
+  setGuardTourModal(): void {
+    this._addTourModal = true
+   
+  }
+
+  setGuardTour(){
     if (this.tourNameInput != '') {
-      this.patrol.setGuardTour(this.tourNameInput).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      this.patrol.setGuardTour(this.tourNameInput,this.selectTypeId,this.zorunlu).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         const responsee = response[0].x;
         console.log("setGuardTour:", responsee);
         this.getGuardTour();
@@ -60,17 +77,22 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
         "Tur Adı Boş Geçilemez"
       );
     }
+    this._addTourModal = false;
   }
 
-
-  deleteGuardTour(tour: any): void {
+  deleteGuardTourModal(tour: any): void {
     this.selectedTour = tour;
     this.selectTourId = tour.id;
+    this._deleteTourModal = true;
+  }
+
+  deleteGouardTour() {
     this.patrol.deleteGuardTour(this.selectTourId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       const responsee = response[0].x;
       console.log("deleteGuardTour:", responsee);
       this.getGuardTour();
     });
+    this._deleteTourModal = false;
   }
 
   getGuardTour(): void {
@@ -88,7 +110,7 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
     this.patrol.getGuardStation('-1').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.allStation = response[0].x;
       this.filteredStations = [...this.allStation];
-      // console.log("getGuardStation:", this.allStation);
+
       this.ref.detectChanges();
     });
 
@@ -100,7 +122,7 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
       this.targetList = response[0].x;
       this.filteredTargets = [...this.targetList];
       this.ref.detectChanges();
-      // console.log("TARGET LİST GET TOUR", this.targetList);
+
     });
 
   }
@@ -108,7 +130,6 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
   getItem(tour: any) {
     this.selectedTour = tour;
     this.selectTourId = tour.id;
-    //this.targetList = this.allStation.filter(item => item.id === tour.id);
     this.getGuardStationForTour(tour.id);
   }
 
@@ -120,7 +141,7 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
           this.targetList = response[0].x;
           this.filteredTargets = [...this.targetList];
           this.ref.detectChanges();
-          //console.log("relation_i TARGET:", this.targetList);
+
         })
       }
       else {
@@ -139,32 +160,53 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
   deleteTourStation(item: any) {
     const id = item.id;
     const hedefid = item.hedefid;
-    console.log("SİL ID", id)
-    console.log("SİL TUR İD", hedefid);
-    console.log("deleteTourStation:", item);
+
     if (id !== undefined) {
 
       this.patrol.relation_d(id, hedefid).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         this.targetList = response[0].x;
         this.filteredTargets = [...this.targetList];
-        console.log("deleteTourStation: TARGET", this.targetList);
+
         this.ref.detectChanges();
       })
       this.getGuardStationForTour(hedefid);
     } else {
       const kaynakid = item.kaynakid;
       const hedefid = item.hedefid;
-      console.log("kaynakid:", kaynakid);
-      console.log("hedefid:", hedefid);
-      console.log("Station:", item);
+
       this.patrol.relation_d(kaynakid, hedefid).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
         this.targetList = response[0].x;
         this.filteredTargets = [...this.targetList];
-        console.log("deleteTourStation:", this.targetList);
+
         this.ref.detectChanges();
       })
       this.getGuardStationForTour(hedefid);
     }
+  }
+
+  updateTourModal(item:any){
+    console.log("updateTourName",item);
+    if (item?.id != null) {
+      this.selectTourId = item?.id;
+      this.updateTourName = item?.ad;
+      this._updateTourModal = true;
+      this.zorunlu = item.zorlama;
+      this.selectTypeId = item?.tip;
+    } else {
+      console.error("updateData.id undefined veya null!", item);
+    }
+  }
+
+  updateTour(){
+
+    this.patrol.upGuardTour(this.updateTourName, this.selectTourId,this.selectTypeId,this.zorunlu).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      const Result = response[0].x;
+      
+      console.log("upGuardTour",Result);
+      this.ref.detectChanges();
+    })
+    this.getGuardTour();
+    this._updateTourModal = false;
   }
 
   filterTours() {
@@ -187,6 +229,23 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
       item.kaynakad?.toLowerCase().includes(query)
     );
   }
+
+  type_tour(){
+    
+    this.patrol.tip23_ss().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      this.tourType = response[0].x;
+      
+      console.log("this.tourType",this.tourType);
+      this.ref.detectChanges();
+    })
+
+  }
+
+  zorunluCheckbox(event: any) {
+    const checked = (event.target as HTMLInputElement).checked;
+    this.zorunlu = checked ? "1" : "0";
+  }
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();

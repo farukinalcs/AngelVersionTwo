@@ -190,5 +190,6 @@ interface TourCalendarModel {
   lokasyonid: number;
   ozel: string;
   takvimid: number;
+  turaciklama:string;
   turid: number;
 }

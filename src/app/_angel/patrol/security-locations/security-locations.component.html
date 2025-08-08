@@ -35,14 +35,26 @@
                                                     <span>{{item?.ad}}</span>
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-sm py-1 px-2" style="background:red;font-weight: bold;color:white">
-                                                        <i class="fa-solid fa-pen p-0" style="background:red;font-weight: bold;color:white"></i>
+
+
+                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1" (click)="updateLocationModal(item?.ad, item?.id)">
+                                                        <i class="fa-solid fa-pen p-0"></i>
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-sm py-1 px-2 text-white" style="background:red;font-weight: bold;color:white"(click)="deleteLocation(item?.id)">
-                                                        <i class="fa-solid fa-minus p-0" style="background:red;font-weight: bold;color:white"></i>
+
+                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1" (click)="deleteLocationModal(item?.id)">
+                                                        <i class="fa-solid fa-trash p-0"></i>
                                                     </a>
+<!-- 
+                                                    <a class="btn btn-light-danger btn-sm py-1 px-2 my-1" (click)="deleteLocationModal(item?.id)">
+                                                        <i class="fa-solid fa-trash p-0"></i>
+                                                    </a> -->
+
+
+                                                    <!-- <a class="btn btn-sm py-1 px-2 text-white" style="background:red;font-weight: bold;color:white" (click)="deleteLocationModal(item?.id)">
+                                                        <i class="fa-solid fa-trash p-0" style="background:red;font-weight: bold;color:white"></i>
+                                                    </a> -->
                                                 </td>
                                         </tr>
                     
@@ -545,3 +557,45 @@
         </div>
     </div>
 </div>
+
+
+<p-dialog
+        [(visible)]="_updateLocationModal"
+        [modal]="true"
+        [style]="{ width: '25vw'}"
+        [breakpoints]="{'2560px': '25vw', '992px': '70vw', '576px': '90vw'}"
+        [maximizable]="true"
+        [baseZIndex]="10000">
+    
+       <input type="text" [(ngModel)]="updateLocationName" class="form-control">
+        
+        <div class="row">
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-secondary m-2" (click)="_updateLocationModal = false;">İPTAL</button>
+            <button class="btn btn-danger m-2" (click)="updateLocaion()">Güncelle</button>
+          </div>
+        
+        </div>
+
+</p-dialog>
+
+
+<p-dialog
+        [(visible)]="_deleteLocationModal"
+        [modal]="true"
+        [style]="{ width: '25vw'}"
+        [breakpoints]="{'2560px': '25vw', '992px': '70vw', '576px': '90vw'}"
+        [maximizable]="true"
+        [baseZIndex]="10000">
+    
+        <h1>Silmek istediğinize emin misiniz? </h1>
+        
+        <div class="row">
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-secondary m-2" (click)="_deleteLocationModal = false;">İPTAL</button>
+            <button class="btn btn-danger m-2" (click)="deleteLocation()">Sil</button>
+          </div>
+        
+        </div>
+
+</p-dialog>
