@@ -1,0 +1,134 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card card-custom gutter-b my-5 pb-5">
+                <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+                    <div class="card-title">
+                        <h3 class="card-label text-white">{{"Sicil_Grupları_Tanımları" | translate}}</h3>
+                        <h4 class="card-label text-gray-200 fs-8">{{"Bilgilerini_Buradan_Belirleyebilirsiniz" |
+                            translate}}</h4>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="loading">
+                    <div class="card-body">
+                        <div class="row d-flex align-items-strech">
+                            <div class="col-3">
+
+                                <div class="h-550px scroll">
+                                    <ng-container *ngFor="let item of accessGroups">
+                                        <div class="d-flex align-items-center my-4 process-item rounded cursor-pointer"
+                                            [ngClass]="{'bg-dark': selectedAccessGroup?.id == item.id}"
+                                            (click)="selectDeviceGroup(item)">
+                                            <span class="bullet bullet-vertical h-20px bg-dark me-5"></span>
+                                            <div class="d-flex flex-column">
+                                                <a class="fs-9 fw-bolder"
+                                                    [ngClass]="{'text-white': selectedAccessGroup?.id == item.id, 'text-gray-900':selectedAccessGroup?.id != item.id}">
+                                                    {{item.ad}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-12 py-3">
+                                        <span class="fs-2 fw-bold" style="text-decoration: underline;">
+                                            {{selectedAccessGroup?.ad}}
+                                        </span>
+                                    </div>
+
+                                    
+
+                                    <div class="col-12 py-2">
+                                        <p-floatlabel variant="on" class="mt-2">
+                                            <p-iconfield>
+                                                <p-inputicon class="pi pi-search" />
+                                                <input pInputText id="over_label" [(ngModel)]="filterText"
+                                                    autocomplete="off" />
+                                            </p-iconfield>
+                                            <label for="over_label">Arama..</label>
+                                        </p-floatlabel>
+                                    </div>
+
+                                    <div class="col-6 ">
+                                        <div class="table-responsive h-550px scroll">
+                                            <table
+                                                class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                                <thead class="sticky-top">
+                                                    <tr
+                                                        class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-light rounded text-gray-600">
+                                                        <th class=" fw-bolder me-1 cursor-pointer rounded-start"
+                                                            style="width: 80%;">{{"Eklenmiş Gruplar" | translate}}
+                                                        </th>
+                                                        <th class=" fw-bolder me-1 cursor-pointer rounded-end"
+                                                            style="width: 20%;">{{"İşlem" | translate}}</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr *ngFor="let item of relations | searchFilter:filterText: ['kaynakad']"
+                                                        class="cursor-pointer fs-8">
+                                                        <ng-container *ngIf="item.dahil == 1">
+                                                            <td>
+                                                                <span class="mb-1">{{ item?.kaynakad }}</span>
+                                                            </td>
+
+                                                            <td>
+                                                                <a class="btn btn-warning btn-sm py-1 px-2"
+                                                                    (click)="relationStateChange(item, 'd')">
+                                                                    <i class="fa-solid fa-minus p-0"></i>
+                                                                </a>
+                                                            </td>
+                                                        </ng-container>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <div class="table-responsive h-550px scroll">
+                                            <table
+                                                class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                                                <thead class="sticky-top">
+                                                    <tr class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-light rounded text-gray-600">
+                                                        <th class=" rounded-start" style="width: 20%;">{{"İşlem" | translate}}</th>
+                                                        <th class=" fw-bolder me-1 cursor-pointer rounded-end" style="width: 80%;">{{"Eklenebilir_Gruplar" | translate}}</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr *ngFor="let item of relations | searchFilter:filterText: ['kaynakad']"
+                                                        class="cursor-pointer fs-8">
+                                                        <ng-container *ngIf="item.dahil == 0">
+                                                            <td>
+                                                                <a class="btn btn-primary btn-sm py-1 px-2"
+                                                                    (click)="relationStateChange(item, 'i')">
+                                                                    <i class="fa-solid fa-plus p-0"></i>
+                                                                </a>
+                                                            </td>
+
+                                                            <td>
+                                                                <span class="mb-1">{{ item?.kaynakad }}</span>
+                                                            </td>
+                                                        </ng-container>
+
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

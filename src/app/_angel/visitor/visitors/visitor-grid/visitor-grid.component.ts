@@ -420,8 +420,8 @@ export class VisitorGridComponent implements OnInit, OnDestroy, OnChanges {
         personel: savedFilterModel?.KimlikTipiAd?.filter || '',
         bilgi: savedFilterModel?.Bilgi?.filter || '',
         firma: savedFilterModel?.Firma?.filter || '',
-        tarih: formatDate(today),
-        tarihbit: !savedFilterModel || isObjectEmpty(savedFilterModel) ? formatDate(today) : formatDate(oneYearAgo),
+        tarih: !savedFilterModel || isObjectEmpty(savedFilterModel) ? formatDate(today) : formatDate(oneYearAgo),
+        tarihbit: formatDate(today),
         kimlik: savedFilterModel?.Kimlikno?.filter || '',
         kaydeden: savedFilterModel?.kaydeden?.filter || ''
       }

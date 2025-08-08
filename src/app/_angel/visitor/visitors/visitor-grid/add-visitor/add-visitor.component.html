@@ -1,5 +1,5 @@
 <p-dialog header="{{ 'Yeni_Ziyaretçi_Ekle' | translate }}" [(visible)]="visible" (onHide)="onHide()" position="center"
-    [modal]="true" [breakpoints]="{ '2560px': '60vw', '992px': '80vw', '576px': '90vw' }" [baseZIndex]="10000"
+    [modal]="true" [breakpoints]="{ '2560px': '60vw', '992px': '80vw', '576px': '90vw' }" [baseZIndex]="-800"
     [draggable]="true" [resizable]="false" [maximizable]="true">
 
     <div class="container">
@@ -84,12 +84,46 @@
                     </ng-container>
                     <ng-container *ngIf="infoMessage">
                         <div class="fv-plugins-message-container">
-                            <div class="fv-help-block fs-8"
-                                [ngClass]="{'text-danger text-decoration-underline': !infoMessageStatus, 'text-success': infoMessageStatus}">
+                            <div class="fv-help-block fs-8" [ngClass]="{
+        'text-danger text-decoration-underline': !infoMessageStatus,
+        'text-success': infoMessageStatus
+      }">
+
                                 <span role="alert" [ngClass]="{ 'cursor-pointer': !infoMessageStatus }"
                                     (click)="onClickBanned()">
+
+                                    <ng-container *ngIf="!infoMessageStatus">
+                                        <span class="blink-icon">❗</span>
+                                    </ng-container>
+
                                     {{ infoMessage }}
+
+                                    <ng-container *ngIf="!infoMessageStatus">
+                                        <span class="blink-icon">❗</span>
+                                    </ng-container>
+
                                 </span>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="!expectedVisitorMessageStatus">
+                        <div class="fv-plugins-message-container">
+                            <div class="text-info fs-8">
+
+                                <span class="me-2">{{ checkExpectedVisitorMessage }}</span>
+
+                                <ng-container *ngIf="!expectedVisitorMessageStatus">
+                                    <span *ngIf="expectedVisitorByCheck.length == 1" class="text-gray-500 fake-link"
+                                        (click)="onAutoFillClick()">
+                                        (Otomatik Doldur)
+                                    </span>
+
+                                    <span *ngIf="expectedVisitorByCheck.length > 1" class="text-gray-500 fake-link"
+                                        (click)="onListVisitorsClick()">
+                                        (Beklenen Ziyaretçileri Listele)
+                                    </span>
+                                </ng-container>
+
                             </div>
                         </div>
                     </ng-container>
@@ -110,15 +144,52 @@
                     </ng-container>
                     <ng-container *ngIf="infoMessage">
                         <div class="fv-plugins-message-container">
-                            <div class="fv-help-block fs-8"
-                                [ngClass]="{'text-danger text-decoration-underline': !infoMessageStatus, 'text-success': infoMessageStatus}">
+                            <div class="fv-help-block fs-8" [ngClass]="{
+        'text-danger text-decoration-underline': !infoMessageStatus,
+        'text-success': infoMessageStatus
+      }">
+
                                 <span role="alert" [ngClass]="{ 'cursor-pointer': !infoMessageStatus }"
                                     (click)="onClickBanned()">
+
+                                    <ng-container *ngIf="!infoMessageStatus">
+                                        <span class="blink-icon">❗</span>
+                                    </ng-container>
+
                                     {{ infoMessage }}
+
+                                    <ng-container *ngIf="!infoMessageStatus">
+                                        <span class="blink-icon">❗</span>
+                                    </ng-container>
+
                                 </span>
                             </div>
                         </div>
                     </ng-container>
+
+
+                    <ng-container *ngIf="!expectedVisitorMessageStatus">
+                        <div class="fv-plugins-message-container">
+                            <div class="text-info fs-8">
+
+                                <span class="me-2">{{ checkExpectedVisitorMessage }}</span>
+
+                                <ng-container *ngIf="!expectedVisitorMessageStatus">
+                                    <span *ngIf="expectedVisitorByCheck.length == 1" class="text-gray-500 fake-link"
+                                        (click)="onAutoFillClick()">
+                                        (Otomatik Doldur)
+                                    </span>
+
+                                    <span *ngIf="expectedVisitorByCheck.length > 1" class="text-gray-500 fake-link"
+                                        (click)="onListVisitorsClick()">
+                                        (Beklenen Ziyaretçileri Listele)
+                                    </span>
+                                </ng-container>
+
+                            </div>
+                        </div>
+                    </ng-container>
+
                 </div>
 
                 <div class="col-12 p-3">
@@ -136,7 +207,7 @@
                         <span class="required">{{"Firma" | translate}}</span>
                     </label>
 
-                    <p-select [options]="companies" formControlName="company" optionLabel="Ad"
+                    <p-select [options]="companies" formControlName="company" optionLabel="Ad" [editable]="true"
                         emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="true" filterBy="Ad"
                         [showClear]="true" placeholder="{{'Firma_Seçiniz' | translate}}" class="w-100 md:w-56">
                         <ng-template #selectedItem let-selected>
@@ -195,7 +266,7 @@
 
                         <input type="text" class="form-control form-control-sm form-control-solid"
                             [formControlName]="item.ad" placeholder="{{item.baslik}} Giriniz">
-                        <ng-container *ngIf="item.belge == 1">
+                        <!-- <ng-container *ngIf="item.belge == 1">
                             <div class="fv-plugins-message-container">
                                 <div class="fv-help-block fs-8 text-danger text-decoration-underline">
                                     <span role="alert" class="cursor-pointer" (click)="visibleUploadDialog(item)">
@@ -204,7 +275,7 @@
                                     </span>
                                 </div>
                             </div>
-                        </ng-container>
+                        </ng-container> -->
                     </div>
                 </ng-container>
 
@@ -332,7 +403,8 @@
         </a>
 
         <ng-container *ngIf="!expected">
-            <a *ngIf="form.get('expectedId')?.value" (click)="setFormByExpected()" class="btn btn-danger btn-sm mx-1">
+            <a *ngIf="form.get('expectedId')?.value" (click)="setFormByExpected(form.get('expectedId')?.value)"
+                class="btn btn-danger btn-sm mx-1">
                 <i class="fa-solid fa-caret-right fs-7 mb-1"></i>
                 {{'İleri' | translate}}
             </a>
@@ -362,7 +434,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive">
-                        <table class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                        <table
+                            class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
                             <thead class="sticky-top">
                                 <tr
                                     class="fs-8 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
@@ -486,6 +559,93 @@
         </ng-template>
     </p-dialog>
 </ng-container>
+
+
+
+<ng-container *ngIf="visibleExpected">
+    <p-dialog header="{{ 'Beklenen Ziyaretçi Listesi' | translate }}" [(visible)]="visibleExpected"
+        (onHide)="visibleExpectedVisitorList()" position="top" [modal]="true"
+        [breakpoints]="{ '2560px': '57vw', '992px': '74vw', '576px': '110vw' }" [baseZIndex]="10000" [draggable]="false"
+        [resizable]="false" [maximizable]="false">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table
+                            class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4">
+                            <thead class="sticky-top">
+                                <tr
+                                    class="fs-8 fw-bold text-gray-600 border-bottom-0 text-uppercase bg-secondary rounded">
+                                    <th class="rounded-start">{{"Ad" | translate}}</th>
+                                    <th class="fw-bolder me-1 cursor-pointer">{{"Soyad" | translate}}</th>
+                                    <th class="fw-bolder me-1 cursor-pointer">{{"Açıklama" | translate}}</th>
+                                    <th class="fw-bolder me-1 cursor-pointer">{{"Giriş" | translate}}</th>
+                                    <th class="fw-bolder me-1 cursor-pointer">{{"Çıkış" | translate}}</th>
+                                    <th class="fw-bolder me-1 cursor-pointer">{{"Ekleyen" | translate}}</th>
+                                    <th class="rounded-end fw-bolder me-1 cursor-pointer text-center">{{"İşlem" |
+                                        translate}}</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <ng-container *ngFor="let item of expectedVisitorByCheck">
+                                    <tr class="cursor-pointer fs-8 text-gray-600">
+                                        <td>
+                                            <span class="mb-1 fw-semibold">{{item.Ad}}</span>
+                                        </td>
+
+                                        <td>
+                                            <span class="mb-1 fw-semibold">{{item.Soyad}}</span>
+                                        </td>
+
+                                        <td>
+                                            <span class="mb-1 fw-semibold">{{item.Bilgi | truncate:15 }}</span>
+                                        </td>
+
+                                        <td>
+                                            <span class="mb-1 fw-semibold">{{item.Giris | date: 'yyyy-MM-dd /
+                                                HH:mm'}}</span>
+                                        </td>
+
+                                        <td>
+                                            <span class="mb-1 fw-semibold">{{item.Cikis | date: 'yyyy-MM-dd / HH:mm'}}</span>
+                                        </td>
+
+                                        <td>
+                                            <span class="mb-1 fw-semibold">{{item.KimEkledi}}</span>
+                                        </td>
+
+                                        <td>
+                                            <span class="mb-1 fw-semibold"
+                                                (click)="setFormByExpected(item.ID.toString())">
+                                                <a class="btn btn-sm btn-danger py-1 px-2">
+                                                    <i class="fa-solid fa-pen-to-square p-0"></i>
+                                                </a>
+                                            </span>
+                                        </td>
+
+                                    </tr>
+                                </ng-container>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-template pTemplate="footer">
+            <a (click)="visibleExpectedVisitorList()" class="btn btn-danger btn-sm mx-1">
+                <i class="fa-solid fa-xmark fs-7"></i>
+                {{'Kapat' | translate}}
+            </a>
+        </ng-template>
+    </p-dialog>
+</ng-container>
+
+
+
 
 <ng-template #formError let-control="control" let-message="message" let-validation="validation">
     <ng-container *ngIf="control.hasError(validation)">

@@ -339,6 +339,22 @@
                                                     </label>
                                                 </div>
                                             </div>
+
+                                            <div class="fv-row fv-plugins-icon-container d-flex flex-column gap-3">
+                                                <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                                    <span class="me-2">Sicil Yetkileri Üzerine Eklensin</span>
+                                                    <i class="fa-solid fa-circle-info text-info"
+                                                        pTooltip="Seçilen siciller, sicil yetkileri üzerine dahil mi edilsin yoksa hariç mi tutulsun"
+                                                        tooltipPosition="right"></i>
+                                                </label>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="overrideCheck"
+                                                        [(ngModel)]="selectedDetail.overrideCheck">
+                                                    <label class="form-check-label" for="overrideCheck">
+                                                        {{ selectedDetail.overrideCheck ? 'Eklensin' : 'Eklenmesin' }}
+                                                    </label>
+                                                </div>
+                                            </div>
                                             }
 
                                         </div>

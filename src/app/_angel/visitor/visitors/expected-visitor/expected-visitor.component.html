@@ -20,6 +20,7 @@
         [enableRangeSelection]="true"
         [enableRangeHandle]="true"
         [gridOptions]="gridOptions"
-        (filterChanged)="onFilterChanged($event)">
+        (filterChanged)="onFilterChanged($event)"
+        [getRowStyle]="getRowStyle">
     </ag-grid-angular>
 </div>
