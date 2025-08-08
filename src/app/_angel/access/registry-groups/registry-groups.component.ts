@@ -527,6 +527,8 @@ export class RegistryGroupsComponent implements OnInit, OnDestroy {
 
     onEditTriggered() {
         this.editTriggered = !this.editTriggered; // Düzenleme tetiklendi
+
+        console.log("selectedDetail :", this.selectedDetail);
     }
 
     onEditEvent(event: any) {

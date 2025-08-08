@@ -10,6 +10,8 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { SelectModule } from 'primeng/select';
 import { combineLatest, Subject, takeUntil } from 'rxjs';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
+import { CustomPipeModule } from 'src/app/_helpers/custom-pipe.module';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-add-visitor',
@@ -22,7 +24,8 @@ import { ProfileService } from 'src/app/_angel/profile/profile.service';
         ReactiveFormsModule,
         TranslateModule,
         ProgressBarModule,
-        DatePickerModule
+        DatePickerModule,
+        CustomPipeModule
     ],
     templateUrl: './add-visitor.component.html',
     styleUrl: './add-visitor.component.scss'
@@ -51,6 +54,11 @@ export class AddVisitorComponent implements OnInit, OnDestroy {
     addedFiles: any[] = [];
     selectedVisitCode: any;
     expected: boolean = false;
+    expectedVisitor: any;
+    expectedVisitorByCheck: any[] = [];
+    checkExpectedVisitorMessage: any;
+    expectedVisitorMessageStatus: boolean;
+    visibleExpected: boolean = false;
 
     constructor(
         private profileService: ProfileService,
@@ -71,6 +79,7 @@ export class AddVisitorComponent implements OnInit, OnDestroy {
         this.getCompanies();
         this.changeVisitType();
         this.changeCredential();
+        this.isThereCompany();
     }
 
     onHide() {
@@ -97,6 +106,11 @@ export class AddVisitorComponent implements OnInit, OnDestroy {
     }
 
     checkValidForm(): boolean {
+        console.log("Form Alanları: ", this.form.value);
+        console.log("Form Kuralları ('name'): ", this.form.get('name')?.valid);
+        console.log("Form Kuralları ('surname'): ", this.form.get('surname')?.valid);
+        
+        
         if (this.form.invalid) {
             this.form.markAllAsTouched();
 
@@ -111,10 +125,34 @@ export class AddVisitorComponent implements OnInit, OnDestroy {
 
     add() {
         if (!this.checkValidForm()) {
-            return; // Eğer form geçersizse `add()` fonksiyonunu burada durdur
+            return;
+        }
+
+        if (this.bannedList.length > 0) {
+            Swal.fire({
+                title: 'Emin misiniz?',
+                text: 'Yasaklı listesinde yer alan kişiyi eklemek üzeresiniz!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Evet, gönder',
+                cancelButtonText: 'Vazgeç',
+                reverseButtons: true,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                heightAuto: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.postForm();
+                }
+            });
+        } else {
+            this.postForm();
         }
 
 
+    }
+
+    postForm() {
         const formValues: FormModel = this.getFormValues();
         console.log("formValues: ", formValues);
 
@@ -130,7 +168,7 @@ export class AddVisitorComponent implements OnInit, OnDestroy {
                 giztarih: formValues.confidentialityDate,
                 plaka: formValues.carPlate,
                 arac: '',
-                firma: formValues.company?.Ad,
+                firma: formValues.company.Ad || formValues.company,
                 kimlikno: formValues.credential,
                 ziyarettipi: formValues.visitType?.ID?.toString(),
                 kimliktipi: formValues.idType?.ID?.toString(),
@@ -155,25 +193,25 @@ export class AddVisitorComponent implements OnInit, OnDestroy {
 
         console.log("Ziyaretçi Ekle params: ", sp);
 
+        this.profileService.requestMethod(sp)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((response: any) => {
+                const data = response[0].x;
+                const message = response[0].z;
 
-        this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
-            const data = response[0].x;
-            const message = response[0].z;
+                if (message.islemsonuc == -1) {
+                    return;
+                }
 
-            if (message.islemsonuc == -1) {
-                return;
-            }
+                console.log("Ziyaretçi Eklendi : ", data);
+                this.toastrService.success(
+                    this.translateService.instant("Ziyaretçi_Eklendi"),
+                    this.translateService.instant("Başarılı")
+                );
 
-            console.log("Ziyaretçi Eklendi : ", data);
-            this.toastrService.success(
-                this.translateService.instant("Ziyaretçi_Eklendi"),
-                this.translateService.instant("Başarılı")
-            );
-
-            this.onHide();
-            this.refreshEvent.emit();
-        });
-
+                this.onHide();
+                this.refreshEvent.emit();
+            });
     }
 
     getFormValues(): FormModel {
@@ -333,13 +371,19 @@ export class AddVisitorComponent implements OnInit, OnDestroy {
             this.visitCodes = data.map((item: any) => ({ ...item, isUpload: false }));
             console.log("Ziyaret Kodları : ", this.visitCodes);
 
-            this.addFormControl(data);
+            this.addFormControl(data, this.expectedVisitor || null);
+
+
         });
     }
 
-    addFormControl(data: any) {
+    addFormControl(data: any, expectedVisitor?: any) {
         data.forEach((item: any) => {
             this.form.addControl(item.ad, this.formBuilder.control(''));
+
+            if (expectedVisitor) {
+                this.form.get(item.ad)?.setValue(expectedVisitor[item.ad]);
+            }
         });
     }
 
@@ -363,7 +407,7 @@ export class AddVisitorComponent implements OnInit, OnDestroy {
             }
         ];
 
-        this.profileService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
+        this.profileService.requestMethod(sp, {'noloading':'true'}).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
             const data = response[0].x;
             const message = response[0].z;
 
@@ -396,12 +440,45 @@ export class AddVisitorComponent implements OnInit, OnDestroy {
             .subscribe(([name, surname]) => {
                 if (name || surname) {
                     this.getNameSurnameControl(name, surname);
+                    this.checkExpectedVisitor(name, surname);
                 }
                 // else {
                 //   // Boşsa hataları temizle
                 //   nameControl.setErrors(null);
                 //   surnameControl.setErrors(null);
                 // }
+            });
+    }
+
+    checkExpectedVisitor(name: any, surname: any) {
+        const sp: any[] = [
+            {
+                mkodu: 'yek376',
+                ad: name,
+                soyad: surname
+            }
+        ];
+
+        this.profileService.requestMethod(sp, {'noloading':'true'})
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((response: any) => {
+                const data: any[] = response[0].x;
+                const message = response[0].z;
+
+                if (message.islemsonuc == -1) {
+                    return;
+                }
+
+                console.log("Ad Soyad Kontrol Edildi Beklenen Ziyaretçi İçin : ", data);
+
+                this.expectedVisitorByCheck = [...data];
+                data.length > 0 ? this.checkExpectedVisitorMessage = this.translateService.instant("Ad Soyad Beklenen Ziyaretçiler Listesinde Mevcut") : "";
+                data.length > 0 ? this.expectedVisitorMessageStatus = false : this.expectedVisitorMessageStatus = true;
+
+                if (!this.form.get('name')?.value || !this.form.get('surname')?.value) this.infoMessage = '';
+
+                // this.form.get('name')?.setErrors({ apiError: message.hataMesaji });
+                // this.form.get('surname')?.setErrors({ apiError: message.hataMesaji });
             });
     }
 
@@ -414,7 +491,7 @@ export class AddVisitorComponent implements OnInit, OnDestroy {
             }
         ];
 
-        this.profileService.requestMethod(sp)
+        this.profileService.requestMethod(sp, {'noloading':'true'})
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe((response: any) => {
                 const data: any[] = response[0].x;
@@ -432,8 +509,8 @@ export class AddVisitorComponent implements OnInit, OnDestroy {
 
                 if (!this.form.get('name')?.value || !this.form.get('surname')?.value) this.infoMessage = '';
 
-                this.form.get('name')?.setErrors({ apiError: message.hataMesaji });
-                this.form.get('surname')?.setErrors({ apiError: message.hataMesaji });
+                // this.form.get('name')?.setErrors({ apiError: message.hataMesaji });
+                // this.form.get('surname')?.setErrors({ apiError: message.hataMesaji });
             });
     }
 
@@ -764,11 +841,13 @@ export class AddVisitorComponent implements OnInit, OnDestroy {
         this.expected = true;
     }
 
-    setFormByExpected() {
+    setFormByExpected(id: any) {
+        if (this.visibleExpected) this.visibleExpected = !this.visibleExpected;
+
         var sp: any[] = [
             {
-                mkodu: 'yek',
-                id: this.form.get('expectedId')?.value
+                mkodu: 'yek375',
+                id: id
             }
         ];
 
@@ -781,14 +860,46 @@ export class AddVisitorComponent implements OnInit, OnDestroy {
             }
 
             console.log("Beklenen Ziyareçi Bilgisi Geldi :", data);
-            
+            this.expectedVisitor = data[0];
+
             this.matchForm(data);
             this.expected = true;
         });
     }
 
     matchForm(data: any) {
+        this.form.patchValue({
+            name: this.expectedVisitor.Ad,
+            surname: this.expectedVisitor.Soyad,
+            explanation: this.expectedVisitor.Bilgi,
+            company: this.companies.find(item => item.Ad == this.expectedVisitor.Firma),
+            registry: this.registries.find(item => item.id == this.expectedVisitor.SicilId1),
+            carPlate: this.expectedVisitor.Plaka || ""
+        });
+    }
 
+    isThereCompany() { // Ziyaretçi Firmalar Arasında Var mı Yok mu Kontrolü
+        this.form.get('company')?.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe((value: any) => {
+            if (value?.ID == '0') {
+                // this.visitTypeForm.addControl('otherCompany', this.formBuilder.control('', Validators.required));
+                // this.isOtherCompany = true; // ng-container da durum kontrolü için eklendi
+            } else {
+                // this.isOtherCompany = false; // ng-container da durum kontrolü için eklendi
+            }
+        });
+    }
+
+    onAutoFillClick() {
+        this.setFormByExpected(this.expectedVisitorByCheck[0].ID.toString());
+    }
+
+    onListVisitorsClick() {
+        if (this.expectedVisitorMessageStatus) return;
+        this.visibleExpectedVisitorList();
+    }
+
+    visibleExpectedVisitorList() {
+        this.visibleExpected = !this.visibleExpected
     }
 
     ngOnDestroy(): void {
