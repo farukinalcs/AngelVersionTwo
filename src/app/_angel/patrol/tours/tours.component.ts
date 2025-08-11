@@ -84,11 +84,13 @@ export class ToursComponent implements OnInit, OnDestroy {
   widgets: any;
   alarmlar: any[] = [];
   olaylar: any[] = [];
+  tourDetail:any[]= [];
 
   widgetTitle: string = "";
   widgetData: any[] = [];
   widgetDetailModal: boolean = false;
   selectLocationId: number;
+
 
 
   constructor(
@@ -110,8 +112,9 @@ export class ToursComponent implements OnInit, OnDestroy {
 
     this.dateControl.valueChanges.subscribe((newDate) => {
       this.formattedDate = this.datePipe.transform(newDate, 'yyyy-MM-dd')!;
-      this.dailyGuardTourDetail(this.formattedDate, this.selectLocationId);
+      // this.dailyGuardTourDetail(this.formattedDate, this.selectLocationId);
       this.dailyGuardTourCheck(this.formattedDate,this.selectLocationId);
+      this.guardTourDetail(this.formattedDate,this.selectLocationId);
     });
 
     // this.dailyGuardTourCheck(this.formattedDate,this.selectLocationId);
@@ -161,12 +164,6 @@ export class ToursComponent implements OnInit, OnDestroy {
     this.patrol.dailyGuardTourCheck(date,lokasyonId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.dailyGuardTour = response[0]?.x;
 
-      // this.atilmayan = (this.dailyGuardTour ?? []).filter((item: any) => item.durum === 0)
-      // this.atilan = (this.dailyGuardTour ?? []).filter((item: any) => item.durum === 1)
-      // this.atilacak = (this.dailyGuardTour ?? []).filter((item: any) => item.durum === 2)
-
-
-
       const tourList = Array.isArray(this.dailyGuardTour) ? this.dailyGuardTour : [];
 
       this.atilmayan = tourList.filter(item => item.durum === 0);
@@ -176,23 +173,23 @@ export class ToursComponent implements OnInit, OnDestroy {
       console.log("atilmayan", this.atilmayan);
       console.log("atilan", this.atilan);
       console.log("atilacak", this.atilacak);
-      console.log("dailyGuardTour typeof:", typeof this.dailyGuardTour);
+
       this.updateWidgets();
       this.ref.detectChanges();
     })
 
   }
 
-    dailyGuardTourDetail(date: any, locationid: number) {
-      this.patrol.tour_s(date, locationid)?.pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-        this.tour_s = response[0]?.x;
-        console.log("this.tour_s", this.tour_s);
-      })
-      this.patrol.tour_sd(date, locationid)?.pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-        this.tour_sd = response[0]?.x;
-        console.log("this.tour_sd........sd", this.tour_sd);
-      })
-    }
+    // dailyGuardTourDetail(date: any, locationid: number) {
+    //   this.patrol.tour_s(date, locationid)?.pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    //     this.tour_s = response[0]?.x;
+    //     console.log("this.tour_s", this.tour_s);
+    //   })
+    //   this.patrol.tour_sd(date, locationid)?.pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+    //     this.tour_sd = response[0]?.x;
+    //     console.log("this.tour_sd........sd", this.tour_sd);
+    //   })
+    // }
 
       
   getLocation() {
@@ -201,12 +198,25 @@ export class ToursComponent implements OnInit, OnDestroy {
       if (locationId !== null) {
         this.selectLocationId = locationId;
         console.log("TOUR Location:",  this.selectLocationId);
-        this.dailyGuardTourDetail(this.formattedDate, this.selectLocationId);
         this.dailyGuardTourCheck(this.formattedDate,this.selectLocationId);
+        this.guardTourDetail(this.formattedDate,this.selectLocationId);
       }
     });
     
   }
+
+  guardTourDetail(date: any, locationid: number){
+    this.patrol.guardTourDetail(date, locationid)?.pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+
+     this.tourDetail = response[0]?.x.map(item => ({
+      ...item,
+      turdetaylari: JSON.parse(item.turdetaylari) // string → object array
+    }));
+
+      console.log("detail", this.tourDetail);
+    })
+  }
+
   onDateChanged(date: Date) {
     console.log("Seçilen tarih:", date);
     // İşlem yapılacak yer

@@ -64,7 +64,7 @@
 
   </div>
 
-  <div class="row mt-4">
+  <!-- <div class="row mt-4">
 
     <div class="col-md-3 mb-3" *ngFor="let item of this.tour_s">
       <div class="card custom-card">
@@ -73,9 +73,11 @@
           <h5 class="text-white mb-0">{{item.tur}}</h5>
         </div>
         <div class="card-body">
+
           <div class="row text-center">
             <h3>{{item.sicil}}</h3>
           </div>
+
           <div class="row text-center">
             <div class="col-12">
               <p><b>Tarih:</b>&nbsp;&nbsp;<b>{{item?.zaman | date: 'yyyy-MM-dd'}}</b></p>
@@ -91,7 +93,76 @@
       </div>
     </div>
 
+  </div> -->
+
+  <!-- <div class="row g-4">
+    <div class="col-sm-6 col-lg-4"
+        *ngFor="let item of tourDetail">
+        <div class="card shadow-sm h-100 px-2 py-4">
+            <div class="card-header bg-white border-bottom-0 pb-2">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <div class="d-flex align-items-center">
+                        <img src="{{imageUrl}}?sicilid={{item.guvenlikci}}" alt=""
+                            class="rounded-circle me-3" width="48" height="48" />
+                        <div>
+                            <h5 class="mb-0">{{ item.Aciklama }}</h5>
+                            <small class="text-muted">#{{item.guvenlikci}}</small>
+                            <p class="text-muted">#{{item.imei}}</p>
+                        </div>
+                    </div>
+              
+                </div>
+            </div>
+
+            <div class="card-body">
+       
+
+            </div> 
+        </div>
+    </div>
+  </div>  -->
+  <div class="col-sm-6 col-lg-4" *ngFor="let item of tourDetail">
+    <div class="card shadow-sm h-100 px-2 py-4">
+      <div class="card-header bg-white border-bottom-0 pb-2">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div class="d-flex align-items-center">
+            <div>
+              <h5 class="mb-0">{{ item.Aciklama }}</h5>
+              <small class="text-muted">#{{ item.guvenlikci }}</small>
+              <p class="text-muted">{{ item.imei }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card-body">
+        <ul class="timeline list-unstyled">
+          <li *ngFor="let detay of item.turdetaylari" class="mb-3">
+            <div class="d-flex align-items-start">
+              <!-- eventtime varsa yeşil yoksa kırmızı -->
+              <div
+                class="timeline-dot me-3 rounded-circle"
+                [ngClass]="detay.eventtime ? 'bg-success' : 'bg-danger'"
+                style="width: 12px; height: 12px;"
+              ></div>
+  
+              <div>
+                <strong>{{ detay.istasyonad }}</strong>
+                <div class="text-muted small">
+                  {{ detay.eventtime ? (detay.eventtime | date:'dd.MM.yyyy HH:mm') : 'Zaman kaydı yok' }}
+                </div>
+                <div class="text-secondary small">
+                  {{ detay.lat && detay.lng ? (detay.lat + ', ' + detay.lng) : 'Konum kaydı yok' }}
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
+  
+  
 
 
 </div>
@@ -123,3 +194,54 @@
     </tbody>
   </table>
 </p-dialog>
+
+
+
+<!-- 
+         <div class="d-flex align-items-center text-gray-700 mb-2">
+                    <i class="pi pi-calendar me-2 text-primary"></i>
+                    <span>{{ member.pozisyonad }}</span>
+                </div>
+                <div class="d-flex gap-4 small text-gray-700 mb-3">
+                    <div>
+                        <i class="pi pi-clock text-success me-1"></i> Giriş: <span class="fw-bold">{{ member.ggiris
+                            || '--:--' }}</span>
+                    </div>
+                    <div>
+                        <i class="pi pi-clock text-danger me-1"></i> Çıkış: <span class="fw-bold">{{ member.gcikis
+                            || '--:--' }}</span>
+                    </div>
+                </div> -->
+
+                <!-- <div class="row text-center border-top pt-3">
+                    <div class="col">
+                        <div class="fw-bold" [ngClass]="{ 'text-warning': member.bekleyenizintalep > 0 }">
+                            {{ member.bekleyenizintalep }}
+                        </div>
+                        <small class="text-muted">Bekleyen İzin</small>
+                    </div>
+                    <div class="col">
+                        <div class="fw-bold" [ngClass]="{ 'text-warning': member.bekleyenfmtalep > 0 }">
+                            {{ member.bekleyenfmtalep }}
+                        </div>
+                        <small class="text-muted">Bekleyen Mesai</small>
+                    </div>
+                    <div class="col">
+                        <div class="fw-bold" [ngClass]="{ 'text-danger': member.geckalma > 0 }">
+                            {{ member.geckalma }}
+                        </div>
+                        <small class="text-muted">Geç Kalma</small>
+                    </div>
+                    <div class="col">
+                        <div class="fw-bold" [ngClass]="{ 'text-danger': member.erkencikma > 0 }">
+                            {{ member.erkencikma }}
+                        </div>
+                        <small class="text-muted">Erken Çıkış</small>
+                    </div>
+                </div> -->
+
+                <!-- <div *ngIf="member.bekleyenizintalep + member.bekleyenfmtalep > 0"
+                    class="alert alert-warning mt-3 d-flex align-items-center gap-2">
+                    <i class="pi pi-exclamation-triangle"></i>
+                    <span>Bekleyen talepler var</span>
+                </div> -->

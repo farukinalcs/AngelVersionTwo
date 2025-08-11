@@ -384,12 +384,27 @@ export class DeviceAndmapComponent {
                     map: this.map,
                     title: device.terminalname,
                     icon: {
-                      url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-                          <circle cx="20" cy="20" r="18" fill="red" />
-                          <text x="20" y="25" font-size="16" text-anchor="middle" fill="white" font-family="Arial">G</text>
-                        </svg>
-                      `),
+                      url:'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60">
+                     <path
+                      d="M20 0C9 0 0 9 0 20c0 11 20 40 20 40s20-29 20-40C40 9 31 0 20 0z"
+                      fill="red"
+                      stroke="white"
+                      stroke-width="3"
+                    />
+                    <text
+                      x="20"
+                      y="27"
+                      font-size="15"
+                      text-anchor="middle"
+                      fill="white"
+                      font-family="Arial"
+                      dominant-baseline="top"
+                    >
+                      ${device?.terminalname.trim()?.charAt(0)}
+                    </text>
+                  </svg>
+                `),
                       scaledSize: new google.maps.Size(40, 40),
                       anchor: new google.maps.Point(20, 20)
                     }
@@ -557,15 +572,48 @@ export class DeviceAndmapComponent {
             map: this.map,
             title: device?.terminalname,
             animation: null,
-            icon: device?.isOnline
-              ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-              : 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+            // icon: device?.isOnline
+            //   ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+            //   :  'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+            //     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+            //       <circle cx="20" cy="20" r="18" fill="red" />
+            //       <text x="20" y="25" font-size="16" text-anchor="middle" fill="white" font-family="Arial">
+            //       ${device?.terminalname.trim()?.charAt(0)}</text>
+            //     </svg>`
+            //   ),
+            icon: {
+              url:'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60">
+             <path
+              d="M20 0C9 0 0 9 0 20c0 11 20 40 20 40s20-29 20-40C40 9 31 0 20 0z"
+              fill="red"
+              stroke="white"
+              stroke-width="3"
+            />
+            <text
+              x="20"
+              y="27"
+              font-size="15"
+              text-anchor="middle"
+              fill="white"
+              font-family="Arial"
+              dominant-baseline="top"
+            >
+              ${device?.terminalname.trim()?.charAt(0)}
+            </text>
+          </svg>
+        `),
+              scaledSize: new google.maps.Size(40, 40),
+              anchor: new google.maps.Point(20, 20)
+            }
           });
           this.markers[device.imei] = marker;
         } else {
           console.warn('Geçersiz marker koordinatları:', device);
         }
       });
+
+
   
       this.ref.detectChanges();
   

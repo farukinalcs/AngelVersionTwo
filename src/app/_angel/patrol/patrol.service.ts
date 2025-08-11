@@ -335,6 +335,15 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
+  guardTourDetail(date:string,locationid:number){
+    var sp: any[] = [{
+      mkodu:'yek377',
+      lokasyon: locationid.toString(),
+      tarih:date.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
 
 
 
