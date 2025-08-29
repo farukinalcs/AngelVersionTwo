@@ -23,7 +23,6 @@
 .timeline-dot {
   width: 10px;
   height: 10px;
-  background-color: #0d6efd;
   border-radius: 50%;
   margin-top: 6px;
 }
@@ -39,4 +38,7 @@
   width: 2px;
   height: 100%;
   background-color: #dee2e6;
+}
+.station{
+  cursor: pointer;
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDateFormats, NativeDateAdapter } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -89,10 +89,20 @@ export class ToursComponent implements OnInit, OnDestroy {
   widgetTitle: string = "";
   widgetData: any[] = [];
   widgetDetailModal: boolean = false;
+  tourDetailModal:boolean = false;
+  allTourMap:boolean = false;
   selectLocationId: number;
+  imageUrl: string;
 
-
-
+  markers: google.maps.Marker[] = [];
+  markerMap = new Map<string, google.maps.Marker>();
+  map!: google.maps.Map;
+  lastLat: any = "";
+  lastLng: any = "";
+  stationLat: any ="";
+  stationLng: any = "";
+  mapMarkers: any[] = [];
+  @ViewChild('gmap', { static: false }) gmapElement!: ElementRef;
   constructor(
     private patrol: PatrolService,
     private ref: ChangeDetectorRef,
@@ -102,7 +112,7 @@ export class ToursComponent implements OnInit, OnDestroy {
     private helperService: HelperService,
     private location : LocationService
 
-  ) { }
+  ) { this.imageUrl = this.patrol.getImageUrl();}
 
   ngOnInit(): void {
 
@@ -112,13 +122,19 @@ export class ToursComponent implements OnInit, OnDestroy {
 
     this.dateControl.valueChanges.subscribe((newDate) => {
       this.formattedDate = this.datePipe.transform(newDate, 'yyyy-MM-dd')!;
-      // this.dailyGuardTourDetail(this.formattedDate, this.selectLocationId);
       this.dailyGuardTourCheck(this.formattedDate,this.selectLocationId);
       this.guardTourDetail(this.formattedDate,this.selectLocationId);
     });
 
     // this.dailyGuardTourCheck(this.formattedDate,this.selectLocationId);
     this.getLocation();
+  
+  }
+
+  
+  ngAfterViewInit(): void {
+
+
   }
 
   updateWidgets() {
@@ -180,18 +196,6 @@ export class ToursComponent implements OnInit, OnDestroy {
 
   }
 
-    // dailyGuardTourDetail(date: any, locationid: number) {
-    //   this.patrol.tour_s(date, locationid)?.pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-    //     this.tour_s = response[0]?.x;
-    //     console.log("this.tour_s", this.tour_s);
-    //   })
-    //   this.patrol.tour_sd(date, locationid)?.pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-    //     this.tour_sd = response[0]?.x;
-    //     console.log("this.tour_sd........sd", this.tour_sd);
-    //   })
-    // }
-
-      
   getLocation() {
 
     this.location.selectedLocationId$.subscribe(locationId => {
@@ -213,8 +217,181 @@ export class ToursComponent implements OnInit, OnDestroy {
       turdetaylari: JSON.parse(item.turdetaylari) // string → object array
     }));
 
-      console.log("detail", this.tourDetail);
+      console.log("tourDetail", this.tourDetail);
     })
+  }
+
+  openMap(stations:any[]){
+    console.log("openMap",stations)
+    this.allTourMap = true;
+    setTimeout(() => {
+      this.initMap();
+      this.prepareMarkers(stations);
+      this.fitBoundsToMarkers();
+      this.drawRoute();
+    }, 300); // modal renderı için küçük gecikme
+    
+  }
+
+  fitBoundsToMarkers() {
+    if (!this.map || this.markers.length === 0) return;
+  
+    const bounds = new google.maps.LatLngBounds();
+    this.markers.forEach(m => bounds.extend(m.getPosition()!));
+    this.map.fitBounds(bounds);
+  }
+
+  drawRoute() {
+    if (!this.map || this.markers.length === 0) return;
+  
+    const pathCoords = this.markers.map(m => m.getPosition()!); // marker pozisyonlarını al
+    const routeLine = new google.maps.Polyline({
+      path: pathCoords,
+      geodesic: true,
+      strokeColor: "#0000FF",  // mavi çizgi
+      strokeOpacity: 0,
+      strokeWeight: 2,
+      icons: [
+        {
+          icon: {
+            path: 'M 0,-1 0,1',   // küçük çizgi
+            strokeOpacity: 1,
+            scale: 2              // boyut
+          },
+          offset: '0',
+          repeat: '10px'          // aralık
+        }
+      ]
+    });
+  
+    routeLine.setMap(this.map);
+  }
+
+  prepareMarkers(stations: any[]) {
+    if (!stations || !Array.isArray(stations)) {
+      console.error("stations yok veya hatalı:", stations);
+      return;
+    }
+  
+    // Önceki markerları temizle
+    this.markers.forEach(m => m.setMap(null));
+    this.markers = [];
+  
+    console.log("Marker ekleme başlıyor. Toplam stations:", stations.length);
+  
+    stations.forEach((station: any, index: number) => {
+      const lat = station.lat ? parseFloat(station.lat) : parseFloat(station.istasyonlat);
+      const lng = station.lng ? parseFloat(station.lng) : parseFloat(station.istasyonlng);
+  
+      if (isNaN(lat) || isNaN(lng)) {
+        console.warn(`Geçersiz koordinat atlandı: ${station.istasyonad}`, station);
+        return;
+      }
+  
+      let pinColor = '';
+      if (station.istasyonid === -1) pinColor = 'blue';
+      else if (station.eventtime) pinColor = 'green';
+      else pinColor = 'red';
+      
+      const iconUrl = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60">
+          <path
+            d="M20 0C9 0 0 9 0 20c0 11 20 40 20 40s20-29 20-40C40 9 31 0 20 0z"
+            fill="${pinColor}"
+            stroke="white"
+            stroke-width="3"
+          />
+          <text
+            x="20"
+            y="27"
+            font-size="15"
+            text-anchor="middle"
+            fill="white"
+            font-family="Arial"
+            dominant-baseline="top"
+          >
+            ${station?.istasyonad?.trim()?.charAt(0).toUpperCase() || ''}
+          </text>
+        </svg>
+      `);
+      // let iconUrl = '';
+      // if (station.istasyonid === -1) iconUrl = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+      // else if (station.eventtime) iconUrl = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+      // else iconUrl = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+  
+      const marker = new google.maps.Marker({
+        position: { lat, lng },
+        map: this.map,
+        title: station.istasyonad,
+        icon: {
+          url: iconUrl,
+          scaledSize: new google.maps.Size(30, 45),
+          anchor: new google.maps.Point(20, 60)
+        }
+      });
+  
+      this.markers.push(marker);
+      console.log(`Marker eklendi [${index}]:`, station.istasyonad, lat, lng);
+    });
+  
+    console.log("Toplam marker eklendi:", this.markers.length);
+  }
+
+  initMap() {
+    const mapOptions: google.maps.MapOptions = {
+      center: { lat: 41.0, lng: 29.0 }, 
+      zoom: 15
+    };
+    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapOptions);
+  }
+
+  getItem(item: any) {
+    console.log("SEÇİLİ İSTASYON", item);
+    this.tourDetailModal = true;
+  
+    const lat = Number(item?.lat);
+    const lng = Number(item?.lng);
+    const stationLAT = Number(item?.istasyonlat);
+    const stationLNG = Number(item?.istasyonlng)
+  
+    this.stationLat = stationLAT;
+    this.stationLng = stationLNG;
+    this.lastLat = lat;
+    this.lastLng = lng;
+    console.log("this.stationLat", this.stationLat);
+    console.log("his.stationLng", this.stationLng);
+    console.log("this.lastLat", this.lastLat);
+    console.log("this.lastLng", this.lastLng);
+  }
+
+
+  onMapDialogShow() {
+    setTimeout(() => {
+      const mapElement = document.getElementById('map') as HTMLElement;
+      if (!mapElement) {
+        console.error('Harita elementi bulunamadı.');
+        return;
+      }
+  
+      const defaultCenter = this.lastLat && this.lastLng
+        ? { lat: this.lastLat, lng: this.lastLng }
+        : { lat: 40.997953, lng: 29.136747 };
+  
+      // Haritayı modal açıldığında oluştur
+      this.map = new google.maps.Map(mapElement, {
+        center: defaultCenter,
+        zoom: 14
+      });
+  
+      // Marker ekleme
+      if (this.lastLat && this.lastLng) {
+        new google.maps.Marker({
+          position: { lat: this.lastLat, lng: this.lastLng },
+          map: this.map
+        });
+      }
+  
+    }, 200); // Modal animasyonu bitene kadar bekle
   }
 
   onDateChanged(date: Date) {

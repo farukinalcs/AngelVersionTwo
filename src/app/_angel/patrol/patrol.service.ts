@@ -44,6 +44,10 @@ export class PatrolService {
     return this.httpClient.get<any>(this.apiUrlService.apiUrl + '/process', options);
   }
 
+  getImageUrl(path?: string): string {
+    return `${environment.imageUrl}`;
+  }
+
   getPatrolInfo(locationid:number){
     var sp : any[] = [{
       mkodu : 'yek189',
