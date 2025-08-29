@@ -1,0 +1,56 @@
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.event-card {
+  background-color: #ffffff00;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+    .indicator-line {
+      opacity: 1;
+    }
+  }
+
+  .indicator-line {
+    width: 4px;
+    background-color: var(--kt-danger);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+}
+
+.my-div {
+  background-image: url("/assets/media/illustrations/storyset-1/15.svg");
+  background-repeat: no-repeat;
+  background-size: contain; /* veya cover */
+  background-position: center;
+}
+
+.my-div2 {
+  background-image: url("/assets/media/illustrations/storyset-1/17.svg");
+  background-repeat: no-repeat;
+  background-size: contain; /* veya cover */
+  background-position: center;
+}
+
+.card {
+  background-color: rgb(255 255 255 / 95%);
+}

@@ -1,8 +1,4 @@
 <div class="card card-flush h-md-100" >
-
-    <!-- Coming Soon Filigranı -->
-    <div class="watermark">Coming Soon</div>
-
     <div class="content-wrapper">
         <div class="card-header pt-5" style="display: block;">
             <div class="card-title" style="display: block;">
@@ -83,7 +79,7 @@
                     </div>
     
                     <div class="col-12 d-flex justify-content-center align-items-center">
-                        <a class="btn text-gray-400 text-hover-danger">
+                        <a class="btn text-gray-400 text-hover-danger" (click)="displayInventory()">
                             <i class="fa-solid fa-circle-plus fs-1 pe-2"></i>
                             <span class="fs-4">{{"Envanter_Talebi_Oluştur" | translate}}</span>
                         </a>
@@ -440,3 +436,11 @@
         </a>
     </ng-template>
 </p-dialog>
+
+
+<ng-container *ngIf="displayInventoryForm">
+    <app-inventory
+        [display]="displayInventoryForm"
+        (onHide)="displayInventory($event)">
+    </app-inventory>
+</ng-container>

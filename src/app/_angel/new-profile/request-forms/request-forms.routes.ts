@@ -11,6 +11,7 @@ import { OvertimeComponent } from "./overtime/overtime.component";
 import { ShiftChangeComponent } from "./shift-change/shift-change.component";
 import { VehicleComponent } from "./vehicle/vehicle.component";
 import { VisitorComponent } from "./visitor/visitor.component";
+import { InventoryComponent } from "./inventory/inventory.component";
 
 export const RequestFormsRoutes: Routes = [
     {
@@ -27,7 +28,8 @@ export const RequestFormsRoutes: Routes = [
             { path: 'overtime', component: OvertimeComponent },
             { path: 'shift-change', component: ShiftChangeComponent },
             { path: 'vehicle', component: VehicleComponent },
-            { path: 'visitor', component: VisitorComponent }
+            { path: 'visitor', component: VisitorComponent },
+            { path: 'inventory', component: InventoryComponent },
         ]
     }
 ];

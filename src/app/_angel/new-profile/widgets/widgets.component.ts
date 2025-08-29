@@ -11,9 +11,10 @@ import { MealMenuComponent } from './meal-menu/meal-menu.component';
 import { SeniorEmployeesComponent } from './senior-employees/senior-employees.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { SuggestionsComponent } from './suggestions/suggestions.component';
-import { InventoryComponent } from './inventory/inventory.component';
+
 import { SurveyInHouseComponent } from '../survey-in-house/survey-in-house.component';
 import { DepartureComponent } from './departure/departure.component';
+import { MyInventoryComponent } from "./my-inventory/my-inventory.component";
 
 @Component({
   selector: 'app-widgets',
@@ -31,10 +32,10 @@ import { DepartureComponent } from './departure/departure.component';
     AnnouncementsComponent,
     SuggestionsComponent,
     SurveyComponent,
-    InventoryComponent,
     SurveyInHouseComponent,
-    DepartureComponent
-  ],
+    DepartureComponent,
+    MyInventoryComponent
+],
   templateUrl: './widgets.component.html',
   styleUrl: './widgets.component.scss'
 })

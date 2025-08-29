@@ -163,6 +163,16 @@ export const MENU: MenuItem[] = [
             { title: 'Tanımlamalar', routerLink: 'user-management/definitions' }
         ],
         app: ['1']
+    },
+        {
+        title: 'Envanter Yönetimi',
+        icon: 'fa-solid fa-boxes-stacked text-danger',
+        children: [
+            { title: 'Genel Bakış', routerLink: 'inventory/overview' },
+            { title:'Tanımlamalar', routerLink:'inventory/definitions'},
+            { title:'Talepler', routerLink:'inventory/request'}
+        ],
+        app: ['1']
     }
 ];
 
