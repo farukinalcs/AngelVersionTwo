@@ -131,31 +131,37 @@ export class ProfileService {
 
     return this.requestMethod(sp);
   }
+cancelMyDemandsMultiple(arr: any[], aciklama: any) {
+  const sp: any[] = [];
 
-  cancelMyDemandsMultiple(arr : any[], aciklama : any) {
-    var sp : any[] = [];
+  arr.forEach((item) => {
+    // Öncelik zimmet
+    let kaynak: string;
+    if (item.zimmetid) {
+      kaynak = 'zimmet';
+    } else if (item.tipad === 'İzin') {
+      kaynak = 'izin';
+    } else if (item.tipad === 'Fazla Mesai') {
+      kaynak = 'fm';
+    } else if (item.tipad === 'Yetki') {
+      kaynak = 'sureliyetki';
+    } else if (item.tipad === 'Avans') {
+      kaynak = 'avans';
+    } else {
+      kaynak = item.tipad; // bilinmeyen bir tip gelirse dokunma
+    }
 
-    arr.forEach((item) => {
-      if (item.tipad == 'İzin') {
-        item.tipad = 'izin';
-      } else if (item.tipad == 'Fazla Mesai'){
-        item.tipad = 'fm';
-      } else if (item.tipad == 'Yetki'){
-        item.tipad = 'sureliyetki';
-      } else if (item.tipad == 'Avans'){
-        item.tipad = 'avans';
-      }
+    sp.push({
+      mkodu: 'yek038',
+      formid: (item.Id ?? item.id)?.toString(), // Büyük/küçük id desteği
+      kaynak:kaynak,
+      aciklama:aciklama
+    });
+  });
 
-      sp.push({
-        mkodu : 'yek038',
-        formid : item.Id.toString(),
-        kaynak : item.tipad,
-        aciklama : aciklama
-      })
-    })
+  return this.requestMethod(sp);
+}
 
-    return this.requestMethod(sp);
-  }
 
   getDemandProcess(formId : any, formTip : any) {
     var sp : any[] = [{
@@ -234,28 +240,36 @@ export class ProfileService {
       id : formId.toString(),
       kaynak : kaynak
     }]
-
+    console.log(sp);
+    
     return this.requestMethod(sp);
   }
 
-  confirmDemandMultiple(arr : any[]) {
-    var sp : any[] = [];
+confirmDemandMultiple(arr: any[]) {
+  var sp: any[] = [];
+  console.log(arr);
 
-    arr.forEach((item) => {
-      if (item.tipad == 'İzin') {
-        item.tipad = 'izin';
-      } else if (item.tipad == 'Fazla Mesai'){
-        item.tipad = 'fm';
-      }
-      sp.push({
-        mkodu : 'yek044',
-        id : item.Id.toString(),
-        kaynak : item.tipad,
-      })
-    })
+  arr.forEach((item) => {
+    let kaynak = '';
 
-    return this.requestMethod(sp);
-  }
+    // Öncelik zimmetid kontrolü
+    if (item.zimmetid) {
+      kaynak = 'zimmet';
+    } else if (item.tipad == 'İzin') {
+      kaynak = 'izin';
+    } else if (item.tipad == 'Fazla Mesai') {
+      kaynak = 'fm';
+    }
+
+    sp.push({
+      mkodu: 'yek044',
+      id: (item.Id ?? item.id)?.toString(), // büyük/küçük id farkı için
+      kaynak: kaynak,
+    });
+  });
+
+  return this.requestMethod(sp);
+}
 
   postMyDemandedDetailSearch(kaynak : any, detailFormValues : any) {
     var sp : any[] = [{

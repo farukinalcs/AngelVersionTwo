@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-custom gutter-b my-5 pb-5">
+        <div class="card-header border-0 bg-danger" style="min-height: 45px">
+          <div class="card-title">
+            <h3 class="card-label text-white">{{ cardTitle }}</h3>
+            <h4 class="card-label text-gray-200 fs-8">
+              {{ "Bilgilerini_Buradan_Belirleyebilirsiniz" | translate }}
+            </h4>
+          </div>
+        </div>
+        <div
+          [formGroup]="form"
+          class="col-6 d-flex align-sm-items-end gap-2 flex-column flex-sm-row"
+        >
+          <div class="col-sm-6 p-3">
+            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+              <span>{{ "Atama Yapılacak Sicil Grubu" | translate }}</span>
+            </label>
+
+            <p-select
+              [options]="registryGroups"
+              formControlName="registryGroup"
+              optionLabel="ad"
+              emptyFilterMessage="{{ 'Kayıt_Bulunamadı' | translate }}"
+              [filter]="true"
+              filterBy="ad"
+              [showClear]="true"
+              placeholder="{{ 'Sicil_Grubu_Seçiniz' | translate }}"
+              class="w-100 md:w-56"
+            >
+              <ng-template #selectedItem let-selected>
+                <div class="flex items-center gap-2">
+                  <div>{{ form.get("registryGroup")?.value?.ad }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-item #item>
+                <div class="flex items-center gap-2">
+                  <div>{{ item?.ad }}</div>
+                </div>
+              </ng-template>
+            </p-select>
+          </div>
+        </div>
+        <div class="transfer-card animated-border">
+          <p-pickList
+            #pl
+            [source]="specialAssignmentList || []"
+            [target]="available || []"
+            sourceHeader="Sicile_Ekli_Ekipmanlar"
+            targetHeader="Eklenebilir_Ekipmanlar"
+            [dragdrop]="true"
+            [metaKeySelection]="false"
+            [showSourceControls]="false"
+            [showTargetControls]="false"
+            [responsive]="true"
+            [filterBy]="'ad'"
+            sourceFilterPlaceholder="Ara..."
+            targetFilterPlaceholder="Ara..."
+            (onMoveToTarget)="handleMoveToTarget($event)"
+            (onMoveToSource)="handleMoveToSource($event)"
+            (onMoveAllToTarget)="handleMoveAllToTarget($event)"
+            (onMoveAllToSource)="handleMoveAllToSource($event)"
+          >
+            <!-- Ortak item şablonu -->
+            <ng-template let-item pTemplate="item">
+              <div class="row-item">
+                <div class="title">{{ item.ad }}</div>
+                <!-- <div class="actions">
+         
+          <button
+            pButton
+            type="button"
+            class="p-button-sm action-btn plus"
+            icon="pi pi-plus"
+            (click)="moveToSelected(item)"
+          ></button>
+          <button
+            pButton
+            type="button"
+            class="p-button-sm action-btn minus"
+            icon="pi pi-minus"
+            (click)="moveToAvailable(item)"
+          ></button>
+        </div> -->
+              </div>
+            </ng-template>
+    <ng-template #emptySource>
+      <div class="p-3 text-center text-muted">Data yok</div>
+    </ng-template>
+            <ng-template pTemplate="sourceHeader">
+              <div class="col-header grow">Sicile Ekli Ekipman Liste</div>
+            </ng-template>
+
+            <ng-template pTemplate="targetHeader">
+              <div class="col-header grow">Eklenebilir Ekipman Listesi</div>
+            </ng-template>
+          </p-pickList>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

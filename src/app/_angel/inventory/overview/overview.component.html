@@ -1,0 +1,46 @@
+<div class="container py-4">
+    <div class="row g-4 mb-4">
+        <div class="col-12 col-md-6 col-lg-3" *ngFor="let stat of stats">
+            <div class="card shadow-sm h-100 stat-card">
+                <div class="card-body d-flex justify-content-between align-items-center bg-danger rounded">
+                    <div>
+                        <p class="text-white small mb-1">{{ stat.title }}</p>
+                        <div class="d-flex align-items-baseline">
+                            <h4 class="mb-0 me-2 text-white">{{ stat.value }}</h4>
+                            <span class="text-white small">{{ stat.unit }}</span>
+                        </div>
+                        <p class="small mt-2 fw-medium"
+                            [ngClass]="stat.change.startsWith('+') ? 'text-success' : 'text-warning'">
+                            {{ stat.change }} geçen aya göre
+                        </p>
+                    </div>
+                    <div class="icon-wrapper" [ngClass]="stat.color">
+                        <i [class]="stat.icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grafikler -->
+    <div class="row g-4">
+        <div class="col-12 col-lg-6" *ngFor="let chart of charts">
+            <div class="card shadow-sm h-100">
+                <div class="card-header align-items-center">
+                    <h5 class="mb-1">{{ chart.title }}</h5>
+                    <small class="text-muted">{{ chart.description }}</small>
+                </div>
+                <div class="card-body">
+                    <apx-chart [series]="chart.series" [chart]="chart.options.chart" [xaxis]="chart.options.xaxis"
+                        [yaxis]="chart.options.yaxis" [colors]="chart.options.colors" [grid]="chart.options.grid"
+                        [tooltip]="chart.options.tooltip" [legend]="chart.options.legend"
+                        [stroke]="chart.options.stroke" [fill]="chart.options.fill"
+                        [plotOptions]="chart.options.plotOptions" [labels]="chart.options.labels"
+                        [responsive]="chart.options.responsive" [dataLabels]="{ enabled: false }"
+                        [theme]="{ mode: 'light' }">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

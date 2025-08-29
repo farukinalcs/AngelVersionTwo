@@ -1,0 +1,164 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-custom gutter-b my-5 pb-5">
+        <div class="card-header border-0 bg-danger" style="min-height: 45px">
+          <div class="card-title">
+            <h3 class="card-label text-white">{{ cardTitle }}</h3>
+            <h4 class="card-label text-gray-200 fs-8">
+              {{ "Bilgilerini_Buradan_Belirleyebilirsiniz" | translate }}
+            </h4>
+          </div>
+        </div>
+
+        <ng-container *ngIf="loading">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <p-floatlabel variant="on" class="mt-2">
+                  <p-iconfield>
+                    <p-inputicon class="pi pi-search" />
+                    <input
+                      pInputText
+                      id="over_label"
+                      [(ngModel)]="filterText"
+                      autocomplete="off"
+                    />
+                  </p-iconfield>
+                  <label for="over_label">Arama..</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="col-8 d-flex justify-content-end">
+                <div class="p-2">
+                  <a
+                    class="btn btn-dark btn-sm hover-elevate-up"
+                    (click)="openDialog('i')"
+                  >
+                    <i class="fa-solid fa-plus"></i>
+                    {{ "Ekle" | translate }}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="row my-4">
+              <div class="col-12">
+                <div class="table-responsive h-400px scroll">
+                  <!-- <table class="table table-hover border table-striped table-rounded table-row-dashed table-row-gray-400 align-middle gs-4 gy-2"> -->
+                  <table
+                    class="table table-hover border table-rounded table-row-dashed align-middle gs-4 gy-2"
+                  >
+                    <thead class="sticky-top" style="z-index: 0">
+                      <tr
+                        class="fs-6 fw-bold border-bottom-0 text-uppercase rounded text-gray-600 bg-secondary"
+                      >
+                        <th class="rounded-start" style="width: 5%">
+                          {{ "Id" | translate }}
+                        </th>
+                        <th
+                          class="fw-bolder me-1 cursor-pointer"
+                          style="width: 85%"
+                        >
+                          {{ "Ad" | translate }}
+                        </th>
+                        <th class="rounded-end text-center" style="width: 10%">
+                          {{ "#" | translate }}
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <ng-container
+                        *ngFor="
+                          let item of assetInventoryList
+                            | searchFilter : filterText : ['id', 'ad']
+                        "
+                      >
+                        <tr class="cursor-pointer fs-7">
+                          <td>
+                            <span class="mb-1">{{ item.id }}</span>
+                          </td>
+
+                          <td>
+                            <span class="mb-1 fw-bolder">{{ item.ad }}</span>
+                          </td>
+
+                          <td>
+                            <a
+                              pTooltip="{{ 'Kaldır' | translate }}"
+                              class="btn btn-light btn-sm py-1 px-2 mx-2"
+                              (click)="delete(item)"
+                            >
+                              <i
+                                class="fa-solid fa-trash p-0 text-gray-900"
+                              ></i>
+                            </a>
+
+                            <a
+                              pTooltip="{{ 'Güncelle' | translate }}"
+                              class="btn btn-light btn-sm py-1 px-2 mx-2"
+                              (click)="openDialog('u', item)"
+                            >
+                              <i
+                                class="fa-solid fa-pen-to-square p-0 text-gray-900"
+                              ></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  [header]="header"
+  [(visible)]="display"
+  [position]="'top'"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="-40"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="closeAction()"
+>
+  <div class="fv-row my-5 fv-plugins-icon-container">
+    <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+      <span class="required">{{ "Ad" | translate }}</span>
+    </label>
+
+    <input
+      type="text"
+      class="form-control form-control-sm form-control-solid"
+      [(ngModel)]="inventoryItemName"
+    />
+  </div>
+
+  <ng-template pTemplate="footer">
+    <a class="btn btn-sm btn-danger mx-1" (click)="closeAction()">
+      <i class="fa-solid fa-xmark fs-7"></i>
+      {{ "İptal" | translate }}
+    </a>
+
+    <button
+      type="button"
+      class="btn btn-sm btn-danger mx-1"
+      (click)="type == 'i' ? add() : update()"
+      [disabled]="
+        !inventoryItemName ||
+        (type === 'u' && inventoryItemName === originalItem?.ad)
+      "
+    >
+      <i class="fa-solid fa-floppy-disk fs-7"></i>
+      {{ "Gönder" | translate }}
+    </button>
+  </ng-template>
+</p-dialog>

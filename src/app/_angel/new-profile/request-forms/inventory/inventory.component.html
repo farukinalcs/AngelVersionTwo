@@ -1,0 +1,397 @@
+<p-dialog
+  header="{{ 'Ekipman Talep Formu' | translate }}"
+  [(visible)]="display"
+  [modal]="true"
+  [breakpoints]="{ '2560px': '70vw', '992px': '90vw', '576px': '99vw' }"
+  (onHide)="closedFormDialog()"
+  [maximizable]="true"
+  [baseZIndex]="10000"
+  [draggable]="true"
+  [resizable]="false"
+>
+  <div class="container py-0 px-5">
+    <div class="container">
+      <div class="row">
+        <div
+          class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid my-10"
+        >
+          <div
+            class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px"
+          >
+            <div class="stepper-nav d-flex justify-content-center">
+              <img
+                src="../../../../../assets/media/illustrations/storyset-1/14.svg"
+                width="100%"
+                alt=""
+              />
+            </div>
+          </div>
+
+          <app-form-stepper
+            class="d-flex align-items-center"
+            [stepperFields]="stepperFields"
+            [isFromAttendance]="false"
+          ></app-form-stepper>
+
+          <div class="row w-xl-700px gap-5">
+            <div class="col-12">
+              <form
+                class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10"
+                [formGroup]="inventoryForm"
+              >
+                <ng-container *ngIf="currentStep$.value == 1">
+                  <div class="current">
+                    <div class="w-100">
+                      <div class="row">
+                        <div class="row mb-2">
+                          <div class="col-12 d-flex justify-content-center">
+                            <label
+                              class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100"
+                            >
+                              <div class="d-flex align-items-center me-2">
+                                <div
+                                  class="form-check form-check-custom form-check-solid form-check-danger me-6"
+                                >
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    formControlName="inventoryType"
+                                    value="1"
+                                  />
+                                </div>
+
+                                <div class="flex-grow-1">
+                                  <h2
+                                    class="d-flex align-items-center fs-3 fw-bold flex-wrap"
+                                  >
+                                    {{ "Ekipman" | translate }}
+                                  </h2>
+                                  <div class="fw-semibold opacity-50">
+                                    Ekipman için talep oluşturuyorsunuz
+                                  </div>
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+
+                          <div class="col-12 d-flex justify-content-center">
+                            <label
+                              class="btn btn-outline btn-outline-dashed btn-active-light-danger d-flex flex-stack text-start p-6 mb-5 w-100"
+                            >
+                              <div class="d-flex align-items-center me-2">
+                                <div
+                                  class="form-check form-check-custom form-check-solid form-check-danger me-6"
+                                >
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    formControlName="inventoryType"
+                                    value="0"
+                                  />
+                                </div>
+
+                                <div class="flex-grow-1">
+                                  <h2
+                                    class="d-flex align-items-center fs-3 fw-bold flex-wrap"
+                                  >
+                                    {{ "Sarf Malzeme" | translate }}
+                                  </h2>
+                                  <div class="fw-semibold opacity-50">
+                                    Sarf Malzeme için talep oluşturuyorsunuz
+                                  </div>
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <ng-container *ngIf="currentStep$.value == 2">
+                  <div class="current">
+                    <div class="w-100">
+                      <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                          <div class="col-12 mb-5">
+                            <label
+                              class="d-flex align-items-center fs-5 fw-semibold mb-2"
+                            >
+                              <span class="required">{{
+                                "Ekipman_Seçimi" | translate
+                              }}</span>
+                            </label>
+
+                            <p-select
+                              [options]="selectedInventoryList"
+                              formControlName="inventoryItem"
+                              optionLabel="ad"
+                              emptyFilterMessage="{{
+                                'Kayıt_Bulunamadı' | translate
+                              }}"
+                              [filter]="true"
+                              filterBy="ad"
+                              [showClear]="true"
+                              placeholder="{{ 'Ekipman_Seçiniz' | translate }}"
+                              class="w-100 md:w-56"
+                            >
+                              <ng-template #selectedItem let-selected>
+                                <div class="flex items-center gap-2">
+                                  <div>
+                                    {{
+                                      inventoryForm.get("inventoryItem")?.value
+                                        ?.ad
+                                    }}
+                                  </div>
+                                </div>
+                              </ng-template>
+                              <ng-template let-item #item>
+                                <div class="flex items-center gap-2">
+                                  <div>{{ item?.ad }}</div>
+                                </div>
+                              </ng-template>
+                            </p-select>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="d-flex align-items-center">
+                            <div class="w-100">
+                              <div class="mb-3">
+                                <label
+                                  for="exampleFormControlTextarea1"
+                                  class="form-label required"
+                                  >Açıklama</label
+                                >
+                                <textarea
+                                  class="form-control w-100"
+                                  id="inventoryArea"
+                                  rows="3"
+                                  formControlName="inventoryDesc"
+                                ></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <ng-container *ngIf="currentStep$.value == 3">
+                  <h2>Talep Özeti</h2>
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-12 d-flex justify-content-center pb-3">
+                        <span
+                          class="fs-5 fw-bolder me-1 text-danger opacity-74-hover"
+                          >{{ "Talep_Sahibi" | translate }}</span
+                        >
+                      </div>
+
+                      <div
+                        class="col-12 d-flex justify-content-center pb-3"
+                        *ngIf="
+                          this.authService.currentUserSubject | async as _user
+                        "
+                      >
+                        <span class="text-gray-800 fs-6 fw-bolder">{{
+                          _user.adsoyad
+                        }}</span>
+                        <span class="text-muted fw-bold d-block fs-7"></span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 d-flex justify-content-center pb-3">
+                        <span
+                          class="fs-5 fw-bolder me-1 text-danger opacity-74-hover"
+                          >{{ "Talep_Edilen_Ekipman" | translate }}</span
+                        >
+                      </div>
+
+                      <div class="col-12 d-flex justify-content-center pb-3">
+                        <span class="text-gray-800 fs-6 fw-bolder">{{
+                          inventoryForm.value.inventoryItem.ad
+                        }}</span>
+                        <span class="text-muted fw-bold d-block fs-7"></span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 d-flex justify-content-center pb-3">
+                        <span
+                          class="fs-5 fw-bolder me-1 text-danger opacity-74-hover"
+                          >{{ "Açıklama" | translate }}</span
+                        >
+                      </div>
+
+                      <div class="col-12 d-flex justify-content-center pb-3">
+                        <span class="text-gray-800 fs-6 fw-bolder">{{
+                          inventoryForm.value.inventoryDesc
+                        }}</span>
+                        <span class="text-muted fw-bold d-block fs-7"></span>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </form>
+            </div>
+
+            <div
+              class="col-12 d-flex align-items-end justify-content-center justify-content-md-end"
+            >
+              <div class="d-flex flex-stack pt-0">
+                <div class="mr-2">
+                  <ng-container
+                    *ngIf="3 > currentStep$.value && currentStep$.value > 1"
+                  >
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-light-danger me-3"
+                      (click)="prevStep()"
+                    >
+                      <span
+                        [inlineSVG]="
+                          './assets/media/icons/duotune/arrows/arr063.svg'
+                        "
+                        class="svg-icon svg-icon-4 me-1"
+                      ></span>
+                      {{ "Geri" | translate }}
+                    </button>
+                  </ng-container>
+
+                  <ng-container *ngIf="currentStep$.value == formsCount">
+                    <button
+                      (click)="closedFormDialog()"
+                      mat-dialog-close
+                      type="button"
+                      class="btn btn-sm btn-light-danger me-3"
+                    >
+                      <span
+                        [inlineSVG]="
+                          './assets/media/icons/duotune/arrows/arr063.svg'
+                        "
+                        class="svg-icon svg-icon-4 me-1"
+                      ></span>
+                      {{ "Kapat" | translate }}
+                    </button>
+                  </ng-container>
+                </div>
+
+                <ng-container *ngIf="currentStep$.value !== formsCount">
+                  <div>
+                    <ng-container *ngIf="currentStep$.value < formsCount - 1">
+                      <button
+                        *ngIf="currentStep$.value < formsCount - 1"
+                        type="button"
+                        class="btn btn-sm btn-danger me-3"
+                        (click)="nextStep()"
+                      >
+                        <span class="indicator-label">
+                          {{ "İleri" | translate }}
+                          <span
+                            [inlineSVG]="
+                              './assets/media/icons/duotune/arrows/arr064.svg'
+                            "
+                            class="svg-icon svg-icon-3 ms-2 me-0"
+                          ></span>
+                        </span>
+                      </button>
+                      <button
+                        *ngIf="currentStep$.value === formsCount - 1"
+                        type="button"
+                        class="btn btn-sm btn-success me-3"
+                        (click)="submitInventory()"
+                      >
+                        <span class="indicator-label">
+                          {{ "Gönder" | translate }}
+                        </span>
+                      </button>
+                    </ng-container>
+                    <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-danger me-3"
+                        (click)="closedFormDialog()"
+                      >
+                        <span class="indicator-label">
+                          <ng-container *ngIf="isCompleted">
+                            {{ "Kapat" | translate }}
+                          </ng-container>
+
+                          <ng-container *ngIf="!isCompleted">
+                            {{ "İptal" | translate }}
+                          </ng-container>
+                        </span>
+                      </button>
+
+                      <ng-container *ngIf="!isCompleted">
+                        <button
+                          *ngIf="currentStep$.value === formsCount - 1"
+                          type="button"
+                          class="btn btn-sm btn-danger me-3"
+                          (click)="submitInventory()"
+                        >
+                          <span class="indicator-label">
+                            {{ "Gönder" | translate }}
+                          </span>
+                        </button>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+
+<ng-template
+  #formError
+  let-control="control"
+  let-message="message"
+  let-validation="validation"
+>
+  <ng-container *ngIf="control.hasError(validation)">
+    <div class="invalid-feedback">
+      {{ message | translate }}
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template
+  #formSuccess
+  let-control="control"
+  let-message="message"
+  let-validation="validation"
+>
+  <ng-container *ngIf="control.valid">
+    <div class="valid-feedback">
+      {{ message | translate }}
+    </div>
+  </ng-container>
+</ng-template>
+
+<!-- <p-dialog header="{{'Önizleme' | translate}}" [(visible)]="displayUploadedFile" position="center" [modal]="true"
+    [breakpoints]="{ '2560px': '65vw', '992px': '90vw', '576px': '99vw' }" [baseZIndex]="10000" [draggable]="false"
+    [resizable]="false">
+
+    <ng-container *ngIf="currentUploadedFile">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="symbol symbol-75px">
+                <iframe [src]="currentUploadedFile?.files?.url" iframeborder="0" width="600px" height="600px"></iframe>
+            </div>
+        </div>
+    </ng-container>
+
+
+
+    <ng-template pTemplate="footer">
+        <a (click)="displayUploadedFile=false" class="btn btn-sm btn-danger mx-1">
+            <i class="fa-solid fa-xmark fs-7"></i>
+            {{'Kapat' | translate}}
+        </a>
+    </ng-template>
+</p-dialog> -->

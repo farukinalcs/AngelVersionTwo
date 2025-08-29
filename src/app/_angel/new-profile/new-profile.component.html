@@ -108,13 +108,11 @@
                                             <div class="watermark-button">Coming Soon</div>
                                         </div>
                                         
-                                        <div class="position-relative disabled-feature-wrapper">
-                                            <button mat-menu-item>
-                                                <i class="fa-solid fa-screwdriver-wrench pe-4 fs-3 text-danger"></i>
-                                                {{"Malzeme_Envanter" | translate}}
-                                            </button>
-                                            <div class="watermark-button">Coming Soon</div>
-                                        </div>
+                                            <button mat-menu-item (click)="showInventoryDialog()">
+                                            <i class="fa-solid fa-screwdriver-wrench pe-4 fs-3 text-danger"></i>
+                                            {{"Malzeme_Envanter" | translate}}
+                                        </button>
+
                                         
                                         <button mat-menu-item (click)="displayExpense()">
                                                 <i class="fa-solid fa-file-invoice-dollar pe-4 fs-3 text-danger"></i>
@@ -127,7 +125,8 @@
                                             <i class="fa-solid fa-calendar-days pe-4 fs-3 text-danger"></i>
                                             {{"Mesai_Birimi_Değişikliği" | translate}}
                                         </button>
-
+                                        
+                                    
                                         <!-- <button mat-menu-item (click)="showAttendanceDialog()">
                                             <i class="fa-solid fa-door-open pe-4 fs-3 text-danger"></i>
                                             {{"Hareket_Düzenleme" | translate}}
@@ -439,4 +438,9 @@
 <ng-container *ngIf="displayVisitRequestForm">
     <app-visitor [display]="displayVisitRequestForm" (onHide)="visitRequestFormIsSend()">
     </app-visitor>
+</ng-container>
+
+<ng-container *ngIf="displayInventoryForm">
+    <app-inventory [display]="displayInventoryForm" (onHide)="onHideInventoryDialog()">
+    </app-inventory>
 </ng-container>

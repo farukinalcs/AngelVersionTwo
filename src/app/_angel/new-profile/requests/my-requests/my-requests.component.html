@@ -1,6 +1,6 @@
 <div class="container-xxl">
     <div class="card p-5">
-        <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="resetArr()" style="min-height: 300px;">
+        <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="resetArr($event)" style="min-height: 300px;">
             <mat-tab label="{{'Süreci_Devam_Eden_Formlar' | translate}}">
                 <app-ongoing-requests 
                     [ongoingRequests]="sureciDevamEdenFormlar"

@@ -1,11 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { DialogModule } from 'primeng/dialog';
-import { Subject, takeUntil } from 'rxjs';
+import { last, Subject, takeUntil } from 'rxjs';
 import { DemandProcessModel } from 'src/app/_angel/profile/models/demandProcess';
 import { ProfileService } from 'src/app/_angel/profile/profile.service';
 import { ResponseDetailZ } from 'src/app/modules/auth/models/response-detail-z';
@@ -18,519 +25,643 @@ import { DetailSearchComponent } from 'src/app/_angel/shared/detail-search/detai
 import { RequestProcessComponent } from 'src/app/_angel/shared/request-process/request-process.component';
 
 @Component({
-    selector: 'app-pending-requests',
-    standalone: true,
-    imports: [
-        CommonModule,
-        FormsModule,
-        TranslateModule,
-        MatTabsModule,
-        DialogModule,
-        UploadedFilesComponent,
-        DeniedRequestsComponent,
-        ApprovedRequestsComponent,
-        PendingComponent,
-        DetailSearchComponent,
-        RequestProcessComponent
-    ],
-    templateUrl: './pending-requests.component.html',
-    styleUrl: './pending-requests.component.scss'
+  selector: 'app-pending-requests',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    TranslateModule,
+    MatTabsModule,
+    DialogModule,
+    UploadedFilesComponent,
+    DeniedRequestsComponent,
+    ApprovedRequestsComponent,
+    PendingComponent,
+    DetailSearchComponent,
+    RequestProcessComponent,
+  ],
+  templateUrl: './pending-requests.component.html',
+  styleUrl: './pending-requests.component.scss',
 })
 export class PendingRequestsComponent implements OnInit, OnDestroy {
-    private ngUnsubscribe = new Subject();
-    @ViewChild('base64Iframe') base64Iframe: ElementRef | undefined;
+  private ngUnsubscribe = new Subject();
+  @ViewChild('base64Iframe') base64Iframe: ElementRef | undefined;
+  activeIndex = 0;
+  filterText: string = ''; // Arama yapmak için
+  kaynak: string; // Nav Linklerden seçilen
+  panelOpenState = false; // Cardlardan checkbox ayarı için
+  onayBeklenenFormlar: any[] = []; // *ngFor ile döndürülen arr
+  onaylananFormlar: any[] = []; // *ngFor ile döndürülen arr
+  reddedilenFormlar: any[] = []; // *ngFor ile döndürülen arr
+  demandProcess: any[] = []; // *ngFor ile döndürülen arr (Süreç İçin)
+  displayDemandProcess: boolean; // Süreç dialog aç-kapat ayarı
+  allComplete: boolean = false; // Checkbox tümünü seç veya kaldır
+  displayDetailSearch: boolean; // Detaylı arama dialog aç-kapat ayarı
+  uniqeFotoImage: any;
+  currentDate: any = new Date().toISOString().substring(0, 10);
+  checkedList: any[] = [];
+  cancelAlertRef: any; // Dialog pencersini kapatmak için
+  confirmAlertRef: any; // Dialog pencersini kapatmak için
+  checkGrid: boolean = true; // Liste görünümüne geçiş yapmak için
+  forRejectData: any;
 
-    filterText: string = ''; // Arama yapmak için
-    kaynak: string; // Nav Linklerden seçilen
-    panelOpenState = false; // Cardlardan checkbox ayarı için
-    onayBeklenenFormlar: any[] = []; // *ngFor ile döndürülen arr
-    onaylananFormlar: any[] = []; // *ngFor ile döndürülen arr
-    reddedilenFormlar: any[] = [];  // *ngFor ile döndürülen arr
-    demandProcess: any[] = []; // *ngFor ile döndürülen arr (Süreç İçin)
-    displayDemandProcess: boolean; // Süreç dialog aç-kapat ayarı
-    allComplete: boolean = false; // Checkbox tümünü seç veya kaldır
-    displayDetailSearch: boolean; // Detaylı arama dialog aç-kapat ayarı
-    uniqeFotoImage: any;
-    currentDate: any = new Date().toISOString().substring(0, 10);
-    checkedList: any[] = [];
-    cancelAlertRef: any; // Dialog pencersini kapatmak için
-    confirmAlertRef: any; // Dialog pencersini kapatmak için
-    checkGrid: boolean = true; // Liste görünümüne geçiş yapmak için 
+  menuItems = [
+    {
+      id: 'izinNavItem',
+      key: 'izin',
+      icon: 'fa-umbrella-beach',
+      label: 'İzin',
+    },
+    {
+      id: 'fazlamesaiNavItem',
+      key: 'fazlamesai',
+      icon: 'fa-business-time',
+      label: 'Fazla_Mesai',
+    },
+    {
+      id: 'yetkiNavItem',
+      key: 'sureliyetki',
+      icon: 'fa-door-open',
+      label: 'Yetki',
+    },
+    {
+      id: 'avansNavItem',
+      key: 'avans',
+      icon: 'fa-sack-dollar',
+      label: 'Avans',
+    },
+    {
+      id: 'expenseNavItem',
+      key: 'expense',
+      icon: 'fa-receipt',
+      label: 'Masraf',
+    },
+    {
+      id: 'ekipmanNavItem',
+      key: 'ekipman',
+      icon: 'fa-screwdriver-wrench',
+      label: 'Ekipman',
+    },
+  ];
+  fileTypes: any[];
+  uploadedFiles: any[];
+  displayUploadedFiles: boolean = false;
+  displayUploadedFile: boolean;
+  currentUploadedFile: any;
+  path: any;
+  base64Data: any;
+  selectedFormId: any;
+  selectedDemand: any;
+  demandTypeNameForProcess: any;
+  demandIdForProcess: any;
 
-    menuItems = [
-        { id: 'izinNavItem', key: 'izin', icon: 'fa-umbrella-beach', label: 'İzin' },
-        { id: 'fazlamesaiNavItem', key: 'fazlamesai', icon: 'fa-business-time', label: 'Fazla_Mesai' },
-        { id: 'yetkiNavItem', key: 'sureliyetki', icon: 'fa-door-open', label: 'Yetki' },
-        { id: 'avansNavItem', key: 'avans', icon: 'fa-sack-dollar', label: 'Avans' },
-        { id: 'expenseNavItem', key: 'expense', icon: 'fa-receipt', label: 'Masraf' }
-    ];
-    fileTypes: any[];
-    uploadedFiles: any[];
-    displayUploadedFiles: boolean = false;
-    displayUploadedFile: boolean;
-    currentUploadedFile: any;
-    path: any;
-    base64Data: any;
-    selectedFormId: any;
-    selectedDemand: any;
-    demandTypeNameForProcess: any;
-    demandIdForProcess: any;
+  displayCancelDemand: boolean;
+  selectedItem: any;
+  tip: any;
+  descriptionText: string;
+  displayRejectDemand: boolean = false;
 
+  constructor(
+    private profilService: ProfileService,
+    private toastrService: ToastrService,
+    private translateService: TranslateService,
+    private ref: ChangeDetectorRef
+  ) {}
 
+  ngOnInit(): void {
+    console.log(this.kaynak);
+  }
 
-    displayCancelDemand: boolean;
-    selectedItem: any;
-    tip: any;
-    descriptionText: string;
-    displayRejectDemand: boolean = false;
+  getFormValues(data: { selectedNavItem: any; formValues: any }) {
+    // let detailSearchFormValues = Object.assign({}, this.detailSearchForm.value);
 
-    constructor(
-        private profilService: ProfileService,
-        private toastrService: ToastrService,
-        private translateService: TranslateService,
-        private ref: ChangeDetectorRef
-    ) { }
-
-    ngOnInit(): void {
+    if (data.selectedNavItem == 'izin') {
+      data.formValues.fsecimm = '1';
+    } else if (data.selectedNavItem == 'fazlamesai') {
+      data.formValues.fsecimm = '2';
+    } else {
+      data.formValues.ftip = '0';
     }
+    console.log('Detay Form Değerleri  :', data.formValues);
+    this.displayDetailSearch = false;
 
-    getFormValues(data: { selectedNavItem: any, formValues: any }) {
-        // let detailSearchFormValues = Object.assign({}, this.detailSearchForm.value);
+    for (let key in data.formValues) {
+      if (
+        data.formValues.hasOwnProperty(key) &&
+        data.formValues[key] === null
+      ) {
+        if (
+          key === 'firma' ||
+          key === 'bolum' ||
+          key === 'pozisyon' ||
+          key === 'gorev' ||
+          key === 'yaka' ||
+          key === 'direktorluk' ||
+          key === 'fsecimm' ||
+          key === 'ftip'
+        ) {
+          data.formValues[key] = '0';
+        } else if (key === 'tarih' || key === 'tarihbit') {
+          let tarih = new Date();
+          tarih.setMonth(tarih.getMonth());
+          let formattedDate = tarih.toISOString().slice(0, 10);
 
-
-        if (data.selectedNavItem == 'izin') {
-            data.formValues.fsecimm = '1'
-        } else if (data.selectedNavItem == 'fazlamesai') {
-            data.formValues.fsecimm = '2'
-
+          data.formValues[key] = formattedDate;
         } else {
-            data.formValues.ftip = '0'
-
+          data.formValues[key] = '';
         }
-        console.log("Detay Form Değerleri  :", data.formValues);
-        this.displayDetailSearch = false;
-
-        for (let key in data.formValues) {
-            if (data.formValues.hasOwnProperty(key) && data.formValues[key] === null) {
-                if (key === 'firma' || key === 'bolum' || key === 'pozisyon' || key === 'gorev' || key === 'yaka' || key === 'direktorluk' || key === 'fsecimm' || key === 'ftip') {
-                    data.formValues[key] = '0';
-                } else if (key === 'tarih' || key === 'tarihbit') {
-
-                    let tarih = new Date();
-                    tarih.setMonth(tarih.getMonth());
-                    let formattedDate = tarih.toISOString().slice(0, 10);
-
-                    data.formValues[key] = formattedDate;
-
-                } else {
-                    data.formValues[key] = '';
-                }
-            }
-        }
-
-        this.profilService.postDetailSearch(data.selectedNavItem, data.formValues).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
-            const data = response[0].x;
-            const message = response[0].z;
-
-            console.log("Detay Filtreleme : ", data);
-
-            // if (message.islemsonuc == 1) {
-            this.onayBeklenenFormlar = [];
-            this.reddedilenFormlar = [];
-            this.onaylananFormlar = [];
-
-
-            data.forEach((item: any) => {
-                item.completed = false;
-                if (item.sectim == 0) {
-                    this.onayBeklenenFormlar.push(item);
-
-                } else if (item.sectim == 9) {
-                    this.reddedilenFormlar.push(item);
-
-                } else if (item.sectim == 1) {
-                    this.onaylananFormlar.push(item);
-
-                }
-            });
-
-            this.ref.detectChanges();
-        });
+      }
     }
 
-    getDemanded(kaynak: any) {
-        this.profilService.getDemanded(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
-            this.kaynak = kaynak;
+    this.profilService
+      .postDetailSearch(data.selectedNavItem, data.formValues)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        const data = response[0].x;
+        const message = response[0].z;
 
-            this.onayBeklenenFormlar = [];
-            this.reddedilenFormlar = [];
-            this.onaylananFormlar = [];
+        console.log('Detay Filtreleme : ', data);
 
-            let data = response[0].x;
-            let message = response[0].z;
-
-            if (message.islemsonuc != 1) {
-                return;
-            }
-
-            console.log("Talep Edilenler :", data);
-
-            let bosBelgeSayisi: any = 0;
-            data.forEach((item: any) => {
-                item.completed = false;
-
-                if (item?.sectim == 0) {
-                    this.onayBeklenenFormlar.push(item);
-
-                } else if (item?.sectim == 9) {
-                    this.reddedilenFormlar.push(item);
-
-                } else if (item?.sectim == 1) {
-                    this.onaylananFormlar.push(item);
-                }
-
-                if (item.atananlar) {
-                    item.atananlar = JSON.parse(item?.atananlar);
-
-                    item?.atananlar.forEach((belge: any) => {
-                        if (belge.link == 'boş') {
-                            bosBelgeSayisi++
-                        }
-                    });
-
-                    item.bosBelgeSayisi = bosBelgeSayisi;
-                    bosBelgeSayisi = 0;
-                }
-            });
-
-
-            this.uniqeFotoImage = this.getUniqeValue(this.onayBeklenenFormlar, 'fotoimage')
-            console.log("Talep Edilenler YENİİ:", data);
-
-            this.ref.detectChanges();
-        });
-    }
-
-    getUniqeValue(data: any[], key: string): any[] {
-        const uniqueOptions = new Set();
-        data.forEach(item => uniqueOptions.add(item));
-        return Array.from(uniqueOptions);
-    }
-
-    resetArr() {
-        this.kaynak = '';
-        this.allComplete = false;
+        // if (message.islemsonuc == 1) {
         this.onayBeklenenFormlar = [];
-        this.onaylananFormlar = [];
         this.reddedilenFormlar = [];
+        this.onaylananFormlar = [];
 
-        const classList = ['active'];
-
-        for (const menuItem of this.menuItems) {
-            const bekleyenNavItem = document.getElementById('bekleyen-' + menuItem.id);
-            const onaylananNavItem = document.getElementById('onaylanan-' + menuItem.id);
-            const reddedilenNavItem = document.getElementById('reddedilen-' + menuItem.id);
-
-            if (bekleyenNavItem) {
-                bekleyenNavItem.classList.remove(...classList);
-            }
-            if (onaylananNavItem) {
-                onaylananNavItem.classList.remove(...classList);
-            }
-            if (reddedilenNavItem) {
-                reddedilenNavItem.classList.remove(...classList);
-            }
-        }
-    }
-
-    getDemandProcess(formId: any, formTip: any) {
-        if (formTip == 'İzin') {
-            formTip = 'izin';
-        } else if (formTip == 'Fazla Mesai') {
-            formTip = 'fazlamesai'
-        }
-
-        this.profilService.getDemandProcess(formId, formTip).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<DemandProcessModel, ResponseDetailZ>[]) => {
-            let data = response[0].x;
-            let message = response[0].z;
-
-            console.log("Talep Süreci : ", data);
-            if (message.islemsonuc == 1) {
-                this.demandProcess = data;
-
-            } else {
-                this.toastrService.warning(
-                    this.translateService.instant("Gösterilecek_Süreç_Bulunamadı"),
-                    this.translateService.instant("Uyarı")
-                );
-            }
-
-            this.ref.detectChanges();
-        })
-    }
-
-    showDemandProcessDialog2(formId: any, formTip: any) { // Talepedilenler Onay Bekleyen Formlar İçin Ayrı Bir fonskiyon
-        this.displayDemandProcess = true;
-        // this.getDemandProcess(formId, formTip);
-        this.demandIdForProcess = formId;
-        this.demandTypeNameForProcess = formTip;
-    }
-
-    showDemandProcessDialog(data: { demandId: any, demandTypeName: any }) {
-        this.displayDemandProcess = true;
-        this.demandIdForProcess = data.demandId;
-        this.demandTypeNameForProcess = data.demandTypeName;
-    }
-
-    showDetailSearchDialog(currentMenu: any) {
-        this.displayDetailSearch = true;
-        this.kaynak = currentMenu;
-    }
-
-
-    isCardOpen(item: any) {
-        item.panelOpenState = true;
-        // this.panelOpenState = true
-        console.log("Kard Açıldı : ");
-
-    }
-
-    showUploadedFiles(selectedDemand: any) {
-        this.displayUploadedFiles = true;
-        this.selectedDemand = selectedDemand;
-    }
-
-    onHideUploadedFiles() {
-        this.displayUploadedFiles = false;
-        this.selectedDemand = undefined;
-    }
-
-    setSelectedDemandEmptyFile(selectedNavItem: any) {
-        this.getDemanded(selectedNavItem);
-    }
-
-
-
-
-
-
-    showCancelDemandDialog(data: { item: any, tip: any }) {
-        // this.cancelAlertRef.close();
-        if (data.tip == 2) {
-            let checkedList = this.onayBeklenenFormlar.filter((c: any) => {
-                return c.completed == true;
-            });
-            if (checkedList.length > 0) {
-                this.cancelAlertRef.close();
-                this.displayCancelDemand = true;
-                this.selectedItem = data.item;
-                this.tip = data.tip;
-
-            } else {
-                this.toastrService.error(
-                    this.translateService.instant("İşaretleme_Yapmalısınız"),
-                    this.translateService.instant("Hata")
-                );
-            }
-        } else {
-            this.displayCancelDemand = true;
-            this.selectedItem = data.item;
-            this.tip = data.tip;
-        }
+        data.forEach((item: any) => {
+          item.completed = false;
+          if (item.sectim == 0) {
+            this.onayBeklenenFormlar.push(item);
+          } else if (item.sectim == 9) {
+            this.reddedilenFormlar.push(item);
+          } else if (item.sectim == 1) {
+            this.onaylananFormlar.push(item);
+          }
+        });
 
         this.ref.detectChanges();
+      });
+  }
 
+  getDemanded(kaynak: any) {
+    if (kaynak == 'ekipman') {
+      this.kaynak = kaynak;
+      this.getInventoryForStat();
+    } else {
+      this.profilService
+        .getDemanded(kaynak)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+          this.kaynak = kaynak;
+
+          this.onayBeklenenFormlar = [];
+          this.reddedilenFormlar = [];
+          this.onaylananFormlar = [];
+
+          let data = response[0].x;
+          let message = response[0].z;
+
+          if (message.islemsonuc != 1) {
+            return;
+          }
+
+          console.log('Talep Edilenler :', data);
+
+          let bosBelgeSayisi: any = 0;
+          data.forEach((item: any) => {
+            item.completed = false;
+
+            if (item?.sectim == 0) {
+              this.onayBeklenenFormlar.push(item);
+            } else if (item?.sectim == 9) {
+              this.reddedilenFormlar.push(item);
+            } else if (item?.sectim == 1) {
+              this.onaylananFormlar.push(item);
+            }
+
+            if (item.atananlar) {
+              item.atananlar = JSON.parse(item?.atananlar);
+
+              item?.atananlar.forEach((belge: any) => {
+                if (belge.link == 'boş') {
+                  bosBelgeSayisi++;
+                }
+              });
+
+              item.bosBelgeSayisi = bosBelgeSayisi;
+              bosBelgeSayisi = 0;
+            }
+          });
+
+          this.uniqeFotoImage = this.getUniqeValue(
+            this.onayBeklenenFormlar,
+            'fotoimage'
+          );
+          console.log('Talep Edilenler YENİİ:', data);
+
+          this.ref.detectChanges();
+        });
+    }
+  }
+
+  getUniqeValue(data: any[], key: string): any[] {
+    const uniqueOptions = new Set();
+    data.forEach((item) => uniqueOptions.add(item));
+    return Array.from(uniqueOptions);
+  }
+
+  resetArr(e: MatTabChangeEvent) {
+    this.activeIndex = e.index;
+    this.kaynak = '';
+    this.allComplete = false;
+    this.onayBeklenenFormlar = [];
+    this.onaylananFormlar = [];
+    this.reddedilenFormlar = [];
+
+    const classList = ['active'];
+    for (const menuItem of this.menuItems) {
+      const bekleyenNavItem = document.getElementById(
+        'bekleyen-' + menuItem.id
+      );
+      const onaylananNavItem = document.getElementById(
+        'onaylanan-' + menuItem.id
+      );
+      const reddedilenNavItem = document.getElementById(
+        'reddedilen-' + menuItem.id
+      );
+
+      if (bekleyenNavItem) {
+        bekleyenNavItem.classList.remove(...classList);
+      }
+      if (onaylananNavItem) {
+        onaylananNavItem.classList.remove(...classList);
+      }
+      if (reddedilenNavItem) {
+        reddedilenNavItem.classList.remove(...classList);
+      }
+    }
+  }
+
+  getDemandProcess(formId: any, formTip: any) {
+    if (formTip == 'İzin') {
+      formTip = 'izin';
+    } else if (formTip == 'Fazla Mesai') {
+      formTip = 'fazlamesai';
+    } else if (formTip == 'Ekipman') {
+      formTip = 'ekipman';
     }
 
-    showRejectDemandDialog(data: { item: any, tip: any }) {
+    this.profilService
+      .getDemandProcess(formId, formTip)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (response: ResponseModel<DemandProcessModel, ResponseDetailZ>[]) => {
+          let data = response[0].x;
+          let message = response[0].z;
+
+          console.log('Talep Süreci : ', data);
+          if (message.islemsonuc == 1) {
+            this.demandProcess = data;
+          } else {
+            this.toastrService.warning(
+              this.translateService.instant('Gösterilecek_Süreç_Bulunamadı'),
+              this.translateService.instant('Uyarı')
+            );
+          }
+
+          this.ref.detectChanges();
+        }
+      );
+  }
+
+  showDemandProcessDialog2(formId: any, formTip: any) {
+    // Talepedilenler Onay Bekleyen Formlar İçin Ayrı Bir fonskiyon
+    this.displayDemandProcess = true;
+    // this.getDemandProcess(formId, formTip);
+    this.demandIdForProcess = formId;
+    this.demandTypeNameForProcess = formTip;
+  }
+
+  showDemandProcessDialog(data: { demandId: any; demandTypeName: any }) {
+    this.displayDemandProcess = true;
+    this.demandIdForProcess = data.demandId;
+    this.demandTypeNameForProcess = data.demandTypeName;
+  }
+
+  showDetailSearchDialog(currentMenu: any) {
+    this.displayDetailSearch = true;
+    this.kaynak = currentMenu;
+  }
+
+  isCardOpen(item: any) {
+    item.panelOpenState = true;
+    // this.panelOpenState = true
+    console.log('Kard Açıldı : ');
+  }
+
+  showUploadedFiles(selectedDemand: any) {
+    this.displayUploadedFiles = true;
+    this.selectedDemand = selectedDemand;
+  }
+
+  onHideUploadedFiles() {
+    this.displayUploadedFiles = false;
+    this.selectedDemand = undefined;
+  }
+
+  setSelectedDemandEmptyFile(selectedNavItem: any) {
+    this.getDemanded(selectedNavItem);
+  }
+
+  showCancelDemandDialog(data: { item: any; tip: any }) {
+    // this.cancelAlertRef.close();
+    if (data.tip == 2) {
+      let checkedList = this.onayBeklenenFormlar.filter((c: any) => {
+        return c.completed == true;
+      });
+      if (checkedList.length > 0) {
+        this.cancelAlertRef.close();
+        this.displayCancelDemand = true;
+        this.selectedItem = data.item;
+        this.tip = data.tip;
+      } else {
+        this.toastrService.error(
+          this.translateService.instant('İşaretleme_Yapmalısınız'),
+          this.translateService.instant('Hata')
+        );
+      }
+    } else {
+      this.displayCancelDemand = true;
+      this.selectedItem = data.item;
+      this.tip = data.tip;
+    }
+
+    this.ref.detectChanges();
+  }
+
+  showRejectDemandDialog(data: { item: any; tip: any }) {
+    console.log(data);
+    this.forRejectData = data;
+    // this.cancelAlertRef.close();
+    if (data.tip == 2) {
+      let checkedList = this.onayBeklenenFormlar.filter((c: any) => {
+        return c.completed == true;
+      });
+      if (checkedList.length > 0) {
         // this.cancelAlertRef.close();
-        if (data.tip == 2) {
-            let checkedList = this.onayBeklenenFormlar.filter((c: any) => {
-                return c.completed == true;
-            });
-            if (checkedList.length > 0) {
-                // this.cancelAlertRef.close();
-                this.displayRejectDemand = true;
-                this.selectedItem = data.item;
-                this.tip = data.tip;
-
-            } else {
-                this.toastrService.error(
-                    this.translateService.instant("İşaretleme_Yapmalısınız"),
-                    this.translateService.instant("Hata")
-                );
-            }
-        } else {
-            this.displayRejectDemand = true;
-            this.selectedItem = data.item;
-            this.tip = data.tip;
-        }
-
+        this.displayRejectDemand = true;
+        this.selectedItem = data.item;
+        this.tip = data.tip;
+      } else {
+        this.toastrService.error(
+          this.translateService.instant('İşaretleme_Yapmalısınız'),
+          this.translateService.instant('Hata')
+        );
+      }
+    } else {
+      this.displayRejectDemand = true;
+      this.selectedItem = data.item;
+      this.tip = data.tip;
     }
+  }
 
-    isSingleOrMultiple(aktifMenu: string, description: any) {
-        if (this.tip == 1) {
-            this.cancelDemandSingle(this.selectedItem.Id, this.selectedItem.tipad, description, aktifMenu);
-        } else if (this.tip == 2) {
-            this.cancelDemandMultiple(aktifMenu, description);
-        }
+  isSingleOrMultiple(aktifMenu: string, description: any) {
+    if (this.tip == 1) {
+      this.cancelDemandSingle(
+        this.selectedItem.Id,
+        this.selectedItem.tipad,
+        description,
+        aktifMenu
+      );
+    } else if (this.tip == 2) {
+      this.cancelDemandMultiple(aktifMenu, description);
     }
+  }
 
-    isSingleOrMultipleReject(aktifMenu: string, description: any) {
-        if (this.tip == 1) {
-            this.rejectDemandSingle(this.selectedItem.Id, this.selectedItem.tipad, description, aktifMenu);
-        } else if (this.tip == 2) {
-            this.rejectDemandMultiple(aktifMenu, description);
-        }
+  isSingleOrMultipleReject(aktifMenu: string, description: any) {
+    if (this.tip == 1) {
+      this.rejectDemandSingle(
+        this.selectedItem.Id,
+        this.selectedItem.tipad,
+        description,
+        aktifMenu
+      );
+    } else if (this.tip == 2) {
+      this.rejectDemandMultiple(aktifMenu, description);
     }
+  }
 
-    cancelDemandMultiple(aktifMenu: any, description: string) {
-        this.checkedList = this.onayBeklenenFormlar.filter((c: any) => {
-            return c.completed == true;
-        });
-        console.log("SELECTED :", this.checkedList);
+  cancelDemandMultiple(aktifMenu: any, description: string) {
+    this.checkedList = this.onayBeklenenFormlar.filter((c: any) => {
+      return c.completed == true;
+    });
+    console.log('SELECTED :', this.checkedList);
 
+    if (this.checkedList.length > 0) {
+      this.profilService
+        .cancelMyDemandsMultiple(this.checkedList, description)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((response: any) => {
+          console.log('Çoklu İptal :', response);
+          this.getDemanded(aktifMenu);
+          this.toastrService.success(
+            this.translateService.instant('Talep_İptal_Edildi'),
+            this.translateService.instant('Başarılı')
+          );
 
-        if (this.checkedList.length > 0) {
-            this.profilService.cancelMyDemandsMultiple(this.checkedList, description).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
-                console.log("Çoklu İptal :", response);
-                this.getDemanded(aktifMenu);
-                this.toastrService.success(
-                    this.translateService.instant("Talep_İptal_Edildi"),
-                    this.translateService.instant("Başarılı")
-                );
+          this.allComplete = false;
 
-
-                this.allComplete = false;
-
-                this.ref.detectChanges();
-            });
-
-            this.descriptionText = '';
-            this.displayCancelDemand = false;
-        }
-
-    }
-
-    cancelDemandSingle(formid: any, kaynak: any, aciklama: any, aktifMenu: any) {
-        if (kaynak == 'İzin') {
-            kaynak = 'izin';
-        } else if (kaynak == 'Fazla Mesai') {
-            kaynak = 'fm'
-        } else if (kaynak == 'Yetki') {
-            kaynak = 'sureliyetki'
-        } else if (kaynak == 'Avans') {
-            kaynak = 'avans'
-        }
-
-        this.profilService.cancelMyDemands(formid, kaynak, aciklama).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
-            if (response[0].x[0].islemsonuc) {
-                this.getDemanded(kaynak);
-                this.toastrService.success(
-                    this.translateService.instant("Talep_İptal_Edildi"),
-                    this.translateService.instant("Başarılı")
-                );
-
-            }
-            console.log("Talep İptal :", response);
-
-
-            this.ref.detectChanges();
+          this.ref.detectChanges();
         });
 
+      this.descriptionText = '';
+      this.displayCancelDemand = false;
+    }
+  }
 
-        this.descriptionText = '';
-        this.displayCancelDemand = false;
-
+  cancelDemandSingle(formid: any, kaynak: any, aciklama: any, aktifMenu: any) {
+    if (kaynak == 'İzin') {
+      kaynak = 'izin';
+    } else if (kaynak == 'Fazla Mesai') {
+      kaynak = 'fm';
+    } else if (kaynak == 'Yetki') {
+      kaynak = 'sureliyetki';
+    } else if (kaynak == 'Avans') {
+      kaynak = 'avans';
+    } else if (kaynak == 'Ekipman') {
+      kaynak = 'ekipman';
     }
 
-    rejectDemandMultiple(aktifMenu: any, description: string) {
-        this.checkedList = this.onayBeklenenFormlar.filter((c: any) => {
-            return c.completed == true;
-        });
-        console.log("SELECTED :", this.checkedList);
-
-        var sp: any[] = [];
-
-        this.checkedList.forEach((item) => {
-            if (item.tipad == 'İzin') {
-                item.tipad = 'izin';
-            } else if (item.tipad == 'Fazla Mesai') {
-                item.tipad = 'fm';
-            } else if (item.tipad == 'Yetki') {
-                item.tipad = 'sureliyetki';
-            } else if (item.tipad == 'Avans') {
-                item.tipad = 'avans';
-            }
-
-            sp.push({
-                mkodu: 'yek038',
-                formid: item.Id.toString(),
-                kaynak: item.tipad,
-                aciklama: description
-            })
-        });
-
-        if (this.checkedList.length > 0) {
-            this.profilService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
-                console.log("Çoklu Reddet :", response);
-                this.getDemanded(aktifMenu);
-                this.toastrService.success(
-                    this.translateService.instant("Talep_Reddedildi"),
-                    this.translateService.instant("Başarılı")
-                );
-
-
-                this.allComplete = false;
-            });
-
-            this.descriptionText = '';
-            this.displayRejectDemand = false;
+    this.profilService
+      .cancelMyDemands(formid, kaynak, aciklama)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        if (response[0].x[0].islemsonuc) {
+          this.getDemanded(kaynak);
+          this.toastrService.success(
+            this.translateService.instant('Talep_İptal_Edildi'),
+            this.translateService.instant('Başarılı')
+          );
         }
+        console.log('Talep İptal :', response);
 
-    }
+        this.ref.detectChanges();
+      });
 
-    rejectDemandSingle(formid: any, kaynak: any, aciklama: any, aktifMenu: any) {
-        if (kaynak == 'İzin') {
-            kaynak = 'izin';
-        } else if (kaynak == 'Fazla Mesai') {
-            kaynak = 'fm'
-        } else if (kaynak == 'Yetki') {
-            kaynak = 'sureliyetki'
-        } else if (kaynak == 'Avans') {
-            kaynak = 'avans'
-        }
+    this.descriptionText = '';
+    this.displayCancelDemand = false;
+  }
 
-        var sp: any[] = [{
-            mkodu: 'yek345',
-            formid: formid.toString(),
-            kaynak: kaynak,
-            aciklama: aciklama
-        }];
+  rejectDemandMultiple(aktifMenu: any, description: string) {
+    this.checkedList = this.onayBeklenenFormlar.filter(
+      (c: any) => c.completed == true
+    );
+    console.log('SELECTED :', this.checkedList);
 
+    const sp: any[] = [];
 
-        this.profilService.requestMethod(sp).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: any) => {
-            if (response[0].x[0].islemsonuc) {
-                this.getDemanded(kaynak);
-                this.toastrService.success(
-                    this.translateService.instant("Talep_Reddedildi"),
-                    this.translateService.instant("Başarılı")
-                );
+    this.checkedList.forEach((item) => {
+      let kaynak: string;
 
-            }
-            console.log("Talep Reddet :", response);
+      if (item.zimmetid) {
+        kaynak = 'zimmet';
+      } else if (item.tipad === 'İzin') {
+        kaynak = 'izin';
+      } else if (item.tipad === 'Fazla Mesai') {
+        kaynak = 'fm';
+      } else if (item.tipad === 'Yetki') {
+        kaynak = 'sureliyetki';
+      } else if (item.tipad === 'Avans') {
+        kaynak = 'avans';
+      } else {
+        kaynak = item.tipad; // eşleşmeyen durumlarda olduğu gibi gönder
+      }
+
+      sp.push({
+        mkodu: 'yek038',
+        formid: (item.Id ?? item.id)?.toString(),
+        kaynak, // buraya artık yukarıdaki doğru kaynak gelecek
+        aciklama: description,
+      });
+    });
+
+    console.log(sp);
+
+    if (this.checkedList.length > 0) {
+      this.profilService
+        .requestMethod(sp)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((response: any) => {
+          console.log('Çoklu Reddet :', response);
+          this.getDemanded(aktifMenu);
+          this.toastrService.success(
+            this.translateService.instant('Talep_Reddedildi'),
+            this.translateService.instant('Başarılı')
+          );
+
+          this.allComplete = false;
         });
 
-
-        this.descriptionText = '';
-        this.displayRejectDemand = false;
-
+      this.descriptionText = '';
+      this.displayRejectDemand = false;
     }
+  }
 
-
-    ngOnDestroy(): void {
-        this.ngUnsubscribe.next(true);
-        this.ngUnsubscribe.complete();
+  rejectDemandSingle(formid: any, kaynak: any, aciklama: any, aktifMenu: any) {
+    var lastSource;
+    if (kaynak == 'İzin') {
+      kaynak = 'izin';
+    } else if (kaynak == 'Fazla Mesai') {
+      kaynak = 'fm';
+    } else if (kaynak == 'Yetki') {
+      kaynak = 'sureliyetki';
+    } else if (kaynak == 'Avans') {
+      kaynak = 'avans';
+    } else if (kaynak == 'Ekipman') {
+      kaynak = 'ekipman';
+    } else if (this.kaynak == 'ekipman') {
+      kaynak = 'zimmet';
     }
+    const forRejectData = this.forRejectData;
 
+    var sp: any[] = [
+      {
+        mkodu: 'yek345',
+        formid: (formid ?? forRejectData?.item.id)?.toString(),
+        kaynak: kaynak,
+        aciklama: aciklama,
+      },
+    ];
+    console.log(sp);
+    this.profilService
+      .requestMethod(sp)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: any) => {
+        this.getDemanded(this.kaynak);
+        this.toastrService.success(
+          this.translateService.instant('Talep_Reddedildi'),
+          this.translateService.instant('Başarılı')
+        );
+
+        console.log('Talep Reddet :', response);
+      });
+
+    this.descriptionText = '';
+    this.displayRejectDemand = false;
+  }
+
+  getInventoryForStat() {
+    var durum: any;
+    if (this.activeIndex == 0) {
+      durum = 0;
+    } else if (this.activeIndex == 1) {
+      durum = 1;
+    } else if (this.activeIndex == 2) {
+      durum = -1;
+    }
+    var sp: any[] = [
+      {
+        mkodu: 'yek392',
+        durum: String(durum),
+      },
+    ];
+
+    this.profilService
+      .requestMethod(sp)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (response: any) => {
+          const data = response[0].x;
+          const message = response[0].z;
+
+          if (message.islemsonuc == -1) {
+            return;
+          }
+
+          if (durum == 0) {
+            this.onayBeklenenFormlar = Array.isArray(data) ? [...data] : [];
+            console.log(
+              'onayBeklenenFormlar',
+              this.onayBeklenenFormlar.length,
+              this.onayBeklenenFormlar
+            );
+          } else if (durum == 1) {
+            this.onaylananFormlar = Array.isArray(data) ? [...data] : [];
+          } else if (durum == -1) {
+            this.reddedilenFormlar = Array.isArray(data) ? [...data] : [];
+            console.log(this.reddedilenFormlar);
+          }
+        },
+        (err) => {
+          this.toastrService.error(
+            this.translateService.instant('Beklenmeyen_Bir_Hata_Oluştu'),
+            this.translateService.instant('Hata')
+          );
+        }
+      );
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
+  }
 }

@@ -44,6 +44,8 @@ export class RequestProcessComponent implements OnInit, OnDestroy {
     }
 
     getDemandProcess(formId: any, formTip: any) {
+        console.log(formId,formTip);
+        
         if (formTip == 'İzin') {
             formTip = 'izin';
         } else if (formTip == 'Fazla Mesai') {

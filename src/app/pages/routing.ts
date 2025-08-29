@@ -5,6 +5,7 @@ import { overtimeRoutes } from '../_angel/overtime/overtime.routes';
 import { leaveRoutes } from '../_angel/leave/leave.routes';
 import { shiftRoutes } from '../_angel/shift/shift.routes';
 import { userManagementRoutes } from '../_angel/user-management/user-management.routes';
+import { inventoryRoutes } from '../_angel/inventory/inventory.routes';
 
 const Routing: Routes = [
     // {
@@ -69,6 +70,11 @@ const Routing: Routes = [
     {
         path: 'visitor',
         children: visitorRoutes,
+        data: { layout: 'light-sidebar' },
+    },
+        {
+        path: 'inventory',
+        children: inventoryRoutes,
         data: { layout: 'light-sidebar' },
     },
     {

@@ -1,0 +1,252 @@
+<div class="container-fluid p-2">
+  <h2 class="text-center">Talepler</h2>
+<div class="row g-4 px-3">
+  <div class="col-12 col-lg-6 my-div">
+    <div class="card h-100">
+      <div class="card-body">
+        <h4 class="card-title mb-3">Sarf Talepleri</h4>
+        <div class="d-flex flex-column gap-3 h-full ">
+    <ng-container *ngIf="InventoryListForSarf.length > 0">
+      <div
+        *ngFor="let request of InventoryListForSarf; let i = index"
+        class="event-card d-flex gap-3 p-3 rounded border transition position-relative"
+      >
+        <div
+          class="rounded-circle d-flex align-items-center justify-content-center shadow-sm text-white fw-bold"
+        >
+          <!-- <img
+            src="{{ imageUrl }}?sicilid={{ transit.sicilid }}"
+            alt="{{ transit.adsoyad }}"
+            class="rounded-circle"
+            width="40"
+            height="40"
+          /> -->
+           <img
+            src="https://yekgateway.mecloud.com.tr/api/Image?sicilid=619"
+            alt="{{ request.adsoyad }}"
+            class="rounded-circle"
+            width="40"
+            height="40"
+          />
+        </div>
+
+        <div class="flex-grow-1 min-w-0">
+          <div class="d-flex justify-content-between">
+            <div class="text-truncate">
+              <h6 class="mb-0 fw-semibold">
+                {{ request.adsoyad }}
+              </h6>
+              <p class="small text-muted mb-0">#{{ request.sicilno }}</p>
+            </div>
+            <div class="d-flex g-4" style="display:flex;gap:4px">
+            <button type="button" class="btn btn-success btn-sm" (click)="openDialog('i',request)">Onay</button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="openDialog('s',request)">İptal</button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center small mt-2">
+            <!-- Sol taraf -->
+            <div class="d-flex align-items-center gap-3 text-muted">
+              <div class="d-flex align-items-center gap-1">
+                <i class="fa-solid fa-comment"></i>
+                <span>{{ request.aciklama }}</span>
+              </div>
+              <div class="d-flex align-items-center gap-1">
+                <i class="fa-solid fa-toolbox"></i>
+                <span>{{ request.zimmetad }}</span>
+              </div>
+            </div>
+          
+            <!-- Sağ taraf -->
+            <div class="d-flex align-items-center gap-1 text-muted">
+              <i class="bi bi-clock"></i>
+              <span>{{ request.taleptarihi | date : "MMM d, y, HH:mm:ss" }}</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div
+          class="indicator-line position-absolute top-0 bottom-0 start-0 rounded-start"
+        ></div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="InventoryListForSarf.length == 0">
+      <div class="row pt-10">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+          <div class="row">
+            <app-data-not-found [imgWidth]="'70%'"></app-data-not-found>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6 my-div2">
+    <div class="card h-100">
+      <div class="card-body">
+        <h4 class="card-title mb-3">Ekipman Talepleri</h4>
+        <div class="d-flex flex-column gap-3 h-full ">
+    <ng-container *ngIf="InventoryListForZimmet.length > 0">
+      <div
+        *ngFor="let request of InventoryListForZimmet; let i = index"
+        class="event-card d-flex gap-3 p-3 rounded border transition position-relative "
+      >
+        <div
+          class="rounded-circle d-flex align-items-center justify-content-center shadow-sm text-white fw-bold"
+        >
+          <!-- <img
+            src="{{ imageUrl }}?sicilid={{ transit.sicilid }}"
+            alt="{{ transit.adsoyad }}"
+            class="rounded-circle"
+            width="40"
+            height="40"
+          /> -->
+           <img
+            src="https://yekgateway.mecloud.com.tr/api/Image?sicilid=619"
+            alt="{{ request.adsoyad }}"
+            class="rounded-circle"
+            width="40"
+            height="40"
+          />
+        </div>
+
+        <div class="flex-grow-1 min-w-0">
+          <div class="d-flex justify-content-between">
+            <div class="text-truncate">
+              <h6 class="mb-0 fw-semibold">
+                {{ request.adsoyad }}
+              </h6>
+              <p class="small text-muted mb-0">#{{ request.sicilno }}</p>
+            </div>
+            <div class="d-flex g-4" style="display:flex;gap:4px">
+            <button type="button" class="btn btn-success btn-sm" (click)="openDialog('i',request)">Onay</button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="openDialog('s',request)">İptal</button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center small mt-2">
+            <!-- Sol taraf -->
+            <div class="d-flex align-items-center gap-3 text-muted">
+              <div class="d-flex align-items-center gap-1">
+                <i class="fa-solid fa-comment"></i>
+                <span>{{ request.aciklama }}</span>
+              </div>
+              <div class="d-flex align-items-center gap-1">
+                <i class="fa-solid fa-toolbox"></i>
+                <span>{{ request.zimmetad }}</span>
+              </div>
+            </div>
+          
+            <!-- Sağ taraf -->
+            <div class="d-flex align-items-center gap-1 text-muted">
+              <i class="bi bi-clock"></i>
+              <span>{{ request.taleptarihi | date : "MMM d, y, HH:mm:ss" }}</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div
+          class="indicator-line position-absolute top-0 bottom-0 start-0 rounded-start"
+        ></div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="InventoryListForZimmet.length == 0">
+      <div class="row pt-10">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+          <div class="row">
+            <app-data-not-found [imgWidth]="'70%'"></app-data-not-found>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<p-dialog
+  [header]="header+' '+'Formu'"
+  [(visible)]="display"
+  [position]="'top'"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="-40"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="closeAction()"
+>
+
+<!-- ÖZET KARTI -->
+<div *ngIf="itemSetForDialog" class="border rounded p-3 mb-4 bg-light">
+  <h4 class="text-center" style="color:#ed1b24">Talep Bilgileri</h4>
+  <div class="d-flex flex-column gap-2">
+    <div class="d-flex align-items-center gap-2 text-muted">
+      <i class="fa-solid fa-user"></i>
+      <strong>Ad Soyad:</strong>
+      <span class="text-dark text-truncate">{{ itemSetForDialog?.adsoyad || '-' }}</span>
+    </div>
+
+    <div class="d-flex align-items-center gap-2 text-muted">
+      <i class="fa-solid fa-comment"></i>
+      <strong>Açıklama:</strong>
+      <span class="text-dark text-truncate">{{ itemSetForDialog?.aciklama || '-' }}</span>
+    </div>
+
+    <div class="d-flex align-items-center gap-2 text-muted">
+      <i class="fa-solid fa-toolbox"></i>
+      <strong>Zimmet Adı:</strong>
+      <span class="text-dark text-truncate">{{ itemSetForDialog?.zimmetad || '-' }}</span>
+    </div>
+  </div>
+</div>
+
+  <div class="fv-row my-5 fv-plugins-icon-container">
+    <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+      <span class="required">{{ "Açıklama" }}</span>
+    </label>
+
+    <input
+      type="text"
+      class="form-control form-control-sm form-control-solid"
+        [(ngModel)]="desc"
+    />
+  </div>
+
+    <div class="fv-row my-5 fv-plugins-icon-container" *ngIf="type == 1 && header == 'Onayla'">
+    <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+      <span class="required">{{ "Seri No" }}</span>
+    </label>
+
+    <input
+      type="text"
+      class="form-control form-control-sm form-control-solid"
+        [(ngModel)]="seriaNo"
+    />
+  </div>
+
+  <ng-template pTemplate="footer">
+    <a class="btn btn-sm btn-danger mx-1" (click)="closeAction()">
+      <i class="fa-solid fa-xmark fs-7"></i>
+      {{ "İptal"}}
+    </a>
+
+    <button
+      type="button"
+      class="btn btn-sm btn-danger mx-1"
+      (click)="addAndCancel()" 
+      [disabled]="!desc || (type == 1 && header == 'Onayla' && !seriaNo)"
+    >
+      <i class="fa-solid fa-floppy-disk fs-7"></i>
+      {{ "Gönder"}}
+    </button>
+  </ng-template>
+</p-dialog>

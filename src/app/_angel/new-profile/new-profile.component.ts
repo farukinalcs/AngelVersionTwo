@@ -26,29 +26,31 @@ import { VisitorComponent } from './request-forms/visitor/visitor.component';
 import { HasPermissionAnyDirective } from 'src/app/core/permission/has-permission-any.directive';
 import { HasPermissionDirective } from 'src/app/core/permission/has-permission.directive';
 import { LayoutModule } from 'src/app/_metronic/layout';
+import { InventoryComponent } from './request-forms/inventory/inventory.component';
 
 @Component({
     selector: 'app-new-profile',
     standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        RouterModule,
-        MatProgressSpinnerModule,
-        TranslateModule,
-        InlineSVGModule,
-        MatMenuModule,
-        AttendanceChangeComponent,
-        AuthorityComponent,
-        VehicleComponent,
-        AdvanceComponent,
-        OvertimeComponent,
-        ShiftChangeComponent,
-        ExpenseComponent,
-        LeaveComponent,
-        VisitorComponent,
-        HasPermissionDirective
-    ],
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    InlineSVGModule,
+    MatMenuModule,
+    AttendanceChangeComponent,
+    AuthorityComponent,
+    VehicleComponent,
+    AdvanceComponent,
+    InventoryComponent,
+    OvertimeComponent,
+    ShiftChangeComponent,
+    ExpenseComponent,
+    LeaveComponent,
+    VisitorComponent,
+    HasPermissionDirective,
+],
     templateUrl: './new-profile.component.html',
     styleUrl: './new-profile.component.scss'
 })
@@ -71,6 +73,7 @@ export class NewProfileComponent implements OnInit, OnDestroy {
     displayVehicleRequestForm: boolean;
     displayExpenseRequestForm: boolean;
     displayShiftForm: boolean;
+    displayInventoryForm:boolean;
     displayAttendanceForm: boolean;
     imageUrl: string;
     constructor(
@@ -115,7 +118,7 @@ export class NewProfileComponent implements OnInit, OnDestroy {
             this.menuConfig = res;
             this.ref.detectChanges();
         });
-
+        
         console.log("ben ekranı menü config :", this.menuConfig);
 
         console.log("Kurabiye : ", this.getCookie('UserId'));
@@ -201,7 +204,14 @@ export class NewProfileComponent implements OnInit, OnDestroy {
     onHideShiftForm() {
         this.displayShiftForm = false;
     }
-
+     /* Ekipman Form Dialog Penceresi */
+    showInventoryDialog() {
+        this.displayInventoryForm = true;
+    }
+    onHideInventoryDialog() {
+        this.displayInventoryForm = false;
+    }
+     /*---------------------------- */
     showAttendanceDialog() {
         this.displayAttendanceForm = true;
     }
