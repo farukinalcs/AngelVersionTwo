@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { DialogModule } from 'primeng/dialog';
@@ -38,7 +38,7 @@ import { RequestProcessComponent } from 'src/app/_angel/shared/request-process/r
 })
 export class MyRequestsComponent implements OnInit, OnDestroy {
     private ngUnsubscribe = new Subject();
-
+  activeIndex = 0;
     myDemands: MyDemands[] = [];
     sureciDevamEdenFormSayisi: any = 0;
     kaynak: string;
@@ -64,6 +64,7 @@ export class MyRequestsComponent implements OnInit, OnDestroy {
         { id: 'yetkiNavItem', key: 'sureliyetki', icon: 'fa-door-open', label: 'Yetki' },
         { id: 'avansNavItem', key: 'avans', icon: 'fa-sack-dollar', label: 'Avans' },
         { id: 'expenseNavItem', key: 'expense', icon: 'fa-receipt', label: 'Masraf' },
+        { id: 'ekipmanNavItem', key: 'ekipman', icon: 'fa-screwdriver-wrench', label: 'Ekipman' },
         // { id: 'envanterNavItem1', key: 'envanter', icon: 'fa-screwdriver-wrench', label: 'Malzeme' },
         // { id: 'digerNavItem1', key: 'tum', icon: 'fa-circle-question', label: 'Tümü' }
     ];
@@ -83,7 +84,12 @@ export class MyRequestsComponent implements OnInit, OnDestroy {
     }
 
     getMyDemands(kaynak: string) {
-        this.kaynak = kaynak;
+        if(kaynak =="ekipman"){
+            this.kaynak = kaynak;
+            this.getInventoryForStat()
+        }
+        else{
+            this.kaynak = kaynak;
         console.log("KAYNAK :", kaynak);
 
         this.profilService.getMyDemands(kaynak).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<MyDemands, ResponseDetailZ>[]) => {
@@ -91,7 +97,8 @@ export class MyRequestsComponent implements OnInit, OnDestroy {
             const message = response[0].z;
             const responseToken = response[0].y;
 
-
+            console.log(response[0].x);
+            
             console.log("Taleplerim : ", data);
             this.myDemands = data;
             this.sureciDevamEdenFormlar = [];
@@ -132,6 +139,8 @@ export class MyRequestsComponent implements OnInit, OnDestroy {
 
             this.ref.detectChanges();
         });
+        }
+        
     }
 
     updateAllComplete(item: any) {
@@ -161,7 +170,8 @@ export class MyRequestsComponent implements OnInit, OnDestroy {
         console.log("setAll else :", arr);
     }
 
-    resetArr() {
+    resetArr(e: MatTabChangeEvent) {
+        this.activeIndex = e.index;
         this.kaynak = '';
         this.sureciDevamEdenFormlar = [];
         this.sureciDevamEdenFormSayisi = 0;
@@ -332,7 +342,56 @@ export class MyRequestsComponent implements OnInit, OnDestroy {
         this.displayUploadedFiles = false;
         this.selectedDemand = undefined;
     }
+        
+  getInventoryForStat() {
+    var durum:any;
+    if (this.activeIndex== 0) {
+      durum = 0;
+    } else if (this.activeIndex == 1) {
+      durum = 1;
+    } else if (this.activeIndex == 2) {
+      durum = -1;
+    }
+    var sp: any[] = [
+      {
+        mkodu: 'yek393',
+        durum: String(durum),
+      },
+    ];
 
+    this.profilService
+      .requestMethod(sp)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (response: any) => {
+            
+          const data = response[0].x;
+          const message = response[0].z;
+
+          if (message.islemsonuc == -1) {
+            return;
+          }
+
+          if (durum == 0) {
+           this.sureciDevamEdenFormlar = Array.isArray(data) ? [...data] : [];
+           console.log('sureciDevamEdenFormlar', this.sureciDevamEdenFormlar.length , this.sureciDevamEdenFormlar);
+          } else if (durum == 1) {
+            this.onaylananFormlar= Array.isArray(data) ? [...data] : []; 
+             console.log('onaylananFormlar', this.sureciDevamEdenFormlar.length , this.sureciDevamEdenFormlar);
+          } else if (durum == -1) {
+            this.reddedilenFormlar= Array.isArray(data) ? [...data] : []; 
+            console.log('reddedilenFormlar', this.sureciDevamEdenFormlar.length , this.sureciDevamEdenFormlar);
+            
+          }
+        },
+        (err) => {
+          this.toastrService.error(
+            this.translateService.instant('Beklenmeyen_Bir_Hata_Oluştu'),
+            this.translateService.instant('Hata')
+          );
+        }
+      );
+  }
 
     ngOnDestroy(): void {
         this.ngUnsubscribe.next(true);

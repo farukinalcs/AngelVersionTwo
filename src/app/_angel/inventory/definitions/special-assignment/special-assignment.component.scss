@@ -1,0 +1,94 @@
+.p-listbox-list {
+  width: 100% !important;
+}
+.transfer-card {
+  background: #fff;
+    border-radius: 14px;
+  padding: 12px;
+  .header {
+    margin-bottom: 10px;
+    input {
+      width: 320px;
+      max-width: 100%;
+    }
+  }
+
+  .row-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-bottom: 1px dashed #e42d2d;
+
+    .title {
+      font-weight: 600;
+      color: #111827;
+      flex: 1;
+    }
+
+    .actions {
+      display: flex;
+      gap: 6px;
+
+      .action-btn.plus .pi {
+        /* artı butonu solda görünür */
+      }
+      .action-btn.minus .pi {
+        /* eksi butonu sağda görünür */
+      }
+    }
+  }
+}
+::ng-deep .p-picklist-transfer-controls .p-button {
+  background-color: #d42525 !important; // istediğin renk
+  border-color: #d42525 !important;
+  color: #fff !important; // ikon rengini beyaz yap
+}
+
+/* Hover efekti */
+::ng-deep .p-picklist-transfer-controls .p-button:hover {
+  background-color: #ee1717 !important;
+  border-color: #ee1717 !important;
+}
+::ng-deep .p-picklist {
+  border: 0;
+  gap: 20px;
+
+  .p-picklist-header {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px 10px 0 0;
+    font-weight: 600;
+    color: #6b7280;
+    display: flex;
+    gap: 12px;
+
+    .col-header {
+      padding: 10px 12px;
+      min-width: 90px;
+      &.grow {
+        flex: 1;
+      }
+    }
+  }
+
+  .p-picklist-list {
+    border: 1px solid #e5e7eb;
+    border-top: 0;
+    border-radius: 0 0 10px 10px;
+    min-height: 640px;
+    max-height: 720px;
+  }
+
+  .p-picklist-buttons {
+    display: none; // default ok tuşlarını gizliyoruz
+  }
+
+  .p-picklist-source,
+  .p-picklist-target {
+    flex: 1;
+    min-width: 380px;
+  }
+}
+

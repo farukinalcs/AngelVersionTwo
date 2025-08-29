@@ -1,0 +1,13 @@
+//Toogle için css
+::ng-deep .form-check-custom.form-check-solid .form-check-input {
+    border: 0;
+    background-color: rgba(24, 28, 50, 0.527)!important;
+}
+// ::ng-deep .form-check-custom.form-check-solid .form-check-input:active, .form-check-custom.form-check-solid .form-check-input:focus {
+//     filter: none;
+//    background-color: #dd1212e1!important;
+// }
+::ng-deep .form-check-custom.form-check-solid .form-check-input:checked {
+    background-color: rgb(24 28 50)!important;
+}
+//----end
