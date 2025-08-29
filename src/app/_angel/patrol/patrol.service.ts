@@ -44,6 +44,10 @@ export class PatrolService {
     return this.httpClient.get<any>(this.apiUrlService.apiUrl + '/process', options);
   }
 
+  getImageUrl(path?: string): string {
+    return `${environment.imageUrl}`;
+  }
+
   getPatrolInfo(locationid:number){
     var sp : any[] = [{
       mkodu : 'yek189',
@@ -331,6 +335,15 @@ export class PatrolService {
       mkodu:'yek041',
       id: '0',
       kaynak:'guvenlikturtipi'
+    }]
+    return this.requestMethod(sp);
+  }
+
+  guardTourDetail(date:string,locationid:number){
+    var sp: any[] = [{
+      mkodu:'yek377',
+      lokasyon: locationid.toString(),
+      tarih:date.toString(),
     }]
     return this.requestMethod(sp);
   }

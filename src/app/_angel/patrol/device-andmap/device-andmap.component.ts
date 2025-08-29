@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDateFormats } from '@angular/material/core';
 import * as signalR from '@microsoft/signalr';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { PatrolService } from '../patrol.service';
@@ -22,6 +21,16 @@ import { LocationService } from '../content-container/location.service';
 
 
 export class DeviceAndmapComponent {
+
+  //DASHBOARD
+  eventLogs: {
+    type: string;
+    message: string;
+    time: Date;
+    icon: string;
+    color: string;
+  }[] = [];
+
   // locationSub!: Subscription;
   private hubConnection!: signalR.HubConnection;
 
@@ -66,13 +75,6 @@ export class DeviceAndmapComponent {
 
   ngOnInit(): void {
 
-    // const today = new Date();
-    // this.formattedDate = this.datePipe.transform(today, 'yyyy-MM-dd')!;
-    // this.dateControl.setValue(today);
-
-    // this.dateControl.valueChanges.subscribe((newDate) => {
-    //   this.formattedDate = this.datePipe.transform(newDate, 'yyyy-MM-dd')!;
-    // });
 
     this.getLocation();
 
@@ -88,6 +90,44 @@ export class DeviceAndmapComponent {
 
     this.initializeMap();
 
+  }
+
+  private addEventLog(type: string, message: string) {
+
+    console.log("addEventLog:",  this.eventLogs);
+    console.log("addEventLog:", type,message);
+    let icon = "info";
+    let color = "secondary";
+  
+    switch (type) {
+      case "🚨 INCIDENT:":
+        icon = "alert-octagon";
+        color = "danger"; // kırmızı
+        break;
+      case "⚠️ ALERT":
+        icon = "bell";
+        color = "warning"; // sarı
+        break;
+      case "🎧 VOICE":
+        icon = "headphones";
+        color = "primary"; // mavi
+        break;
+      default:
+        icon = "info";
+        color = "secondary";
+    }
+  
+    this.eventLogs.unshift({
+      type,
+      message,
+      time: new Date(),
+      icon,
+      color
+    }); 
+  
+    if (this.eventLogs.length > 20) {
+      this.eventLogs.pop();
+    }
   }
 
   private clearAllMarkers(): void {
@@ -115,12 +155,6 @@ export class DeviceAndmapComponent {
     console.log('Harita yüklendi:', this.map);
   }
 
-  // private clearAllMarkers() {
-  //   for (const marker of Object.values(this.markers)) {
-  //     marker.setMap(null);
-  //   }
-  //   this.markers = {};
-  // }
 
   getLocation() {
     this.clearAllMarkers();
@@ -128,9 +162,6 @@ export class DeviceAndmapComponent {
       if(id !== null){
         this.selectedLocationID = id;
         console.log("DMLocation:", this.selectedLocationID);
-        // this.markers.forEach(marker => marker.setMap(null));
-        // this.markers = [];
-      
         this.getPatrolInfo(id);
       }
     })
@@ -156,10 +187,9 @@ export class DeviceAndmapComponent {
           console.warn('Geçersiz koordinatlar:', firstDevice);
         }
   
-        // 🔴 Önce eski marker'ları temizle
+
         this.clearAllMarkers();
-  
-        // 🟢 Yeni marker'ları ekle
+ 
         this.displayList.forEach((device: any) => {
           const lat = +device?.lat;
           const lng = +device?.lng;
@@ -240,85 +270,10 @@ export class DeviceAndmapComponent {
       .then(() => {
         console.log('✅ SignalR bağlantısı kuruldu.');
 
-        this.register(); // yeniden bağlandıysa tekrar register
+        this.register();
         this.listenSignalREvents();
       })
       .catch(err => console.error('🔴 SignalR bağlantı hatası:', err));
-  }
-
-  public async register2(): Promise<void> {
-    if (!this.hubConnection || this.hubConnection.state !== signalR.HubConnectionState.Connected) {
-      console.warn("❌ SignalR bağlantısı yok, register yapılamıyor.");
-      return;
-    }
-  
-    try {
-      const data = await this.generateRegisterData();
-      const jsonData = JSON.stringify(data);
-  
-      console.log('📦 Register gönderiliyor:', jsonData);
-  
-      this.hubConnection.on('allconninfo', (...args: any[]) => {
-        if (args && args.length > 0) {
-          try {
-            const rawJson = args[0] as string;
-            const parsed = JSON.parse(rawJson) as ConnectionModel[];
-  
-            const connections = parsed.map((conn) => {
-              let clientInfoParsed: any;
-              try {
-                clientInfoParsed = JSON.parse(conn.ClientInfo);
-              } catch {
-                console.warn('❌ ClientInfo JSON değil:', conn.ClientInfo);
-                clientInfoParsed = {};
-              }
-  
-              return {
-                ...conn,
-                ClientInfo: clientInfoParsed,
-              };
-            });
-  
-            console.log('📦 SİGANL R VERİİİ:', connections);
-  
-            const mobileConnections = connections.filter(c => c.ClientType === 4);
-  
-            // Yeni clientInfo'lar
-            const newClientInfos = mobileConnections.map(user => ({
-              terminalname: user.terminalname,
-              connectionDate: user.ConnectionDate,
-              ...user.ClientInfo
-            }));
-  
-
-            const lokasyonfilter = newClientInfos.filter(x=>  
-              x.LokasyonId == this.selectedLocationID
-            )
-            console.log('🧾lokasyon......................filter......:', this.selectedLocationID,lokasyonfilter);
-            // ❗ Sadece yeni olanları ekle (imei ile karşılaştır)
-            const uniqNewDevices = lokasyonfilter.filter(newItem =>
-              !this.displayList.some(existing => existing.imei === newItem.imei)
-            );
-            console.log('🧾 Yeni eklenen cihazlar:', uniqNewDevices);
-
-            const uniqNewDevices2 = this.displayList.filter(newItem =>
-              !lokasyonfilter.some(existing => existing.imei !== newItem.imei)
-            );
-           console.log('🧾 ime i farklı  liste:', uniqNewDevices2);
-            
-            this.displayList = [...uniqNewDevices2, ...uniqNewDevices];
-  
-          } catch (err) {
-            console.error('❌ allconninfo parse hatası:', err);
-          }
-        }
-      });
-  
-      const result = await this.hubConnection.invoke("register", jsonData);
-      console.log('✅ Register başarılı:', result);
-    } catch (err) {
-      console.error('❌ Register hatası:', err);
-    }
   }
 
   public async register(): Promise<void> {
@@ -384,12 +339,27 @@ export class DeviceAndmapComponent {
                     map: this.map,
                     title: device.terminalname,
                     icon: {
-                      url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-                          <circle cx="20" cy="20" r="18" fill="red" />
-                          <text x="20" y="25" font-size="16" text-anchor="middle" fill="white" font-family="Arial">G</text>
-                        </svg>
-                      `),
+                      url:'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60">
+                     <path
+                      d="M20 0C9 0 0 9 0 20c0 11 20 40 20 40s20-29 20-40C40 9 31 0 20 0z"
+                      fill="red"
+                      stroke="white"
+                      stroke-width="3"
+                    />
+                    <text
+                      x="20"
+                      y="27"
+                      font-size="15"
+                      text-anchor="middle"
+                      fill="white"
+                      font-family="Arial"
+                      dominant-baseline="top"
+                    >
+                      ${device?.terminalname.trim()?.charAt(0)}
+                    </text>
+                  </svg>
+                `),
                       scaledSize: new google.maps.Size(40, 40),
                       anchor: new google.maps.Point(20, 20)
                     }
@@ -430,9 +400,11 @@ export class DeviceAndmapComponent {
 
   private onIncident(...args: any[]): void {
 
+
     if (args && args.length > 0) {
       const data = args[0] as string;
       console.log("🚨 INCIDENT:", data);
+      this.addEventLog("🚨 INCIDENT:", data);
 
     }
   }
@@ -443,6 +415,8 @@ export class DeviceAndmapComponent {
       console.log("⚠️ Alert event geldi:", alertData);
 
       this.handleAlarmMessage(alertData);
+      this.addEventLog("⚠️ ALERT", alertData);
+     
     }
 
   }
@@ -452,6 +426,7 @@ export class DeviceAndmapComponent {
       const voiceData = args[0] as string;
       console.log("🎧 Voice event geldi:", voiceData);
       await this.handleVoiceMessage(voiceData);
+      this.addEventLog("🎧 VOICE", voiceData);
     }
 
   }
@@ -497,6 +472,7 @@ export class DeviceAndmapComponent {
             ...conn.ClientInfo
           });
           console.log('🟢 Yeni cihaz eklendi:', imei);
+          
         }
   
         if (conn.Process === '+' && index !== -1) {
@@ -510,6 +486,7 @@ export class DeviceAndmapComponent {
             ...conn.ClientInfo
           };
           console.log('♻ Güncellendi:', imei);
+ 
         }
   
         if (conn.Process === '-' && index !== -1) {
@@ -523,6 +500,7 @@ export class DeviceAndmapComponent {
             ...conn.ClientInfo
           };
           console.log('🔴 Cihaz offline oldu, güncellendi:', imei);
+          this.addEventLog('🔴 Cihaz offline oldu', imei);
         }
       });
   
@@ -557,15 +535,40 @@ export class DeviceAndmapComponent {
             map: this.map,
             title: device?.terminalname,
             animation: null,
-            icon: device?.isOnline
-              ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-              : 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+
+            icon: {
+              url:'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60">
+             <path
+              d="M20 0C9 0 0 9 0 20c0 11 20 40 20 40s20-29 20-40C40 9 31 0 20 0z"
+              fill="red"
+              stroke="white"
+              stroke-width="3"
+            />
+            <text
+              x="20"
+              y="27"
+              font-size="15"
+              text-anchor="middle"
+              fill="white"
+              font-family="Arial"
+              dominant-baseline="top"
+            >
+              ${device?.terminalname.trim()?.charAt(0)}
+            </text>
+          </svg>
+        `),
+              scaledSize: new google.maps.Size(40, 40),
+              anchor: new google.maps.Point(20, 20)
+            }
           });
           this.markers[device.imei] = marker;
         } else {
           console.warn('Geçersiz marker koordinatları:', device);
         }
       });
+
+
   
       this.ref.detectChanges();
   

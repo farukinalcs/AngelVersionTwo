@@ -17,3 +17,28 @@
     transform: scale(0.8);
     /* İkonu büyüt */
 }
+
+
+
+.timeline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 6px;
+}
+.timeline li {
+  position: relative;
+  padding-left: 15px;
+}
+.timeline li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background-color: #dee2e6;
+}
+.station{
+  cursor: pointer;
+}
