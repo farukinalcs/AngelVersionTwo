@@ -17,8 +17,9 @@
 
     <!-- Summary Cards -->
     <div class="row mb-5 g-4">
-        <div class="col-md-4">
-            <div class="card py-3 px-10 text-success">
+        <div class="col-md-3">
+            <div class="card py-3 px-10 text-success cursor-pointer" (click)="toggleFilter('present')"
+                [ngClass]="{'border border-3 border-success': activeFilters.present}">
                 <div class="d-flex align-items-center gap-2">
                     <i class="pi pi-check-circle fs-2x"></i>
                     <div>
@@ -29,8 +30,9 @@
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card py-3 px-10 text-danger">
+        <div class="col-md-3">
+            <div class="card py-3 px-10 text-danger cursor-pointer" (click)="toggleFilter('absent')"
+                [ngClass]="{'border border-3 border-danger': activeFilters.absent}">
                 <div class="d-flex align-items-center gap-2">
                     <i class="pi pi-times-circle fs-2x"></i>
                     <div>
@@ -41,15 +43,27 @@
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card py-3 px-10 text-warning">
+        <div class="col-md-3">
+            <div class="card py-3 px-10 text-warning cursor-pointer" (click)="toggleFilter('pending')"
+                [ngClass]="{'border border-3 border-warning': activeFilters.pending}">
                 <div class="d-flex align-items-center gap-2">
                     <i class="pi pi-exclamation-circle fs-2x"></i>
                     <div>
-                        <div class="fs-3x fw-bold">
-                            {{ pendingRequestsCount }}
-                        </div>
+                        <div class="fs-3x fw-bold">{{ pendingRequestsCount }}</div>
                         <small>Bekleyen Talepler</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card py-3 px-10 text-info cursor-pointer" (click)="toggleFilter('tomorrowLeave')"
+                [ngClass]="{'border border-3 border-info': activeFilters.tomorrowLeave}">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="pi pi-calendar fs-2x"></i>
+                    <div>
+                        <div class="fs-3x fw-bold">{{ tomorrowLeaveCount }}</div>
+                        <small>Yarın İzinli Olanlar</small>
                     </div>
                 </div>
             </div>
@@ -58,7 +72,7 @@
 
     <div class="row g-4">
         <div class="col-sm-6 col-lg-4"
-            *ngFor="let member of myTeam | searchFilter:filterText: ['durum', 'ad', 'soyad', 'sicilno', 'mesaiaciklama', 'ggiris', 'gcikis', 'gelmedi']">
+            *ngFor="let member of filteredData | searchFilter:filterText: ['durum', 'ad', 'soyad', 'sicilno', 'mesaiaciklama', 'ggiris', 'gcikis', 'gelmedi']">
             <div class="card shadow-sm h-100 px-2 py-4">
                 <div class="card-header bg-white border-bottom-0 pb-2">
                     <div class="d-flex justify-content-between align-items-center w-100">
@@ -130,6 +144,12 @@
                         class="alert alert-warning mt-3 d-flex align-items-center gap-2">
                         <i class="pi pi-exclamation-triangle"></i>
                         <span>Bekleyen talepler var</span>
+                    </div>
+
+                    <div *ngIf="member.yarinizin"
+                        class="alert alert-warning mt-3 d-flex align-items-center gap-2">
+                        <i class="pi pi-exclamation-triangle"></i>
+                        <span>Yarın İzinli (Dönüş Tarihi : {{member.yarinizin | date: 'dd-MM-yyyy'}})</span>
                     </div>
                 </div>
             </div>

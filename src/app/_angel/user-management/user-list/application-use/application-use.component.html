@@ -1,0 +1,269 @@
+<ng-container *ngIf="!detail?.LoginName">
+    <div class="row" style="
+                            flex-direction: column;
+                            align-items: center;
+                            ">
+        <div class="col-12 p-5 d-flex justify-content-center">
+            <div class="alert alert-danger d-flex align-items-center p-5">
+                <i class="fa-solid fa-triangle-exclamation fs-2hx me-4 text-danger"></i>
+                <div class="d-flex flex-column">
+                    <h4 class="mb-1 text-danger">{{"Dikkat!" | translate}}</h4>
+
+                    <span>{{"Henüz_Program_Kullanıcısı_Olarak_Tanımlanmamış" | translate}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 p-5 py-1">
+            <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
+                <span>{{"Kullanıcı_Adı" | translate}}</span>
+            </label>
+
+            <input type="text" class="form-control form-control-sm form-control-solid" [(ngModel)]="loginName"
+                placeholder="{{'Kullanıcı_Adı' | translate}}">
+        </div>
+
+        <div class="col-6 p-5 py-1">
+            <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
+                <span>{{"Şifre" | translate}}</span>
+            </label>
+
+            <input type="password" class="form-control form-control-sm form-control-solid" [(ngModel)]="password"
+                placeholder="{{'Şifre' | translate}}">
+        </div>
+
+        <div class="col-6 p-5 py-10 d-flex justify-content-center">
+            <a class="btn btn-sm btn-light mx-1 fw-bolder d-flex justify-content-center align-item-center text-hover-danger"
+                (click)="createNewAppUser()">
+                <i class="fa-solid fa-floppy-disk fs-7 d-flex align-items-center"></i>
+                {{'Kaydet' | translate}}
+            </a>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="detail?.LoginName">
+
+    <div class="row my-5">
+        <div class="col-12">
+            <div class="card shadow-lg">
+                <div class="card-header d-flex align-items-center justify-content-between" style="min-height: 40px;">
+                    <div class="d-flex align-items-center">
+                        <i class="fa fa-user-cog text-danger me-2 fs-5"></i>
+                        <h3 class="card-title fs-5">{{"Kullanıcı_Bilgileri" | translate}}</h3>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-pen-to-square fs-5 ms-auto text-hover-danger cursor-pointer"
+                            pTooltip="{{'Düzenle' | translate}}" tooltipPosition="top" (click)="editState('all')"></i>
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    <div class="row my-2">
+                        <div class="col-6 d-flex flex-column">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
+                                <span>{{"Kullanıcı_Adı" | translate}}</span>
+                            </label>
+
+                            <input #loginInput type="text" class="form-control form-control-sm form-control-solid"
+                                [(ngModel)]="loginName" placeholder="{{'Kullanıcı_Adı' | translate}}"
+                                [ngStyle]="{'cursor': disabledLoginName ? 'not-allowed' : ''}"
+                                [disabled]="disabledLoginName">
+                        </div>
+
+                        <div class="col-6 d-flex flex-column">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2 rounded px-2">
+                                <span>{{"Şifre" | translate}}</span>
+                            </label>
+
+                            <input #passInput type="password" [(ngModel)]="updatedPassword"
+                                class="form-control form-control-sm form-control-solid"
+                                placeholder="{{'Şifre' | translate}}"
+                                [ngStyle]="{'cursor': disabledPass ? 'not-allowed' : ''}" [disabled]="disabledPass">
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="!disabledLoginName || !disabledPass">
+                        <div class="d-flex">
+                            <span class="h-100 d-flex align-items-start">
+                                <i class="fa-solid fa-circle-exclamation text-gray-600 fs-7"
+                                    pTooltip="{{'Şifre_alanı_Boş_Gönderildiğinde_Değişiklik_Olmayacaktır' | translate}}"
+                                    tooltipPosition="top"></i>
+                            </span>
+                            <a class="btn btn-sm btn-dark mx-1 px-2 fw-bolder d-flex justify-content-center align-item-center fs-8"
+                                (click)="updateAppUser()">
+                                <i class="fa-solid fa-floppy-disk fs-9 d-flex align-items-center"></i>
+                                {{'Güncelle' | translate}}
+                            </a>
+
+
+                            <a class="btn btn-sm btn-dark mx-1 px-2 fw-bolder d-flex justify-content-center align-item-center fs-8"
+                                (click)="editState('all')">
+                                <i class="fa-solid fa-xmark fs-9 d-flex align-items-center"></i>
+                                {{'İptal' | translate}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex align-items-center justify-content-start" style="min-height: 40px;">
+                    <i class="fa fa-mobile-screen-button text-danger me-2 fs-5"></i>
+                    <h3 class="card-title fs-5">{{"Uygulama_Kullanımı" | translate}}</h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                            {{"Doğrulama Yöntemi Seçiniz" | translate}}
+                        </label>
+                    </div>
+                    <div class="row">
+                        <div class="d-flex fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
+                            <div class="btn-group w-100">
+                                <ng-container *ngFor="let item of twoFactorAuth">
+                                    <label *ngIf="item?.visible"
+                                        class="btn btn-sm btn-outline btn-active-dark btn-color-muted fs-8"
+                                        [ngClass]="{'active': selectedTwoFactorAuth == item.value}">
+                                        <input class="btn-check" type="radio" [value]="item.value"
+                                            [(ngModel)]="selectedTwoFactorAuth"
+                                            [checked]="selectedTwoFactorAuth == item.value">
+                                        {{item.name}}
+                                    </label>
+                                </ng-container>
+
+                            </div>
+                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label *ngIf="selectedTwoFactorAuth == 'Mail'"
+                            class="d-flex align-items-center fs-8 text-muted fw-semibold mb-2">
+                            {{"Doğrulama kodu mail adresine gönderilecek" | translate}}
+                        </label>
+                        <label *ngIf="selectedTwoFactorAuth == 'Mobile'"
+                            class="d-flex align-items-center fs-8 text-muted fw-semibold mb-2">
+                            {{"Doğrulama kodu mobil uygulamaya gönderilecek" | translate}}
+                        </label>
+                        <label *ngIf="selectedTwoFactorAuth == 'Sms'"
+                            class="d-flex align-items-center fs-8 text-muted fw-semibold mb-2">
+                            {{"Doğrulama kodu sms ile gönderilecek" | translate}}
+                        </label>
+                    </div>
+
+                    <div class="row">
+                        <div *ngIf="twoFactorAuthInfo?.hasmobil >= 0"
+                            class="col d-flex align-items-end justify-content-end flex-column p-2">
+                            <a class="btn btn-sm btn-light-dark mx-1 fw-bolder d-flex justify-content-center align-item-center"
+                                (click)="removeMobile()">
+                                <i class="fa-solid fa-minus fs-7 d-flex align-items-center"></i>
+                                {{'Mobili_Kaldır' | translate}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex align-items-center justify-content-start" style="min-height: 40px;">
+                    <i class="fa fa-mobile-screen-button text-danger me-2 fs-5"></i>
+                    <h3 class="card-title fs-5">{{"PIN_Ayarları" | translate}}</h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-12 p-2">
+                            <div class="otp-container">
+                                <input class="otp-input form-control form-control-sm form-control-solid" type="text"
+                                    *ngFor="let char of otpArray" [value]="char" readonly />
+                            </div>
+                        </div>
+
+                        <div class="col-5 d-flex" style="justify-content: space-evenly;">
+                            <button type="button"
+                                class="btn btn-icon btn-sm h-auto btn-color-gray-500 btn-active-color-danger justify-content-end"
+                                (click)="setPin()">
+                                {{"Yenile" | translate}}
+                            </button>
+
+                            <button type="button"
+                                class="btn btn-icon btn-sm h-auto btn-color-gray-500 btn-active-color-danger justify-content-end"
+                                (click)="removePin()">
+                                {{"Kaldır" | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex align-items-center justify-content-start" style="min-height: 40px;">
+                    <i class="fa fa-mobile-screen-button text-danger me-2 fs-5"></i>
+                    <h3 class="card-title fs-5">{{"Terminal ve Grup Ayarları" | translate}}</h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6 p-2 d-flex justify-content-center flex-column">
+                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                <span>{{"Terminal_Grubu" | translate}}</span>
+                            </label>
+
+                            <p-dropdown [options]="deviceGroups" [(ngModel)]="selectedDevice" optionLabel="ad"
+                                [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="ad"
+                                [showClear]="true" placeholder="{{'Terminal_Grubu_Seçiniz' | translate}}">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="selectedDevice">
+                                        <div>{{selectedDevice?.ad}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item?.ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-6 p-2 d-flex justify-content-center flex-column">
+                            <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+                                <span>{{"Geçiş_Grubu" | translate}}</span>
+                            </label>
+
+                            <p-dropdown [options]="accessGroups" [(ngModel)]="selectedAccessGroup" optionLabel="Ad"
+                                [emptyFilterMessage]="dropdownEmptyMessage" [filter]="true" filterBy="Ad"
+                                [showClear]="true" placeholder="{{'Geçiş_Grubu_Seçiniz' | translate}}">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="item-item item-item-value" *ngIf="selectedAccessGroup">
+                                        <div>{{selectedAccessGroup?.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item-item">
+                                        <div>{{item?.Ad}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
