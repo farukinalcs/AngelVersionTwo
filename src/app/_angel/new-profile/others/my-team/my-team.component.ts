@@ -37,6 +37,15 @@ export class MyTeamComponent implements OnInit, OnDestroy {
     filterText: string = "";
     filteredItems: any[] = [];
     imageUrl: string;
+    filteredData: any[] = [];
+    // Seçili filtreler
+    activeFilters: { [key: string]: boolean } = {
+        present: false,
+        absent: false,
+        pending: false,
+        tomorrowLeave: false
+    };
+
 
     constructor(
         private profileService: ProfileService,
@@ -56,7 +65,8 @@ export class MyTeamComponent implements OnInit, OnDestroy {
 
             console.log("Takımım :", response);
             if (message.islemsonuc == 1) {
-                this.myTeam = data;
+                this.myTeam = [...data];
+                this.filteredData = this.myTeam;
             }
 
         });
@@ -72,19 +82,62 @@ export class MyTeamComponent implements OnInit, OnDestroy {
 
     get presentCount(): number {
         return this.myTeam.filter((m) => m.ggiris).length;
-      }
-      
-      get absentCount(): number {
+    }
+
+    get absentCount(): number {
         return this.myTeam.filter((m) => !m.ggiris).length;
-      }
-      
-      get pendingRequestsCount(): number {
+    }
+
+    get pendingRequestsCount(): number {
         return this.myTeam.reduce(
-          (sum, m) => sum + m.bekleyenizintalep + m.bekleyenfmtalep,
-          0
+            (sum, m) => sum + m.bekleyenizintalep + m.bekleyenfmtalep,
+            0
         );
-      }
-      
+    }
+
+    get tomorrowLeaveCount(): number {
+        return this.myTeam.filter((m) => m.yarinizin).length;
+    }
+
+    toggleFilter(filterKey: keyof typeof this.activeFilters) {
+        this.activeFilters[filterKey] = !this.activeFilters[filterKey];
+        this.applyFilters();
+    }
+
+    applyFilters() {
+        let data = [...this.myTeam];
+
+        // Bugün İşte
+        if (this.activeFilters.present) {
+            data = data.filter(m => m.ggiris);
+        }
+
+        // Bugün Yok
+        if (this.activeFilters.absent) {
+            data = data.filter(m => !m.ggiris);
+        }
+
+        // Bekleyen Talepler
+        if (this.activeFilters.pending) {
+            data = data.filter(m => (m.bekleyenizintalep + m.bekleyenfmtalep) > 0);
+        }
+
+        // Yarın İzinli
+        if (this.activeFilters.tomorrowLeave) {
+            data = data.filter(m => m.yarinizin); 
+        }
+
+        // Metin
+        if (this.filterText.trim() !== '') {
+            const searchPipe = new SearchFilterPipe();
+            data = searchPipe.transform(data, this.filterText, [
+                'durum', 'ad', 'soyad', 'sicilno', 'mesaiaciklama', 'ggiris', 'gcikis', 'gelmedi'
+            ]);
+        }
+
+        this.filteredData = data;
+    }
+
 
     ngOnDestroy(): void {
         this.ngUnsubscribe.next(true);

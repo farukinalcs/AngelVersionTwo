@@ -1,0 +1,177 @@
+<div class="container">
+    <div class="row py-5 flex-column d-flex justify-content-center align-items-center">
+        <div class="col-sm-12 p-3">
+            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                <span>{{"Sicil_Grupları" | translate}}</span>
+            </label>
+
+            <p-select [options]="registerGroups" [(ngModel)]="registryGroup" optionLabel="ad"
+                emptyFilterMessage="{{'Kayıt_Bulunamadı' | translate}}" [filter]="true" filterBy="ad" [showClear]="true"
+                placeholder="{{'Sicil_Grubu_Seçiniz' | translate}}" class="w-100 md:w-56" [appendTo]="'body'">
+                <ng-template #selectedItem let-selected>
+                    <div class="flex items-center gap-2">
+                        <div>{{ registryGroup?.ad }}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-item #item>
+                    <div class="flex items-center gap-2">
+                        <div>{{ item?.ad }}</div>
+                    </div>
+                </ng-template>
+            </p-select>
+        </div>
+
+        <div class="col-sm-12 px-3 d-flex align-items-end justify-content-end">
+            <a class="btn btn-sm btn-dark mx-1 fw-bolder d-flex justify-content-center align-item-center"
+                (click)="op.toggle($event)">
+                <i class="fa-solid fa-plus fs-7 d-flex align-items-center"></i>
+                {{ 'Ekle' | translate }}
+            </a>
+
+            <p-popover #op>
+                <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-3 w-[25rem] p-3">
+                    <!-- kademe -->
+                    <div class="d-flex flex-column gap-2 py-2">
+                        <label for="level" class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span>{{"Kademe" | translate}}</span>
+                        </label>
+
+                        <select id="level" class="form-control form-control-sm" formControlName="level">
+                            <option *ngFor="let num of levels" [value]="num">
+                                {{ num }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="separator my-2"></div>
+
+                    <!-- Yetki Tipi -->
+                    <div class="d-flex flex-column gap-2 py-2">
+                        <label for="level" class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span>{{"Yetki Tipi" | translate}}</span>
+                        </label>
+                        <div class="d-flex gap-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <p-radioButton name="accessType" value="view" formControlName="accessType"
+                                    inputId="view"></p-radioButton>
+                                <label for="view">İzleme</label>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-2">
+                                <p-radioButton name="accessType" value="edit" formControlName="accessType"
+                                    inputId="edit"></p-radioButton>
+                                <label for="edit">Düzenleme</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="separator my-2"></div>
+
+                    <!-- Checkboxes -->
+                    <div class="d-flex flex-column gap-2 py-2">
+                        <label for="level" class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span>{{"Talep Kademe" | translate}}</span>
+                        </label>
+                        <div class="d-flex flex-column gap-2">
+                            <div *ngFor="let item of requestSteps; let i = index"
+                                class="d-flex align-items-center gap-2">
+                                <p-checkbox [inputId]="item.key" [formControlName]="item.key"
+                                    binary="true"></p-checkbox>
+                                <label [for]="item.key">{{ item.ad }}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="separator my-2"></div>
+
+                    <!-- Ekle Buton -->
+                    <div class="d-flex justify-content-end pt-3">
+                        <button pButton type="submit" label="Ekle" icon="pi pi-check" class="p-button-sm"></button>
+                    </div>
+                </form>
+            </p-popover>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="d-flex flex-column gap-3 p-3 col-sm-4" *ngFor="let data of authority">
+            <div class="card shadow-lg ">
+                <div class="card-header">
+                    <div class="card-title m-0">
+                        <div class="fw-bolder">
+                            {{data.sicilgrupad}}
+                        </div>
+                    </div>
+
+                    <div class="card-toolbar">
+                        <button pButton icon="pi pi-trash" class="p-button-sm" (click)="deleteAuthority(data)"></button>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <!-- kademe -->
+                    <div class="d-flex flex-column gap-2 py-2">
+                        <label for="level" class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span>{{"Kademe" | translate}}</span>
+                        </label>
+
+                        <select id="level" class="form-control form-control-sm" [(ngModel)]="data.kademe">
+                            <option *ngFor="let num of levels" [value]="num">
+                                {{ num }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="separator my-2"></div>
+
+                    <!-- Yetki Tipi -->
+                    <div class="d-flex flex-column gap-2 py-2">
+                        <label for="level" class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span>{{"Yetki Tipi" | translate}}</span>
+                        </label>
+                        <div class="d-flex gap-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <p-radioButton name="accessType" value="view" [(ngModel)]="data.yetkimap"
+                                    inputId="s_view"></p-radioButton>
+                                <label for="s_view">İzleme</label>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-2">
+                                <p-radioButton name="accessType" value="edit" [(ngModel)]="data.yetkimap"
+                                    inputId="s_edit"></p-radioButton>
+                                <label for="s_edit">Düzenleme</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="separator my-2"></div>
+
+                    <!-- Checkboxes -->
+                    <div class="d-flex flex-column gap-2 py-2">
+                        <label for="level" class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span>{{"Talep Kademe" | translate}}</span>
+                        </label>
+                        <div class="d-flex flex-column gap-2">
+                            <div *ngFor="let item of data.kategoriler; let i = index"
+                                class="d-flex align-items-center gap-2">
+                                <p-checkbox [(ngModel)]="item.deger" binary="true"
+                                    [inputId]="item.key + data.id + i"></p-checkbox>
+                                <label [for]="item.key + data.id + i">{{ item.ad }}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="separator my-2"></div>
+
+                    <!-- Ekle Buton -->
+                    <div class="d-flex justify-content-end pt-3">
+                        <button pButton label="Güncelle" icon="pi pi-check" class="p-button-sm" (click)="updateAuthority(data)"></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

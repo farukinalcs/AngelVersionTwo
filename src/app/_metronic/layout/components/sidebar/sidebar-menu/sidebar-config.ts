@@ -160,6 +160,7 @@ export const MENU: MenuItem[] = [
         title: 'Kullanıcı Yetki Yönetimi',
         icon: 'fa-solid fa-key text-danger',
         children: [
+            { title: 'Sicil Listesi', routerLink: 'user-management/user-list' },
             { title: 'Tanımlamalar', routerLink: 'user-management/definitions' }
         ],
         app: ['1']
