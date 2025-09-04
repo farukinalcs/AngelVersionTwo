@@ -14,22 +14,26 @@ import { VisitorComponent } from "./visitor/visitor.component";
 import { InventoryComponent } from "./inventory/inventory.component";
 
 export const RequestFormsRoutes: Routes = [
-    {
-        path: '',
-        component: RequestFormsComponent,
-        children: [
-            { path: 'advance', component: AdvanceComponent },
-            { path: 'announcement', component: AnnouncementComponent },
-            { path: 'attendance-change', component: AttendanceChangeComponent },
-            { path: 'authority', component: AuthorityComponent },
-            { path: 'bulletin', component: BulletinComponent },
-            { path: 'expense', component: ExpenseComponent },
-            { path: 'leave', component: LeaveComponent },
-            { path: 'overtime', component: OvertimeComponent },
-            { path: 'shift-change', component: ShiftChangeComponent },
-            { path: 'vehicle', component: VehicleComponent },
-            { path: 'visitor', component: VisitorComponent },
-            { path: 'inventory', component: InventoryComponent },
-        ]
-    }
+  {
+    path: '',
+    component: RequestFormsComponent,
+    data: { breadcrumb: 'Talep Formları' }, // üst seviye etiket
+    children: [
+      { path: 'advance',           component: AdvanceComponent,           data: { breadcrumb: 'Avans Talebi' } },
+      { path: 'announcement',      component: AnnouncementComponent,      data: { breadcrumb: 'Duyuru' } },
+      { path: 'attendance-change', component: AttendanceChangeComponent,  data: { breadcrumb: 'Yoklama Değişikliği' } },
+      { path: 'authority',         component: AuthorityComponent,         data: { breadcrumb: 'Yetki Talebi' } },
+      { path: 'bulletin',          component: BulletinComponent,          data: { breadcrumb: 'Bülten' } },
+      { path: 'expense',           component: ExpenseComponent,           data: { breadcrumb: 'Masraf Talebi' } },
+      { path: 'leave',             component: LeaveComponent,             data: { breadcrumb: 'İzin Talebi' } },
+      { path: 'overtime',          component: OvertimeComponent,          data: { breadcrumb: 'Fazla Mesai Talebi' } },
+      { path: 'shift-change',      component: ShiftChangeComponent,       data: { breadcrumb: 'Vardiya Değişikliği' } },
+      { path: 'vehicle',           component: VehicleComponent,           data: { breadcrumb: 'Araç Talebi' } },
+      { path: 'visitor',           component: VisitorComponent,           data: { breadcrumb: 'Ziyaretçi Talebi' } },
+      { path: 'inventory',         component: InventoryComponent,         data: { breadcrumb: 'Envanter Talebi' } },
+
+      // (opsiyonel) varsayılan sayfa:
+      // { path: '', redirectTo: 'advance', pathMatch: 'full' },
+    ]
+  }
 ];

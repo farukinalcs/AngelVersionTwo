@@ -1,46 +1,196 @@
 <div class="container py-4">
-    <div class="row g-4 mb-4">
-        <div class="col-12 col-md-6 col-lg-3" *ngFor="let stat of stats">
-            <div class="card shadow-sm h-100 stat-card">
-                <div class="card-body d-flex justify-content-between align-items-center bg-danger rounded">
-                    <div>
-                        <p class="text-white small mb-1">{{ stat.title }}</p>
-                        <div class="d-flex align-items-baseline">
-                            <h4 class="mb-0 me-2 text-white">{{ stat.value }}</h4>
-                            <span class="text-white small">{{ stat.unit }}</span>
-                        </div>
-                        <p class="small mt-2 fw-medium"
-                            [ngClass]="stat.change.startsWith('+') ? 'text-success' : 'text-warning'">
-                            {{ stat.change }} geçen aya göre
-                        </p>
-                    </div>
-                    <div class="icon-wrapper" [ngClass]="stat.color">
-                        <i [class]="stat.icon"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div
+    class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4"
+  >
+    <div class="btn-group border border-2">
+      <button
+        class="btn bg-light-danger bg-hover-danger btn-sm text-hover-white"
+        [ngClass]="{ 'bg-danger text-white': timePeriod === '1' }"
+        (click)="setTimePeriod('1')"
+      >
+        Günlük
+      </button>
+      <button
+        class="btn bg-light-danger bg-hover-danger btn-sm text-hover-white"
+        [ngClass]="{ 'bg-danger text-white': timePeriod === '7' }"
+        (click)="setTimePeriod('7')"
+      >
+        Haftalık
+      </button>
+      <button
+        class="btn bg-light-danger bg-hover-danger btn-sm text-hover-white"
+        [ngClass]="{ 'bg-danger text-white': timePeriod === '30' }"
+        (click)="setTimePeriod('30')"
+      >
+        Aylık
+      </button>
+      <button
+        class="btn bg-light-danger bg-hover-danger btn-sm text-hover-white"
+        [ngClass]="{ 'bg-danger text-white': timePeriod === '365' }"
+        (click)="setTimePeriod('365')"
+      >
+        Yıllık
+      </button>
     </div>
+    <div
+      class="col-12 d-flex align-sm-items-end gap-2 ml-4 flex-column flex-sm-row"
+    >
+      <a
+        class="btn btn-dark btn-sm hover-elevate-up"
+        (click)="toggleEditMode()"
+      >
+        <i class="fa-solid fa-grip"></i>
+        {{ "Düzenle" }}
+      </a>
+    </div>
+  </div>
 
-    <!-- Grafikler -->
-    <div class="row g-4">
-        <div class="col-12 col-lg-6" *ngFor="let chart of charts">
-            <div class="card shadow-sm h-100">
-                <div class="card-header align-items-center">
-                    <h5 class="mb-1">{{ chart.title }}</h5>
-                    <small class="text-muted">{{ chart.description }}</small>
-                </div>
-                <div class="card-body">
-                    <apx-chart [series]="chart.series" [chart]="chart.options.chart" [xaxis]="chart.options.xaxis"
-                        [yaxis]="chart.options.yaxis" [colors]="chart.options.colors" [grid]="chart.options.grid"
-                        [tooltip]="chart.options.tooltip" [legend]="chart.options.legend"
-                        [stroke]="chart.options.stroke" [fill]="chart.options.fill"
-                        [plotOptions]="chart.options.plotOptions" [labels]="chart.options.labels"
-                        [responsive]="chart.options.responsive" [dataLabels]="{ enabled: false }"
-                        [theme]="{ mode: 'light' }">
-                    </apx-chart>
-                </div>
-            </div>
-        </div>
+  <div
+    class="card card-custom wave wave-animate wave-danger mb-2 mb-4"
+    *ngIf="editMode"
+  >
+    <div class="card-body py-3">
+      <div class="d-flex flex-wrap align-items-center gap-2">
+        <!-- Gizlenen STAT chip'leri -->
+        <ng-container *ngFor="let s of hiddenStats">
+          <button
+            type="button"
+            class="btn btn-sm btn-danger d-inline-flex align-items-center"
+            (click)="restoreStat(s)"
+          >
+            <span class="me-2">{{ s.title }}</span>
+            <i class="bi bi-x"></i>
+          </button>
+        </ng-container>
+      </div>
     </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="row g-4 mb-4">
+    <div
+      class="col-12 col-md-6 col-lg-3"
+      *ngFor="let stat of visibleStats; trackBy: trackByStat"
+    >
+      <div
+        class="card shadow-sm h-100 stat-card d-flex flex-column bg-danger"
+        [ngClass]="{ 'card-edit-mode': editMode }"
+      >
+        <!-- Card Body -->
+        <div
+          class="card-body d-flex justify-content-between align-items-center rounded"
+        >
+          <div class="col-11">
+            <p class="text-white small mb-1">{{ stat.title }}</p>
+            <div class="d-flex align-items-baseline">
+              <h4 class="mb-0 me-2 text-white">{{ stat.value }}</h4>
+              <span class="text-white small">{{ stat.unit }}</span>
+            </div>
+            <p
+              class="small mt-2 fw-medium"
+              [ngClass]="
+                (stat.change || '').startsWith('-')
+                  ? 'text-warning'
+                  : 'text-success'
+              "
+            >
+              {{ stat.change }} {{ compareText }}
+            </p>
+          </div>
+          <div class="icon-wrapper col-1" [ngClass]="stat.color">
+            <i [class]="stat.icon"></i>
+          </div>
+        </div>
+
+        <!-- Card Footer / Kapat Butonu -->
+        <div
+          class="mt-auto bg-danger text-white"
+          style="background: #bd1c23"
+          *ngIf="editMode"
+        >
+          <button
+            class="btn btn-bg-danger w-100"
+            style="background: #bd1c23"
+            (click)="test(stat)"
+          >
+            Gizle
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="card card-custom wave wave-animate wave-danger mb-2 mb-4"
+    *ngIf="editMode"
+  >
+    <div class="card-body py-3">
+      <div class="d-flex flex-wrap align-items-center gap-2">
+        <!-- (İsteğe bağlı) Gizlenen CHART chip'leri -->
+        <ng-container *ngFor="let c of hiddenCharts">
+          <button
+            type="button"
+            class="btn btn-sm btn-danger d-inline-flex align-items-center"
+            (click)="restoreChart(c)"
+          >
+            <span class="me-2">{{ c.title }}</span>
+            <i class="bi bi-x"></i>
+          </button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grafikler -->
+  <div class="row g-4">
+    <div
+      class="col-12 col-lg-6"
+      *ngFor="let chart of visibleCharts; trackBy: trackByChart"
+      [ngClass]="{ 'card-edit-mode': editMode }"
+    >
+      <div class="card shadow-sm h-100">
+        <div class="card-header align-items-center">
+          <h5 class="mb-1">{{ chart.title }}</h5>
+          <small class="text-muted">{{ chart.description }}</small>
+          <div class="action-buttons">
+            <button class="btn btn-sm btn-outline-secondary" *ngIf="!editMode">
+              <i
+                class="bi p-0 fs-4"
+                [ngClass]="
+                  chart.collapsed ? 'bi-chevron-down' : 'bi-chevron-up'
+                "
+              ></i>
+            </button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              *ngIf="editMode"
+              (click)="test(chart)"
+            >
+              <i class="bi bi-x p-0 fs-4"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <apx-chart
+            [series]="chart.series"
+            [chart]="chart.options.chart"
+            [xaxis]="chart.options.xaxis"
+            [yaxis]="chart.options.yaxis"
+            [colors]="chart.options.colors"
+            [grid]="chart.options.grid"
+            [tooltip]="chart.options.tooltip"
+            [legend]="chart.options.legend"
+            [stroke]="chart.options.stroke"
+            [fill]="chart.options.fill"
+            [plotOptions]="chart.options.plotOptions"
+            [labels]="chart.options.labels"
+            [responsive]="chart.options.responsive"
+            [dataLabels]="{ enabled: false }"
+            [theme]="{ mode: 'light' }"
+          >
+          </apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

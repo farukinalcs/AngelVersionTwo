@@ -5,13 +5,16 @@ import { MyTaskListComponent } from "./my-task-list/my-task-list.component";
 import { MobileLocationComponent } from "./mobile-location/mobile-location.component";
 
 export const OthersRoutes: Routes = [
-    {
-        path: '',
-        component: OthersComponent,
-        children: [
-            { path: 'my-team', component: MyTeamComponent },
-            { path: 'my-task-list', component: MyTaskListComponent },
-            { path: 'mobile-location', component: MobileLocationComponent }
-        ]
-    }
-]
+  {
+    path: '',
+    component: OthersComponent,
+    // Üst seviye 'profile/others' zaten breadcrumb: 'Diğerleri' (profileRoutes'ta verdik)
+    children: [
+      { path: 'my-team',        component: MyTeamComponent,       data: { breadcrumb: 'Takımım' } },
+      { path: 'my-task-list',   component: MyTaskListComponent,   data: { breadcrumb: 'Görev Listem' } },
+      { path: 'mobile-location',component: MobileLocationComponent,data: { breadcrumb: 'Mobil Konum' } },
+      // (opsiyonel) varsayılan açılış:
+      // { path: '', redirectTo: 'my-team', pathMatch: 'full' },
+    ]
+  }
+];

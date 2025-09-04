@@ -26,7 +26,12 @@
 @import 'ngx-toastr/toastr';
 
 @import "primeicons/primeicons.css";
-
+.p-breadcrumb {
+    background: #ffffff00!important;
+    padding: 2rem!important;
+    overflow-x: auto;
+    min-width: 400px!important;
+}
 // sweetalert2
 .swal-on-top {
   z-index: 9999 !important;

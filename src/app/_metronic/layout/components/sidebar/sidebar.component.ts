@@ -117,7 +117,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
         config
       ) as boolean;
       if (this.appSidebarDefaultMinimizeDesktopHoverable) {
-        document.body.setAttribute('data-kt-app-sidebar-hoverable', 'true');
+        document.body.setAttribute('data-kt-app-sidebar-hoverable', 'false');
       }
     }
 

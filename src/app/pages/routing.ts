@@ -8,89 +8,68 @@ import { userManagementRoutes } from '../_angel/user-management/user-management.
 import { inventoryRoutes } from '../_angel/inventory/inventory.routes';
 
 const Routing: Routes = [
-    // {
-    //     path: 'dashboard',
-    //     loadChildren: () =>
-    //         import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
-    //     data: { layout: 'light-sidebar' }
-    // },
-    {
-        path: 'performance',
-        loadChildren: () =>
-            import('../_angel/performance/performance.module').then((m) => m.PerformanceModule),
-        data: { layout: 'light-sidebar' },
-    },
-    {
-        path: 'profile',
-        loadChildren: () =>
-            import('../_angel/new-profile/new-profile.routes').then(m => m.profileRoutes),
-        data: { layout: 'light-sidebar' }
-    },
-    {
-        path: 'access',
-        loadChildren: () =>
-            import('../_angel/access/access.module').then((m) => m.AccessModule),
-        data: { layout: 'light-sidebar' },
-
-    },
-    {
-        path: 'attendance',
-        loadChildren: () =>
-            import('../_angel/attendance/attendance.module').then((m) => m.AttendanceModule),
-        data: { layout: 'light-sidebar' },
-
-    },
-    {
-        path: 'leave',
-        children: leaveRoutes,
-        data: { layout: 'light-sidebar' }
-    },
-    {
-        path: 'overtime',
-        children: overtimeRoutes,
-        data: { layout: 'light-sidebar' }
-    },
-    {
-        path: 'shift',
-        children: shiftRoutes,
-        data: { layout: 'light-sidebar' }
-    },
-    {
-        path: 'patrol',
-        loadChildren: () =>
-            import('../_angel/patrol/patrol.module').then((m) => m.PatrolModule),
-        data: { layout: 'light-sidebar' },
-    },
-    {
-        path: 'apps/chat',
-        loadChildren: () =>
-            import('../modules/apps/chat/chat.module').then((m) => m.ChatModule),
-        data: { layout: 'light-sidebar' },
-    },
-    {
-        path: 'visitor',
-        children: visitorRoutes,
-        data: { layout: 'light-sidebar' },
-    },
-        {
-        path: 'inventory',
-        children: inventoryRoutes,
-        data: { layout: 'light-sidebar' },
-    },
-    {
-        path: 'user-management',
-        children: userManagementRoutes,
-        data: { layout: 'light-sidebar' },
-    },
-    {
-        path: '',
-        redirectTo: '/profile',
-        pathMatch: 'full',
-    },
-    {
-        path: '**',
-        redirectTo: 'error/404',
-    },
+  {
+    path: 'performance',
+    loadChildren: () => import('../_angel/performance/performance.module').then(m => m.PerformanceModule),
+    data: { layout: 'light-sidebar', breadcrumb: 'Performans' }
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('../_angel/new-profile/new-profile.routes').then(m => m.profileRoutes),
+    data: { layout: 'light-sidebar', breadcrumb: 'Profil' }
+  },
+  {
+    path: 'access',
+    loadChildren: () => import('../_angel/access/access.module').then(m => m.AccessModule),
+    data: { layout: 'light-sidebar', breadcrumb: 'Erişim' }
+  },
+  {
+    path: 'attendance',
+    loadChildren: () => import('../_angel/attendance/attendance.module').then(m => m.AttendanceModule),
+    data: { layout: 'light-sidebar', breadcrumb: 'Yoklama' }
+  },
+  {
+    path: 'leave',
+    children: leaveRoutes,
+    data: { layout: 'light-sidebar', breadcrumb: 'İzin' }
+  },
+  {
+    path: 'overtime',
+    children: overtimeRoutes,
+    data: { layout: 'light-sidebar', breadcrumb: 'Fazla Mesai' }
+  },
+  {
+    path: 'shift',
+    children: shiftRoutes,
+    data: { layout: 'light-sidebar', breadcrumb: 'Vardiya' }
+  },
+  {
+    path: 'patrol',
+    loadChildren: () => import('../_angel/patrol/patrol.module').then(m => m.PatrolModule),
+    data: { layout: 'light-sidebar', breadcrumb: 'Devriye' }
+  },
+  {
+    path: 'apps/chat',
+    loadChildren: () => import('../modules/apps/chat/chat.module').then(m => m.ChatModule),
+    data: { layout: 'light-sidebar', breadcrumb: 'Sohbet' }
+  },
+  {
+    path: 'visitor',
+    children: visitorRoutes,
+    data: { layout: 'light-sidebar', breadcrumb: 'Ziyaretçi' }
+  },
+  {
+    path: 'inventory',
+    children: inventoryRoutes,
+    data: { layout: 'light-sidebar', breadcrumb: 'Envanter' }
+  },
+  {
+    path: 'user-management',
+    children: userManagementRoutes,
+    data: { layout: 'light-sidebar', breadcrumb: 'Kullanıcı Yönetimi' }
+  },
+  { path: '', redirectTo: '/profile', pathMatch: 'full' },
+  { path: '**', redirectTo: 'error/404' }
 ];
 
 export { Routing };

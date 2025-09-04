@@ -41,6 +41,7 @@ import { ReportsComponent } from './components/toolbar/reports/reports.component
 import { SaasComponent } from './components/toolbar/saas/saas.component';
 import { HasPermissionDirective } from 'src/app/core/permission/has-permission.directive';
 import { AssistantComponent } from './components/assistant/assistant.component';
+import { AppBreadcrumbComponent } from 'src/app/_angel/shared/breadcrumb/breadcrumb.component';
 
 const routes: Routes = [
   {
@@ -86,8 +87,9 @@ const routes: Routes = [
     TranslateModule,
     ThemeModeModule,
     HasPermissionDirective,
-    AssistantComponent
-  ],
+    AssistantComponent,
+    AppBreadcrumbComponent
+],
   exports: [RouterModule],
 })
 export class LayoutModule {}
