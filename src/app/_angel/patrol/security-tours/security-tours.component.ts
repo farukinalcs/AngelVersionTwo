@@ -99,11 +99,11 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
     this.patrol.getGuardTour(0).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.tourList = response[0].x;
       this.filteredTours = [...this.tourList];
-      console.log("getGuardTour:", this.tourList);
+      console.log("getGuardTour:", this.filteredTours);
       this.tourNameInput = "";
-      this.ref.detectChanges();
+      
     });
-
+    this.ref.detectChanges();
   }
 
   getGuardStation(): void {
@@ -200,12 +200,13 @@ export class SecurityToursComponent implements OnInit, OnDestroy {
   updateTour(){
 
     this.patrol.upGuardTour(this.updateTourName, this.selectTourId,this.selectTypeId,this.zorunlu).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-      const Result = response[0].x;
-      
-      console.log("upGuardTour",Result);
+      this.tourList = response[0].x;
+      this.filteredTours = [...this.tourList];
+      console.log("upGuardTour",this.filteredTours);
       this.ref.detectChanges();
     })
     this.getGuardTour();
+    this.filterTours();
     this._updateTourModal = false;
   }
 

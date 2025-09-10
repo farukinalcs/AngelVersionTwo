@@ -665,24 +665,6 @@ export class DeviceAndmapComponent {
 
 
 
-  focusOnDevice2(device: any): void {
-    if (!device || !this.map) return;
-    Object.values(this.markers).forEach(marker => marker.setAnimation(null));
-    const marker = this.markers[device.imei];
-
-    const lat = parseFloat(device.lat);
-    const lng = parseFloat(device.lng);
-  
-    if (!isNaN(lat) && !isNaN(lng)) {
-      marker.setAnimation(google.maps.Animation.BOUNCE);
-      this.map.setCenter({ lat, lng });
-      this.map.setZoom(20);
-      console.log("📍 Harita ortalandı:", lat, lng);
-    } else {
-      console.warn("⚠ Geçersiz koordinatlar:", device);
-    }
-  }
-
   focusOnDevice(device: any): void {
     Object.values(this.markers).forEach(marker =>{
       marker.setAnimation(null);
@@ -712,6 +694,7 @@ export class DeviceAndmapComponent {
     this.stopConnection();
   }
 }
+
 export interface ClientInfo {
   AppName: String;
   IpAddr: String;
