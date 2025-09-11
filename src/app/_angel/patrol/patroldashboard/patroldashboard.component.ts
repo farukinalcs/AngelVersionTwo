@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Signal, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { PatrolService } from '../patrol.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
@@ -15,7 +15,9 @@ import { ChangeDetectionStrategy } from '@angular/core';
 import { SignalrPatrolService } from '../signalr-patrol.service';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import * as signalR from '@microsoft/signalr';
-import { ConnectionModel} from '../models/connection';
+import { ConnectionModel } from '../models/connection';
+import { LocationService } from '../content-container/location.service';
+
 
 export const MY_DATE_FORMATS: MatDateFormats = {
   parse: { dateInput: 'yyyy-MM-dd' },
@@ -26,6 +28,7 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+
 export class CustomDateAdapter extends NativeDateAdapter {
   override  parse(value: any): Date | null {
     if (!value) return null;
@@ -50,6 +53,7 @@ export class CustomDateAdapter extends NativeDateAdapter {
     return ('0' + n).slice(-2);
   }
 }
+
 @Component({
   selector: 'app-patroldashboard',
   templateUrl: './patroldashboard.component.html',
@@ -62,6 +66,17 @@ export class CustomDateAdapter extends NativeDateAdapter {
 })
 
 export class PatroldashboardComponent implements OnInit, OnDestroy {
+
+  //DASHBOARD
+  eventLogs: {
+    type: string;
+    message: string;
+    time: Date;
+    icon: string;
+    color: string;
+  }[] = [];
+
+
 
   private ngUnsubscribe = new Subject();
 
@@ -106,25 +121,24 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   widgets: any;
   alarmlar: any[] = [];
   olaylar: any[] = [];
-  displayList:any[] = [];
+  displayList: any[] = [];
 
   mobileUsers: ConnectionModel[] = [];
   mobileClientInfos: any[] = [];
 
-
-
-
+  selectedLocationID: number;
   onlineMobileUsers: ConnectionModel[] = [];
-
-  allconnInfo:ConnectionModel[] = []
-  allClitenInfos:any[] = []
+  allconnInfo: ConnectionModel[] = []
+  allClitenInfos: any[] = []
+  private markers: { [imei: string]: google.maps.Marker } = {};
   constructor(
     private patrol: PatrolService,
     private ref: ChangeDetectorRef,
     private translateService: TranslateService,
     private datePipe: DatePipe,
     private signalRService: SignalrPatrolService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private location: LocationService
 
   ) { }
 
@@ -132,29 +146,16 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    const today = new Date();
-    this.formattedDate = this.datePipe.transform(today, 'yyyy-MM-dd')!;
-    this.dateControl.setValue(today);
+    // const today = new Date();
+    // this.formattedDate = this.datePipe.transform(today, 'yyyy-MM-dd')!;
+    // this.dateControl.setValue(today);
 
-    this.dateControl.valueChanges.subscribe((newDate) => {
-      this.formattedDate = this.datePipe.transform(newDate, 'yyyy-MM-dd')!;
-    });
+    // this.dateControl.valueChanges.subscribe((newDate) => {
+    //   this.formattedDate = this.datePipe.transform(newDate, 'yyyy-MM-dd')!;
+    // });
 
     this.getLocation();
 
-
-    //this.startConnection(this.helperService.gateResponseY, 'https://mecloud.com.tr:8011/angelhub');
-
-    // window.setInterval(() => {
-    //   this.getPatrolInfo(this.selectLocationId);
-    //   this.dailyGuardTourCheck(this.formattedDate);
-    //   this.dailyGuardTourDetail(this.formattedDate, this.selectLocationId);
-
-    // }, 3000);
-  
-      this.getPatrolInfo(this.selectLocationId);
-      // this.dailyGuardTourCheck(this.formattedDate);
-      // this.dailyGuardTourDetail(this.formattedDate, this.selectLocationId);
 
   }
 
@@ -185,51 +186,100 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
       console.warn("❌ SignalR bağlantısı yok, register yapılamıyor.");
       return;
     }
+
     try {
       const data = await this.generateRegisterData();
       const jsonData = JSON.stringify(data);
-  
-      console.log('📦 Register gönderiliyor:', jsonData);
 
-      let connections: ConnectionModel[] = [];
+      console.log('📦 Register gönderiliyor:', jsonData);
 
       this.hubConnection.on('allconninfo', (...args: any[]) => {
         if (args && args.length > 0) {
           try {
             const rawJson = args[0] as string;
             const parsed = JSON.parse(rawJson) as ConnectionModel[];
-      
-            connections = parsed.map((conn) => {
+
+            const connections = parsed.map((conn) => {
               let clientInfoParsed: any;
               try {
                 clientInfoParsed = JSON.parse(conn.ClientInfo);
               } catch {
-                console.warn('❌ blabla JSON değil:', conn.ClientInfo);
+                console.warn('❌ ClientInfo JSON değil:', conn.ClientInfo);
                 clientInfoParsed = {};
               }
-      
+
               return {
                 ...conn,
                 ClientInfo: clientInfoParsed,
               };
             });
-      
-            this.allconnInfo = connections.filter(c => c.ClientType === 4);
-            this.allClitenInfos = this.allconnInfo.map(u => u.ClientInfo);
 
-            console.table(connections);
-      
-            this.displayList = this.allconnInfo.map(user => ({
-              adSoyad: user.terminalname,
+            const mobileConnections = connections.filter(c => c.ClientType === 4);
+
+            const newClientInfos = mobileConnections.map(user => ({
+              terminalname: user.terminalname,
               connectionDate: user.ConnectionDate,
-           
               ...user.ClientInfo
             }));
-      
-            console.log('📱 Mobil kullanıcılar:', this.allconnInfo);
-            console.log('📦 Mobil client info listesi:', this.allClitenInfos);
-            console.log('🧾 Display List:', this.displayList);
-      
+
+            const filteredByLocation = newClientInfos.filter(x =>
+              x.LokasyonId == this.selectedLocationID
+            );
+
+            // 🔄 Display list'i yeni lokasyon cihazlarıyla güncelle
+            this.displayList = [...filteredByLocation];
+
+
+            // 🔄 Marker senkronizasyonu
+            filteredByLocation.forEach(device => {
+              const lat = +device.lat;
+              const lng = +device.lng;
+
+              if (!isNaN(lat) && !isNaN(lng)) {
+                const existingMarker = this.markers[device.imei];
+
+                if (!existingMarker) {
+                  const marker = new google.maps.Marker({
+                    position: { lat, lng },
+                    map: this.map,
+                    title: device.terminalname,
+                    icon: {
+                      url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60">
+                       <path
+                        d="M20 0C9 0 0 9 0 20c0 11 20 40 20 40s20-29 20-40C40 9 31 0 20 0z"
+                        fill="red"
+                        stroke="white"
+                        stroke-width="3"
+                      />
+                      <text
+                        x="20"
+                        y="27"
+                        font-size="15"
+                        text-anchor="middle"
+                        fill="white"
+                        font-family="Arial"
+                        dominant-baseline="top"
+                      >
+                        ${device?.terminalname.trim()?.charAt(0)}
+                      </text>
+                    </svg>
+                  `),
+                      scaledSize: new google.maps.Size(40, 40),
+                      anchor: new google.maps.Point(20, 20)
+                    }
+                  });
+
+                  this.markers[device.imei] = marker;
+                  console.log("🆕 Yeni marker eklendi: http://maps.google.com/mapfiles/ms/icons/red-dot.png ", device.imei);
+                } else {
+
+                }
+              } else {
+                console.warn('❌ Geçersiz koordinat:', device);
+              }
+            });
+
           } catch (err) {
             console.error('❌ allconninfo parse hatası:', err);
           }
@@ -238,9 +288,10 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
       const result = await this.hubConnection.invoke("register", jsonData);
       console.log('✅ Register başarılı:', result);
+
     } catch (err) {
       console.error('❌ Register hatası:', err);
-    } 
+    }
   }
 
   public listenSignalREvents(): void {
@@ -255,27 +306,29 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     if (args && args.length > 0) {
       const data = args[0] as string;
       console.log("🚨 INCIDENT:", data);
-  
+      this.addEventLog("🚨 INCIDENT:", data);
     }
   }
-  
+
   private onAlert(...args: any[]): void {
     if (args && args.length > 0) {
       const alertData = args[0] as string;
       console.log("⚠️ Alert event geldi:", alertData);
-  
+
       this.handleAlarmMessage(alertData);
+      this.addEventLog("⚠️ ALERT", alertData);
     }
- 
+
   }
-  
+
   private async onVoice(...args: any[]): Promise<void> {
     if (args && args.length > 0) {
       const voiceData = args[0] as string;
       console.log("🎧 Voice event geldi:", voiceData);
       await this.handleVoiceMessage(voiceData);
+      this.addEventLog("🎧 VOICE", voiceData);
     }
-   
+
   }
 
   private async onConninfo(...args: any[]): Promise<void> {
@@ -283,7 +336,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
       try {
         const rawJson = args[0] as string;
         const parsed = JSON.parse(rawJson) as ConnectionModel[];
-  
+
         let connections: ConnectionModel[] = [];
 
         connections = parsed.map((conn) => {
@@ -294,7 +347,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
             console.warn('❌ Conninfo ClientInfo JSON değil:', conn.ClientInfo);
             clientInfoParsed = {};
           }
-  
+
           return {
             ...conn,
             ClientInfo: clientInfoParsed,
@@ -303,14 +356,14 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
         const updates = connections.filter(c => c.ClientType === 4);
         updates.forEach(conn => {
           const uniqueKey = conn.LoginId || conn.ClientInfo?.person || conn.KullaniciAdi;
-  
+
           const index = this.displayList.findIndex(
             u =>
               u.loginId === uniqueKey || // loginId eşleşmesi varsa
               u.person === uniqueKey || // clientInfo.person eşleşiyorsa
               u.kullaniciAdi === uniqueKey
           );
-  
+
           if (conn.Process === '+' && index === -1) {
             // ✔ cihaz yoksa → ekle
             this.displayList.push({
@@ -324,7 +377,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
             });
             console.log('🟢 Yeni cihaz eklendi:', conn.terminalname);
           }
-  
+
           if (conn.Process === '+' && index !== -1) {
             // 🔁 varsa → güncelle (yani overwrite)
             this.displayList[index] = {
@@ -338,16 +391,16 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
             };
             console.log('♻ Güncellendi:', conn.terminalname);
           }
-  
+
           if (conn.Process === '-' && index !== -1) {
             // 🔴 cihaz offline olduysa → sil
             this.displayList.splice(index, 1);
             console.log('🔴 Cihaz listeden silindi:', conn.terminalname);
           }
         });
-  
-        console.log("🔴",connections);
-        console.log("❌❌❌❌❌❌",this.displayList);
+
+        console.log("🔴", connections);
+        console.log("❌❌❌❌❌❌", this.displayList);
       } catch (err) {
         console.error('❌ conninfo parse hatası:', err);
       }
@@ -389,11 +442,11 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
         scaledSize: new google.maps.Size(40, 40)
       }
     });
-  
-  
+
+
     console.log("🔔 Alarm verisi işlendi:", rawAlarm);
   }
-  
+
   async handleVoiceMessage(data: string): Promise<void> {
     // Belki sesli mesaj oynatılacak?
     console.log("🔊 Voice mesajı işlendi:", data);
@@ -405,8 +458,8 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     const clientInfo = await this.generateClientInfo();
 
     return {
-      terminalname: 'Faruk İnal',
-      KullaniciAdi: 'faruk.inal',
+      terminalname: 'Guard Dashboard',
+      KullaniciAdi: 'Guard Dashboard',
       LoginId: '',
       TokenId: '',
       CustomerCode: 'MeyerTakip14367',
@@ -423,82 +476,12 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.initializeMap();
+
   }
 
 
   getFormattedDate(): string {
     return this.selectedDate ? this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd')! : '';
-  }
-
-  getPatrolInfo(locationid: number): void {
-
-    this.patrol.getPatrolInfo(locationid).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-      this.patrolInfo = response[0]?.x;
-      console.log(' this.patrolInfo:', this.patrolInfo);
-      this.ref.detectChanges();
-      (this.patrolInfo ?? []).forEach((patrol) => {
-        if (+patrol?.olay > 0) {
-          this.lastIncidentModal = true;
-          this.openAlarmModal(patrol);
-        }
-        if (+patrol?.alarm > 0) {
-          // this.LastEventModal(patrol);
-        }
-      });
-
-      if (this.patrolInfo?.[0]?.lat != null && this.patrolInfo?.[0]?.lng != null &&
-        !isNaN(+this.patrolInfo[0]?.lat) && !isNaN(+this.patrolInfo[0]?.lng)) {
-
-        this.map?.setCenter({
-          lat: +this.patrolInfo[0]?.lat,
-          lng: +this.patrolInfo[0]?.lng,
-        });
-
-        console.log('lat:', this.patrolInfo[0]?.lat);
-        console.log('lng:', this.patrolInfo[0]?.lng);
-      } else {
-        console.warn('Geçersiz koordinatlar:', this.patrolInfo?.[0]);
-      }
-
-      if (this.patrolInfo?.length > 0) {
-        (this.patrolInfo ?? []).forEach((patrol: any) => {
-          if (!isNaN(+patrol?.lat) && !isNaN(+patrol?.lng) && this.map) {
-            new google.maps.Marker({
-              position: { lat: +patrol?.lat, lng: +patrol?.lng },
-              map: this.map,
-              title: patrol?.name,
-              icon: patrol?.durum === 'offline'
-                ? 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-                : 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-            });
-          } else {
-            console.warn('Geçersiz marker koordinatları:', patrol);
-          }
-        });
-      }
-    });
-
-  }
-
-
-  initializeMap() {
-
-    const mapElement = document.getElementById('map') as HTMLElement;
-    if (!mapElement) {
-      console.error('Harita elementi bulunamadı.');
-      return;
-    }
-
-    const defaultCenter = { lat: 40.997953, lng: 29.136747 };
-
-    this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-      center: defaultCenter,
-      zoom: 10,
-    });
-
-    console.log('Harita yüklendi:', this.map);
-    this.getPatrolInfo(this.selectLocationId);
   }
 
   LastEventModal(item: AlarmModel) {
@@ -531,11 +514,55 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     });
   }
 
+  onLocationChange(locationid: number) {
+
+    this.selectLocationId = locationid;
+
+  }
+
 
   private validateCoordinates(lat: string | null, lng: string | null): boolean {
     const latitude = parseFloat(lat || "0");
     const longitude = parseFloat(lng || "0");
     return !isNaN(latitude) && !isNaN(longitude);
+  }
+
+  private addEventLog(type: string, message: string) {
+
+    console.log("addEventLog:", this.eventLogs);
+    console.log("addEventLog:", type, message);
+    let icon = "info";
+    let color = "secondary";
+
+    switch (type) {
+      case "🚨 INCIDENT:":
+        icon = "alert-octagon";
+        color = "danger"; // kırmızı
+        break;
+      case "⚠️ ALERT":
+        icon = "bell";
+        color = "warning"; // sarı
+        break;
+      case "🎧 VOICE":
+        icon = "headphones";
+        color = "primary"; // mavi
+        break;
+      default:
+        icon = "info";
+        color = "secondary";
+    }
+
+    this.eventLogs.unshift({
+      type,
+      message,
+      time: new Date(),
+      icon,
+      color
+    });
+
+    if (this.eventLogs.length > 20) {
+      this.eventLogs.pop();
+    }
   }
 
   private loadMap(lat: number, lng: number, title: string): void {
@@ -560,19 +587,6 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   }
 
 
-  getGuardEventList(item: Incident) {
-
-    this.deviceIncidentList = true;
-    const imei = item?.imei;
-    this.patrol.getGuardEvents(0, imei).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-      this.guardEventList = response[0]?.x;
-      this.ref.detectChanges();
-      this.guardEventList = this.guardEventList?.map(olay => {
-        olay.link = JSON.parse(olay.link);
-        return olay;
-      });
-    })
-  }
 
   getEventDetail(item: Incident) {
     console.log(":::DETAİLS::::", item);
@@ -606,68 +620,6 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   }
 
 
-
-  // dailyGuardTourCheck(date: any) {
-  //   this.patrol.dailyGuardTourCheck(date).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-  //     this.dailyGuardTour = response[0]?.x;
-
-  //     this.atilmayan = (this.dailyGuardTour ?? []).filter((item: any) => item.durum === 0)
-  //     this.atilan = (this.dailyGuardTour ?? []).filter((item: any) => item.durum === 1)
-  //     this.atilacak = (this.dailyGuardTour ?? []).filter((item: any) => item.durum === 2)
-
-  //     this.updateWidgets();
-  //     this.ref.detectChanges();
-  //   })
-
-  // }
-
-
-  // updateWidgets() {
-  //   this.widgets = [
-  //     { title: 'Planlanan Turlar', value: this.dailyGuardTour?.length, index: 0 },
-  //     { title: 'Atılan Turlar', value: this.atilan?.length, index: 1 },
-  //     { title: 'Atılmayan Turlar', value: this.atilmayan?.length, index: 2 },
-  //     { title: 'Atılacak Turlar', value: this.atilacak?.length, index: 3 },
-  //     { title: 'Alarmlar', value: this.alarmlar?.length, index: 4 },
-  //     { title: 'Olaylar', value: this.olaylar?.length, index: 5 },
-  //   ];
-  // }
-
-  // openWidget(widget: any) {
-
-  //   switch (widget.index) {
-  //     case 0: this.widgetData = this.dailyGuardTour; break; // Planlanan Turlar
-  //     case 1: this.widgetData = this.atilan; break; // Atılan Turlar
-  //     case 2: this.widgetData = this.atilmayan; break; // Atılmayan Turlar
-  //     case 3: this.widgetData = this.atilacak; break; // Atılacak Turlar
-  //     case 4: this.widgetData = this.alarmlar; break; // Alarmlar
-  //     case 5: this.widgetData = this.olaylar; break; // Olaylar
-  //     default: this.widgetData = [];
-  //   }
-  //   console.log("openWidget", widget);
-  //   this.widgetTitle = widget.title;
-  //   this.widgetDetailModal = true;
-  // }
-
-  // dailyGuardTourDetail(date: any, locationid: number) {
-  //   this.patrol.tour_s(date, locationid)?.pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-  //     this.tour_s = response[0]?.x;
-  //     console.log("this.tour_s", this.tour_s);
-  //   })
-  //   this.patrol.tour_sd(date, locationid)?.pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-  //     this.tour_sd = response[0]?.x;
-  //     console.log("this.tour_sd........sd", this.tour_sd);
-  //   })
-  // }
-
-  // formatTime(seconds: number): string {
-  //   const hrs = Math.floor(seconds / 3600);
-  //   const mins = Math.floor((seconds % 3600) / 60);
-  //   const secs = seconds % 60;
-
-  //   return `${this.pad(hrs)}:${this.pad(mins)}:${this.pad(secs)}`;
-  // }
-
   pad(num: number): string {
     return num.toString().padStart(2, '0');
   }
@@ -675,7 +627,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
-   
+    this.stopConnection();
   }
 
 }

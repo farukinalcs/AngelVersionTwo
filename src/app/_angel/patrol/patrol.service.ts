@@ -260,13 +260,14 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
-  deleteGuardTourCalendar(id:number){
+  deleteGuardTourCalendar(locationId:number,tourId:number,specific:string){
     var sp: any[] = [{
       mkodu:'yek254',
-      lokasyonid:id.toString(),
-      id:"",
-      ozel:""
+      lokasyonid:locationId.toString(),
+      id:tourId.toString(),
+      ozel:specific.toString()
     }]
+    console.log("deleteGuardTourCalendar",sp)
     return this.requestMethod(sp);
   }
 
@@ -347,12 +348,6 @@ export class PatrolService {
     }]
     return this.requestMethod(sp);
   }
-
-
-
-
-
-
 
 
 }

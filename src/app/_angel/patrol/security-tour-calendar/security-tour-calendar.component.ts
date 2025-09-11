@@ -144,6 +144,18 @@ export class SecurityTourCalendarComponent implements OnInit, OnDestroy {
     this.getItemsByGun(this.dayIndex);
   }
 
+  deleteGuardTourCalendar(){
+    this.patrol.deleteGuardTourCalendar(this.selectedTourDetail.lokasyonid,this.selectedTourDetail.takvimid,this.selectedTourDetail.ozel).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+
+      const result = response[0].x
+      console.log("RESULT",result);
+      this._deleteTourCalendarModal = false;
+      this.ref.detectChanges();
+    })
+    this.getItemsByGun(this.dayIndex);
+    this.getLocation();
+  }
+
   getTourId(item: any) {
     this.tourId = item;
     console.log(" SECİLİ TUR ID", typeof this.tourId, this.tourId);
