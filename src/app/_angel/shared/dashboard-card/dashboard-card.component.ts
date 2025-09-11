@@ -33,6 +33,8 @@ export class DashboardCardComponent implements OnInit, OnDestroy {
     }
 
     openMore(detail: any) {
+        console.log(detail);
+        
         if (detail.items.length === 0) {
             this.toastrService.warning('Bu kartta gösterilecek detay yok.', 'Uyarı');
             return;

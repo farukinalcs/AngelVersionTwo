@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes,RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { RaporlarComponent } from './raporlar/raporlar.component';
 import { DevicesComponent } from './devices/devices.component';
@@ -22,74 +22,77 @@ import { AccessGroupsComponent } from './access-groups/access-groups.component';
 import { OnboardingComponent } from './access-definitions/definitions/onboarding/onboarding.component';
 import { NecessaryDocsComponent } from './access-definitions/definitions/necessary-docs/necessary-docs.component';
 
-
 const routes: Routes = [
   {
     path: 'dashboard',
     component: AccessDashboardComponent,
+    data: { breadcrumb: 'Kontrol Paneli' }
   },
   {
     path: 'registry-list',
     component: AccessRegistryListComponent,
+    data: { breadcrumb: 'Sicil Listesi' }
   },
   {
     path: 'terminal',
     component: DevicesComponent,
+    data: { breadcrumb: 'Terminaller' }
   },
   {
     path: 'access-groups',
     loadComponent: () => import('./access-groups/access-groups.component').then(m => m.AccessGroupsComponent),
+    data: { breadcrumb: 'Erişim Grupları' }
   },
   {
     path: 'registry-groups',
     loadComponent: () => import('./registry-groups/registry-groups.component').then(m => m.RegistryGroupsComponent),
+    data: { breadcrumb: 'Sicil Grupları' }
   },
   {
     path: 'definitions',
     component: AccessDefinitionsComponent,
+    data: { breadcrumb: 'Tanımlar' },
     children: [
-      { path: '', redirectTo: 'company', pathMatch: 'full' }, // İlk sekmeye yönlendirme
-      { path: 'company', component: OrganizationDefinitionsComponent, data: { crud: 'cbo_firma' } },
-      { path: 'department', component: OrganizationDefinitionsComponent, data: { crud: 'cbo_bolum' } },
-      { path: 'position', component: OrganizationDefinitionsComponent, data: { crud: 'cbo_pozisyon' } },
-      { path: 'job', component: OrganizationDefinitionsComponent, data: { crud: 'cbo_gorev' } },
-      { path: 'sub-company', component: OrganizationDefinitionsComponent, data: { crud: 'cbo_altfirma' } },
-      { path: 'directorship', component: OrganizationDefinitionsComponent, data: { crud: 'cbo_direktorluk' } },
-      { path: 'collar', component: OrganizationDefinitionsComponent, data: { crud: 'cbo_yaka' } },
-      { path: 'device-groups', component: DeviceGroupsComponent },
-      { path: 'time-zone', component: TimeZoneComponent },
-      { path: 'fingerprint', component: FingerprintComponent },
-      { path: 'doc-type', component: OrganizationDefinitionsComponent, data: { crud: 'cbo_belgetipi' } },
-      { path: 'time-attendance', component: OrganizationDefinitionsComponent, data: { crud: 'cbo_puantaj' } },
-      { path: 'mail-service', component: MailServiceComponent },
-      { path: 'ftp-info', component: FtpInfoComponent },
-      { path: 'leave-reason', component: OrganizationDefinitionsComponent, data: { crud: 'sys_ayrilisnedeni' } },
-      { path: 'security', component: SecurityComponent },
-      { path: 'event-codes', component: EventCodesComponent},
-      { path: 'printers', component: PrintersComponent},
-      { path: 'led-panels', component: LedPanelsComponent},
-      { path: 'authority-roles', component: AuthorityRolesComponent},
-      { path: 'my-page', component: MyPageComponent},
-      { path: 'onboarding', component: OnboardingComponent},
-      { path: 'necessary-docs', component: NecessaryDocsComponent}
-      
+      { path: '', redirectTo: 'company', pathMatch: 'full' }, // ilk sekmeye yönlendirme
+      { path: 'company',        component: OrganizationDefinitionsComponent, data: { breadcrumb: 'Firma',        crud: 'cbo_firma' } },
+      { path: 'department',     component: OrganizationDefinitionsComponent, data: { breadcrumb: 'Bölüm',        crud: 'cbo_bolum' } },
+      { path: 'position',       component: OrganizationDefinitionsComponent, data: { breadcrumb: 'Pozisyon',     crud: 'cbo_pozisyon' } },
+      { path: 'job',            component: OrganizationDefinitionsComponent, data: { breadcrumb: 'Görev',        crud: 'cbo_gorev' } },
+      { path: 'sub-company',    component: OrganizationDefinitionsComponent, data: { breadcrumb: 'Alt Firma',    crud: 'cbo_altfirma' } },
+      { path: 'directorship',   component: OrganizationDefinitionsComponent, data: { breadcrumb: 'Direktörlük',  crud: 'cbo_direktorluk' } },
+      { path: 'collar',         component: OrganizationDefinitionsComponent, data: { breadcrumb: 'Yaka',         crud: 'cbo_yaka' } },
+      { path: 'device-groups',  component: DeviceGroupsComponent,           data: { breadcrumb: 'Cihaz Grupları' } },
+      { path: 'time-zone',      component: TimeZoneComponent,               data: { breadcrumb: 'Zaman Dilimi' } },
+      { path: 'fingerprint',    component: FingerprintComponent,            data: { breadcrumb: 'Parmak İzi' } },
+      { path: 'doc-type',       component: OrganizationDefinitionsComponent, data: { breadcrumb: 'Belge Tipi',   crud: 'cbo_belgetipi' } },
+      { path: 'time-attendance',component: OrganizationDefinitionsComponent, data: { breadcrumb: 'Puantaj',      crud: 'cbo_puantaj' } },
+      { path: 'mail-service',   component: MailServiceComponent,            data: { breadcrumb: 'Mail Servisi' } },
+      { path: 'ftp-info',       component: FtpInfoComponent,                data: { breadcrumb: 'FTP Bilgisi' } },
+      { path: 'leave-reason',   component: OrganizationDefinitionsComponent, data: { breadcrumb: 'İzin Nedeni',  crud: 'sys_ayrilisnedeni' } },
+      { path: 'security',       component: SecurityComponent,               data: { breadcrumb: 'Güvenlik' } },
+      { path: 'event-codes',    component: EventCodesComponent,             data: { breadcrumb: 'Olay Kodları' } },
+      { path: 'printers',       component: PrintersComponent,               data: { breadcrumb: 'Yazıcılar' } },
+      { path: 'led-panels',     component: LedPanelsComponent,              data: { breadcrumb: 'LED Paneller' } },
+      { path: 'authority-roles',component: AuthorityRolesComponent,         data: { breadcrumb: 'Yetki Rolleri' } },
+      { path: 'my-page',        component: MyPageComponent,                 data: { breadcrumb: 'Benim Sayfam' } },
+      { path: 'onboarding',     component: OnboardingComponent,             data: { breadcrumb: 'Onboarding' } },
+      { path: 'necessary-docs', component: NecessaryDocsComponent,          data: { breadcrumb: 'Gerekli Belgeler' } }
     ]
   },
   {
     path: 'raporlar',
     component: RaporlarComponent,
+    data: { breadcrumb: 'Raporlar' }
   },
   {
     path: 'temp-card',
-    loadComponent: () => import('./access-temp-card/access-temp-card.component').then(m => m.AccessTempCardComponent)
+    loadComponent: () => import('./access-temp-card/access-temp-card.component').then(m => m.AccessTempCardComponent),
+    data: { breadcrumb: 'Geçici Kart' }
   }
 ];
 
-
 @NgModule({
-  // declarations: [],
-  imports: [
-    RouterModule.forChild(routes)
-  ], exports: [RouterModule],
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class AccessRoutingModule { }
+export class AccessRoutingModule {}

@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-custom gutter-b my-5 pb-5">
+        <div class="card-header border-0 bg-danger" style="min-height: 45px">
+          <div class="card-title">
+            <!-- Güvenli erişim: selectedItem başlangıçta undefined olabilir -->
+            <h3 class="card-label text-white">
+              {{ selectedItem?.label || ("Yemek_Tipi" | translate) }}
+            </h3>
+            <h4 class="card-label text-gray-200 fs-8">
+              {{
+                "Yemek_Tipi_Bilgilerini_Buradan_Belirleyebilirsiniz" | translate
+              }}
+            </h4>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row">
+            <form #frm="ngForm" (ngSubmit)="onSubmit(frm.value)">
+              <div class="w-100">
+                <div class="row">
+                  <div class="col-12 mb-4">
+                    <label class="required" for="selectMealType"
+                      >Yemek Türü</label
+                    >
+
+                    <select
+                      id="selectMealType"
+                      class="form-select"
+                      name="yemektipi"
+                      aria-label="Yemek Türü"
+                      required
+                      ngModel
+                    >
+                      <option [ngValue]="null" disabled selected>
+                        Seçiniz
+                      </option>
+                      <!-- Dizi yoksa bile patlamasın -->
+                      <option
+                        *ngFor="let item of mealType(); trackBy: trackById"
+                        [value]="item.Id"
+                      >
+                        {{ item.Ad }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12 mb-5">
+                    <label class="required" for="inputMeal">Yemek Adı</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="inputMeal"
+                      name="yemekadi"
+                      placeholder="Eklemek istediğiniz yemeğin adını giriniz"
+                      required
+                      ngModel
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="d-grid gap-2">
+                    <button
+                      type="submit"
+                      class="btn btn-danger"
+                      [disabled]="frm.invalid"
+                    >
+                      Tanımla
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

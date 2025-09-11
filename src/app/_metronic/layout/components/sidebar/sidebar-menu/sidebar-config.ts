@@ -101,9 +101,9 @@ export const MENU: MenuItem[] = [
         title: 'Yemekhane',
         icon: 'fa-solid fa-utensils text-danger',
         children: [
-            { title: 'Genel Bakış', routerLink: 'yemekhane/dashboard' },
-            { title: 'Tanımlamalar', routerLink: 'yemekhane/tanimlamalar' },
-            { title: 'Raporlar', routerLink: 'yemekhane/raporlar' }
+            { title: 'Genel Bakış', routerLink: 'refectory/overview' },
+            { title: 'Tanımlamalar', routerLink: 'refectory/definitions' },
+            { title: 'Raporlar', routerLink: 'refectory/reports' }
         ],
         app: ['1', '6']
     },
@@ -174,6 +174,7 @@ export const MENU: MenuItem[] = [
             { title:'Talepler', routerLink:'inventory/request'}
         ],
         app: ['1']
-    }
+    },
+    
 ];
 

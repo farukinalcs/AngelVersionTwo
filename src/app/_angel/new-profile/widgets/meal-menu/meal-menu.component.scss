@@ -1,0 +1,22 @@
+#mealCarousel .carousel-control-prev,
+#mealCarousel .carousel-control-next {
+  width: 4rem;                 /* tıklama alanını büyütür */
+}
+
+#mealCarousel .arrow-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.75rem;          /* ok büyüklüğü */
+  color: #fff;
+  background: rgba(0,0,0,.45); /* yarı saydam arka plan */
+  border-radius: 9999px;       /* yuvarlak buton */
+  box-shadow: 0 2px 10px rgba(0,0,0,.2);
+}
+
+#mealCarousel .carousel-control-prev:hover .arrow-btn,
+#mealCarousel .carousel-control-next:hover .arrow-btn {
+  background: rgba(0,0,0,.65);
+}

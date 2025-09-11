@@ -34,6 +34,7 @@ import { LicenseManager } from 'ag-grid-enterprise';
 import { registerLocaleData } from '@angular/common';
 import localeTr from '@angular/common/locales/tr';
 import { wizardFormReducer } from './_angel/new-profile/request-forms/attendance-change/store/wizard-form.reducer';
+import { RouterModule } from '@angular/router';
 
 LicenseManager.setLicenseKey(
   "BOARD4ALL_NDEwMjM1MTIwMDAwMA==8f4481b5cc626ad79fe91bc5f4e52e3d"
@@ -76,10 +77,10 @@ registerLocaleData(localeTr, 'tr');
     HttpClientModule,
     ClipboardModule,
     AppRoutingModule,
+    RouterModule,
     InlineSVGModule.forRoot(),
     NgbModule,
     ToastrModule.forRoot(),
-    
 
     // NgRx State Mangement
     StoreModule.forRoot({ 

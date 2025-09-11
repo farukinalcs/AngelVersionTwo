@@ -8,11 +8,12 @@ export const definitionsRoutes: Routes = [
   {
     path: '',
     component: DefinitionsComponent,
+    // Üst seviye 'profile/definitions' zaten breadcrumb: 'Tanımlar'
     children: [
-      { path: 'file-type', component:  FileTypeComponent},
-      { path: 'food-type', component: FoodTypeComponent },
-      { path: 'menu', component:  MenuComponent},
-      // { path: '', pathMatch: 'full' },
+      { path: 'file-type', component: FileTypeComponent, data: { breadcrumb: 'Dosya Tipleri' } },
+      { path: 'food-type', component: FoodTypeComponent, data: { breadcrumb: 'Yemek Türleri' } },
+      { path: 'menu',      component: MenuComponent,     data: { breadcrumb: 'Menü' } },
+      // { path: '', redirectTo: 'file-type', pathMatch: 'full' },
     ],
   },
 ];

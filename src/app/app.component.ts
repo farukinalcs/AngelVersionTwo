@@ -4,57 +4,51 @@ import { LoadingService } from './_helpers/loading.service';
 import { SessionService } from './_helpers/session.service';
 
 @Component({
-    selector: 'body[root]',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
+  selector: 'body[root]',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush, // istersen aç
 })
-
 export class AppComponent implements OnInit {
-    fullUrl: string;
-    constructor(
-        private modeService: ThemeModeService,
-        public loadingService: LoadingService,
-        private sessionService: SessionService
-    ) { }
+  fullUrl: string = 'https://yekgateway.mecloud.com.tr/api/gate';
 
-    ngOnInit() {
+  constructor(
+    private modeService: ThemeModeService,
+    public loadingService: LoadingService,
+    private sessionService: SessionService
+  ) {}
 
-        // this.fullUrl = window.location.href;
-        this.fullUrl = "https://yekgateway.mecloud.com.tr/api/gate";
-        console.log('Kullanıcının linki:', this.fullUrl);
-        
-        
-        
-        
-        window.addEventListener('beforeunload', () => {
-            // Yenileme olabilir! İşaret bırakıyoruz
-            localStorage.setItem('manualLogoutTriggered', 'true');
-        });
-        this.checkIfReloaded();
-        this.modeService.init();
-    }
+  ngOnInit(): void {
+    console.log('Kullanıcının linki:', this.fullUrl);
+    this.checkIfReloaded();
+    this.modeService.init();
+  }
 
-    checkIfReloaded() {
-        const isRefresh = localStorage.getItem('manualLogoutTriggered') === 'true';
+  /** Sayfa kapatma/yenileme anında işaret bırak */
+  @HostListener('window:beforeunload')
+  onBeforeUnload() {
+    // Yenileme olabilir! İşaret bırakıyoruz
+    localStorage.setItem('manualLogoutTriggered', 'true');
+  }
 
-        if (isRefresh) {
-            localStorage.removeItem('manualLogoutTriggered');
-            const userkey = sessionStorage.getItem('userkey');
-            if (userkey) {
-                // API isteği, localStorage temizliği, yönlendirme vs.                
-                this.sessionService.logoutUser(userkey).subscribe((success) => {
-                    if (success) {
-                        console.log("Başarıyla çıkış yapıldı.");
-                        // Devam eden işlemler...
-                        sessionStorage.removeItem('id');
-                        sessionStorage.removeItem('userkey');
-                    } else {
-                        console.log("Çıkış başarısız.");
-                        // Hata işlemleri...
-                    }
-                });
-            }
-        }
-    }
+  private checkIfReloaded(): void {
+    const isRefresh = localStorage.getItem('manualLogoutTriggered') === 'true';
+    if (!isRefresh) return;
 
+    localStorage.removeItem('manualLogoutTriggered');
+
+    const userkey = sessionStorage.getItem('userkey');
+    if (!userkey) return;
+
+    // API isteği, local storage temizliği, yönlendirme vs.
+    this.sessionService.logoutUser(userkey).subscribe((success) => {
+      if (success) {
+        console.log('Başarıyla çıkış yapıldı.');
+        sessionStorage.removeItem('id');
+        sessionStorage.removeItem('userkey');
+      } else {
+        console.log('Çıkış başarısız.');
+      }
+    });
+  }
 }

@@ -1,0 +1,621 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-custom gutter-b my-5 pb-5">
+        <div class="card-header border-0 bg-danger" style="min-height: 45px">
+          <div class="card-title">
+            <!-- Başlık güvenli erişim -->
+            <h3 class="card-label text-white">
+              {{ selectedItem?.label || ("Menü" | translate) }}
+            </h3>
+            <h4 class="card-label text-gray-200 fs-8">
+              {{ "Menü_Bilgilerini_Buradan_Belirleyebilirsiniz" | translate }}
+            </h4>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row">
+            <form #frm="ngForm" (ngSubmit)="onSubmit(frm.value)">
+              <!-- Ay değiştir -->
+              <div class="row mb-4">
+                <div
+                  class="col-3 d-flex align-items-center justify-content-end"
+                >
+                  <i
+                    class="fa-solid fa-chevron-left text-hover-danger fs-2"
+                    (click)="previousMonth()"
+                  ></i>
+                </div>
+                <div class="col-6 d-flex justify-content-center">
+                  <span class="fw-bold fs-2x text-gray-800">
+                    {{ currentMonthName }} {{ currentYear }}
+                  </span>
+                </div>
+                <div class="col-3 d-flex align-items-center">
+                  <i
+                    class="fa-solid fa-chevron-right text-hover-danger fs-2"
+                    (click)="nextMonth()"
+                  ></i>
+                </div>
+              </div>
+
+              <!-- Hafta şeridi -->
+              <div class="row mb-8">
+                <div
+                  class="col-1 d-flex justify-content-center align-items-center"
+                >
+                  <i
+                    class="fa-solid fa-chevron-left text-hover-danger fs-2"
+                    (click)="previousWeek()"
+                  ></i>
+                </div>
+
+                <div class="col-10 list p-0 m-0 p-md-auto m-md-auto">
+                  <ng-container
+                    *ngIf="
+                      weeks?.length && weeks[currentWeekIndex];
+                      else loadingWeeks
+                    "
+                  >
+                    <ul
+                      class="nav nav-stretch nav-pills nav-pills-custom nav-pills-active-custom d-flex justify-content-around justify-content-md-between px-0 px-md-5"
+                      role="tablist"
+                    >
+                      <li
+                        class="nav-item p-0 ms-0"
+                        role="presentation"
+                        *ngFor="
+                          let item of weeks[currentWeekIndex];
+                          trackBy: trackById
+                        "
+                      >
+                        <a
+                          class="nav-link border border-2 btn d-flex flex-column flex-center rounded-pill min-w-95px py-4 px-3 px-md-1 btn-active-danger"
+                          [ngClass]="{
+                            active:
+                              item.date.getDate() === currentDate.getDate() &&
+                              item.date.getMonth() === currentDate.getMonth(),
+                            'bg-light-dark text-dark text-hover-white':
+                              !item.isCurrentMonth
+                          }"
+                          data-bs-toggle="tab"
+                          aria-selected="false"
+                          tabindex="-1"
+                          role="tab"
+                          (click)="showMenu(item)"
+                          [attr.id]="
+                            'date-' + item.monthName + item.day + item.dayName
+                          "
+                        >
+                          <span class="fs-7 fw-semibold">{{
+                            item.dayName
+                          }}</span>
+                          <span
+                            class="fs-6 fw-bold"
+                            [ngClass]="{
+                              'text-gray-500': !item.isCurrentMonth
+                            }"
+                          >
+                            {{ item.day }}
+                          </span>
+                          <span class="fs-8 fw-bold">{{ item.monthName }}</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </ng-container>
+                  <ng-template #loadingWeeks>
+                    <div class="text-center text-muted py-3">Yükleniyor…</div>
+                  </ng-template>
+                </div>
+
+                <div
+                  class="col-1 d-flex justify-content-center align-items-center"
+                >
+                  <i
+                    class="fa-solid fa-chevron-right text-hover-danger fs-2"
+                    (click)="nextWeek()"
+                  ></i>
+                </div>
+              </div>
+
+              <div class="row g-4">
+                <div class="d-flex gap-2">
+                  <button
+                    *ngFor="let menu of menuItems"
+                    type="button"
+                    class="btn btn-sm"
+                    [ngClass]="{
+                      'btn-danger': selectedMenu === menu,
+                      'outlines': selectedMenu !== menu
+                    }"
+                    (click)="onMenuClick(menu)"
+                  >
+                    Menü {{ menu }}
+                  </button>
+                </div>
+
+                <div class="col-12 d-grid">
+                  <label class="required fw-bold mb-2" for="deviceGroup"
+                    >Lokasyon Seçimi</label
+                  >
+                  <p-dropdown
+                    [options]="deviceGroups"
+                    optionLabel="ad"
+                    optionValue="id"
+                    [(ngModel)]="selectedGroupId"
+                    name="deviceGroup"
+                    (onChange)="onGroupChange($event)"
+                    placeholder="Terminal Grubu Seçiniz"
+                    [filter]="true"
+                    [showClear]="true"
+                  >
+                  </p-dropdown>
+                </div>
+                <!-- Çorba -->
+                <div class="col-12 col-md-6">
+                  <label class="required fw-bold mb-2" for="corba">Çorba</label>
+                  <select
+                    id="corba"
+                    [(ngModel)]="selectedCorba"
+                    name="corba"
+                    (change)="onSelectionChange(selectedCorba!, 'Corba')"
+                    class="form-select"
+                    aria-label="Çorba"
+                  >
+                    <!-- Placeholder -->
+                    <option [ngValue]="null" disabled>Seçiniz...</option>
+
+                    <option
+                      *ngFor="let item of corbaOptions; trackBy: trackById"
+                      [ngValue]="item"
+                    >
+                      {{ item?.Aciklama }}
+                    </option>
+                  </select>
+
+                  <!-- Seçimler -->
+                  <div
+                    class="badges-wrap"
+                    *ngIf="corbaMenu.length; else corbaEmpty"
+                  >
+                    <span
+                      *ngFor="let item of corbaMenu; trackBy: trackById"
+                      class="badge text-white m-2"
+                    >
+                      <button
+                        (click)="onSelectionChange(item, 'Corba')"
+                        type="button"
+                        class="btn-close me-1"
+                        aria-label="Close"
+                      ></button>
+                      {{ item?.Aciklama }}
+                    </span>
+                  </div>
+                  <ng-template #corbaEmpty>
+                    <small class="text-muted d-block mt-2"
+                      >Henüz seçim yok</small
+                    >
+                  </ng-template>
+                </div>
+
+                <!-- Ana Yemek -->
+                <div class="col-12 col-md-6">
+                  <label class="required fw-bold mb-2" for="anayemek"
+                    >Ana Yemek</label
+                  >
+                  <select
+                    id="anayemek"
+                    [(ngModel)]="selectedAnaYemek"
+                    name="anayemek"
+                    (change)="onSelectionChange(selectedAnaYemek!, 'AnaYemek')"
+                    class="form-select"
+                    aria-label="Ana Yemek"
+                  >
+                    <option [ngValue]="null" disabled>Seçiniz...</option>
+                    <option
+                      *ngFor="let item of anayemekOptions; trackBy: trackById"
+                      [ngValue]="item"
+                    >
+                      {{ item?.Aciklama }}
+                    </option>
+                  </select>
+
+                  <div
+                    class="badges-wrap"
+                    *ngIf="anayemekMenu.length; else anayemekEmpty"
+                  >
+                    <span
+                      *ngFor="let item of anayemekMenu; trackBy: trackById"
+                      class="badge text-white m-2"
+                    >
+                      <button
+                        (click)="onSelectionChange(item, 'AnaYemek')"
+                        type="button"
+                        class="btn-close text-white me-1"
+                        aria-label="Close"
+                      ></button>
+                      {{ item?.Aciklama }}
+                    </span>
+                  </div>
+                  <ng-template #anayemekEmpty>
+                    <small class="text-muted d-block mt-2"
+                      >Henüz seçim yok</small
+                    >
+                  </ng-template>
+                </div>
+
+                <!-- Salata -->
+                <div class="col-12 col-md-6">
+                  <label class="required fw-bold mb-2" for="salata"
+                    >Salata</label
+                  >
+                  <select
+                    id="salata"
+                    [(ngModel)]="selectedSalata"
+                    name="salata"
+                    (change)="onSelectionChange(selectedSalata!, 'Salata')"
+                    class="form-select"
+                    aria-label="Salata"
+                  >
+                    <option [ngValue]="null" disabled>Seçiniz...</option>
+                    <option
+                      *ngFor="let item of salataOptions; trackBy: trackById"
+                      [ngValue]="item"
+                    >
+                      {{ item?.Aciklama }}
+                    </option>
+                  </select>
+
+                  <div
+                    class="badges-wrap"
+                    *ngIf="salataMenu.length; else salataEmpty"
+                  >
+                    <span
+                      *ngFor="let item of salataMenu; trackBy: trackById"
+                      class="badge text-white m-2"
+                    >
+                      <button
+                        (click)="onSelectionChange(item, 'Salata')"
+                        type="button"
+                        class="btn-close me-1"
+                        aria-label="Close"
+                      ></button>
+                      {{ item?.Aciklama }}
+                    </span>
+                  </div>
+                  <ng-template #salataEmpty>
+                    <small class="text-muted d-block mt-2"
+                      >Henüz seçim yok</small
+                    >
+                  </ng-template>
+                </div>
+
+                <!-- Tatlı -->
+                <div class="col-12 col-md-6">
+                  <label class="required fw-bold mb-2" for="tatli">Tatlı</label>
+                  <select
+                    id="tatli"
+                    [(ngModel)]="selectedTatli"
+                    name="tatli"
+                    (change)="onSelectionChange(selectedTatli!, 'Tatli')"
+                    class="form-select"
+                    aria-label="Tatlı"
+                  >
+                    <option [ngValue]="null" disabled>Seçiniz...</option>
+                    <option
+                      *ngFor="let item of tatliOptions; trackBy: trackById"
+                      [ngValue]="item"
+                    >
+                      {{ item?.Aciklama }}
+                    </option>
+                  </select>
+
+                  <div
+                    class="badges-wrap"
+                    *ngIf="tatliMenu.length; else tatliEmpty"
+                  >
+                    <span
+                      *ngFor="let item of tatliMenu; trackBy: trackById"
+                      class="badge text-white m-2"
+                    >
+                      <button
+                        (click)="onSelectionChange(item, 'Tatli')"
+                        type="button"
+                        class="btn-close me-1"
+                        aria-label="Close"
+                      ></button>
+                      {{ item?.Aciklama }}
+                    </span>
+                  </div>
+                  <ng-template #tatliEmpty>
+                    <small class="text-muted d-block mt-2"
+                      >Henüz seçim yok</small
+                    >
+                  </ng-template>
+                </div>
+
+                <!-- Meze -->
+                <div class="col-12 col-md-6">
+                  <label class="required fw-bold mb-2" for="meze">Meze</label>
+                  <select
+                    id="meze"
+                    [(ngModel)]="selectedMeze"
+                    name="meze"
+                    (change)="onSelectionChange(selectedMeze!, 'Meze')"
+                    class="form-select"
+                    aria-label="Meze"
+                  >
+                    <option [ngValue]="null" disabled>Seçiniz...</option>
+                    <option
+                      *ngFor="let item of mezeOptions; trackBy: trackById"
+                      [ngValue]="item"
+                    >
+                      {{ item?.Aciklama }}
+                    </option>
+                  </select>
+
+                  <div
+                    class="badges-wrap"
+                    *ngIf="mezeMenu.length; else mezeEmpty"
+                  >
+                    <span
+                      *ngFor="let item of mezeMenu; trackBy: trackById"
+                      class="badge text-white m-2"
+                    >
+                      <button
+                        (click)="onSelectionChange(item, 'Meze')"
+                        type="button"
+                        class="btn-close me-1"
+                        aria-label="Close"
+                      ></button>
+                      {{ item?.Aciklama }}
+                    </span>
+                  </div>
+                  <ng-template #mezeEmpty>
+                    <small class="text-muted d-block mt-2"
+                      >Henüz seçim yok</small
+                    >
+                  </ng-template>
+                </div>
+
+                <!-- Ara Sıcak -->
+                <div class="col-12 col-md-6">
+                  <label class="required fw-bold mb-2" for="arasicak"
+                    >Ara Sıcak</label
+                  >
+                  <select
+                    id="arasicak"
+                    [(ngModel)]="selectedAraSicak"
+                    name="arasicak"
+                    (change)="onSelectionChange(selectedAraSicak!, 'AraSicak')"
+                    class="form-select"
+                    aria-label="Ara Sıcak"
+                  >
+                    <option [ngValue]="null" disabled>Seçiniz...</option>
+                    <option
+                      *ngFor="let item of arasicakOptions; trackBy: trackById"
+                      [ngValue]="item"
+                    >
+                      {{ item?.Aciklama }}
+                    </option>
+                  </select>
+
+                  <div
+                    class="badges-wrap"
+                    *ngIf="arasicakMenu.length; else arasicakEmpty"
+                  >
+                    <span
+                      *ngFor="let item of arasicakMenu; trackBy: trackById"
+                      class="badge text-white m-2"
+                    >
+                      <button
+                        (click)="onSelectionChange(item, 'AraSicak')"
+                        type="button"
+                        class="btn-close me-1"
+                        aria-label="Close"
+                      ></button>
+                      {{ item?.Aciklama }}
+                    </span>
+                  </div>
+                  <ng-template #arasicakEmpty>
+                    <small class="text-muted d-block mt-2"
+                      >Henüz seçim yok</small
+                    >
+                  </ng-template>
+                </div>
+
+                <!-- Ara Soğuk -->
+                <div class="col-12 col-md-6">
+                  <label class="required fw-bold mb-2" for="arasoguk"
+                    >Ara Soğuk</label
+                  >
+                  <select
+                    id="arasoguk"
+                    [(ngModel)]="selectedAraSoguk"
+                    name="arasoguk"
+                    (change)="onSelectionChange(selectedAraSoguk!, 'AraSoguk')"
+                    class="form-select"
+                    aria-label="Ara Soğuk"
+                  >
+                    <option [ngValue]="null" disabled>Seçiniz...</option>
+                    <option
+                      *ngFor="let item of arasogukOptions; trackBy: trackById"
+                      [ngValue]="item"
+                    >
+                      {{ item?.Aciklama }}
+                    </option>
+                  </select>
+
+                  <div
+                    class="badges-wrap"
+                    *ngIf="arasogukMenu.length; else arasogukEmpty"
+                  >
+                    <span
+                      *ngFor="let item of arasogukMenu; trackBy: trackById"
+                      class="badge text-white m-2"
+                    >
+                      <button
+                        (click)="onSelectionChange(item, 'AraSoguk')"
+                        type="button"
+                        class="btn-close me-1"
+                        aria-label="Close"
+                      ></button>
+                      {{ item?.Aciklama }}
+                    </span>
+                  </div>
+                  <ng-template #arasogukEmpty>
+                    <small class="text-muted d-block mt-2"
+                      >Henüz seçim yok</small
+                    >
+                  </ng-template>
+                </div>
+
+                <!-- İçecek -->
+                <div class="col-12 col-md-6">
+                  <label class="required fw-bold mb-2" for="icecek"
+                    >İçecek</label
+                  >
+                  <select
+                    id="icecek"
+                    [(ngModel)]="selectedIcecek"
+                    name="icecek"
+                    (change)="onSelectionChange(selectedIcecek!, 'Icecekler')"
+                    class="form-select"
+                    aria-label="İçecek"
+                  >
+                    <option [ngValue]="null" disabled>Seçiniz...</option>
+                    <option
+                      *ngFor="let item of icecekOptions; trackBy: trackById"
+                      [ngValue]="item"
+                    >
+                      {{ item?.Aciklama }}
+                    </option>
+                  </select>
+
+                  <div
+                    class="badges-wrap"
+                    *ngIf="icecekMenu.length; else icecekEmpty"
+                  >
+                    <span
+                      *ngFor="let item of icecekMenu; trackBy: trackById"
+                      class="badge text-white m-2"
+                    >
+                      <button
+                        (click)="onSelectionChange(item, 'Icecekler')"
+                        type="button"
+                        class="btn-close me-1"
+                        aria-label="Close"
+                      ></button>
+                      {{ item?.Aciklama }}
+                    </span>
+                  </div>
+                  <ng-template #icecekEmpty>
+                    <small class="text-muted d-block mt-2"
+                      >Henüz seçim yok</small
+                    >
+                  </ng-template>
+                </div>
+
+                <!-- Meyve -->
+                <div class="col-12 col-md-6">
+                  <label class="required fw-bold mb-2" for="meyve">Meyve</label>
+                  <select
+                    id="meyve"
+                    [(ngModel)]="selectedMeyve"
+                    name="meyve"
+                    (change)="onSelectionChange(selectedMeyve!, 'Meyve')"
+                    class="form-select"
+                    aria-label="Meyve"
+                  >
+                    <option [ngValue]="null" disabled>Seçiniz...</option>
+                    <option
+                      *ngFor="let item of meyveOptions; trackBy: trackById"
+                      [ngValue]="item"
+                    >
+                      {{ item?.Aciklama }}
+                    </option>
+                  </select>
+
+                  <div
+                    class="badges-wrap"
+                    *ngIf="meyveMenu.length; else meyveEmpty"
+                  >
+                    <span
+                      *ngFor="let item of meyveMenu; trackBy: trackById"
+                      class="badge text-white m-2"
+                    >
+                      <button
+                        (click)="onSelectionChange(item, 'Meyve')"
+                        type="button"
+                        class="btn-close me-1"
+                        aria-label="Close"
+                      ></button>
+                      {{ item?.Aciklama }}
+                    </span>
+                  </div>
+                  <ng-template #meyveEmpty>
+                    <small class="text-muted d-block mt-2"
+                      >Henüz seçim yok</small
+                    >
+                  </ng-template>
+                </div>
+
+                <!-- Kahvaltılık -->
+                <div class="col-12 col-md-6">
+                  <label class="required fw-bold mb-2" for="kahvaltilik"
+                    >Kahvaltılık</label
+                  >
+                  <select
+                    id="kahvaltilik"
+                    [(ngModel)]="selectedKahvaltilik"
+                    name="kahvaltilik"
+                    (change)="
+                      onSelectionChange(selectedKahvaltilik!, 'Kahvaltilik')
+                    "
+                    class="form-select"
+                    aria-label="Kahvaltılık"
+                  >
+                    <option [ngValue]="null" disabled>Seçiniz...</option>
+                    <option
+                      *ngFor="
+                        let item of kahvaltilikOptions;
+                        trackBy: trackById
+                      "
+                      [ngValue]="item"
+                    >
+                      {{ item?.Aciklama }}
+                    </option>
+                  </select>
+
+                  <div
+                    class="badges-wrap"
+                    *ngIf="kahvaltilikMenu.length; else kahvaltilikEmpty"
+                  >
+                    <span
+                      *ngFor="let item of kahvaltilikMenu; trackBy: trackById"
+                      class="badge text-white m-2"
+                    >
+                      <button
+                        (click)="onSelectionChange(item, 'Kahvaltilik')"
+                        type="button"
+                        class="btn-close me-1"
+                        aria-label="Close"
+                      ></button>
+                      {{ item?.Aciklama }}
+                    </span>
+                  </div>
+                  <ng-template #kahvaltilikEmpty>
+                    <small class="text-muted d-block mt-2"
+                      >Henüz seçim yok</small
+                    >
+                  </ng-template>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

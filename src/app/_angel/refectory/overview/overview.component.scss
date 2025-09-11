@@ -1,0 +1,21 @@
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;        // aradaki boşluk (istediğin px verebilirsin)
+}
+
+:host ::ng-deep .filter-bar .p-dropdown,
+:host ::ng-deep .filter-bar .p-datepicker {
+  min-width: 220px; // her ikisi de eşit ve geniş görünsün diye
+}
+
+:host ::ng-deep .p-dropdown:not(.p-disabled):hover {
+  border-color: #ed1b24 !important;
+  box-shadow: none !important; // gri glow’u kapat
+}
+
+:host ::ng-deep .p-dropdown:not(.p-disabled).p-focus {
+  border-color: #ed1b24 !important;
+  box-shadow: 0 0 0 1px #ed1b24 !important; // focus görünümü
+}
