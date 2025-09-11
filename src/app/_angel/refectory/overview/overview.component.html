@@ -1,0 +1,54 @@
+<div class="container-fluid">
+<div class="filter-bar">
+  <p-dropdown
+    [options]="deviceGroups"
+    optionLabel="ad"
+    optionValue="id"
+    [(ngModel)]="selectedGroupId"
+    name="deviceGroup"
+    (onChange)="onGroupChange($event)"
+    placeholder="Terminal Grubu Seçiniz"
+    [filter]="true"
+    [showClear]="true">
+  </p-dropdown>
+
+  <p-datepicker
+    [(ngModel)]="selectedDate"
+    (onSelect)="onDateSelect($event)"
+    dateFormat="yy-mm-dd"
+    [showIcon]="true"
+    [touchUI]="true"
+    inputId="onlyDate">
+  </p-datepicker>
+</div>
+
+  <div class="row d-flex justify-content-end py-3">
+    <div class="col-12 d-flex align-items-sm-end gap-2 flex-column flex-sm-row">
+      <!-- <button type="button" class="btn btn-dark btn-sm hover-elevate-up" (click)="editModeToggle()">
+        <i class="fa-solid fa-grip"></i>
+        {{ "Düzenle" | translate }}
+      </button> -->
+    </div>
+  </div>
+
+  <app-card-menu
+    [menu]="visitTypes"
+    (changeVisible)="onChangeVisible($event)"
+    [editMode]="editMode">
+  </app-card-menu>
+
+  <app-dashboard-card
+    [cards]="dashboardOptions"
+    (removeEvent)="removeCard($event)"
+    [editMode]="editMode"
+    [fromWhere]="'refectory'">
+</app-dashboard-card>
+
+<app-modern-table
+  [title]="'Yemekhane Takibi (Son 10 Geçiş)'"
+  [columns]="userCols"
+  [rows]="passList"
+  [pageSizeOptions]="[5,10]"
+  (sortChange)="onSort($event)"
+></app-modern-table>
+</div>

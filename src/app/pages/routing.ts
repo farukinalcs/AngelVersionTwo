@@ -6,6 +6,7 @@ import { leaveRoutes } from '../_angel/leave/leave.routes';
 import { shiftRoutes } from '../_angel/shift/shift.routes';
 import { userManagementRoutes } from '../_angel/user-management/user-management.routes';
 import { inventoryRoutes } from '../_angel/inventory/inventory.routes';
+import { refectoryRoutes } from '../_angel/refectory/refectory.routes';
 
 const Routing: Routes = [
   {
@@ -62,6 +63,11 @@ const Routing: Routes = [
     path: 'inventory',
     children: inventoryRoutes,
     data: { layout: 'light-sidebar', breadcrumb: 'Envanter' }
+  },
+    {
+    path: 'refectory',
+    children: refectoryRoutes,
+    data: { layout: 'light-sidebar', breadcrumb: 'Yemekhane' }
   },
   {
     path: 'user-management',

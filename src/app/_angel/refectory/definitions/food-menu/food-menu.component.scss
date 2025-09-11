@@ -1,0 +1,50 @@
+/* Çift sütun düzeni için zaten col-12 col-md-6 kullandık; boşlukları artırmak için: */
+.row.g-4 {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 1.5rem;
+}
+
+/* Label’ları belirginleştir */
+label.required.fw-bold {
+  color: #212529;
+}
+
+/* Select’ler tam genişlikte kalsın */
+.form-select {
+  width: 100%;
+}
+.badge{
+  background-color: #e91616;
+}
+/* Seçilen item’lar (badges) için sarmalayıcı */
+.badges-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+/* Küçük ekranlarda tek sütuna düşer, md ve üstünde iki sütun */
+@media (max-width: 767.98px) {
+  .badges-wrap {
+    margin-top: 0.25rem;
+  }
+}
+
+::ng-deep .form-select {
+  box-shadow: none !important;
+  border: 1px solid rgb(204, 30, 30);
+}
+::ng-deep .p-select {
+  border: 1px solid rgb(204, 30, 30) !important;
+}
+
+.outlines{
+  border: 1px solid #e91616!important;
+  color: #e91616!important;
+}
+
+.outlines:hover{
+  border: 1px solid #e91616!important;
+  color: #fff!important;
+  background-color: #e63535c5;
+}

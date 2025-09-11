@@ -1,0 +1,59 @@
+.h-550px { max-height: 550px; }
+.scroll { overflow: auto; }
+
+.process-items {
+  padding: 0.65rem 0.9rem;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  transition: background-color .15s, border-color .15s, box-shadow .15s, transform .12s;
+}
+.process-items:hover {
+  background-color: #80b0e3 !important;
+  border-color: #80b0e3 !important;
+  box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,.08);
+  transform: translateY(-1px);
+}
+
+.process-items.bg-dark {
+  background-color: #80b0e3 !important;
+  border-color: #80b0e3 !important;
+  box-shadow: 0 0 0 0.2rem rgba(128,176,227,.4);
+}
+.process-items.bg-dark:hover {
+  background-color: #2d73be !important;
+  border-color: #0e2033 !important;
+  box-shadow: 0 0 0 0.2rem rgba(128,176,227,.4);
+}
+
+.process-items a,
+.process-items a:hover,
+.process-items a:focus,
+.process-items a:active {
+  color: inherit !important;
+  text-decoration: none;
+}
+
+:host {
+  --bs-link-hover-color: inherit;
+}
+
+.bullet-vertical {
+  width: 4px; min-width: 4px; height: 20px; border-radius: 2px;
+  background-color: #adb5bd !important; 
+}
+.process-items:hover .bullet-vertical { background-color: #e3e6e9 !important; }
+.process-items.bg-dark .bullet-vertical { background-color: #fff !important; }
+
+
+.fs-9 { font-size: .95rem; line-height: 1.25rem; }
+.text-gray-900 { color: #212529 !important; }
+.cursor-pointer { cursor: pointer; }
+
+
+.warn-icon { color: #d63384; } 
+
+:host ::-webkit-scrollbar { width: 8px; height: 8px; }
+:host ::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,.2); border-radius: 8px; }
+
+::ng-deep .p-tooltip { z-index: 9999 !important; }
+

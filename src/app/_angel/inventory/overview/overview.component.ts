@@ -27,7 +27,7 @@ type ChartItem = any & { id: string; visible?: boolean };
   styleUrls: ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit {
-  timePeriod: TimePeriod = '7';
+  timePeriod: TimePeriod = '365';
   propForStat: any;
 
   private toastr = inject(ToastrService);

@@ -47,8 +47,6 @@ export class DefinitionsComponent implements OnInit, OnDestroy {
     {id: 3, label: this.translateService.instant('Ziyaret_Tipi'), icon: "fa-solid fa-person-walking", demandParam : 'cbo_ziyaretnedeni', fileParam : 'ziyaretci'},
     {id: 4, label: this.translateService.instant('Avans_Nedeni'), icon: "fa-solid fa-sack-dollar", demandParam : '', fileParam : 'avans'},
     {id: 5, label: this.translateService.instant('Araç_Nedeni'), icon: "fa-solid fa-car-side", demandParam : '', fileParam : 'arac'},
-    {id: 6, label: this.translateService.instant('Yemek_Tipi'), icon: "fa-solid fa-burger"},
-    {id: 7, label: this.translateService.instant('Yemek_Menü'), icon: "fa-solid fa-utensils"},
   ];
 
   visibleTabs: any[] = [];

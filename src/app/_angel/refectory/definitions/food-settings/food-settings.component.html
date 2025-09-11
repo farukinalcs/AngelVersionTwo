@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-custom gutter-b my-5 pb-5">
+        <div class="card-header border-0 bg-danger" style="min-height: 45px">
+          <div class="card-title">
+            <h3 class="card-label text-white">{{ "Genel" | translate }}</h3>
+            <h4 class="card-label text-gray-200 fs-8">
+              {{
+                "Ekipman Parametrelerini Buradan Belirleyebilirsiniz"
+                  | translate
+              }}
+            </h4>
+          </div>
+        </div>
+
+        <ng-container *ngIf="loading">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 my-5 pe-20">
+                <div class="d-flex flex-stack">
+                  <div class="me-5">
+                    <label class="fs-6 fw-semibold form-label">{{
+                      "Yemek Menüsü Sayısı" | translate
+                    }}</label>
+                    <div class="fs-7 fw-semibold text-muted">
+                      {{
+                        "Yemek menüsün sayısının adet tanımlaması" | translate
+                      }}
+                    </div>
+                  </div>
+                  <div>
+                    <input
+                      id="sayi"
+                      name="sayi"
+                      type="number"
+                      class="form-control"
+                      placeholder="Adet"
+                      [(ngModel)]="piece"
+                      min="1"
+                      max="99"
+                      step="1"
+                      inputmode="numeric"
+                      pattern="[0-9]*"
+                      (ngModelChange)="onPieceChange($event)"
+                         (blur)="onPieceBlur()"  
+                      style="border: 1px solid rgb(172, 26, 26)"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

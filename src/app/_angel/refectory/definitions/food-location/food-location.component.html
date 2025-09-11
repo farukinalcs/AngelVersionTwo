@@ -1,0 +1,392 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-custom gutter-b my-5 pb-5">
+        <div class="card-header border-0 bg-danger" style="min-height: 45px">
+          <div class="card-title">
+            <h3 class="card-label text-white">
+              {{ "Terminal_Grupları_Tanımları" | translate }}
+            </h3>
+            <h4 class="card-label text-gray-200 fs-8">
+              {{ "Bilgilerini_Buradan_Belirleyebilirsiniz" | translate }}
+            </h4>
+          </div>
+        </div>
+
+        <ng-container *ngIf="loading">
+          <div class="card-body">
+            <div class="row d-flex align-items-strech">
+              <div class="col-3" style="border-right: 2px dashed #00000066">
+                <p-toolbar styleClass="mb-3 shadow-1 border-round">
+                  <ng-template pTemplate="start">
+                    <p-floatlabel variant="on" style="min-width: 260px">
+                      <p-iconfield>
+                        <p-inputicon class="pi pi-search" />
+                        <input
+                          pInputText
+                          id="search"
+                          type="search"
+                          [(ngModel)]="filterText"
+                          autocomplete="off"
+                          placeholder=" "
+                          style="width: 100%"
+                        />
+                      </p-iconfield>
+                      <label for="search">Arama..</label>
+                    </p-floatlabel>
+                  </ng-template>
+
+                  <ng-template pTemplate="end">
+                    <div
+                      class="flex align-items-center gap-4 flex-wrap"
+                      style="display: flex !important"
+                    >
+                      <p-button
+                        label="{{ 'Ekle' | translate }}"
+                        icon="pi pi-plus"
+                        severity="success"
+                        size="small"
+                        (onClick)="openAddDialog()"
+                      />
+                      <p-button
+                        label="{{ 'Düzenle' | translate }}"
+                        icon="pi pi-pencil"
+                        severity="warn"
+                        size="small"
+                        (onClick)="openUpdateDialog()"
+                      />
+                      <p-button
+                        label="{{ 'Sil' | translate }}"
+                        icon="pi pi-trash"
+                        severity="danger"
+                        size="small"
+                        (onClick)="deleteDeviceGroup()"
+                      />
+                    </div>
+                  </ng-template>
+                </p-toolbar>
+
+                <div class="h-550px scroll">
+                  <ng-container
+                    *ngFor="
+                      let item of deviceGroups
+                        | searchFilter : filterText : ['ad']
+                    "
+                  >
+                    <div
+                      class="d-flex align-items-center my-4 process-items rounded cursor-pointer"
+                      [ngClass]="{
+                        'bg-dark': selectedDeviceGroup?.id == item.id
+                      }"
+                      (click)="selectDeviceGroup(item)"
+                    >
+                      <span
+                        class="bullet bullet-vertical h-20px bg-dark me-5"
+                      ></span>
+                      <div class="d-flex flex-column">
+                        <div class="d-flex align-items-center">
+                          <a
+                            class="fs-9 fw-bolder"
+                            [ngClass]="{
+                              'text-white': selectedDeviceGroup?.id == item.id,
+                              'text-gray-900':
+                                selectedDeviceGroup?.id != item.id
+                            }"
+                          >
+                            {{ item.ad }}
+                          </a>
+
+                          <!-- saatvar 1 değilse uyarı ikonu -->
+                          <i
+                            *ngIf="item?.saatvar !== 1"
+                            class="pi pi-times-circle text-danger ms-2"
+                            pTooltip="Terminale Saat Ataması Yapılmadı"
+                            tooltipPosition="right"
+                            aria-label="Terminale Saat Ataması Yapılmadı"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+
+              <div class="col-9">
+                <div class="row">
+                  <div class="col-12 py-3">
+                    <span class="fs-2 fw-bold">
+                      Seçilen Terminal : {{ selectedDeviceGroup?.ad }}
+                    </span>
+                  </div>
+
+                  <div class="col-12 py-3">
+                    <label
+                      class="d-flex align-items-center fs-7 fw-semibold mb-2"
+                    >
+                      <span>{{ "Terminal_Grubu_Amacı" | translate }}</span>
+                    </label>
+
+                    <p-select
+                      [options]="purposes"
+                      [(ngModel)]="selectedPurpose"
+                      (ngModelChange)="onChangePurpose()"
+                      optionLabel="ad"
+                      [emptyFilterMessage]="dropdownEmptyMessage"
+                      [filter]="true"
+                      filterBy="ad"
+                      [showClear]="true"
+                      placeholder="Terminal Seçiniz"
+                      class="w-100 md:w-56"
+                      [autoZIndex]="true"
+                      [baseZIndex]="3000"
+                    >
+                      <ng-template #selectedItem let-selectedPurpose>
+                        <div class="flex items-center gap-2">
+                          <div>{{ selectedPurpose?.ad }}</div>
+                        </div>
+                      </ng-template>
+                      <ng-template let-item #item>
+                        <div class="flex items-center gap-2">
+                          <div>{{ item?.ad }}</div>
+                        </div>
+                      </ng-template>
+                    </p-select>
+                  </div>
+
+                  <div class="col-12 py-2">
+                    <p-floatlabel variant="on" class="mt-2">
+                      <p-iconfield>
+                        <p-inputicon class="pi pi-search" />
+                        <input
+                          pInputText
+                          id="over_label"
+                          [(ngModel)]="filterTextDevice"
+                          autocomplete="off"
+                        />
+                      </p-iconfield>
+                      <label for="over_label">Arama..</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="table-responsive h-550px scroll">
+                      <table
+                        class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"
+                      >
+                        <thead class="sticky-top">
+                          <tr
+                            class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-light rounded text-gray-600"
+                          >
+                            <th
+                              class="fw-bolder me-1 cursor-pointer rounded-start"
+                              style="width: 80%"
+                            >
+                              {{ "Gruptaki_Terminaller" | translate }}
+                            </th>
+                            <th
+                              class="fw-bolder me-1 cursor-pointer rounded-end"
+                              style="width: 20%"
+                            >
+                              {{ "İşlem" | translate }}
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr
+                            *ngFor="
+                              let item of relations
+                                | searchFilter : filterTextDevice : ['kaynakad']
+                            "
+                            class="cursor-pointer fs-8"
+                          >
+                            <ng-container *ngIf="item.dahil == 1">
+                              <td>
+                                <span class="mb-1">{{ item?.kaynakad }}</span>
+                              </td>
+
+                              <td>
+                                <a
+                                  class="btn btn-warning btn-sm py-1 px-2"
+                                  (click)="relationStateChange(item, 'd')"
+                                >
+                                  <i class="fa-solid fa-minus p-0"></i>
+                                </a>
+                              </td>
+                            </ng-container>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="table-responsive h-550px scroll">
+                      <table
+                        class="table table-hover border table-rounded table-row-dashed table-row-gray-400 align-middle gs-3 gy-4"
+                      >
+                        <thead class="sticky-top">
+                          <tr
+                            class="fs-8 fw-bold text-white border-bottom-0 text-uppercase bg-light rounded text-gray-600"
+                          >
+                            <th class="rounded-start" style="width: 20%">
+                              {{ "İşlem" | translate }}
+                            </th>
+                            <th
+                              class="fw-bolder me-1 cursor-pointer rounded-end"
+                              style="width: 80%"
+                            >
+                              {{ "Eklenebilir_Terminaller" | translate }}
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr
+                            *ngFor="
+                              let item of relations
+                                | searchFilter : filterTextDevice : ['kaynakad']
+                            "
+                            class="cursor-pointer fs-8"
+                          >
+                            <ng-container *ngIf="item.dahil == 0">
+                              <td>
+                                <a
+                                  class="btn btn-primary btn-sm py-1 px-2"
+                                  (click)="relationStateChange(item, 'i')"
+                                >
+                                  <i class="fa-solid fa-plus p-0"></i>
+                                </a>
+                              </td>
+
+                              <td>
+                                <span class="mb-1">{{ item?.kaynakad }}</span>
+                              </td>
+                            </ng-container>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  header="{{ 'Terminal_Grubunu_Güncelle' | translate }}"
+  [(visible)]="displayUpdate"
+  [position]="'top'"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="-40"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="closeAction()"
+>
+  <form #deviceUpdateForm="ngForm">
+    <div class="fv-row my-5 fv-plugins-icon-container">
+      <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+        <span class="required">{{ "Terminal_Grubu_Adı" | translate }}</span>
+      </label>
+
+      <input
+        type="text"
+        class="form-control form-control-sm form-control-solid"
+        name="deviceName"
+        ngModel
+        required
+      />
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <a class="btn btn-sm btn-danger mx-1" (click)="closeAction()">
+      <i class="fa-solid fa-xmark fs-7"></i>
+      {{ "İptal" | translate }}
+    </a>
+
+    <a
+      class="btn btn-sm btn-danger mx-1"
+      (click)="updateDeviceGroup(deviceUpdateForm.value)"
+    >
+      <i class="fa-solid fa-floppy-disk fs-7"></i>
+      {{ "Gönder" | translate }}
+    </a>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  header="{{ 'Terminal_Grubu_Ekle' | translate }}"
+  [(visible)]="displayAdd"
+  [position]="'top'"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="-40"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="closeAction()"
+>
+    <h4 class="text-danger">Terminal ekledikten sonra "Saat Tanımları" kısmından saat atayınız!.</h4>
+  <form #deviceAddForm="ngForm">
+    <div class="fv-row my-5 fv-plugins-icon-container">
+      <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+        <span>{{ "Terminal_Grubu_Ekleme_Amacı" | translate }}</span>
+      </label>
+
+      <p-dropdown
+        [options]="purposes"
+        ngModel
+        name="purpose"
+        optionLabel="ad"
+        [emptyFilterMessage]="dropdownEmptyMessage"
+        [filter]="false"
+        [showClear]="true"
+        required
+        placeholder="{{
+          'Terminal_Grubu_Ekleme_Amacınızı_Seçiniz' | translate
+        }}"
+      >
+        <ng-template let-item pTemplate="item">
+          <div class="item-item">
+            <div>{{ item?.ad }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="fv-row my-5 fv-plugins-icon-container">
+      <label class="d-flex align-items-center fs-7 fw-semibold mb-2">
+        <span class="required">{{ "Terminal_Grubu_Adı" | translate }}</span>
+      </label>
+
+      <input
+        type="text"
+        class="form-control form-control-sm form-control-solid"
+        name="deviceName"
+        ngModel
+        required
+      />
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <a class="btn btn-sm btn-danger mx-1" (click)="closeAction()">
+      <i class="fa-solid fa-xmark fs-7"></i>
+      {{ "İptal" | translate }}
+    </a>
+
+    <a
+      class="btn btn-sm btn-danger mx-1"
+      (click)="addDeviceGroup(deviceAddForm.value)"
+    >
+      <i class="fa-solid fa-floppy-disk fs-7"></i>
+      {{ "Gönder" | translate }}
+    </a>
+  </ng-template>
+</p-dialog>

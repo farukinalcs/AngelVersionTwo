@@ -1,0 +1,290 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-custom gutter-b my-5 pb-5">
+        <div class="card-header border-0 bg-danger" style="min-height: 45px">
+          <div class="card-title">
+            <h3 class="card-label text-white">
+              {{ "Yemekhane_Saat_Tanımları" | translate }}
+            </h3>
+            <h4 class="card-label text-gray-200 fs-8">
+              {{ "Bilgilerini_Buradan_Belirleyebilirsiniz" | translate }}
+            </h4>
+          </div>
+        </div>
+
+        <!-- Yükleniyor durumu -->
+        <ng-container *ngIf="loading">
+          <div class="card-body">
+            <div class="d-flex align-items-center py-10 justify-content-center">
+              <span class="spinner-border me-3"></span>
+              <span>{{ "Yükleniyor" | translate }}...</span>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- İçerik: yükleme bitince göster -->
+        <ng-container *ngIf="!loading">
+          <div class="card-body">
+            <div class="row d-flex align-items-strech">
+              <!-- Sol Liste -->
+              <div class="col-3" style="border-right: 2px dashed #00000066">
+                <div class="h-550px scroll">
+                  <ng-container *ngFor="let item of deviceGroups">
+                    <div
+                      class="d-flex align-items-center my-4 process-items rounded cursor-pointer"
+                      [ngClass]="{
+                        'bg-dark': selectedDeviceGroup?.id == item.id
+                      }"
+                      (click)="selectDeviceGroup(item)"
+                    >
+                      <span
+                        class="bullet bullet-vertical h-20px bg-dark me-5"
+                      ></span>
+                      <div class="d-flex flex-column">
+                        <div class="d-flex align-items-center">
+                          <a
+                            class="fs-9 fw-bolder"
+                            [ngClass]="{
+                              'text-white': selectedDeviceGroup?.id == item.id,
+                              'text-gray-900':
+                                selectedDeviceGroup?.id != item.id
+                            }"
+                          >
+                            {{ item.ad }}
+                          </a>
+
+                          <i
+                            *ngIf="item?.saatvar !== 1"
+                            class="pi pi-times-circle text-danger ms-2"
+                            pTooltip="Terminale Saat Ataması Yapılmadı"
+                            tooltipPosition="right"
+                            aria-label="Terminale Saat Ataması Yapılmadı"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+
+              <!-- Sağ Form -->
+              <div class="col-9">
+                <div class="row">
+                  <div class="col-12 py-3">
+                    <span class="fs-2 fw-bold">
+                      Seçilen Terminal : {{ selectedDeviceGroup?.ad }}
+                    </span>
+                  </div>
+
+                  <form [formGroup]="form" class="form-grid">
+                    <div class="row g-4">
+                      <!-- Başlangıç kolon -->
+                      <div class="col-12 col-lg-6">
+                        <div class="form-group mb-4">
+                          <label class="form-label fw-bold mb-2"
+                            >Sabah Başlangıç</label
+                          >
+                          <p-calendar
+                            formControlName="saat1b"
+                            [timeOnly]="true"
+                            [hourFormat]="'24'"
+                            [showIcon]="true"
+                            [style]="{ width: '100%' }"
+                            inputStyleClass="w-100"
+                            (onSelect)="onTimeChange('saat1b', $event)"
+                          ></p-calendar>
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label class="form-label fw-bold mb-2"
+                            >Öğlen Başlangıç</label
+                          >
+                          <p-calendar
+                            formControlName="saat2b"
+                            [timeOnly]="true"
+                            [hourFormat]="'24'"
+                            [showIcon]="true"
+                            [style]="{ width: '100%' }"
+                            inputStyleClass="w-100"
+                            (onSelect)="onTimeChange('saat2b', $event)"
+                          ></p-calendar>
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label class="form-label fw-bold mb-2"
+                            >Akşam Başlangıç</label
+                          >
+                          <p-calendar
+                            formControlName="saat3b"
+                            [timeOnly]="true"
+                            [hourFormat]="'24'"
+                            [showIcon]="true"
+                            [style]="{ width: '100%' }"
+                            inputStyleClass="w-100"
+                            (onSelect)="onTimeChange('saat3b', $event)"
+                          ></p-calendar>
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label class="form-label fw-bold mb-2"
+                            >Gece Başlangıç</label
+                          >
+                          <p-calendar
+                            formControlName="saat4b"
+                            [timeOnly]="true"
+                            [hourFormat]="'24'"
+                            [showIcon]="true"
+                            [style]="{ width: '100%' }"
+                            inputStyleClass="w-100"
+                            (onSelect)="onTimeChange('saat4b', $event)"
+                          ></p-calendar>
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label class="form-label fw-bold mb-2"
+                            >Ek(1) Başlangıç</label
+                          >
+                          <p-calendar
+                            formControlName="saat5b"
+                            [timeOnly]="true"
+                            [hourFormat]="'24'"
+                            [showIcon]="true"
+                            [style]="{ width: '100%' }"
+                            inputStyleClass="w-100"
+                            (onSelect)="onTimeChange('saat5b', $event)"
+                          ></p-calendar>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="form-label fw-bold mb-2"
+                            >Ek(2) Başlangıç</label
+                          >
+                          <p-calendar
+                            formControlName="saat6b"
+                            [timeOnly]="true"
+                            [hourFormat]="'24'"
+                            [showIcon]="true"
+                            [style]="{ width: '100%' }"
+                            inputStyleClass="w-100"
+                            (onSelect)="onTimeChange('saat6b', $event)"
+                          ></p-calendar>
+                        </div>
+                      </div>
+
+                      <!-- Bitiş kolon -->
+                      <div class="col-12 col-lg-6">
+                        <div class="form-group mb-4">
+                          <label class="form-label fw-bold mb-2"
+                            >Sabah Bitiş</label
+                          >
+                          <p-calendar
+                            formControlName="saat1s"
+                            [timeOnly]="true"
+                            [hourFormat]="'24'"
+                            [showIcon]="true"
+                            [style]="{ width: '100%' }"
+                            inputStyleClass="w-100"
+                            (onSelect)="onTimeChange('saat1s', $event)"
+                          ></p-calendar>
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label class="form-label fw-bold mb-2"
+                            >Öğlen Bitiş</label
+                          >
+                          <p-calendar
+                            formControlName="saat2s"
+                            [timeOnly]="true"
+                            [hourFormat]="'24'"
+                            [showIcon]="true"
+                            [style]="{ width: '100%' }"
+                            inputStyleClass="w-100"
+                            (onSelect)="onTimeChange('saat2s', $event)"
+                          ></p-calendar>
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label class="form-label fw-bold mb-2"
+                            >Akşam Bitiş</label
+                          >
+                          <p-calendar
+                            formControlName="saat3s"
+                            [timeOnly]="true"
+                            [hourFormat]="'24'"
+                            [showIcon]="true"
+                            [style]="{ width: '100%' }"
+                            inputStyleClass="w-100"
+                            (onSelect)="onTimeChange('saat3s', $event)"
+                          ></p-calendar>
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label class="form-label fw-bold mb-2"
+                            >Gece Bitiş</label
+                          >
+                          <p-calendar
+                            formControlName="saat4s"
+                            [timeOnly]="true"
+                            [hourFormat]="'24'"
+                            [showIcon]="true"
+                            [style]="{ width: '100%' }"
+                            inputStyleClass="w-100"
+                            (onSelect)="onTimeChange('saat4s', $event)"
+                          ></p-calendar>
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label class="form-label fw-bold mb-2"
+                            >Ek(1) Bitiş</label
+                          >
+                          <p-calendar
+                            formControlName="saat5s"
+                            [timeOnly]="true"
+                            [hourFormat]="'24'"
+                            [showIcon]="true"
+                            [style]="{ width: '100%' }"
+                            inputStyleClass="w-100"
+                            (onSelect)="onTimeChange('saat5s', $event)"
+                          ></p-calendar>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="form-label fw-bold mb-2"
+                            >Ek(2) Bitiş</label
+                          >
+                          <p-calendar
+                            formControlName="saat6s"
+                            [timeOnly]="true"
+                            [hourFormat]="'24'"
+                            [showIcon]="true"
+                            [style]="{ width: '100%' }"
+                            inputStyleClass="w-100"
+                            (onSelect)="onTimeChange('saat6s', $event)"
+                          ></p-calendar>
+                        </div>
+
+                        <div class="text-end mt-4">
+                          <button
+                            pButton
+                            type="button"
+                            label="{{ 'Kaydet' | translate }}"
+                            class="p-button-success"
+                            icon="pi pi-check"
+                            (click)="onSave()"
+                          ></button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- /Sağ Form -->
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
