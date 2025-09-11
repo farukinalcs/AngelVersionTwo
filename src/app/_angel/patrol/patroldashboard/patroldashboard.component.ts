@@ -15,7 +15,7 @@ import { ChangeDetectionStrategy } from '@angular/core';
 import { SignalrPatrolService } from '../signalr-patrol.service';
 import { HelperService } from 'src/app/_helpers/helper.service';
 import * as signalR from '@microsoft/signalr';
-import { ConnectionModel} from '../models/connection';
+import { ConnectionModel } from '../models/connection';
 import { LocationService } from '../content-container/location.service';
 
 
@@ -67,14 +67,14 @@ export class CustomDateAdapter extends NativeDateAdapter {
 
 export class PatroldashboardComponent implements OnInit, OnDestroy {
 
-    //DASHBOARD
-    eventLogs: {
-      type: string;
-      message: string;
-      time: Date;
-      icon: string;
-      color: string;
-    }[] = [];
+  //DASHBOARD
+  eventLogs: {
+    type: string;
+    message: string;
+    time: Date;
+    icon: string;
+    color: string;
+  }[] = [];
 
 
 
@@ -121,15 +121,15 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   widgets: any;
   alarmlar: any[] = [];
   olaylar: any[] = [];
-  displayList:any[] = [];
+  displayList: any[] = [];
 
   mobileUsers: ConnectionModel[] = [];
   mobileClientInfos: any[] = [];
 
-  selectedLocationID : number;
+  selectedLocationID: number;
   onlineMobileUsers: ConnectionModel[] = [];
-  allconnInfo:ConnectionModel[] = []
-  allClitenInfos:any[] = []
+  allconnInfo: ConnectionModel[] = []
+  allClitenInfos: any[] = []
   private markers: { [imei: string]: google.maps.Marker } = {};
   constructor(
     private patrol: PatrolService,
@@ -138,7 +138,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private signalRService: SignalrPatrolService,
     private helperService: HelperService,
-    private location :LocationService
+    private location: LocationService
 
   ) { }
 
@@ -181,70 +181,70 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
       .catch(err => console.error('🔴 SignalR bağlantı hatası:', err));
   }
 
-    public async register(): Promise<void> {
-      if (!this.hubConnection || this.hubConnection.state !== signalR.HubConnectionState.Connected) {
-        console.warn("❌ SignalR bağlantısı yok, register yapılamıyor.");
-        return;
-      }
-    
-      try {
-        const data = await this.generateRegisterData();
-        const jsonData = JSON.stringify(data);
-    
-        console.log('📦 Register gönderiliyor:', jsonData);
-    
-        this.hubConnection.on('allconninfo', (...args: any[]) => {
-          if (args && args.length > 0) {
-            try {
-              const rawJson = args[0] as string;
-              const parsed = JSON.parse(rawJson) as ConnectionModel[];
-    
-              const connections = parsed.map((conn) => {
-                let clientInfoParsed: any;
-                try {
-                  clientInfoParsed = JSON.parse(conn.ClientInfo);
-                } catch {
-                  console.warn('❌ ClientInfo JSON değil:', conn.ClientInfo);
-                  clientInfoParsed = {};
-                }
-    
-                return {
-                  ...conn,
-                  ClientInfo: clientInfoParsed,
-                };
-              });
-    
-              const mobileConnections = connections.filter(c => c.ClientType === 4);
-    
-              const newClientInfos = mobileConnections.map(user => ({
-                terminalname: user.terminalname,
-                connectionDate: user.ConnectionDate,
-                ...user.ClientInfo
-              }));
-    
-              const filteredByLocation = newClientInfos.filter(x =>
-                x.LokasyonId == this.selectedLocationID
-              );
-    
-              // 🔄 Display list'i yeni lokasyon cihazlarıyla güncelle
-              this.displayList = [...filteredByLocation];
-    
-  
-              // 🔄 Marker senkronizasyonu
-              filteredByLocation.forEach(device => {
-                const lat = +device.lat;
-                const lng = +device.lng;
-    
-                if (!isNaN(lat) && !isNaN(lng)) {
-                  const existingMarker = this.markers[device.imei];
-    
-                  if (!existingMarker) {
-                    const marker = new google.maps.Marker({
-                      position: { lat, lng },
-                      map: this.map,
-                      title: device.terminalname,
-                      icon: {
-                        url:'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+  public async register(): Promise<void> {
+    if (!this.hubConnection || this.hubConnection.state !== signalR.HubConnectionState.Connected) {
+      console.warn("❌ SignalR bağlantısı yok, register yapılamıyor.");
+      return;
+    }
+
+    try {
+      const data = await this.generateRegisterData();
+      const jsonData = JSON.stringify(data);
+
+      console.log('📦 Register gönderiliyor:', jsonData);
+
+      this.hubConnection.on('allconninfo', (...args: any[]) => {
+        if (args && args.length > 0) {
+          try {
+            const rawJson = args[0] as string;
+            const parsed = JSON.parse(rawJson) as ConnectionModel[];
+
+            const connections = parsed.map((conn) => {
+              let clientInfoParsed: any;
+              try {
+                clientInfoParsed = JSON.parse(conn.ClientInfo);
+              } catch {
+                console.warn('❌ ClientInfo JSON değil:', conn.ClientInfo);
+                clientInfoParsed = {};
+              }
+
+              return {
+                ...conn,
+                ClientInfo: clientInfoParsed,
+              };
+            });
+
+            const mobileConnections = connections.filter(c => c.ClientType === 4);
+
+            const newClientInfos = mobileConnections.map(user => ({
+              terminalname: user.terminalname,
+              connectionDate: user.ConnectionDate,
+              ...user.ClientInfo
+            }));
+
+            const filteredByLocation = newClientInfos.filter(x =>
+              x.LokasyonId == this.selectedLocationID
+            );
+
+            // 🔄 Display list'i yeni lokasyon cihazlarıyla güncelle
+            this.displayList = [...filteredByLocation];
+
+
+            // 🔄 Marker senkronizasyonu
+            filteredByLocation.forEach(device => {
+              const lat = +device.lat;
+              const lng = +device.lng;
+
+              if (!isNaN(lat) && !isNaN(lng)) {
+                const existingMarker = this.markers[device.imei];
+
+                if (!existingMarker) {
+                  const marker = new google.maps.Marker({
+                    position: { lat, lng },
+                    map: this.map,
+                    title: device.terminalname,
+                    icon: {
+                      url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60">
                        <path
                         d="M20 0C9 0 0 9 0 20c0 11 20 40 20 40s20-29 20-40C40 9 31 0 20 0z"
@@ -265,97 +265,34 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
                       </text>
                     </svg>
                   `),
-                        scaledSize: new google.maps.Size(40, 40),
-                        anchor: new google.maps.Point(20, 20)
-                      }
-                    });
-    
-                    this.markers[device.imei] = marker;
-                    console.log("🆕 Yeni marker eklendi: http://maps.google.com/mapfiles/ms/icons/red-dot.png ", device.imei);
-                  } else {
-                  
-                  }
+                      scaledSize: new google.maps.Size(40, 40),
+                      anchor: new google.maps.Point(20, 20)
+                    }
+                  });
+
+                  this.markers[device.imei] = marker;
+                  console.log("🆕 Yeni marker eklendi: http://maps.google.com/mapfiles/ms/icons/red-dot.png ", device.imei);
                 } else {
-                  console.warn('❌ Geçersiz koordinat:', device);
+
                 }
-              });
-    
-            } catch (err) {
-              console.error('❌ allconninfo parse hatası:', err);
-            }
+              } else {
+                console.warn('❌ Geçersiz koordinat:', device);
+              }
+            });
+
+          } catch (err) {
+            console.error('❌ allconninfo parse hatası:', err);
           }
-        });
-    
-        const result = await this.hubConnection.invoke("register", jsonData);
-        console.log('✅ Register başarılı:', result);
-    
-      } catch (err) {
-        console.error('❌ Register hatası:', err);
-      }
+        }
+      });
+
+      const result = await this.hubConnection.invoke("register", jsonData);
+      console.log('✅ Register başarılı:', result);
+
+    } catch (err) {
+      console.error('❌ Register hatası:', err);
     }
-
-  // public async register(): Promise<void> {
-  //   if (!this.hubConnection || this.hubConnection.state !== signalR.HubConnectionState.Connected) {
-  //     console.warn("❌ SignalR bağlantısı yok, register yapılamıyor.");
-  //     return;
-  //   }
-  //   try {
-  //     const data = await this.generateRegisterData();
-  //     const jsonData = JSON.stringify(data);
-  
-  //     console.log('📦 Register gönderiliyor:', jsonData);
-
-  //     let connections: ConnectionModel[] = [];
-
-  //     this.hubConnection.on('allconninfo', (...args: any[]) => {
-  //       if (args && args.length > 0) {
-  //         try {
-  //           const rawJson = args[0] as string;
-  //           const parsed = JSON.parse(rawJson) as ConnectionModel[];
-      
-  //           connections = parsed.map((conn) => {
-  //             let clientInfoParsed: any;
-  //             try {
-  //               clientInfoParsed = JSON.parse(conn.ClientInfo);
-  //             } catch {
-  //               console.warn('❌ ClientInfo JSON değil:', conn.ClientInfo);
-  //               clientInfoParsed = {};
-  //             }
-      
-  //             return {
-  //               ...conn,
-  //               ClientInfo: clientInfoParsed,
-  //             };
-  //           });
-      
-  //           this.allconnInfo = connections.filter(c => c.ClientType === 4);
-  //           this.allClitenInfos = this.allconnInfo.map(u => u.ClientInfo);
-
-  //           console.table(connections);
-      
-  //           this.displayList = this.allconnInfo.map(user => ({
-  //             adSoyad: user.terminalname,
-  //             connectionDate: user.ConnectionDate,
-           
-  //             ...user.ClientInfo
-  //           }));
-      
-  //           console.log('📱 Mobil kullanıcılar:', this.allconnInfo);
-  //           console.log('📦 Mobil client info listesi:', this.allClitenInfos);
-  //           console.log('🧾 Display List:', this.displayList);
-      
-  //         } catch (err) {
-  //           console.error('❌ allconninfo parse hatası:', err);
-  //         }
-  //       }
-  //     });
-
-  //     const result = await this.hubConnection.invoke("register", jsonData);
-  //     console.log('✅ Register başarılı:', result);
-  //   } catch (err) {
-  //     console.error('❌ Register hatası:', err);
-  //   } 
-  // }
+  }
 
   public listenSignalREvents(): void {
     this.hubConnection.on('incident', this.onIncident.bind(this));
@@ -369,27 +306,29 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     if (args && args.length > 0) {
       const data = args[0] as string;
       console.log("🚨 INCIDENT:", data);
-  
+      this.addEventLog("🚨 INCIDENT:", data);
     }
   }
-  
+
   private onAlert(...args: any[]): void {
     if (args && args.length > 0) {
       const alertData = args[0] as string;
       console.log("⚠️ Alert event geldi:", alertData);
-  
+
       this.handleAlarmMessage(alertData);
+      this.addEventLog("⚠️ ALERT", alertData);
     }
- 
+
   }
-  
+
   private async onVoice(...args: any[]): Promise<void> {
     if (args && args.length > 0) {
       const voiceData = args[0] as string;
       console.log("🎧 Voice event geldi:", voiceData);
       await this.handleVoiceMessage(voiceData);
+      this.addEventLog("🎧 VOICE", voiceData);
     }
-   
+
   }
 
   private async onConninfo(...args: any[]): Promise<void> {
@@ -397,7 +336,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
       try {
         const rawJson = args[0] as string;
         const parsed = JSON.parse(rawJson) as ConnectionModel[];
-  
+
         let connections: ConnectionModel[] = [];
 
         connections = parsed.map((conn) => {
@@ -408,7 +347,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
             console.warn('❌ Conninfo ClientInfo JSON değil:', conn.ClientInfo);
             clientInfoParsed = {};
           }
-  
+
           return {
             ...conn,
             ClientInfo: clientInfoParsed,
@@ -417,14 +356,14 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
         const updates = connections.filter(c => c.ClientType === 4);
         updates.forEach(conn => {
           const uniqueKey = conn.LoginId || conn.ClientInfo?.person || conn.KullaniciAdi;
-  
+
           const index = this.displayList.findIndex(
             u =>
               u.loginId === uniqueKey || // loginId eşleşmesi varsa
               u.person === uniqueKey || // clientInfo.person eşleşiyorsa
               u.kullaniciAdi === uniqueKey
           );
-  
+
           if (conn.Process === '+' && index === -1) {
             // ✔ cihaz yoksa → ekle
             this.displayList.push({
@@ -438,7 +377,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
             });
             console.log('🟢 Yeni cihaz eklendi:', conn.terminalname);
           }
-  
+
           if (conn.Process === '+' && index !== -1) {
             // 🔁 varsa → güncelle (yani overwrite)
             this.displayList[index] = {
@@ -452,16 +391,16 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
             };
             console.log('♻ Güncellendi:', conn.terminalname);
           }
-  
+
           if (conn.Process === '-' && index !== -1) {
             // 🔴 cihaz offline olduysa → sil
             this.displayList.splice(index, 1);
             console.log('🔴 Cihaz listeden silindi:', conn.terminalname);
           }
         });
-  
-        console.log("🔴",connections);
-        console.log("❌❌❌❌❌❌",this.displayList);
+
+        console.log("🔴", connections);
+        console.log("❌❌❌❌❌❌", this.displayList);
       } catch (err) {
         console.error('❌ conninfo parse hatası:', err);
       }
@@ -503,11 +442,11 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
         scaledSize: new google.maps.Size(40, 40)
       }
     });
-  
-  
+
+
     console.log("🔔 Alarm verisi işlendi:", rawAlarm);
   }
-  
+
   async handleVoiceMessage(data: string): Promise<void> {
     // Belki sesli mesaj oynatılacak?
     console.log("🔊 Voice mesajı işlendi:", data);
@@ -586,6 +525,44 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     const latitude = parseFloat(lat || "0");
     const longitude = parseFloat(lng || "0");
     return !isNaN(latitude) && !isNaN(longitude);
+  }
+
+  private addEventLog(type: string, message: string) {
+
+    console.log("addEventLog:", this.eventLogs);
+    console.log("addEventLog:", type, message);
+    let icon = "info";
+    let color = "secondary";
+
+    switch (type) {
+      case "🚨 INCIDENT:":
+        icon = "alert-octagon";
+        color = "danger"; // kırmızı
+        break;
+      case "⚠️ ALERT":
+        icon = "bell";
+        color = "warning"; // sarı
+        break;
+      case "🎧 VOICE":
+        icon = "headphones";
+        color = "primary"; // mavi
+        break;
+      default:
+        icon = "info";
+        color = "secondary";
+    }
+
+    this.eventLogs.unshift({
+      type,
+      message,
+      time: new Date(),
+      icon,
+      color
+    });
+
+    if (this.eventLogs.length > 20) {
+      this.eventLogs.pop();
+    }
   }
 
   private loadMap(lat: number, lng: number, title: string): void {
