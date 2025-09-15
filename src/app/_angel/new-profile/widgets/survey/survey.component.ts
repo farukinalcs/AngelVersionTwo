@@ -19,7 +19,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
 
   items: any[] = [
     { id: '1', tarih: '01 Temmuz 2023', aciklama: 'Kahvaltı Yapalım mı ?', bolum: 'İnsan Kaynakları', selectedOption: null },
-    { id: '2', tarih: '02 Temmuz 2023', aciklama: 'Araç Talep Modülü Yapalım mı ?', bolum: 'Yazılım Geliştirme', selectedOption: null },
+    { id: '2', tarih: '02 Temmuz 2023', aciklama: 'Cuma 4-6 Arası Happy Hour Yapalım mı ?', bolum: 'Genel', selectedOption: null },
     { id: '3', tarih: '03 Temmuz 2023', aciklama: 'Araç Talep Modülü Yapalım mı ?', bolum: 'Yazılım Geliştirme', selectedOption: null },
     { id: '4', tarih: '04 Temmuz 2023', aciklama: 'Araç Talep Modülü Yapalım mı ?', bolum: 'Yazılım Geliştirme', selectedOption: null },
     { id: '5', tarih: '05 Temmuz 2023', aciklama: 'Araç Talep Modülü Yapalım mı ?', bolum: 'Teknik', selectedOption: null },

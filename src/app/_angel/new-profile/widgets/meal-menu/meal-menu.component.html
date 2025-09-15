@@ -44,33 +44,37 @@
           data-bs-interval="false"
         >
           <div class="carousel-inner">
-            <div
-              *ngFor="let s of slides; let i = index"
-              class="carousel-item"
-              [class.active]="i === 0"
-            >
-              <div class="container py-4">
-                <div
-                  *ngFor="let g of s.groups; trackBy: trackByGroup"
-                  class="mb-3"
-                >
-                  <h6
-                    class="text-center fw-bold text-uppercase mb-2 text-danger"
-                  >
-                  ~ {{ g.label }} ~
-                  </h6>
-                  <div class="d-flex flex-column align-items-center gap-2">
-                    <span
-                      *ngFor="let item of g.items; trackBy: trackById"
-                      class="badge text-dark px-3 py-2"
-                    >
-                      {{ item.Aciklama }}
-                    </span>
-                    
-                  </div>
-                </div>
-              </div>
-            </div>
+<div
+  *ngFor="let s of slides; let i = index"
+  class="carousel-item"
+  [class.active]="i === 0"
+>
+  <div class="container py-4">
+    <div *ngFor="let g of s.groups; trackBy: trackByGroup" class="mb-3">
+      <h6 class="text-center fw-bold text-uppercase mb-2 text-danger">
+        ~ {{ g.label }} ~
+      </h6>
+
+      <div class="d-flex flex-column align-items-center gap-2" *ngIf="g.items?.length; else noItemsOfGroup">
+        <span *ngFor="let item of g.items; trackBy: trackById" class="badge text-dark px-3 py-2">
+          {{ item.Aciklama }}
+        </span>
+      </div>
+      <ng-template #noItemsOfGroup></ng-template>
+    </div>
+
+    <!-- SLIDE tamamen boşsa (hiç item yoksa) Not Found göster -->
+    <div class="text-center text-muted py-4" *ngIf="isSlideEmpty(s)">
+      <app-data-not-found [imgWidth]="'100%'"></app-data-not-found>
+    </div>
+  </div>
+</div>
+
+<!-- (opsiyonel) Hiç slide yoksa genel Not Found -->
+<div class="text-center text-muted py-4" *ngIf="isAllEmpty()">
+  <app-data-not-found [imgWidth]="'100%'"></app-data-not-found>
+</div>
+
           </div>
           <button
             class="carousel-control-prev"
@@ -92,10 +96,8 @@
           </button>
         </div>
 
-        <ng-template #noMeals>
-          <div class="text-center text-muted py-4">
-            Gösterilecek menü bulunamadı.
-          </div>
+        <ng-template>
+
         </ng-template>
       </div>
     </div>

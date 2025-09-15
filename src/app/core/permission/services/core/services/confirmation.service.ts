@@ -27,6 +27,26 @@ export class ConfirmationService {
     });
   }
 
+  confirmWarning(message: string, title?: string) {
+  return Swal.fire({
+    title: title ?? 'Uyarı',
+    text: message,
+    icon: 'warning',
+    iconColor: '#ed1b24',
+    showCancelButton: true,
+    confirmButtonColor: '#ed1b24',
+    cancelButtonColor: '#6c757d',
+    cancelButtonText: 'Hayır',
+    confirmButtonText: 'Evet',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    heightAuto: false,
+    customClass: {
+      popup: 'swal-on-top',
+    },
+  });
+}
+
   /** Genel onay için (pozitif) */
   confirmAction(message: string, title?: string) {
     return Swal.fire({

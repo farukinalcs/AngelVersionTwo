@@ -5,6 +5,7 @@ import { DialogModule } from 'primeng/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { AllMealMenuComponent } from './all-meal-menu/all-meal-menu.component';
 import { TanimlamalarService } from 'src/app/_angel/profile/profile-definitions/tanimlamalar.service';
+import { DataNotFoundComponent } from "src/app/_angel/shared/data-not-found/data-not-found.component";
 
 interface MealItem {
   Id: number;
@@ -31,7 +32,7 @@ interface MealSlide {
 @Component({
   selector: 'app-meal-menu',
   standalone: true,
-  imports: [CommonModule, TranslateModule, DialogModule, DatePipe, AllMealMenuComponent],
+  imports: [CommonModule, TranslateModule, DialogModule, DatePipe, AllMealMenuComponent, DataNotFoundComponent],
   templateUrl: './meal-menu.component.html',
   styleUrls: ['./meal-menu.component.scss'],
 })
@@ -139,6 +140,17 @@ export class MealMenuComponent implements OnInit, OnDestroy {
     this._currentDate = `${yil}-${ay}-${gun}`;
     return this._currentDate;
   }
+
+  isSlideEmpty(s: any): boolean {
+  return !Array.isArray(s?.groups) || !s.groups.some((g: any) =>
+    Array.isArray(g?.items) && g.items.length > 0
+  );
+}
+
+// (opsiyonel) tüm slider boşsa (hiç slide yoksa)
+isAllEmpty(): boolean {
+  return !Array.isArray(this.slides) || this.slides.length === 0;
+}
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
