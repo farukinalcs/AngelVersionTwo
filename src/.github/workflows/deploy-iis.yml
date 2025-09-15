@@ -1,0 +1,142 @@
+name: Build & Deploy Angular to IIS
+
+on:
+  push:
+    branches: [ "master" ]   # ihtiyacına göre değiştir (örn: develop)
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install deps (clean)
+        run: npm ci
+
+      - name: Angular production build
+        run: npx ng build --configuration production
+
+      - name: Upload dist as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/**/*
+          if-no-files-found: error
+
+  deploy:
+    needs: build
+    # Sunucuna kurduğun self-hosted runner'ın etiketleri:
+    runs-on: [self-hosted, windows, iis]
+
+    env:
+      # IIS canlı site klasörü
+      SITE_PATH: C:\inetpub\wwwroot\angel
+      # Release ve yedeklerin tutulacağı klasör
+      RELEASES_PATH: C:\inetpub\wwwroot\angel_releases
+      # dist altında oluşan klasör adı (proje adı)
+      APP_NAME_IN_DIST: ANGELVERSIONTWO
+      # Kaç yedek/release saklansın
+      KEEP_BACKUPS: "3"
+      # (opsiyonel) Uygulamanın AppPool adı
+      APP_POOL: DefaultAppPool
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Prepare & Deploy
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+
+
+          $releaseStamp = (Get-Date -Format "yyyyMMdd_HHmmss")
+          $releaseDir   = Join-Path $env:RELEASES_PATH $releaseStamp
+          if (!(Test-Path $env:RELEASES_PATH)) { New-Item -ItemType Directory -Path $env:RELEASES_PATH | Out-Null }
+          if (!(Test-Path $env:SITE_PATH))      { New-Item -ItemType Directory -Path $env:SITE_PATH      | Out-Null }
+          New-Item -ItemType Directory -Path $releaseDir | Out-Null
+
+
+          $distRoot = (Resolve-Path "dist").Path
+          $distApp  = Join-Path $distRoot $env:APP_NAME_IN_DIST
+          if (!(Test-Path $distApp)) {
+            throw "Bulunamadı: $distApp  (APP_NAME_IN_DIST doğru mu?)"
+          }
+
+
+          $webConfig = Join-Path $distApp "web.config"
+          if (!(Test-Path $webConfig)) {
+            @"
+<configuration>
+  <system.webServer>
+    <rewrite>
+      <rules>
+        <rule name=\"Angular Routes\" stopProcessing=\"true\">
+          <match url=\".*\" />
+          <conditions logicalGrouping=\"MatchAll\">
+            <add input=\"{REQUEST_FILENAME}\" matchType=\"IsFile\" negate=\"true\" />
+            <add input=\"{REQUEST_FILENAME}\" matchType=\"IsDirectory\" negate=\"true\" />
+          </conditions>
+          <action type=\"Rewrite\" url=\"/index.html\" />
+        </rule>
+      </rules>
+    </rewrite>
+    <staticContent>
+      <mimeMap fileExtension=\".json\" mimeType=\"application/json\" />
+      <mimeMap fileExtension=\".webmanifest\" mimeType=\"application/manifest+json\" />
+    </staticContent>
+  </system.webServer>
+</configuration>
+"@ | Set-Content -Path $webConfig -Encoding UTF8
+          }
+
+
+          robocopy $distApp $releaseDir /MIR /NP /NFL /NDL /NJH /NJS | Out-Null
+
+
+          $backupDir = Join-Path $env:RELEASES_PATH ("backup_" + $releaseStamp)
+          robocopy $env:SITE_PATH $backupDir /MIR /NP /NFL /NDL /NJH /NJS | Out-Null
+
+
+          $offline = Join-Path $env:SITE_PATH "app_offline.htm"
+          "<html><body><h2>Güncelleme yapılıyor, lütfen birazdan tekrar deneyin.</h2></body></html>" | Set-Content -Path $offline -Encoding UTF8
+
+
+          robocopy $releaseDir $env:SITE_PATH /MIR /NP /NFL /NDL /NJH /NJS | Out-Null
+
+
+          if (Test-Path $offline) { Remove-Item $offline -Force }
+
+
+          $keep = [int]$env:KEEP_BACKUPS
+
+          $backups = Get-ChildItem $env:RELEASES_PATH -Directory |
+            Where-Object { $_.Name -like "backup_*" } | Sort-Object Name -Descending
+          if ($backups.Count -gt $keep) {
+            $backups | Select-Object -Skip $keep | ForEach-Object { Remove-Item $_.FullName -Recurse -Force }
+          }
+
+          $releases = Get-ChildItem $env:RELEASES_PATH -Directory |
+            Where-Object { $_.Name -match '^\d{8}_\d{6}$' } | Sort-Object Name -Descending
+          if ($releases.Count -gt $keep) {
+            $releases | Select-Object -Skip $keep | ForEach-Object { Remove-Item $_.FullName -Recurse -Force }
+          }
+
+      - name: Recycle IIS app pool
+        shell: pwsh
+        run: |
+          Import-Module WebAdministration
+          Restart-WebAppPool -Name $env:APP_POOL

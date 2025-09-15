@@ -1,0 +1,20 @@
+/* Label’ları satıra yay */
+.form-label.d-block { display: block; }
+
+/* PrimeNG Calendar genişliği */
+:host ::ng-deep .p-calendar {
+  width: 100%;
+}
+:host ::ng-deep .p-calendar .p-inputtext {
+  width: 100%;
+  height: 42px;
+}
+:host ::ng-deep .p-calendar .p-button {
+  height: 42px;
+}
+
+/* Dropdown ve input’lar hizalı dursun */
+:host ::ng-deep .p-dropdown,
+:host ::ng-deep .p-inputtext {
+  min-height: 42px;
+}

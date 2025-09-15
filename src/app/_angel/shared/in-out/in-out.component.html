@@ -1,0 +1,129 @@
+<p-dialog
+  header="{{ 'Giriş_Çıkış_Düzenleme' | translate }}"
+  [(visible)]="displayInOut"
+  position="top"
+  [breakpoints]="{ '2560px': '99vw', '992px': '90vw', '576px': '99vw' }"
+  [modal]="true"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+  [maximizable]="true"
+  (onHide)="hideInOutModal()"
+>
+  <div class="container-fluid p-0">
+    <div class="row">
+      <form
+        [formGroup]="form"
+        (ngSubmit)="submit()"
+        class="col-12 col-lg-8 mx-auto py-3"
+      >
+        <!-- Tarih -->
+        <div class="col-12 mb-3">
+          <label class="form-label mb-1 d-block" for="tarih">Tarih</label>
+          <p-calendar
+            inputId="tarih"
+            formControlName="tarih"
+            [locale]="tr"
+            dateFormat="dd-mm-yy"
+            [showIcon]="true"
+            styleClass="w-100"
+            inputStyleClass="w-100"
+          ></p-calendar>
+          <div
+            class="text-danger small"
+            *ngIf="f.tarih.touched && f.tarih.invalid"
+          >
+            Lütfen tarih seçin.
+          </div>
+        </div>
+        <!-- Saat -->
+        <div class="col-12 mb-3">
+          <label class="form-label mb-1 d-block" for="saat">Saat</label>
+          <p-calendar
+            inputId="saat"
+            formControlName="saat"
+            [timeOnly]="true"
+            [hourFormat]="'24'"
+            [showIcon]="true"
+            [touchUI]="false"
+            [locale]="tr"
+            styleClass="w-100"
+            inputStyleClass="w-100"
+          ></p-calendar>
+          <div
+            class="text-danger small"
+            *ngIf="f.saat.touched && f.saat.invalid"
+          >
+            Lütfen saat seçin.
+          </div>
+        </div>
+
+        <!-- Terminal -->
+        <div class="col-12 mb-3">
+          <label class="form-label mb-1 d-block" for="terminal">Terminal</label>
+          <p-dropdown
+            inputId="terminal"
+            formControlName="terminal"
+            [options]="deviceGroups"
+            optionLabel="ad"
+            optionValue="id"
+            name="deviceGroup"
+            placeholder="Terminal Grubu Seçiniz"
+            [filter]="true"
+            [showClear]="true"
+            class="w-100"
+          ></p-dropdown>
+          <div
+            class="text-danger small mt-1"
+            *ngIf="f.terminal.touched && f.terminal.invalid"
+          >
+            Lütfen bir terminal seçin.
+          </div>
+        </div>
+
+        <!-- Açıklama -->
+        <div class="col-12 mb-3">
+          <label class="form-label mb-1 d-block" for="aciklama">Açıklama</label>
+          <p-iconfield iconPosition="left" class="w-100">
+            <p-inputicon class="pi pi-envelope"></p-inputicon>
+            <input
+              id="aciklama"
+              pInputText
+              type="text"
+              class="form-control"
+              formControlName="aciklama"
+              placeholder="Açıklama"
+              maxlength="200"
+            />
+          </p-iconfield>
+          <div class="d-flex justify-content-end">
+            <small class="text-muted"
+              >{{ f.aciklama.value?.length || 0 }}/200</small
+            >
+          </div>
+        </div>
+
+        <div class="row">
+          <div
+            class="col-12 d-flex justify-content-end align-items-center mt-4 gap-2"
+          >
+            <a
+              (click)="hideInOutModal()"
+              class="btn btn-sm btn-danger"
+            >
+              <i class="fa-solid fa-xmark fs-5"></i> {{ "Vazgeç" | translate }}
+            </a>
+            <button
+              pButton
+              type="submit"
+              label="Gönder"
+              class="btn btn-sm btn-danger"
+            >
+              <i class="fa-solid fa-check fs-5 mr-2"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</p-dialog>
