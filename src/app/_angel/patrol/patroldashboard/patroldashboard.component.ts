@@ -159,6 +159,8 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
   }
 
+  
+
 
 
   public startConnection(accessToken: string, serverUrl: string): void {

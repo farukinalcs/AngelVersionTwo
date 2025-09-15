@@ -19,8 +19,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     // KeenThemes mock, change it to:
 
     defaultAuth: any = {
-        userName: '',
-        password: '',
+        userName: 'meyer',
+        password: 'Mcld1878*',
     };
     defaultAuth3: any = {
         userName: 'meyer',
