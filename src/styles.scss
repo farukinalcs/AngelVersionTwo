@@ -45,7 +45,12 @@
 div:where(.swal2-container) {
     z-index: 9999!important;
 }
-
+.swal2-container.swal2-on-top {
+  z-index: 200000 !important;  // Bootstrap/PrimeNG overlay'lerini geçer
+}
+.swal2-popup-on-top {
+  z-index: 200001 !important;  // (opsiyonel) popup'ı da ekstra üste al
+}
 
 .custom-card {
     border: 1px solid #ddd;

@@ -1,0 +1,101 @@
+.category-nav {
+  --accent: #ed1b24;                 /* marka kırmızın */
+  --accent2: #ff7a18;                /* akışkan degrade için ikinci ton */
+  --bg-hover: rgba(237, 27, 36, .06);
+  --text: #212529;
+
+  .category-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .6rem .9rem .6rem 1rem;
+    color: var(--text);
+    border-radius: .6rem;
+    transition: background-color .25s ease, transform .18s ease;
+    overflow: hidden;
+    isolation: isolate;             
+    will-change: background-color, transform;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: .28rem;
+      border-radius: .28rem;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      transform: scaleY(0);
+      transform-origin: center top;
+      transition: transform .3s ease;
+      z-index: -1;                   
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(120px 60px at var(--rx, 50%) var(--ry, 50%), var(--bg-hover), transparent 60%);
+      opacity: 0;
+      transition: opacity .25s ease;
+      z-index: -1;
+    }
+
+    .dot {
+      width:.5rem; height:.5rem; border-radius:50%;
+      background: #e1e3ea;
+      transition: background-color .25s ease, transform .25s ease;
+      flex: 0 0 .5rem;
+    }
+    .label {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      flex: 1 1 auto;
+      background-color: #ffffff00!important;
+      font-size: 1rem!important;
+      font-weight: 500!important;
+    }
+
+    &:hover {
+      transform: translateX(2px);
+      .dot { background: var(--accent); transform: scale(1.15); }
+      &::after { opacity: 1; }
+    }
+
+    &.active {
+      background: linear-gradient(90deg, rgba(237,27,36,.08), transparent 70%);
+      font-weight: 700;
+      .dot { background: var(--accent); transform: scale(1.2); }
+      &::before { transform: scaleY(1); }
+    }
+
+    &.ripple {
+      background-image: radial-gradient(circle at var(--rx, 50%) var(--ry, 50%), rgba(237,27,36,.15) 0%, rgba(237,27,36,.15) 10%, transparent 11%);
+      background-repeat: no-repeat;
+      animation: rippleExpand .5s ease-out forwards;
+    }
+
+    animation: itemIn .3s ease both;
+    animation-delay: calc((var(--i, 0) + 1) * 15ms);
+  }
+}
+
+/* Animasyonlar */
+@keyframes rippleExpand {
+  0%   { background-size: 0 0; }
+  100% { background-size: 200% 200%; }
+}
+@keyframes itemIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hareket azaltma tercihi */
+@media (prefers-reduced-motion: reduce) {
+  .category-nav .category-link,
+  .category-nav .category-link::before,
+  .category-nav .category-link::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
