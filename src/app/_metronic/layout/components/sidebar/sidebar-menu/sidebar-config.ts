@@ -179,5 +179,15 @@ export const MENU: MenuItem[] = [
       { title: 'Talepler', routerLink: 'inventory/request' }
     ],
     app: ['1']
+  },
+    {
+    title: 'Dağıtım Yönetimi',
+    icon: 'fa-solid fa-person-chalkboard text-danger',
+    children: [
+      { title: 'Genel Bakış', routerLink: 'presentation/overview' },
+      { title: 'Tanımlamalar', routerLink: 'presentation/definitions' },
+      { title: 'Ürün Dağıtımı', routerLink: 'presentation/product-distribution' }
+    ],
+    app: ['1']
   }
 ];

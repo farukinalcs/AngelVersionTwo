@@ -1,0 +1,366 @@
+<div class="container-fluid">
+  <div class="row d-flex justify-content-between align-items-center py-3">
+    <div class="col">
+      <h5 class="m-0 fw-semibold">Dağıtım Genel Bakış</h5>
+      <small class="text-muted">Bugün: {{ today | date : "dd.MM.yyyy" }}</small>
+    </div>
+    <div class="col-auto d-flex gap-2">
+      <button class="btn btn-outline-secondary btn-sm" (click)="getList()">
+        Yenile Özet
+      </button>
+      <button class="btn btn-outline-secondary btn-sm" (click)="getList2()">
+        Yenile Hareketler
+      </button>
+      <button class="btn btn-outline-secondary btn-sm" (click)="getList3()">
+        Yenile Dağıtımlar
+      </button>
+    </div>
+  </div>
+
+  <div class="row g-3" *ngIf="stats as s; else statsEmpty">
+    <div class="col-6 col-md-4 col-xl-2">
+      <div
+        class="card shadow-sm h-100 meyer-bg position-relative overflow-hidden"
+      >
+        <div class="card-body">
+          <!-- Arka plan ikon -->
+          <i class="fa-solid fa-truck card-bg-icon"></i>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div
+              class="fw-semibold text-white"
+              style="font-size: clamp(16px, 2vw, 16px)"
+            >
+              Dağıtımda
+            </div>
+            <!-- Sağ üst küçük ikon istersen bu kalır -->
+            <i
+              class="fa-solid fa-truck text-white"
+              style="font-size: 1.5rem"
+            ></i>
+          </div>
+          <div class="display-6 text-center text-white">
+            {{ animatedStats.dagitimda || 0 }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-xl-2">
+      <div
+        class="card shadow-sm h-100 meyer-bg position-relative overflow-hidden"
+      >
+        <div class="card-body">
+          <!-- Arka plan ikon -->
+          <i class="fa-solid fa-list-check card-bg-icon"></i>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div
+              class="fw-semibold text-white"
+              style="font-size: clamp(16px, 2vw, 16px)"
+            >
+              Talep Toplama
+            </div>
+            <!-- Sağ üst küçük ikon istersen bu kalır -->
+            <i
+              class="fa-solid fa-list-check text-white"
+              style="font-size: 1.5rem"
+            ></i>
+          </div>
+          <div class="display-6 text-center text-white">
+            {{ animatedStats.taleptoplama || 0 }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-xl-2">
+      <div
+        class="card shadow-sm h-100 meyer-bg position-relative overflow-hidden"
+      >
+        <div class="card-body">
+          <!-- Arka plan ikon -->
+          <i class="fa-solid fa-circle-check card-bg-icon"></i>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div
+              class="fw-semibold text-white"
+              style="font-size: clamp(16px, 2vw, 16px)"
+            >
+              Tamamlanan
+            </div>
+            <!-- Sağ üst küçük ikon istersen bu kalır -->
+            <i
+              class="fa-solid fa-circle-check text-white"
+              style="font-size: 1.5rem"
+            ></i>
+          </div>
+          <div class="display-6 text-center text-white">
+            {{ animatedStats.tamamlanan || 0 }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-xl-2">
+      <div
+        class="card shadow-sm h-100 meyer-bg position-relative overflow-hidden"
+      >
+        <div class="card-body">
+          <!-- Arka plan ikon -->
+          <i class="fa-solid fa-box-open card-bg-icon"></i>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div
+              class="fw-semibold text-white"
+              style="font-size: clamp(16px, 2vw, 16px)"
+            >
+              Aktif Teslim
+            </div>
+            <!-- Sağ üst küçük ikon istersen bu kalır -->
+            <i
+              class="fa-solid fa-box-open text-white"
+              style="font-size: 1.5rem"
+            ></i>
+          </div>
+          <div class="display-6 text-center text-white">
+            {{ animatedStats.aktifteslim || 0 }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-xl-2">
+      <div
+        class="card shadow-sm h-100 meyer-bg position-relative overflow-hidden"
+      >
+        <div class="card-body">
+          <!-- Arka plan ikon -->
+          <i class="fa-solid fa-user-clock card-bg-icon"></i>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div
+              class="fw-semibold text-white"
+              style="font-size: clamp(16px, 2vw, 16px)"
+            >
+              Tes. Edilmeyen
+            </div>
+            <!-- Sağ üst küçük ikon istersen bu kalır -->
+            <i
+              class="fa-solid fa-user-clock text-white"
+              style="font-size: 1.5rem"
+            ></i>
+          </div>
+          <div class="display-6 text-center text-white">
+            {{ animatedStats.aktifteslimedilmeyen || 0 }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-xl-2">
+      <div
+        class="card shadow-sm h-100 meyer-bg position-relative overflow-hidden"
+      >
+        <div class="card-body">
+          <!-- Arka plan ikon -->
+          <i class="fa-solid fa-triangle-exclamation card-bg-icon"></i>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div
+              class="fw-semibold text-white"
+              style="font-size: clamp(16px, 2vw, 16px)"
+            >
+              Tes. Edilemeyen
+            </div>
+            <!-- Sağ üst küçük ikon istersen bu kalır -->
+            <i
+              class="fa-solid fa-triangle-exclamation text-white"
+              style="font-size: 1.5rem"
+            ></i>
+          </div>
+          <div class="display-6 text-center text-white">
+            {{ animatedStats.aktifteslimedilemeyen || 0 }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #statsEmpty>
+    <div
+      class="alert alert-light border d-flex align-items-center"
+      *ngIf="!loading432"
+    >
+      <i class="fa-regular fa-circle-question me-2"></i>
+      Özet verisi bulunamadı.
+    </div>
+    <div class="alert alert-light border" *ngIf="loading432">Yükleniyor…</div>
+  </ng-template>
+  <div class="row g-3 mt-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div
+          class="card-header bg-white"
+          style="
+            background: #ed1b24 !important;
+            align-content: center !important;
+          "
+        >
+          <div class="fw-semibold text-white">
+            <i
+              class="fa-solid fa-clock me-2"
+              style="font-size: 1.7rem; color: #ffffff !important"
+            ></i>
+            Süreç Özetleri
+          </div>
+        </div>
+
+        <div class="card-body p-0">
+          <div class="table-responsive m-4">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Dağıtım</th>
+                  <th>Sorumlu</th>
+                  <th class="text-center">Talep Kalan Gün</th>
+                  <th class="text-center">Dağıtım Kalan Gün</th>
+                  <th class="text-center" style="width: 220px">
+                    Teslim / Alıcı
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let d of distributions;
+                    let i = index;
+                    trackBy: trackByIndex
+                  "
+                >
+                  <td class="fw-semibold">{{ d.dagitimad }}</td>
+                  <td>{{ d.dagitimsorumlusu }}</td>
+                  <td class="text-center">
+                    <span [class.text-danger]="d.talepkalangun <= 1">{{
+                      d.talepkalangun
+                    }}</span>
+                  </td>
+                  <td class="text-center">
+                    <span [class.text-danger]="d.dagitimkalangun <= 1">{{
+                      d.dagitimkalangun
+                    }}</span>
+                  </td>
+                  <td>
+                    <div class="d-flex flex-column">
+                      <div class="d-flex justify-content-between small">
+                        <span>Teslim: {{ d.teslim }}</span>
+                        <span>Alıcı: {{ d.alici }}</span>
+                        <span class="fw-semibold"
+                          >{{ animatedPct[i] || 0 }}%</span
+                        >
+                      </div>
+                      <div class="progress" style="height: 8px">
+                        <div
+                          class="progress-bar bg-success"
+                          role="progressbar"
+                          [style.width.%]="animatedPct[i] || 0"
+                          [attr.aria-valuenow]="animatedPct[i] || 0"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        ></div>
+                      </div>
+                      <small class="text-muted mt-1"
+                        >Kalan: {{ d.kalan }}</small
+                      >
+                    </div>
+                  </td>
+                </tr>
+
+                <tr *ngIf="!distributions?.length && !loading435">
+                  <td colspan="5" class="text-center text-muted py-4">
+                    Kayıt yok.
+                  </td>
+                </tr>
+                <tr *ngIf="loading435">
+                  <td colspan="5" class="text-center text-muted py-4">
+                    Yükleniyor…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3 mt-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div
+          class="card-header bg-white"
+          style="
+            background: #ed1b24 !important;
+            align-content: center !important;
+          "
+        >
+          <div class="fw-semibold text-white">
+            <i
+              class="fa-solid fa-truck-ramp-box me-2"
+              style="font-size: 1.7rem; color: #ffffff !important"
+            ></i>
+            Dağıtım Özetleri
+          </div>
+        </div>
+
+        <div class="card-body p-0">
+          <div class="table-responsive m-4">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th style="width: 22%">Ad Soyad</th>
+                  <th style="width: 22%">Ürün</th>
+                  <th style="width: 18%">Zaman</th>
+                  <th style="width: 18%">Teslim Alan</th>
+                  <th style="width: 10%" class="text-center">Teslim</th>
+                  <th style="width: 10%" class="text-center">Problem</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let a of activities; trackBy: trackByIndex">
+                  <td>{{ a.adsoyad }}</td>
+                  <td>{{ a.urunadi }}</td>
+                  <td>{{ a.zaman | date : "dd.MM.yyyy HH:mm" }}</td>
+                  <td>{{ a.teslimalan }}</td>
+                  <td class="text-center">
+                    <span
+                      class="badge"
+                      [class.bg-success]="a.teslim == 1"
+                      [class.bg-secondary]="a.teslim != 1"
+                    >
+                      {{ a.teslim == 1 ? "Evet" : "Hayır" }}
+                    </span>
+                  </td>
+                  <td class="text-center">
+                    <span
+                      class="badge"
+                      [class.bg-danger]="a.problem == 1"
+                      [class.bg-secondary]="a.problem != 1"
+                    >
+                      {{ a.problem == 1 ? "Var" : "Yok" }}
+                    </span>
+                  </td>
+                </tr>
+                <tr *ngIf="!activities?.length && !loading433">
+                  <td colspan="6" class="text-center text-muted py-4">
+                    Kayıt yok.
+                  </td>
+                </tr>
+                <tr *ngIf="loading433">
+                  <td colspan="6" class="text-center text-muted py-4">
+                    Yükleniyor…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

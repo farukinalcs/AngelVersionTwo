@@ -1,0 +1,466 @@
+<!-- Alert -->
+<div *ngIf="alertMessage" class="alert" [ngClass]="'alert-' + alertType" role="alert">
+  <i class="pi pi-info-circle me-2"></i>{{ alertMessage }}
+</div>
+
+<div class="pd-container">
+  <!-- Kırmızı hero -->
+  <div class="pd-hero d-flex align-items-center justify-content-between flex-wrap">
+    <div class="d-flex align-items-center gap-3">
+      <div class="pd-hero-icon d-flex align-items-center justify-content-center">
+        <i class="pi pi-gift"></i>
+      </div>
+      <div>
+        <div class="pd-title fw-semibold">Ürün Dağıtımı Yönetimi</div>
+        <div class="pd-subtitle text-danger-70 small">
+          Talep:
+          <strong>{{ f['talepbaslangic'].value | date: 'dd.MM.yyyy' }}</strong>
+          –
+          <strong>{{ f['talepbitis'].value | date: 'dd.MM.yyyy' }}</strong>
+          <span class="mx-2">|</span>
+          Dağıtım:
+          <strong>{{ f['dagitimbaslangic'].value | date: 'dd.MM.yyyy' }}</strong>
+          –
+          <strong>{{ f['dagitimbitis'].value | date: 'dd.MM.yyyy' }}</strong>
+        </div>
+      </div>
+    </div>
+    <span class="badge pd-badge bg-danger">
+      <i class="pi pi-clock"></i><span class="ms-1">Yeni dağıtım için formu doldurun</span>
+    </span>
+  </div>
+
+  <div class="row g-4 mt-4">
+    <div class="col-12 col-lg-7">
+      <form class="pd-card p-fluid" [formGroup]="form" (ngSubmit)="submit()">
+        <div class="pd-card-body">
+          <div class="row g-3">
+            <!-- Dağıtım adı -->
+            <div class="col-md-12">
+              <label class="form-label">Dağıtım Adı <span class="text-danger">*</span></label>
+              <input class="form-control" formControlName="ad" />
+              <div *ngIf="f['ad'].touched && f['ad'].invalid" class="invalid-feedback d-block">
+                Zorunlu alan
+              </div>
+            </div>
+
+            <!-- Ürün (id gönderilir) -->
+            <div class="col-md-6">
+              <label class="form-label">Ürün <span class="text-danger">*</span></label>
+              <p-dropdown
+                [options]="productOptions"
+                formControlName="dagitimurunid"
+                optionLabel="label"
+                optionValue="value"
+                [filter]="true"
+                [showClear]="true"
+                appendTo="body"
+                placeholder="Ürün seçiniz"
+                styleClass="w-100"
+              ></p-dropdown>
+              <div *ngIf="f['dagitimurunid'].touched && f['dagitimurunid'].invalid" class="invalid-feedback d-block">
+                Lütfen ürün seçiniz.
+              </div>
+            </div>
+
+            <!-- Sicil Grubu (id gönderilir) -->
+            <div class="col-md-6">
+              <label class="form-label">Sicil Grubu <span class="text-danger">*</span></label>
+              <p-dropdown
+                [options]="registryGroupOptions"
+                formControlName="sicilgrubu"
+                optionLabel="label"
+                optionValue="value"
+                [filter]="true"
+                [showClear]="true"
+                appendTo="body"
+                placeholder="Sicil grubu seçiniz"
+                styleClass="w-100"
+              ></p-dropdown>
+              <div *ngIf="f['sicilgrubu'].touched && f['sicilgrubu'].invalid" class="invalid-feedback d-block">
+                Lütfen sicil grubu seçiniz.
+              </div>
+            </div>
+
+            <!-- Talep tarihleri -->
+            <div class="col-md-6">
+              <label class="form-label">Talep Başlangıç <span class="text-danger">*</span></label>
+              <p-calendar
+                formControlName="talepbaslangic"
+                dateFormat="dd.mm.yy"
+                [showIcon]="true"
+                [iconDisplay]="'input'"
+                appendTo="body"
+                [style]="{ width: '100%' }"
+                [inputStyle]="{ width: '100%' }"
+              ></p-calendar>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Talep Bitiş <span class="text-danger">*</span></label>
+              <p-calendar
+                formControlName="talepbitis"
+                dateFormat="dd.mm.yy"
+                [showIcon]="true"
+                [iconDisplay]="'input'"
+                appendTo="body"
+                [style]="{ width: '100%' }"
+                [inputStyle]="{ width: '100%' }"
+              ></p-calendar>
+            </div>
+
+            <!-- Dağıtım tarihleri -->
+            <div class="col-md-6">
+              <label class="form-label">Dağıtım Başlangıç <span class="text-danger">*</span></label>
+              <p-calendar
+                formControlName="dagitimbaslangic"
+                dateFormat="dd.mm.yy"
+                [showIcon]="true"
+                [iconDisplay]="'input'"
+                appendTo="body"
+                [style]="{ width: '100%' }"
+                [inputStyle]="{ width: '100%' }"
+              ></p-calendar>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Dağıtım Bitiş <span class="text-danger">*</span></label>
+              <p-calendar
+                formControlName="dagitimbitis"
+                dateFormat="dd.mm.yy"
+                [showIcon]="true"
+                [iconDisplay]="'input'"
+                appendTo="body"
+                [style]="{ width: '100%' }"
+                [inputStyle]="{ width: '100%' }"
+              ></p-calendar>
+            </div>
+
+            <!-- Seçenekler (dinamik) -->
+            <div class="col-12">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <label class="form-label m-0">Seçenekler</label>
+                <button
+                  pButton
+                  type="button"
+                  icon="pi pi-plus"
+                  label="Ekle"
+                  styleClass="p-button-sm p-button-danger"
+                  (click)="addOption()"
+                ></button>
+              </div>
+
+              <div formArrayName="secenekler" class="secenekler-wrap">
+                <div
+                  class="row g-2 align-items-start mb-2"
+                  *ngFor="let grp of secenekler.controls; let i = index; trackBy: trackByIndex"
+                  [formGroupName]="i"
+                >
+                  <div class="col-12 col-md-4">
+                    <input class="form-control" formControlName="key" placeholder="Tanım (örn: Numara, Beden...)" />
+                  </div>
+
+                  <div class="col-10 col-md-6">
+                    <input class="form-control" formControlName="value" placeholder="Değer (örn: 39)" />
+                  </div>
+
+                  <div class="col-2 col-md-2 d-flex">
+                    <button
+                      pButton
+                      type="button"
+                      icon="pi pi-trash"
+                      styleClass="p-button-text p-button-danger ms-auto"
+                      (click)="removeOption(i)"
+                      [disabled]="secenekler.length === 1"
+                      title="Satırı sil"
+                      style="margin-top: 7px"
+                    ></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form-level tarih hatası -->
+            <div class="col-12" *ngIf="form.errors?.['dateRange']">
+              <div class="invalid-feedback d-block">
+                Tarih aralıklarını kontrol edin (başlangıç, bitişten büyük olamaz).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pd-card-footer d-flex justify-content-end gap-2">
+          <button pButton type="submit" label="Kaydet" icon="pi pi-save" [disabled]="form.invalid" styleClass="p-button-danger pd-btn"></button>
+          <button pButton type="button" label="Temizle" icon="pi pi-refresh" styleClass="p-button-text p-button-plain" (click)="resetForm()"></button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Özet -->
+    <div class="col-12 col-lg-5">
+      <div class="pd-card pd-summary">
+        <div class="pd-card-body">
+          <div class="fw-semibold mb-3 text-danger">Form Önizleme</div>
+          <div class="pd-summary-line">
+            <span class="label">Ad</span><span class="value">{{ f['ad'].value || '—' }}</span>
+          </div>
+          <div class="pd-summary-line">
+            <span class="label">Ürün Ad</span>
+            <span class="value">{{ productLabel(f['dagitimurunid'].value) }}</span>
+          </div>
+          <div class="pd-summary-line">
+            <span class="label">Sicil Grubu</span><span class="value">{{ groupLabel(f['sicilgrubu'].value) }}</span>
+          </div>
+          <div class="pd-summary-line">
+            <span class="label">Talep</span
+            ><span class="value">
+              {{ f['talepbaslangic'].value | date: 'dd.MM.yyyy' }} – {{ f['talepbitis'].value | date: 'dd.MM.yyyy' }}
+            </span>
+          </div>
+          <div class="pd-summary-line">
+            <span class="label">Dağıtım</span
+            ><span class="value">
+              {{ f['dagitimbaslangic'].value | date: 'dd.MM.yyyy' }} – {{ f['dagitimbitis'].value | date: 'dd.MM.yyyy' }}
+            </span>
+          </div>
+        </div>
+        <div class="pd-card-footer"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pd-container mt-8">
+  <!-- Liste Hero -->
+  <div class="pd-hero d-flex align-items-center justify-content-between flex-wrap">
+    <div class="d-flex align-items-center gap-3">
+      <div class="pd-hero-icon d-flex align-items-center justify-content-center">
+        <i class="fa-solid fa-list-check"></i>
+      </div>
+      <div>
+        <div class="pd-title fw-semibold">Ürün Dağıtımı Listesi</div>
+      </div>
+    </div>
+    <span class="badge pd-badge bg-danger">
+      <i class="pi pi-clock"></i><span class="ms-1">Oluşturulmuş dağıtımlar</span>
+    </span>
+  </div>
+
+  <div class="row g-4 mt-4">
+    <div class="col-12 col-lg-12">
+      <form class="pd-card p-fluid">
+        <div class="pd-card-body">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <p-floatlabel variant="on" class="mt-2">
+                  <p-iconfield>
+                    <p-inputicon class="pi pi-search"></p-inputicon>
+                    <input
+                      style="border-radius: 7px"
+                      pInputText
+                      id="over_label"
+                      [(ngModel)]="filterText"
+                      autocomplete="off"
+                      name="searchTxt"
+                    />
+                  </p-iconfield>
+                  <label for="over_label">Arama..</label>
+                </p-floatlabel>
+              </div>
+            </div>
+
+            <div class="row my-4">
+              <div class="col-12">
+                <div class="table-responsive h-400px scroll">
+                  <table class="table table-hover border table-rounded table-row-dashed align-middle gs-4 gy-2">
+                    <thead class="sticky-top" style="z-index: 0">
+                      <tr class="fs-6 fw-bold border-bottom-0 text-uppercase rounded text-danger bg-white">
+                        <th class="rounded-start" style="width: auto">{{ 'Id' | translate }}</th>
+                        <th style="width: auto">{{ 'Ad' | translate }}</th>
+                        <th style="width: auto">Ürün Adı</th>
+                        <th style="width: auto">Sicil Grubu</th>
+                        <th style="width: auto">Talep</th>
+                        <th style="width: auto">Dağıtım</th>
+                        <th style="width: auto">Seçenekler</th>
+                        <th class="rounded-end text-center" style="width: auto">{{ '#' | translate }}</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <ng-container
+                        *ngFor="
+                          let item of distributionList
+                          | searchFilter : filterText : ['id','ad','urunadi','sicilgrupadi']
+                        "
+                      >
+                        <tr class="cursor-pointer fs-7">
+                          <td><span class="mb-1">{{ item.id }}</span></td>
+                          <td><span class="mb-1 fw-bolder">{{ item.ad }}</span></td>
+                          <td><span class="mb-1">{{ item.urunadi }}</span></td>
+                          <td><span class="mb-1">{{ item.sicilgrupadi }}</span></td>
+
+                          <td>
+                            <div class="small">
+                              {{ item.talepbaslangic | date : 'yyyy-MM-dd' }} – {{ item.talepbitis | date : 'yyyy-MM-dd' }}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="small">
+                              {{ item.dagitimbaslangic | date : 'yyyy-MM-dd' }} – {{ item.dagitimbitis | date : 'yyyy-MM-dd' }}
+                            </div>
+                          </td>
+
+                          <td>
+                            <div class="small text-truncate" [pTooltip]="seceneklerPreview(item)" tooltipPosition="top">
+                              {{
+                                seceneklerPreview(item).length > 15
+                                  ? (seceneklerPreview(item) | slice:0:15) + '...'
+                                  : seceneklerPreview(item)
+                              }}
+                            </div>
+                          </td>
+
+                          <td class="text-center">
+                            <a
+                              pTooltip="{{ 'Kaldır' | translate }}"
+                              class="btn btn-light btn-sm py-1 px-2 mx-1"
+                              (click)="delete(item)"
+                            >
+                              <i class="fa-solid fa-trash p-0 text-gray-900"></i>
+                            </a>
+                            <a
+                              pTooltip="{{ 'Güncelle' | translate }}"
+                              class="btn btn-light btn-sm py-1 px-2 mx-1"
+                              (click)="update(item)"
+                            >
+                              <i class="fa-solid fa-pen-to-square p-0 text-gray-900"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </ng-container>
+
+                      <tr
+                        *ngIf="
+                          (distributionList | searchFilter : filterText : ['id','ad','dagitimurunid','sicilgrubu']).length === 0
+                        "
+                      >
+                        <td colspan="8" class="text-center text-muted py-4">Kayıt bulunamadı.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div> <!-- /card-body -->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT POPUP -->
+<p-dialog
+  [(visible)]="editDisplay"
+  [modal]="true"
+  [style]="{ width: '700px', maxWidth: '95vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+  (onHide)="closeEdit()"
+  header="Dağıtım Güncelle"
+>
+  <form [formGroup]="editForm" class="p-fluid">
+    <div class="row g-3">
+      <div class="col-12">
+        <label class="form-label">Dağıtım Adı <span class="text-danger">*</span></label>
+        <input class="form-control" formControlName="ad" />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Ürün <span class="text-danger">*</span></label>
+        <p-dropdown
+          [options]="productOptions"
+          formControlName="dagitimurunid"
+          optionLabel="label"
+          optionValue="value"
+          [filter]="true"
+          appendTo="body"
+          placeholder="Ürün seçiniz"
+          styleClass="w-100"
+        ></p-dropdown>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Sicil Grubu <span class="text-danger">*</span></label>
+        <p-dropdown
+          [options]="registryGroupOptions"
+          formControlName="sicilgrubu"
+          optionLabel="label"
+          optionValue="value"
+          [filter]="true"
+          appendTo="body"
+          placeholder="Sicil grubu seçiniz"
+          styleClass="w-100"
+        ></p-dropdown>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Talep Başlangıç</label>
+        <p-calendar formControlName="talepbaslangic" dateFormat="dd.mm.yy" [showIcon]="true" [iconDisplay]="'input'" appendTo="body"
+          [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"></p-calendar>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Talep Bitiş</label>
+        <p-calendar formControlName="talepbitis" dateFormat="dd.mm.yy" [showIcon]="true" [iconDisplay]="'input'" appendTo="body"
+          [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"></p-calendar>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Dağıtım Başlangıç</label>
+        <p-calendar formControlName="dagitimbaslangic" dateFormat="dd.mm.yy" [showIcon]="true" [iconDisplay]="'input'" appendTo="body"
+          [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"></p-calendar>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Dağıtım Bitiş</label>
+        <p-calendar formControlName="dagitimbitis" dateFormat="dd.mm.yy" [showIcon]="true" [iconDisplay]="'input'" appendTo="body"
+          [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"></p-calendar>
+      </div>
+
+      <!-- Seçenekler (edit) -->
+      <div class="col-12">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <label class="form-label m-0">Seçenekler</label>
+          <button
+            pButton type="button" icon="pi pi-plus" label="Ekle"
+            styleClass="p-button-sm p-button-danger"
+            (click)="editSecenekler.push(createEditOption('Numara',''))"
+          ></button>
+        </div>
+
+        <div formArrayName="secenekler">
+          <div class="row g-2 align-items-start mb-2" *ngFor="let g of editSecenekler.controls; let i = index" [formGroupName]="i">
+            <div class="col-12 col-md-4">
+              <input class="form-control" formControlName="key" placeholder="Tanım (örn: Numara, Beden...)" />
+            </div>
+            <div class="col-10 col-md-6">
+              <input class="form-control" formControlName="value" placeholder="Değer (örn: 39)" />
+            </div>
+            <div class="col-2 col-md-2 d-flex">
+              <button
+                pButton type="button" icon="pi pi-trash"
+                styleClass="p-button-text p-button-danger ms-auto"
+                (click)="editSecenekler.removeAt(i)"
+                [disabled]="editSecenekler.length === 1"
+                title="Satırı sil" style="margin-top: 7px"
+              ></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-3">
+      <button pButton type="button" label="Vazgeç" class="p-button-text" (click)="closeEdit()"></button>
+      <button pButton type="button" label="Kaydet" icon="pi pi-save" styleClass="p-button-danger" (click)="submitUpdate()"></button>
+    </div>
+  </form>
+</p-dialog>
