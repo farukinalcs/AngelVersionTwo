@@ -349,5 +349,39 @@ export class PatrolService {
     return this.requestMethod(sp);
   }
 
+  guardIncidentLogs(locationid:number){
+    var sp: any[] = [{
+      mkodu:'yek417',
+      lokasyon: locationid.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
+  guardVoiceLogs(locationid:number){
+    var sp: any[] = [{
+      mkodu:'yek418',
+      lokasyon: locationid.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
+  guardAlertLogs(locationid:number){
+    var sp: any[] = [{
+      mkodu:'yek420',
+      lokasyon: locationid.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
+  getIncidentFiles(typeId : number, kaynak:string) {
+    var sp : any[] = [{
+      mkodu : 'yek066',
+      formId : typeId.toString(),
+      kaynak : kaynak
+    }];
+    
+    return this.requestMethod(sp);
+  }
+
 
 }

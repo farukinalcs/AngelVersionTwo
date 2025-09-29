@@ -152,7 +152,10 @@ export const MENU: MenuItem[] = [
         icon: 'fa-solid fa-paste text-danger',
         children: [
             { title: 'Genel Bakış', routerLink: 'performance/dashboard' },
-            { title: 'Tanımlamalar', routerLink: 'performance/tanimlamalar' }
+            { title: 'Sürec Yönetimi', routerLink: 'performance/process' },
+            { title: 'Tanımlamalar', routerLink: 'performance/tanimlamalar'},
+          
+            
         ],
         app: ['3']
     },

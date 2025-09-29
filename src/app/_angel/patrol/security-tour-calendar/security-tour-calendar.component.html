@@ -49,8 +49,8 @@
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 1">
-                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"> Açıklama var</p></button>
-                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7">Haftaya Özel Tur</p><p class="fs-7" *ngIf="item.turaciklama != ''">Açıklama var</p></button>
+                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
+                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7">Haftaya Özel Tur</p><p class="fs-7" *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
                               </td>
                             </tr>
                           </tbody>
@@ -66,8 +66,8 @@
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 2">
-                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"> Açıklama var</p></button>
-                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p><p class="fs-7">Haftaya Özel Tur</p><p class="fs-7" *ngIf="item.turaciklama != ''"> Açıklama var</p></button>
+                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
+                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p>{{ item.Aciklama }}</p><p class="fs-7">Haftaya Özel Tur</p><p class="fs-7" *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
                               </td>
                             </tr>
                           </tbody>
@@ -81,8 +81,8 @@
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 3">
-                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1"style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"> Açıklama var</p></button>
-                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p> <p class="fs-7" class="fs-7">Haftaya Özel Tur</p><p *ngIf="item.turaciklama != ''"> Açıklama var</p></button>
+                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1"style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
+                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p> <p class="fs-7" class="fs-7">Haftaya Özel Tur</p><p *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
                               </td>
                             </tr>
                           </tbody>
@@ -96,8 +96,8 @@
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 4">
-                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"> Açıklama var</p></button>
-                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7">Haftaya Özel Tur</p><p class="fs-7" *ngIf="item.turaciklama != ''"> Açıklama var</p></button>
+                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
+                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7">Haftaya Özel Tur</p><p class="fs-7" *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
                               </td>
                             </tr>
                           </tbody>
@@ -111,8 +111,8 @@
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 5">
-                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"> Açıklama var</p></button>
-                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7">Haftaya Özel Tur</p><p class="fs-7" *ngIf="item.turaciklama != ''"> Açıklama var</p></button>
+                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
+                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7">Haftaya Özel Tur</p><p class="fs-7" *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
                               </td>
                             </tr>
                           </tbody>
@@ -126,8 +126,8 @@
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 6">
-                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"> Açıklama var</p></button>
-                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7">Haftaya Özel Tur</p><p class="fs-7" *ngIf="item.turaciklama != ''"> Açıklama var</p></button>
+                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
+                                <button (click)="openDeleteModal(item)" *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7">Haftaya Özel Tur</p><p class="fs-7" *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
                               </td>
                             </tr>
                           </tbody>
@@ -141,8 +141,8 @@
                           <tbody>
                             <tr *ngFor="let item of _activeTourList">
                               <td *ngIf="item.gun === 7"> 
-                                <button (click)="openDeleteModal(item)"  *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"> Açıklama var</p></button>
-                                <button (click)="openDeleteModal(item)"  *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p  class="fs-6">{{ item.Aciklama }}</p> <p class="fs-7">Haftaya Özel Tur</p><p class="fs-7" *ngIf="item.turaciklama != ''"> Açıklama var</p></button>
+                                <button (click)="openDeleteModal(item)"  *ngIf="item.ozel !== '1'" class="btn btn-secondary m-1" style="border: 1px dashed black;"> <p class="fs-6">{{ item.bassaat }}</p> <p class="fs-6">{{ item.Aciklama }}</p><p class="fs-7" *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
+                                <button (click)="openDeleteModal(item)"  *ngIf="item.ozel === '1'" class="btn btn-primary m-1" style="border: 1px dashed blue;"> <p class="fs-6">{{ item.bassaat }}</p> <p  class="fs-6">{{ item.Aciklama }}</p> <p class="fs-7">Haftaya Özel Tur</p><p class="fs-7" *ngIf="item.turaciklama != ''"><i class="fa-solid fa-comment"></i></p></button>
                               </td>
                             </tr>
                           </tbody>

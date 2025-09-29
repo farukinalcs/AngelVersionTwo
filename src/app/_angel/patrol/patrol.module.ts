@@ -35,7 +35,7 @@ import { ContentContainerComponent } from './content-container/content-container
 import { DropdownModule } from 'primeng/dropdown';
 import { SelectModule } from 'primeng/select';
 import { MatExpansionModule } from '@angular/material/expansion';
-
+import { CalendarModule } from 'primeng/calendar';
 @NgModule({
   declarations: [
     PatroldashboardComponent,
@@ -55,6 +55,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     //   apiKey: 'AIzaSyAdALF-5HPnZFuvYRXmGY8qkv21TGD25ak',
     // }),
     AgGridModule,
+    CalendarModule,
     TranslationModule,
     OverlayPanelModule,
     SplitterModule,

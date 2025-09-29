@@ -17,21 +17,96 @@
     </div>
 
     <div class="row mt-5">
-        <div class="col-md-12">
+        <div class="col-md-3">
           <div class="card shadow-lg rounded-3">
-            <div class="card-header bg-white border-bottom">
-              <h5 class="mb-0">Son Olaylar</h5>
+            <div class="card-header bg-white border-bottom justify-content-center mt-3">
+              <h5 class="mb-0 text-center">⚠️ INCIDENT</h5>
             </div>
             <div class="card-body p-3">
               <div class="timeline">
-                <div *ngFor="let log of eventLogs" class="timeline-item">
-                  <div class="timeline-icon bg-{{log.color}}">
+                <div *ngFor="let log of incidentLogs" class="timeline-item">
+                  <div class="timeline-icon">
+                    <i class="bi bi-{{log.icon}}"></i>
+                  </div>
+                  <div class="timeline-content" (click)="getIncidentDetail(log)" style="cursor: pointer;">
+                    <div class="d-flex justify-content-between">
+                      <strong class="text-capitalize">{{ log.type.toLowerCase() }} {{ log.message }}</strong>
+                      <small class="text-muted">{{ log.time | date:'dd.MM.yyyy HH:mm:ss' }}</small>
+                    </div>
+                    <p class="mb-0">{{ log.lat }}</p>
+                    <p class="mb-0">{{ log.lng }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-lg rounded-3">
+            <div class="card-header bg-white border-bottom justify-content-center mt-3">
+              <h5 class="mb-0 text-center">🚨 ALERT</h5>
+            </div>
+            <div class="card-body p-3">
+              <div class="timeline">
+                <div *ngFor="let log of alertLogs" class="timeline-item">
+                  <div class="timeline-icon">
                     <i class="bi bi-{{log.icon}}"></i>
                   </div>
                   <div class="timeline-content">
                     <div class="d-flex justify-content-between">
                       <strong class="text-capitalize">{{ log.type.toLowerCase() }}</strong>
-                      <small class="text-muted">{{ log.time | date:'shortTime' }}</small>
+                      <small class="text-muted">{{ log.time | date:'dd.MM.yyyy HH:mm:ss' }}</small>
+                    </div>
+                    <p class="mb-0">{{ log.lat }}</p>
+                    <p class="mb-0">{{ log.lng }}</p>
+                    <p class="mb-0">{{ log.message }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-lg rounded-3">
+            <div class="card-header bg-white border-bottom justify-content-center mt-3">
+              <h5 class="mb-0 text-center">🎧 VOICE</h5>
+            </div>
+            <div class="card-body p-3">
+              <div class="timeline">
+                <div *ngFor="let log of voiceLogs" class="timeline-item">
+                  <div class="timeline-icon">
+                    <i class="bi bi-{{log.icon}}"></i>
+                  </div>
+                  <div class="timeline-content">
+                    <div class="d-flex justify-content-between">
+                      <strong class="text-capitalize">{{ log.type.toLowerCase() }}</strong>
+                      <small class="text-muted">{{ log.time |date:'dd.MM.yyyy HH:mm:ss' }}</small>
+                    </div>
+                    <p class="mb-0">{{ log.message }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-lg rounded-3">
+            <div class="card-header bg-white border-bottom d-flex justify-content-center mt-3">
+              <h5 class="mb-0 text-center">🔴 OTHERS</h5>
+            </div>
+            <div class="card-body p-3">
+              <div class="timeline">
+                <div *ngFor="let log of otherLogs" class="timeline-item">
+                  <div class="timeline-icon">
+                    <i class="bi bi-{{log.icon}}"></i>
+                  </div>
+                  <div class="timeline-content">
+                    <div class="d-flex justify-content-between">
+                      <strong class="text-capitalize">{{ log.type.toLowerCase() }}</strong>
+                      <small class="text-muted">{{ log.time | date:'dd.MM.yyyy HH:mm:ss' }}</small>
                     </div>
                     <p class="mb-0">{{ log.message }}</p>
                   </div>
@@ -44,3 +119,40 @@
       </div>
 
 </div>
+
+<p-dialog [(visible)]="alarmModal" [modal]="true" [style]="{ width: '40vw'}"
+  [breakpoints]="{ '2560px': '40vw', '992px': '40vw', '576px': '50vw' }" [maximizable]="true" [baseZIndex]="10000">
+  <div class="card custom-card h-100">
+    <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+      <h5 class="text-white mb-0">Alarm Haritası</h5>
+    </div>
+    <div class="card-body">
+      <div #alarmMap  style="height:400px; width:100%"></div>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="IncidentModal" [modal]="true" [style]="{ width: '40vw'}"
+  [breakpoints]="{ '2560px': '40vw', '992px': '40vw', '576px': '50vw' }" [maximizable]="true" [baseZIndex]="10000">
+  <div class="card custom-card h-100">
+    <div class="card-header border-0 bg-danger" style="min-height: 45px;">
+      <h5 class="text-white mb-0">Olay Haritası</h5>
+    </div>
+    <div class="card-body">
+      <div #incidentMap  style="height:400px; width:100%"></div>
+      
+      <div class="action-buttons">
+        <button class="btn btn-sm" (click)="toggleCollapse()">
+          <i class="bi p-0 fs-4" [ngClass]="isCollapsed ? 'bi-chevron-down' : 'bi-chevron-up'"></i>
+        </button>
+      </div>
+
+      <div [hidden]="isCollapsed">
+        
+        <h5 style="margin-top: 5px;">🔴 </h5>
+    </div>
+      
+      
+    </div>
+  </div>
+</p-dialog>

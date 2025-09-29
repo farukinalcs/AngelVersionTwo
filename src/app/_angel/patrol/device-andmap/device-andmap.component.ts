@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { PatrolService } from '../patrol.service';
@@ -51,14 +51,24 @@ export class DeviceAndmapComponent {
   intervalId:any;
   allClitenInfos: any[] = [];
   
+
+
+  @ViewChild('alarmMap') alarmMapElement!: ElementRef;
+  @ViewChild('incidentMap') incidentMapElement!: ElementRef;
+
+  alarmMap!: google.maps.Map;
+  incidentMap!: google.maps.Map;
   map: google.maps.Map | undefined;
   latitude: any = "";
   longitude: any = "";
 
   disableLayoutPadding = true;
   selectedItem: any = null;
- 
+
+  alarmModal:boolean = false;
+  IncidentModal:boolean = false;
   markerMap = new Map<string, google.maps.Marker>();
+
   //private markers: google.maps.Marker[] = [];
   private markers: { [imei: string]: google.maps.Marker } = {};
   constructor(
@@ -153,6 +163,13 @@ export class DeviceAndmapComponent {
     });
 
     console.log('Harita yüklendi:', this.map);
+
+    this.alarmMap = new google.maps.Map(this.alarmMapElement.nativeElement, {
+      center: { lat: 39.92077, lng: 32.85411 }, // Ankara örnek
+      zoom: 12
+    });
+
+
   }
 
 
@@ -236,8 +253,6 @@ export class DeviceAndmapComponent {
       });
   }
   
-
-
   getGuardEventList(item: Incident) {
     this.selectedItem = item.imei;
     
@@ -402,10 +417,16 @@ export class DeviceAndmapComponent {
 
 
     if (args && args.length > 0) {
-      const data = args[0] as string;
-      console.log("🚨 INCIDENT:", data);
-      this.addEventLog("🚨 INCIDENT:", data);
-
+      const incidentData = args[0] as string;
+        
+    // Olay haritası
+    this.incidentMap = new google.maps.Map(this.incidentMapElement.nativeElement, {
+      center: { lat: 41.0082, lng: 28.9784 }, // İstanbul örnek
+      zoom: 12
+    });
+      console.log("⚠️ INCIDENT:", incidentData);
+      this.handleIncidentMessage(incidentData)
+      // this.addEventLog("⚠️ INCIDENT:", incidentData);
     }
   }
 
@@ -414,9 +435,14 @@ export class DeviceAndmapComponent {
       const alertData = args[0] as string;
       console.log("⚠️ Alert event geldi:", alertData);
 
+      this.alarmMap = new google.maps.Map(this.alarmMapElement.nativeElement, {
+        center: { lat: 39.92077, lng: 32.85411 }, // Ankara örnek
+        zoom: 12
+      });
+    
       this.handleAlarmMessage(alertData);
-      this.addEventLog("⚠️ ALERT", alertData);
-     
+      //this.addEventLog("⚠️ ALERT", alertData);
+      //40.9977743@@@29.1366294@@@Güvenlik Faruk
     }
 
   }
@@ -426,7 +452,8 @@ export class DeviceAndmapComponent {
       const voiceData = args[0] as string;
       console.log("🎧 Voice event geldi:", voiceData);
       await this.handleVoiceMessage(voiceData);
-      this.addEventLog("🎧 VOICE", voiceData);
+      //this.addEventLog("🎧 VOICE", voiceData);
+       //Güvenlik Mert@@@C28345EA-3DC6-4481-A4F2-FFAB2C4EAA93
     }
 
   }
@@ -522,7 +549,8 @@ export class DeviceAndmapComponent {
       this.markers = {};
   
       // Display list'i filtrele seçili lokasyona göre
-      this.displayList = this.displayList.filter(x => x.lokasyonid == this.selectedLocationID);
+
+      //this.displayList = this.displayList.filter(x => x.lokasyonid == this.selectedLocationID);
   
       // Yeni markerları oluştur
       this.displayList.forEach(device => {
@@ -530,6 +558,7 @@ export class DeviceAndmapComponent {
         const lng = +device?.lng;
   
         if (!isNaN(lat) && !isNaN(lng) && this.map) {
+          const color = device.isOnline ? "green" : "red";
           const marker = new google.maps.Marker({
             position: { lat, lng },
             map: this.map,
@@ -537,27 +566,27 @@ export class DeviceAndmapComponent {
             animation: null,
 
             icon: {
-              url:'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60">
-             <path
-              d="M20 0C9 0 0 9 0 20c0 11 20 40 20 40s20-29 20-40C40 9 31 0 20 0z"
-              fill="red"
-              stroke="white"
-              stroke-width="3"
-            />
-            <text
-              x="20"
-              y="27"
-              font-size="15"
-              text-anchor="middle"
-              fill="white"
-              font-family="Arial"
-              dominant-baseline="top"
-            >
-              ${device?.terminalname.trim()?.charAt(0)}
-            </text>
-          </svg>
-        `),
+              url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60">
+                  <path
+                    d="M20 0C9 0 0 9 0 20c0 11 20 40 20 40s20-29 20-40C40 9 31 0 20 0z"
+                    fill="${color}"
+                    stroke="white"
+                    stroke-width="3"
+                  />
+                  <text
+                    x="20"
+                    y="27"
+                    font-size="15"
+                    text-anchor="middle"
+                    fill="white"
+                    font-family="Arial"
+                    dominant-baseline="top"
+                  >
+                    ${device?.terminalname.trim()?.charAt(0)}
+                  </text>
+                </svg>
+              `),
               scaledSize: new google.maps.Size(40, 40),
               anchor: new google.maps.Point(20, 20)
             }
@@ -607,25 +636,27 @@ export class DeviceAndmapComponent {
   }
 
   async handleAlarmMessage(rawAlarm: string): Promise<void> {
+    this.IncidentModal = false;
+    this.alarmModal = true;
     // Alert içeriğini yorumla, kullanıcıya göster, ses çal, vs.
     const [latStr, lngStr, title] = rawAlarm.split('@@@');
     const lat = parseFloat(latStr);
     const lng = parseFloat(lngStr);
-    const person = parseFloat(title)
+    //const person = parseFloat(title)
 
     if (isNaN(lat) || isNaN(lng)) {
       console.warn("Geçersiz alarm koordinatı:", rawAlarm);
       return;
     }
 
-    this.map?.setCenter({
+    this.alarmMap?.setCenter({
       lat: +lat,
       lng: +lng,
     });
 
     new google.maps.Marker({
       position: { lat, lng },
-      map: this.map,
+      map: this.alarmMap,
       title: title,
       icon: {
         url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
@@ -656,15 +687,6 @@ export class DeviceAndmapComponent {
     };
   }
 
-  public stopConnection(): void {
-    this.hubConnection
-      .stop()
-      .then(() => console.log('🛑 SignalR bağlantısı durduruldu.'))
-      .catch(err => console.error('❌ Bağlantı durdurulurken hata:', err));
-  }
-
-
-
   focusOnDevice(device: any): void {
     Object.values(this.markers).forEach(marker =>{
       marker.setAnimation(null);
@@ -684,6 +706,50 @@ export class DeviceAndmapComponent {
         console.warn("⚠ Marker pozisyonu veya map eksik:", device);
       }
     }
+  }
+
+  async handleIncidentMessage(rawAlarm: string): Promise<void> {
+    this.alarmModal = false;
+    this.IncidentModal = true;
+
+    // Alert içeriğini yorumla, kullanıcıya göster, ses çal, vs.
+    const [latStr, lngStr, title] = rawAlarm.split('@@@');
+    const lat = parseFloat(latStr);
+    const lng = parseFloat(lngStr);
+    const person = parseFloat(title);
+
+
+    if (isNaN(lat) || isNaN(lng)) {
+      console.warn("Geçersiz alarm koordinatı:", rawAlarm);
+      return;
+    }
+
+    this.incidentMap?.setCenter({
+      lat: +lat,
+      lng: +lng,
+    });
+
+    new google.maps.Marker({
+      position: { lat, lng },
+      map: this.incidentMap,
+      title: title,
+      icon: {
+        url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+        scaledSize: new google.maps.Size(40, 40)
+      }
+    });
+
+
+    console.log("🛑 INcident verisi işlendi:", rawAlarm);
+  }
+
+
+
+  public stopConnection(): void {
+    this.hubConnection
+      .stop()
+      .then(() => console.log('🛑 SignalR bağlantısı durduruldu.'))
+      .catch(err => console.error('❌ Bağlantı durdurulurken hata:', err));
   }
   
 
