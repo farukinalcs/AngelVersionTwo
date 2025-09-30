@@ -1,0 +1,112 @@
+:root {
+  --brand-red: #dc2626;
+  --brand-red-700: #b91c1c;
+  --surface: #d70c0c29;
+  --card-border: #eef1f5;
+  --muted: #6b7280;
+}
+
+.pd-container { max-width: 1120px; margin: 0 auto; }
+
+/* Kırmızı odaklı hero */
+.pd-hero {
+  background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-red-700) 100%);
+  color: #fff;
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  box-shadow: 1px 1px 24px rgba(185, 28, 28, 0.25);
+
+  .pd-hero-icon { width: 42px; height: 42px; border-radius: 12px; background: rgba(241, 0, 0, 0.555); font-size: 18px; }
+  .pd-title { font-size: 1.15rem; letter-spacing: .2px; color: #dc2626; }
+  .pd-subtitle { opacity: 0.95; color: #9c1b1b;}
+  .pd-dot { opacity: .9; margin: 0 6px; }
+  .pd-badge { padding: 8px 10px; border-radius: 999px; font-weight: 600; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+}
+.text-light-60 { color: #dc2626 }
+.text-light-70 { color: #dc2626 }
+
+/* Kart */
+.pd-card {
+  position: relative;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  background: rgba(71, 14, 14, 0.096);
+  box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+  &-body { padding: 16px; }
+  &-footer { padding: 12px 16px; border-top: 1px dashed #e9edf3; background: rgba(71, 14, 14, 0); border-bottom-left-radius: 14px; border-bottom-right-radius: 14px; }
+}
+
+/* Özet */
+.pd-summary .pd-summary-line {
+  display: grid; grid-template-columns: 120px 1fr; gap: 10px;
+  align-items: center; padding: 8px 0; border-bottom: 1px dashed #f1d3d3;
+  &:last-child { border-bottom: none; }
+  .label { color: var(--muted); font-size: .9rem; }
+  .value { font-weight: 600; color: #111827; }
+}
+
+.form-label { margin-bottom: 6px; font-weight: 600; font-size: .92rem; }
+.pd-textarea { min-height: 70px; }
+
+/* PrimeNG kompakt + kırmızı focus */
+:host ::ng-deep {
+  .p-dropdown, .p-inputnumber, .p-calendar {
+    width: 100%;
+    .p-inputtext, .p-dropdown-label, .p-inputnumber-input {
+      padding: 0.48rem 0.6rem; min-height: 38px; font-size: 0.95rem;
+    }
+    .p-dropdown-trigger { width: 2.1rem; }
+  }
+
+  .pd-red-focus .p-inputtext, .pd-red-focus .p-dropdown-label, .pd-red-focus .p-inputnumber-input {
+    &:focus, &:focus-visible { box-shadow: 0 0 0 2px rgba(220, 38, 38, .16); border-color: var(--brand-red); }
+  }
+
+  .p-button.p-button-danger.pd-btn {
+    background: var(--brand-red); border-color: var(--brand-red);
+    &:hover { background: var(--brand-red-700); border-color: var(--brand-red-700); }
+  }
+}
+
+/* Alert */
+.alert { border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06); }
+
+/* Responsive */
+@media (max-width: 991.98px) {
+  .pd-summary .pd-summary-line { grid-template-columns: 1fr; gap: 2px; .label { font-size: .85rem; } .value { font-size: .95rem; } }
+}
+:host ::ng-deep .p-calendar {
+  display: block;
+  width: 100% !important;
+}
+
+:host ::ng-deep .p-calendar input {
+  width: 100% !important;
+}
+.label {
+    padding: 0;
+    margin: 0;
+    display: inline-flex
+;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    background-color: #0871d900;
+    font-weight: 400;
+    height: 20px;
+    width: 71px;
+    font-size: 0.8rem;
+}
+.secenekler-wrap {
+  border: 1px dashed #f1d3d3;
+  border-radius: 8px;
+  padding: 8px;
+  background: #fff;
+}
+::ng-deep .pd-card-body{
+  background: var(--surface);
+}

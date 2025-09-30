@@ -23,4 +23,26 @@ export class ReportCategoryComponent implements OnInit {
     changeCategory(category: any): void {
         this.selectCategory.emit(category);
     }
+
+    onItemClick(ev: MouseEvent, item: any) {
+  // Ripple için tıklama koordinatını hesapla
+  const el = ev.currentTarget as HTMLElement;
+  const rect = el.getBoundingClientRect();
+  const x = ((ev.clientX - rect.left) / rect.width) * 100;
+  const y = ((ev.clientY - rect.top) / rect.height) * 100;
+
+  // CSS değişkenleri setle
+  el.style.setProperty('--rx', `${x}%`);
+  el.style.setProperty('--ry', `${y}%`);
+
+  // Ripple class'ını kısa süreli ekle
+  el.classList.remove('ripple');       // ardışık tıklamalarda reset
+  // reflow için:
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  el.offsetHeight;
+  el.classList.add('ripple');
+
+  // Dışarıya item’ı gönder
+  this.selectCategory.emit(item);
+}
 }

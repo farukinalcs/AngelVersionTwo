@@ -1,0 +1,15 @@
+.meyer-bg{
+    background-color: #ed1b24!important;
+}.card-bg-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 6rem;       
+  color: rgb(255 255 255 / 16%); 
+  z-index: 0;          
+}
+
+.card-body {
+  position: relative;
+  z-index: 1; 
+}

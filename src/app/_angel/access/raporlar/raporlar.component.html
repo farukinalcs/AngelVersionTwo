@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="" *ngIf="!selectedReport">
         <div class="row">
-            <div class="col-12">
+            <div class="col-3 pe-10 border-end border-3 my-2">
                 <app-report-category [categories]="categories" [selectedCategory]="selectedCategory"
                     (selectCategory)="changeCategory($event)">
                 </app-report-category>
             </div>
 
-            <div class="col-12">
+            <div class="col-9">
                 <app-report-list [selectedCategory]="selectedCategory" [reports]="reports"
                     (selectReportEvent)="selectReport($event)">
                 </app-report-list>
