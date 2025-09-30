@@ -92,7 +92,7 @@ export class PerformanceDashboardComponent implements OnInit, OnDestroy {
   form_s(id: number) {
     this.perform.form_s(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this.formList = response[0]?.x ?? [];
-      console.log("form_s:", this.formList);
+      console.log("form_s........................D:", this.formList);
       this.ref.detectChanges();
     });
   }

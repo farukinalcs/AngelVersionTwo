@@ -68,7 +68,26 @@
 
        <input type="text" class="form-control mb-6" [(ngModel)]="numberForStation">
 
-       <div id="map" style="height: 500px; width: 100%;"></div>
+       <div class="custom-card mb-6" [class.collapsed]="isCollapsed">
+        
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="m-0">Konum Seçimi</h5>
+          <div class="action-buttons">
+            <button class="btn btn-sm" (click)="toggleCollapse()">
+              <i class="bi p-0 fs-4" [ngClass]="isCollapsed ? 'bi-chevron-down' : 'bi-chevron-up'"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="card-body" [hidden]="isCollapsed">
+            <div id="map" style="height: 500px; width: 100%;"></div>
+            <h5 style="margin-top: 5px;">🔴 Konum seçimi yapabilmek için harita üzerinde çift tıklayın</h5>
+        </div>
+        <!-- <div class="card-body" *ngIf="!isCollapsed">
+            <div id="map" style="height: 500px; width: 100%;"></div>
+        </div> -->
+      </div>
+    
 
 
        <label for="">Konumu : </label>

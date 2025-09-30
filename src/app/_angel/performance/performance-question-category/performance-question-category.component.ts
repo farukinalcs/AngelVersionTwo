@@ -45,20 +45,27 @@ export class PerformanceQuestionCategoryComponent implements OnInit, OnDestroy {
   }
 
   setCategory(name: string): void {
-    this.perform.setCategory(name).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
 
-      const result = response[0].x[0].islemsonuc;
-      console.log("setCategory:", result);
-      if (result == 1) {
-        this.toastrService.success(
-          "Kategori Ekleme İşlemi Başarılı");
-        this.getCategory(0);
-      } else {
-        this.toastrService.error(
-          "Kategori Ekleme İşlemi Başarısız");
-      }
-      this.ref.detectChanges();
-    });
+    if(name != ""){
+      this.perform.setCategory(name).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+
+        const result = response[0].x[0].islemsonuc;
+        console.log("setCategory:", result);
+        if (result == 1) {
+          this.toastrService.success(
+            "Kategori Ekleme İşlemi Başarılı");
+          this.getCategory(0);
+        } else {
+          this.toastrService.error(
+            "Kategori Ekleme İşlemi Başarısız");
+        }
+        this.ref.detectChanges();
+      });
+    }else{
+      this.toastrService.error(
+        "Kategori Ekleme İşlemi Başarısız");
+    }
+ 
   }
 
   updateCategoryModal(item: any) {

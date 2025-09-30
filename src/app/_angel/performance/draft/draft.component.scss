@@ -11,6 +11,16 @@
     padding-top: 5px;
     z-index: 1;
   }
+
+  .step-actions {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+
   
   .full-width-input,
   .full-width-button,
@@ -40,3 +50,4 @@
   ::ng-deep .p-dropdown-panel {
     z-index: 9999 !important;
   }
+

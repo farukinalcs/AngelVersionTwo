@@ -102,6 +102,7 @@ export class ToursComponent implements OnInit, OnDestroy {
   stationLat: any ="";
   stationLng: any = "";
   mapMarkers: any[] = [];
+  tr: any;
   @ViewChild('gmap', { static: false }) gmapElement!: ElementRef;
   constructor(
     private patrol: PatrolService,
@@ -125,6 +126,51 @@ export class ToursComponent implements OnInit, OnDestroy {
       this.dailyGuardTourCheck(this.formattedDate,this.selectLocationId);
       this.guardTourDetail(this.formattedDate,this.selectLocationId);
     });
+
+    this.tr = {
+      firstDayOfWeek: 1,
+      dayNames: [
+        'Pazar',
+        'Pazartesi',
+        'Salı',
+        'Çarşamba',
+        'Perşembe',
+        'Cuma',
+        'Cumartesi',
+      ],
+      dayNamesShort: ['Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts'],
+      dayNamesMin: ['Pz', 'Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct'],
+      monthNames: [
+        'Ocak',
+        'Şubat',
+        'Mart',
+        'Nisan',
+        'Mayıs',
+        'Haziran',
+        'Temmuz',
+        'Ağustos',
+        'Eylül',
+        'Ekim',
+        'Kasım',
+        'Aralık',
+      ],
+      monthNamesShort: [
+        'Oca',
+        'Şub',
+        'Mar',
+        'Nis',
+        'May',
+        'Haz',
+        'Tem',
+        'Ağu',
+        'Eyl',
+        'Eki',
+        'Kas',
+        'Ara',
+      ],
+      today: 'Bugün',
+      clear: 'Temizle',
+    };
 
     // this.dailyGuardTourCheck(this.formattedDate,this.selectLocationId);
     this.getLocation();

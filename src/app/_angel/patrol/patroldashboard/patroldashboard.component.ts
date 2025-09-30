@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { PatrolService } from '../patrol.service';
 import { ResponseModel } from 'src/app/modules/auth/models/response-model';
@@ -67,7 +67,6 @@ export class CustomDateAdapter extends NativeDateAdapter {
 
 export class PatroldashboardComponent implements OnInit, OnDestroy {
 
-  //DASHBOARD
   eventLogs: {
     type: string;
     message: string;
@@ -76,28 +75,42 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     color: string;
   }[] = [];
 
+  lastIncidentID: any;
+  incidentLogsDB: any[] = [];
+  incidentLogs: any[] = [];
+  incidentFiles: any[] = [];
+
+  alertLogsDB: any[] = [];
+  alertLogs: any[] = [];
 
 
+  voiceLogsDB: any[] = [];
+  voiceLogs: any[] = [];
+
+  otherLogs: any[] = [];
+  alarmModal: boolean = false;
+  IncidentModal: boolean = false;
   private ngUnsubscribe = new Subject();
 
 
   formattedDate: string = '';
   selectedDate: Date = new Date();
   dateControl = new FormControl();
-  activeWidget: number = 0;
+
   latitude: any = "";
   longitude: any = "";
   map: google.maps.Map | undefined;
 
-  patrolInfo: any[] = [];
+  // patrolInfo: any[] = [];
 
-  lastIncidentModal: boolean = false;
-  lastAlarmModal: boolean = false;
-  eventDetailsModal: boolean = false;
-  deviceIncidentList: boolean = false;
+  // lastIncidentModal: boolean = false;
+  // lastAlarmModal: boolean = false;
+  // eventDetailsModal: boolean = false;
+  // deviceIncidentList: boolean = false;
 
-  lastIncidentDesc: string;
-  lastIncidentSecurity: string;
+  alarmMap!: google.maps.Map;
+  incidentMap!: google.maps.Map;
+
   IncidentDesc: string;
   IncidentHeader: string;
   IncidentTime: any;
@@ -125,12 +138,17 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
   mobileUsers: ConnectionModel[] = [];
   mobileClientInfos: any[] = [];
-
+  intervalId: any;
+  isCollapsed: boolean = true;
   selectedLocationID: number;
   onlineMobileUsers: ConnectionModel[] = [];
   allconnInfo: ConnectionModel[] = []
   allClitenInfos: any[] = []
   private markers: { [imei: string]: google.maps.Marker } = {};
+
+  @ViewChild('alarmMap') alarmMapElement!: ElementRef;
+  @ViewChild('incidentMap') incidentMapElement!: ElementRef;
+
   constructor(
     private patrol: PatrolService,
     private ref: ChangeDetectorRef,
@@ -155,11 +173,23 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     // });
 
     this.getLocation();
+    this.startConnection(this.helperService.gateResponseY, 'https://mecloud.com.tr:8011/angelhub');
+    this.intervalId = setInterval(() => {
+      this.ref.detectChanges();
+    }, 1000);
 
+    console.log("ALERT LOG", this.alertLogs)
+  }
+  toggleCollapse() {
+    this.isCollapsed = !this.isCollapsed;
 
+    // if (!this.isCollapsed) {
+    //   setTimeout(() => {
+    //     google.maps.event.trigger(this.map, 'resize'); // veya this.map.invalidateSize() (Leaflet için)
+    //   }, 300);
+    // }
   }
 
-  
 
 
 
@@ -200,7 +230,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
           try {
             const rawJson = args[0] as string;
             const parsed = JSON.parse(rawJson) as ConnectionModel[];
-
+            console.log("geliyor muuuu0");
             const connections = parsed.map((conn) => {
               let clientInfoParsed: any;
               try {
@@ -215,7 +245,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
                 ClientInfo: clientInfoParsed,
               };
             });
-
+            console.log("geliyor muuuu111");
             const mobileConnections = connections.filter(c => c.ClientType === 4);
 
             const newClientInfos = mobileConnections.map(user => ({
@@ -231,7 +261,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
             // 🔄 Display list'i yeni lokasyon cihazlarıyla güncelle
             this.displayList = [...filteredByLocation];
 
-
+            console.log("geliyor muuuu2222");
             // 🔄 Marker senkronizasyonu
             filteredByLocation.forEach(device => {
               const lat = +device.lat;
@@ -301,24 +331,36 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     this.hubConnection.on('alert', this.onAlert.bind(this));
     this.hubConnection.on('voice', this.onVoice.bind(this));
     this.hubConnection.on('conninfo', this.onConninfo.bind(this));
+    this.hubConnection.on('allconninfo', this.onConninfo.bind(this));
   }
 
   private onIncident(...args: any[]): void {
 
     if (args && args.length > 0) {
       const data = args[0] as string;
-      console.log("🚨 INCIDENT:", data);
-      this.addEventLog("🚨 INCIDENT:", data);
+      this.incidentMap = new google.maps.Map(this.incidentMapElement.nativeElement, {
+        center: { lat: 41.0082, lng: 28.9784 }, // İstanbul örnek
+        zoom: 12
+      });
+      console.log("⚠️ INCIDENT:", data);
+      this.handleIncidentMessage(data);
     }
   }
 
   private onAlert(...args: any[]): void {
     if (args && args.length > 0) {
       const alertData = args[0] as string;
-      console.log("⚠️ Alert event geldi:", alertData);
+      console.log("🚨 Alert event geldi:", alertData);
 
+      this.alarmMap = new google.maps.Map(this.alarmMapElement.nativeElement, {
+        center: { lat: 39.92077, lng: 32.85411 }, // Ankara örnek
+        zoom: 12
+      });
       this.handleAlarmMessage(alertData);
-      this.addEventLog("⚠️ ALERT", alertData);
+
+      const [lat, rest] = alertData.split('@@@');
+      const [lng, security] = rest.split('@@@@@@');
+      this.addEventLog("🚨 ALERT", lat, lng, security);
     }
 
   }
@@ -328,7 +370,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
       const voiceData = args[0] as string;
       console.log("🎧 Voice event geldi:", voiceData);
       await this.handleVoiceMessage(voiceData);
-      this.addEventLog("🎧 VOICE", voiceData);
+      this.addEventLog("🎧 VOICE", "", "", voiceData);
     }
 
   }
@@ -338,7 +380,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
       try {
         const rawJson = args[0] as string;
         const parsed = JSON.parse(rawJson) as ConnectionModel[];
-
+        console.log("CONNNN",rawJson)
         let connections: ConnectionModel[] = [];
 
         connections = parsed.map((conn) => {
@@ -358,7 +400,7 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
         const updates = connections.filter(c => c.ClientType === 4);
         updates.forEach(conn => {
           const uniqueKey = conn.LoginId || conn.ClientInfo?.person || conn.KullaniciAdi;
-
+          console.log("CONNNN2222",rawJson)
           const index = this.displayList.findIndex(
             u =>
               u.loginId === uniqueKey || // loginId eşleşmesi varsa
@@ -377,7 +419,8 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
               person: conn.ClientInfo?.person,
               ...conn.ClientInfo
             });
-            console.log('🟢 Yeni cihaz eklendi:', conn.terminalname);
+            console.log('🟢 Yeni cihaz eklendi:', conn);
+            this.addEventLog("Yeni cihaz eklendi", "", "", conn.AdSoyad);
           }
 
           if (conn.Process === '+' && index !== -1) {
@@ -391,13 +434,15 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
               person: conn.ClientInfo?.person,
               ...conn.ClientInfo
             };
-            console.log('♻ Güncellendi:', conn.terminalname);
+            console.log('♻ Güncellendi:', conn.AdSoyad);
+            //this.addEventLog("♻ Güncellendi", conn.terminalname);
           }
 
           if (conn.Process === '-' && index !== -1) {
             // 🔴 cihaz offline olduysa → sil
             this.displayList.splice(index, 1);
             console.log('🔴 Cihaz listeden silindi:', conn.terminalname);
+            this.addEventLog("🔴 Cihaz listeden silindi", "", "", conn.AdSoyad);
           }
         });
 
@@ -419,6 +464,8 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
   }
 
   async handleAlarmMessage(rawAlarm: string): Promise<void> {
+    this.IncidentModal = false;
+    this.alarmModal = true;
     // Alert içeriğini yorumla, kullanıcıya göster, ses çal, vs.
     const [latStr, lngStr, title] = rawAlarm.split('@@@');
     const lat = parseFloat(latStr);
@@ -430,14 +477,14 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.map?.setCenter({
+    this.alarmMap?.setCenter({
       lat: +lat,
       lng: +lng,
     });
 
     new google.maps.Marker({
       position: { lat, lng },
-      map: this.map,
+      map: this.alarmMap,
       title: title,
       icon: {
         url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
@@ -448,6 +495,58 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
 
     console.log("🔔 Alarm verisi işlendi:", rawAlarm);
   }
+
+  async handleIncidentMessage(data: string): Promise<void> {
+    this.alarmModal = false;
+    this.IncidentModal = true;
+
+    console.log("⚠️ INCIDENT:", typeof data, data);
+
+
+    const parts = data.split('@@@');
+    console.log("parts:", parts);
+
+ 
+    const latStr = parts[0];
+    const lngStr = parts[1];
+    const idStr = parts[3]; // dikkat: index 3
+    
+    const lat = Number(latStr);
+    const lng = Number(lngStr);
+    const id = Number(idStr);
+    this.addEventLog("⚠️ INCIDENT:", lat, lng, id);
+    
+
+    this.getIncidentFiles(id);
+    // Olay haritası
+    this.incidentMap = new google.maps.Map(this.incidentMapElement.nativeElement, {
+      center: { lat: 41.0082, lng: 28.9784 }, // İstanbul örnek
+      zoom: 12
+    });
+
+    if (isNaN(lat) || isNaN(lng)) {
+      console.warn("Geçersiz alarm koordinatı:", data);
+      return;
+    }
+
+    this.incidentMap?.setCenter({
+      lat: +lat,
+      lng: +lng,
+    });
+
+    new google.maps.Marker({
+      position: { lat, lng },
+      map: this.incidentMap,
+      icon: {
+        url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+        scaledSize: new google.maps.Size(40, 40)
+      }
+    });
+
+
+    console.log("🛑 INcident verisi işlendi:", data);
+  }
+
 
   async handleVoiceMessage(data: string): Promise<void> {
     // Belki sesli mesaj oynatılacak?
@@ -486,72 +585,124 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     return this.selectedDate ? this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd')! : '';
   }
 
-  LastEventModal(item: AlarmModel) {
-    console.log("ALARM MODEL", item);
-    if (!this.validateCoordinates(item.olat, item.olng)) {
-      console.error("Geçersiz koordinatlar:", item.olat, item.olng);
-      return;
-    }
-    this.loadMap(parseFloat(item.olat || "0"), parseFloat(item.olng || "0"), item.name);
-    this.lastIncidentModal = true;
-    this.lastIncidentDesc = item.oaciklama || '';
-    this.lastIncidentSecurity = item.securityname;
-
-    const lat = parseFloat(item.olat || "0");
-    const lng = parseFloat(item.olng || "0");
-
-    if (isNaN(lat) || isNaN(lng)) {
-      console.error("Geçersiz koordinatlar:", item.olat, item.olng);
-      return;
-    }
+  getIncidentDetail(log: any) {
+    console.log("DETAİİİİİL", log)
   }
+
 
   getLocation() {
     this.patrol.getLocation().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       this._locations = response[0].x;
       console.log("getLocation:", this._locations);
       this.selectLocationId = this._locations[0]?.id;
+      this.guardIncidentLogs(this.selectLocationId);
+      this.guardVoicetLogs(this.selectLocationId);
+      this.guardAlerttLogs(this.selectLocationId);
       this.ref.detectChanges();
 
     });
   }
 
+  guardIncidentLogs(locaitonId: number) {
+    this.patrol.guardIncidentLogs(locaitonId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      this.incidentLogsDB = response[0].x;
+
+      this.incidentLogsDB.forEach(log => {
+        this.addEventLog("⚠️ INCIDENT:", log.olaybaslik, log.guvenlikadsoyad, log.Id);
+      });
+      console.log("guardIncidentLogs:", this.incidentLogsDB);
+      this.ref.detectChanges();
+
+    });
+  }
+
+  getIncidentFiles(IncidentId: any, source = "olay") {
+    console.log("Incidentttt iddd ", IncidentId)
+    this.patrol.getIncidentFiles(IncidentId, source).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      this.incidentFiles = response[0].x;
+      console.log("🚨🚨🚨incidentFiles🚨🚨🚨", this.incidentFiles);
+      this.ref.detectChanges();
+
+    });
+  }
+
+  guardAlerttLogs(locaitonId: number) {
+    this.patrol.guardAlertLogs(locaitonId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      this.alertLogsDB = response[0].x;
+      this.alertLogsDB.forEach(log => {
+        this.addEventLog("🚨 ALERT", log.lat, log.lng, log.guvenlikadsoyad)
+      })
+      console.log("guardAlertLogs:", this.alertLogsDB);
+      this.ref.detectChanges();
+
+    });
+  }
+
+  guardVoicetLogs(locaitonId: number) {
+    this.patrol.guardVoiceLogs(locaitonId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      this.voiceLogsDB = response[0].x;
+      console.log("guardVoicetLogs:", this.voiceLogsDB);
+      this.ref.detectChanges();
+
+    });
+  }
+
+
   onLocationChange(locationid: number) {
-
     this.selectLocationId = locationid;
-
+    this.guardIncidentLogs(this.selectLocationId);
+    this.guardVoicetLogs(this.selectLocationId);
+    this.guardAlerttLogs(this.selectLocationId);
   }
 
+  // private validateCoordinates(lat: string | null, lng: string | null): boolean {
+  //   const latitude = parseFloat(lat || "0");
+  //   const longitude = parseFloat(lng || "0");
+  //   return !isNaN(latitude) && !isNaN(longitude);
+  // }
 
-  private validateCoordinates(lat: string | null, lng: string | null): boolean {
-    const latitude = parseFloat(lat || "0");
-    const longitude = parseFloat(lng || "0");
-    return !isNaN(latitude) && !isNaN(longitude);
-  }
+  private addEventLog(type: string, lat: any, lng: any, message: any) {
 
-  private addEventLog(type: string, message: string) {
-
-    console.log("addEventLog:", this.eventLogs);
-    console.log("addEventLog:", type, message);
     let icon = "info";
     let color = "secondary";
 
     switch (type) {
-      case "🚨 INCIDENT:":
-        icon = "alert-octagon";
-        color = "danger"; // kırmızı
+      case "⚠️ INCIDENT:":
+        icon = "alert";
+        color = "warning";
+        this.incidentLogs.unshift({
+          type, lat, lng, message, time: new Date(), icon, color
+        });
+        if (this.incidentLogs.length > 20) this.incidentLogs.pop();
+
         break;
-      case "⚠️ ALERT":
+
+      case "🚨 ALERT":
         icon = "bell";
-        color = "warning"; // sarı
+        color = "danger";
+        this.alertLogs.unshift({
+          type, lat, lng, message, time: new Date(), icon, color
+        });
+        if (this.alertLogs.length > 20) this.alertLogs.pop();
+
         break;
+
       case "🎧 VOICE":
         icon = "headphones";
-        color = "primary"; // mavi
+        color = "primary";
+        this.voiceLogs.unshift({
+          type, lat, lng, message, time: new Date(), icon, color
+        });
+        if (this.voiceLogs.length > 20) this.voiceLogs.pop();
         break;
+
       default:
         icon = "info";
         color = "secondary";
+        this.otherLogs.unshift({
+          type, lat, lng, message, time: new Date(), icon, color
+        });
+        if (this.otherLogs.length > 20) this.otherLogs.pop();
     }
 
     this.eventLogs.unshift({
@@ -565,66 +716,28 @@ export class PatroldashboardComponent implements OnInit, OnDestroy {
     if (this.eventLogs.length > 20) {
       this.eventLogs.pop();
     }
+
   }
+  // private loadMap(lat: number, lng: number, title: string): void {
+  //   setTimeout(() => {
+  //     const mapElement = document.getElementById('mapIncident') as HTMLElement;
+  //     if (mapElement) {
+  //       const center = { lat, lng };
+  //       this.map = new google.maps.Map(mapElement, {
+  //         center: center,
+  //         zoom: 15,
+  //       });
 
-  private loadMap(lat: number, lng: number, title: string): void {
-    setTimeout(() => {
-      const mapElement = document.getElementById('mapIncident') as HTMLElement;
-      if (mapElement) {
-        const center = { lat, lng };
-        this.map = new google.maps.Map(mapElement, {
-          center: center,
-          zoom: 15,
-        });
+  //       new google.maps.Marker({
+  //         position: center,
+  //         map: this.map,
+  //         title: title,
+  //       });
 
-        new google.maps.Marker({
-          position: center,
-          map: this.map,
-          title: title,
-        });
-
-        google.maps.event.trigger(this.map, 'resize');
-      }
-    }, 0);
-  }
-
-
-
-  getEventDetail(item: Incident) {
-    console.log(":::DETAİLS::::", item);
-    if (!this.validateCoordinates(item?.latitude, item?.longitude)) {
-      console.error("Geçersiz koordinatlar:", item.latitude, item.longitude);
-      return;
-    }
-    this.loadMap(parseFloat(item.latitude || "0"), parseFloat(item?.longitude || "0"), item?.olaybaslik);
-    this.eventDetailsModal = true;
-    this.IncidentDesc = item?.olayaciklama || '';
-    this.IncidentHeader = item?.olaybaslik || '';
-    this.IncidentTime = item?.zaman;
-
-    const lat = parseFloat(item?.latitude || "0");
-    const lng = parseFloat(item?.longitude || "0");
-
-    if (isNaN(lat) || isNaN(lng)) {
-      console.error("Geçersiz koordinatlar:", item.latitude, item.longitude);
-      return;
-    }
-  }
-
-  openAlarmModal(patrol: any) {
-    this.lastAlarmModal = true;
-    console.log("ALARMMMM", patrol);
-    if (!this.validateCoordinates(patrol?.lat, patrol?.lng)) {
-      console.error("Geçersiz koordinatlar:", patrol.lat, patrol.lng);
-      return;
-    }
-    this.loadMap(parseFloat(patrol?.lat || "0"), parseFloat(patrol?.lng || "0"), patrol?.securityname);
-  }
-
-
-  pad(num: number): string {
-    return num.toString().padStart(2, '0');
-  }
+  //       google.maps.event.trigger(this.map, 'resize');
+  //     }
+  //   }, 0);
+  // }
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

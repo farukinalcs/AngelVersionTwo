@@ -32,19 +32,19 @@
                                     <tbody>
                                         <tr *ngFor="let item of _filteredItems" class="cursor-pointer fs-8">
                                                 <td [ngClass]="this.selectLocationId === item.id ? 'selected-location' : 'text-dark fw-bold'" (click)="selectLocation(item);">
-                                                    <span>{{item?.ad}}</span>
+                                                    <span style="margin-left: 10px;">{{item?.ad}}</span>
                                                 </td>
                                                 <td>
 
 
                                                     <a class="btn btn-light-danger btn-sm py-1 px-2 my-1" (click)="updateLocationModal(item?.ad, item?.id)">
-                                                        <i class="fa-solid fa-pen p-0"></i>
+                                                        <i class="fa-solid fa-pen p-0 mr-3"></i>
                                                     </a>
                                                 </td>
                                                 <td>
 
                                                     <a class="btn btn-light-danger btn-sm py-1 px-2 my-1" (click)="deleteLocationModal(item?.id)">
-                                                        <i class="fa-solid fa-trash p-0"></i>
+                                                        <i class="fa-solid fa-trash p-0 mr-3"></i>
                                                     </a>
 
                                                 </td>

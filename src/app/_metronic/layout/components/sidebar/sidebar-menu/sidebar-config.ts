@@ -61,133 +61,121 @@ export const MENU: MenuItem[] = [
           { title: 'Raporlar', routerLink: 'attendance/reports' }
         ],
         app: ['1']
-      }
-    ]
-  },
-
-  {
-    title: 'İzin',
-    icon: 'fa-solid fa-umbrella-beach text-danger',
-    children: [
-      { title: 'Genel Bakış', routerLink: 'leave/overview' }
-    ],
-    app: ['1']
-  },
-  {
-    title: 'Fazla Mesai',
-    icon: 'fa-solid fa-business-time text-danger',
-    children: [
-      { title: 'Genel Bakış', routerLink: 'overtime/overview' }
-    ],
-    app: ['1']
-  },
-  {
-    title: 'Vardiya',
-    icon: 'fa-solid fa-calendar-check text-danger',
-    children: [
-      { title: 'Genel Bakış', routerLink: 'shift/overview' }
-    ],
-    app: ['1']
-  },
-  {
-    title: 'Ziyaretçi',
-    icon: 'fa-solid fa-users text-danger',
-    children: [
-      { title: 'Genel Bakış', routerLink: 'visitor/overview' },
-      { title: 'Ziyaretçi Kartları', routerLink: 'visitor/cards' },
-      { title: 'Ziyaretçiler', routerLink: 'visitor/visitors' },
-      { title: 'Geçici Kartlar', routerLink: 'visitor/temp-card' },
-      { title: 'Tanımlamalar', routerLink: 'visitor/definitions' },
-      { title: 'Raporlar', routerLink: 'visitor/reports' }
-    ],
-    app: ['1','5']
-  },
-  {
-    title: 'Yemekhane',
-    icon: 'fa-solid fa-utensils text-danger',
-    children: [
-      { title: 'Genel Bakış', routerLink: 'refectory/overview' },
-      { title: 'Tanımlamalar', routerLink: 'refectory/definitions' },
-      { title: 'Raporlar', routerLink: 'refectory/reports' }
-    ],
-    app: ['1','6']
-  },
-  {
-    title: 'Kantin',
-    icon: 'fa-solid fa-credit-card text-danger',
-    children: [
-      { title: 'Genel Bakış', routerLink: 'kantin/dashboard' },
-      { title: 'Tanımlamalar', routerLink: 'kantin/tanimlamalar' },
-      { title: 'Krediler', routerLink: 'kantin/krediler' },
-      { title: 'Raporlar', routerLink: 'kantin/raporlar' }
-    ],
-    app: ['1']
-  },
-  {
-    title: 'Bildirim',
-    icon: 'fa-solid fa-gear text-danger',
-    children: [
-      { title: 'SMS Servis', routerLink: 'sistem/sistem_yedek' },
-      { title: 'Mail Servis', routerLink: 'sistem/mail_servis' }
-    ],
-    app: ['1']
-  },
-  {
-    title: 'Müşteri Hizmetleri',
-    icon: 'fa-solid fa-phone-volume text-danger',
-    children: [
-      { title: 'Destek', routerLink: 'musteri_hizmetleri/destek' }
-    ],
-    app: ['1']
-  },
-  {
-    title: 'Güvenlik Tur',
-    icon: 'fa-solid fa-walkie-talkie text-danger',
-    children: [
-      { title: 'Genel Bakış', routerLink: 'patrol/dashboard' },
-      { title: 'Güvenlikçiler', routerLink: 'patrol/guvenlikciler' },
-      { title: 'Tanımlamalar', routerLink: 'patrol/tanimlamalar' },
-      { title: 'Cihazlar ve Harita', routerLink: '/patrol/content/device-map' },
-      { title: 'Turlar', routerLink: '/patrol/content/tours' }
-    ],
-    app: ['2']
-  },
-  {
-    title: 'Performans Yönetimi',
-    icon: 'fa-solid fa-paste text-danger',
-    children: [
-      { title: 'Genel Bakış', routerLink: 'performance/dashboard' },
-      { title: 'Tanımlamalar', routerLink: 'performance/tanimlamalar' }
-    ],
-    app: ['3']
-  },
-  {
-    title: 'Kullanıcı Yetki Yönetimi',
-    icon: 'fa-solid fa-key text-danger',
-    children: [
-      { title: 'Sicil Listesi', routerLink: 'user-management/user-list' },
-      { title: 'Tanımlamalar', routerLink: 'user-management/definitions' }
-    ],
-    app: ['1']
-  },
-  {
-    title: 'Envanter Yönetimi',
-    icon: 'fa-solid fa-boxes-stacked text-danger',
-    children: [
-      { title: 'Genel Bakış', routerLink: 'inventory/overview' },
-      { title: 'Tanımlamalar', routerLink: 'inventory/definitions' },
-      { title: 'Talepler', routerLink: 'inventory/request' }
-    ],
-    app: ['1']
-  },
+    },
     {
-    title: 'Dağıtım Yönetimi',
-    icon: 'fa-solid fa-person-chalkboard text-danger',
-    children: [
-      { title: 'Genel Bakış', routerLink: 'presentation/overview' },
-      { title: 'Tanımlamalar', routerLink: 'presentation/definitions' },
-      { title: 'Ürün Dağıtımı', routerLink: 'presentation/product-distribution' }
-    ],
-    app: ['1']
-  }
+        title: 'İzin',
+        icon: 'fa-solid fa-umbrella-beach text-danger',
+        children: [
+            { title: 'Genel Bakış', routerLink: 'leave/overview' }
+        ],
+        app: ['1']
+    },
+    {
+        title: 'Fazla Mesai',
+        icon: 'fa-solid fa-business-time text-danger',
+        children: [
+            { title: 'Genel Bakış', routerLink: 'overtime/overview' }
+        ],
+        app: ['1']
+    },
+    {
+        title: 'Vardiya',
+        icon: 'fa-solid fa-calendar-check text-danger',
+        children: [
+            { title: 'Genel Bakış', routerLink: 'shift/overview' }
+        ],
+        app: ['1']
+    },
+    {
+        title: 'Ziyaretçi',
+        icon: 'fa-solid fa-users text-danger',
+        children: [
+            { title: 'Genel Bakış', routerLink: 'visitor/overview' },
+            { title: 'Ziyaretçi Kartları', routerLink: 'visitor/cards' },
+            { title: 'Ziyaretçiler', routerLink: 'visitor/visitors' },
+            { title: 'Geçici Kartlar', routerLink: 'visitor/temp-card'},
+            { title: 'Tanımlamalar', routerLink: 'visitor/definitions' },
+            { title: 'Raporlar', routerLink: 'visitor/reports' }
+        ],
+        app: ['1', '5']
+    },
+    {
+        title: 'Yemekhane',
+        icon: 'fa-solid fa-utensils text-danger',
+        children: [
+            { title: 'Genel Bakış', routerLink: 'refectory/overview' },
+            { title: 'Tanımlamalar', routerLink: 'refectory/definitions' },
+            { title: 'Raporlar', routerLink: 'refectory/reports' }
+        ],
+        app: ['1', '6']
+    },
+    {
+        title: 'Kantin',
+        icon: 'fa-solid fa-credit-card text-danger',
+        children: [
+            { title: 'Genel Bakış', routerLink: 'kantin/dashboard' },
+            { title: 'Tanımlamalar', routerLink: 'kantin/tanimlamalar' },
+            { title: 'Krediler', routerLink: 'kantin/krediler' },
+            { title: 'Raporlar', routerLink: 'kantin/raporlar' }
+        ],
+        app: ['1']
+    },
+    {
+        title: 'Bildirim',
+        icon: 'fa-solid fa-gear text-danger',
+        children: [
+            { title: 'SMS Servis', routerLink: 'sistem/sistem_yedek' },
+            { title: 'Mail Servis', routerLink: 'sistem/mail_servis' }
+        ],
+        app: ['1']
+    },
+    {
+        title: 'Müşteri Hizmetleri',
+        icon: 'fa-solid fa-phone-volume text-danger',
+        children: [
+            { title: 'Destek', routerLink: 'musteri_hizmetleri/destek' }
+        ],
+        app: ['1']
+    },
+    {
+        title: 'Güvenlik Tur',
+        icon: 'fa-solid fa-walkie-talkie text-danger',
+        children: [
+            { title: 'Genel Bakış', routerLink: 'patrol/dashboard' },
+            { title: 'Güvenlikçiler', routerLink: 'patrol/guvenlikciler' },
+            { title: 'Tanımlamalar', routerLink: 'patrol/tanimlamalar' },
+            { title: 'Cihazlar ve Harita', routerLink: '/patrol/content/device-map' },
+            { title: 'Turlar', routerLink: '/patrol/content/tours' }
+        ],
+        app: ['2']
+    },
+    {
+        title: 'Performans Yönetimi',
+        icon: 'fa-solid fa-paste text-danger',
+        children: [
+            { title: 'Genel Bakış', routerLink: 'performance/dashboard' },
+            { title: 'Tanımlamalar', routerLink: 'performance/tanimlamalar' }
+        ],
+        app: ['3']
+    },
+    {
+        title: 'Kullanıcı Yetki Yönetimi',
+        icon: 'fa-solid fa-key text-danger',
+        children: [
+            { title: 'Sicil Listesi', routerLink: 'user-management/user-list' },
+            { title: 'Tanımlamalar', routerLink: 'user-management/definitions' }
+        ],
+        app: ['1']
+    },
+        {
+        title: 'Envanter Yönetimi',
+        icon: 'fa-solid fa-boxes-stacked text-danger',
+        children: [
+            { title: 'Genel Bakış', routerLink: 'inventory/overview' },
+            { title:'Tanımlamalar', routerLink:'inventory/definitions'},
+            { title:'Talepler', routerLink:'inventory/request'}
+        ],
+        app: ['1']
+    },
+    
 ];

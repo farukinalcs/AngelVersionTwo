@@ -48,16 +48,6 @@ export class ScaleComponent implements OnInit,OnDestroy{
     this.getScale(0);
   }
 
-  // onScaleChange(scaleId: number) {
-  //   const found = this.scaleList.find(s => s.id === scaleId);
-  //   if (found) {
-  //     console.log("FOUND",found);
-  //     this.selectedScale = found;
-  //     this.scaleName = found.scaleName;
-  //     this.answers = [...found.answers]; // kopyasını al
-  //     this.selectedCount = found.answers.length;
-  //   }
-  // }
 
   onScaleChange(scaleId: number) {
  
