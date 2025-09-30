@@ -6,7 +6,15 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { combineLatest, delay, filter, map, Subject, take, takeUntil } from 'rxjs';
+import {
+  combineLatest,
+  delay,
+  filter,
+  map,
+  Subject,
+  take,
+  takeUntil,
+} from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
 import {
   ColDef,
@@ -31,6 +39,7 @@ import {
 } from '@angular/forms';
 import { AttendanceService } from '../attendance.service';
 import {
+  CellClickedEvent,
   FilterChangedEvent,
   FilterModifiedEvent,
   FilterOpenedEvent,
@@ -53,6 +62,8 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { InOutComponent } from '../../shared/in-out/in-out.component';
 import { ConfirmationService } from 'src/app/core/permission/services/core/services/confirmation.service';
+import { PermissionReqComponent } from '../../shared/permission-req/permission-req.component';
+import { InOutViewComponent } from '../../shared/in-out-view/in-out-view.component';
 
 @Component({
   selector: 'app-attendance-list',
@@ -72,6 +83,8 @@ import { ConfirmationService } from 'src/app/core/permission/services/core/servi
     TranslateModule,
     ProgressBarModule,
     InOutComponent,
+    PermissionReqComponent,
+    InOutViewComponent,
   ],
   templateUrl: './attendance-list.component.html',
   styleUrls: ['./attendance-list.component.scss'],
@@ -124,28 +137,36 @@ export class AttendanceListComponent
       hide: false,
     },
     {
-      headerName: this.translateService.instant('Fotoğraf'),
-      field: 'imagePath',
-      editable: false,
-      pinned: 'left',
-      minWidth: 60,
-      maxWidth: 60,
+      headerName: this.translateService.instant('Durum'),
+      field: 'arasurevar',
+      minWidth: 80,
+      maxWidth: 80,
       filter: false,
       sortable: false,
-      headerTooltip: this.translateService.instant('Fotoğraf'),
-      cellStyle: {},
-      cellRenderer: (params: any) => this.getImageGrid(params),
-      cellRendererParams: { exampleParameter: 'red' },
-      hide: false,
+      cellRenderer: (params: any) => {
+        const makeIcon = (color: string) => `
+      <div class="icon-center">
+        <i class="fa-solid fa-arrow-right-arrow-left"
+           data-action="statusIcon"
+           style="color:${color}; font-size:18px;cursor:pointer;"></i>
+      </div>`;
+        if (params.value === 0) return makeIcon('gray');
+        if (params.value === 1) return makeIcon('red');
+        return '';
+      },
+      onCellClicked: (params) => {
+        const target = params.event?.target as HTMLElement | null;
+        if (target?.closest('[data-action="statusIcon"]')) {
+          this.getActions(params);
+        }
+      },
     },
 
-    //Kişi Bilgileri
     {
       headerName: 'Kişi Bilgileri',
       marryChildren: true,
       headerClass: 'person-group',
       groupId: 'PersonInfoGroup',
-      // headerGroupComponent: CustomHeaderGroup,
       hide: false,
       children: [
         {
@@ -154,10 +175,6 @@ export class AttendanceListComponent
           headerTooltip: this.translateService.instant('Sicil_Id'),
           type: 'numericColumn',
           filter: false,
-          // filter: 'agNumberColumnFilter',
-          // filterParams: {
-          //   buttons: ['reset', 'apply']
-          // },
           cellClass: (params) => this.applyWeekendClass(params),
           hide: false,
         },
@@ -167,7 +184,6 @@ export class AttendanceListComponent
           headerTooltip: this.translateService.instant('Sicil_No'),
           filter: 'agTextColumnFilter',
           filterParams: {
-            // buttons: ['reset', 'apply'],
             textMatcher: ({
               filterOption,
               value,
@@ -706,9 +722,13 @@ export class AttendanceListComponent
   savedFilterModel: any;
   displayVacationForm: boolean = false;
   displayAnnualCalendar: boolean = false;
+  displayPermission: boolean = false;
   displayInOut: boolean = false;
+  displayInOutView: boolean = false;
   personInfoForAnnualCalendar: any;
   personInfoForInOut: any;
+  personInfoForInOutView: any;
+  infoForPermission: any;
   terminalSelect: any;
   displayOvertimeForm: boolean = false;
   displayShiftForm: boolean = false;
@@ -1780,6 +1800,29 @@ export class AttendanceListComponent
     this.displayAnnualCalendar = false;
   }
 
+  showPermission() {
+    let selectedEmployees: any[] = [];
+    this.attendanceService.selectedItems$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((items) => {
+        selectedEmployees = items;
+        this.infoForPermission = selectedEmployees;
+      });
+    if (selectedEmployees.length > 0) {
+      this.displayPermission = true;
+    } else {
+      this.toastrService.warning(
+        this.translateService.instant('Listeden_Seçim_Yapmalısınız!'),
+        this.translateService.instant('Uyarı')
+      );
+      return;
+    }
+  }
+
+  onHidePermission() {
+    this.displayPermission = false;
+  }
+
   formatDate(date: Date): string {
     const correctedDate = new Date(date); // Orijinal tarihi klonla
     correctedDate.setHours(0, 0, 0, 0); // Saat, dakika, saniye sıfırlanır
@@ -1868,6 +1911,24 @@ export class AttendanceListComponent
     this.displayInOut = false;
   }
 
+  //view
+  showInOutViewModal(): void {
+    this.displayInOutView = true;
+  }
+  onHideInOutViewModal(): void {
+    this.displayInOutView = false;
+  }
+  getActions(data: any): void {
+    this.displayInOutView = true;
+    this.attendanceService.selectedItems$.pipe(take(1)).subscribe((vals) => {
+      if (Array.isArray(vals) && vals.length > 0) {
+        this.personInfoForInOutView = vals;
+      } else {
+        this.personInfoForInOutView = data?.data;
+      }
+    });
+  }
+  //view
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();

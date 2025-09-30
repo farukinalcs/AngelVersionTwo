@@ -1,0 +1,633 @@
+<p-dialog
+  [(visible)]="displayInOutView"
+  [modal]="true"
+  [style]="{ width: '70vw', maxWidth: '98vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  [baseZIndex]="1"
+  [closable]="true"
+  (onHide)="hideInOutView()"
+  header="{{ 'PDKS_Hareketleri' | translate }}"
+>
+  <ng-container *ngIf="!loading; else loadingTpl">
+    <div
+      *ngIf="invalidIncoming()"
+      class="warn-banner"
+      role="alert"
+      aria-live="polite"
+    >
+      <i
+        class="pi pi-exclamation-triangle blink"
+        aria-hidden="true"
+        style="color: #e57e00 !important"
+      ></i>
+      <span class="warn-text" style="color: #e57e00 !important"
+        >Gelen Hareketleriniz Düzgün Değil.</span
+      >
+    </div>
+    <div class="pdks-card">
+      <div class="pdks-header">
+        <div class="title">
+          <i class="pi pi-user"></i>
+          <span>
+            {{ inOutViewData?.ad }} {{ inOutViewData?.soyad }} /
+            {{ inOutViewData?.mesaitarih | date : "dd.MM.yyyy" }}
+          </span>
+        </div>
+
+        <div class="legend">
+          <span class="chip chip-in">
+            <i class="pi pi-sign-in"></i>
+            {{ "Giriş" | translate }}
+          </span>
+          <span class="chip chip-out">
+            <i class="pi pi-sign-out"></i>
+            {{ "Çıkış" | translate }}
+          </span>
+          <span class="chip chip-main">
+            <i class="pi pi-star"></i>
+            {{ "Ana Giriş/Çıkış" | translate }}
+          </span>
+
+          <div class="toggle-deleted">
+            <p-inputSwitch
+              [ngModel]="showDeleted()"
+              (ngModelChange)="showDeleted.set($event)"
+              inputId="toggleDeleted"
+            ></p-inputSwitch>
+            <label for="toggleDeleted" class="ms-2">
+              {{ "Silinenleri göster" | translate }}
+            </label>
+          </div>
+
+          <button
+            pButton
+            type="button"
+            class="p-button p-button-sm ms-2"
+            (click)="toggleAddPanel()"
+          >
+            <i class="pi pi-plus me-2"></i>
+            {{
+              showAddPanel()
+                ? ("Kapat" | translate)
+                : ("Yeni Hareket" | translate)
+            }}
+          </button>
+        </div>
+      </div>
+
+      <div
+        *ngIf="showAddPanel()"
+        class="p-3 mb-2"
+        style="
+          border: 1px dashed #cfe7fb;
+          border-radius: 12px;
+          background: #fafcff;
+        "
+      >
+        <form [formGroup]="addPanelForm" (ngSubmit)="submitAddPanel()">
+          <!-- HIZA DÜZELTİLDİ: align-items-start -->
+          <div class="row g-3 align-items-start">
+            <!-- Mod seçimi -->
+            <div class="col-12 col-md-3">
+              <label class="form-label mb-1 d-block">{{
+                "Kayıt Şekli" | translate
+              }}</label>
+              <div class="d-flex gap-2">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="modeSingle"
+                    value="single"
+                    formControlName="mode"
+                  />
+                  <label class="form-check-label" for="modeSingle">{{
+                    "Tek" | translate
+                  }}</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="modePair"
+                    value="pair"
+                    formControlName="mode"
+                  />
+                  <label class="form-check-label" for="modePair">{{
+                    "Giriş + Çıkış" | translate
+                  }}</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Açıklama -->
+            <div class="col-12 col-md-9">
+              <label class="form-label mb-1 d-block">{{
+                "Açıklama" | translate
+              }}</label>
+              <p-iconfield iconPosition="left" class="w-100">
+                <p-inputicon class="pi pi-envelope"></p-inputicon>
+                <input
+                  pInputText
+                  type="text"
+                  class="form-control"
+                  formControlName="aciklama"
+                  placeholder="{{ 'Açıklama' | translate }}"
+                  maxlength="200"
+                />
+              </p-iconfield>
+              <div class="d-flex justify-content-end">
+                <small class="text-muted"
+                  >{{
+                    addPanelForm.get("aciklama")?.value?.length || 0
+                  }}/200</small
+                >
+              </div>
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  addPanelForm.get('aciklama')?.touched &&
+                  addPanelForm.get('aciklama')?.invalid
+                "
+              >
+                {{ "Zorunlu alan" | translate }}
+              </div>
+            </div>
+          </div>
+
+          <!-- TEK MOD -->
+          <div
+            *ngIf="addPanelForm.get('mode')?.value === 'single'"
+            class="row g-3 mt-2"
+          >
+            <div class="col-12 col-md-2">
+              <label class="form-label mb-1 d-block">{{
+                "Yön" | translate
+              }}</label>
+              <p-dropdown
+                formControlName="pdks"
+                [options]="[
+                  { label: ('Giriş' | translate), value: 1 },
+                  { label: ('Çıkış' | translate), value: 2 }
+                ]"
+                optionLabel="label"
+                optionValue="value"
+                class="w-100"
+              ></p-dropdown>
+            </div>
+
+            <div class="col-12 col-md-3">
+              <label class="form-label mb-1 d-block">{{
+                "Tarih" | translate
+              }}</label>
+              <p-calendar
+                formControlName="tarihSingle"
+                [locale]="tr"
+                dateFormat="dd-mm-yy"
+                [showIcon]="true"
+                inputStyleClass="w-100"
+                styleClass="w-100"
+              ></p-calendar>
+            </div>
+
+            <div class="col-12 col-md-3">
+              <label class="form-label mb-1 d-block">{{
+                "Saat" | translate
+              }}</label>
+              <p-calendar
+                formControlName="timeSingle"
+                [timeOnly]="true"
+                [hourFormat]="'24'"
+                [showIcon]="true"
+                [touchUI]="false"
+                [locale]="tr"
+                inputStyleClass="w-100"
+                styleClass="w-100"
+              ></p-calendar>
+            </div>
+
+            <div class="col-12 col-md-2">
+              <label class="form-label mb-1 d-block">{{
+                "Terminal" | translate
+              }}</label>
+              <p-dropdown
+                formControlName="terminalSingle"
+                [options]="deviceGroups"
+                optionLabel="ad"
+                optionValue="id"
+                placeholder="{{ 'Terminal Seçiniz' | translate }}"
+                [filter]="true"
+                [showClear]="true"
+                class="w-100"
+              ></p-dropdown>
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  addPanelForm.get('terminalSingle')?.touched &&
+                  addPanelForm.get('terminalSingle')?.invalid
+                "
+              >
+                {{ "Lütfen bir terminal seçin" | translate }}.
+              </div>
+            </div>
+
+            <div
+              class="col-12 col-md-2 d-flex justify-content-end align-items-end"
+            >
+              <button
+                type="button"
+                class="p-button p-button-text me-2"
+                pButton
+                (click)="cancelAddPanel()"
+              >
+                <i class="pi pi-times me-1"></i> {{ "Vazgeç" | translate }}
+              </button>
+              <button type="submit" class="p-button" pButton>
+                <i class="pi pi-check me-1"></i> {{ "Ekle" | translate }}
+              </button>
+            </div>
+          </div>
+
+          <!-- ÇİFT MOD (Giriş + Çıkış) -->
+          <div
+            *ngIf="addPanelForm.get('mode')?.value === 'pair'"
+            class="row g-3 mt-2"
+          >
+            <div class="col-12 col-lg-6">
+              <div
+                class="p-3"
+                style="
+                  border: 1px solid #e5edf9;
+                  border-radius: 10px;
+                  background: #fff;
+                "
+              >
+                <div
+                  class="pdks-header"
+                  style="
+                    margin-bottom: 0 !important;
+                    padding: 0 !important;
+                    border: none !important;
+                  "
+                >
+                  <span class="chip chip-in">
+                    <i class="pi pi-sign-in"></i>
+                    {{ "Giriş" | translate }}
+                  </span>
+                </div>
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label class="form-label mb-1 d-block">{{
+                      "Terminal (Giriş)" | translate
+                    }}</label>
+                    <p-dropdown
+                      formControlName="terminalIn"
+                      [options]="deviceGroupsIn"
+                      optionLabel="ad"
+                      optionValue="id"
+                      placeholder="{{ 'Terminal Seçiniz' | translate }}"
+                      [filter]="true"
+                      [showClear]="true"
+                      class="w-100"
+                    ></p-dropdown>
+                    <div
+                      class="text-danger small mt-1"
+                      *ngIf="
+                        addPanelForm.get('terminalIn')?.touched &&
+                        addPanelForm.get('terminalIn')?.invalid
+                      "
+                    >
+                      {{ "Lütfen bir terminal seçin" | translate }}.
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <label class="form-label mb-1 d-block">{{
+                      "Tarih" | translate
+                    }}</label>
+                    <p-calendar
+                      formControlName="tarihIn"
+                      [locale]="tr"
+                      dateFormat="dd-mm-yy"
+                      [showIcon]="true"
+                      inputStyleClass="w-100"
+                      styleClass="w-100"
+                    ></p-calendar>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label mb-1 d-block">{{
+                      "Saat" | translate
+                    }}</label>
+                    <p-calendar
+                      formControlName="timeIn"
+                      [timeOnly]="true"
+                      [hourFormat]="'24'"
+                      [showIcon]="true"
+                      [touchUI]="false"
+                      [locale]="tr"
+                      inputStyleClass="w-100"
+                      styleClass="w-100"
+                    ></p-calendar>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <div
+                class="p-3"
+                style="
+                  border: 1px solid #e5edf9;
+                  border-radius: 10px;
+                  background: #fff;
+                "
+              >
+                <div
+                  class="pdks-header"
+                  style="
+                    margin-bottom: 0 !important;
+                    padding: 0 !important;
+                    border: none !important;
+                  "
+                >
+                  <span class="chip chip-out">
+                    <i class="pi pi-sign-out"></i>
+                    {{ "Çıkış" | translate }}
+                  </span>
+                </div>
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label class="form-label mb-1 d-block">{{
+                      "Terminal (Çıkış)" | translate
+                    }}</label>
+                    <p-dropdown
+                      formControlName="terminalOut"
+                      [options]="deviceGroupsOut"
+                      optionLabel="ad"
+                      optionValue="id"
+                      placeholder="{{ 'Terminal Seçiniz' | translate }}"
+                      [filter]="true"
+                      [showClear]="true"
+                      class="w-100"
+                    ></p-dropdown>
+                    <div
+                      class="text-danger small mt-1"
+                      *ngIf="
+                        addPanelForm.get('terminalOut')?.touched &&
+                        addPanelForm.get('terminalOut')?.invalid
+                      "
+                    >
+                      {{ "Lütfen bir terminal seçin" | translate }}.
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <label class="form-label mb-1 d-block">{{
+                      "Tarih" | translate
+                    }}</label>
+                    <p-calendar
+                      formControlName="tarihOut"
+                      [locale]="tr"
+                      dateFormat="dd-mm-yy"
+                      [showIcon]="true"
+                      inputStyleClass="w-100"
+                      styleClass="w-100"
+                    ></p-calendar>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label mb-1 d-block">{{
+                      "Saat" | translate
+                    }}</label>
+                    <p-calendar
+                      formControlName="timeOut"
+                      [timeOnly]="true"
+                      [hourFormat]="'24'"
+                      [showIcon]="true"
+                      [touchUI]="false"
+                      [locale]="tr"
+                      inputStyleClass="w-100"
+                      styleClass="w-100"
+                    ></p-calendar>
+                  </div>
+                </div>
+
+                <div
+                  *ngIf="addPanelForm.touched && addPanelForm.hasError('order')"
+                  class="text-danger small mt-2"
+                >
+                  {{ "Çıkış saati girişten sonra olmalı" | translate }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end align-items-end">
+              <button
+                type="button"
+                class="p-button p-button-text me-2"
+                pButton
+                (click)="cancelAddPanel()"
+              >
+                <i class="pi pi-times me-1"></i> {{ "Vazgeç" | translate }}
+              </button>
+              <button type="submit" class="p-button" pButton>
+                <i class="pi pi-check me-1"></i> {{ "Ekle" | translate }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div
+        id="pdks-strip-container"
+        class="pdks-strip"
+        (pointerdown)="onPointerDown($event)"
+        (pointermove)="onPointerMove($event)"
+        (pointerup)="onPointerUpOrLeave($event)"
+        (pointercancel)="onPointerUpOrLeave($event)"
+        (pointerleave)="onPointerUpOrLeave($event)"
+      >
+        <ng-container *ngIf="filteredItems().length; else emptyTpl">
+          <div
+            class="event"
+            *ngFor="let it of filteredItems(); trackBy: trackById"
+            [class.event-in]="isIn(viewPdks(it))"
+            [class.event-out]="isOut(viewPdks(it))"
+            [class.event-main]="it.anagiriscikis === 1"
+            [class.locked]="!canDeleteRec(it)"
+            [class.is-deleted]="isDeletedRec(it)"
+            [class.pending-delete]="hasPendingFor(it, 2)"
+            [class.pending-change]="
+              hasPendingFor(it, 3) || hasPendingFor(it, 1)
+            "
+            [class.is-preview-deleted]="isPreviewDeleted(it)"
+            [class.is-preview-changed]="isPreviewChanged(it)"
+          >
+            <div class="event-top" [class.main-top]="it.anagiriscikis === 1">
+              <span
+                class="io"
+                [class.io-in]="isIn(viewPdks(it))"
+                [class.io-out]="isOut(viewPdks(it))"
+                [class.io-main]="it.anagiriscikis === 1"
+              >
+                <i class="pi" [ngClass]="'pi ' + piIcon(viewPdks(it))"></i>
+                {{
+                  it.anagiriscikis === 1
+                    ? "Ana " + label(viewPdks(it))
+                    : label(viewPdks(it))
+                }}
+              </span>
+              <span class="time">{{ viewTime(it) }}</span>
+            </div>
+
+            <!-- Önizleme rozetleri -->
+            <!-- <span class="preview-badge" *ngIf="isPreviewDeleted(it)">
+              <i class="pi pi-times"></i> {{ "Silinecek" | translate }}
+            </span>
+            <span
+              class="preview-badge preview-badge--change"
+              *ngIf="isPreviewChanged(it)"
+            >
+              <i class="pi pi-refresh"></i> {{ "Değişecek" | translate }}
+            </span> -->
+
+            <div class="terminal" [title]="it.terminal">
+              {{ it.terminal }}
+            </div>
+
+            <div class="meta">
+              <span class="user">
+                <i class="pi pi-id-card"></i> {{ it.adsoyad }}
+              </span>
+              <span class="uid">
+                <i class="pi pi-hashtag"></i> {{ displayUid(it) }}
+              </span>
+            </div>
+
+            <div class="actions">
+              <button
+                pButton
+                type="button"
+                class="p-button-rounded p-button-text p-button-sm"
+                (click)="openTimeEdit(it)"
+                [disabled]="disableTimeEdit(it)"
+                tooltipPosition="top"
+                [attr.aria-label]="'Saat düzenle'"
+              >
+                <i class="pi pi-clock"></i>
+              </button>
+
+              <button
+                *ngIf="canShowChangeButton(it)"
+                pButton
+                type="button"
+                class="p-button-rounded p-button-text p-button-sm"
+                (click)="onRefresh(it)"
+                [disabled]="disableChange(it)"
+                tooltipPosition="top"
+                [attr.aria-label]="'Değiştir'"
+              >
+                <i
+                  class="pi"
+                  [ngClass]="
+                    hasPendingFor(it, 3)
+                      ? 'pi pi-refresh pi-spin'
+                      : 'pi pi-refresh'
+                  "
+                ></i>
+              </button>
+
+              <button
+                *ngIf="canDeleteRec(it)"
+                pButton
+                type="button"
+                class="p-button-rounded p-button-text p-button-sm p-button-danger"
+                (click)="onDelete(it)"
+                [disabled]="disableDelete(it)"
+                tooltipPosition="top"
+                [attr.aria-label]="'Sil'"
+              >
+                <i class="pi pi-times"></i>
+              </button>
+            </div>
+
+            <div class="time-edit" *ngIf="editTimeForId() === it.Id">
+              <p-calendar
+                [(ngModel)]="editTimeModel"
+                [timeOnly]="true"
+                [showIcon]="true"
+                inputId="time-{{ it.Id }}"
+              ></p-calendar>
+
+              <div class="time-edit-actions">
+                <button
+                  pButton
+                  type="button"
+                  class="p-button p-button-sm me-2"
+                  (click)="applyTimeEdit(it)"
+                >
+                  <i class="pi pi-check me-1"></i> {{ "Uygula" | translate }}
+                </button>
+
+                <button
+                  pButton
+                  type="button"
+                  class="p-button-text p-button-sm"
+                  (click)="cancelTimeEdit()"
+                >
+                  <i class="pi pi-times me-1"></i> {{ "Vazgeç" | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #emptyTpl>
+          <div class="empty text-center">
+            {{ "Kayıt bulunamadı." | translate }}
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #loadingTpl>
+    <div class="loading">
+      <i class="pi pi-spin pi-spinner"></i>
+      <span>{{ "Yükleniyor" | translate }}...</span>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="w-100 d-flex align-items-center justify-content-between">
+      <div class="pending-info">
+        <i class="pi pi-inbox"></i>
+        <span class="ms-2">
+          {{ "Bekleyen işlem" | translate }}: {{ pendingOps.length }}
+        </span>
+      </div>
+
+      <div class="footer-actions d-flex align-items-center">
+        <button
+          pButton
+          type="button"
+          class="p-button-text me-2"
+          (click)="hideInOutView()"
+        >
+          {{ "Kapat" | translate }}
+        </button>
+
+        <button
+          pButton
+          type="button"
+          class="p-button"
+          (click)="saveAll()"
+          [disabled]="!pendingOps.length || loading"
+        >
+          <i class="pi pi-save me-2"></i>
+          {{ "Kaydet" | translate }}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

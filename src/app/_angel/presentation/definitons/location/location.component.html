@@ -1,0 +1,137 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-custom gutter-b my-5 pb-5">
+        <div class="card-header border-0 bg-danger" style="min-height: 45px">
+          <div class="card-title">
+            <h3 class="card-label text-white">Lokasyon</h3>
+            <h4 class="card-label text-gray-200 fs-8">
+              Lokasyon tanımlarınızı buradan yönetebilirsiniz.
+            </h4>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 my-5 pe-20">
+              <div
+                class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between gap-2 mb-3"
+              >
+                <div class="d-flex gap-2">
+                  <button
+                    *ngIf="isUnassigned"
+                    class="btn btn-dark btn-sm hover-elevate-up"
+                    (click)="addItem()"
+                  >
+                    <i class="fa-solid fa-plus"></i> Atama Yap
+                  </button>
+                  <button
+                    *ngIf="isAssigned"
+                    class="btn btn-danger btn-sm hover-elevate-up"
+                    (click)="deleteSelected()"
+                  >
+                    <i class="fa-solid fa-trash"></i> Atamadan Çıkar
+                  </button>
+
+                  <button
+                    class="btn btn-secondary btn-sm"
+                    (click)="openFilterModal()"
+                  >
+                    <i class="fa-solid fa-filter"></i> Filtrele
+                  </button>
+                  <button
+                    class="btn btn-secondary btn-sm"
+                    (click)="clearFilters()"
+                  >
+                    <i class="fa-solid fa-eraser"></i> Temizle
+                  </button>
+                </div>
+
+                <p-dropdown
+                  [options]="locations"
+                  optionLabel="ad"
+                  optionValue="id"
+                  [(ngModel)]="selectedLocation"
+                  (onChange)="refreshByControls()"
+                  placeholder="Lokasyon seçiniz"
+                  class="w-100 w-sm-auto"
+                >
+                </p-dropdown>
+              </div>
+
+              <ul
+                class="nav nav-pills nav-pills-custom item position-relative mx-1 mb-1"
+              >
+                <li class="nav-item col mx-0 p-0" *ngFor="let item of tabList">
+                  <a
+                    class="nav-link d-flex justify-content-center w-100 border-0 h-100 cursor-pointer"
+                    [ngClass]="{ active: selectedTab.type === item.type }"
+                    (click)="changeTabMenu(item)"
+                  >
+                    <span class="nav-text text-gray-800 fw-bold fs-6 mb-3">{{
+                      item.name
+                    }}</span>
+                    <span
+                      class="bullet-custom position-absolute z-index-2 bottom-0 w-100 h-4px bg-dark rounded"
+                    ></span>
+                  </a>
+                </li>
+                <span
+                  class="position-absolute z-index-1 bottom-0 w-100 h-4px bg-light rounded"
+                ></span>
+              </ul>
+
+              <div
+                [ngClass]="
+                  activeTheme == 'dark'
+                    ? 'ag-theme-alpine-dark'
+                    : 'ag-theme-alpine'
+                "
+                [ngStyle]="gridStyle"
+              >
+                <ag-grid-angular
+                  #agGrid
+                  style="width: 100%; height: 100%"
+                  (gridReady)="
+                    activeTheme == 'dark'
+                      ? onGridReadyDark($event)
+                      : onGridReadyLight($event)
+                  "
+                  [columnDefs]="columnDefs"
+                  [defaultColDef]="defaultColDef"
+                  [rowData]="rowData$ | async"
+                  [rowSelection]="rowSelection"
+                  [suppressRowClickSelection]="true"
+                  (selectionChanged)="onSelectionChangedLight()"
+                  [sideBar]="sideBar"
+                  [rowGroupPanelShow]="rowGroupPanelShow"
+                  [getContextMenuItems]="getContextMenuItems"
+                  [animateRows]="true"
+                  [statusBar]="statusBar"
+                  [getRowHeight]="getRowHeight"
+                  [groupSelectsChildren]="true"
+                  [pagination]="false"
+                  [paginationAutoPageSize]="false"
+                  [paginateChildRows]="false"
+                  [enableRangeSelection]="true"
+                  [enableRangeHandle]="true"
+                  [gridOptions]="gridOptions"
+                  (filterChanged)="onFilterChanged($event)"
+                  (rowClicked)="onRowClicked($event)"
+                >
+                </ag-grid-angular>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-registry-filter
+  [displayFilterModal]="displayFilterModal"
+  (onHideFilterModalEvent)="onHideFilterModal()"
+  (setFilterFormEvent)="setFilterFormFromModal($event)"
+>
+</app-registry-filter>

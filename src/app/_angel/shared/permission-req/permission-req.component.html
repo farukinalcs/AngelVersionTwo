@@ -1,0 +1,216 @@
+<p-dialog
+  header="{{ 'İzin_Formu' | translate }}"
+  [(visible)]="displayPermission"
+  position="top"
+  [breakpoints]="{ '2560px': '99vw', '992px': '90vw', '576px': '99vw' }"
+  [modal]="true"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+  [maximizable]="true"
+  (onHide)="hidePermission()"
+>
+  <div class="container py-0 px-5">
+    <div class="row gap-5">
+      <div class="col-12">
+        <form
+          class="form fv-plugins-bootstrap5 fv-plugins-framework mb-10"
+          [formGroup]="vacationForm"
+          (ngSubmit)="sendPermission()"
+        >
+          <!-- İzin Tipi -->
+          <div class="current">
+            <div class="w-100">
+              <div class="row">
+                <div class="col-12">
+                  <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{ 'İzin_Tipi' | translate }}</span>
+                  </label>
+
+                  <p-select
+                    [options]="vacationReasons"
+                    formControlName="tip"
+                    optionLabel="ad"
+                    emptyFilterMessage="{{ 'Kayıt_Bulunamadı' | translate }}"
+                    [filter]="true"
+                    filterBy="ad"
+                    [showClear]="true"
+                    placeholder="{{ 'İzin_Tipi_Seçiniz' | translate }}"
+                    class="w-100 md:w-56"
+                  >
+                    <ng-template #selectedItem let-selected>
+                      <div class="flex items-center gap-2">
+                        <div>{{ vacationForm.get('tip')?.value?.ad }}</div>
+                      </div>
+                    </ng-template>
+                    <ng-template let-item #item>
+                      <div class="flex items-center gap-2">
+                        <div>{{ item?.ad }}</div>
+                      </div>
+                    </ng-template>
+                  </p-select>
+
+                  <div class="invalid-feedback d-block"
+                       *ngIf="vacationForm.get('tip')?.touched && vacationForm.get('tip')?.hasError('required')">
+                    {{ 'Zorunlu alan' | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Günlük / Saatlik -->
+          <div class="current mt-4">
+            <div class="w-100">
+              <div class="row">
+                <div class="col-12">
+                  <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{ 'Günlük_Saatlik' | translate }}</span>
+                  </label>
+
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        formControlName="gunluksaatlik"
+                        value="gunluk"
+                        id="kt_radio_buttons_2_option_1"
+                      />
+                      <label
+                        class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center mb-5"
+                        for="kt_radio_buttons_2_option_1"
+                      >
+                        <i class="fa-solid fa-calendar-days fs-2x text-danger"></i>
+                        <span class="d-block fw-semibold text-start ps-3">
+                          <span class="text-dark fw-bold d-block fs-3">{{ 'Günlük' | translate }}</span>
+                        </span>
+                      </label>
+                    </div>
+
+                    <div class="col-lg-6">
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        formControlName="gunluksaatlik"
+                        value="saatlik"
+                        id="kt_radio_buttons_2_option_2"
+                      />
+                      <label
+                        class="btn btn-outline btn-outline-dashed btn-active-light-danger p-7 d-flex align-items-center justify-content-center"
+                        for="kt_radio_buttons_2_option_2"
+                      >
+                        <i class="fa-solid fa-clock fs-2x text-danger"></i>
+                        <span class="d-block fw-semibold text-start ps-3">
+                          <span class="text-dark fw-bold d-block fs-3">{{ 'Saatlik' | translate }}</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="invalid-feedback d-block"
+                       *ngIf="vacationForm.get('gunluksaatlik')?.touched && vacationForm.get('gunluksaatlik')?.hasError('required')">
+                    {{ 'Zorunlu alan' | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Saat alanları: SADECE saatlikte görünür -->
+          <div class="current mt-4" *ngIf="vacationForm.get('gunluksaatlik')?.value === 'saatlik'">
+            <div class="row">
+              <div class="col-6 mb-3">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                  <span class="required">{{ 'Başlangıç Saati' | translate }}</span>
+                </label>
+                <p-calendar
+                  inputId="basSaat"
+                  formControlName="basSaat"
+                  [timeOnly]="true"
+                  [showIcon]="true"
+                  hourFormat="24"
+                  appendTo="body"
+                  [stepMinute]="5"
+                  styleClass="w-100"
+                  inputStyleClass="w-100"
+                ></p-calendar>
+                <div class="invalid-feedback d-block"
+                     *ngIf="vacationForm.get('basSaat')?.touched && vacationForm.get('basSaat')?.hasError('required')">
+                  {{ 'Zorunlu alan' | translate }}
+                </div>
+              </div>
+
+              <div class="col-6 mb-3">
+                <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                  <span class="required">{{ 'Bitiş Saati' | translate }}</span>
+                </label>
+                <p-calendar
+                  inputId="bitSaat"
+                  formControlName="bitSaat"
+                  [timeOnly]="true"
+                  [showIcon]="true"
+                  hourFormat="24"
+                  appendTo="body"
+                  [stepMinute]="5"
+                  styleClass="w-100"
+                  inputStyleClass="w-100"
+                ></p-calendar>
+
+                <div class="invalid-feedback d-block"
+                     *ngIf="vacationForm.get('bitSaat')?.touched && vacationForm.get('bitSaat')?.hasError('required')">
+                  {{ 'Zorunlu alan' | translate }}
+                </div>
+                <div class="invalid-feedback d-block"
+                     *ngIf="vacationForm.touched && vacationForm.hasError('timeOrder')">
+                  {{ 'Bitiş saati başlangıçtan sonra olmalı' | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Açıklama -->
+          <div class="current mt-4">
+            <div class="w-100">
+              <div class="row">
+                <div class="col-12">
+                  <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                    <span class="required">{{ 'Aciklama' | translate }}</span>
+                  </label>
+                  <div class="row">
+                    <div class="col-12">
+                      <input
+                        type="text"
+                        formControlName="aciklama"
+                        class="form-control"
+                        placeholder="Açıklama giriniz"
+                      />
+                      <div class="invalid-feedback d-block"
+                           *ngIf="vacationForm.get('aciklama')?.touched && vacationForm.get('aciklama')?.hasError('required')">
+                        {{ 'Zorunlu alan' | translate }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Butonlar -->
+          <div class="row">
+            <div class="col-12 d-flex justify-content-end align-items-center mt-4 gap-2">
+              <a (click)="hidePermission()" class="btn btn-sm btn-danger">
+                <i class="fa-solid fa-xmark fs-5"></i>
+                {{ 'Vazgeç' | translate }}
+              </a>
+              <button type="submit" class="btn btn-sm btn-danger">
+                <i class="fa-solid fa-check fs-5 mr-2"></i>
+                {{ 'Gönder' | translate }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</p-dialog>
