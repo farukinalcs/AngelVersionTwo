@@ -30,13 +30,20 @@ export class DefinitonsComponent {
       source: 'cbo_bolum',
       path: 'product',
     },
+        {
+      id: 3,
+      label: this.translateService.instant('Lokasyon'),
+      icon: 'fa-solid fa-location',
+      source: 'cbo_lokasyon',
+      path: 'location',
+    },
   ];
   selectedTab: any;
   startIndex = 0;
-  slideDirection: 'left' | 'right' = 'left'; // Animasyon yönü için değişken
-  currentPage = 0; // Aktif sayfa numarası
-  pageSize = 9; // Her sayfada gösterilecek öğe sayısı
-  pages: number[] = []; // Sayfa numaraları dizisi
+  slideDirection: 'left' | 'right' = 'left';
+  currentPage = 0;
+  pageSize = 9;
+  pages: number[] = [];
 
   constructor(private translateService: TranslateService) {}
   ngOnInit(): void {

@@ -119,6 +119,10 @@ export class ProductDistributionComponent implements OnInit, OnDestroy {
   filterText = '';
   distributionList: DistributionRow[] = [];
 
+  // --- lokasyonlar ---
+  locationList: Array<{ id: number; ad: string }> = [];
+  selectedLocationId: number | null = null;
+
   // --- alert ---
   alertMessage: string | null = null;
   alertType: 'success' | 'danger' | 'warning' | null = null;
@@ -182,12 +186,12 @@ export class ProductDistributionComponent implements OnInit, OnDestroy {
       value: this.fb.control<string | null>(initValue),
     });
   }
-createEditOption(key = 'Numara', value = '') {
-  return this.fb.group({
-    key: this.fb.control<string | null>(key),
-    value: this.fb.control<string | null>(value),
-  });
-}
+  createEditOption(key = 'Numara', value = '') {
+    return this.fb.group({
+      key: this.fb.control<string | null>(key),
+      value: this.fb.control<string | null>(value),
+    });
+  }
 
   addOption() {
     const lastKey =
@@ -198,7 +202,8 @@ createEditOption(key = 'Numara', value = '') {
     this.secenekler.push(this.createOptionGroup(lastKey, ''));
   }
   removeOption(i: number) {
-    if (this.secenekler.length > 1) this.secenekler.removeAt(i);
+    if (this.secenekler.length === 1) return;
+    this.secenekler.removeAt(i);
   }
 
   trackByIndex = (i: number) => i;
@@ -237,7 +242,7 @@ createEditOption(key = 'Numara', value = '') {
   ngOnInit(): void {
     this.getRegistryGroups();
     this.getProductList();
-    this.getDistributionList();
+    this.getMyLocations(); // lokasyonlar yüklendikten sonra liste çekilecek
   }
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
@@ -301,7 +306,7 @@ createEditOption(key = 'Numara', value = '') {
 
   private toDDMMYYYY(d: Date | null): string | null {
     if (!d) return null;
-    // Backend şu an 'yyyy-MM-dd' bekliyor (ad yanıltıcı, istersen ismini formatOut yapabilirsin)
+    // Backend 'yyyy-MM-dd' bekliyor
     return this.datePipe.transform(d, 'yyyy-MM-dd');
   }
 
@@ -355,6 +360,7 @@ createEditOption(key = 'Numara', value = '') {
         },
       });
   }
+
   getRegistryGroups(preselectId?: number): void {
     const sp: any[] = [{ mkodu: 'yek326' }];
     this.profileService
@@ -391,8 +397,50 @@ createEditOption(key = 'Numara', value = '') {
       });
   }
 
+  // --- LOKASYONLAR ---
+  getMyLocations(): void {
+    const sp: any[] = [{ mkodu: 'yek438', modul: 'dagitim' }];
+    this.profileService
+      .requestMethod(sp)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (res: any) => {
+          const data = (res?.[0]?.x ?? []) as any[];
+          const message = res?.[0]?.z;
+          if (message?.islemsonuc === -1) return;
+
+          this.locationList = data ?? [];
+          if (this.locationList.length > 0) {
+            this.selectedLocationId = this.locationList[0].id; // ilk lokasyon otomatik seç
+          } else {
+            this.selectedLocationId = null;
+          }
+
+          // lokasyon belli -> listeyi çek
+          this.getDistributionList();
+        },
+        error: () => {
+          this.toastr.error(
+            this.i18n.instant('Beklenmeyen_Bir_Hata_Oluştu'),
+            this.i18n.instant('Hata')
+          );
+        },
+      });
+  }
+
+  onLocationChange(): void {
+    this.getDistributionList();
+  }
+
+  // --- LİSTE ---
   getDistributionList(): void {
-    const sp: any[] = [{ mkodu: 'yek428', lokasyonid: '0' }];
+    if (!this.selectedLocationId) {
+      // lokasyon yoksa API çağrısı yapma; listeyi temizle
+      this.distributionList = [];
+      return;
+    }
+
+    const sp: any[] = [{ mkodu: 'yek428', lokasyonid: String(this.selectedLocationId) }];
     this.profileService
       .requestMethod(sp)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -412,19 +460,21 @@ createEditOption(key = 'Numara', value = '') {
       });
   }
 
+  // --- SUBMIT (CREATE) ---
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      this.setAlert(
-        'Lütfen zorunlu alanları ve tarih aralıklarını kontrol edin.',
-        'danger'
-      );
+      this.setAlert('Lütfen zorunlu alanları ve tarih aralıklarını kontrol edin.', 'danger');
       return;
     }
+    if (!this.selectedLocationId) {
+      this.toastr.warning('Lütfen bir lokasyon seçiniz.');
+      return;
+    }
+
     const v = this.form.getRawValue();
 
-    const sp: any[] = [];
-    sp.push({
+    const sp: any[] = [{
       mkodu: 'yek430',
       ad: v.ad!,
       dagitimurunid: String(v.dagitimurunid!),
@@ -434,8 +484,8 @@ createEditOption(key = 'Numara', value = '') {
       dagitimbaslangictarihi: this.toDDMMYYYY(v.dagitimbaslangic)!,
       dagitimbitistarihi: this.toDDMMYYYY(v.dagitimbitis)!,
       sicilgrubu: String(v.sicilgrubu!),
-      lokasyonid: '0',
-    });
+      lokasyonid: String(this.selectedLocationId), // seçili lokasyon
+    }];
 
     this.profileService
       .requestMethod(sp)
@@ -459,6 +509,7 @@ createEditOption(key = 'Numara', value = '') {
       );
   }
 
+  // --- UPDATE ---
   update(item: DistributionRow) {
     this.editingId = item.id;
     this.editForm.reset({
@@ -475,12 +526,11 @@ createEditOption(key = 'Numara', value = '') {
   }
   private fillEditOptionsFromString(src: string | null) {
     this.editSecenekler.clear();
-    const list = this.parseSecenekler(src)
-      .map((pair) => {
-        const idx = pair.indexOf(':');
-        if (idx === -1) return { k: 'Numara', v: pair };
-        return { k: pair.slice(0, idx), v: pair.slice(idx + 1) };
-      });
+    const list = this.parseSecenekler(src).map((pair) => {
+      const idx = pair.indexOf(':');
+      if (idx === -1) return { k: 'Numara', v: pair };
+      return { k: pair.slice(0, idx), v: pair.slice(idx + 1) };
+    });
     if (list.length === 0) {
       this.editSecenekler.push(this.createEditOption('Numara', ''));
     } else {
@@ -499,9 +549,8 @@ createEditOption(key = 'Numara', value = '') {
     }
     const v = this.editForm.getRawValue();
 
-    const sp: any[] = [];
-    sp.push({
-      mkodu: 'yek431', 
+    const sp: any[] = [{
+      mkodu: 'yek431',
       dagitimid: String(this.editingId),
       ad: v.ad!,
       dagitimurunid: String(v.dagitimurunid!),
@@ -511,9 +560,8 @@ createEditOption(key = 'Numara', value = '') {
       dagitimbaslangictarihi: this.toDDMMYYYY(v.dagitimbaslangic)!,
       dagitimbitistarihi: this.toDDMMYYYY(v.dagitimbitis)!,
       sicilgrubu: String(v.sicilgrubu!),
-    });
-    console.log(sp);
-    
+    }];
+
     this.profileService
       .requestMethod(sp)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -588,6 +636,7 @@ createEditOption(key = 'Numara', value = '') {
     return this.form.controls;
   }
 }
+
 function dateRangeValidator(group: AbstractControl): ValidationErrors | null {
   const s1 = group.get('talepbaslangic')?.value as Date | null;
   const e1 = group.get('talepbitis')?.value as Date | null;

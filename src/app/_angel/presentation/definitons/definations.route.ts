@@ -1,7 +1,8 @@
-import { Routes } from "@angular/router";
-import { ProductComponent } from "./product/product.component";
-import { GeneralComponent } from "./general/general.component";
-import { DefinitonsComponent } from "./definitons.component";
+import { Routes } from '@angular/router';
+import { ProductComponent } from './product/product.component';
+import { GeneralComponent } from './general/general.component';
+import { DefinitonsComponent } from './definitons.component';
+import { LocationComponent } from './location/location.component';
 
 export const definitionsRoutes: Routes = [
   {
@@ -23,6 +24,11 @@ export const definitionsRoutes: Routes = [
         path: 'product',
         component: ProductComponent,
         data: { breadcrumb: 'Ürün' },
+      },
+      {
+        path: 'location',
+        component: LocationComponent,
+        data: { breadcrumb: 'Lokasyon' },
       },
     ],
   },
