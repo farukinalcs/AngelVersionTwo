@@ -156,6 +156,7 @@ export class DraftComponent implements OnInit, OnDestroy {
       this.draftList = response[0]?.x ?? [];
       console.log("draft_s :", this.draftList);
       this._selectedDraftId = this.draftList[0]?.id;
+      this.draftWithQuest_s(this._selectedDraftId);
       this.ref.detectChanges();
       this._openNewDraft = false;
       this._draftTitle = "";
