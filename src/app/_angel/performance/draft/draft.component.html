@@ -1,87 +1,5 @@
 <div class="container-fluid mt-5">
 
-
-
-    <!-- <mat-tab-group style="height: fit-content;">
-
-        <mat-tab label="INSERT" style="height: fit-content;">
-
-            <div class="scale-form-box">
-                <label for="formTitle" class="border">Yeni Form Kaydı</label>
-                <div class="p-field">
-                    <p-iftalabel style="margin-top: 3px;">
-                        <input pInputText id="formTitle" [(ngModel)]="formTitle" class="full-width-input" />
-                        <label for="formTitle">Değerlendirme Form Başlığı:</label>
-                    </p-iftalabel>
-                </div>
-
-                <div class="p-field">
-                    <p-iftalabel style="margin-top: 3px;">
-                        <input pInputText id="explanation" [(ngModel)]="explanation" class="full-width-input" />
-                        <label for="explanation">Form Açıklaması:</label>
-                    </p-iftalabel>
-                </div>
-
-                <button pButton type="button" label="Kaydet" (click)="form_i()" class="full-width-button"></button>
-
-                <div class="p-field">
-                    <label for="formList">Form seçimi</label>
-                    <p-dropdown [options]="draftList" [(ngModel)]="selectedFormId" optionLabel="baslik"
-                        optionValue="id" placeholder="Seçiniz"  (onChange)="onFormChange($event.value)" class="full-width-input"
-                        [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
-                    </p-dropdown>
-                </div>
-                <div class="p-field">
-                    <label for="countSelect">Hangi Kategori</label>
-                    <p-dropdown [options]="categoryList" [(ngModel)]="selectedCategoryId" optionLabel="Ad"
-                        optionValue="Id" placeholder="Seçiniz" (onChange)="onCategoryChange($event.value)" class="full-width-input"
-                        [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
-                    </p-dropdown>
-                </div> 
-                <div class="p-field">
-                    <label for="countSelect">Soru seçimi</label>
-                    <p-dropdown [options]="questionList" [(ngModel)]="selectedQuestionId" optionLabel="aciklama"
-                        optionValue="id" placeholder="Seçiniz" (onChange)="onQuestionChange($event.value)"  class="full-width-input"
-                        [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
-                    </p-dropdown>
-                </div>
-                 <button pButton type="button" label="Soru Ekle" (click)="form_question()" class="full-width-button"></button>
-            </div>
-           
-        </mat-tab>
-
-        <mat-tab label="UPDATE AND DELETE">
-
-            <div>
-                <div class="p-card my-3 p-3">
-
-                    <div class="scale-form-box">
-
-
-                        <div class="p-field">
-                            <p-iftalabel style="margin-top: 3px;">
-                                <input pInputText id="formTitle" [(ngModel)]="formTitle" class="full-width-input" />
-                                <label for="formTitle">Değerlendirme Form Adı:</label>
-                            </p-iftalabel>
-                        </div>
-
-                        <div class="p-field">
-                            <p-iftalabel style="margin-top: 3px;">
-                                <input pInputText id="formTitle" [(ngModel)]="formTitle" class="full-width-input" />
-                                <label for="formTitle">Form Açıklaması:</label>
-                            </p-iftalabel>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </mat-tab>
-
-
-
-
-
-    </mat-tab-group> -->
     <div class="card flex justify-center scale-form-box">
         <p-stepper [value]="1" class="basis-[50rem]">
             <p-step-list>
@@ -93,11 +11,7 @@
                 <p-step-panel [value]="1">
                     <ng-template #content let-activateCallback="activateCallback">
                         <div style="display:flex; flex-direction:column; gap:12px; width:100%;">
-                            <!-- <div
-                                class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
-    
-                               
-                            </div> -->
+                
                             <div>
                                 <button pButton type="button" label="Oluştur" (click)="_openNewDraft = true"
                                     class="full-width-button"></button>
@@ -118,13 +32,13 @@
                                     <ng-template #title>
                                         <div
                                             style="font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                            {{ this.draftList[0]?.baslik }}
+                                            {{ this._draft_s[0]?.baslik }}
                                         </div>
                                     </ng-template>
 
                                     <ng-template #subtitle>
                                         <div style="font-size: 0.9rem; height: 40px; overflow: hidden;">
-                                            {{ this.draftList[0]?.aciklama }}
+                                            {{ this._draft_s[0]?.aciklama }}
                                         </div>
                                     </ng-template>
 
@@ -144,10 +58,6 @@
                                 (onClick)="activateCallback(2)" />
                         </div>
 
-                        <!-- <div class="flex pt-6 justify-end">
-                            <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
-                                (onClick)="activateCallback(2)" />
-                        </div> -->
                     </ng-template>
                 </p-step-panel>
 
@@ -157,7 +67,7 @@
                             <div>
                                 <div class="p-field mb-4">
                                     <label for="formList">Form seçimi</label>
-                                    <p-dropdown [options]="draftList" [(ngModel)]="_selectedDraftId"
+                                    <p-dropdown [options]="_draft_s" [(ngModel)]="_selectedDraftId"
                                         optionLabel="baslik" optionValue="id" placeholder="Seçiniz"
                                         (onChange)="onFormChange($event.value)" class="full-width-input"
                                         [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
@@ -263,7 +173,37 @@
             </p-step-panels>
         </p-stepper>
     </div>
-
+    <div class="top p-3 border-bottom" style="height: 40%; overflow-y: auto;">
+        <!-- <h5 class="mb-3">📌 Yayınlanmaya Hazır Şablonlar</h5> -->
+        <div class="d-flex flex-wrap gap-3">
+          <p-card *ngFor="let item of _draft_s" [style]="{ width: '260px', height: '300px', overflow: 'hidden' }"
+            styleClass="d-flex flex-column justify-content-between">
+    
+            <ng-template #header>
+              <img alt="Card" src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
+                style="width: 100%; height: 120px; object-fit: cover;" />
+            </ng-template>
+    
+            <ng-template #title>
+              <div style="font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                {{ item.baslik }}
+              </div>
+            </ng-template>
+    
+            <ng-template #subtitle>
+              <div style="font-size: 0.9rem; height: 40px; overflow: hidden;">
+                {{ item.aciklama }}
+              </div>
+            </ng-template>
+    
+            <ng-template #footer>
+              <div class="d-flex justify-content-center gap-2 mt-2 w-100">
+                <p-button label="Düzenle" styleClass="my-blue-btn mr-2" />
+              </div>
+            </ng-template>
+          </p-card>
+        </div>
+      </div>
 </div>
 
 

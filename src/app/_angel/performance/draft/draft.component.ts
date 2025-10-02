@@ -22,7 +22,7 @@ export class DraftComponent implements OnInit, OnDestroy {
   categoryList: any[] = [];
   questionList: any[] = [];
   formList: any[] = [];
-  draftList: any[]= [];
+  _draft_s: any[]= [];
   parsedForms: any[] = [];
 
   selectedQuestionId: number | null;
@@ -153,9 +153,9 @@ export class DraftComponent implements OnInit, OnDestroy {
 
   draft_s(id: number) {
     this.perform.draft_s(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-      this.draftList = response[0]?.x ?? [];
-      console.log("draft_s :", this.draftList);
-      this._selectedDraftId = this.draftList[0]?.id;
+      this._draft_s = response[0]?.x ?? [];
+      console.log("draft_s :", this._draft_s);
+      this._selectedDraftId = this._draft_s[0]?.id;
       this.draftWithQuest_s(this._selectedDraftId);
       this.ref.detectChanges();
       this._openNewDraft = false;

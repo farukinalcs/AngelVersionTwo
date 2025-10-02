@@ -158,7 +158,8 @@ export interface MenuItem {
       children: [
         { title: 'Genel Bakış', routerLink: 'performance/dashboard' },
         { title: 'Tanımlamalar', routerLink: 'performance/tanimlamalar' },
-        { title: 'Süreç Yönetimi', routerLink: 'performance/process' }
+        { title: 'Süreç Yönetimi', routerLink: 'performance/process' },
+        { title: 'Değerlendirme Şablonları',routerLink: 'performance/drafts'}
       ],
       app: ['3']
     },
