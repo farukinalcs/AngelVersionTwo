@@ -165,28 +165,24 @@ export class PerformanceService {
     return this.requestMethod(sp);
   }
 
-  form_i(title:string,explanation:string){
+  draft_i(title:string,explanation:string){
     var sp: any[] = [{
       mkodu: 'yek313',
       baslik:title.toString(),
       aciklama:explanation.toString()
+      
     }]
+    console.log("draft_i:",sp);
     return this.requestMethod(sp);
   }
 
-  form_s(id:number){
-    var sp: any[] = [{
-      mkodu: 'yek314',
-      id:id.toString()
-    }]
-    return this.requestMethod(sp);
-  }
 
-  form_question(formId:number,questionId:number,catId:number,){
+
+  sablon_question(formId:number,questionId:number,catId:number,){
     console.log("formId:",formId,"question",questionId,"CAT",catId);
     var sp: any[] = [{
       mkodu: 'yek318',
-      formid:formId.toString(),
+      sablonid:formId.toString(),
       soruid:questionId.toString(),
       kategoriid:catId.toString()
     }]
@@ -233,6 +229,31 @@ export class PerformanceService {
       bitis:endDate.toString()
     }]
     return this.requestMethod(sp);
-
   }
+
+  draftWithQuest_s(id:number){
+    var sp: any[] = [{
+      mkodu: 'yek423',
+      id:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  
+  draft_s(id:number){
+    var sp: any[] = [{
+      mkodu: 'yek434',
+      id:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  form_s(id:number){
+    var sp: any[] = [{
+      mkodu: 'yek314',
+      id:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
 }

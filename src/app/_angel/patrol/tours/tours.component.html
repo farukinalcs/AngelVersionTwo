@@ -54,13 +54,29 @@
 
 
 
-    <div class="col-md-12 mt-3">
+    <!-- <div class="col-md-12 mt-3">
       <mat-form-field appearance="outline" class="full-width">
         <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (ngModelChange)="onDateChanged($event)" [formControl]="dateControl">
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
+    </div> -->
+
+
+    <div class="col-12 mb-3">
+      <label class="form-label mb-1 d-block" for="tarih">Tarih</label>
+      <p-calendar
+        inputId="tarih"
+        [(ngModel)]="selectedDate"
+        (onSelect)="onDateChanged($event)"
+        [locale]="tr"
+        dateFormat="dd-mm-yy"
+        [showIcon]="true"
+        styleClass="w-100"
+        inputStyleClass="w-100"
+      ></p-calendar>
     </div>
+    
 
   </div>
 

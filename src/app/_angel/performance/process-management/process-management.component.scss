@@ -1,0 +1,181 @@
+// .definitions{
+  
+//     background: url(https://www.meyer.com.tr/cdn/img/briefly2.png) right 0;
+//     height: 100vh;
+// }
+
+  
+// .category-row {
+//     background-color: #e0e0e0;
+//     font-weight: bold;
+//   }
+  
+//   .question-row {
+//     background-color: #f9f9f9;
+//     border-bottom: 1px solid #ddd;
+//   }
+  
+//   .question-row:hover {
+//     background-color: #f1f1f1;
+//   }
+//   .puan-input {
+//     width: 60px !important;
+//     padding: 2px 6px;
+//     text-align: center;
+//   }
+
+//   .custom-chip {
+//     display: inline-flex;
+//     align-items: center;
+//     border-radius: 16px;
+//     font-family: Arial, sans-serif;
+//     cursor: pointer;
+//   }
+  
+//   .custom-icon {
+//     background-color: #ffc0cb;
+//     color: white;
+//     width: 32px;
+//     height: 32px;
+//     border-radius: 50%;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     font-weight: bold;
+//     font-size: 18px;
+//   }
+  
+//   .custom-label {
+//     margin-left: 10px;
+//     font-weight: bolder;
+//   }
+//   .my-blue-btn .p-button {
+//     background-color: #1976d2 !important;
+//     border-color: #1976d2 !important;
+//     color: white !important;
+//   }
+  
+// .sicil{
+//     margin: 0 auto;
+//     display: flex;
+//     flex-direction: column;
+//     gap: 15px;
+//     min-width: 50vw;
+//     padding-top: 5px;
+//     padding-bottom: 5px;
+//   }
+//   .form-group {
+//     display: flex;
+//     align-items: center;
+//     margin-bottom: 1rem;
+//   }
+  
+//   .form-group p-checkbox {
+//     margin-right: 0.5rem;
+//   }
+  
+//   .form-group label {
+//     min-width: 60px; /* label genişliği ayarlanabilir */
+//   }
+  
+//   .form-group p-datepicker {
+//     width: 200px; /* datepicker genişliği */
+//   }
+
+//   .btn-right {
+//     float: right;
+//     margin-top: 1rem; /* İstersen biraz üst boşluk */
+//   }
+//   .card-custom {
+//     width: 195px;   /* %25 küçültme */
+//     height: 225px;  /* %25 küçültme */
+//     overflow: hidden;
+//   }
+
+
+/* Genel container tam ekran, dikey layout */
+.page-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Top kısmı: %40 yükseklik + scroll */
+  .top-section {
+    height: 40%;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+    overflow-y: auto;
+  }
+  
+  /* Bottom kısmı: %60 yükseklik, yatayda flex ile left/right */
+  .bottom-section {
+    height: 60%;
+    display: flex;
+    overflow: hidden;
+  }
+  
+  /* Left ve Right: kendi içinde scroll */
+  .left-section,
+  .right-section {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+  
+  /* Left ve Right arasında sınır çizgisi */
+  .left-section {
+    border-right: 1px solid #ddd;
+  }
+  
+  /* Kartlar için tek sınıf: boyut, overflow, padding, flex */
+  .card-custom {
+    width: 195px !important;   /* sabit genişlik */
+    height: 225px !important;  /* sabit yükseklik */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  
+    flex: 0 0 auto !important; /* Container içinde büyümeyi engelle */
+  }
+  
+  /* Kart iç wrapper padding küçült */
+  .card-custom .p-card-body {
+    padding: 0.5rem;
+  }
+  
+  /* Kart içindeki header image */
+  .card-custom img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+  }
+  
+  /* Kart başlık ve alt başlık */
+  .card-title {
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .card-subtitle {
+    font-size: 0.9rem;
+    height: 40px;
+    overflow: hidden;
+  }
+  
+  /* Footer button alanı */
+  .card-footer {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  /* Containerlarda flex-wrap ile align-items: flex-start */
+  .d-flex.flex-wrap.gap-3 {
+    align-items: flex-start;
+  }
+  

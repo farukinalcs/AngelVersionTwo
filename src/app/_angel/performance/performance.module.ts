@@ -28,6 +28,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DatePickerModule } from 'primeng/datepicker';
 import { AccordionModule } from 'primeng/accordion';
 import { DialogModule } from 'primeng/dialog';
+import { StepperModule } from 'primeng/stepper';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { DialogModule } from 'primeng/dialog';
     CheckboxModule,
     DatePickerModule,
     AccordionModule,
-    DialogModule
+    DialogModule,
+    StepperModule
   ]
 })
 export class PerformanceModule { }

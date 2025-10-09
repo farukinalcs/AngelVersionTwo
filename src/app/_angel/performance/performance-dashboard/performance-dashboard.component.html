@@ -1,5 +1,5 @@
 <div class="container-fluid d-flex flex-wrap justify-content-start gap-3 definitions">
-  <p-card [style]="{ width: '260px', height: '300px', cursor: 'pointer' }"
+  <!-- <p-card [style]="{ width: '260px', height: '300px', cursor: 'pointer' }"
     styleClass="d-flex flex-column justify-content-center align-items-center">
 
     <ng-template #header>
@@ -18,7 +18,7 @@
     <ng-template #subtitle>
       <div style="height: 40px;"></div>
     </ng-template>
-  </p-card>
+  </p-card> -->
   <p-card *ngFor="let item of formList" [style]="{ width: '260px', height: '300px', overflow: 'hidden' }"
     styleClass="d-flex flex-column justify-content-between">
 
@@ -41,9 +41,11 @@
 
     <ng-template #footer>
       <div class="d-flex justify-content-center gap-2 mt-2 w-100">
-        <p-button label="Sil" severity="secondary" styleClass="px-3 mr-2" [outlined]="true" />
+        <!-- <p-button label="Sil" severity="secondary" styleClass="px-3 mr-2" [outlined]="true" />
+    
+        <p-button label="Puanla" styleClass="px-3" (click)="getItem(item)" /> -->
+
         <p-button label="Yayınla" styleClass="my-blue-btn mr-2" (click)="formMatch(item)" />
-        <p-button label="Puanla" styleClass="px-3" (click)="getItem(item)" />
 
       </div>
     </ng-template>
@@ -116,8 +118,9 @@
             {{ cat.Ad }}
           </div>
           <div style="font-weight: bold; color:#0d47a1">{{ question.aciklama }}</div>
-          <!-- <div class="text-muted" style="font-size: 0.85rem;"><span>a) Adana   b) Bursa   c) Ceyhan   d) Denizli</span></div> -->
+  
           <div class="text-muted" style="font-size: 0.85rem;">
+
             <ng-container *ngIf="getScaleByQuestion(question) as scale">
               <span *ngIf="scale.cevap1">a) {{ scale.cevap1 }}&nbsp;&nbsp;</span>
               <span *ngIf="scale.cevap2">b) {{ scale.cevap2 }}&nbsp;&nbsp;</span>
@@ -125,12 +128,16 @@
               <span *ngIf="scale.cevap4">d) {{ scale.cevap4 }}&nbsp;&nbsp;</span>
               <span *ngIf="scale.cevap5">e) {{ scale.cevap5 }}</span>
             </ng-container>
+
           </div>
+
         </td>
       </tr>
 
     </ng-template>
+
   </p-table>
+  
   <div style="text-align: right; margin-top: 1rem;">
     <button pButton type="button" icon="pi pi-save" label="Kaydet" class="p-button-sm p-button-warning"
       (click)="formMatchSicil()">

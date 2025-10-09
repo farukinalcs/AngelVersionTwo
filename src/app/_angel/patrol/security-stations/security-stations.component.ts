@@ -16,7 +16,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class SecurityStationsComponent implements OnInit, OnDestroy  {
 
     private ngUnsubscribe = new Subject();
-
+    isCollapsed: boolean = true; 
   allStation:any[]=[];
   filteredItems:any[]=[];
   stationType:any[]=[];
@@ -51,7 +51,6 @@ export class SecurityStationsComponent implements OnInit, OnDestroy  {
   ngOnInit(): void {
 
     this.getGuardStation();
-    //this.getLocation();
     this.tip23_s();
   }
 
@@ -61,6 +60,14 @@ export class SecurityStationsComponent implements OnInit, OnDestroy  {
     });
   }
 
+  toggleCollapse() {
+    this.isCollapsed = !this.isCollapsed;
+    // if (!this.isCollapsed) {
+    //   setTimeout(() => {
+    //     google.maps.event.trigger(this.map, 'resize'); // veya this.map.invalidateSize() (Leaflet için)
+    //   }, 300);
+    // }
+  }
 
   getGuardStation(): void {
     this.patrol.getGuardStation('9').pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
@@ -72,8 +79,6 @@ export class SecurityStationsComponent implements OnInit, OnDestroy  {
   }
 
   setGuardStation(): void {
-
-
     
     this.patrol.setGuardStation(this.stationName,this.selectTypeId,this.numberForStation,this.latitude,this.longitude,this.description).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
       const setStation = response[0].x;

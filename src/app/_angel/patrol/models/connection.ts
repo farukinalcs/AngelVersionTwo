@@ -1,4 +1,5 @@
 export interface ConnectionModel {
+    AdSoyad:string;
     terminalname: string;
     ClientType: number;
     ConnectionDate: string;
