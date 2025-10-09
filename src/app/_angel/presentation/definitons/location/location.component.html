@@ -13,11 +13,24 @@
 
         <div class="card-body">
           <div class="row">
-            <div class="col-12 my-5 pe-20">
-              <div
-                class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between gap-2 mb-3"
-              >
-                <div class="d-flex gap-2">
+            <div class="col-12 my-5 pe-20" >
+              <div class="d-flex flex-column gap-2 mb-3" style="max-width: 442px;">
+                <div class="d-flex align-items-center gap-4">
+                  <label>Lokasyon:  </label>
+
+                  <p-dropdown
+                    [options]="locations"
+                    optionLabel="ad"
+                    optionValue="id"
+                    [(ngModel)]="selectedLocation"
+                    (onChange)="refreshByControls()"
+                    placeholder="Lokasyon seçiniz"
+                    class="w-100 ng-invalid"
+                  >
+                  </p-dropdown>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2">
                   <button
                     *ngIf="isUnassigned"
                     class="btn btn-dark btn-sm hover-elevate-up"
@@ -25,6 +38,7 @@
                   >
                     <i class="fa-solid fa-plus"></i> Atama Yap
                   </button>
+
                   <button
                     *ngIf="isAssigned"
                     class="btn btn-danger btn-sm hover-elevate-up"
@@ -39,6 +53,7 @@
                   >
                     <i class="fa-solid fa-filter"></i> Filtrele
                   </button>
+
                   <button
                     class="btn btn-secondary btn-sm"
                     (click)="clearFilters()"
@@ -46,17 +61,6 @@
                     <i class="fa-solid fa-eraser"></i> Temizle
                   </button>
                 </div>
-
-                <p-dropdown
-                  [options]="locations"
-                  optionLabel="ad"
-                  optionValue="id"
-                  [(ngModel)]="selectedLocation"
-                  (onChange)="refreshByControls()"
-                  placeholder="Lokasyon seçiniz"
-                  class="w-100 w-sm-auto"
-                >
-                </p-dropdown>
               </div>
 
               <ul

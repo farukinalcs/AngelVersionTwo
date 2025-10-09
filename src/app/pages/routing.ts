@@ -8,80 +8,98 @@ import { userManagementRoutes } from '../_angel/user-management/user-management.
 import { inventoryRoutes } from '../_angel/inventory/inventory.routes';
 import { refectoryRoutes } from '../_angel/refectory/refectory.routes';
 import { presentationRoute } from '../_angel/presentation/presentation.route';
+import { educationRoutes } from '../_angel/education/education.routes';
 
 const Routing: Routes = [
   {
     path: 'performance',
-    loadChildren: () => import('../_angel/performance/performance.module').then(m => m.PerformanceModule),
-    data: { layout: 'light-sidebar', breadcrumb: 'Performans' }
+    loadChildren: () =>
+      import('../_angel/performance/performance.module').then(
+        (m) => m.PerformanceModule
+      ),
+    data: { layout: 'light-sidebar', breadcrumb: 'Performans' },
   },
   {
     path: 'profile',
-    loadChildren: () => import('../_angel/new-profile/new-profile.routes').then(m => m.profileRoutes),
-    data: { layout: 'light-sidebar', breadcrumb: 'Profil' }
+    loadChildren: () =>
+      import('../_angel/new-profile/new-profile.routes').then(
+        (m) => m.profileRoutes
+      ),
+    data: { layout: 'light-sidebar', breadcrumb: 'Profil' },
   },
   {
     path: 'access',
-    loadChildren: () => import('../_angel/access/access.module').then(m => m.AccessModule),
-    data: { layout: 'light-sidebar', breadcrumb: 'Erişim' }
+    loadChildren: () =>
+      import('../_angel/access/access.module').then((m) => m.AccessModule),
+    data: { layout: 'light-sidebar', breadcrumb: 'Erişim' },
   },
   {
     path: 'attendance',
-    loadChildren: () => import('../_angel/attendance/attendance.module').then(m => m.AttendanceModule),
-    data: { layout: 'light-sidebar', breadcrumb: 'Yoklama' }
+    loadChildren: () =>
+      import('../_angel/attendance/attendance.module').then(
+        (m) => m.AttendanceModule
+      ),
+    data: { layout: 'light-sidebar', breadcrumb: 'Yoklama' },
   },
   {
     path: 'leave',
     children: leaveRoutes,
-    data: { layout: 'light-sidebar', breadcrumb: 'İzin' }
+    data: { layout: 'light-sidebar', breadcrumb: 'İzin' },
   },
   {
     path: 'overtime',
     children: overtimeRoutes,
-    data: { layout: 'light-sidebar', breadcrumb: 'Fazla Mesai' }
+    data: { layout: 'light-sidebar', breadcrumb: 'Fazla Mesai' },
   },
   {
     path: 'shift',
     children: shiftRoutes,
-    data: { layout: 'light-sidebar', breadcrumb: 'Vardiya' }
+    data: { layout: 'light-sidebar', breadcrumb: 'Vardiya' },
   },
   {
     path: 'patrol',
-    loadChildren: () => import('../_angel/patrol/patrol.module').then(m => m.PatrolModule),
-    data: { layout: 'light-sidebar', breadcrumb: 'Devriye' }
+    loadChildren: () =>
+      import('../_angel/patrol/patrol.module').then((m) => m.PatrolModule),
+    data: { layout: 'light-sidebar', breadcrumb: 'Devriye' },
   },
   {
     path: 'apps/chat',
-    loadChildren: () => import('../modules/apps/chat/chat.module').then(m => m.ChatModule),
-    data: { layout: 'light-sidebar', breadcrumb: 'Sohbet' }
+    loadChildren: () =>
+      import('../modules/apps/chat/chat.module').then((m) => m.ChatModule),
+    data: { layout: 'light-sidebar', breadcrumb: 'Sohbet' },
   },
   {
     path: 'visitor',
     children: visitorRoutes,
-    data: { layout: 'light-sidebar', breadcrumb: 'Ziyaretçi' }
+    data: { layout: 'light-sidebar', breadcrumb: 'Ziyaretçi' },
   },
   {
     path: 'inventory',
     children: inventoryRoutes,
-    data: { layout: 'light-sidebar', breadcrumb: 'Envanter' }
+    data: { layout: 'light-sidebar', breadcrumb: 'Envanter' },
   },
-    {
+  {
     path: 'presentation',
     children: presentationRoute,
-    data: { layout: 'light-sidebar', breadcrumb: 'Dağıtım' }
+    data: { layout: 'light-sidebar', breadcrumb: 'Dağıtım' },
   },
-    {
+  {
     path: 'refectory',
     children: refectoryRoutes,
-    data: { layout: 'light-sidebar', breadcrumb: 'Yemekhane' }
+    data: { layout: 'light-sidebar', breadcrumb: 'Yemekhane' },
+  },
+  {
+    path: 'education',
+    children: educationRoutes,
+    data: { layout: 'light-sidebar', breadcrumb: 'Eğitim' },
   },
   {
     path: 'user-management',
     children: userManagementRoutes,
-    data: { layout: 'light-sidebar', breadcrumb: 'Kullanıcı Yönetimi' }
+    data: { layout: 'light-sidebar', breadcrumb: 'Kullanıcı Yönetimi' },
   },
   { path: '', redirectTo: '/profile', pathMatch: 'full' },
-  { path: '**', redirectTo: 'error/404' }
+  { path: '**', redirectTo: 'error/404' },
 ];
 
 export { Routing };

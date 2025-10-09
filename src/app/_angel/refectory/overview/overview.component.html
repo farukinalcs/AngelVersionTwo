@@ -1,54 +1,115 @@
 <div class="container-fluid">
-<div class="filter-bar">
-  <p-dropdown
-    [options]="deviceGroups"
-    optionLabel="ad"
-    optionValue="id"
-    [(ngModel)]="selectedGroupId"
-    name="deviceGroup"
-    (onChange)="onGroupChange($event)"
-    placeholder="Terminal Grubu Seçiniz"
-    [filter]="true"
-    [showClear]="true">
-  </p-dropdown>
+  <div class="filter-bar">
+    <p-dropdown
+      [options]="deviceGroups"
+      optionLabel="ad"
+      optionValue="id"
+      [(ngModel)]="selectedGroupId"
+      name="deviceGroup"
+      (onChange)="onGroupChange($event)"
+      placeholder="Terminal Grubu Seçiniz"
+      [filter]="true"
+      [showClear]="true"
+    >
+    </p-dropdown>
 
-  <p-datepicker
-    [(ngModel)]="selectedDate"
-    (onSelect)="onDateSelect($event)"
-    dateFormat="yy-mm-dd"
-    [showIcon]="true"
-    [touchUI]="true"
-    inputId="onlyDate">
-  </p-datepicker>
-</div>
+    <p-datepicker
+      [(ngModel)]="selectedDate"
+      (onSelect)="onDateSelect($event)"
+      dateFormat="yy-mm-dd"
+      [showIcon]="true"
+      [touchUI]="true"
+      inputId="onlyDate"
+    >
+    </p-datepicker>
+  </div>
 
   <div class="row d-flex justify-content-end py-3">
     <div class="col-12 d-flex align-items-sm-end gap-2 flex-column flex-sm-row">
-      <!-- <button type="button" class="btn btn-dark btn-sm hover-elevate-up" (click)="editModeToggle()">
-        <i class="fa-solid fa-grip"></i>
-        {{ "Düzenle" | translate }}
-      </button> -->
+      <!-- (Opsiyonel) ekstra filtre/aksiyon butonları -->
     </div>
   </div>
-
-  <app-card-menu
-    [menu]="visitTypes"
-    (changeVisible)="onChangeVisible($event)"
-    [editMode]="editMode">
-  </app-card-menu>
 
   <app-dashboard-card
     [cards]="dashboardOptions"
     (removeEvent)="removeCard($event)"
     [editMode]="editMode"
-    [fromWhere]="'refectory'">
-</app-dashboard-card>
+    [fromWhere]="'refectory'"
+  >
+  </app-dashboard-card>
 
-<app-modern-table
-  [title]="'Yemekhane Takibi (Son 10 Geçiş)'"
-  [columns]="userCols"
-  [rows]="passList"
-  [pageSizeOptions]="[5,10]"
-  (sortChange)="onSort($event)"
-></app-modern-table>
+  <app-card-menu
+    [menu]="visitTypes"
+    (changeVisible)="onChangeVisible($event)"
+    [editMode]="editMode"
+  >
+  </app-card-menu>
+
+  <div class="row g-4 mb-8">
+    <div class="col-12 col-md-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">Sicil Gruba Göre Grafik</h5>
+            <div *ngIf="isLoading" class="small text-muted">Yükleniyor…</div>
+          </div>
+          <ng-container *ngIf="!emptyState; else emptyTpl">
+            <apx-chart
+              [series]="barOptions.series"
+              [chart]="barOptions.chart"
+              [xaxis]="barOptions.xaxis"
+              [dataLabels]="barOptions.dataLabels"
+              [plotOptions]="barOptions.plotOptions"
+              [yaxis]="barOptions.yaxis"
+              [grid]="barOptions.grid"
+              [legend]="barOptions.legend"
+              [tooltip]="barOptions.tooltip"
+            ></apx-chart>
+          </ng-container>
+
+          <ng-template #emptyTpl>
+            <div class="text-muted small">Gösterilecek veri bulunamadı.</div>
+            <apx-chart
+              [series]="barOptions.series"
+              [chart]="barOptions.chart"
+              [xaxis]="barOptions.xaxis"
+              [dataLabels]="barOptions.dataLabels"
+              [plotOptions]="barOptions.plotOptions"
+              [yaxis]="barOptions.yaxis"
+              [grid]="barOptions.grid"
+              [legend]="barOptions.legend"
+              [tooltip]="barOptions.tooltip"
+            ></apx-chart>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">Departmanlara Göre Grafik</h5>
+            <div *ngIf="isLoading" class="small text-muted">Yükleniyor…</div>
+          </div>
+          <apx-chart
+            [series]="treemapOptions.series"
+            [chart]="treemapOptions.chart"
+            [plotOptions]="treemapOptions.plotOptions"
+            [dataLabels]="treemapOptions.dataLabels"
+            [legend]="treemapOptions.legend"
+            [grid]="treemapOptions.grid"
+            [tooltip]="treemapOptions.tooltip"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-modern-table
+    [title]="'Yemekhane Takibi (Son 10 Geçiş)'"
+    [columns]="userCols"
+    [rows]="passList"
+    [pageSizeOptions]="[5, 10]"
+  ></app-modern-table>
 </div>

@@ -19,3 +19,14 @@
   border-color: #ed1b24 !important;
   box-shadow: 0 0 0 1px #ed1b24 !important; // focus görünümü
 }
+:host ::ng-deep .apexcharts-treemap-rect {
+  stroke: var(--bs-card-bg, #fff);
+  stroke-width: 2px;
+
+  rx: 4px;
+  ry: 4px;
+}
+
+:host-context(.dark), :host-context([data-theme="dark"]) ::ng-deep .apexcharts-treemap-rect {
+  stroke: #0f172a; 
+}
