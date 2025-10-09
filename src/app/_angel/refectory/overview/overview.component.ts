@@ -10,9 +10,22 @@ import {
   ModernTableComponent,
 } from '../../shared/modern-table/modern-table.component';
 import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { TooltipModule } from 'primeng/tooltip';
+import { FormsModule } from '@angular/forms';
+import { NgApexchartsModule } from 'ng-apexcharts';
+
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexDataLabels,
+  ApexPlotOptions,
+  ApexXAxis,
+  ApexYAxis,
+  ApexGrid,
+  ApexLegend,
+  ApexTooltip,
+} from 'ng-apexcharts';
 
 interface DashboardOption {
   id: number;
@@ -40,6 +53,29 @@ interface VisitType {
   visible: boolean;
   [k: string]: any;
 }
+type CountItem = { sicil: number; ziyaretci: number; altyukenici: number };
+
+type BarOptions = {
+  series: any;
+  chart: any;
+  dataLabels: any;
+  plotOptions: any;
+  xaxis: any;
+  yaxis: any;
+  grid: any;
+  legend: any;
+  tooltip: any;
+};
+
+type TreemapOptions = {
+  series: any;
+  chart: any;
+  plotOptions: any;
+  dataLabels: any;
+  legend: any;
+  grid: any;
+  tooltip: any;
+};
 
 @Component({
   selector: 'app-overview',
@@ -53,7 +89,8 @@ interface VisitType {
     DropdownModule,
     FormsModule,
     DatePickerModule,
-    TooltipModule
+    TooltipModule,
+    NgApexchartsModule,
   ],
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss'],
@@ -144,18 +181,30 @@ export class OverviewComponent implements OnInit, OnDestroy {
       type: 'date',
     },
   ];
+
   visitTypes: VisitType[] = [];
   editMode = false;
   passList: any = [];
+
+  barOptions: Partial<BarOptions> = {};
+  treemapOptions: Partial<TreemapOptions> = {};
+
+  isLoading = false;
+  emptyState = false;
+
   allScore: ScoreRow[] = [];
   deviceGroups: Array<{ id: number; ad: string; amac: number }> = [];
-  selectedGroupId: number = 0; // ilk açılışta "Tüm Terminaller"
-selectedDate: Date = new Date(); // bugün default
-  private nf = new Intl.NumberFormat('tr-TR'); // 1.234 biçimi için
+  selectedGroupId: number = 0;
+selectedDate: Date = new Date(new Date().setDate(new Date().getDate() - 1));
+
+  private nf = new Intl.NumberFormat('tr-TR');
+
   constructor(
     private readonly profileService: ProfileService,
     private readonly translateService: TranslateService
-  ) {}
+  ) {
+    this.initBarOptions();
+  }
 
   ngOnInit(): void {
     this.getAllScores(this.selectedGroupId, this.selectedDate);
@@ -165,6 +214,8 @@ selectedDate: Date = new Date(); // bugün default
     this.getValues('ck', '0');
     this.getPassList(this.selectedGroupId, this.selectedDate);
     this.getDeviceGroups();
+    this.getChartData(this.selectedGroupId, this.selectedDate); 
+    this.getChartData2(this.selectedGroupId, this.selectedDate);
   }
 
   getDeviceGroups() {
@@ -186,27 +237,25 @@ selectedDate: Date = new Date(); // bugün default
         }));
 
         const allOption = { id: 0, ad: 'Tüm Terminaller', amac: 3 };
-
         const withoutAll = normalized.filter((x: any) => x.id !== 0);
         this.deviceGroups = [allOption, ...withoutAll];
-
         this.selectedGroupId = 0;
       });
   }
 
   onGroupChange(event: any) {
-    console.log('Seçilen id:', event.value); // sadece id gelir
-    const selectedObj = this.deviceGroups.find((x) => x.id === event.value);
-    console.log('Seçilen obje:', selectedObj);
-    this.getAllScores(event.value, this.selectedDate);
-    this.getPassList(event.value, this.selectedDate);
+    const id = event.value;
+    this.getAllScores(id, this.selectedDate);
+    this.getPassList(id, this.selectedDate);
+    this.getChartData(id, this.selectedDate);
+    this.getChartData2(id, this.selectedDate);
   }
 
   onDateSelect(date: Date) {
-    console.log('Seçilen tarih:', date);
     this.getAllScores(this.selectedGroupId, date);
     this.getPassList(this.selectedGroupId, date);
-    // TODO: burada işlemini yap
+    this.getChartData(this.selectedGroupId, date);
+    this.getChartData2(this.selectedGroupId, date);
   }
 
   getVisitTypes(): void {
@@ -217,32 +266,30 @@ selectedDate: Date = new Date(); // bugün default
       .subscribe((response: any) => {
         const data = response?.[0]?.x ?? [];
         const message = response?.[0]?.z;
-
         if (message?.islemsonuc === -1) return;
 
-        // visible default false
         this.visitTypes = (data as any[]).map((item) => ({
           ...item,
           visible: false,
         }));
-        // İlk elemanı (ID:0) çıkar
         if (this.visitTypes.length) this.visitTypes.shift();
-
         this.getMenuVisible();
       });
   }
 
-  private formatDate(d: Date): string {
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
+  private formatDate(d?: Date): string {
+    const date = d ?? this.selectedDate ?? new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
   getAllScores(lokasyon?: number, tarih?: any): void {
     const formatted = this.formatDate(tarih);
-    const sp = [{ mkodu: 'yek407', lokasyon: String(lokasyon), tarih: formatted }];
-    console.log(sp);
+    const sp = [
+      { mkodu: 'yek407', lokasyon: String(lokasyon), tarih: formatted },
+    ];
 
     this.profileService
       .requestMethod(sp)
@@ -253,14 +300,10 @@ selectedDate: Date = new Date(); // bugün default
         if (message?.islemsonuc === -1) return;
 
         this.allScore = [...data];
-        this.applyScoreTotals(); // <— toplamlara çevir ve dashboard’a yaz
+        this.applyScoreTotals();
       });
   }
 
-  onSort(e: { key: string; dir: 'asc' | 'desc' }) {
-    console.log('sort:', e.key, e.dir);
-    // İstersen burada dışarıdan da veri çeker / server-side sort yaparsın.
-  }
 
   getValues(type: string, id: string): void {
     const today = new Date().toISOString().split('T')[0];
@@ -359,7 +402,6 @@ selectedDate: Date = new Date(); // bugün default
         if (message?.islemsonuc === -1) return;
 
         if (message?.islemsonuc === 9) {
-          // Güvenlik: index kontrolü
           if (this.visitTypes[1]) this.visitTypes[1].visible = true;
           if (this.visitTypes[2]) this.visitTypes[2].visible = true;
           if (this.visitTypes[3]) this.visitTypes[3].visible = true;
@@ -429,10 +471,156 @@ selectedDate: Date = new Date(); // bugün default
     this.editMode = !this.editMode;
   }
 
+  getChartData(lokasyon?: number, tarih?: any): void {
+    this.isLoading = true;
+    this.emptyState = false;
+
+    const formatted = this.formatDate(tarih);
+    const sp = [
+      { mkodu: 'yek442', lokasyon: String(lokasyon ?? ''), tarih: formatted },
+    ];
+
+    this.profileService
+      .requestMethod(sp)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (response: any) => {
+          const x = response?.[0]?.x ?? response;
+          const arr: CountItem[] = Array.isArray(x) ? x : [];
+
+          if (response?.[0]?.z?.islemsonuc === -1 || !arr.length) {
+            this.emptyState = true;
+            this.setBarSeries([0, 0, 0]);
+            return;
+          }
+
+          const item = arr[0] as Partial<CountItem>;
+          const sicil = Number(item?.sicil ?? 0);
+          const ziyaretci = Number(item?.ziyaretci ?? 0);
+          const altyukenici = Number(item?.altyukenici ?? 0);
+
+          this.setBarSeries([sicil, ziyaretci, altyukenici]);
+        },
+        error: () => {
+          this.emptyState = true;
+          this.setBarSeries([0, 0, 0]);
+        },
+        complete: () => (this.isLoading = false),
+      });
+  }
+
+  getChartData2(lokasyon?: number, tarih?: any): void {
+    this.isLoading = true;
+
+    const formatted = this.formatDate(tarih);
+    const sp = [
+      { mkodu: 'yek443', lokasyon: String(lokasyon ?? ''), tarih: formatted },
+    ];
+
+    this.profileService
+      .requestMethod(sp)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (response: any) => {
+          const x = response?.[0]?.x ?? response;
+          let arr: Array<{ Ad: string; sayi: number }> = Array.isArray(x) ? x : [];
+
+          const message = response?.[0]?.z;
+          if (message?.islemsonuc === -1) arr = [];
+
+          arr = arr.filter(it => it?.Ad && it.Ad.trim() !== '- - - - - - - - - - -');
+
+          const data = arr
+            .map(it => ({
+              x: String(it.Ad || '—'),
+              y: Math.max(0, Number((it as any).sayi ?? 0))
+            }))
+            .filter(d => d.y > 0);
+
+          this.treemapOptions = this.buildTreemapOptions(data);
+        },
+        error: () => {
+          this.treemapOptions = this.buildTreemapOptions([]);
+        },
+        complete: () => (this.isLoading = false),
+      });
+  }
+
+  private buildTreemapOptions(data: Array<{ x: string; y: number }>): Partial<TreemapOptions> {
+    const height = Math.max(360, Math.min(720, 250 + (data?.length ?? 0) * 14));
+
+    return {
+      chart: {
+        type: 'treemap',
+        height,
+        toolbar: { show: false },
+        animations: { enabled: true },
+      },
+      plotOptions: {
+        treemap: {
+          distributed: true,      
+          enableShades: false,    
+          useFillColorAsStroke: false
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        // Etiket: "Ad (sayi)"
+        formatter: (text: any, op: any) => {
+          const val = Number(op?.value ?? 0);
+          const t = String(text ?? '');
+          const name = t.length > 26 ? t.slice(0, 26) + '…' : t;
+          return `${name} (${val})`;
+        },
+        style: {
+          fontSize: '12px',
+          fontWeight: '500'
+        }
+      },
+      legend: { show: false },
+      grid: { padding: { top: 8, right: 8, bottom: 8, left: 8 } },
+      tooltip: {
+        enabled: true,
+        y: { formatter: (val: number) => `${val}` },
+      },
+      series: [
+        {
+          data // [{x, y}]
+        }
+      ],
+    };
+  }
+
+  private initBarOptions(): void {
+    this.barOptions = {
+      chart: { type: 'bar', height: 500, toolbar: { show: false } },
+      plotOptions: { bar: { borderRadius: 6, columnWidth: '40%' } },
+      dataLabels: { enabled: false },
+      xaxis: { categories: ['Sicil', 'Ziyaretçi', 'Alt Yüklenici'] },
+      yaxis: { min: 0, forceNiceScale: true, decimalsInFloat: 0 },
+      grid: { strokeDashArray: 4 },
+      legend: { show: false },
+      tooltip: { enabled: true },
+      series: [{ name: 'Adet', data: [0, 0, 0] }],
+    };
+  }
+
+  private setBarSeries(values: number[]) {
+    this.barOptions = {
+      ...this.barOptions,
+      series: [{ name: 'Adet', data: values }],
+      xaxis: {
+        ...this.barOptions.xaxis,
+        categories: ['Sicil', 'Ziyaretçi', 'Alt Yüklenici'],
+      },
+    };
+  }
+
   getPassList(lokasyon?: number, tarih?: any): void {
     const formatted = this.formatDate(tarih);
-    const sp = [{ mkodu: 'yek406', lokasyon: String(lokasyon), tarih: formatted }];
-    console.log(sp);
+    const sp = [
+      { mkodu: 'yek406', lokasyon: String(lokasyon), tarih: formatted },
+    ];
 
     this.profileService
       .requestMethod(sp)
@@ -440,10 +628,8 @@ selectedDate: Date = new Date(); // bugün default
       .subscribe((response: any) => {
         const data = response?.[0]?.x ?? [];
         const message = response?.[0]?.z;
-
         if (message?.islemsonuc === -1) return;
         this.passList = [...data];
-        console.log(this.passList);
       });
   }
 
@@ -463,7 +649,6 @@ selectedDate: Date = new Date(); // bugün default
     const toplam =
       totals.sabah + totals.ogle + totals.aksam + totals.gece + totals.ogundisi;
 
-    // Etiketleri Translate ile oluşturduğun için label eşleşmesi güvenli:
     this.setDashValue('Sabah', totals.sabah);
     this.setDashValue('Öğle', totals.ogle);
     this.setDashValue('Akşam', totals.aksam);

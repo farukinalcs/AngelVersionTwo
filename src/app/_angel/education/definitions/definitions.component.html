@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-custom gutter-b py-3">
+        <div class="card-body pt-3 pb-0">
+          <p-carousel
+            [value]="tabList"
+            [numVisible]="11"
+            [numScroll]="10"
+            [circular]="true"
+            [responsiveOptions]="[
+              { breakpoint: '1024px', numVisible: 7, numScroll: 6 },
+              { breakpoint: '768px', numVisible: 4, numScroll: 3 },
+              { breakpoint: '560px', numVisible: 2, numScroll: 1 }
+            ]"
+          >
+            <ng-template let-tab pTemplate="item">
+              <li
+                class="nav-item d-flex justify-content-center"
+                style="list-style: none"
+              >
+                <a
+                  class="nav-link btn btn-outline btn-flex btn-color-gray-800 btn-active-color-danger flex-column overflow-hidden w-100px h-85px pt-5 pb-2 position-relative"
+                  [routerLink]="tab.path"
+                  [attr.id]="tab.id"
+                  (click)="changeTab(tab)"
+                  [ngClass]="{
+                    'active border-danger': selectedTab.id === tab.id
+                  }"
+                >
+                  <div class="nav-icon mb-3">
+                    <i class="{{ tab.icon }} fs-2 p-0"></i>
+                  </div>
+                  <span class="fw-bold fs-8 lh-1"> {{ tab.label }} </span>
+                  <span
+                    *ngIf="selectedTab.id === tab.id"
+                    class="bullet-custom position-absolute bottom-0 w-100px h-4px bg-danger"
+                  ></span>
+                </a>
+              </li>
+            </ng-template>
+          </p-carousel>
+        </div>
+      </div>
+
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

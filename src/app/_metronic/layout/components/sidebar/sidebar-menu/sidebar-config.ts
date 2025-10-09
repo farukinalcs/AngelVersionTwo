@@ -20,19 +20,71 @@ export const MENU: MenuItem[] = [
         icon: 'fa-solid fa-user-tie text-danger',
         permissionCode: 'a001',
         children: [
-          { title: 'Genel_Bakış', routerLink: 'profile/widgets', translate: true, permissionCode: 'a001' },
-          { title: 'Geçişlerim', routerLink: 'profile/operations/passages', translate: true, permissionCode: 'm926' },
-          { title: 'Sürelerim', routerLink: 'profile/operations/durations', translate: true, permissionCode: 'm927' },
-          { title: 'İzinlerim', routerLink: 'profile/operations/leaves', translate: true, permissionCode: 'm928' },
-          { title: 'Talep_Edilenler', routerLink: 'profile/requests/pending-requests', translate: true, permissionCode: 'm917' },
-          { title: 'Taleplerim', routerLink: 'profile/requests/my-requests', translate: true, permissionCode: 'm961' },
-          { title: 'Ziyaretçi_Talepleri', routerLink: 'profile/requests/visitor-requests', translate: true },
-          { title: 'Ziyaretçi_Taleplerim', routerLink: 'profile/requests/my-visitor-requests', translate: true, permissionCode: 'm962' },
-          { title: 'Takımım', routerLink: 'profile/others/my-team', translate: true, permissionCode: 'm944' },
-          { title: 'Eksik_Sürelerim', routerLink: 'profile/operations/missing-durations', translate: true },
-          { title: 'Profil_Tanımlamalar', routerLink: 'profile/definitions', translate: true }
+          {
+            title: 'Genel_Bakış',
+            routerLink: 'profile/widgets',
+            translate: true,
+            permissionCode: 'a001',
+          },
+          {
+            title: 'Geçişlerim',
+            routerLink: 'profile/operations/passages',
+            translate: true,
+            permissionCode: 'm926',
+          },
+          {
+            title: 'Sürelerim',
+            routerLink: 'profile/operations/durations',
+            translate: true,
+            permissionCode: 'm927',
+          },
+          {
+            title: 'İzinlerim',
+            routerLink: 'profile/operations/leaves',
+            translate: true,
+            permissionCode: 'm928',
+          },
+          {
+            title: 'Talep_Edilenler',
+            routerLink: 'profile/requests/pending-requests',
+            translate: true,
+            permissionCode: 'm917',
+          },
+          {
+            title: 'Taleplerim',
+            routerLink: 'profile/requests/my-requests',
+            translate: true,
+            permissionCode: 'm961',
+          },
+          {
+            title: 'Ziyaretçi_Talepleri',
+            routerLink: 'profile/requests/visitor-requests',
+            translate: true,
+          },
+          {
+            title: 'Ziyaretçi_Taleplerim',
+            routerLink: 'profile/requests/my-visitor-requests',
+            translate: true,
+            permissionCode: 'm962',
+          },
+          {
+            title: 'Takımım',
+            routerLink: 'profile/others/my-team',
+            translate: true,
+            permissionCode: 'm944',
+          },
+          {
+            title: 'Eksik_Sürelerim',
+            routerLink: 'profile/operations/missing-durations',
+            translate: true,
+          },
+          {
+            title: 'Profil_Tanımlamalar',
+            routerLink: 'profile/definitions',
+            translate: true,
+          },
         ],
-        app: ['1','2','3']
+        app: ['1', '2', '3'],
       },
       {
         title: 'Access',
@@ -45,9 +97,9 @@ export const MENU: MenuItem[] = [
           { title: 'Geçiş Grupları', routerLink: 'access/access-groups' },
           { title: 'Sicil Grupları', routerLink: 'access/registry-groups' },
           { title: 'Tanımlamalar', routerLink: 'access/definitions' },
-          { title: 'Raporlar', routerLink: 'access/raporlar' }
+          { title: 'Raporlar', routerLink: 'access/raporlar' },
         ],
-        app: ['1']
+        app: ['1'],
       },
       {
         title: 'Puantaj',
@@ -58,36 +110,30 @@ export const MENU: MenuItem[] = [
           { title: 'Pdks', routerLink: 'attendance/attendance-list' },
           { title: 'Pdks Pivot', routerLink: 'attendance/attendance-pivot' },
           { title: 'Tanımlamalar', routerLink: 'attendance/definitions' },
-          { title: 'Raporlar', routerLink: 'attendance/reports' }
+          { title: 'Raporlar', routerLink: 'attendance/reports' },
         ],
-        app: ['1']
-      }
-    ]
+        app: ['1'],
+      },
+    ],
   },
 
   {
     title: 'İzin',
     icon: 'fa-solid fa-umbrella-beach text-danger',
-    children: [
-      { title: 'Genel Bakış', routerLink: 'leave/overview' }
-    ],
-    app: ['1']
+    children: [{ title: 'Genel Bakış', routerLink: 'leave/overview' }],
+    app: ['1'],
   },
   {
     title: 'Fazla Mesai',
     icon: 'fa-solid fa-business-time text-danger',
-    children: [
-      { title: 'Genel Bakış', routerLink: 'overtime/overview' }
-    ],
-    app: ['1']
+    children: [{ title: 'Genel Bakış', routerLink: 'overtime/overview' }],
+    app: ['1'],
   },
   {
     title: 'Vardiya',
     icon: 'fa-solid fa-calendar-check text-danger',
-    children: [
-      { title: 'Genel Bakış', routerLink: 'shift/overview' }
-    ],
-    app: ['1']
+    children: [{ title: 'Genel Bakış', routerLink: 'shift/overview' }],
+    app: ['1'],
   },
   {
     title: 'Ziyaretçi',
@@ -98,9 +144,9 @@ export const MENU: MenuItem[] = [
       { title: 'Ziyaretçiler', routerLink: 'visitor/visitors' },
       { title: 'Geçici Kartlar', routerLink: 'visitor/temp-card' },
       { title: 'Tanımlamalar', routerLink: 'visitor/definitions' },
-      { title: 'Raporlar', routerLink: 'visitor/reports' }
+      { title: 'Raporlar', routerLink: 'visitor/reports' },
     ],
-    app: ['1','5']
+    app: ['1', '5'],
   },
   {
     title: 'Yemekhane',
@@ -108,9 +154,9 @@ export const MENU: MenuItem[] = [
     children: [
       { title: 'Genel Bakış', routerLink: 'refectory/overview' },
       { title: 'Tanımlamalar', routerLink: 'refectory/definitions' },
-      { title: 'Raporlar', routerLink: 'refectory/reports' }
+      { title: 'Raporlar', routerLink: 'refectory/reports' },
     ],
-    app: ['1','6']
+    app: ['1', '6'],
   },
   {
     title: 'Kantin',
@@ -119,26 +165,24 @@ export const MENU: MenuItem[] = [
       { title: 'Genel Bakış', routerLink: 'kantin/dashboard' },
       { title: 'Tanımlamalar', routerLink: 'kantin/tanimlamalar' },
       { title: 'Krediler', routerLink: 'kantin/krediler' },
-      { title: 'Raporlar', routerLink: 'kantin/raporlar' }
+      { title: 'Raporlar', routerLink: 'kantin/raporlar' },
     ],
-    app: ['1']
+    app: ['1'],
   },
   {
     title: 'Bildirim',
     icon: 'fa-solid fa-gear text-danger',
     children: [
       { title: 'SMS Servis', routerLink: 'sistem/sistem_yedek' },
-      { title: 'Mail Servis', routerLink: 'sistem/mail_servis' }
+      { title: 'Mail Servis', routerLink: 'sistem/mail_servis' },
     ],
-    app: ['1']
+    app: ['1'],
   },
   {
     title: 'Müşteri Hizmetleri',
     icon: 'fa-solid fa-phone-volume text-danger',
-    children: [
-      { title: 'Destek', routerLink: 'musteri_hizmetleri/destek' }
-    ],
-    app: ['1']
+    children: [{ title: 'Destek', routerLink: 'musteri_hizmetleri/destek' }],
+    app: ['1'],
   },
   {
     title: 'Güvenlik Tur',
@@ -148,27 +192,27 @@ export const MENU: MenuItem[] = [
       { title: 'Güvenlikçiler', routerLink: 'patrol/guvenlikciler' },
       { title: 'Tanımlamalar', routerLink: 'patrol/tanimlamalar' },
       { title: 'Cihazlar ve Harita', routerLink: '/patrol/content/device-map' },
-      { title: 'Turlar', routerLink: '/patrol/content/tours' }
+      { title: 'Turlar', routerLink: '/patrol/content/tours' },
     ],
-    app: ['2']
+    app: ['2'],
   },
   {
     title: 'Performans Yönetimi',
     icon: 'fa-solid fa-paste text-danger',
     children: [
       { title: 'Genel Bakış', routerLink: 'performance/dashboard' },
-      { title: 'Tanımlamalar', routerLink: 'performance/tanimlamalar' }
+      { title: 'Tanımlamalar', routerLink: 'performance/tanimlamalar' },
     ],
-    app: ['3']
+    app: ['3'],
   },
   {
     title: 'Kullanıcı Yetki Yönetimi',
     icon: 'fa-solid fa-key text-danger',
     children: [
       { title: 'Sicil Listesi', routerLink: 'user-management/user-list' },
-      { title: 'Tanımlamalar', routerLink: 'user-management/definitions' }
+      { title: 'Tanımlamalar', routerLink: 'user-management/definitions' },
     ],
-    app: ['1']
+    app: ['1'],
   },
   {
     title: 'Envanter Yönetimi',
@@ -176,18 +220,30 @@ export const MENU: MenuItem[] = [
     children: [
       { title: 'Genel Bakış', routerLink: 'inventory/overview' },
       { title: 'Tanımlamalar', routerLink: 'inventory/definitions' },
-      { title: 'Talepler', routerLink: 'inventory/request' }
+      { title: 'Talepler', routerLink: 'inventory/request' },
     ],
-    app: ['1']
+    app: ['1'],
   },
-    {
+  {
     title: 'Dağıtım Yönetimi',
     icon: 'fa-solid fa-person-chalkboard text-danger',
     children: [
       { title: 'Genel Bakış', routerLink: 'presentation/overview' },
       { title: 'Tanımlamalar', routerLink: 'presentation/definitions' },
-      { title: 'Ürün Dağıtımı', routerLink: 'presentation/product-distribution' }
+      {
+        title: 'Ürün Dağıtımı',
+        routerLink: 'presentation/product-distribution',
+      },
     ],
-    app: ['1']
-  }
+    app: ['1'],
+  },
+  {
+    title: 'Eğitim Yönetimi',
+    icon: 'fa-solid fa-user-graduate text-danger',
+    children: [
+      { title: 'Genel Bakış', routerLink: 'education/overview' },
+      { title: 'Tanımlamalar', routerLink: 'education/definitions' },
+    ],
+    app: ['1'],
+  },
 ];

@@ -1,0 +1,604 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-custom gutter-b my-5 pb-5">
+        <div class="card-header border-0 bg-danger" style="min-height: 45px">
+          <div class="card-title">
+            <h3 class="card-label text-white">Eğitim Tanımları</h3>
+            <h4 class="card-label text-gray-200 fs-8">
+              Eğitim Parametrelerini Buradan Belirleyebilirsiniz
+            </h4>
+          </div>
+        </div>
+        <div class="d-flex gap-2"></div>
+        <div class="flip-container">
+          <div class="flip-inner" [@flipState]="currentView">
+            <div class="flip-face flip-front">
+              <div id="liste" class="pd-container">
+                <div class="row g-4 mt-4">
+                  <div class="col-12 col-lg-12">
+                    <form class="pd-card p-fluid">
+                      <div class="pd-card-body bg-for-list">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-4">
+                              <p-floatlabel variant="on" class="mt-2">
+                                <p-iconfield>
+                                  <p-inputicon
+                                    class="pi pi-search"
+                                  ></p-inputicon>
+                                  <input
+                                    style="border-radius: 7px"
+                                    pInputText
+                                    id="over_label"
+                                    [(ngModel)]="filterText"
+                                    autocomplete="off"
+                                    name="searchTxt"
+                                  />
+                                </p-iconfield>
+                                <label for="over_label">Arama..</label>
+                              </p-floatlabel>
+                            </div>
+                            <div class="col-8 d-flex justify-content-end">
+                              <button
+                                class="btn btn-danger"
+                                (click)="showAdd()"
+                                *ngIf="currentView === 'list'"
+                              >
+                                <i class="fa-solid fa-plus me-1"></i>Yeni Eğitim
+                                Ekle
+                              </button>
+                            </div>
+                          </div>
+
+                          <div class="row my-4">
+                            <div class="col-12">
+                              <div class="table-responsive">
+                                <table
+                                  class="table table-hover border table-rounded table-row-dashed align-middle gs-4 gy-2"
+                                >
+                                  <thead class="sticky-top" style="z-index: 0">
+                                    <tr
+                                      class="fs-6 fw-bold border-bottom-0 text-uppercase rounded text-danger bg-white"
+                                    >
+                                      <th
+                                        class="rounded-start"
+                                        style="width: auto"
+                                      >
+                                        Id
+                                      </th>
+                                      <th style="width: 25%">Başlık</th>
+                                      <th style="width: 25%">Kategoriler</th>
+                                      <th
+                                        style="width: 10%"
+                                        class="text-center"
+                                      >
+                                        Katılım
+                                      </th>
+                                      <th
+                                        style="width: 10%"
+                                        class="text-center"
+                                      >
+                                        Süre
+                                      </th>
+                                      <th style="width: 15%">Eklenme</th>
+                                      <th
+                                        class="rounded-end text-center"
+                                        style="width: 120px"
+                                      >
+                                        İşlemler
+                                      </th>
+                                    </tr>
+                                  </thead>
+
+                                  <tbody>
+                                    <ng-container
+                                      *ngFor="
+                                        let it of educationList
+                                          | searchFilter
+                                            : filterText
+                                            : [
+                                                'id',
+                                                'baslik',
+                                                'kategoriadlari'
+                                              ];
+                                        trackBy: trackById
+                                      "
+                                    >
+                                      <tr class="cursor-pointer fs-7">
+                                        <td>
+                                          <span class="mb-1">{{ it.id }}</span>
+                                        </td>
+                                        <td>
+                                          <span class="mb-1 fw-bolder">{{
+                                            it.baslik
+                                          }}</span>
+                                        </td>
+                                        <td>
+                                          <span class="mb-1">{{
+                                            it.kategoriadlari || "—"
+                                          }}</span>
+                                        </td>
+                                        <td class="text-center">
+                                          <span
+                                            class="badge bg-light text-dark"
+                                          >
+                                            {{ it.katilim ?? 0 }}
+                                          </span>
+                                        </td>
+                                        <td class="text-center">
+                                          <span
+                                            class="badge bg-light text-dark"
+                                          >
+                                            {{ minutesToHHMM(it.egitimsuresi) }}
+                                          </span>
+                                        </td>
+                                        <td>
+                                          <div class="small">
+                                            {{ fmtDateTime(it.eklenmetarihi) }}
+                                          </div>
+                                        </td>
+                                        <td class="text-center">
+                                          <a
+                                            pTooltip="Kaldır"
+                                            class="btn btn-light btn-sm py-1 px-2 mx-1"
+                                            (click)="confirmDelete(it)"
+                                          >
+                                            <i
+                                              class="fa-solid fa-trash p-0 text-gray-900"
+                                            ></i>
+                                          </a>
+                                          <a
+                                            pTooltip="Güncelle"
+                                            class="btn btn-light btn-sm py-1 px-2 mx-1"
+                                            (click)="openUpdate(it)"
+                                          >
+                                            <i
+                                              class="fa-solid fa-pen-to-square p-0 text-gray-900"
+                                            ></i>
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    </ng-container>
+
+                                    <tr
+                                      *ngIf="
+                                        (
+                                          educationList
+                                          | searchFilter
+                                            : filterText
+                                            : ['id', 'baslik', 'kategoriadlari']
+                                        ).length === 0
+                                      "
+                                    >
+                                      <td
+                                        colspan="7"
+                                        class="text-center text-muted py-4"
+                                      >
+                                        Kayıt bulunamadı.
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body flip-face flip-back">
+              <div
+                class="row"
+                style="background: #80808024; border-radius: 1rem"
+              >
+                <div class="col-12 my-5 pe-20">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <h3 class="text-danger mb-2">Eğitim Tanımlama Formu</h3>
+                    <button
+                      class="btn btn-danger mb-2"
+                      *ngIf="currentView === 'add'"
+                      (click)="showList()"
+                    >
+                      <i class="fa-solid fa-list me-1"></i> Liste
+                    </button>
+                  </div>
+
+                  <form
+                    [formGroup]="form"
+                    (ngSubmit)="onSubmit()"
+                    novalidate
+                    class="edu-form"
+                  >
+                    <div class="form-field bd">
+                      <label for="baslik" class="form-label required"
+                        >Eğitim Başlık</label
+                      >
+                      <small class="text-muted d-block mb-2"
+                        >Maks. 120 karakter</small
+                      >
+
+                      <input
+                        pInputText
+                        formControlName="baslik"
+                        class="w-100"
+                        [ngClass]="{
+                          'p-invalid':
+                            f.baslik.invalid && (f.baslik.touched || submitted)
+                        }"
+                        [attr.aria-invalid]="
+                          f.baslik.invalid && (f.baslik.touched || submitted)
+                            ? 'true'
+                            : null
+                        "
+                      />
+                      <small
+                        id="baslikError"
+                        *ngIf="
+                          f.baslik.errors && (f.baslik.touched || submitted)
+                        "
+                        class="text-danger d-block mt-1"
+                      >
+                        <ng-container *ngIf="f.baslik.errors['required']"
+                          >Bu alan zorunludur.</ng-container
+                        >
+                        <ng-container *ngIf="f.baslik.errors['maxlength']">
+                          En fazla
+                          {{ f.baslik.errors["maxlength"].requiredLength }}
+                          karakter giriniz.
+                        </ng-container>
+                      </small>
+                    </div>
+
+                    <div class="form-field bd mt-4">
+                      <label for="icerik" class="form-label required"
+                        >Eğitim İçerik</label
+                      >
+                      <small class="text-muted d-block mb-2"
+                        >Zengin metin editörü ile içerik girin</small
+                      >
+
+                      <p-editor
+                        formControlName="icerik"
+                        [style]="{ height: '260px' }"
+                        [ngClass]="{
+                          'p-invalid':
+                            f.icerik.invalid && (f.icerik.touched || submitted)
+                        }"
+                        [attr.aria-invalid]="
+                          f.icerik.invalid && (f.icerik.touched || submitted)
+                            ? 'true'
+                            : null
+                        "
+                      ></p-editor>
+
+                      <small
+                        id="icerikError"
+                        *ngIf="
+                          f.icerik.errors && (f.icerik.touched || submitted)
+                        "
+                        class="text-danger d-block mt-1"
+                      >
+                        İçerik zorunludur.
+                      </small>
+                    </div>
+
+                    <div class="grid-2">
+                      <div class="form-field bd mt-4">
+                        <label for="katilimSayisi" class="form-label required"
+                          >Katılım Sayısı</label
+                        >
+                        <small class="text-muted d-block mb-2"
+                          >Toplam kontenjan (0 ise herkese açık).</small
+                        >
+
+                        <p-inputNumber
+                          formControlName="katilimSayisi"
+                          [min]="0"
+                          [max]="10000"
+                          [useGrouping]="false"
+                          [showButtons]="true"
+                          class="w-100"
+                          [ngClass]="{
+                            'p-invalid':
+                              f.katilimSayisi.invalid &&
+                              (f.katilimSayisi.touched || submitted)
+                          }"
+                          [attr.aria-invalid]="
+                            f.katilimSayisi.invalid &&
+                            (f.katilimSayisi.touched || submitted)
+                              ? 'true'
+                              : null
+                          "
+                        ></p-inputNumber>
+
+                        <small
+                          id="katilimError"
+                          *ngIf="
+                            f.katilimSayisi.errors &&
+                            (f.katilimSayisi.touched || submitted)
+                          "
+                          class="text-danger d-block mt-1"
+                        >
+                          <ng-container
+                            *ngIf="f.katilimSayisi.errors['required']"
+                            >Bu alan zorunludur.</ng-container
+                          >
+                          <ng-container *ngIf="f.katilimSayisi.errors['min']"
+                            >En az 0 olmalıdır.</ng-container
+                          >
+                          <ng-container *ngIf="f.katilimSayisi.errors['max']"
+                            >En fazla 10000 olabilir.</ng-container
+                          >
+                        </small>
+                      </div>
+
+                      <!-- <div class="form-field bd mt-4">
+                      <label class="form-label">Serbest Katılım</label>
+                      <small class="text-muted d-block mb-2"
+                        >Davet gerektirmeden katılımı etkinleştir.</small
+                      >
+
+                      <div class="toggle-line">
+                        <div class="form-check form-switch danger-switch m-0">
+                          <input
+                            id="serbestKatilim"
+                            class="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            formControlName="serbestKatilim"
+                            [attr.aria-checked]="
+                              form.value.serbestKatilim ? 'true' : 'false'
+                            "
+                            [style.width.px]="48"
+                            [style.height.px]="26"
+                          />
+                          <label
+                            class="form-check-label visually-hidden"
+                            for="serbestKatilim"
+                          >
+                            Serbest Katılım
+                          </label>
+                        </div>
+
+                        <span
+                          class="toggle-text ms-2"
+                          [class.text-danger]="form.value.serbestKatilim"
+                        >
+                          {{ form.value.serbestKatilim ? "Açık" : "Kapalı" }}
+                        </span>
+                      </div>
+                    </div> -->
+                    </div>
+
+                    <div class="grid-2">
+                      <div class="form-field bd mt-4">
+                        <label for="kategoriIds" class="form-label required"
+                          >Kategoriler</label
+                        >
+                        <small class="text-muted d-block mb-2"
+                          >Bir veya daha fazla kategori seçiniz.</small
+                        >
+
+                        <div class="d-flex gap-2 align-items-start">
+                          <p-multiSelect
+                            formControlName="kategoriIds"
+                            [options]="categoryList"
+                            optionLabel="ad"
+                            optionValue="id"
+                            defaultLabel="Kategorileri seçiniz"
+                            display="chip"
+                            [filter]="true"
+                            [showToggleAll]="true"
+                            [showClear]="true"
+                            appendTo="body"
+                            class="w-100"
+                            [ngClass]="{
+                              'p-invalid':
+                                f.kategoriIds.invalid &&
+                                (f.kategoriIds.touched || submitted)
+                            }"
+                            [attr.aria-invalid]="
+                              f.kategoriIds.invalid &&
+                              (f.kategoriIds.touched || submitted)
+                                ? 'true'
+                                : null
+                            "
+                            aria-describedby="kategoriError"
+                          ></p-multiSelect>
+                        </div>
+
+                        <small
+                          id="kategoriError"
+                          *ngIf="
+                            f.kategoriIds.errors &&
+                            (f.kategoriIds.touched || submitted)
+                          "
+                          class="text-danger d-block mt-1"
+                        >
+                          En az bir kategori seçiniz.
+                        </small>
+                      </div>
+
+                      <div class="form-field bd mt-4">
+                        <label for="sure" class="form-label required"
+                          >Süre Seçimi</label
+                        >
+                        <small class="text-muted d-block mb-2"
+                          >örn: 01:30.</small
+                        >
+
+                        <p-calendar
+                          formControlName="sure"
+                          timeOnly="true"
+                          hourFormat="24"
+                          class="w-100"
+                          [showIcon]="true"
+                          [ngClass]="{
+                            'p-invalid':
+                              f.sure.invalid && (f.sure.touched || submitted)
+                          }"
+                          [attr.aria-invalid]="
+                            f.sure.invalid && (f.sure.touched || submitted)
+                              ? 'true'
+                              : null
+                          "
+                        ></p-calendar>
+
+                        <small
+                          id="sureError"
+                          *ngIf="f.sure.errors && (f.sure.touched || submitted)"
+                          class="text-danger d-block mt-1"
+                        >
+                          Süre seçimi zorunludur.
+                        </small>
+                      </div>
+                    </div>
+
+                    <!-- <div class="form-field bd mt-4">
+                    <label for="belge" class="form-label">Belge (PDF)</label>
+                    <small class="text-muted d-block mb-2">
+                      Dosya başına en fazla 1MB. Yalnızca PDF kabul edilir.
+                    </small>
+
+                    <input
+                      #fileInput
+                      id="belge"
+                      type="file"
+                      class="form-control form-control-sm form-control-solid"
+                      accept="application/pdf"
+                      (change)="onFileSelected($event)"
+                      [attr.aria-invalid]="
+                        f.file.invalid && (f.file.touched || submitted)
+                          ? 'true'
+                          : null
+                      "
+                    />
+
+                    <div
+                      class="d-flex align-items-center mt-2"
+                      *ngIf="form.value.file as selectedFile"
+                    >
+                      <i class="pi pi-file-pdf me-2"></i>
+                      <span class="me-3">{{ selectedFile.name }}</span>
+                      <button
+                        type="button"
+                        class="btn btn-link text-danger p-0"
+                        (click)="removeFile(fileInput)"
+                      >
+                        Kaldır
+                      </button>
+                    </div>
+
+                    <small
+                      *ngIf="f.file.errors && (f.file.touched || submitted)"
+                      class="text-danger d-block mt-1"
+                    >
+                      <ng-container *ngIf="f.file.errors['fileType']"
+                        >Yalnızca PDF dosyası yükleyin.</ng-container
+                      >
+                      <ng-container *ngIf="f.file.errors['fileSize']"
+                        >Dosya en fazla 1MB olmalıdır.</ng-container
+                      >
+                    </small>
+                  </div> -->
+
+                    <div
+                      class="actions mt-4"
+                      style="display: flex; justify-content: end"
+                    >
+                      <button
+                        type="button"
+                        class="btn btn-light-danger me-2"
+                        (click)="onReset()"
+                      >
+                        Vazgeç
+                      </button>
+                      <button type="submit" class="btn btn-danger">
+                        Kaydet
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-dialog
+  header="Eğitim Güncelle"
+  [(visible)]="editDisplay"
+  [modal]="true"
+  [style]="{ width: '70vw' }"
+>
+  <form [formGroup]="editForm" (ngSubmit)="submitUpdate()" class="edu-form">
+    <div class="form-field bd">
+      <label for="baslik" class="form-label required">Eğitim Başlık</label>
+      <input pInputText formControlName="baslik" class="w-100" />
+    </div>
+
+    <div class="form-field bd mt-3">
+      <label for="icerik" class="form-label required">Eğitim İçerik</label>
+      <p-editor
+        formControlName="icerik"
+        [style]="{ height: '200px' }"
+      ></p-editor>
+    </div>
+
+    <div class="form-field d-grid bd">
+      <label for="katilimSayisi" class="form-label required"
+        >Katılım Sayısı</label
+      >
+      <p-inputNumber
+        formControlName="katilimSayisi"
+        [min]="0"
+        [max]="10000"
+      ></p-inputNumber>
+    </div>
+    <div class="form-field bd">
+      <label for="kategoriIds" class="form-label required">Kategoriler</label>
+      <p-multiSelect
+        formControlName="kategoriIds"
+        [options]="categoryList"
+        optionLabel="ad"
+        optionValue="id"
+        display="chip"
+        [filter]="true"
+        [showClear]="true"
+        [showToggleAll]="true"
+        class="w-100"
+      ></p-multiSelect>
+    </div>
+
+    <div class="form-field bd mt-3 d-grid">
+      <label for="sure" class="form-label required">Süre</label>
+      <p-calendar
+        formControlName="sure"
+        timeOnly="true"
+        hourFormat="24"
+        [showIcon]="true"
+        class="w-100"
+      ></p-calendar>
+    </div>
+
+    <div class="mt-4 d-flex justify-content-end">
+      <button
+        type="button"
+        class="btn btn-light me-2"
+        (click)="editDisplay = false"
+      >
+        Vazgeç
+      </button>
+      <button type="submit" class="btn btn-danger">Kaydet</button>
+    </div>
+  </form>
+</p-dialog>

@@ -34,6 +34,15 @@ import { ConfirmationService } from 'src/app/core/permission/services/core/servi
 import Swal from 'sweetalert2';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import {
+  trigger,
+  transition,
+  style,
+  query,
+  group,
+  animate,
+  state,
+} from '@angular/animations';
 
 interface RegistryGroup {
   id: number;
@@ -62,7 +71,70 @@ interface DistributionRow {
   sicilgrupadi: string;
   durum: number;
 }
-
+const viewSwapAnimation = trigger('viewSwap', [
+  transition('list => add', [
+    style({ position: 'relative' }),
+    query(
+      ':enter, :leave',
+      [style({ position: 'absolute', top: 0, left: 0, width: '100%' })],
+      { optional: true }
+    ),
+    group([
+      query(
+        ':leave',
+        [
+          animate(
+            '300ms ease',
+            style({ opacity: 0, transform: 'translateX(-100px)' })
+          ),
+        ],
+        { optional: true }
+      ),
+      query(
+        ':enter',
+        [
+          style({ opacity: 0, transform: 'translateX(100px)' }),
+          animate(
+            '300ms ease',
+            style({ opacity: 1, transform: 'translateX(0)' })
+          ),
+        ],
+        { optional: true }
+      ),
+    ]),
+  ]),
+  transition('add => list', [
+    style({ position: 'relative' }),
+    query(
+      ':enter, :leave',
+      [style({ position: 'absolute', top: 0, left: 0, width: '100%' })],
+      { optional: true }
+    ),
+    group([
+      query(
+        ':leave',
+        [
+          animate(
+            '300ms ease',
+            style({ opacity: 0, transform: 'translateX(100px)' })
+          ),
+        ],
+        { optional: true }
+      ),
+      query(
+        ':enter',
+        [
+          style({ opacity: 0, transform: 'translateX(-100px)' }),
+          animate(
+            '300ms ease',
+            style({ opacity: 1, transform: 'translateX(0)' })
+          ),
+        ],
+        { optional: true }
+      ),
+    ]),
+  ]),
+]);
 @Component({
   selector: 'app-product-distribution',
   standalone: true,
@@ -71,7 +143,6 @@ interface DistributionRow {
     ReactiveFormsModule,
     FormsModule,
 
-    // PrimeNG
     ButtonModule,
     DropdownModule,
     CalendarModule,
@@ -82,9 +153,15 @@ interface DistributionRow {
     TooltipModule,
     DialogModule,
 
-    // Diğer
     TranslateModule,
     CustomPipeModule,
+  ],
+  animations: [
+    trigger('flipState', [
+      state('list', style({ transform: 'rotateY(0deg)' })),
+      state('add', style({ transform: 'rotateY(180deg)' })),
+      transition('list <=> add', animate('400ms ease-in-out')),
+    ]),
   ],
   providers: [DatePipe],
   templateUrl: './product-distribution.component.html',
@@ -101,13 +178,21 @@ export class ProductDistributionComponent implements OnInit, OnDestroy {
   private toastr = inject(ToastrService);
   private i18n = inject(TranslateService);
   private translateService = inject(TranslateService);
+  currentView: 'list' | 'add' = 'list';
 
-  // --- UI state ---
-  display = false;             // (kullanımda değil, gerekirse)
-  editDisplay = false;         // güncelle popup
+  showAdd() {
+    this.currentView = 'add';
+  }
+  showList() {
+    this.currentView = 'list';
+  }
+  toggle() {
+    this.currentView = this.currentView === 'list' ? 'add' : 'list';
+  }
+  display = false;
+  editDisplay = false;
   editingId: number | null = null;
 
-  // --- dropdown verileri ---
   registryGroups: RegistryGroup[] = [];
   registryGroupOptions: { label: string; value: number }[] = [];
 
@@ -234,7 +319,9 @@ export class ProductDistributionComponent implements OnInit, OnDestroy {
     if (rows.length === 0) return null;
 
     const esc = (s: string) => s.replace(/'/g, "\\'");
-    const parts = rows.map((x: any) => `{\'${esc(x.key)}\': \'${esc(x.val)}\'}`);
+    const parts = rows.map(
+      (x: any) => `{\'${esc(x.key)}\': \'${esc(x.val)}\'}`
+    );
     return `[${parts.join(',')}]`;
   }
 
@@ -440,7 +527,9 @@ export class ProductDistributionComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const sp: any[] = [{ mkodu: 'yek428', lokasyonid: String(this.selectedLocationId) }];
+    const sp: any[] = [
+      { mkodu: 'yek428', lokasyonid: String(this.selectedLocationId) },
+    ];
     this.profileService
       .requestMethod(sp)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -464,7 +553,10 @@ export class ProductDistributionComponent implements OnInit, OnDestroy {
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      this.setAlert('Lütfen zorunlu alanları ve tarih aralıklarını kontrol edin.', 'danger');
+      this.setAlert(
+        'Lütfen zorunlu alanları ve tarih aralıklarını kontrol edin.',
+        'danger'
+      );
       return;
     }
     if (!this.selectedLocationId) {
@@ -474,18 +566,20 @@ export class ProductDistributionComponent implements OnInit, OnDestroy {
 
     const v = this.form.getRawValue();
 
-    const sp: any[] = [{
-      mkodu: 'yek430',
-      ad: v.ad!,
-      dagitimurunid: String(v.dagitimurunid!),
-      secenekler: this.buildSeceneklerString() || null,
-      talepbaslangictarihi: this.toDDMMYYYY(v.talepbaslangic)!,
-      talepbitistarihi: this.toDDMMYYYY(v.talepbitis)!,
-      dagitimbaslangictarihi: this.toDDMMYYYY(v.dagitimbaslangic)!,
-      dagitimbitistarihi: this.toDDMMYYYY(v.dagitimbitis)!,
-      sicilgrubu: String(v.sicilgrubu!),
-      lokasyonid: String(this.selectedLocationId), // seçili lokasyon
-    }];
+    const sp: any[] = [
+      {
+        mkodu: 'yek430',
+        ad: v.ad!,
+        dagitimurunid: String(v.dagitimurunid!),
+        secenekler: this.buildSeceneklerString() || null,
+        talepbaslangictarihi: this.toDDMMYYYY(v.talepbaslangic)!,
+        talepbitistarihi: this.toDDMMYYYY(v.talepbitis)!,
+        dagitimbaslangictarihi: this.toDDMMYYYY(v.dagitimbaslangic)!,
+        dagitimbitistarihi: this.toDDMMYYYY(v.dagitimbitis)!,
+        sicilgrubu: String(v.sicilgrubu!),
+        lokasyonid: String(this.selectedLocationId), // seçili lokasyon
+      },
+    ];
 
     this.profileService
       .requestMethod(sp)
@@ -511,6 +605,8 @@ export class ProductDistributionComponent implements OnInit, OnDestroy {
 
   // --- UPDATE ---
   update(item: DistributionRow) {
+    console.log(item);
+
     this.editingId = item.id;
     this.editForm.reset({
       ad: item.ad,
@@ -534,7 +630,9 @@ export class ProductDistributionComponent implements OnInit, OnDestroy {
     if (list.length === 0) {
       this.editSecenekler.push(this.createEditOption('Numara', ''));
     } else {
-      list.forEach((x) => this.editSecenekler.push(this.createEditOption(x.k, x.v)));
+      list.forEach((x) =>
+        this.editSecenekler.push(this.createEditOption(x.k, x.v))
+      );
     }
   }
   closeEdit() {
@@ -549,18 +647,20 @@ export class ProductDistributionComponent implements OnInit, OnDestroy {
     }
     const v = this.editForm.getRawValue();
 
-    const sp: any[] = [{
-      mkodu: 'yek431',
-      dagitimid: String(this.editingId),
-      ad: v.ad!,
-      dagitimurunid: String(v.dagitimurunid!),
-      secenekler: this.buildSeceneklerStringFrom(this.editSecenekler), // null olabilir
-      talepbaslangictarihi: this.toDDMMYYYY(v.talepbaslangic)!,
-      talepbitistarihi: this.toDDMMYYYY(v.talepbitis)!,
-      dagitimbaslangictarihi: this.toDDMMYYYY(v.dagitimbaslangic)!,
-      dagitimbitistarihi: this.toDDMMYYYY(v.dagitimbitis)!,
-      sicilgrubu: String(v.sicilgrubu!),
-    }];
+    const sp: any[] = [
+      {
+        mkodu: 'yek431',
+        dagitimid: String(this.editingId),
+        ad: v.ad!,
+        dagitimurunid: String(v.dagitimurunid!),
+        secenekler: this.buildSeceneklerStringFrom(this.editSecenekler), // null olabilir
+        talepbaslangictarihi: this.toDDMMYYYY(v.talepbaslangic)!,
+        talepbitistarihi: this.toDDMMYYYY(v.talepbitis)!,
+        dagitimbaslangictarihi: this.toDDMMYYYY(v.dagitimbaslangic)!,
+        dagitimbitistarihi: this.toDDMMYYYY(v.dagitimbitis)!,
+        sicilgrubu: String(v.sicilgrubu!),
+      },
+    ];
 
     this.profileService
       .requestMethod(sp)

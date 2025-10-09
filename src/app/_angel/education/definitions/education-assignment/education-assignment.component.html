@@ -1,0 +1,200 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-custom gutter-b my-5 pb-5">
+        <div class="card-header border-0 bg-danger" style="min-height: 45px">
+          <div class="card-title">
+            <h3 class="card-label text-white">Eğitim Atama</h3>
+            <h4 class="card-label text-gray-200 fs-8">
+              Eğitim Atamalarını Buradan Yönetebilirsiniz.
+            </h4>
+          </div>
+        </div>
+
+        <ng-container>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 my-5 pe-20">
+                <form
+                  [formGroup]="form"
+                  (ngSubmit)="onSubmit()"
+                  class="p-3 border rounded-3"
+                >
+                  <div class="row g-3">
+                    <!-- Registry Groups (MultiSelect) -->
+                    <div class="col-12">
+                      <label class="form-label fw-semibold">Sicil Grubu</label>
+                      <p-multiSelect
+                        formControlName="registryIds"
+                        [options]="registryOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        display="chip"
+                        [filter]="true"
+                        [showClear]="true"
+                        placeholder="Seçiniz"
+                        class="w-100"
+                      >
+                      </p-multiSelect>
+                      <div
+                        class="text-danger small"
+                        *ngIf="
+                          form.get('registryIds')?.touched &&
+                          form.get('registryIds')?.invalid
+                        "
+                      >
+                        Bu alan zorunludur
+                      </div>
+                    </div>
+
+                    <!-- Education (Dropdown) -->
+                    <div class="col-12">
+                      <label class="form-label fw-semibold">Eğitim</label>
+                      <p-dropdown
+                        formControlName="educationId"
+                        [options]="educationOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [filter]="true"
+                        [showClear]="true"
+                        placeholder="Seçiniz"
+                        class="w-100"
+                      >
+                      </p-dropdown>
+                      <div
+                        class="text-danger small"
+                        *ngIf="
+                          form.get('educationId')?.touched &&
+                          form.get('educationId')?.invalid
+                        "
+                      >
+                        Bu alan zorunludur
+                      </div>
+                    </div>
+
+                    <!-- Başlangıç Tarihi -->
+                    <div class="col-md-6 col-12 d-grid">
+                      <label class="form-label fw-semibold">
+                        Başlangıç <span class="text-danger">*</span>
+                      </label>
+                      <p-datePicker
+                        formControlName="startDate"
+                        [showTime]="true"
+                        hourFormat="24"
+                        [showIcon]="true"
+                        [iconDisplay]="'input'"
+                        [touchUI]="false"
+                        appendTo="body"
+                        class="w-100 custom-calendar"
+                        [style]="{ width: '100%' }"
+                        [inputStyle]="{ width: '100%' }"
+                      >
+                      </p-datePicker>
+                      <div
+                        class="text-danger small"
+                        *ngIf="
+                          form.get('startDate')?.touched &&
+                          form.get('startDate')?.invalid
+                        "
+                      >
+                        Zorunlu alan
+                      </div>
+                    </div>
+
+                    <!-- Bitiş Tarihi -->
+                    <div class="col-md-6 col-12 d-grid">
+                      <label class="form-label fw-semibold">
+                        Bitiş <span class="text-danger">*</span>
+                      </label>
+                      <p-datePicker
+                        formControlName="endDate"
+                        [showTime]="true"
+                        hourFormat="24"
+                        [showIcon]="true"
+                        [iconDisplay]="'input'"
+                        [touchUI]="false"
+                        appendTo="body"
+                        class="w-100 custom-calendar"
+                        [style]="{ width: '100%' }"
+                        [inputStyle]="{ width: '100%' }"
+                      >
+                      </p-datePicker>
+                      <div
+                        class="text-danger small"
+                        *ngIf="
+                          form.get('endDate')?.touched &&
+                          form.get('endDate')?.invalid
+                        "
+                      >
+                        Zorunlu alan
+                      </div>
+                      <div
+                        class="text-danger small"
+                        *ngIf="form.errors?.['range']"
+                      >
+                        Bitiş tarihi başlangıçtan büyük olmalı
+                      </div>
+                    </div>
+
+                    <div class="col-md-2 col-12">
+                      <label class="form-label fw-semibold d-block"
+                        >Online mı?</label
+                      >
+                      <div class="form-check form-switch mt-1">
+                        <input
+                          class="form-check-input switch-danger"
+                          type="checkbox"
+                          formControlName="online"
+                          role="switch"
+                          id="flexSwitchCheckDefault"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-10 col-12">
+                      <label class="form-label fw-semibold">{{
+                        egitimLabel
+                      }}</label>
+                      <input
+                        pInputText
+                        type="text"
+                        class="w-100"
+                        placeholder="{{ egitimLabel }} giriniz"
+                        formControlName="egitimadi"
+                      />
+                    </div>
+
+                    <div class="col-md- col-12">
+                      <label class="form-label fw-semibold"
+                        >Sicil Listesi</label
+                      >
+                      <app-registry-list
+                        [selectedTab]="selectedTab"
+                        [clear]="clear"
+                        [fromWhere]="[1]"
+                        (loadingEvent)="loadingEvent($event)"
+                        (requestTimeEvent)="getRequestTime($event)"
+                        [refreshEvent]="refreshEvent"
+                        [filterEvent]="filterEvent"
+                        [bulkChangeEvent]="bulkChangeEvent"
+                        [userdef]="'1'"
+                      >
+                      </app-registry-list>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="col-12 d-flex gap-2 justify-content-end">
+                      <button type="submit" class="btn btn-primary">
+                        Gönder
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

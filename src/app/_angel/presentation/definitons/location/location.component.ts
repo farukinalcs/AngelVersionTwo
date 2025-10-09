@@ -72,8 +72,9 @@ export class LocationComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   tabList = [
+        { name: 'Lokasyon Atanmışlar', type: '0' },
     { name: 'Atanmamışlar', type: '1' },
-    { name: 'Atanmışlar', type: '0' },
+
   ];
   selectedTab = this.tabList[0];
 

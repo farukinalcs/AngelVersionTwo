@@ -11,7 +11,7 @@ import {
   StatVm,
 } from './overview.model';
 
-// Overview görünürlük anahtarları (persist)
+
 export const OVERVIEW_VIS_KEYS = {
   charts: 'overview_dashboard_charts_visible',
   stats: 'overview_dashboard_stats_visible',
@@ -21,7 +21,6 @@ export const OVERVIEW_VIS_KEYS = {
 export class InventoryService {
   private profile = inject(ProfileService);
 
-  /** Ortak: SP cevabını doğrula, başarısızsa hata fırlat */
   private assertOk<X>(resp: any[]): ApiEnvelope<X> {
     const env = resp?.[0] as ApiEnvelope<X> | undefined;
     if (!env || env.z?.islemsonuc === -1) {
@@ -30,7 +29,6 @@ export class InventoryService {
     return env;
   }
 
-  /** Ortak: ilk satırdan labels/values çıkar */
   private kvFromFirstRow(row: Record<string, any> | undefined) {
     const safeRow = row ?? {};
     const labels = Object.keys(safeRow);
@@ -38,7 +36,6 @@ export class InventoryService {
     return { labels, values };
   }
 
-  // ===================== Charts =====================
 
   getSarfChart(period: TimePeriod) {
     const sp = [{ mkodu: 'yek399', tip: period }];
@@ -156,7 +153,6 @@ export class InventoryService {
         const vm: ChartVm = {
           title,
           description,
-          // Donut/Pie → number[] (modelde union)
           series: values,
           options: {
             chart: { type: 'donut', height: 350, background: 'transparent' },
@@ -195,7 +191,7 @@ export class InventoryService {
           value: String(row?.buay ?? '0'),
           unit: 'Adet',
           change: toPercentString(row?.artisorani, 2),
-          icon: 'bi bi-clock',
+          icon: 'fa-solid fa-suitcase',
           color: 'text-primary',
         };
         return vm;
@@ -204,7 +200,6 @@ export class InventoryService {
   }
 
   getToplamEkipmanSahibi(period: TimePeriod) {
-    // SP tip istiyorsa: const sp = [{ mkodu: 'yek401', tip: period }];
     const sp = [{ mkodu: 'yek401' }];
     return this.profile.requestMethod(sp).pipe(
       map((resp: any[]) => {
@@ -261,9 +256,6 @@ export class InventoryService {
     );
   }
 
-  // ===================== Persisted Visibility =====================
-
-  /** Görünür id listesini kaydet */
   saveVisibility(key: string, ids: string[]) {
     const sp = [{ mkodu: 'yek104', ad: key, deger: JSON.stringify(ids) }];
     return this.profile.requestMethod(sp, { noloading: 'true' }).pipe(
@@ -275,11 +267,6 @@ export class InventoryService {
     );
   }
 
-  /**
-   * Görünür id listesini getir.
-   * Dönüş: { status: number, ids: string[] | null }
-   * status: -1 (hata) | 9 (ilk ayar yok) | 1 (başarılı)
-   */
   getVisibility(key: string) {
     const sp = [{ mkodu: 'yek105', ad: key }];
     return this.profile.requestMethod(sp, { noloading: 'true' }).pipe(
