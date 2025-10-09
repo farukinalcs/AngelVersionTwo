@@ -38,11 +38,11 @@ export class PerformanceDefinitionsComponent implements OnInit, OnDestroy {
     { title: 'Değerlendirme Soruları', value: 3},
 
   ];
-
+ 
   tabList: any[] = [
-    {id: 1, label: this.translateService.instant("Değerlendirme Kategorileri"), icon: "fa-solid fa-building"},
-    {id: 2, label: this.translateService.instant("Cevap Ölçekleri"), icon: "fa-solid fa-helmet-safety"},
-    {id: 3, label: this.translateService.instant("Değerlendirme Soruları"), icon: "fa-solid fa-clipboard-user"},
+    {id: 1, label: this.translateService.instant("Değerlendirme Kategorileri"), icon: "fa-solid fa-bars"},
+    {id: 2, label: this.translateService.instant("Cevap Ölçekleri"), icon: "fa-solid fa-sliders"},
+    {id: 3, label: this.translateService.instant("Değerlendirme Soruları"), icon: "fa-solid fa-question"},
   ];
 
   ngOnDestroy(){

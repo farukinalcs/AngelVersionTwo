@@ -47,9 +47,7 @@ export class PerformanceDashboardComponent implements OnInit, OnDestroy {
   myselfChecked:boolean = false;
   isValid: boolean = true;
 
-  as:number;
-  us:number;
-  myself:number;
+
 
   startDate: Date | null = null;
   endDate: Date | null = null;
@@ -162,25 +160,6 @@ export class PerformanceDashboardComponent implements OnInit, OnDestroy {
   }
 
 
-
-  editCategory(cat: any) {
-    // this.selectedCategoryId = cat.Id;
-    this.perform.edit_Category(this.selectedFormId ?? 0, cat.Id ?? 0, cat.kategoripuan).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
-      const result = response[0].x[0].islemsonuc;
-      console.log("editCategory:", result);
-      if (result == 1) {
-        this.toastrService.success(
-          "Kategori Güncelleme İşlemi Başarılı");
-        this._formDetailModal = false;
-      } else {
-        this.toastrService.error(
-          "Kategori Güncelleme İşlemi Başarısız");
-      }
-      this.ref.detectChanges();
-    });
-    // cat burada zaten güncellenmiş haliyle geliyor
-  }
-
   editQuestion(item: any) {
     console.log('editQuestion:', item);
   }
@@ -193,15 +172,6 @@ export class PerformanceDashboardComponent implements OnInit, OnDestroy {
     return this.scaleS.find(scale => scale.olcekid === question.olcekid);
   }
 
-  onCheckboxChange() {
-
-    this.as = this.asChecked ? 1 : 0;
-    this.us = this.usChecked ? 1 : 0;
-    this.myself = this.myselfChecked ? 1 : 0;
-     
-    this.isValid = this.asChecked || this.usChecked || this.myselfChecked;
-    console.log('asChecked:', this.as, 'usChecked:', this.us, 'myselfChecked:', this.myself);
-  }
 
   onSicilGroupChange(event:any){
     console.log('Seçilen Sicil Grubu ID:', this.selectedSicilGroupId);
@@ -233,27 +203,6 @@ export class PerformanceDashboardComponent implements OnInit, OnDestroy {
     console.log(`${type.toUpperCase()} Date (end):`, this.endDateStr);
   }
 
-  formMatchSicil(){
-    console.log("1",this.selectedFormId)
-    console.log("2",this.selectedSicilGroupId)
-    console.log("3",this.as)
-    console.log("4",this.us)
-    console.log("5",this.myself)
-    console.log("6",this.startDateStr)
-    console.log("7",this.endDateStr)
-    if(this.isValid){
-      this.perform.formMatchSicil(this.selectedFormId ?? 0,this.selectedSicilGroupId ?? 0,this.as,this.us,this.myself,this.startDateStr,this.endDateStr).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
-        const result = response;
-        console.log("formMatchSicil:", result );
-        this.ref.detectChanges();
-      });
-    }else {
-      this.toastrService.error(
-        "Lütfen Formun Kimin Tarafından Cevaplanacağını Seçiniz");
-    }
-
-    
-  }
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next(true);

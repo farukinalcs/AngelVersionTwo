@@ -64,18 +64,18 @@
     </p-dropdown>
   </div>
   <div class="form-group">
-    <p-checkbox [(ngModel)]="asChecked" [binary]="true" inputId="as" (ngModelChange)="onCheckboxChange()"></p-checkbox>
+    <p-checkbox [(ngModel)]="asChecked" [binary]="true" inputId="as" ></p-checkbox>
     <label for="as" class="ml-2">As</label>
   </div>
 
   <div class="form-group">
-    <p-checkbox [(ngModel)]="usChecked" [binary]="true" inputId="us" (ngModelChange)="onCheckboxChange()"></p-checkbox>
+    <p-checkbox [(ngModel)]="usChecked" [binary]="true" inputId="us" ></p-checkbox>
     <label for="us" class="ml-2">ÜS</label>
   </div>
 
   <div class="form-group">
     <p-checkbox [(ngModel)]="myselfChecked" [binary]="true" inputId="myself"
-      (ngModelChange)="onCheckboxChange()"></p-checkbox>
+    ></p-checkbox>
     <label for="myself" class="ml-2">Kendisi</label>
   </div>
 
@@ -140,7 +140,7 @@
   
   <div style="text-align: right; margin-top: 1rem;">
     <button pButton type="button" icon="pi pi-save" label="Kaydet" class="p-button-sm p-button-warning"
-      (click)="formMatchSicil()">
+      >
     </button>
   </div>
 
@@ -189,7 +189,7 @@
         </td>
         <td>
           <button pButton type="button" icon="pi pi-save" label="Güncelle" class="p-button-sm p-button-info"
-            (click)="editCategory(cat)">
+           >
           </button>
         </td>
       </tr>

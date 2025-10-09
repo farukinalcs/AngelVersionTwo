@@ -1,96 +1,96 @@
-// .definitions{
+.definitions{
   
-//     background: url(https://www.meyer.com.tr/cdn/img/briefly2.png) right 0;
-//     height: 100vh;
-// }
+    background: url(https://www.meyer.com.tr/cdn/img/briefly2.png) right 0;
+    height: 100vh;
+}
 
   
-// .category-row {
-//     background-color: #e0e0e0;
-//     font-weight: bold;
-//   }
+.category-row {
+    background-color: #e0e0e0;
+    font-weight: bold;
+  }
   
-//   .question-row {
-//     background-color: #f9f9f9;
-//     border-bottom: 1px solid #ddd;
-//   }
+  .question-row {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+  }
   
-//   .question-row:hover {
-//     background-color: #f1f1f1;
-//   }
-//   .puan-input {
-//     width: 60px !important;
-//     padding: 2px 6px;
-//     text-align: center;
-//   }
+  .question-row:hover {
+    background-color: #f1f1f1;
+  }
+  .puan-input {
+    width: 60px !important;
+    padding: 2px 6px;
+    text-align: center;
+  }
 
-//   .custom-chip {
-//     display: inline-flex;
-//     align-items: center;
-//     border-radius: 16px;
-//     font-family: Arial, sans-serif;
-//     cursor: pointer;
-//   }
+  .custom-chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 16px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+  }
   
-//   .custom-icon {
-//     background-color: #ffc0cb;
-//     color: white;
-//     width: 32px;
-//     height: 32px;
-//     border-radius: 50%;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     font-weight: bold;
-//     font-size: 18px;
-//   }
+  .custom-icon {
+    background-color: #ffc0cb;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+  }
   
-//   .custom-label {
-//     margin-left: 10px;
-//     font-weight: bolder;
-//   }
-//   .my-blue-btn .p-button {
-//     background-color: #1976d2 !important;
-//     border-color: #1976d2 !important;
-//     color: white !important;
-//   }
+  .custom-label {
+    margin-left: 10px;
+    font-weight: bolder;
+  }
+  .my-blue-btn .p-button {
+    background-color: #1976d2 !important;
+    border-color: #1976d2 !important;
+    color: white !important;
+  }
   
-// .sicil{
-//     margin: 0 auto;
-//     display: flex;
-//     flex-direction: column;
-//     gap: 15px;
-//     min-width: 50vw;
-//     padding-top: 5px;
-//     padding-bottom: 5px;
-//   }
-//   .form-group {
-//     display: flex;
-//     align-items: center;
-//     margin-bottom: 1rem;
-//   }
+.sicil{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 50vw;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
   
-//   .form-group p-checkbox {
-//     margin-right: 0.5rem;
-//   }
+  .form-group p-checkbox {
+    margin-right: 0.5rem;
+  }
   
-//   .form-group label {
-//     min-width: 60px; /* label genişliği ayarlanabilir */
-//   }
+  .form-group label {
+    min-width: 60px; /* label genişliği ayarlanabilir */
+  }
   
-//   .form-group p-datepicker {
-//     width: 200px; /* datepicker genişliği */
-//   }
+  .form-group p-datepicker {
+    width: 200px; /* datepicker genişliği */
+  }
 
-//   .btn-right {
-//     float: right;
-//     margin-top: 1rem; /* İstersen biraz üst boşluk */
-//   }
-//   .card-custom {
-//     width: 195px;   /* %25 küçültme */
-//     height: 225px;  /* %25 küçültme */
-//     overflow: hidden;
-//   }
+  .btn-right {
+    float: right;
+    margin-top: 1rem; /* İstersen biraz üst boşluk */
+  }
+  .card-custom {
+    width: 195px;   /* %25 küçültme */
+    height: 225px;  /* %25 küçültme */
+    overflow: hidden;
+  }
 
 
 /* Genel container tam ekran, dikey layout */

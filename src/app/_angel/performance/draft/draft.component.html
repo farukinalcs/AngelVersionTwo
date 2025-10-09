@@ -1,76 +1,112 @@
 <div class="container-fluid mt-5">
 
+    <div class="top p-3 border-bottom" style="height: 40%; overflow-y: auto;">
+        <!-- <h5 class="mb-3">📌 Yayınlanmaya Hazır Şablonlar</h5> -->
+        <div class="d-flex flex-wrap gap-3">
+            <p-card [style]="{ width: '260px', height: '300px', cursor: 'pointer' }"
+                styleClass="d-flex flex-column justify-content-center align-items-center" (click)="_openNewDraft = true">
+
+                <ng-template #header>
+                    <div
+                        style="width: 100%; height: 120px; background-color: #fff; display: flex; align-items: center; justify-content: center;">
+                        <i class="pi pi-plus" style="font-size: 3.5rem; color: #000;margin-top: 5px;"></i>
+                    </div>
+                </ng-template>
+
+                <ng-template #title>
+                    <div
+                        style="text-align: center;font-weight: bold; background-color: #fff; font-size: 1rem; margin-top: 10px;">
+                        YENİ FORM OLUŞTUR
+                    </div>
+                </ng-template>
+
+                <ng-template #subtitle>
+                    <div style="height: 40px;"></div>
+                </ng-template>
+            </p-card>
+            <p-card *ngFor="let item of _draft_s" [style]="{ width: '260px', height: '300px', overflow: 'hidden' }"
+                styleClass="d-flex flex-column justify-content-between">
+
+                <ng-template #header>
+                    <img alt="Card" src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
+                        style="width: 100%; height: 120px; object-fit: cover;" />
+                </ng-template>
+
+                <ng-template #title>
+                    <div style="font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        {{ item.baslik }}
+                    </div>
+                </ng-template>
+
+                <ng-template #subtitle>
+                    <div style="font-size: 0.9rem; height: 40px; overflow: hidden;">
+                        {{ item.aciklama }}
+                    </div>
+                </ng-template>
+
+                <ng-template #footer>
+                    <div class="d-flex justify-content-center gap-2 mt-2 w-100">
+                        <p-button label="Sil" icon="pi pi-trash"  (click)="draft_d(item)"/>
+                        <p-button label="Düzenle" styleClass="my-blue-btn mr-2" (click)="editDraft(item)" />
+                   
+                    </div>
+                </ng-template>
+            </p-card>
+        </div>
+    </div>
+</div>
+
+
+<p-dialog header="" [(visible)]="_openNewDraft" [position]="'top'" [modal]="true" [style]="{width: '50vw'}"
+    [baseZIndex]="-40" [draggable]="false" [resizable]="false" (onHide)="_openNewDraft = false">
+
+    <label for="draftTitle" class="border">Yeni Değerlendirme Form Kaydı</label>
+    <div class="p-field">
+        <p-iftalabel style="margin-top: 3px;">
+            <input pInputText id="draftTitle" [(ngModel)]="draftTitle" class="full-width-input" />
+            <label for="draftTitle">Değerlendirme Form Başlığı:</label>
+        </p-iftalabel>
+    </div>
+
+    <div class="p-field">
+        <p-iftalabel style="margin-top: 3px;">
+            <input pInputText id="explanation" [(ngModel)]="explanation" class="full-width-input" />
+            <label for="explanation">Form Açıklaması:</label>
+        </p-iftalabel>
+    </div>
+
+
+
+    <div style="text-align: right; margin-top: 1rem;">
+        <button pButton type="button" icon="pi pi-save" label="Kaydet" class="p-button-sm p-button-warning"
+            (click)="draft_i()">
+        </button>
+    </div>
+
+</p-dialog>
+
+
+<p-dialog header="" [(visible)]="_editDraft" [position]="'top'" [modal]="true" [style]="{width: '60vw'}"
+    [baseZIndex]="-40" [draggable]="false" [resizable]="false" (onHide)="_editDraft = false">
     <div class="card flex justify-center scale-form-box">
         <p-stepper [value]="1" class="basis-[50rem]">
+
             <p-step-list>
-                <p-step [value]="1">Oluştur</p-step>
-                <p-step [value]="2">Düzenle</p-step>
-                <p-step [value]="3">Bitir</p-step>
+                <p-step [value]="1">Düzenle</p-step>
+                <p-step [value]="2">Bitir</p-step>
             </p-step-list>
+
             <p-step-panels>
+
                 <p-step-panel [value]="1">
-                    <ng-template #content let-activateCallback="activateCallback">
-                        <div style="display:flex; flex-direction:column; gap:12px; width:100%;">
-                
-                            <div>
-                                <button pButton type="button" label="Oluştur" (click)="_openNewDraft = true"
-                                    class="full-width-button"></button>
-
-                            </div>
-                            <div style="width:100%; display:flex; justify-content:center;">
-                            
-
-
-                                <p-card [style]="{ width: '260px', height: '300px', overflow: 'hidden' }"
-                                    styleClass="d-flex flex-column justify-content-between border-dashed border-surface-200">
-
-                                    <ng-template #header>
-                                        <img alt="Card" src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
-                                            style="width: 100%; height: 120px; object-fit: cover;" />
-                                    </ng-template>
-
-                                    <ng-template #title>
-                                        <div
-                                            style="font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                            {{ this._draft_s[0]?.baslik }}
-                                        </div>
-                                    </ng-template>
-
-                                    <ng-template #subtitle>
-                                        <div style="font-size: 0.9rem; height: 40px; overflow: hidden;">
-                                            {{ this._draft_s[0]?.aciklama }}
-                                        </div>
-                                    </ng-template>
-
-                                    <ng-template #footer>
-                                        <div class="d-flex justify-content-center gap-2 mt-2 w-100">
-                                            <p-button label="Soru Ekle" styleClass="my-blue-btn mr-2"
-                                                (onClick)="activateCallback(2)" />
-                                        </div>
-                                    </ng-template>
-                                </p-card>
-                            </div>
-
-
-                        </div>
-                        <div class="step-actions">
-                            <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
-                                (onClick)="activateCallback(2)" />
-                        </div>
-
-                    </ng-template>
-                </p-step-panel>
-
-                <p-step-panel [value]="2">
                     <ng-template #content let-activateCallback="activateCallback">
                         <div class="flex flex-col h-48">
                             <div>
                                 <div class="p-field mb-4">
                                     <label for="formList">Form seçimi</label>
-                                    <p-dropdown [options]="_draft_s" [(ngModel)]="_selectedDraftId"
-                                        optionLabel="baslik" optionValue="id" placeholder="Seçiniz"
-                                        (onChange)="onFormChange($event.value)" class="full-width-input"
-                                        [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
+                                    <p-dropdown [options]="_draft_s" [(ngModel)]="_selectedDraftId" optionLabel="baslik"
+                                        optionValue="id" placeholder="Seçiniz" (onChange)="onFormChange($event.value)"
+                                        class="full-width-input" [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
                                     </p-dropdown>
                                 </div>
                                 <div class="p-field mb-4">
@@ -89,33 +125,37 @@
                                         [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
                                     </p-dropdown>
                                 </div>
-                                <button pButton type="button" label="Soru Ekle" (click)="form_question()"
+                                <button pButton type="button" label="Soru Ekle" (click)="draft_question_i()"
                                     class="full-width-button"></button>
                             </div>
                         </div>
-  
+
                         <div class="step-actions">
-                            <p-button label="Back" severity="secondary" icon="pi pi-arrow-left"
-                                (onClick)="activateCallback(1)" />
+                            <!-- <p-button label="Back" severity="secondary" icon="pi pi-arrow-left"
+                                (onClick)="activateCallback(1)" /> -->
                             <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
-                                (onClick)="activateCallback(3)" />
+                                (onClick)="activateCallback(2)" (onClick)="draftWithQuest_s(_selectedDraftId)" />
                         </div>
 
                     </ng-template>
                 </p-step-panel>
 
-                <p-step-panel [value]="3">
+                <p-step-panel [value]="2">
+
                     <ng-template #content let-activateCallback="activateCallback">
                         <div class="flex flex-col h-48">
                             <div
                                 class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
-                                <p-table #table [value]="categoryS" [tableStyle]="{ 'min-width': '60rem' }"
+                                <!-- <p-table #table [value]="categoryS" [tableStyle]="{ 'min-width': '60rem' }"
                                     dataKey="id">
 
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th style="width: 60%">Kategori / Soru</th>
+                                            <th></th>
+                                            <th></th>
                                         </tr>
+                                        
                                     </ng-template>
 
                                     <ng-template pTemplate="body" let-cat>
@@ -152,85 +192,83 @@
                                                             }}&nbsp;&nbsp;</span>
                                                         <span *ngIf="scale.cevap5">e) {{ scale.cevap5 }}</span>
                                                     </ng-container>
-
+                                                    <button pButton type="button" icon="pi pi-trash" label="Sil" class="p-button-sm p-button-warning"
+                                                 >
+                                                  </button>
                                                 </div>
 
                                             </td>
                                         </tr>
-
+                               
+                                          
                                     </ng-template>
 
-                                </p-table>
+                                </p-table> -->
+                                <p-table #table [value]="categoryS" [tableStyle]="{ 'min-width': '60rem' }" dataKey="id">
+                                    <!-- Header -->
+                                    <ng-template pTemplate="header">
+                                      <tr>
+                                        <th style="width: 60%">Kategori / Soru</th>
+                                        <th style="width: 20%; text-align: center;">İşlem</th>
+                                      </tr>
+                                    </ng-template>
+                                  
+                                    <!-- Body -->
+                                    <ng-template pTemplate="body" let-cat>
+                                      <!-- Kategori satırı -->
+                                      <tr style="background-color: #e0e0e0; font-weight: bold;">
+                                        <td colspan="3" style="color:#ed1b24; padding: 6px 10px;">
+                                          {{ cat.Ad }}
+                                        </td>
+                                      </tr>
+                                  
+                                      <!-- Sorular -->
+                                      <tr *ngFor="let question of getQuestionsByCategory(cat.Ad)" style="background-color: #f9f9f9;">
+                                        <td style="padding-left: 20px;">
+                                          <div style="color:#0d47a1;font-weight: bold;">
+                                            {{ question.aciklama }}
+                                          </div>
+                                          <div style="font-size: 0.85rem; margin-top: 3px;">
+                                            <ng-container *ngIf="getScaleByQuestion(question) as scale">
+                                              <span *ngIf="scale.cevap1">a) {{ scale.cevap1 }} </span>
+                                              <span *ngIf="scale.cevap2">b) {{ scale.cevap2 }} </span>
+                                              <span *ngIf="scale.cevap3">c) {{ scale.cevap3 }} </span>
+                                              <span *ngIf="scale.cevap4">d) {{ scale.cevap4 }} </span>
+                                              <span *ngIf="scale.cevap5">e) {{ scale.cevap5 }}</span>
+                                            </ng-container>
+                                          </div>
+                                        </td>
+                                  
+                                        <!-- Sil butonu -->
+                                        <td style="text-align: center;">
+                                          <button
+                                            pButton
+                                            type="button"
+                                            icon="pi pi-trash"
+                                            class="p-button-sm p-button-danger"
+                                           
+                                          ></button>
+                                        </td>
+                                      </tr>
+                                    </ng-template>
+                                  </p-table>
                             </div>
                         </div>
+
                         <div class="step-actions">
                             <p-button label="Back" icon="pi pi-arrow-left" iconPos="right"
-                                (onClick)="activateCallback(2)" />
+                                (onClick)="activateCallback(1)" />
+                        
+                            <p-button label="Yayına Hazır" (click)=is_ready()  icon="pi pi-check"/>
                         </div>
 
+                  
                     </ng-template>
+                
                 </p-step-panel>
+
             </p-step-panels>
         </p-stepper>
-    </div>
-    <div class="top p-3 border-bottom" style="height: 40%; overflow-y: auto;">
-        <!-- <h5 class="mb-3">📌 Yayınlanmaya Hazır Şablonlar</h5> -->
-        <div class="d-flex flex-wrap gap-3">
-          <p-card *ngFor="let item of _draft_s" [style]="{ width: '260px', height: '300px', overflow: 'hidden' }"
-            styleClass="d-flex flex-column justify-content-between">
-    
-            <ng-template #header>
-              <img alt="Card" src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
-                style="width: 100%; height: 120px; object-fit: cover;" />
-            </ng-template>
-    
-            <ng-template #title>
-              <div style="font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                {{ item.baslik }}
-              </div>
-            </ng-template>
-    
-            <ng-template #subtitle>
-              <div style="font-size: 0.9rem; height: 40px; overflow: hidden;">
-                {{ item.aciklama }}
-              </div>
-            </ng-template>
-    
-            <ng-template #footer>
-              <div class="d-flex justify-content-center gap-2 mt-2 w-100">
-                <p-button label="Düzenle" styleClass="my-blue-btn mr-2" />
-              </div>
-            </ng-template>
-          </p-card>
-        </div>
-      </div>
-</div>
-
-
-<p-dialog header="" [(visible)]="_openNewDraft" [position]="'top'" [modal]="true" [style]="{width: '50vw'}"
-    [baseZIndex]="-40" [draggable]="false" [resizable]="false" (onHide)="_openNewDraft = false">
-
-    <label for="draftTitle" class="border">Yeni Değerlendirme Form Kaydı</label>
-    <div class="p-field">
-        <p-iftalabel style="margin-top: 3px;">
-            <input pInputText id="draftTitle" [(ngModel)]="draftTitle" class="full-width-input" />
-            <label for="draftTitle">Değerlendirme Form Başlığı:</label>
-        </p-iftalabel>
-    </div>
-
-    <div class="p-field">
-        <p-iftalabel style="margin-top: 3px;">
-            <input pInputText id="explanation" [(ngModel)]="explanation" class="full-width-input" />
-            <label for="explanation">Form Açıklaması:</label>
-        </p-iftalabel>
-    </div>
-
-
-
-    <div style="text-align: right; margin-top: 1rem;">
-        <button pButton type="button" icon="pi pi-save" label="Kaydet" class="p-button-sm p-button-warning"
-            (click)="draft_i()">
-        </button>
     </div>
 
 </p-dialog>
