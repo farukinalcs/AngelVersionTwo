@@ -29,6 +29,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { AccordionModule } from 'primeng/accordion';
 import { DialogModule } from 'primeng/dialog';
 import { StepperModule } from 'primeng/stepper';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { StepperModule } from 'primeng/stepper';
     DatePickerModule,
     AccordionModule,
     DialogModule,
-    StepperModule
+    StepperModule,
+    CarouselModule
   ]
 })
 export class PerformanceModule { }

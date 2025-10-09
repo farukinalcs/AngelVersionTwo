@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PerformanceDashboardComponent } from './performance-dashboard/performance-dashboard.component';
 import { PerformanceDefinitionsComponent } from './performance-definitions/performance-definitions.component';
 import { ProcessManagementComponent } from './process-management/process-management.component';
+import { DraftComponent } from './draft/draft.component';
 
 
 
@@ -19,10 +20,10 @@ const routes: Routes = [
     path:'process',
     component:ProcessManagementComponent
   },
-  // {
-  //   path:'Surveyyy',
-  //   component:
-  // }
+  {
+    path:'drafts',
+    component:DraftComponent
+  }
 
 ];
 @NgModule({

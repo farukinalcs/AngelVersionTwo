@@ -172,13 +172,27 @@ export class PerformanceService {
       aciklama:explanation.toString()
       
     }]
-    console.log("draft_i:",sp);
+    return this.requestMethod(sp);
+  }
+
+  draft_s(id:number){
+    var sp: any[] = [{
+      mkodu: 'yek434',
+      id:id.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  draft_d(id:number){
+    var sp: any[] = [{
+      mkodu: 'yek455',
+      id:id.toString()
+    }]
     return this.requestMethod(sp);
   }
 
 
-
-  sablon_question(formId:number,questionId:number,catId:number,){
+  draft_question_i(formId:number,questionId:number,catId:number,){
     console.log("formId:",formId,"question",questionId,"CAT",catId);
     var sp: any[] = [{
       mkodu: 'yek318',
@@ -189,24 +203,43 @@ export class PerformanceService {
     return this.requestMethod(sp);
   }
 
-  edit_Category(formId:number,catId:number,puan:any){
+  draft_question_d(questionId:number,catId:number,){
+    console.log("question",questionId,"CAT",catId);
+    var sp: any[] = [{
+      mkodu: 'yek440',
+      id:questionId.toString(),
+      kategoriid:catId.toString()
+    }]
+    return this.requestMethod(sp);
+  }
+
+  is_ready(id:number){
+    var sp: any[] = [{
+      mkodu: 'yek441',
+      id:id.toString(),
+    }]
+    return this.requestMethod(sp);
+  }
+
+  edit_Category_Puan(formId:number,catId:number,puan:any){
     var sp: any[] = [{
       mkodu: 'yek320',
-      formid:formId.toString(),
+      sablonid:formId.toString(),
       kategoriid:catId.toString(),
       puan:puan.toString()
     }]
     return this.requestMethod(sp);
   }
 
-  edit_Question(formId:number,catId:number,questionId:number,puan:any){
+  edit_Question_Puan(formId:number,catId:number,questionId:number,puan:any){
     var sp: any[] = [{
       mkodu: 'yek321',
-      formid:formId.toString(),
+      sablonid:formId.toString(),
       kategoriid:catId.toString(),
       soruid:questionId.toString(),
       puan:puan.toString()
     }]
+    console.log("edit_Question_Puan",sp)
     return this.requestMethod(sp);
   }
 
@@ -240,13 +273,7 @@ export class PerformanceService {
   }
 
   
-  draft_s(id:number){
-    var sp: any[] = [{
-      mkodu: 'yek434',
-      id:id.toString()
-    }]
-    return this.requestMethod(sp);
-  }
+
 
   form_s(id:number){
     var sp: any[] = [{

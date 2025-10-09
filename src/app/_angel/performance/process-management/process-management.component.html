@@ -1,176 +1,82 @@
-<!-- <div class="container-fluid d-flex flex-wrap justify-content-start gap-3 definitions">
 
-    <p-card *ngFor="let item of _draft_s" [style]="{ width: '260px', height: '300px', overflow: 'hidden' }"
-      styleClass="d-flex flex-column justify-content-between">
-  
-      <ng-template #header>
-        <img alt="Card" src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
-          style="width: 100%; height: 120px; object-fit: cover;" />
-      </ng-template>
-  
-      <ng-template #title>
-        <div style="font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-          {{ item.baslik }}
-        </div>
-      </ng-template>
-  
-      <ng-template #subtitle>
-        <div style="font-size: 0.9rem; height: 40px; overflow: hidden;">
-          {{ item.aciklama }}
-        </div>
-      </ng-template>
-  
-      <ng-template #footer>
-        <div class="d-flex justify-content-center gap-2 mt-2 w-100">
-
-  
-          <p-button label="Yayınla" styleClass="my-blue-btn mr-2" (click)="draftMatch(item)" />
-  
-        </div>
-      </ng-template>
-    </p-card>
-
-</div> -->
-
-<!-- <div class="container-fluid h-100 d-flex flex-column" style="height: 100vh;">
-
-
-    <div class="top p-3 border-bottom" style="height: 40%; overflow-y: auto;">
-      <h5 class="mb-3">📌 Yayınlanmaya Hazır Şablonlar</h5>
-      <div class="d-flex flex-wrap gap-3">
-        <p-card *ngFor="let item of _draft_s" 
-        styleClass="card-custom d-flex flex-column justify-content-between">
-    
-          <ng-template #header>
-            <img alt="Card" src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
-              style="width: 100%; height: 120px; object-fit: cover;" />
-          </ng-template>
-    
-          <ng-template #title>
-            <div style="font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-              {{ item.baslik }}
-            </div>
-          </ng-template>
-    
-          <ng-template #subtitle>
-            <div style="font-size: 0.9rem; height: 40px; overflow: hidden;">
-              {{ item.aciklama }}
-            </div>
-          </ng-template>
-    
-          <ng-template #footer>
-            <div class="d-flex justify-content-center gap-2 mt-2 w-100">
-              <p-button label="Yayınla" styleClass="my-blue-btn mr-2" (click)="draftMatch(item)" />
-            </div>
-          </ng-template>
-        </p-card>
-      </div>
-    </div>
-  
-   
-    <div class="bottom d-flex" style="height: 60%; overflow: hidden;">
-
-      <div class="left flex-fill p-3 border-end" style="overflow-y: auto;">
-        <h5 class="mb-3">🔄 Süreci Devam Edenler</h5>
-        <div class="d-flex flex-wrap gap-3">
-            <p-card *ngFor="let item of _draft_s"
-            styleClass="card-custom d-flex flex-column justify-content-between">
-      
-            <ng-template #header>
-              <img alt="Card" src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
-                style="width: 100%; height: 120px; object-fit: cover;" />
-            </ng-template>
-      
-            <ng-template #title>
-              <div style="font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                {{ item.baslik }}
-              </div>
-            </ng-template>
-      
-            <ng-template #subtitle>
-              <div style="font-size: 0.9rem; height: 40px; overflow: hidden;">
-                {{ item.aciklama }}
-              </div>
-            </ng-template>
-      
-            <ng-template #footer>
-              <div class="d-flex justify-content-center gap-2 mt-2 w-100">
-                <p-button label="Yayınla" styleClass="my-blue-btn mr-2" (click)="draftMatch(item)" />
-              </div>
-            </ng-template>
-          </p-card>
-        </div>
-      </div>
-
-      <div class="right flex-fill p-3" style="overflow-y: auto;">
-        <h5 class="mb-3">✅ Süreci Tamamlananlar</h5>
-        <div class="d-flex flex-wrap gap-3">
-            <p-card *ngFor="let item of _draft_s" 
-            styleClass="card-custom d-flex flex-column justify-content-between">
-      
-            <ng-template #header>
-              <img alt="Card" src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
-                style="width: 100%; height: 120px; object-fit: cover;" />
-            </ng-template>
-      
-            <ng-template #title>
-              <div style="font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                {{ item.baslik }}
-              </div>
-            </ng-template>
-      
-            <ng-template #subtitle>
-              <div style="font-size: 0.9rem; height: 40px; overflow: hidden;">
-                {{ item.aciklama }}
-              </div>
-            </ng-template>
-      
-            <ng-template #footer>
-              <div class="d-flex justify-content-center gap-2 mt-2 w-100">
-                <p-button label="Yayınla" styleClass="my-blue-btn mr-2" (click)="draftMatch(item)" />
-              </div>
-            </ng-template>
-          </p-card>
-        </div>
-      </div>
-  
-    </div>
-  </div> -->
   <div class="container-fluid h-100 d-flex flex-column" style="height: 100vh;">
 
     <!-- TOP (40%) -->
     <div class="top p-3 border-bottom" style="height: 40%; overflow-y: auto;">
-      <h5 class="mb-3">📌 Yayınlanmaya Hazır Şablonlar</h5>
-      <div class="d-flex flex-wrap gap-3">
-        <p-card *ngFor="let item of _draft_s" [style]="{ width: '260px', height: '300px', overflow: 'hidden' }"
-          styleClass="d-flex flex-column justify-content-between">
-  
-          <ng-template #header>
-            <img alt="Card" src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
-              style="width: 100%; height: 120px; object-fit: cover;" />
-          </ng-template>
-  
-          <ng-template #title>
-            <div style="font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-              {{ item.baslik }}
-            </div>
-          </ng-template>
-  
-          <ng-template #subtitle>
-            <div style="font-size: 0.9rem; height: 40px; overflow: hidden;">
-              {{ item.aciklama }}
-            </div>
-          </ng-template>
-  
-          <ng-template #footer>
-            <div class="d-flex justify-content-center gap-2 mt-2 w-100">
-              <p-button label="Yayınla" styleClass="my-blue-btn mr-2" (click)="draftMatch(item)" />
-            </div>
-          </ng-template>
-        </p-card>
+        <h5 class="mb-3">📌 Yayınlanmaya Hazır Şablonlar</h5>
+      
+        <div class="d-flex flex-wrap gap-3">
+          <!-- Yeni oluşturma kartı -->
+          <p-card 
+            [style]="{ width: '260px', height: '300px', cursor: 'pointer' }"
+            styleClass="d-flex flex-column justify-content-center align-items-center"
+            (click)="goDrafts()">
+      
+            <ng-template #header>
+              <div
+                style="width: 100%; height: 120px; background-color: #fff; display: flex; align-items: center; justify-content: center;">
+                <i class="pi pi-plus" style="font-size: 3.5rem; color: #000;margin-top: 5px;"></i>
+              </div>
+            </ng-template>
+      
+            <ng-template #title>
+              <div
+                style="text-align: center;font-weight: bold; background-color: #fff; font-size: 1rem; margin-top: 10px;">
+                YENİ FORM OLUŞTUR
+              </div>
+            </ng-template>
+      
+            <ng-template #subtitle>
+              <div style="height: 40px;"></div>
+            </ng-template>
+          </p-card>
+      
+          <!-- Sayfalı kartlar -->
+          <p-card 
+            *ngFor="let item of _pagedDrafts" 
+            [style]="{ width: '260px', height: '300px', overflow: 'hidden' }"
+            styleClass="d-flex flex-column justify-content-between">
+      
+            <ng-template #header>
+              <img alt="Card" src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
+                style="width: 100%; height: 120px; object-fit: cover;" />
+            </ng-template>
+      
+            <ng-template #title>
+              <div style="font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                {{ item.baslik }}
+              </div>
+            </ng-template>
+      
+            <ng-template #subtitle>
+              <div style="font-size: 0.9rem; height: 40px; overflow: hidden;">
+                {{ item.aciklama }}
+              </div>
+            </ng-template>
+      
+            <ng-template #footer>
+              <div class="d-flex justify-content-center gap-2 mt-2 w-100">
+                <p-button label="Yayınla" styleClass="my-blue-btn mr-2" (click)="draftMatch(item)" />
+              </div>
+            </ng-template>
+          </p-card>
+        </div>
+
       </div>
-    </div>
-  
+
+      <div class="paginator-wrapper border-bottom p-2 bg-white">
+        <p-paginator
+          (onPageChange)="onPageChange($event)"
+          [first]="first"
+          [rows]="rows"
+          [totalRecords]="_draft_s.length"
+          [rowsPerPageOptions]="[10, 20, 30]"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="{first} - {last} arası / Toplam {totalRecords}"
+          styleClass="justify-content-start"
+        />
+      </div>
+
     <!-- BOTTOM (60%) -->
     <div class="bottom d-flex" style="height: 60%; overflow: hidden;">
   
@@ -200,11 +106,22 @@
   
             <ng-template #footer>
               <div class="d-flex justify-content-center gap-2 mt-2 w-100">
-                <p-button label="Yayınla" styleClass="my-blue-btn mr-2" (click)="draftMatch(item)" />
+                <p-button label="Detey" styleClass="my-blue-btn mr-2" />
               </div>
             </ng-template>
           </p-card>
         </div>
+        <div class="paginator-wrapper border-bottom p-2 bg-white">
+            <p-paginator
+              (onPageChange)="onPageChange($event)"
+              [first]="first"
+              [rows]="rows"
+              [totalRecords]="_draft_s.length"
+              [showCurrentPageReport]="true"
+              currentPageReportTemplate="{first} - {last} arası / Toplam {totalRecords}"
+              styleClass="justify-content-start"
+            />
+          </div>
       </div>
   
       <!-- RIGHT -->
@@ -233,11 +150,22 @@
   
             <ng-template #footer>
               <div class="d-flex justify-content-center gap-2 mt-2 w-100">
-                <p-button label="Yayınla" styleClass="my-blue-btn mr-2" (click)="draftMatch(item)" />
+                <p-button label="Detay" styleClass="my-blue-btn mr-2"/>
               </div>
             </ng-template>
           </p-card>
         </div>
+        <div class="paginator-wrapper border-bottom p-2 bg-white">
+            <p-paginator
+              (onPageChange)="onPageChange($event)"
+              [first]="first"
+              [rows]="rows"
+              [totalRecords]="_draft_s.length"
+              [showCurrentPageReport]="true"
+              currentPageReportTemplate="{first} - {last} arası / Toplam {totalRecords}"
+              styleClass="justify-content-start"
+            />
+          </div>
       </div>
   
     </div>
@@ -256,6 +184,14 @@
       placeholder="Seçiniz" class="full-width-input" (onChange)="onSicilGroupChange($event)">
     </p-dropdown>
   </div>
+
+  <div class="sicil">
+    <label for="responsible">Değerlendirme Sorumlusu</label>
+    <p-dropdown [options]="sicilGroup" [(ngModel)]="_selectedResponsibleId" optionLabel="ad" optionValue="id"
+      placeholder="Seçiniz" class="full-width-input" (onChange)="onSicilGroupChange($event)">
+    </p-dropdown>
+  </div>
+  
   <div class="form-group">
     <p-checkbox [(ngModel)]="asChecked" [binary]="true" inputId="as" (ngModelChange)="onCheckboxChange()"></p-checkbox>
     <label for="as" class="ml-2">As</label>
@@ -273,6 +209,18 @@
   </div>
 
   <div class="form-group">
+    <p-checkbox [(ngModel)]="colleagueChecked" [binary]="true" inputId="colleague"
+      (ngModelChange)="onCheckboxChange()"></p-checkbox>
+    <label for="colleague" class="ml-2">Eşdeğer</label>
+  </div>
+
+  <div class="form-group">
+    <p-checkbox [(ngModel)]="withGoalChecked" [binary]="true" inputId="goal"
+      (ngModelChange)="onCheckboxChange()"></p-checkbox>
+    <label for="goal" class="ml-2">Hedef Değerlendirmesi Olacak Mı?</label>
+  </div>
+
+  <div class="form-group">
     <label for="startDate">Başlangıç Tarihi:</label>&nbsp;
     <p-datepicker [(ngModel)]="startDate" [iconDisplay]="'input'" (onSelect)="getDate('start', $event)"
       [showIcon]="true" inputId="startDate"></p-datepicker>
@@ -286,32 +234,69 @@
 
 
   <p-table #table [value]="categoryS" [tableStyle]="{ 'min-width': '60rem' }" dataKey="id">
-
     <ng-template pTemplate="header">
       <tr>
+        <th style="width: 10%">Puan</th>
         <th style="width: 60%">Kategori / Soru</th>
+        <th style="width: 30%">İşlem</th>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-cat>
 
       <tr style="background-color: #e0e0e0; font-weight: bold;">
+      
+        <td pEditableColumn>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input type="number" [(ngModel)]="cat.kategoripuan" pInputText class="puan-input" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              <div class="custom-chip">
+                <span class="custom-icon">P</span>
+                <span class="custom-label">{{cat.kategoripuan}}</span>
+              </div>
 
+            </ng-template>
+          </p-cellEditor>
+        </td>
         <td style="color:#ed1b24; padding-left: 10px;">
           {{ cat.Ad }}
         </td>
+        <td>
+          <button pButton type="button" icon="pi pi-save" label="Güncelle" class="p-button-sm p-button-info"
+            (click)="edit_Category_Puan(cat)">
+          </button>
+        </td>
       </tr>
 
-      <!-- Soru Satırları -->
+ 
       <tr *ngFor="let question of getQuestionsByCategory(cat.Ad)" style="background-color: #f9f9f9;">
 
+
+        <td pEditableColumn>
+
+          <p-cellEditor>
+
+            <ng-template pTemplate="input">
+              <input type="number" [(ngModel)]="question.sorupuan" pInputText class="puan-input" />
+            </ng-template>
+
+            <ng-template pTemplate="output">
+              <div class="custom-chip">
+                <span class="custom-icon">P</span>
+                <span class="custom-label">{{question.sorupuan}}</span>
+              </div>
+            </ng-template>
+
+          </p-cellEditor>
+        </td>
         <td>
-          <!-- Sol üst köşede küçük kategori adı -->
+      
           <div style="font-size: 0.75rem; color: #ffc0cb; margin-bottom: 4px;">
             {{ cat.Ad }}
           </div>
           <div style="font-weight: bold; color:#0d47a1">{{ question.aciklama }}</div>
-  
           <div class="text-muted" style="font-size: 0.85rem;">
 
             <ng-container *ngIf="getScaleByQuestion(question) as scale">
@@ -323,14 +308,19 @@
             </ng-container>
 
           </div>
-
+    
+        </td>
+        <td>
+          <button pButton type="button" icon="pi pi-save" label="Güncelle" class="p-button-sm p-button-warning"
+            (click)="edit_Question_Puan(question)">
+          </button>
         </td>
       </tr>
 
     </ng-template>
 
   </p-table>
-  
+
   <div style="text-align: right; margin-top: 1rem;">
     <button pButton type="button" icon="pi pi-save" label="Kaydet" class="p-button-sm p-button-warning"
     >

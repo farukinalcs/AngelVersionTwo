@@ -22,7 +22,7 @@ export class DraftComponent implements OnInit, OnDestroy {
   categoryList: any[] = [];
   questionList: any[] = [];
   formList: any[] = [];
-  draftList: any[]= [];
+  _draft_s: any[]= [];
   parsedForms: any[] = [];
 
   selectedQuestionId: number | null;
@@ -31,7 +31,7 @@ export class DraftComponent implements OnInit, OnDestroy {
 
 
 
-
+  _editDraft:boolean = false;
   _openNewDraft : boolean = false;
   categoryS: any[] = [];
   questionS: any[] = [];
@@ -52,7 +52,7 @@ export class DraftComponent implements OnInit, OnDestroy {
   _selectedDraftId : number = 0;
   _draftMatchModal: boolean = false;
   _selectedSicilGroupId: number | null = null;
-
+  _stepperValue: number = 1;
   asChecked:boolean = false;
   usChecked:boolean = false;
   myselfChecked:boolean = false;
@@ -75,6 +75,24 @@ export class DraftComponent implements OnInit, OnDestroy {
 
   }
 
+  editDraft(item:any){
+
+    this._editDraft = true;
+    this._stepperValue = 1;
+    this._selectedDraftId = item?.id;
+    this.draftWithQuest_s(this._selectedDraftId);
+    console.log("_selectedDraftId:", this._selectedDraftId);
+
+  }
+
+  is_ready(){
+    console.log("_selectedDraftId:", this._selectedDraftId);
+    this.perform.is_ready(this._selectedDraftId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+      const result = response[0]?.x ?? [];
+      console.log("is_ready:", result);
+      this.ref.detectChanges();
+    });
+  }
  
   getQuestion(id: number, categoryId: number) {
     this.perform.getQuestion(id, categoryId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
@@ -134,28 +152,12 @@ export class DraftComponent implements OnInit, OnDestroy {
     });
   }
 
-  // form_s(id: number) {
-  //   this.perform.form_s(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-  //     this.formList = response[0]?.x ?? [];
-  //     console.log("form_s:", this.formList);
-
-  //     this.parsedForms = this.formList.map(form => ({
-  //       ...form,
-  //       sorular: JSON.parse(form.sorular || '[]'),
-  //       kategoriler: JSON.parse(form.kategoriler || '[]'),
-  //     }));
-
-  //     console.log('parsedForms:', this.parsedForms);
-
-  //     this.ref.detectChanges();
-  //   });
-  // }
 
   draft_s(id: number) {
     this.perform.draft_s(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-      this.draftList = response[0]?.x ?? [];
-      console.log("draft_s :", this.draftList);
-      this._selectedDraftId = this.draftList[0]?.id;
+      this._draft_s = (response[0]?.x ?? []).filter((item: any) => item.aktif !== 1);
+      console.log("draft_s :", this._draft_s);
+      this._selectedDraftId = this._draft_s[0]?.id;
       this.draftWithQuest_s(this._selectedDraftId);
       this.ref.detectChanges();
       this._openNewDraft = false;
@@ -164,9 +166,31 @@ export class DraftComponent implements OnInit, OnDestroy {
     });
   }
 
-  form_question() {
+
+  
+  draft_d(item: any) {
+    this._selectedDraftId = item?.id;
+    this.perform.draft_d(this._selectedDraftId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+      const result = response[0]?.x[0]?.islemsonuc;
+ 
+      console.log("draft_d:", result);
+      if (result == 1) {
+        this.toastrService.success(
+          "Şablon Silme İşlemi Başarılı");
+       
+        this.draft_s(0);
+      } else {
+        this.toastrService.error(
+          "Şablon Silme İşlemi Başarısız");
+
+      }
+      this.ref.detectChanges();
+    });
+  }
+
+  draft_question_i() {
     if (this.selectedQuestionId != 0) {
-      this.perform.sablon_question(this._selectedDraftId ?? 0, this.selectedQuestionId ?? 0, this.selectedCategoryId ?? 0).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+      this.perform.draft_question_i(this._selectedDraftId ?? 0, this.selectedQuestionId ?? 0, this.selectedCategoryId ?? 0).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
         const result = response[0].x[0]?.islemsonuc;
         console.log("result:", result);
         console.log("_selectedDraftId:", this._selectedDraftId);
@@ -189,15 +213,9 @@ export class DraftComponent implements OnInit, OnDestroy {
     }
   }
 
-  // onCheckboxChange() {
 
-  //   this.as = this.asChecked ? 1 : 0;
-  //   this.us = this.usChecked ? 1 : 0;
-  //   this.myself = this.myselfChecked ? 1 : 0;
-     
-  //   this.isValid = this.asChecked || this.usChecked || this.myselfChecked;
-  //   console.log('asChecked:', this.as, 'usChecked:', this.us, 'myselfChecked:', this.myself);
-  // }
+
+
 
   onSicilGroupChange(event:any){
     console.log('Seçilen Sicil Grubu ID:', this._selectedSicilGroupId);
