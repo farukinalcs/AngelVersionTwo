@@ -100,7 +100,7 @@ export class ScaleComponent implements OnInit,OnDestroy{
       console.log("getScale:", this.scaleList);
       this.ref.detectChanges();
     });
-       // Form temizle
+  
        this.scaleName = '';
        this.selectedCount = 0;
        this.answers = [null, null, null, null, null];
@@ -134,13 +134,7 @@ export class ScaleComponent implements OnInit,OnDestroy{
     this.selectedScaleId  = 0;
   }
 
-  // Seçilen ölçek verisini forma doldur
-  // editScale(scale: Scale): void {
-  //   this.scaleName = scale.name;
-  //   this.selectedCount = scale.count;
-  //   this.answers = [...scale.answers, null, null, null, null].slice(0, 5); // 5 elemanlı sabit diziye yay
-  //   this.direction = scale.direction;
-  // }
+
   deleteScale(){
     this.perform.deleteScale(this.selectedScaleId ?? 0).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
       const result = response[0].x[0].islemsonuc;

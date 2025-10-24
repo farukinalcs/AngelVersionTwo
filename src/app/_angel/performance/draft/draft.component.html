@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="p-field mb-4">
                                     <label for="countSelect">Hangi Kategori</label>
-                                    <p-dropdown [options]="categoryList" [(ngModel)]="selectedCategoryId"
+                                    <p-dropdown [options]="categoryList" [(ngModel)]="_selectedCategoryId"
                                         optionLabel="Ad" optionValue="Id" placeholder="Seçiniz"
                                         (onChange)="onCategoryChange($event.value)" class="full-width-input"
                                         [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="p-field mb-4">
                                     <label for="countSelect">Soru seçimi</label>
-                                    <p-dropdown [options]="questionList" [(ngModel)]="selectedQuestionId"
+                                    <p-dropdown [options]="questionList" [(ngModel)]="_selectedQuestionId"
                                         optionLabel="aciklama" optionValue="id" placeholder="Seçiniz"
                                         (onChange)="onQuestionChange($event.value)" class="full-width-input"
                                         [appendTo]="'body'" [panelStyle]="{ width: '100%' }">
@@ -246,7 +246,7 @@
                                             type="button"
                                             icon="pi pi-trash"
                                             class="p-button-sm p-button-danger"
-                                           
+                                           (click)="draft_question_d(question)"
                                           ></button>
                                         </td>
                                       </tr>

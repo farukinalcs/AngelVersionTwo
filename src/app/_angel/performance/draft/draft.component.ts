@@ -21,13 +21,13 @@ export class DraftComponent implements OnInit, OnDestroy {
   explanation: string = "";
   categoryList: any[] = [];
   questionList: any[] = [];
-  formList: any[] = [];
+
   _draft_s: any[]= [];
   parsedForms: any[] = [];
 
-  selectedQuestionId: number | null;
+  _selectedQuestionId: number | null;
 
-  selectedCategoryId: number | null;
+  _selectedCategoryId: number | null;
 
 
 
@@ -36,7 +36,7 @@ export class DraftComponent implements OnInit, OnDestroy {
   categoryS: any[] = [];
   questionS: any[] = [];
   scaleS: any[] = [];
-  sicilGroup: any[] = [];
+ 
   _draftWithQuest_s: any[] = [];
   
   startDate: Date | null = null;
@@ -44,19 +44,13 @@ export class DraftComponent implements OnInit, OnDestroy {
   startDateStr: string = '';
   endDateStr: string = '';
 
-  as:number;
-  us:number;
-  myself:number;
+
 
   _draftTitle:string="";
   _selectedDraftId : number = 0;
   _draftMatchModal: boolean = false;
   _selectedSicilGroupId: number | null = null;
   _stepperValue: number = 1;
-  asChecked:boolean = false;
-  usChecked:boolean = false;
-  myselfChecked:boolean = false;
-  isValid: boolean = true;
 
   constructor(
     private perform: PerformanceService,
@@ -87,10 +81,20 @@ export class DraftComponent implements OnInit, OnDestroy {
 
   is_ready(){
     console.log("_selectedDraftId:", this._selectedDraftId);
-    this.perform.is_ready(this._selectedDraftId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-      const result = response[0]?.x ?? [];
-      console.log("is_ready:", result);
+    this.perform.is_ready(this._selectedDraftId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+     
+      const result = response[0]?.x[0]?.islemsonuc;
+      if (result == 1) {
+        this.toastrService.success(
+          "Şablon Yayınlanma İşlemi Başarılı");
+        this.draft_s(0);
+      } else {
+        this.toastrService.error(
+          "FŞablon Yayınlanma İşlemi Başarısız");
+      }
+
       this.ref.detectChanges();
+
     });
   }
  
@@ -113,17 +117,17 @@ export class DraftComponent implements OnInit, OnDestroy {
 
   onCategoryChange(categoryId: number) {
 
-    this.selectedCategoryId = categoryId;
-    console.log("categoryId", this.selectedCategoryId);
+    this._selectedCategoryId = categoryId;
+    console.log("categoryId", this._selectedCategoryId);
     const found = this.categoryList.find(s => s.Id === categoryId);
     console.log("onCategoryChange", found);
-    this.selectedQuestionId = 0;
+    this._selectedQuestionId = 0;
     this.getQuestion(0, categoryId);
   }
 
   onQuestionChange(questionId: number) {
-    this.selectedQuestionId = questionId;
-    console.log("onQuestionChange", this.selectedQuestionId);
+    this._selectedQuestionId = questionId;
+    console.log("onQuestionChange", this._selectedQuestionId);
   }
 
   onFormChange(formId: number) {
@@ -189,17 +193,17 @@ export class DraftComponent implements OnInit, OnDestroy {
   }
 
   draft_question_i() {
-    if (this.selectedQuestionId != 0) {
-      this.perform.draft_question_i(this._selectedDraftId ?? 0, this.selectedQuestionId ?? 0, this.selectedCategoryId ?? 0).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+    if (this._selectedQuestionId != 0) {
+      this.perform.draft_question_i(this._selectedDraftId ?? 0, this._selectedQuestionId ?? 0, this._selectedCategoryId ?? 0).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
         const result = response[0].x[0]?.islemsonuc;
         console.log("result:", result);
         console.log("_selectedDraftId:", this._selectedDraftId);
-        console.log("selectedQuestionId:", this.selectedQuestionId);
-        console.log("selectedCategoryId:", this.selectedCategoryId);
+        console.log("selectedQuestionId:", this._selectedQuestionId);
+        console.log("selectedCategoryId:", this._selectedCategoryId);
         if (result == 1) {
           this.toastrService.success(
             "Form'a Soru Ekleme İşlemi Başarılı");
-          //this.form_s(0);
+            this.draftWithQuest_s(this._selectedDraftId);
         } else {
           this.toastrService.error(
             "Form'a Soru Ekleme İşlemi Başarısız");
@@ -213,7 +217,24 @@ export class DraftComponent implements OnInit, OnDestroy {
     }
   }
 
+  draft_question_d(question:any){
+    console.log("question",question);
+      this.perform.draft_question_d(question.sablonid ?? 0,question.id ?? 0, question.kategoriid ?? 0).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+        const result = response[0].x[0]?.islemsonuc;
+        console.log("draft_question_d:", result);
 
+        if (result == 1) {
+          this.toastrService.success(
+            `${question.aciklama} Silme İşlemi Başarılı`);
+            this.draftWithQuest_s(this._selectedDraftId);
+        } else {
+          this.toastrService.error(
+            "Soru Silme İşlemi Başarısız");
+        }
+        this.ref.detectChanges();
+      });
+   
+  }
 
 
 
@@ -230,14 +251,14 @@ export class DraftComponent implements OnInit, OnDestroy {
     return this.questionS.filter(q => q.kategoriad === kategoriad);
   }
 
-  getSicilGroups() {
-    this.perform.getSicilGroups().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
-      const result = response?.[0]?.x;
-      this.sicilGroup = Array.isArray(result) ? result : [];
-      console.log("getSicilGroups:", result );
-      this.ref.detectChanges();
-    });
-  }
+  // getSicilGroups() {
+  //   this.perform.getSicilGroups().pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+  //     const result = response?.[0]?.x;
+  //     this.sicilGroup = Array.isArray(result) ? result : [];
+  //     console.log("getSicilGroups:", result );
+  //     this.ref.detectChanges();
+  //   });
+  // }
 
   draftWithQuest_s(id: number) {
     this.perform.draftWithQuest_s(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
@@ -282,12 +303,8 @@ export class DraftComponent implements OnInit, OnDestroy {
       };
     });
 
-    console.log('parsedForms:', this.parsedForms);
-    console.log('Tüm Kategoriler:', this.categoryS);
-    console.log('Tüm Sorular:', this.questionS);
-    console.log('Benzersiz Ölçekler:', this.scaleS);
-
     this.ref.detectChanges();
+
     });
 }
 

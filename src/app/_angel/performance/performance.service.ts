@@ -5,8 +5,7 @@ import CryptoES from "crypto-es";
 import { HttpClient } from '@angular/common/http';
 import { ApiUrlService } from 'src/app/_helpers/api-url.service';
 import { Scale } from './models/scale';
-import { useTheme } from '@primeng/themes';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @Injectable({
   providedIn: 'root'
@@ -169,8 +168,7 @@ export class PerformanceService {
     var sp: any[] = [{
       mkodu: 'yek313',
       baslik:title.toString(),
-      aciklama:explanation.toString()
-      
+      aciklama:explanation.toString()  
     }]
     return this.requestMethod(sp);
   }
@@ -192,21 +190,24 @@ export class PerformanceService {
   }
 
 
-  draft_question_i(formId:number,questionId:number,catId:number,){
-    console.log("formId:",formId,"question",questionId,"CAT",catId);
+  draft_question_i(draftId:number,questionId:number,catId:number,){
+    
     var sp: any[] = [{
       mkodu: 'yek318',
-      sablonid:formId.toString(),
+      sablonid:draftId.toString(),
       soruid:questionId.toString(),
-      kategoriid:catId.toString()
+      kategoriid:catId.toString(),
+      fikrimyok:"0"
     }]
+    console.log("draft_question_i,",sp);
     return this.requestMethod(sp);
   }
 
-  draft_question_d(questionId:number,catId:number,){
+  draft_question_d(draftId:number,questionId:number,catId:number,){
     console.log("question",questionId,"CAT",catId);
     var sp: any[] = [{
       mkodu: 'yek440',
+      sablonid:draftId.toString(),
       id:questionId.toString(),
       kategoriid:catId.toString()
     }]
@@ -250,17 +251,22 @@ export class PerformanceService {
     return this.requestMethod(sp);
   }
 
-  formMatchSicil(formid:number,sicilgrupid:number,as:number,us:number,myself:number,startDate:string,endDate:string){
+  formMatchSicil(formid:number,sicilgrupid:number,responsibleId:number,as:number,us:number,myself:number,colleague:number,goal:number,goalPercent:number,startDate:string,endDate:string){
     var sp: any[] = [{
       mkodu: 'yek333',
-      formid:formid.toString(),
+      sablonid:formid.toString(),
       sicilgrupid:sicilgrupid.toString(),
+      sorumluid:responsibleId.toString(),
       ast:as.toString(),
       ust:us.toString(),
       kendi:myself.toString(),
+      esdeger:colleague.toString(),
+      hedef:goal.toString(),
+      hedefagirlik:goalPercent.toString(),
       baslangic:startDate.toString(),
       bitis:endDate.toString()
     }]
+    console.log("formMatchSicil",sp)
     return this.requestMethod(sp);
   }
 
@@ -269,18 +275,20 @@ export class PerformanceService {
       mkodu: 'yek423',
       id:id.toString()
     }]
+    console.log("yek423_draftWithQuest_s",sp)
     return this.requestMethod(sp);
   }
 
   
 
 
-  form_s(id:number){
-    var sp: any[] = [{
-      mkodu: 'yek314',
-      id:id.toString()
-    }]
-    return this.requestMethod(sp);
-  }
+  // form_s(id:number){
+  //   var sp: any[] = [{
+  //     mkodu: 'yek314',
+  //     id:id.toString()
+  //   }]
+  //   return this.requestMethod(sp);
+  // }
 
+  
 }

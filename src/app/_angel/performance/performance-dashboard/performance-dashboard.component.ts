@@ -67,7 +67,7 @@ export class PerformanceDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.form_s(0);
+    // this.form_s(0);
     this.getSicilGroups();
   }
 
@@ -76,7 +76,7 @@ export class PerformanceDashboardComponent implements OnInit, OnDestroy {
     this._formTitle = item?.baslik;
     this._formDetailModal = true;
     console.log("getItem:", item);
-    this.forms_Detail(this.selectedFormId ?? 0);
+    // this.forms_Detail(this.selectedFormId ?? 0);
   }
 
   formMatch(item: any) {
@@ -84,70 +84,70 @@ export class PerformanceDashboardComponent implements OnInit, OnDestroy {
     this._formTitle = item?.baslik;
     this._formMatchModal = true;
     console.log("getItem:", item);
-    this.forms_Detail(this.selectedFormId ?? 0);
+    // this.forms_Detail(this.selectedFormId ?? 0);
   }
 
-  form_s(id: number) {
-    this.perform.form_s(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-      this.formList = response[0]?.x ?? [];
-      console.log("form_s........................D:", this.formList);
-      this.ref.detectChanges();
-    });
-  }
+  // form_s(id: number) {
+  //   this.perform.form_s(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+  //     this.formList = response[0]?.x ?? [];
+  //     console.log("form_s........................D:", this.formList);
+  //     this.ref.detectChanges();
+  //   });
+  // }
 
-  forms_Detail(id: number){
-    console.log("KAAAÇ",id);
-    this.perform.form_s(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
-      this.formDetail = response[0]?.x ?? [];
-      console.log("formDetail:", this.formDetail);
+  // forms_Detail(id: number){
+  //   console.log("KAAAÇ",id);
+  //   this.perform.form_s(id).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<"", ResponseDetailZ>[]) => {
+  //     this.formDetail = response[0]?.x ?? [];
+  //     console.log("formDetail:", this.formDetail);
   
-      this.parsedForms = this.formDetail.map(form => {
-        const parsedSorular = JSON.parse(form.sorular || '[]');
-        const parsedKategoriler = JSON.parse(form.kategoriler || '[]');
+  //     this.parsedForms = this.formDetail.map(form => {
+  //       const parsedSorular = JSON.parse(form.sorular || '[]');
+  //       const parsedKategoriler = JSON.parse(form.kategoriler || '[]');
   
-        this.categoryS = [...parsedKategoriler];
-        this.questionS = [...parsedSorular];
+  //       this.categoryS = [...parsedKategoriler];
+  //       this.questionS = [...parsedSorular];
   
-        // Benzersiz ölçekleri çıkar
-        this.scaleS = this.questionS
-          .map(q => ({
-            olcekid: q.olcekid,
-            olcekad: q.olcekad,
-            cevap1: q.cevap1?.trim() || '',
-            cevap2: q.cevap2?.trim() || '',
-            cevap3: q.cevap3?.trim() || '',
-            cevap4: q.cevap4?.trim() || '',
-            cevap5: q.cevap5?.trim() || '',
-            cevapn:  q.cevapn
-          }))
-          .filter((value, index, self) =>
-            index === self.findIndex(v =>
-              v.olcekid === value.olcekid &&
-              v.cevap1 === value.cevap1 &&
-              v.cevap2 === value.cevap2 &&
-              v.cevap3 === value.cevap3 &&
-              v.cevap4 === value.cevap4 &&
-              v.cevap5 === value.cevap5 &&
-              v.cevapn === value.cevapn
-            )
-          );
+  //       // Benzersiz ölçekleri çıkar
+  //       this.scaleS = this.questionS
+  //         .map(q => ({
+  //           olcekid: q.olcekid,
+  //           olcekad: q.olcekad,
+  //           cevap1: q.cevap1?.trim() || '',
+  //           cevap2: q.cevap2?.trim() || '',
+  //           cevap3: q.cevap3?.trim() || '',
+  //           cevap4: q.cevap4?.trim() || '',
+  //           cevap5: q.cevap5?.trim() || '',
+  //           cevapn:  q.cevapn
+  //         }))
+  //         .filter((value, index, self) =>
+  //           index === self.findIndex(v =>
+  //             v.olcekid === value.olcekid &&
+  //             v.cevap1 === value.cevap1 &&
+  //             v.cevap2 === value.cevap2 &&
+  //             v.cevap3 === value.cevap3 &&
+  //             v.cevap4 === value.cevap4 &&
+  //             v.cevap5 === value.cevap5 &&
+  //             v.cevapn === value.cevapn
+  //           )
+  //         );
   
-        return {
-          ...form,
-          sorular: parsedSorular,
-          kategoriler: parsedKategoriler,
-          olcekler : this.scaleS
-        };
-      });
+  //       return {
+  //         ...form,
+  //         sorular: parsedSorular,
+  //         kategoriler: parsedKategoriler,
+  //         olcekler : this.scaleS
+  //       };
+  //     });
   
-      console.log('parsedForms:', this.parsedForms);
-      console.log('Tüm Kategoriler:', this.categoryS);
-      console.log('Tüm Sorular:', this.questionS);
-      console.log('Benzersiz Ölçekler:', this.scaleS);
+  //     console.log('parsedForms:', this.parsedForms);
+  //     console.log('Tüm Kategoriler:', this.categoryS);
+  //     console.log('Tüm Sorular:', this.questionS);
+  //     console.log('Benzersiz Ölçekler:', this.scaleS);
   
-      this.ref.detectChanges();
-    });
-  }
+  //     this.ref.detectChanges();
+  //   });
+  // }
   
   formData = {
     evaluationType: '',

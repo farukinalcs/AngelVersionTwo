@@ -83,6 +83,10 @@ export class ProcessManagementComponent {
   myself: number;
   goal: number;
 
+  goalPercent:number = 0;
+
+  
+
   first: number = 0;
   rows: number = 10;
 
@@ -229,7 +233,6 @@ export class ProcessManagementComponent {
 
   onSicilGroupChange(event: any) {
     console.log('Seçilen Sicil Grubu ID:', this._selectedSicilGroupId);
-    // veya direkt:
     console.log('Event Value:', event.value);
   }
 
@@ -251,7 +254,7 @@ export class ProcessManagementComponent {
   }
 
   edit_Category_Puan(categroy: any) {
-    // this.selectedCategoryId = cat.Id;
+   
     console.log('editQuestion:', this._selectedDraftId, categroy);
     console.log('editQuestion:', categroy);
     this.perform.edit_Category_Puan(this._selectedDraftId ?? 0, categroy.Id ?? 0, categroy.kategoripuan).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
@@ -269,7 +272,7 @@ export class ProcessManagementComponent {
       }
       this.ref.detectChanges();
     });
-    // cat burada zaten güncellenmiş haliyle geliyor
+   
   }
 
   edit_Question_Puan(question: any) {
@@ -286,6 +289,23 @@ export class ProcessManagementComponent {
       } else {
         this.toastrService.error(
           "Soru Güncelleme İşlemi Başarısız");
+      }
+      this.ref.detectChanges();
+    });
+  }
+
+  formMatchSicil(){
+    this.perform.formMatchSicil(this._selectedDraftId ?? 0,this._selectedSicilGroupId ?? 0,this._selectedResponsibleId ?? 0, this.as,this.us,this.myself,this.colleague,this.goal,this.goalPercent,this.startDateStr,this.endDateStr).pipe(takeUntil(this.ngUnsubscribe)).subscribe((response: ResponseModel<any, ResponseDetailZ>[]) => {
+      const result = response[0].x[0].islemsonuc
+      console.log("formMatchSicil:", result);
+      if (result == 1) {
+        this.toastrService.success(
+          "Form Atama İşlemi Başarılı");
+          this.draftWithQuest_s(this._selectedDraftId ?? 0);
+          this._draftMatchModal = false;
+      } else {
+        this.toastrService.error(
+          "Form Atama İşlemi Başarısız");
       }
       this.ref.detectChanges();
     });

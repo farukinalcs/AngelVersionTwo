@@ -1,24 +1,5 @@
 <div class="container-fluid d-flex flex-wrap justify-content-start gap-3 definitions">
-  <!-- <p-card [style]="{ width: '260px', height: '300px', cursor: 'pointer' }"
-    styleClass="d-flex flex-column justify-content-center align-items-center">
 
-    <ng-template #header>
-      <div
-        style="width: 100%; height: 120px; background-color: #fff; display: flex; align-items: center; justify-content: center;">
-        <i class="pi pi-plus" style="font-size: 2.5rem; color: #000;margin-top: 5px;"></i>
-      </div>
-    </ng-template>
-
-    <ng-template #title>
-      <div style="text-align: center;font-weight: bold; background-color: #fff; font-size: 1rem; margin-top: 10px;">
-        YENİ DEĞERLEME BAŞLAT
-      </div>
-    </ng-template>
-
-    <ng-template #subtitle>
-      <div style="height: 40px;"></div>
-    </ng-template>
-  </p-card> -->
   <p-card *ngFor="let item of formList" [style]="{ width: '260px', height: '300px', overflow: 'hidden' }"
     styleClass="d-flex flex-column justify-content-between">
 
@@ -41,9 +22,7 @@
 
     <ng-template #footer>
       <div class="d-flex justify-content-center gap-2 mt-2 w-100">
-        <!-- <p-button label="Sil" severity="secondary" styleClass="px-3 mr-2" [outlined]="true" />
-    
-        <p-button label="Puanla" styleClass="px-3" (click)="getItem(item)" /> -->
+
 
         <p-button label="Yayınla" styleClass="my-blue-btn mr-2" (click)="formMatch(item)" />
 
